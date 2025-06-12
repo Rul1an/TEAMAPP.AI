@@ -130,7 +130,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
   }
 
   static final List<FormationData> _formations = [
-    FormationData(
+    const FormationData(
       name: '4-3-3',
       description: 'Aanvallende opstelling',
       positions: [
@@ -140,7 +140,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         Position(20, 25), Position(50, 20), Position(80, 25), // Attack
       ],
     ),
-    FormationData(
+    const FormationData(
       name: '4-4-2',
       description: 'Gebalanceerde opstelling',
       positions: [
@@ -150,7 +150,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         Position(40, 20), Position(60, 20), // Attack
       ],
     ),
-    FormationData(
+    const FormationData(
       name: '4-2-3-1',
       description: 'Moderne opstelling',
       positions: [
@@ -161,7 +161,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         Position(50, 15), // ST
       ],
     ),
-    FormationData(
+    const FormationData(
       name: 'Training 7v7',
       description: 'Voor training',
       positions: [

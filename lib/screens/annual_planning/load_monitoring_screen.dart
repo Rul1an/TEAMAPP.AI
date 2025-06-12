@@ -268,7 +268,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                   ? const Center(child: Text('No data available'))
                   : LineChart(
                       LineChartData(
-                        gridData: FlGridData(
+                        gridData: const FlGridData(
                           show: true,
                           drawVerticalLine: true,
                           horizontalInterval: 200,
@@ -387,7 +387,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                   ? const Center(child: Text('No data available'))
                   : LineChart(
                       LineChartData(
-                        gridData: FlGridData(
+                        gridData: const FlGridData(
                           show: true,
                           horizontalInterval: 0.2,
                           verticalInterval: 2,

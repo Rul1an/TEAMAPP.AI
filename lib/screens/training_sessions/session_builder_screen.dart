@@ -505,7 +505,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                         if (phase.hasExercises)
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.fitness_center,
                                 size: 14,
                                 color: Colors.green,
@@ -513,7 +513,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                               const SizedBox(width: 4),
                               Text(
                                 '${phase.exerciseCount} oefening${phase.exerciseCount != 1 ? 'en' : ''}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.green,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -535,17 +535,17 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                       children: [
                         if (phase.hasExercises)
                           IconButton(
-                            icon: Icon(Icons.list, color: Colors.green),
+                            icon: const Icon(Icons.list, color: Colors.green),
                             onPressed: () {
                               // TODO: Implement _showPhaseExercises method
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Oefeningen bekijken komt in volgende update')),
+                                const SnackBar(content: Text('Oefeningen bekijken komt in volgende update')),
                               );
                             },
                             tooltip: 'Bekijk oefeningen',
                           ),
                         IconButton(
-                          icon: Icon(Icons.add, color: Colors.blue),
+                          icon: const Icon(Icons.add, color: Colors.blue),
                           onPressed: () => _addExerciseToPhaseQuick(phase),
                           tooltip: 'Voeg oefening toe',
                         ),
@@ -1405,7 +1405,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
           width: double.maxFinite,
           height: 300,
           child: phase.exerciseIds.isEmpty
-            ? Center(
+            ? const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -1425,9 +1425,9 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                       child: Text('${index + 1}'),
                     ),
                     title: Text('Oefening $exerciseId'),
-                    subtitle: Text('Click om details te bekijken'),
+                    subtitle: const Text('Click om details te bekijken'),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
+                      icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () {
                         setState(() {
                           phase.removeExercise(exerciseId);
@@ -1442,14 +1442,14 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Sluiten'),
+            child: const Text('Sluiten'),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               _addExerciseToPhaseQuick(phase);
             },
-            child: Text('Oefening Toevoegen'),
+            child: const Text('Oefening Toevoegen'),
           ),
         ],
       ),

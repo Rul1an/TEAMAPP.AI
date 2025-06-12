@@ -131,7 +131,9 @@ class MainScaffold extends StatelessWidget {
     if (route.startsWith('/annual-planning') || route.startsWith('/season')) return 1;
     if (route.startsWith('/training-sessions') || route.startsWith('/session-builder') ||
         route.startsWith('/exercise-library') || route.startsWith('/exercise-designer') ||
-        route.startsWith('/field-diagram-editor')) return 2;
+        route.startsWith('/field-diagram-editor')) {
+      return 2;
+    }
     if (route.startsWith('/matches')) return 3;
     if (route.startsWith('/players')) return 4;
     if (route.startsWith('/analytics')) return 5;
