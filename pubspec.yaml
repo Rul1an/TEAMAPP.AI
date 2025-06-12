@@ -1,0 +1,60 @@
+name: jo17_tactical_manager
+description: A tactical football team management app for JO17 teams
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Core UI
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.2.1
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Navigation
+  go_router: ^14.2.0
+
+  # Backend & Database
+  supabase_flutter: ^2.5.6
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+
+  # Utilities
+  uuid: ^4.4.0
+  path_provider: ^2.1.3
+  intl: ^0.19.0  # For date formatting
+
+  # UI Components
+  table_calendar: ^3.1.1
+  fl_chart: ^0.68.0
+
+  # Forms & Validation
+  flutter_form_builder: ^9.3.0
+  # form_builder_validators will be added later or we'll use custom validators
+
+  # Export functionality
+  pdf: ^3.11.3
+  excel: ^4.0.6
+  share_plus: ^7.2.2
+  file_picker: ^10.1.9
+  csv: ^6.0.0
+  file_saver: ^0.2.14
+  web: ^1.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.9
+  isar_generator: ^3.1.0+1
+  riverpod_generator: ^2.4.0
+
+flutter:
+  uses-material-design: true

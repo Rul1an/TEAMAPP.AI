@@ -1,0 +1,1102 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../models/player.dart';
+import '../../models/team.dart';
+import '../../models/match.dart';
+import '../../models/formation_template.dart';
+import '../../providers/database_provider.dart';
+import '../../services/database_service.dart';
+import '../../widgets/common/tactical_drawing_canvas.dart';
+
+class LineupBuilderScreen extends ConsumerStatefulWidget {
+  final String? matchId;
+
+  const LineupBuilderScreen({
+    super.key,
+    this.matchId,
+  });
+
+  @override
+  ConsumerState<LineupBuilderScreen> createState() => _LineupBuilderScreenState();
+}
+
+class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
+  Formation _selectedFormation = Formation.fourThreeThree;
+  Map<String, Player?> _fieldPositions = {};
+  final List<Player> _benchPlayers = [];
+  List<Player> _availablePlayers = [];
+  Match? _match;
+
+  // Template functionality
+  FormationTemplate? _selectedTemplate;
+  List<FormationTemplate> _availableTemplates = [];
+
+  // Tactical drawing functionality
+  bool _isDrawingMode = false;
+  DrawingTool _selectedDrawingTool = DrawingTool.arrow;
+  Color _selectedDrawingColor = Colors.red;
+  List<DrawingElement> _tacticalDrawings = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializePositions();
+    _loadTemplates();
+    if (widget.matchId != null) {
+      _loadMatch();
+    }
+  }
+
+  Future<void> _loadTemplates() async {
+    final templates = await DatabaseService().getAllFormationTemplates();
+    if (mounted) {
+      setState(() {
+        _availableTemplates = templates;
+      });
+    }
+  }
+
+  Future<void> _loadMatch() async {
+    final match = await DatabaseService().getMatch(int.parse(widget.matchId!));
+    if (match != null && mounted) {
+      setState(() {
+        _match = match;
+        if (match.selectedFormation != null) {
+          _selectedFormation = match.selectedFormation!;
+          _initializePositions();
+
+          // Load existing lineup if available
+          _loadExistingLineup(match);
+        }
+      });
+    }
+  }
+
+  Future<void> _loadExistingLineup(Match match) async {
+    final players = await DatabaseService().getAllPlayers();
+
+    // Load field positions
+    match.fieldPositions.forEach((position, playerId) {
+      final player = players.firstWhere(
+        (p) => p.id.toString() == playerId,
+        orElse: () => Player(),
+      );
+      if (player.id != 0) {
+        _fieldPositions[position] = player;
+      }
+    });
+
+    // Load bench players
+    for (final playerId in match.substituteIds) {
+      final player = players.firstWhere(
+        (p) => p.id.toString() == playerId,
+        orElse: () => Player(),
+      );
+      if (player.id != 0) {
+        _benchPlayers.add(player);
+      }
+    }
+  }
+
+  void _initializePositions() {
+    // Initialize field positions based on formation
+    _fieldPositions = {
+      'GK': null,
+      'LB': null,
+      'CB1': null,
+      'CB2': null,
+      'RB': null,
+      'CM1': null,
+      'CM2': null,
+      'CM3': null,
+      'LW': null,
+      'ST': null,
+      'RW': null,
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final playersAsync = ref.watch(playersProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_isDrawingMode ? 'Tactical Board' : 'Opstelling Maken'),
+        actions: [
+          // Drawing mode toggle
+          IconButton(
+            icon: Icon(_isDrawingMode ? Icons.sports_soccer : Icons.edit),
+            tooltip: _isDrawingMode ? 'Opstelling Modus' : 'Tactical Board',
+            onPressed: () {
+              setState(() {
+                _isDrawingMode = !_isDrawingMode;
+              });
+            },
+          ),
+          if (_isDrawingMode) ...[
+            // Drawing tools
+            PopupMenuButton<DrawingTool>(
+              icon: const Icon(Icons.brush),
+              tooltip: 'Drawing Tools',
+              onSelected: (tool) {
+                setState(() {
+                  _selectedDrawingTool = tool;
+                });
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: DrawingTool.arrow,
+                  child: Row(
+                    children: [
+                      Icon(Icons.arrow_forward, color: _selectedDrawingTool == DrawingTool.arrow ? Colors.blue : null),
+                      const SizedBox(width: 8),
+                      const Text('Pijl'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: DrawingTool.line,
+                  child: Row(
+                    children: [
+                      Icon(Icons.remove, color: _selectedDrawingTool == DrawingTool.line ? Colors.blue : null),
+                      const SizedBox(width: 8),
+                      const Text('Lijn'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: DrawingTool.circle,
+                  child: Row(
+                    children: [
+                      Icon(Icons.circle_outlined, color: _selectedDrawingTool == DrawingTool.circle ? Colors.blue : null),
+                      const SizedBox(width: 8),
+                      const Text('Cirkel'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: DrawingTool.text,
+                  child: Row(
+                    children: [
+                      Icon(Icons.text_fields, color: _selectedDrawingTool == DrawingTool.text ? Colors.blue : null),
+                      const SizedBox(width: 8),
+                      const Text('Tekst'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: DrawingTool.erase,
+                  child: Row(
+                    children: [
+                      Icon(Icons.cleaning_services, color: _selectedDrawingTool == DrawingTool.erase ? Colors.blue : null),
+                      const SizedBox(width: 8),
+                      const Text('Wissen'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Color picker
+            PopupMenuButton<Color>(
+              icon: Icon(Icons.palette, color: _selectedDrawingColor),
+              tooltip: 'Kleuren',
+              onSelected: (color) {
+                setState(() {
+                  _selectedDrawingColor = color;
+                });
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: Colors.red,
+                  child: Row(
+                    children: [
+                      Container(width: 20, height: 20, color: Colors.red),
+                      const SizedBox(width: 8),
+                      const Text('Rood'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: Colors.blue,
+                  child: Row(
+                    children: [
+                      Container(width: 20, height: 20, color: Colors.blue),
+                      const SizedBox(width: 8),
+                      const Text('Blauw'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: Colors.yellow,
+                  child: Row(
+                    children: [
+                      Container(width: 20, height: 20, color: Colors.yellow),
+                      const SizedBox(width: 8),
+                      const Text('Geel'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: Colors.white,
+                  child: Row(
+                    children: [
+                      Container(width: 20, height: 20, color: Colors.white, child: Container(decoration: BoxDecoration(border: Border.all()))),
+                      const SizedBox(width: 8),
+                      const Text('Wit'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: Colors.black,
+                  child: Row(
+                    children: [
+                      Container(width: 20, height: 20, color: Colors.black),
+                      const SizedBox(width: 8),
+                      const Text('Zwart'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Clear drawings
+            IconButton(
+              icon: const Icon(Icons.clear_all),
+              tooltip: 'Alles Wissen',
+              onPressed: () {
+                setState(() {
+                  _tacticalDrawings.clear();
+                });
+              },
+            ),
+          ],
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: _saveLineup,
+          ),
+        ],
+      ),
+      body: playersAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(child: Text('Fout: $error')),
+        data: (players) {
+          _availablePlayers = players.where((p) =>
+            !_fieldPositions.values.contains(p) && !_benchPlayers.contains(p)
+          ).toList();
+
+          return Row(
+            children: [
+              // Left side - Available players
+              Expanded(
+                flex: 2,
+                child: Container(
+                  color: Colors.grey[100],
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          'Beschikbare Spelers',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(8),
+                          itemCount: _availablePlayers.length,
+                          itemBuilder: (context, index) {
+                            final player = _availablePlayers[index];
+                            return Draggable<Player>(
+                              data: player,
+                              feedback: _buildPlayerChip(player, isDragging: true),
+                              childWhenDragging: Opacity(
+                                opacity: 0.5,
+                                child: _buildPlayerCard(player),
+                              ),
+                              child: _buildPlayerCard(player),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Center - Field
+              Expanded(
+                flex: 5,
+                child: Column(
+                  children: [
+                    // Formation and Template selector (only in lineup mode)
+                    if (!_isDrawingMode)
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            // Formation dropdown
+                            Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Formatie: '),
+                          const SizedBox(width: 16),
+                          DropdownButton<Formation>(
+                            value: _selectedFormation,
+                            items: Formation.values.map((formation) {
+                              return DropdownMenuItem(
+                                value: formation,
+                                child: Text(_getFormationText(formation)),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              if (value != null) {
+                                setState(() {
+                                  _selectedFormation = value;
+                                        _selectedTemplate = null; // Clear template when formation changes
+                                  _updateFormation();
+                                });
+                              }
+                            },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            // Template selector
+                            if (_availableTemplates.isNotEmpty) ...[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('Template: '),
+                                  const SizedBox(width: 16),
+                                  DropdownButton<FormationTemplate>(
+                                    value: _selectedTemplate,
+                                    hint: const Text('Kies template'),
+                                    items: _getTemplatesForCurrentFormation().map((template) {
+                                      return DropdownMenuItem(
+                                        value: template,
+                                        child: Text(template.name),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedTemplate = value;
+                                      });
+                                    },
+                                  ),
+                                  const SizedBox(width: 16),
+                                  ElevatedButton(
+                                    onPressed: _selectedTemplate != null ? _applyTemplate : null,
+                                    child: const Text('Toepassen'),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              // Template actions
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextButton.icon(
+                                    onPressed: _showSaveTemplateDialog,
+                                    icon: const Icon(Icons.save),
+                                    label: const Text('Template Opslaan'),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  TextButton.icon(
+                                    onPressed: _showManageTemplatesDialog,
+                                    icon: const Icon(Icons.folder),
+                                    label: const Text('Beheren'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+
+                    // Tactical Drawing Instructions (only in drawing mode)
+                    if (_isDrawingMode)
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Tactical Board Mode',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Teken tactical instructies op het veld. Gebruik de tools in de toolbar.',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 12),
+                            Wrap(
+                              spacing: 8,
+                              children: [
+                                Chip(
+                                  avatar: const Icon(Icons.arrow_forward, size: 16),
+                                  label: Text('${_selectedDrawingTool.name} - ${_getDrawingToolName(_selectedDrawingTool)}'),
+                                  backgroundColor: _selectedDrawingColor.withValues(alpha: 0.2),
+                                ),
+                                Chip(
+                                  avatar: Container(
+                                    width: 16,
+                                    height: 16,
+                                    decoration: BoxDecoration(
+                                      color: _selectedDrawingColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  label: const Text('Geselecteerde kleur'),
+                                ),
+                              ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Field with Tactical Drawing Overlay
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.all(16),
+                        child: TacticalDrawingCanvas(
+                          isDrawingMode: _isDrawingMode,
+                          selectedTool: _selectedDrawingTool,
+                          selectedColor: _selectedDrawingColor,
+                          drawings: _tacticalDrawings,
+                          onDrawingsChanged: (drawings) {
+                            setState(() {
+                              _tacticalDrawings = drawings;
+                            });
+                          },
+                          child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.green[700],
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.white, width: 3),
+                        ),
+                        child: Stack(
+                          children: _buildFieldPositions(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Right side - Bench
+              Expanded(
+                flex: 2,
+                child: Container(
+                  color: Colors.grey[100],
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          'Bank',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      Expanded(
+                        child: DragTarget<Player>(
+                          onAcceptWithDetails: (details) {
+                            final player = details.data;
+                            setState(() {
+                              // Remove from field if present
+                              _fieldPositions.forEach((key, value) {
+                                if (value == player) {
+                                  _fieldPositions[key] = null;
+                                }
+                              });
+                              // Add to bench if not already there
+                              if (!_benchPlayers.contains(player)) {
+                                _benchPlayers.add(player);
+                              }
+                            });
+                          },
+                          builder: (context, candidateData, rejectedData) {
+                            return Container(
+                              color: candidateData.isNotEmpty
+                                ? Colors.blue.withValues(alpha: 0.1)
+                                : Colors.transparent,
+                              child: ListView.builder(
+                                padding: const EdgeInsets.all(8),
+                                itemCount: _benchPlayers.length,
+                                itemBuilder: (context, index) {
+                                  final player = _benchPlayers[index];
+                                  return Draggable<Player>(
+                                    data: player,
+                                    feedback: _buildPlayerChip(player, isDragging: true),
+                                    childWhenDragging: Opacity(
+                                      opacity: 0.5,
+                                      child: _buildPlayerCard(player),
+                                    ),
+                                    onDragCompleted: () {
+                                      setState(() {
+                                        _benchPlayers.remove(player);
+                                      });
+                                    },
+                                    child: _buildPlayerCard(player),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  List<Widget> _buildFieldPositions() {
+    final positions = _getPositionsForFormation();
+    return positions.entries.map((entry) {
+      return Positioned(
+        left: entry.value['x']! * MediaQuery.of(context).size.width * 0.4,
+        top: entry.value['y']! * MediaQuery.of(context).size.height * 0.6,
+        child: DragTarget<Player>(
+          onAcceptWithDetails: (details) {
+            final player = details.data;
+            setState(() {
+              // Remove player from other positions
+              _fieldPositions.forEach((key, value) {
+                if (value == player) {
+                  _fieldPositions[key] = null;
+                }
+              });
+              _benchPlayers.remove(player);
+              // Assign to new position
+              _fieldPositions[entry.key] = player;
+            });
+          },
+          builder: (context, candidateData, rejectedData) {
+            final player = _fieldPositions[entry.key];
+            return Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: candidateData.isNotEmpty
+                  ? Colors.blue.withValues(alpha: 0.3)
+                  : Colors.white.withValues(alpha: 0.9),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+              ),
+              child: player != null
+                ? Draggable<Player>(
+                    data: player,
+                    feedback: _buildPlayerChip(player, isDragging: true),
+                    childWhenDragging: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withValues(alpha: 0.5),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    onDragCompleted: () {
+                      setState(() {
+                        _fieldPositions[entry.key] = null;
+                      });
+                    },
+                    child: _buildPlayerChip(player),
+                  )
+                : Center(
+                    child: Text(
+                      entry.key,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+            );
+          },
+        ),
+      );
+    }).toList();
+  }
+
+  Widget _buildPlayerCard(Player player) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: _getPositionColor(player.position),
+          child: Text(
+            player.jerseyNumber.toString(),
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+        title: Text('${player.firstName} ${player.lastName}'),
+        subtitle: Text(_getPositionText(player.position)),
+        dense: true,
+      ),
+    );
+  }
+
+  Widget _buildPlayerChip(Player player, {bool isDragging = false}) {
+    return Material(
+      elevation: isDragging ? 8 : 0,
+      shape: const CircleBorder(),
+      child: Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          color: _getPositionColor(player.position),
+          shape: BoxShape.circle,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              player.jerseyNumber.toString(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              player.lastName,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Map<String, Map<String, double>> _getPositionsForFormation() {
+    switch (_selectedFormation) {
+      case Formation.fourFourTwo:
+        return {
+          'GK': {'x': 0.5, 'y': 0.9},
+          'LB': {'x': 0.15, 'y': 0.7},
+          'CB1': {'x': 0.35, 'y': 0.75},
+          'CB2': {'x': 0.65, 'y': 0.75},
+          'RB': {'x': 0.85, 'y': 0.7},
+          'LM': {'x': 0.15, 'y': 0.45},
+          'CM1': {'x': 0.35, 'y': 0.5},
+          'CM2': {'x': 0.65, 'y': 0.5},
+          'RM': {'x': 0.85, 'y': 0.45},
+          'ST1': {'x': 0.35, 'y': 0.2},
+          'ST2': {'x': 0.65, 'y': 0.2},
+        };
+      case Formation.fourFourTwoDiamond:
+        return {
+          'GK': {'x': 0.5, 'y': 0.9},
+          'LB': {'x': 0.15, 'y': 0.7},
+          'CB1': {'x': 0.35, 'y': 0.75},
+          'CB2': {'x': 0.65, 'y': 0.75},
+          'RB': {'x': 0.85, 'y': 0.7},
+          'DM': {'x': 0.5, 'y': 0.6},
+          'LM': {'x': 0.25, 'y': 0.45},
+          'RM': {'x': 0.75, 'y': 0.45},
+          'AM': {'x': 0.5, 'y': 0.35},
+          'ST1': {'x': 0.35, 'y': 0.15},
+          'ST2': {'x': 0.65, 'y': 0.15},
+        };
+      case Formation.fourThreeThree:
+        return {
+          'GK': {'x': 0.5, 'y': 0.9},
+          'LB': {'x': 0.15, 'y': 0.7},
+          'CB1': {'x': 0.35, 'y': 0.75},
+          'CB2': {'x': 0.65, 'y': 0.75},
+          'RB': {'x': 0.85, 'y': 0.7},
+          'CM1': {'x': 0.3, 'y': 0.5},
+          'CM2': {'x': 0.5, 'y': 0.45},
+          'CM3': {'x': 0.7, 'y': 0.5},
+          'LW': {'x': 0.2, 'y': 0.2},
+          'ST': {'x': 0.5, 'y': 0.15},
+          'RW': {'x': 0.8, 'y': 0.2},
+        };
+      case Formation.fourThreeThreeDefensive:
+        return {
+          'GK': {'x': 0.5, 'y': 0.9},
+          'LB': {'x': 0.15, 'y': 0.7},
+          'CB1': {'x': 0.35, 'y': 0.75},
+          'CB2': {'x': 0.65, 'y': 0.75},
+          'RB': {'x': 0.85, 'y': 0.7},
+          'DM': {'x': 0.5, 'y': 0.55},
+          'CM1': {'x': 0.3, 'y': 0.45},
+          'CM2': {'x': 0.7, 'y': 0.45},
+          'LW': {'x': 0.2, 'y': 0.25},
+          'ST': {'x': 0.5, 'y': 0.2},
+          'RW': {'x': 0.8, 'y': 0.25},
+        };
+      case Formation.threeForThree:
+        return {
+          'GK': {'x': 0.5, 'y': 0.9},
+          'CB1': {'x': 0.25, 'y': 0.75},
+          'CB2': {'x': 0.5, 'y': 0.7},
+          'CB3': {'x': 0.75, 'y': 0.75},
+          'LM': {'x': 0.15, 'y': 0.5},
+          'CM1': {'x': 0.35, 'y': 0.5},
+          'CM2': {'x': 0.65, 'y': 0.5},
+          'RM': {'x': 0.85, 'y': 0.5},
+          'LW': {'x': 0.2, 'y': 0.2},
+          'ST': {'x': 0.5, 'y': 0.15},
+          'RW': {'x': 0.8, 'y': 0.2},
+        };
+      case Formation.fourTwoThreeOne:
+        return {
+          'GK': {'x': 0.5, 'y': 0.9},
+          'LB': {'x': 0.15, 'y': 0.7},
+          'CB1': {'x': 0.35, 'y': 0.75},
+          'CB2': {'x': 0.65, 'y': 0.75},
+          'RB': {'x': 0.85, 'y': 0.7},
+          'DM1': {'x': 0.35, 'y': 0.55},
+          'DM2': {'x': 0.65, 'y': 0.55},
+          'LW': {'x': 0.2, 'y': 0.35},
+          'AM': {'x': 0.5, 'y': 0.3},
+          'RW': {'x': 0.8, 'y': 0.35},
+          'ST': {'x': 0.5, 'y': 0.1},
+        };
+    }
+  }
+
+  void _updateFormation() {
+    // Clear current positions
+    _fieldPositions.clear();
+    _initializePositions();
+  }
+
+  void _saveLineup() async {
+    if (_match != null) {
+      // Save lineup to match
+      _match!.selectedFormation = _selectedFormation;
+      _match!.startingLineupIds = _fieldPositions.entries
+          .where((e) => e.value != null)
+          .map((e) => e.value!.id.toString())
+          .toList();
+      _match!.substituteIds = _benchPlayers.map((p) => p.id.toString()).toList();
+
+      // Save field positions
+      _match!.fieldPositions = {};
+      _fieldPositions.forEach((position, player) {
+        if (player != null) {
+          _match!.fieldPositions[position] = player.id.toString();
+        }
+      });
+
+      await DatabaseService().updateMatch(_match!);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Opstelling opgeslagen voor wedstrijd'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        // Use go to navigate back to match detail
+        if (widget.matchId != null) {
+          context.go('/matches/${widget.matchId}');
+        }
+      }
+    } else {
+      // Just show saved message for standalone lineup
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Opstelling opgeslagen'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      context.go('/dashboard');
+    }
+  }
+
+  Color _getPositionColor(Position position) {
+    switch (position) {
+      case Position.goalkeeper:
+        return Colors.orange;
+      case Position.defender:
+        return Colors.blue;
+      case Position.midfielder:
+        return Colors.green;
+      case Position.forward:
+        return Colors.red;
+    }
+  }
+
+  String _getPositionText(Position position) {
+    switch (position) {
+      case Position.goalkeeper:
+        return 'Keeper';
+      case Position.defender:
+        return 'Verdediger';
+      case Position.midfielder:
+        return 'Middenvelder';
+      case Position.forward:
+        return 'Aanvaller';
+    }
+  }
+
+  String _getFormationText(Formation formation) {
+    switch (formation) {
+      case Formation.fourFourTwo:
+        return '4-4-2';
+      case Formation.fourFourTwoDiamond:
+        return '4-4-2 (Ruit)';
+      case Formation.fourThreeThree:
+        return '4-3-3';
+      case Formation.fourThreeThreeDefensive:
+        return '4-3-3 (Verdedigend)';
+      case Formation.threeForThree:
+        return '3-4-3';
+      case Formation.fourTwoThreeOne:
+        return '4-2-3-1';
+    }
+  }
+
+  String _getDrawingToolName(DrawingTool tool) {
+    switch (tool) {
+      case DrawingTool.arrow:
+        return 'Pijl';
+      case DrawingTool.line:
+        return 'Lijn';
+      case DrawingTool.circle:
+        return 'Cirkel';
+      case DrawingTool.text:
+        return 'Tekst';
+      case DrawingTool.erase:
+        return 'Wissen';
+    }
+  }
+
+  // Template functionality methods
+  List<FormationTemplate> _getTemplatesForCurrentFormation() {
+    return _availableTemplates
+        .where((template) => template.formation == _selectedFormation)
+        .toList();
+  }
+
+  Future<void> _applyTemplate() async {
+    if (_selectedTemplate == null) return;
+
+    final allPlayers = await DatabaseService().getAllPlayers();
+    final lineup = await DatabaseService().applyFormationTemplate(_selectedTemplate!, allPlayers);
+
+    setState(() {
+      // Clear current positions
+      _fieldPositions.clear();
+      _benchPlayers.clear();
+
+      // Apply template lineup
+      _fieldPositions = Map.from(lineup);
+    });
+
+    if (mounted && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Template "${_selectedTemplate!.name}" toegepast'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
+  void _showSaveTemplateDialog() {
+    final nameController = TextEditingController();
+    final descriptionController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Template Opslaan'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'Template Naam',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Beschrijving',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Annuleren'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              if (nameController.text.isNotEmpty) {
+                await _saveCurrentAsTemplate(
+                  nameController.text,
+                  descriptionController.text,
+                );
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              }
+            },
+            child: const Text('Opslaan'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _saveCurrentAsTemplate(String name, String description) async {
+    final template = FormationTemplate()
+      ..name = name
+      ..description = description
+      ..formation = _selectedFormation
+      ..positionPreferences = FormationTemplate.getDefaultPositionPreferences(_selectedFormation)
+      ..isCustom = true
+      ..isDefault = false;
+
+    await DatabaseService().addFormationTemplate(template);
+    await _loadTemplates(); // Refresh template list
+
+    if (mounted && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Template "$name" opgeslagen'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
+  void _showManageTemplatesDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: MediaQuery.of(context).size.height * 0.6,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Text(
+                'Template Beheer',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _availableTemplates.length,
+                  itemBuilder: (context, index) {
+                    final template = _availableTemplates[index];
+                    return Card(
+                      child: ListTile(
+                        leading: Icon(
+                          template.isDefault ? Icons.verified : Icons.person,
+                          color: template.isDefault ? Colors.blue : Colors.grey,
+                        ),
+                        title: Text(template.name),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(template.description),
+                            Text(
+                              _getFormationText(template.formation),
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                        trailing: template.isCustom
+                            ? IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () => _deleteTemplate(template),
+                              )
+                            : null,
+                        onTap: () {
+                          setState(() {
+                            _selectedTemplate = template;
+                            _selectedFormation = template.formation;
+                          });
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Sluiten'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _deleteTemplate(FormationTemplate template) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Template Verwijderen'),
+        content: Text('Weet je zeker dat je "${template.name}" wilt verwijderen?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Annuleren'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: const Text('Verwijderen'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await DatabaseService().deleteFormationTemplate(template.id);
+      await _loadTemplates(); // Refresh template list
+
+      if (_selectedTemplate?.id == template.id) {
+        setState(() {
+          _selectedTemplate = null;
+        });
+      }
+
+            if (mounted && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Template "${template.name}" verwijderd'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
+    }
+  }
+}
