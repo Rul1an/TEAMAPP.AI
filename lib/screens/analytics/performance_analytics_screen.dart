@@ -1,9 +1,11 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../services/database_service.dart';
 import '../../models/player.dart';
 import '../../models/assessment.dart';
 import '../../models/training_session/training_session.dart';
+import '../players/assessment_detail_screen.dart'; // Import the new screen
 
 // Analytics Data Providers
 final playersProvider = FutureProvider<List<Player>>((ref) async {
@@ -76,7 +78,8 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Analyseer spelerontwikkeling, training effectiviteit en team prestaties.\n'
+                      'Analyseer spelerontwikkeling, training effectiviteit en team prestaties.
+'
                       'Realtime data analyse voor betere coaching beslissingen.',
                     ),
                   ],
@@ -109,7 +112,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                 _buildFeatureCard(
                   context: context,
                   title: 'Speler Ontwikkeling',
-                  subtitle: 'Performance tracking',
+                  subtitle: 'Top performers',
                   icon: Icons.trending_up,
                   color: Colors.blue,
                   onTap: () => _showPlayerDevelopment(context, ref),
@@ -117,7 +120,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                 _buildFeatureCard(
                   context: context,
                   title: 'Training Effectiviteit',
-                  subtitle: 'Opkomst & resultaten',
+                  subtitle: 'Hoogste opkomst',
                   icon: Icons.fitness_center,
                   color: Colors.green,
                   onTap: () => _showTrainingEffectiveness(context, ref),
@@ -125,18 +128,18 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                 _buildFeatureCard(
                   context: context,
                   title: 'Team Overzicht',
-                  subtitle: 'Statistieken & trends',
-                  icon: Icons.analytics,
+                  subtitle: 'Positie verdeling',
+                  icon: Icons.pie_chart,
                   color: Colors.orange,
                   onTap: () => _showTeamOverview(context, ref),
                 ),
                 _buildFeatureCard(
                   context: context,
-                  title: 'AI Inzichten',
-                  subtitle: 'Slimme aanbevelingen',
-                  icon: Icons.lightbulb,
-                  color: Colors.purple,
-                  onTap: () => _showInsights(context, ref),
+                  title: 'Skill Radar',
+                  subtitle: 'Laatste assessment',
+                  icon: Icons.radar,
+                  color: Colors.red,
+                  onTap: () => _showLatestAssessmentRadar(context, ref),
                 ),
               ],
             ),
@@ -145,6 +148,38 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
             // Recent Activity
             _buildRecentActivity(context, assessmentsAsync, trainingsAsync),
           ],
+        ),
+      ),
+    );
+  }
+
+  // New method to navigate to the radar chart screen
+  void _showLatestAssessmentRadar(BuildContext context, WidgetRef ref) async {
+    final assessments = await ref.read(assessmentsProvider.future);
+    final players = await ref.read(playersProvider.future);
+
+    if (assessments.isEmpty || players.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Geen assessments gevonden.')),
+      );
+      return;
+    }
+
+    // Find the most recent assessment
+    assessments.sort((a, b) => b.assessmentDate.compareTo(a.assessmentDate));
+    final latestAssessment = assessments.first;
+
+    // Find the player for that assessment
+    final player = players.firstWhere(
+      (p) => p.id.toString() == latestAssessment.playerId,
+      orElse: () => players.first, // Fallback, though should not happen
+    );
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AssessmentDetailScreen(
+          assessment: latestAssessment,
+          player: player,
         ),
       ),
     );
@@ -257,7 +292,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
+                  color: color.withAlpha(30),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: color, size: 32),
@@ -350,39 +385,47 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
         ),
         content: SizedBox(
           width: 400,
-          height: 400,
+          height: 500, // Increased height for the chart
           child: playersAsync.when(
             data: (players) => assessmentsAsync.when(
-              data: (assessments) => ListView.builder(
-                itemCount: players.length,
-                itemBuilder: (context, index) {
-                  final player = players[index];
-                  final playerAssessments = assessments
-                      .where((a) => a.playerId == player.id.toString())
-                      .toList();
+              data: (assessments) {
+                if (assessments.isEmpty) {
+                  return const Center(child: Text("Voeg eerst assessments toe."));
+                }
 
-                  return Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        child: Text(
-                          player.firstName[0] + player.lastName[0],
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      title: Text(player.name),
-                      subtitle: Text(
-                        '${playerAssessments.length} beoordelingen\n'
-                        'Goals: ${player.goals} | Assists: ${player.assists}',
-                      ),
-                      trailing: Text(
-                        '${player.attendancePercentage.toStringAsFixed(0)}%',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                // Create a map of Player ID to their latest assessment
+                final latestAssessments = <String, PlayerAssessment>{};
+                for (var assessment in assessments) {
+                  if (!latestAssessments.containsKey(assessment.playerId) ||
+                      assessment.assessmentDate.isAfter(latestAssessments[assessment.playerId]!.assessmentDate)) {
+                    latestAssessments[assessment.playerId] = assessment;
+                  }
+                }
+
+                // Create a list of players with their latest score
+                final scoredPlayers = players.map((player) {
+                  final assessment = latestAssessments[player.id.toString()];
+                  return MapEntry(player, assessment?.overallAverage ?? 0.0);
+                }).where((entry) => entry.value > 0).toList();
+
+                // Sort by score and take top 5
+                scoredPlayers.sort((a, b) => b.value.compareTo(a.value));
+                final topPlayers = scoredPlayers.take(5).toList();
+
+                return Column(
+                  children: [
+                    const Text(
+                      'Top 5 Spelers (Laatste Assessment)',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  );
-                },
-              ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      height: 400,
+                      child: _buildPlayerPerformanceChart(topPlayers),
+                    ),
+                  ],
+                );
+              },
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, _) => Text('Error: $error'),
             ),
@@ -396,6 +439,57 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
             child: const Text('Sluiten'),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildPlayerPerformanceChart(List<MapEntry<Player, double>> topPlayers) {
+    return BarChart(
+      BarChartData(
+        alignment: BarChartAlignment.spaceAround,
+        maxY: 5,
+        barTouchData: BarTouchData(
+          enabled: false,
+        ),
+        titlesData: FlTitlesData(
+          show: true,
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              getTitlesWidget: (double value, TitleMeta meta) {
+                final index = value.toInt();
+                if (index >= 0 && index < topPlayers.length) {
+                  return SideTitleWidget(
+                    axisSide: meta.axisSide,
+                    space: 4,
+                    child: Text(topPlayers[index].key.name.split(' ').first, style: const TextStyle(fontSize: 10)),
+                  );
+                }
+                return const Text('');
+              },
+              reservedSize: 30,
+            ),
+          ),
+          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 28)),
+          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        ),
+        borderData: FlBorderData(show: false),
+        barGroups: topPlayers.asMap().entries.map((entry) {
+          final index = entry.key;
+          final playerData = entry.value;
+          return BarChartGroupData(
+            x: index,
+            barRods: [
+              BarChartRodData(
+                toY: playerData.value,
+                color: Colors.blue,
+                width: 20,
+              )
+            ],
+            showingTooltipIndicators: [0],
+          );
+        }).toList(),
       ),
     );
   }
@@ -415,7 +509,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
         ),
         content: SizedBox(
           width: 400,
-          height: 400,
+          height: 500, // Increased height for chart
           child: playersAsync.when(
             data: (players) {
               if (players.isEmpty) {
@@ -427,6 +521,8 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               // Sort players by attendance
               final sortedPlayers = players.toList()
                 ..sort((a, b) => b.attendancePercentage.compareTo(a.attendancePercentage));
+              
+              final topPlayers = sortedPlayers.take(5).toList();
 
               final avgAttendance = players
                   .map((p) => p.attendancePercentage)
@@ -435,65 +531,42 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Card(
-                    color: Colors.green.withValues(alpha: 0.1),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          const Text(
-                            'Team Opkomst',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '${avgAttendance.toStringAsFixed(1)}%',
-                            style: const TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                  Center(
+                    child: Card(
+                      color: Colors.green.withAlpha(30),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Gemiddelde Team Opkomst',
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                          ),
-                          Text(
-                            'Gemiddelde opkomst van ${players.length} spelers',
-                          ),
-                        ],
+                            const SizedBox(height: 8),
+                            Text(
+                              '${avgAttendance.toStringAsFixed(1)}%',
+                              style: const TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                            Text(
+                              'Gebaseerd op ${players.length} spelers',
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   const Text(
-                    'Top Aanwezigheid:',
+                    'Top 5 Aanwezigheid:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: sortedPlayers.take(5).length,
-                      itemBuilder: (context, index) {
-                        final player = sortedPlayers[index];
-
-                        return ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: _getAttendanceColor(player.attendancePercentage),
-                            radius: 16,
-                            child: Text(
-                              '${index + 1}',
-                              style: const TextStyle(color: Colors.white, fontSize: 12),
-                            ),
-                          ),
-                          title: Text(player.name),
-                          subtitle: Text('${player.trainingsAttended}/${player.trainingsTotal} trainingen'),
-                          trailing: Text(
-                            '${player.attendancePercentage.toStringAsFixed(0)}%',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: _getAttendanceColor(player.attendancePercentage),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                    child: _buildAttendanceChart(topPlayers),
                   ),
                 ],
               );
@@ -512,6 +585,73 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     );
   }
 
+  Widget _buildAttendanceChart(List<Player> topPlayers) {
+    return BarChart(
+      BarChartData(
+        alignment: BarChartAlignment.spaceAround,
+        barTouchData: BarTouchData(enabled: false),
+        titlesData: FlTitlesData(
+          show: true,
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              getTitlesWidget: (double value, TitleMeta meta) {
+                final index = value.toInt();
+                if (index >= 0 && index < topPlayers.length) {
+                  return Text(topPlayers[index].name, style: const TextStyle(fontSize: 10));
+                }
+                return const Text('');
+              },
+              reservedSize: 100,
+            ),
+          ),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              getTitlesWidget: (double value, TitleMeta meta) {
+                if (value % 20 == 0) return Text('${value.toInt()}%');
+                return const Text('');
+              },
+              reservedSize: 20,
+            ),
+          ),
+          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        ),
+        borderData: FlBorderData(show: false),
+        barGroups: topPlayers.asMap().entries.map((entry) {
+          final index = entry.key;
+          final player = entry.value;
+          return BarChartGroupData(
+            x: index,
+            barRods: [
+              BarChartRodData(
+                toY: player.attendancePercentage,
+                color: _getAttendanceColor(player.attendancePercentage),
+                width: 15,
+                borderRadius: BorderRadius.zero,
+              ),
+            ],
+          );
+        }).toList(),
+        gridData: FlGridData(
+          show: true,
+          drawVerticalLine: true,
+          getDrawingHorizontalLine: (value) => const FlLine(
+            color: Colors.black12,
+            strokeWidth: 1,
+          ),
+          getDrawingVerticalLine: (value) => const FlLine(
+            color: Colors.black12,
+            strokeWidth: 1,
+          ),
+        ),
+      ),
+      swapAnimationDuration: const Duration(milliseconds: 150), // Optional
+      swapAnimationCurve: Curves.linear, // Optional
+    );
+  }
+
   void _showTeamOverview(BuildContext context, WidgetRef ref) {
     final playersAsync = ref.read(playersProvider);
 
@@ -527,7 +667,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
         ),
         content: SizedBox(
           width: 400,
-          height: 400,
+          height: 600, // Increased height for the chart
           child: playersAsync.when(
             data: (players) {
               if (players.isEmpty) {
@@ -537,9 +677,9 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               }
 
               // Calculate statistics
-              final totalGoals = players.map((p) => p.goals).reduce((a, b) => a + b);
-              final totalAssists = players.map((p) => p.assists).reduce((a, b) => a + b);
-              final avgAge = players.map((p) => p.age).reduce((a, b) => a + b) / players.length;
+              final totalGoals = players.map((p) => p.goals).fold(0, (a, b) => a + b);
+              final totalAssists = players.map((p) => p.assists).fold(0, (a, b) => a + b);
+              final avgAge = players.map((p) => p.age).fold(0, (a, b) => a + b) / players.length;
 
               // Group by position
               final positionGroups = <Position, List<Player>>{};
@@ -550,7 +690,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               return ListView(
                 children: [
                   Card(
-                    color: Colors.orange.withValues(alpha: 0.1),
+                    color: Colors.orange.withAlpha(30),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -602,24 +742,10 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  ...positionGroups.entries.map((entry) {
-                    return Card(
-                      child: ListTile(
-                        leading: Icon(
-                          _getPositionIcon(entry.key),
-                          color: _getPositionColor(entry.key),
-                        ),
-                        title: Text(entry.key.displayName),
-                        trailing: Text(
-                          '${entry.value.length}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
+                  SizedBox(
+                    height: 180,
+                    child: _buildPositionChart(positionGroups),
+                  ),
                 ],
               );
             },
@@ -637,54 +763,41 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     );
   }
 
-  void _showInsights(BuildContext context, WidgetRef ref) {
-    final playersAsync = ref.read(playersProvider);
-    final assessmentsAsync = ref.read(assessmentsProvider);
+  Widget _buildPositionChart(Map<Position, List<Player>> positionGroups) {
+    int touchedIndex = -1;
+    final data = positionGroups.entries.map((entry) {
+      final position = entry.key;
+      final players = entry.value;
+      return PieChartSectionData(
+        color: _getPositionColor(position),
+        value: players.length.toDouble(),
+        title: '${players.length}',
+        radius: touchedIndex == position.index ? 60.0 : 50.0,
+        titleStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      );
+    }).toList();
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Row(
-          children: [
-            Icon(Icons.lightbulb, color: Colors.purple),
-            SizedBox(width: 8),
-            Text('AI Inzichten'),
-          ],
+    return PieChart(
+      PieChartData(
+        sections: data,
+        borderData: FlBorderData(show: false),
+        sectionsSpace: 2,
+        centerSpaceRadius: 40,
+        pieTouchData: PieTouchData(
+          touchCallback: (FlTouchEvent event, pieTouchResponse) {
+            // setState(() { // This needs to be a StatefulWidget to work properly
+            //   if (!event.isInterestedForInteractions || pieTouchResponse == null || pieTouchResponse.touchedSection == null) {
+            //     touchedIndex = -1;
+            //     return;
+            //   }
+            //   touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+            // });
+          },
         ),
-        content: SizedBox(
-          width: 400,
-          height: 300,
-          child: playersAsync.when(
-            data: (players) => assessmentsAsync.when(
-              data: (assessments) {
-                final insights = _generateInsights(players, assessments);
-                return ListView.builder(
-                  itemCount: insights.length,
-                  itemBuilder: (context, index) {
-                    final insight = insights[index];
-                    return Card(
-                      child: ListTile(
-                        leading: Icon(insight['icon'], color: insight['color']),
-                        title: Text(insight['title']),
-                        subtitle: Text(insight['description']),
-                      ),
-                    );
-                  },
-                );
-              },
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, _) => Text('Error: $error'),
-            ),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => Text('Error: $error'),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Sluiten'),
-          ),
-        ],
       ),
     );
   }
@@ -724,7 +837,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     });
 
     // Team balance
-    final avgAge = players.map((p) => p.age).reduce((a, b) => a + b) / players.length;
+    final avgAge = players.map((p) => p.age).fold(0.0, (a, b) => a + b) / players.length;
     insights.add({
       'icon': Icons.balance,
       'color': Colors.blue,

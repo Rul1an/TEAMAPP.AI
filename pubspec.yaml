@@ -47,6 +47,7 @@ dependencies:
   csv: ^6.0.0
   file_saver: ^0.2.14
   web: ^1.1.1
+  flutter_heatmap_calendar: ^1.0.5
 
 dev_dependencies:
   flutter_test:
