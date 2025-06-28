@@ -55,6 +55,7 @@ dependencies:
   google_generative_ai: ^0.4.7
   http: ^1.4.0
   dio: ^5.8.0+1
+  sentry_flutter: ^9.1.0
 
 dev_dependencies:
   flutter_test:
