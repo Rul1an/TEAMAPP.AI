@@ -16,7 +16,7 @@ import '../../models/match.dart';
 import '../../models/training_session/training_session.dart';
 import '../../models/annual_planning/season_plan.dart';
 
-// New providers for integrated data
+import '../ai_demo_screen.dart';// New providers for integrated data
 final dashboardSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
   final db = DatabaseService();
   final seasons = await db.getAllSeasonPlans();

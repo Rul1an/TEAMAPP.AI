@@ -52,6 +52,9 @@ dependencies:
   flutter_heatmap_calendar: ^1.0.5
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
+  google_generative_ai: ^0.4.7
+  http: ^1.4.0
+  dio: ^5.8.0+1
 
 dev_dependencies:
   flutter_test:
