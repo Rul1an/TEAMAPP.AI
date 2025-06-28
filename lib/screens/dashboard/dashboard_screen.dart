@@ -94,7 +94,7 @@ class DashboardScreen extends ConsumerWidget {
       return 'Mijn Dashboard';
     } else if (PermissionService.isParent(userRole)) {
       return 'Ouder Dashboard';
-    } else if (PermissionService.isAdmin(userRole)) {
+    } else if (PermissionService.canAccessAdmin(userRole)) {
       return 'Bestuurder Dashboard';
     } else {
       return 'Coach Dashboard';
@@ -403,7 +403,7 @@ class DashboardScreen extends ConsumerWidget {
       welcomeMessage = 'Hallo speler!';
     } else if (PermissionService.isParent(userRole)) {
       welcomeMessage = 'Welkom ouder!';
-    } else if (PermissionService.isAdmin(userRole)) {
+    } else if (PermissionService.canAccessAdmin(userRole)) {
       welcomeMessage = 'Welkom bestuurder!';
     } else {
       welcomeMessage = 'Welkom terug, Coach!';
