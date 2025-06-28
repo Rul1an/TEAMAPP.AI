@@ -56,7 +56,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
       orElse: () => Match(),
     );
 
-    if (_match != null && _match!.id != 0) {
+    if (_match != null && _match!.id != '') {
       _opponentController.text = _match!.opponent;
       _teamScoreController.text = _match!.teamScore?.toString() ?? '';
       _opponentScoreController.text = _match!.opponentScore?.toString() ?? '';
@@ -90,7 +90,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
             _loadMatch();
           }
 
-          if (_match == null || _match!.id == 0) {
+          if (_match == null || _match!.id == '') {
             return const Center(child: Text('Wedstrijd niet gevonden'));
           }
 

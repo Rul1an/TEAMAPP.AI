@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../providers/annual_planning_provider.dart';
 import '../../models/annual_planning/morphocycle.dart';
-import '../../models/annual_planning/week_schedule.dart';
 
 class LoadMonitoringScreen extends ConsumerStatefulWidget {
   const LoadMonitoringScreen({super.key});
@@ -345,7 +344,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                             ),
                             belowBarData: BarAreaData(
                               show: true,
-                              color: Colors.blue.withOpacity(0.1),
+                              color: Colors.blue.withValues(alpha: 0.1),
                             ),
                           ),
                         ],
@@ -439,13 +438,13 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                           horizontalLines: [
                             HorizontalLine(
                               y: 0.8,
-                              color: Colors.green.withOpacity(0.5),
+                              color: Colors.green.withValues(alpha: 0.5),
                               strokeWidth: 2,
                               dashArray: [5, 5],
                             ),
                             HorizontalLine(
                               y: 1.3,
-                              color: Colors.green.withOpacity(0.5),
+                              color: Colors.green.withValues(alpha: 0.5),
                               strokeWidth: 2,
                               dashArray: [5, 5],
                             ),
@@ -663,7 +662,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -790,19 +789,19 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                           horizontalLines: [
                             HorizontalLine(
                               y: 0.8,
-                              color: Colors.green,
+                              color: Colors.green.withValues(alpha: 0.5),
                               strokeWidth: 1,
                               dashArray: [5, 5],
                             ),
                             HorizontalLine(
                               y: 1.3,
-                              color: Colors.orange,
+                              color: Colors.orange.withValues(alpha: 0.5),
                               strokeWidth: 1,
                               dashArray: [5, 5],
                             ),
                             HorizontalLine(
                               y: 1.5,
-                              color: Colors.red,
+                              color: Colors.red.withValues(alpha: 0.5),
                               strokeWidth: 1,
                               dashArray: [5, 5],
                             ),

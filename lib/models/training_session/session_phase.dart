@@ -2,9 +2,8 @@ import 'package:isar/isar.dart';
 
 // part 'session_phase.g.dart'; // Disabled for web compatibility
 
-// @Collection() // Disabled for web compatibility
 class SessionPhase {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late String name; // "training uitzetten", "bespreking", "evaluatie"
   late DateTime startTime;
@@ -12,7 +11,6 @@ class SessionPhase {
   String? description;
   late int orderIndex;
 
-  @Enumerated(EnumType.name)
   late PhaseType type;
 
   // Exercise IDs linked to this phase
@@ -22,20 +20,20 @@ class SessionPhase {
   DateTime updatedAt = DateTime.now();
 
   // Computed properties
-  @ignore
+  @Ignore()
   Duration get duration => endTime.difference(startTime);
 
-  @ignore
+  @Ignore()
   int get durationMinutes => duration.inMinutes;
 
-  @ignore
+  @Ignore()
   String get timeRange =>
     '${_formatTime(startTime)} - ${_formatTime(endTime)}';
 
-  @ignore
+  @Ignore()
   int get exerciseCount => exerciseIds.length;
 
-  @ignore
+  @Ignore()
   bool get hasExercises => exerciseIds.isNotEmpty;
 
   String _formatTime(DateTime time) {
@@ -150,7 +148,7 @@ class SessionPhase {
 
   factory SessionPhase.fromJson(Map<String, dynamic> json) {
     final phase = SessionPhase();
-    phase.id = json['id'] ?? Isar.autoIncrement;
+    phase.id = json['id'] ?? "";
     phase.name = json['name'] ?? '';
     phase.startTime = json['startTime'] != null
         ? DateTime.parse(json['startTime'])

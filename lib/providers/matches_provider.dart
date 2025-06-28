@@ -17,7 +17,7 @@ final recentMatchesProvider = FutureProvider<List<Match>>((ref) async {
   return await db.getRecentMatches();
 });
 
-final matchByIdProvider = FutureProvider.family<Match?, int>((ref, id) async {
+final matchByIdProvider = FutureProvider.family<Match?, String>((ref, id) async {
   final db = DatabaseService();
   return await db.getMatch(id);
 });

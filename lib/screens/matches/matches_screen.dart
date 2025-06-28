@@ -47,7 +47,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen> with SingleTicker
               try {
                 if (value == 'pdf') {
                   await ExportService().exportMatchesToPDF();
-                  if (mounted) {
+                  if (mounted && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Export gestart'),
@@ -57,7 +57,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen> with SingleTicker
                   }
                 }
               } catch (e) {
-                if (mounted) {
+                if (mounted && context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Export mislukt: $e'),

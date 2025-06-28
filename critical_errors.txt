@@ -1,0 +1,20 @@
+  error • A function body must be provided • lib/config/environment.dart:27:1 • missing_function_body
+  error • Const constructors can't have a body • lib/config/environment.dart:27:1 • const_constructor_with_body
+  error • A function body must be provided • lib/config/environment.dart:49:3 • missing_function_body
+  error • Const constructors can't have a body • lib/config/environment.dart:49:3 • const_constructor_with_body
+  error • Expected to find ';' • lib/config/environment.dart:57:3 • expected_token
+  error • Expected to find ';' • lib/config/environment.dart:68:3 • expected_token
+  error • Expected to find ';' • lib/config/environment.dart:79:3 • expected_token
+  error • Expected to find ';' • lib/config/environment.dart:128:3 • expected_token
+  error • Expected to find ';' • lib/config/environment.dart:155:9 • expected_token
+  error • Expected to find ';' • lib/config/environment.dart:166:9 • expected_token
+  error • Expected to find ';' • lib/config/environment.dart:177:9 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:139:64 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:142:13 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:170:74 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:172:61 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:186:70 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:187:67 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:194:68 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:195:64 • expected_token
+  error • Expected to find ';' • lib/config/router.dart:202:15 • expected_token

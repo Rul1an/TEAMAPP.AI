@@ -62,20 +62,19 @@ enum TrainingStatus {
   }
 }
 
-@collection
 class Training {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late DateTime date;
   late int duration; // in minutes
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late TrainingFocus focus;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late TrainingIntensity intensity;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late TrainingStatus status;
 
   String? location;

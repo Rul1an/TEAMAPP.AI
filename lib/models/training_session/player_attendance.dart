@@ -2,18 +2,15 @@ import 'package:isar/isar.dart';
 
 // part 'player_attendance.g.dart'; // Disabled for web compatibility
 
-// @Collection() // Disabled for web compatibility
 class PlayerAttendance {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late String playerId;
   late String playerName;
   late int playerNumber;
 
-  @Enumerated(EnumType.name)
   late PlayerPosition position; // K, V, M, A
 
-  @Enumerated(EnumType.name)
   late AttendanceStatus status;
 
   String? notes; // injury details, reason for absence
@@ -23,19 +20,19 @@ class PlayerAttendance {
   DateTime updatedAt = DateTime.now();
 
   // Computed properties
-  @ignore
+  @Ignore()
   bool get isPresent => status == AttendanceStatus.present;
 
-  @ignore
+  @Ignore()
   bool get isAbsent => status == AttendanceStatus.absent;
 
-  @ignore
+  @Ignore()
   bool get isLate => status == AttendanceStatus.late;
 
-  @ignore
+  @Ignore()
   bool get isInjured => status == AttendanceStatus.injured;
 
-  @ignore
+  @Ignore()
   String get statusDisplayText {
     switch (status) {
       case AttendanceStatus.present:
@@ -51,7 +48,7 @@ class PlayerAttendance {
     }
   }
 
-  @ignore
+  @Ignore()
   String get positionDisplayText {
     switch (position) {
       case PlayerPosition.K:
@@ -134,7 +131,7 @@ class PlayerAttendance {
 
   factory PlayerAttendance.fromJson(Map<String, dynamic> json) {
     final attendance = PlayerAttendance();
-    attendance.id = json['id'] ?? Isar.autoIncrement;
+    attendance.id = json['id'] ?? "";
     attendance.playerId = json['playerId'] ?? '';
     attendance.playerName = json['playerName'] ?? '';
     attendance.playerNumber = json['playerNumber'] ?? 0;

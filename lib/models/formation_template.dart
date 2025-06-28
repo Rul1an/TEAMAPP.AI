@@ -3,18 +3,17 @@ import 'team.dart';
 
 // part 'formation_template.g.dart'; // Temporarily commented out
 
-@collection
 class FormationTemplate {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late String name;
   late String description;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late Formation formation;
 
   // Position mappings - position key to position preferences
-  @ignore
+  @Ignore()
   late Map<String, String> positionPreferences; // e.g., {'GK': 'goalkeeper', 'CB1': 'defender'}
 
   // Template metadata

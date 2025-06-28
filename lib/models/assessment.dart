@@ -1,7 +1,5 @@
 import 'package:isar/isar.dart';
 
-// part 'assessment.g.dart'; // Temporarily commented out
-
 enum AssessmentType {
   monthly,
   quarterly,
@@ -39,14 +37,13 @@ enum SkillCategory {
   }
 }
 
-@collection
 class PlayerAssessment {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late String playerId;
   late DateTime assessmentDate;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late AssessmentType type;
 
   // Technical Skills (1-5 rating)
@@ -137,15 +134,14 @@ class PlayerAssessment {
   };
 }
 
-@collection
 class DevelopmentGoal {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late String playerId;
   late String title;
   late String description;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late SkillCategory category;
 
   late int targetRating; // Target score (1-5)

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../organization/organization_badge.dart';
+import '../../providers/demo_mode_provider.dart';
+import '../../providers/auth_provider.dart';
 
-class MainScaffold extends StatelessWidget {
+class MainScaffold extends ConsumerWidget {
   final Widget child;
 
   const MainScaffold({
@@ -10,9 +14,11 @@ class MainScaffold extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentRoute = GoRouterState.of(context).uri.toString();
     final isDesktop = MediaQuery.of(context).size.width > 600;
+    final demoMode = ref.watch(demoModeProvider);
+    final currentUser = ref.watch(currentUserProvider);
 
     if (isDesktop) {
       // Desktop/Tablet layout with NavigationRail
@@ -38,6 +44,76 @@ class MainScaffold extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Organization badge
+                    const OrganizationBadge(),
+                    const SizedBox(height: 8),
+                    // Demo mode indicator
+                    if (demoMode.isActive)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.orange.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.orange.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.play_circle_outline,
+                              size: 14,
+                              color: Colors.orange[700],
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              'Demo',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.orange[700],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              trailing: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // User info
+                    if (currentUser != null || demoMode.isActive)
+                      Text(
+                        demoMode.isActive
+                            ? demoMode.userName ?? 'Demo User'
+                            : currentUser?.email ?? '',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    const SizedBox(height: 8),
+                    // Logout button
+                    IconButton(
+                      icon: const Icon(Icons.logout),
+                      onPressed: () async {
+                        if (demoMode.isActive) {
+                          ref.read(demoModeProvider.notifier).endDemo();
+                        } else {
+                          await ref.read(authNotifierProvider.notifier).signOut();
+                        }
+                        if (context.mounted) {
+                          context.go('/login');
+                        }
+                      },
+                      tooltip: 'Uitloggen',
                     ),
                   ],
                 ),

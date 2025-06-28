@@ -3,9 +3,8 @@ import 'field_diagram.dart';
 
 // part 'training_exercise.g.dart'; // Disabled for web compatibility
 
-// @Collection() // Disabled for web compatibility
 class TrainingExercise {
-  // Id id = Isar.autoIncrement; // Disabled for web compatibility
+  // String id = ""; // Disabled for web compatibility
   int id = 0;
 
   // Basic information

@@ -62,7 +62,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
       orElse: () => Training(),
     );
 
-    if (_training != null && _training!.id != 0) {
+    if (_training != null && _training!.id != '') {
       _selectedDate = _training!.date;
       _selectedTime = TimeOfDay.fromDateTime(_training!.date);
       _durationController.text = _training!.duration.toString();
@@ -98,7 +98,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
             _loadTraining();
           }
 
-          if (_training == null || _training!.id == 0) {
+          if (_training == null || _training!.id == '') {
             return const Center(child: Text('Training niet gevonden'));
           }
 

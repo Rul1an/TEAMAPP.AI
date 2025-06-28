@@ -62,7 +62,7 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
       orElse: () => Player(),
     );
 
-    if (_player != null && _player!.id != 0) {
+    if (_player != null && _player!.id != '') {
       _firstNameController.text = _player!.firstName;
       _lastNameController.text = _player!.lastName;
       _jerseyNumberController.text = _player!.jerseyNumber.toString();
@@ -97,7 +97,7 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
             _loadPlayer();
           }
 
-          if (_player == null || _player!.id == 0) {
+          if (_player == null || _player!.id == '') {
             return const Center(child: Text('Speler niet gevonden'));
           }
 

@@ -39,19 +39,18 @@ enum PreferredFoot {
   }
 }
 
-@collection
 class Player {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late String firstName;
   late String lastName;
   late int jerseyNumber;
   late DateTime birthDate;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late Position position;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late PreferredFoot preferredFoot;
 
   late double height; // in cm

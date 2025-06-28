@@ -77,20 +77,19 @@ enum MatchStatus {
   }
 }
 
-@collection
 class Match {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late DateTime date;
   late String opponent;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late Location location;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late Competition competition;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late MatchStatus status;
 
   // Score
@@ -104,11 +103,11 @@ class Match {
   // Lineup
   List<String> startingLineupIds = [];
   List<String> substituteIds = [];
-  @ignore
+  @Ignore()
   Map<String, String> fieldPositions = {}; // position -> playerId
 
-  @enumerated
-  @ignore
+  @Enumerated(EnumType.name)
+  @Ignore()
   Formation? selectedFormation;
 
   // Events
@@ -126,7 +125,7 @@ class Match {
   late DateTime updatedAt;
 
   // Computed properties
-  @ignore
+  @Ignore()
   MatchResult? get result {
     if (teamScore == null || opponentScore == null) return null;
     if (teamScore! > opponentScore!) return MatchResult.win;

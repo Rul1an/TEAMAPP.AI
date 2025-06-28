@@ -1,20 +1,18 @@
-import 'dart:convert';
 import 'package:isar/isar.dart';
+import 'dart:convert';
 import '../annual_planning/content_distribution.dart';
 import 'session_phase.dart';
 import 'player_attendance.dart';
 
 // part 'training_session.g.dart'; // Disabled for web compatibility
 
-// @Collection() // Disabled for web compatibility
 class TrainingSession {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   // Basic session info
   late String teamId;
   late DateTime date;
   late int trainingNumber;
-  @Enumerated(EnumType.name)
   late TrainingType type;
 
   // Session details
@@ -47,14 +45,13 @@ class TrainingSession {
   int? durationMinutes;
 
   // Status tracking
-  @Enumerated(EnumType.name)
   SessionStatus status = SessionStatus.planned;
 
   DateTime createdAt = DateTime.now();
   DateTime updatedAt = DateTime.now();
 
   // Computed properties
-  @ignore
+  @Ignore()
   List<SessionPhase> get phases {
     if (phasesJson == null) return [];
     try {
@@ -117,7 +114,7 @@ class TrainingSession {
   }
 
   // Helper methods
-  @ignore
+  @Ignore()
   Duration get sessionDuration {
     if (startTime != null && endTime != null) {
       return endTime!.difference(startTime!);
@@ -125,32 +122,32 @@ class TrainingSession {
     return Duration(minutes: durationMinutes ?? 120);
   }
 
-  @ignore
+  @Ignore()
   List<PlayerAttendance> get presentPlayers {
     return playerAttendance.values
         .where((p) => p.status == AttendanceStatus.present)
         .toList();
   }
 
-  @ignore
+  @Ignore()
   List<PlayerAttendance> get absentPlayers {
     return playerAttendance.values
         .where((p) => p.status == AttendanceStatus.absent)
         .toList();
   }
 
-  @ignore
+  @Ignore()
   double get attendancePercentage {
     if (playerAttendance.isEmpty) return 0.0;
     return (presentPlayers.length / playerAttendance.length) * 100;
   }
 
-  @ignore
+  @Ignore()
   bool get isInProgress {
     return status == SessionStatus.inProgress;
   }
 
-  @ignore
+  @Ignore()
   bool get isCompleted {
     return status == SessionStatus.completed;
   }
@@ -200,7 +197,7 @@ class TrainingSession {
 
   factory TrainingSession.fromJson(Map<String, dynamic> json) {
     final session = TrainingSession();
-    session.id = json['id'] ?? Isar.autoIncrement;
+    session.id = json['id'] ?? "";
     session.teamId = json['teamId'] ?? '';
     session.date = json['date'] != null
         ? DateTime.parse(json['date'])

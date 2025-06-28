@@ -58,7 +58,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
   }
 
   Future<void> _loadMatch() async {
-    final match = await DatabaseService().getMatch(int.parse(widget.matchId!));
+    final match = await DatabaseService().getMatch(widget.matchId!);
     if (match != null && mounted) {
       setState(() {
         _match = match;
@@ -82,7 +82,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         (p) => p.id.toString() == playerId,
         orElse: () => Player(),
       );
-      if (player.id != 0) {
+      if (player.id != '') {
         _fieldPositions[position] = player;
       }
     });
@@ -93,7 +93,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         (p) => p.id.toString() == playerId,
         orElse: () => Player(),
       );
-      if (player.id != 0) {
+      if (player.id != '') {
         _benchPlayers.add(player);
       }
     }

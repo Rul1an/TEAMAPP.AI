@@ -22,7 +22,7 @@ final teamsProvider = FutureProvider<List<Team>>((ref) async {
   return await dbService.getAllTeams();
 });
 
-final selectedTeamProvider = FutureProvider.family<Team?, int?>((ref, teamId) async {
+final selectedTeamProvider = FutureProvider.family<Team?, String?>((ref, teamId) async {
   if (teamId == null) return null;
   final dbService = ref.read(databaseServiceProvider);
   return await dbService.getTeam(teamId);
@@ -34,7 +34,7 @@ final playersProvider = FutureProvider<List<Player>>((ref) async {
   return await dbService.getAllPlayers();
 });
 
-final selectedPlayerProvider = FutureProvider.family<Player?, int?>((ref, playerId) async {
+final selectedPlayerProvider = FutureProvider.family<Player?, String?>((ref, playerId) async {
   if (playerId == null) return null;
   final dbService = ref.read(databaseServiceProvider);
   return await dbService.getPlayer(playerId);
@@ -74,9 +74,9 @@ final statisticsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
 });
 
 // Selected item providers
-final selectedPlayerIdProvider = StateProvider<int?>((ref) => null);
-final selectedMatchIdProvider = StateProvider<int?>((ref) => null);
-final selectedTrainingIdProvider = StateProvider<int?>((ref) => null);
+final selectedPlayerIdProvider = StateProvider<String?>((ref) => null);
+final selectedMatchIdProvider = StateProvider<String?>((ref) => null);
+final selectedTrainingIdProvider = StateProvider<String?>((ref) => null);
 
 // Helper class for date range
 class DateTimeRange {

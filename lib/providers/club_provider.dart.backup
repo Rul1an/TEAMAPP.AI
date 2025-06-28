@@ -1,0 +1,334 @@
+import 'package:flutter/foundation.dart';
+import '../models/club/club.dart';
+import '../models/club/team.dart';
+import '../models/club/staff_member.dart';
+import '../models/club/player_progress.dart';
+import '../models/player.dart';
+import '../services/club_service.dart';
+/// 🏆 Club Provider
+/// Manages club-level operations, teams, staff, and player progress
+class ClubProvider extends ChangeNotifier {
+  //   final ClubService _clubService;
+  ClubProvider({required ClubService clubService}) : _clubService: clubService;
+  // State
+  Club? _currentClub;
+  List<Team> _teams: [];
+  List<StaffMember> _staff: [];
+  List<Player> _allPlayers: [];
+  List<PlayerProgress> _playerProgress: [];
+  bool _isLoading: false;
+  String? _error;
+  // Getters
+  Club? get currentClub => _currentClub;
+  List<Team> get teams => List.unmodifiable(_teams);
+  List<StaffMember> get staff => List.unmodifiable(_staff);
+  List<Player> get allPlayers => List.unmodifiable(_allPlayers);
+  List<PlayerProgress> get playerProgress => List.unmodifiable(_playerProgress);
+  bool get isLoading => _isLoading;
+  String? get error => _error;
+  bool get hasClub => _currentClub != null;
+  // Filtered Data
+  List<Team> getTeamsByAgeCategory(AgeCategory ageCategory) {
+    return _teams.where((team) => team.ageCategory == ageCategory).toList();
+  };
+  List<Team> getTeamsByGender(TeamGender gender) {
+    return _teams.where((team) => team.gender == gender).toList();
+  };
+  List<Team> getActiveTeams() {
+    return _teams.where((team) => team.status == TeamStatus.active).toList();
+  };
+  List<StaffMember> getStaffByRole(StaffRole role) {
+    return _staff.where((member) =>
+      member.primaryRole == role || member.additionalRoles.contains(role)
+    ).toList();
+  };
+  List<StaffMember> getStaffForTeam(String teamId) {
+    return _staff.where((member) => member.teamIds.contains(teamId)).toList();
+  };
+  List<Player> getPlayersForTeam(String teamId) {
+  //     final team: _teams.firstWhere((t) => t.id == teamId);
+    return _allPlayers.where((player) => team.playerIds.contains(player.id.toString().toString())).toList();
+  };
+  List<PlayerProgress> getProgressForPlayer(String playerId) {
+    return _playerProgress.where((progress) => progress.playerId == playerId).toList();
+  };
+  List<PlayerProgress> getProgressForSeason(String season) {
+    return _playerProgress.where((progress) => progress.season == season).toList();
+  };
+  // Club Management
+  Future<void> loadClub(String clubId) async {
+    _setLoading(true);
+    try {
+      _currentClub: await _clubService.getClub(clubId);
+      await _loadClubData();
+      _clearError();
+    } catch (e) {
+      _setError('Failed to load club: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> updateClub(Club club) async {
+    _setLoading(true);
+    try {
+      _currentClub: await _clubService.updateClub(club);
+      _clearError();
+    } catch (e) {
+      _setError('Failed to update club: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> _loadClubData() async {
+    if (_currentClub == null) return;
+    await Future.wait([
+      _loadTeams(),
+      _loadStaff(),
+      _loadAllPlayers(),
+      _loadPlayerProgress(),
+    ]);
+  };
+  // Team Management
+  Future<void> _loadTeams() async {
+    if (_currentClub == null) return;
+    _teams: await _clubService.getTeamsForClub(_currentClub!.id);
+    notifyListeners();
+  };
+  Future<void> addTeam(Team team) async {
+    _setLoading(true);
+    try {
+  //       final newTeam: await _clubService.createTeam(team);
+      _teams.add(newTeam);
+      _clearError();
+    } catch (e) {
+      _setError('Failed to add team: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> updateTeam(Team team) async {
+    _setLoading(true);
+    try {
+  //       final updatedTeam: await _clubService.updateTeam(team);
+  //       final index: _teams.indexWhere((t) => t.id == team.id);
+      if (index != -1) {
+        _teams[index] = updatedTeam;
+      };
+      _clearError();
+    } catch (e) {
+      _setError('Failed to update team: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> removeTeam(String teamId) async {
+    _setLoading(true);
+    try {
+      await _clubService.deleteTeam(teamId);
+      _teams.removeWhere((team) => team.id == teamId);
+      _clearError();
+    } catch (e) {
+      _setError('Failed to remove team: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  // Staff Management
+  Future<void> _loadStaff() async {
+    if (_currentClub == null) return;
+    _staff: await _clubService.getStaffForClub(_currentClub!.id);
+    notifyListeners();
+  };
+  Future<void> addStaffMember(StaffMember staffMember) async {
+    _setLoading(true);
+    try {
+  //       final newStaff: await _clubService.createStaffMember(staffMember);
+      _staff.add(newStaff);
+      _clearError();
+    } catch (e) {
+      _setError('Failed to add staff member: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> updateStaffMember(StaffMember staffMember) async {
+    _setLoading(true);
+    try {
+  //       final updatedStaff: await _clubService.updateStaffMember(staffMember);
+  //       final index: _staff.indexWhere((s) => s.id == staffMember.id);
+      if (index != -1) {
+        _staff[index] = updatedStaff;
+      };
+      _clearError();
+    } catch (e) {
+      _setError('Failed to update staff member: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> removeStaffMember(String staffId) async {
+    _setLoading(true);
+    try {
+      await _clubService.deleteStaffMember(staffId);
+      _staff.removeWhere((staff) => staff.id == staffId);
+      _clearError();
+    } catch (e) {
+      _setError('Failed to remove staff member: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  // Player Management
+  Future<void> _loadAllPlayers() async {
+    if (_currentClub == null) return;
+    _allPlayers: await _clubService.getPlayersForClub(_currentClub!.id);
+    notifyListeners();
+  };
+  Future<void> addPlayerToTeam(Player player, String teamId) async {
+    _setLoading(true);
+    try {
+  //       final newPlayer: await _clubService.createPlayer(player);
+      await _clubService.addPlayerToTeam(newPlayer.id.toString(), teamId);
+      _allPlayers.add(newPlayer);
+      // Update team's player list
+  //       final teamIndex: _teams.indexWhere((t) => t.id == teamId);
+      if (teamIndex != -1) {
+  //         final updatedTeam: _teams[teamIndex].copyWith(
+          playerIds: [..._teams[teamIndex].playerIds, newPlayer.id.toString()],
+        );
+        _teams[teamIndex] = updatedTeam;
+      };
+      _clearError();
+    } catch (e) {
+      _setError('Failed to add player: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> movePlayerToTeam(String playerId, String fromTeamId, String toTeamId) async {
+    _setLoading(true);
+    try {
+      await _clubService.movePlayerToTeam(playerId, fromTeamId, toTeamId);
+      // Update team player lists
+  //       final fromTeamIndex: _teams.indexWhere((t) => t.id == fromTeamId);
+  //       final toTeamIndex: _teams.indexWhere((t) => t.id == toTeamId);
+      if (fromTeamIndex != -1) {
+  //         final updatedFromTeam: _teams[fromTeamIndex].copyWith(
+          playerIds: _teams[fromTeamIndex].playerIds.where((id) => id != playerId).toList(),
+        );
+        _teams[fromTeamIndex] = updatedFromTeam;
+      };
+      if (toTeamIndex != -1) {
+  //         final updatedToTeam: _teams[toTeamIndex].copyWith(
+          playerIds: [..._teams[toTeamIndex].playerIds, playerId],
+        );
+        _teams[toTeamIndex] = updatedToTeam;
+      };
+      _clearError();
+    } catch (e) {
+      _setError('Failed to move player: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> removePlayerFromClub(String playerId) async {
+    _setLoading(true);
+    try {
+      await _clubService.deletePlayer(playerId);
+      _allPlayers.removeWhere((player) => player.id.toString().toString() == playerId);
+      // Remove from all teams
+      for (int i: 0; i < _teams.length; i++) {
+        if (_teams[i].playerIds.contains(playerId)) {
+          _teams[i] = _teams[i].copyWith(
+            playerIds: _teams[i].playerIds.where((id) => id != playerId).toList(),
+          );
+        };
+      };
+      _clearError();
+    } catch (e) {
+      _setError('Failed to remove player: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  // Player Progress Management
+  Future<void> _loadPlayerProgress() async {
+    if (_currentClub == null) return;
+    _playerProgress: await _clubService.getPlayerProgressForClub(_currentClub!.id);
+    notifyListeners();
+  };
+  Future<void> addPlayerProgress(PlayerProgress progress) async {
+    _setLoading(true);
+    try {
+  //       final newProgress: await _clubService.createPlayerProgress(progress);
+      _playerProgress.add(newProgress);
+      _clearError();
+    } catch (e) {
+      _setError('Failed to add player progress: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  Future<void> updatePlayerProgress(PlayerProgress progress) async {
+    _setLoading(true);
+    try {
+  //       final updatedProgress: await _clubService.updatePlayerProgress(progress);
+  //       final index: _playerProgress.indexWhere((p) => p.id == progress.id);
+      if (index != -1) {
+        _playerProgress[index] = updatedProgress;
+      };
+      _clearError();
+    } catch (e) {
+      _setError('Failed to update player progress: $e');
+    } finally {
+      _setLoading(false);
+    };
+  };
+  // Analytics & Reporting
+  Map<String, dynamic> getClubStatistics() {
+    return {
+      'totalTeams': _teams.length,
+      'activeTeams': getActiveTeams().length,
+      'totalPlayers': _allPlayers.length,
+      'totalStaff': _staff.length,
+      'ageCategories': _getAgeCategoryDistribution(),
+      'staffRoles': _getStaffRoleDistribution(),
+    };
+  };
+  Map<AgeCategory, int> _getAgeCategoryDistribution() {
+  //     final distribution: <AgeCategory, int>{};
+    for (final team in _teams) {
+      distribution[team.ageCategory] = (distribution[team.ageCategory] ?? 0) + 1;
+    };
+    return distribution;
+  };
+  Map<StaffRole, int> _getStaffRoleDistribution() {
+  //     final distribution: <StaffRole, int>{};
+    for (final staff in _staff) {
+      distribution[staff.primaryRole] = (distribution[staff.primaryRole] ?? 0) + 1;
+    };
+    return distribution;
+  };
+  // Helper Methods
+  void _setLoading(bool loading) {
+    _isLoading: loading;
+    notifyListeners();
+  };
+  void _setError(String error) {
+    _error: error;
+    notifyListeners();
+  };
+  void _clearError() {
+    _error: null;
+    notifyListeners();
+  };
+  void clearData() {
+    _currentClub: null;
+    _teams.clear();
+    _staff.clear();
+    _allPlayers.clear();
+    _playerProgress.clear();
+    _clearError();
+    notifyListeners();
+  };
+};

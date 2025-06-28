@@ -1,4 +1,3 @@
-import 'package:isar/isar.dart';
 import 'training_period.dart';
 import 'week_schedule.dart';
 
@@ -79,9 +78,8 @@ enum InjuryRisk {
   extreme       // ACWR > 1.5 - Extreme injury risk
 }
 
-// @Collection() // Disabled for web compatibility
 class Morphocycle {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   // Basic identification
   late int weekNumber;          // Week number in season (1-43)
@@ -456,7 +454,7 @@ class Morphocycle {
 
   factory Morphocycle.fromJson(Map<String, dynamic> json) {
     final morphocycle = Morphocycle();
-    morphocycle.id = json['id'] ?? Isar.autoIncrement;
+    morphocycle.id = json['id'] ?? "";
     morphocycle.weekNumber = json['weekNumber'] ?? 1;
     morphocycle.periodId = json['periodId'] ?? '';
     morphocycle.seasonPlanId = json['seasonPlanId'] ?? '';

@@ -1,0 +1,1013 @@
+Analyzing jo17_tactical_manager...                              
+
+   info • Dangling library doc comment • lib/config/environment.dart:1:1 • dangling_library_doc_comments
+warning • Unused import: '../models/player.dart' • lib/config/theme.dart:2:8 • unused_import
+  error • Target of URI doesn't exist: 'package:jo17_tactical_manager/models/annual_planning/morphocycle.freezed.dart' • lib/models/annual_planning/morphocycle.dart:5:6 • uri_does_not_exist
+  error • Target of URI hasn't been generated: 'package:jo17_tactical_manager/models/annual_planning/morphocycle.g.dart' • lib/models/annual_planning/morphocycle.dart:6:6 • uri_has_not_been_generated
+warning • The declaration 'Morphocycle._' isn't referenced • lib/models/annual_planning/morphocycle.dart:83:21 • unused_element
+  error • The name '_Morphocycle' isn't a type and can't be used in a redirected constructor • lib/models/annual_planning/morphocycle.dart:121:8 • redirect_to_non_class
+  error • Undefined name 'weeklyLoad' • lib/models/annual_planning/morphocycle.dart:162:30 • undefined_identifier
+  error • Undefined name 'weeklyLoad' • lib/models/annual_planning/morphocycle.dart:163:30 • undefined_identifier
+  error • Undefined name 'weeklyLoad' • lib/models/annual_planning/morphocycle.dart:164:29 • undefined_identifier
+  error • Undefined name 'weeklyLoad' • lib/models/annual_planning/morphocycle.dart:164:50 • undefined_identifier
+  error • Undefined name 'acuteChronicRatio' • lib/models/annual_planning/morphocycle.dart:167:9 • undefined_identifier
+  error • Undefined name 'acuteChronicRatio' • lib/models/annual_planning/morphocycle.dart:168:9 • undefined_identifier
+  error • Undefined name 'acuteChronicRatio' • lib/models/annual_planning/morphocycle.dart:169:9 • undefined_identifier
+  error • The method '_$MorphocycleFromJson' isn't defined for the type 'Morphocycle' • lib/models/annual_planning/morphocycle.dart:180:62 • undefined_method
+  error • Target of URI doesn't exist: 'package:jo17_tactical_manager/models/annual_planning/periodization_plan.freezed.dart' • lib/models/annual_planning/periodization_plan.dart:3:6 • uri_does_not_exist
+  error • Target of URI hasn't been generated: 'package:jo17_tactical_manager/models/annual_planning/periodization_plan.g.dart' • lib/models/annual_planning/periodization_plan.dart:4:6 • uri_has_not_been_generated
+warning • The declaration 'PeriodizationPlan._' isn't referenced • lib/models/annual_planning/periodization_plan.dart:24:27 • unused_element
+  error • The name '_PeriodizationPlan' isn't a type and can't be used in a redirected constructor • lib/models/annual_planning/periodization_plan.dart:37:8 • redirect_to_non_class
+  error • Undefined name 'endDate' • lib/models/annual_planning/periodization_plan.dart:40:28 • undefined_identifier
+  error • Undefined name 'startDate' • lib/models/annual_planning/periodization_plan.dart:40:47 • undefined_identifier
+  error • The method '_$PeriodizationPlanFromJson' isn't defined for the type 'PeriodizationPlan' • lib/models/annual_planning/periodization_plan.dart:44:68 • undefined_method
+  error • Undefined name 'durationInWeeks' • lib/models/annual_planning/periodization_plan.dart:48:33 • undefined_identifier
+  error • Undefined name 'periodIds' • lib/models/annual_planning/periodization_plan.dart:49:30 • undefined_identifier
+  error • Can't have modifier 'static' here • lib/models/annual_planning/periodization_plan.dart:52:3 • extraneous_modifier
+  error • Can't have modifier 'static' here • lib/models/annual_planning/periodization_plan.dart:72:3 • extraneous_modifier
+  error • Can't have modifier 'static' here • lib/models/annual_planning/periodization_plan.dart:92:3 • extraneous_modifier
+  error • Can't have modifier 'static' here • lib/models/annual_planning/periodization_plan.dart:112:3 • extraneous_modifier
+  error • Can't have modifier 'static' here • lib/models/annual_planning/periodization_plan.dart:133:3 • extraneous_modifier
+  error • Undefined name 'type' • lib/models/annual_planning/periodization_plan.dart:143:27 • undefined_identifier
+   info • The import of 'package:json_annotation/json_annotation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:freezed_annotation/freezed_annotation.dart' • lib/models/assessment.dart:2:8 • unnecessary_import
+  error • _$PerformanceMetricsImpl isn't a type • lib/models/club/player_progress.freezed.dart:2547:45 • not_a_type
+  error • _$PerformanceMetricsImpl isn't a type • lib/models/club/player_progress.freezed.dart:2548:25 • not_a_type
+  error • The name '_$PerformanceMetricsImpl' isn't a type, so it can't be used as a type argument • lib/models/club/player_progress.freezed.dart:2571:52 • non_type_as_type_argument
+  error • _$PerformanceMetricsImpl isn't a type • lib/models/club/player_progress.freezed.dart:2573:42 • not_a_type
+  error • _$PerformanceMetricsImpl isn't a type • lib/models/club/player_progress.freezed.dart:2574:21 • not_a_type
+  error • The named parameter 'matchesPlayed' isn't defined • lib/models/club/player_progress.freezed.dart:2596:7 • undefined_named_parameter
+  error • The named parameter 'matchesStarted' isn't defined • lib/models/club/player_progress.freezed.dart:2600:7 • undefined_named_parameter
+  error • The named parameter 'minutesPlayed' isn't defined • lib/models/club/player_progress.freezed.dart:2604:7 • undefined_named_parameter
+  error • The named parameter 'goals' isn't defined • lib/models/club/player_progress.freezed.dart:2608:7 • undefined_named_parameter
+  error • The named parameter 'assists' isn't defined • lib/models/club/player_progress.freezed.dart:2612:7 • undefined_named_parameter
+  error • The named parameter 'yellowCards' isn't defined • lib/models/club/player_progress.freezed.dart:2616:7 • undefined_named_parameter
+  error • The named parameter 'redCards' isn't defined • lib/models/club/player_progress.freezed.dart:2620:7 • undefined_named_parameter
+  error • The named parameter 'trainingsAttended' isn't defined • lib/models/club/player_progress.freezed.dart:2624:7 • undefined_named_parameter
+  error • The named parameter 'totalTrainings' isn't defined • lib/models/club/player_progress.freezed.dart:2628:7 • undefined_named_parameter
+  error • The named parameter 'attendancePercentage' isn't defined • lib/models/club/player_progress.freezed.dart:2632:7 • undefined_named_parameter
+  error • The named parameter 'trainingRating' isn't defined • lib/models/club/player_progress.freezed.dart:2636:7 • undefined_named_parameter
+  error • The named parameter 'improvementRate' isn't defined • lib/models/club/player_progress.freezed.dart:2640:7 • undefined_named_parameter
+  error • The named parameter 'consistencyScore' isn't defined • lib/models/club/player_progress.freezed.dart:2644:7 • undefined_named_parameter
+  error • The named parameter 'potentialRating' isn't defined • lib/models/club/player_progress.freezed.dart:2648:7 • undefined_named_parameter
+  error • Missing concrete implementations of 'getter abstract class _PerformanceMetrics implements PerformanceMetrics.assists', 'getter abstract class _PerformanceMetrics implements PerformanceMetrics.attendancePercentage', 'getter abstract class _PerformanceMetrics implements PerformanceMetrics.consistencyScore', 'getter abstract class _PerformanceMetrics implements PerformanceMetrics.copyWith', and 12 more • lib/models/club/player_progress.freezed.dart:2658:7 • non_abstract_class_inherits_abstract_member
+  error • 'matchesStarted' isn't a field in the enclosing class • lib/models/club/player_progress.freezed.dart:2660:7 • initializing_formal_for_non_existent_field
+warning • A value for optional parameter 'matchesStarted' isn't ever given • lib/models/club/player_progress.freezed.dart:2660:12 • unused_element_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/models/club/player_progress.freezed.dart:2660:27 • named_parameter_outside_group
+  error • 'minutesPlayed' isn't a field in the enclosing class • lib/models/club/player_progress.freezed.dart:2661:7 • initializing_formal_for_non_existent_field
+warning • A value for optional parameter 'minutesPlayed' isn't ever given • lib/models/club/player_progress.freezed.dart:2661:12 • unused_element_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/models/club/player_progress.freezed.dart:2661:26 • named_parameter_outside_group
+  error • 'totalTrainings' isn't a field in the enclosing class • lib/models/club/player_progress.freezed.dart:2662:7 • initializing_formal_for_non_existent_field
+warning • A value for optional parameter 'totalTrainings' isn't ever given • lib/models/club/player_progress.freezed.dart:2662:12 • unused_element_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/models/club/player_progress.freezed.dart:2662:27 • named_parameter_outside_group
+  error • 'attendancePercentage' isn't a field in the enclosing class • lib/models/club/player_progress.freezed.dart:2663:7 • initializing_formal_for_non_existent_field
+warning • A value for optional parameter 'attendancePercentage' isn't ever given • lib/models/club/player_progress.freezed.dart:2663:12 • unused_element_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/models/club/player_progress.freezed.dart:2663:33 • named_parameter_outside_group
+  error • 'trainingRating' isn't a field in the enclosing class • lib/models/club/player_progress.freezed.dart:2664:7 • initializing_formal_for_non_existent_field
+warning • A value for optional parameter 'trainingRating' isn't ever given • lib/models/club/player_progress.freezed.dart:2664:12 • unused_element_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/models/club/player_progress.freezed.dart:2664:27 • named_parameter_outside_group
+  error • 'improvementRate' isn't a field in the enclosing class • lib/models/club/player_progress.freezed.dart:2665:7 • initializing_formal_for_non_existent_field
+warning • A value for optional parameter 'improvementRate' isn't ever given • lib/models/club/player_progress.freezed.dart:2665:12 • unused_element_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/models/club/player_progress.freezed.dart:2665:28 • named_parameter_outside_group
+  error • 'consistencyScore' isn't a field in the enclosing class • lib/models/club/player_progress.freezed.dart:2666:7 • initializing_formal_for_non_existent_field
+warning • A value for optional parameter 'consistencyScore' isn't ever given • lib/models/club/player_progress.freezed.dart:2666:12 • unused_element_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/models/club/player_progress.freezed.dart:2666:29 • named_parameter_outside_group
+  error • 'potentialRating' isn't a field in the enclosing class • lib/models/club/player_progress.freezed.dart:2667:7 • initializing_formal_for_non_existent_field
+warning • A value for optional parameter 'potentialRating' isn't ever given • lib/models/club/player_progress.freezed.dart:2667:12 • unused_element_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/models/club/player_progress.freezed.dart:2667:28 • named_parameter_outside_group
+  error • A function body must be provided • lib/models/club/player_progress.freezed.dart:2667:33 • missing_function_body
+  error • Const constructors can't have a body • lib/models/club/player_progress.freezed.dart:2667:33 • const_constructor_with_body
+  error • Expected to find ')' • lib/models/club/player_progress.freezed.dart:2667:33 • expected_token
+  error • Expected a method, getter, setter or operator declaration • lib/models/club/player_progress.freezed.dart:2667:34 • expected_executable
+  error • Unexpected text ';' • lib/models/club/player_progress.freezed.dart:2667:35 • unexpected_token
+  error • Top-level declarations can't be declared to be 'factory' • lib/models/club/player_progress.freezed.dart:2669:3 • factory_top_level_declaration
+  error • Functions must have an explicit list of parameters • lib/models/club/player_progress.freezed.dart:2669:11 • missing_function_parameters
+  error • The name '_$PerformanceMetricsImpl' is already defined • lib/models/club/player_progress.freezed.dart:2669:11 • duplicate_definition
+  error • A function body must be provided • lib/models/club/player_progress.freezed.dart:2669:35 • missing_function_body
+  error • Expected a method, getter, setter or operator declaration • lib/models/club/player_progress.freezed.dart:2669:35 • expected_executable
+  error • The final variable 'matchesPlayed' must be initialized • lib/models/club/player_progress.freezed.dart:2675:13 • final_not_initialized
+  error • The final variable 'matchesStarted' must be initialized • lib/models/club/player_progress.freezed.dart:2678:13 • final_not_initialized
+  error • The final variable 'minutesPlayed' must be initialized • lib/models/club/player_progress.freezed.dart:2681:13 • final_not_initialized
+  error • The final variable 'goals' must be initialized • lib/models/club/player_progress.freezed.dart:2684:13 • final_not_initialized
+  error • The final variable 'assists' must be initialized • lib/models/club/player_progress.freezed.dart:2687:13 • final_not_initialized
+  error • The final variable 'yellowCards' must be initialized • lib/models/club/player_progress.freezed.dart:2690:13 • final_not_initialized
+  error • The final variable 'redCards' must be initialized • lib/models/club/player_progress.freezed.dart:2693:13 • final_not_initialized
+  error • The final variable 'trainingsAttended' must be initialized • lib/models/club/player_progress.freezed.dart:2697:13 • final_not_initialized
+  error • The final variable 'totalTrainings' must be initialized • lib/models/club/player_progress.freezed.dart:2700:13 • final_not_initialized
+  error • The final variable 'attendancePercentage' must be initialized • lib/models/club/player_progress.freezed.dart:2703:16 • final_not_initialized
+  error • The final variable 'trainingRating' must be initialized • lib/models/club/player_progress.freezed.dart:2706:16 • final_not_initialized
+  error • The final variable 'improvementRate' must be initialized • lib/models/club/player_progress.freezed.dart:2710:16 • final_not_initialized
+  error • The final variable 'consistencyScore' must be initialized • lib/models/club/player_progress.freezed.dart:2713:16 • final_not_initialized
+  error • The final variable 'potentialRating' must be initialized • lib/models/club/player_progress.freezed.dart:2716:16 • final_not_initialized
+  error • Operators must be declared within a class • lib/models/club/player_progress.freezed.dart:2724:8 • top_level_operator
+  error • Invalid reference to 'this' expression • lib/models/club/player_progress.freezed.dart:2725:22 • invalid_reference_to_this
+  error • Undefined name 'runtimeType' • lib/models/club/player_progress.freezed.dart:2726:31 • undefined_identifier
+  error • The name '_$PerformanceMetricsImpl' isn't a type and can't be used in an 'is' expression • lib/models/club/player_progress.freezed.dart:2727:22 • type_test_with_non_type
+  error • Undefined name 'runtimeType' • lib/models/club/player_progress.freezed.dart:2759:7 • undefined_identifier
+  error • The name '_$PerformanceMetricsImpl' isn't a type, so it can't be used as a type argument • lib/models/club/player_progress.freezed.dart:2778:37 • non_type_as_type_argument
+  error • The name '_$PerformanceMetricsImpl' isn't a type, so it can't be used as a type argument • lib/models/club/player_progress.freezed.dart:2779:46 • non_type_as_type_argument
+  error • Invalid reference to 'this' expression • lib/models/club/player_progress.freezed.dart:2780:11 • invalid_reference_to_this
+  error • Invalid reference to 'this' expression • lib/models/club/player_progress.freezed.dart:2785:7 • invalid_reference_to_this
+  error • Expected a method, getter, setter or operator declaration • lib/models/club/player_progress.freezed.dart:2788:1 • expected_executable
+  error • The name '_$PerformanceMetricsImpl' isn't a type and can't be used in a redirected constructor • lib/models/club/player_progress.freezed.dart:2805:40 • redirect_to_non_class
+  error • The prefix '_$PerformanceMetricsImpl' can't be used here because it's shadowed by a local declaration • lib/models/club/player_progress.freezed.dart:2808:7 • prefix_shadowed_by_local_declaration
+  error • The name '_$PerformanceMetricsImpl' isn't a type, so it can't be used as a type argument • lib/models/club/player_progress.freezed.dart:2840:37 • non_type_as_type_argument
+  error • '_PerformanceMetrics.copyWith' ('_$$PerformanceMetricsImplCopyWith<dynamic> Function()') isn't a valid override of '_$PerformanceMetrics.copyWith' ('$PerformanceMetricsCopyWith<PerformanceMetrics> Function()') • lib/models/club/player_progress.freezed.dart:2840:67 • invalid_override
+  error • _$PerformanceMetricsImpl isn't a type • lib/models/club/player_progress.g.dart:233:1 • not_a_type
+  error • The named parameter 'matchesPlayed' isn't defined • lib/models/club/player_progress.g.dart:236:7 • undefined_named_parameter
+  error • The named parameter 'matchesStarted' isn't defined • lib/models/club/player_progress.g.dart:237:7 • undefined_named_parameter
+  error • The named parameter 'minutesPlayed' isn't defined • lib/models/club/player_progress.g.dart:238:7 • undefined_named_parameter
+  error • The named parameter 'goals' isn't defined • lib/models/club/player_progress.g.dart:239:7 • undefined_named_parameter
+  error • The named parameter 'assists' isn't defined • lib/models/club/player_progress.g.dart:240:7 • undefined_named_parameter
+  error • The named parameter 'yellowCards' isn't defined • lib/models/club/player_progress.g.dart:241:7 • undefined_named_parameter
+  error • The named parameter 'redCards' isn't defined • lib/models/club/player_progress.g.dart:242:7 • undefined_named_parameter
+  error • The named parameter 'trainingsAttended' isn't defined • lib/models/club/player_progress.g.dart:243:7 • undefined_named_parameter
+  error • The named parameter 'totalTrainings' isn't defined • lib/models/club/player_progress.g.dart:244:7 • undefined_named_parameter
+  error • The named parameter 'attendancePercentage' isn't defined • lib/models/club/player_progress.g.dart:245:7 • undefined_named_parameter
+  error • The named parameter 'trainingRating' isn't defined • lib/models/club/player_progress.g.dart:247:7 • undefined_named_parameter
+  error • The named parameter 'improvementRate' isn't defined • lib/models/club/player_progress.g.dart:248:7 • undefined_named_parameter
+  error • The named parameter 'consistencyScore' isn't defined • lib/models/club/player_progress.g.dart:249:7 • undefined_named_parameter
+  error • The named parameter 'potentialRating' isn't defined • lib/models/club/player_progress.g.dart:250:7 • undefined_named_parameter
+  error • _$PerformanceMetricsImpl isn't a type • lib/models/club/player_progress.g.dart:254:9 • not_a_type
+  error • All final variables must be initialized, but 'status' isn't • lib/models/match.dart:122:9 • final_not_initialized_constructor
+  error • The named parameter 'status' isn't defined • lib/models/match.dart:226:7 • undefined_named_parameter
+  error • All final variables must be initialized, but 'assists', 'goals', and 5 others aren't • lib/models/player.dart:79:9 • final_not_initialized_constructor
+  error • The named parameter 'matchesPlayed' isn't defined • lib/models/player.dart:174:7 • undefined_named_parameter
+  error • The named parameter 'goals' isn't defined • lib/models/player.dart:177:7 • undefined_named_parameter
+  error • The named parameter 'assists' isn't defined • lib/models/player.dart:178:7 • undefined_named_parameter
+  error • The named parameter 'yellowCards' isn't defined • lib/models/player.dart:179:7 • undefined_named_parameter
+  error • The named parameter 'redCards' isn't defined • lib/models/player.dart:180:7 • undefined_named_parameter
+  error • The named parameter 'trainingsAttended' isn't defined • lib/models/player.dart:181:7 • undefined_named_parameter
+  error • The named parameter 'trainingsTotal' isn't defined • lib/models/player.dart:182:7 • undefined_named_parameter
+  error • All final variables must be initialized, but 'matchesPlayed' isn't • lib/models/team.dart:59:9 • final_not_initialized_constructor
+  error • The named parameter 'matchesPlayed' isn't defined • lib/models/team.dart:125:7 • undefined_named_parameter
+  error • All final variables must be initialized, but 'focus', 'intensity', and 1 others aren't • lib/models/training.dart:109:9 • final_not_initialized_constructor
+  error • The named parameter 'focus' isn't defined • lib/models/training.dart:182:7 • undefined_named_parameter
+  error • The named parameter 'intensity' isn't defined • lib/models/training.dart:183:7 • undefined_named_parameter
+  error • The named parameter 'status' isn't defined • lib/models/training.dart:184:7 • undefined_named_parameter
+  error • Expected to find ';' • lib/providers/annual_planning_provider.dart:71:7 • expected_token
+warning • The declaration 'currentWeekNumber' isn't referenced • lib/providers/annual_planning_provider.dart:71:11 • unused_element
+  error • Functions must have an explicit list of parameters • lib/providers/annual_planning_provider.dart:71:29 • missing_function_parameters
+  error • Conditions must have a static type of 'bool' • lib/providers/annual_planning_provider.dart:73:3 • non_bool_condition
+  error • The non-nullable local variable 'get' must be assigned before it can be used • lib/providers/annual_planning_provider.dart:73:16 • not_assigned_potentially_non_nullable_local_variable
+  error • Expected to find ':' • lib/providers/annual_planning_provider.dart:73:20 • expected_token
+  error • Expected to find ';' • lib/providers/annual_planning_provider.dart:73:20 • expected_token
+  error • Undefined name 'currentMorphocycle' • lib/providers/annual_planning_provider.dart:73:20 • undefined_identifier
+  error • Expected an identifier • lib/providers/annual_planning_provider.dart:73:39 • missing_identifier
+  error • Expected to find ';' • lib/providers/annual_planning_provider.dart:73:39 • expected_token
+warning • The value of the local variable 'get' isn't used • lib/providers/annual_planning_provider.dart:75:10 • unused_local_variable
+  error • Expected to find ';' • lib/providers/annual_planning_provider.dart:75:10 • expected_token
+  error • The name 'get' is already defined • lib/providers/annual_planning_provider.dart:75:10 • duplicate_definition
+warning • The declaration 'periodizationPlanName' isn't referenced • lib/providers/annual_planning_provider.dart:75:14 • unused_element
+  error • Functions must have an explicit list of parameters • lib/providers/annual_planning_provider.dart:75:36 • missing_function_parameters
+  error • The getter 'name' isn't defined for the type 'PeriodizationPlan' • lib/providers/annual_planning_provider.dart:75:66 • undefined_getter
+warning • The value of the local variable 'get' isn't used • lib/providers/annual_planning_provider.dart:77:10 • unused_local_variable
+  error • Expected to find ';' • lib/providers/annual_planning_provider.dart:77:10 • expected_token
+  error • The name 'get' is already defined • lib/providers/annual_planning_provider.dart:77:10 • duplicate_definition
+  error • Expected to find ';' • lib/providers/annual_planning_provider.dart:77:14 • expected_token
+  error • Undefined name 'currentPeriodName' • lib/providers/annual_planning_provider.dart:77:14 • undefined_identifier
+  error • A value of type 'String' can't be returned from the method 'getMorphocycleForWeek' because it has a return type of 'Morphocycle?' • lib/providers/annual_planning_provider.dart:83:12 • return_of_invalid_type
+warning • Dead code • lib/providers/annual_planning_provider.dart:84:8 • dead_code
+  error • The getter 'weekNumber' isn't defined for the type 'Morphocycle' • lib/providers/annual_planning_provider.dart:85:47 • undefined_getter
+  error • The getter 'id' isn't defined for the type 'PeriodizationPlan' • lib/providers/annual_planning_provider.dart:143:39 • undefined_getter
+  error • The getter 'id' isn't defined for the type 'PeriodizationPlan' • lib/providers/annual_planning_provider.dart:150:39 • undefined_getter
+  error • The getter 'id' isn't defined for the type 'PeriodizationPlan' • lib/providers/annual_planning_provider.dart:160:39 • undefined_getter
+  error • The getter 'id' isn't defined for the type 'PeriodizationPlan' • lib/providers/annual_planning_provider.dart:192:49 • undefined_getter
+  error • The getter 'id' isn't defined for the type 'PeriodizationPlan' • lib/providers/annual_planning_provider.dart:198:28 • undefined_getter
+  error • The getter 'primaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/providers/annual_planning_provider.dart:305:39 • undefined_getter
+  error • The getter 'weekNumber' isn't defined for the type 'Morphocycle' • lib/providers/annual_planning_provider.dart:307:50 • undefined_getter
+  error • The getter 'primaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/providers/annual_planning_provider.dart:308:36 • undefined_getter
+  error • The getter 'secondaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/providers/annual_planning_provider.dart:317:39 • undefined_getter
+  error • The getter 'weekNumber' isn't defined for the type 'Morphocycle' • lib/providers/annual_planning_provider.dart:319:50 • undefined_getter
+  error • The getter 'secondaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/providers/annual_planning_provider.dart:320:36 • undefined_getter
+warning • The value of the local variable 'loadStatus' isn't used • lib/providers/annual_planning_provider.dart:331:13 • unused_local_variable
+warning • The value of the local variable 'adaptation' isn't used • lib/providers/annual_planning_provider.dart:332:13 • unused_local_variable
+  error • The getter 'expectedAdaptation' isn't defined for the type 'Morphocycle' • lib/providers/annual_planning_provider.dart:332:38 • undefined_getter
+  error • Undefined name 'Colors' • lib/providers/annual_planning_provider.dart:333:14 • undefined_identifier
+  error • Undefined name 'Colors' • lib/providers/annual_planning_provider.dart:340:14 • undefined_identifier
+  error • The named parameter 'focus' isn't defined • lib/providers/calendar_provider.dart:180:9 • undefined_named_parameter
+  error • The named parameter 'intensity' isn't defined • lib/providers/calendar_provider.dart:181:9 • undefined_named_parameter
+  error • The named parameter 'status' isn't defined • lib/providers/calendar_provider.dart:183:9 • undefined_named_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/providers/training_sessions_provider.dart:21:38 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/providers/training_sessions_provider.dart:21:38 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/providers/training_sessions_provider.dart:21:40 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/providers/training_sessions_provider.dart:21:95 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/providers/training_sessions_provider.dart:21:95 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/providers/training_sessions_provider.dart:21:109 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/providers/training_sessions_provider.dart:21:109 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/providers/training_sessions_provider.dart:21:111 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/providers/training_sessions_provider.dart:21:136 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/providers/training_sessions_provider.dart:21:136 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/providers/training_sessions_provider.dart:21:138 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/providers/training_sessions_provider.dart:21:163 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/providers/training_sessions_provider.dart:21:163 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/providers/training_sessions_provider.dart:21:165 • non_constant_default_value
+  error • The returned type 'Future<List<PlayerAssessment>>' isn't returnable from a 'Future<List<Assessment>>' function, as required by the closure's context • lib/screens/analytics/performance_analytics_screen.dart:17:10 • return_of_invalid_type_from_closure
+  error • The getter 'name' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/annual_planning_screen.dart:301:38 • undefined_getter
+  error • The getter 'type' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/annual_planning_screen.dart:303:31 • undefined_getter
+  error • The getter 'focus' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/annual_planning_screen.dart:303:51 • undefined_getter
+  error • The getter 'description' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/annual_planning_screen.dart:304:31 • undefined_getter
+  error • The getter 'periodIds' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/annual_planning_screen.dart:310:38 • undefined_getter
+  error • The type 'SeasonPhase' is not exhaustively matched by the switch cases since it doesn't match 'SeasonPhase.earlySeason' • lib/screens/annual_planning/annual_planning_screen.dart:395:5 • non_exhaustive_switch_statement
+  error • The getter 'currentWeekNumber' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/load_monitoring_screen.dart:88:31 • undefined_getter
+  error • The getter 'currentMorphocycle' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/load_monitoring_screen.dart:122:29 • undefined_getter
+  error • The getter 'currentMorphocycle' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/load_monitoring_screen.dart:123:49 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:149:69 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:150:68 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:151:58 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:151:79 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:152:68 • undefined_getter
+  error • The getter 'weekNumber' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:287:65 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:326:51 • undefined_getter
+  error • The getter 'weekNumber' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:405:65 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:460:51 • undefined_getter
+  error • The getter 'intensityDistribution' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:494:44 • undefined_getter
+  error • The getter 'currentWeekNumber' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/load_monitoring_screen.dart:566:31 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:604:63 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:606:55 • undefined_getter
+  error • The getter 'weekNumber' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:736:65 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:767:51 • undefined_getter
+  error • The method 'assessInjuryRisk' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:777:58 • undefined_method
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:889:62 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:890:65 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:890:88 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:891:68 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:891:91 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:892:61 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:951:17 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:954:42 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:960:17 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:963:42 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:969:17 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:972:50 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:978:49 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:988:17 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:988:53 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:988:89 • undefined_getter
+  error • The getter 'weekNumber' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1156:37 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1162:52 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1166:34 • undefined_getter
+  error • The getter 'primaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1185:41 • undefined_getter
+  error • The getter 'expectedAdaptation' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1199:53 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1210:42 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1212:50 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1216:49 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1219:52 • undefined_getter
+  error • The getter 'tacticalFocusAreas' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1225:27 • undefined_getter
+  error • The getter 'tacticalFocusAreas' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/load_monitoring_screen.dart:1235:37 • undefined_getter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/match_dialog.dart:285:21 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/match_dialog.dart:285:21 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/annual_planning/match_dialog.dart:285:23 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/match_dialog.dart:285:81 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/match_dialog.dart:285:81 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/match_dialog.dart:285:83 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/match_dialog.dart:285:107 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/match_dialog.dart:285:107 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/match_dialog.dart:285:121 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/match_dialog.dart:285:121 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/match_dialog.dart:285:138 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/match_dialog.dart:285:138 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/match_dialog.dart:285:153 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/match_dialog.dart:285:153 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/match_dialog.dart:285:155 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/match_dialog.dart:285:180 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/match_dialog.dart:285:180 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/match_dialog.dart:285:182 • non_constant_default_value
+  error • The method 'knvbYouthU17' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:20:23 • undefined_method
+  error • The method 'traditionalLinear' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:21:23 • undefined_method
+  error • The method 'blockPeriodization' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:22:23 • undefined_method
+  error • The method 'conjugateMethod' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:23:23 • undefined_method
+  error • The getter 'name' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:83:64 • undefined_getter
+  error • The getter 'totalDurationWeeks' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:88:50 • undefined_getter
+  error • The getter 'numberOfPeriods' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:88:98 • undefined_getter
+  error • The getter 'name' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:105:56 • undefined_getter
+  error • The getter 'name' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:105:73 • undefined_getter
+  error • The getter 'name' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:138:50 • undefined_getter
+  error • The getter 'description' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:146:50 • undefined_getter
+  error • The getter 'totalDurationWeeks' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:164:47 • undefined_getter
+  error • The getter 'numberOfPeriods' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:169:47 • undefined_getter
+  error • The method 'getRecommendedParameters' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:262:38 • undefined_method
+  error • The getter 'modelType' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:263:16 • undefined_getter
+  error • The getter 'targetAgeGroup' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:264:16 • undefined_getter
+  error • The getter 'totalDurationWeeks' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:269:37 • undefined_getter
+  error • The getter 'numberOfPeriods' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:269:68 • undefined_getter
+  error • The getter 'numberOfPeriods' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/periodization_template_dialog.dart:271:35 • undefined_getter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/training_dialog.dart:284:24 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/training_dialog.dart:284:24 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/annual_planning/training_dialog.dart:284:26 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/training_dialog.dart:284:81 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/training_dialog.dart:284:81 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/training_dialog.dart:284:95 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/training_dialog.dart:284:95 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/training_dialog.dart:284:97 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/training_dialog.dart:284:122 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/training_dialog.dart:284:122 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/training_dialog.dart:284:124 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/training_dialog.dart:284:149 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/training_dialog.dart:284:149 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/training_dialog.dart:284:151 • non_constant_default_value
+  error • The getter 'periodizationPlanName' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/weekly_planning_screen.dart:133:46 • undefined_getter
+  error • The getter 'currentPeriodName' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/weekly_planning_screen.dart:148:47 • undefined_getter
+  error • The getter 'currentWeekNumber' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/weekly_planning_screen.dart:190:26 • undefined_getter
+  error • The method 'resetCurrentWeekToToday' isn't defined for the type 'AnnualPlanningNotifier' • lib/screens/annual_planning/weekly_planning_screen.dart:213:76 • undefined_method
+  error • The getter 'currentWeekNumber' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/weekly_planning_screen.dart:248:49 • undefined_getter
+  error • The getter 'currentWeekNumber' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/weekly_planning_screen.dart:348:64 • undefined_getter
+warning • The value of the local variable 'loadDescription' isn't used • lib/screens/annual_planning/weekly_planning_screen.dart:519:13 • unused_local_variable
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/weekly_planning_screen.dart:519:63 • undefined_getter
+warning • The value of the local variable 'adaptationPercent' isn't used • lib/screens/annual_planning/weekly_planning_screen.dart:520:13 • unused_local_variable
+  error • The getter 'expectedAdaptation' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/weekly_planning_screen.dart:520:45 • undefined_getter
+  error • A value of type 'MaterialColor' can't be returned from the method '_getWeekNotesWithMorphocycle' because it has a return type of 'String' • lib/screens/annual_planning/weekly_planning_screen.dart:521:14 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getLoadDescription' because it has a return type of 'String' • lib/screens/annual_planning/weekly_planning_screen.dart:527:35 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getLoadDescription' because it has a return type of 'String' • lib/screens/annual_planning/weekly_planning_screen.dart:528:35 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getLoadDescription' because it has a return type of 'String' • lib/screens/annual_planning/weekly_planning_screen.dart:529:35 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getLoadDescription' because it has a return type of 'String' • lib/screens/annual_planning/weekly_planning_screen.dart:530:12 • return_of_invalid_type
+  error • The getter 'currentWeekNumber' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/weekly_planning_screen.dart:555:58 • undefined_getter
+  error • The getter 'selectedWeekSchedule' isn't defined for the type 'AnnualPlanningState' • lib/screens/annual_planning/weekly_planning_screen.dart:568:58 • undefined_getter
+  error • The method 'updateWeekSchedule' isn't defined for the type 'AnnualPlanningNotifier' • lib/screens/annual_planning/weekly_planning_screen.dart:585:47 • undefined_method
+  error • The method 'applyPeriodizationTemplate' isn't defined for the type 'AnnualPlanningNotifier' • lib/screens/annual_planning/weekly_planning_screen.dart:598:49 • undefined_method
+  error • The getter 'name' isn't defined for the type 'PeriodizationPlan' • lib/screens/annual_planning/weekly_planning_screen.dart:604:57 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/weekly_planning_screen.dart:675:22 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/weekly_planning_screen.dart:677:29 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/weekly_planning_screen.dart:679:29 • undefined_getter
+  error • The getter 'weeklyLoad' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/weekly_planning_screen.dart:700:34 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/weekly_planning_screen.dart:711:28 • undefined_getter
+  error • The getter 'acuteChronicRatio' isn't defined for the type 'Morphocycle' • lib/screens/annual_planning/weekly_planning_screen.dart:713:33 • undefined_getter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:939:23 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:939:23 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/annual_planning/weekly_planning_screen.dart:939:25 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:939:80 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:939:80 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:939:94 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:939:94 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/weekly_planning_screen.dart:939:96 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:939:121 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:939:121 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/weekly_planning_screen.dart:939:123 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:939:148 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:939:148 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/weekly_planning_screen.dart:939:150 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:974:20 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:974:20 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/annual_planning/weekly_planning_screen.dart:974:22 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:974:80 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:974:80 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/weekly_planning_screen.dart:974:82 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:974:106 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:974:106 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:974:120 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:974:120 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:974:137 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:974:137 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:974:152 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:974:152 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/weekly_planning_screen.dart:974:154 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/annual_planning/weekly_planning_screen.dart:974:179 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/annual_planning/weekly_planning_screen.dart:974:179 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/annual_planning/weekly_planning_screen.dart:974:181 • non_constant_default_value
+  error • Target of URI doesn't exist: '../../providers/feature_service.dart' • lib/screens/calendar/integrated_calendar_screen.dart:9:8 • uri_does_not_exist
+  error • Undefined name 'featureServiceProvider' • lib/screens/calendar/integrated_calendar_screen.dart:37:38 • undefined_identifier
+  error • Undefined class 'FeatureService' • lib/screens/calendar/integrated_calendar_screen.dart:382:32 • undefined_class
+  error • Undefined name 'Feature' • lib/screens/calendar/integrated_calendar_screen.dart:383:42 • undefined_identifier
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/calendar/integrated_calendar_screen.dart:648:24 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/calendar/integrated_calendar_screen.dart:648:24 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/calendar/integrated_calendar_screen.dart:648:26 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/calendar/integrated_calendar_screen.dart:648:81 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/calendar/integrated_calendar_screen.dart:648:81 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/calendar/integrated_calendar_screen.dart:648:95 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/calendar/integrated_calendar_screen.dart:648:95 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/calendar/integrated_calendar_screen.dart:648:97 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/calendar/integrated_calendar_screen.dart:648:122 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/calendar/integrated_calendar_screen.dart:648:122 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/calendar/integrated_calendar_screen.dart:648:124 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/calendar/integrated_calendar_screen.dart:648:149 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/calendar/integrated_calendar_screen.dart:648:149 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/calendar/integrated_calendar_screen.dart:648:151 • non_constant_default_value
+  error • The getter 'displayName' isn't defined for the type 'SeasonPhase' • lib/screens/dashboard/dashboard_screen.dart:182:62 • undefined_getter
+  error • The getter 'remainingWeeks' isn't defined for the type 'SeasonPlan' • lib/screens/dashboard/dashboard_screen.dart:203:32 • undefined_getter
+  error • The named parameter 'status' isn't defined • lib/screens/matches/add_match_screen.dart:239:11 • undefined_named_parameter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:52:21 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:52:21 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/matches/edit_match_screen.dart:52:23 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:52:81 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:52:81 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:52:83 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:52:107 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:52:107 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:52:121 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:52:121 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:52:138 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:52:138 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:52:153 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:52:153 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:52:155 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:52:180 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:52:180 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:52:182 • non_constant_default_value
+  error • The argument type 'String' can't be assigned to the parameter type 'Location'.  • lib/screens/matches/edit_match_screen.dart:56:131 • argument_type_not_assignable
+  error • The argument type 'String' can't be assigned to the parameter type 'Competition'.  • lib/screens/matches/edit_match_screen.dart:56:148 • argument_type_not_assignable
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/matches/edit_match_screen.dart:59:38 • unrelated_type_equality_checks
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/matches/edit_match_screen.dart:93:44 • unrelated_type_equality_checks
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:448:21 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:448:21 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/matches/edit_match_screen.dart:448:23 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:448:81 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:448:81 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:448:83 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:448:107 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:448:107 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:448:121 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:448:121 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:448:138 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:448:138 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:448:153 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:448:153 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:448:155 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:448:180 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:448:180 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:448:182 • non_constant_default_value
+  error • The named parameter 'status' isn't defined • lib/screens/matches/edit_match_screen.dart:472:11 • undefined_named_parameter
+  error • Undefined name 'matchesNotifierProvider' • lib/screens/matches/edit_match_screen.dart:479:24 • undefined_identifier
+  error • Undefined name 'matchesNotifierProvider' • lib/screens/matches/edit_match_screen.dart:506:24 • undefined_identifier
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:554:31 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:554:31 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/matches/edit_match_screen.dart:554:33 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:554:91 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:554:91 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:554:93 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:554:117 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:554:117 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:554:131 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:554:131 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:554:148 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:554:148 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:554:163 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:554:163 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:554:165 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/edit_match_screen.dart:554:190 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/edit_match_screen.dart:554:190 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/edit_match_screen.dart:554:192 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/lineup_builder_screen.dart:60:29 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/lineup_builder_screen.dart:60:29 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/matches/lineup_builder_screen.dart:60:31 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/lineup_builder_screen.dart:60:89 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/lineup_builder_screen.dart:60:89 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/lineup_builder_screen.dart:60:91 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/lineup_builder_screen.dart:60:115 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/lineup_builder_screen.dart:60:115 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/lineup_builder_screen.dart:60:129 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/lineup_builder_screen.dart:60:129 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/lineup_builder_screen.dart:60:146 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/lineup_builder_screen.dart:60:146 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/lineup_builder_screen.dart:60:161 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/lineup_builder_screen.dart:60:161 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/lineup_builder_screen.dart:60:163 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/lineup_builder_screen.dart:60:188 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/lineup_builder_screen.dart:60:188 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/lineup_builder_screen.dart:60:190 • non_constant_default_value
+  error • The argument type 'int' can't be assigned to the parameter type 'String'.  • lib/screens/matches/lineup_builder_screen.dart:61:52 • argument_type_not_assignable
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/matches/lineup_builder_screen.dart:85:32 • unrelated_type_equality_checks
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/matches/lineup_builder_screen.dart:96:32 • unrelated_type_equality_checks
+  error • There isn't a setter named 'selectedFormation' in class 'Match' • lib/screens/matches/lineup_builder_screen.dart:782:15 • assignment_to_final_no_setter
+  error • 'startingLineupIds' can't be used as a setter because it's final • lib/screens/matches/lineup_builder_screen.dart:783:15 • assignment_to_final
+  error • 'substituteIds' can't be used as a setter because it's final • lib/screens/matches/lineup_builder_screen.dart:787:15 • assignment_to_final
+  error • 'fieldPositions' can't be used as a setter because it's final • lib/screens/matches/lineup_builder_screen.dart:790:15 • assignment_to_final
+   info • Use 'const' with the constructor to improve performance • lib/screens/matches/lineup_builder_screen.dart:967:22 • prefer_const_constructors
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/matches/lineup_builder_screen.dart:967:22 • missing_required_argument
+  error • The named parameter 'formation' is required, but there's no corresponding argument • lib/screens/matches/lineup_builder_screen.dart:967:22 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/matches/lineup_builder_screen.dart:967:22 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/matches/lineup_builder_screen.dart:967:22 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/matches/lineup_builder_screen.dart:967:22 • missing_required_argument
+  error • 'name' can't be used as a setter because it's final • lib/screens/matches/lineup_builder_screen.dart:968:9 • assignment_to_final
+  error • 'description' can't be used as a setter because it's final • lib/screens/matches/lineup_builder_screen.dart:969:9 • assignment_to_final
+  error • 'formation' can't be used as a setter because it's final • lib/screens/matches/lineup_builder_screen.dart:970:9 • assignment_to_final
+  error • There isn't a setter named 'positionPreferences' in class 'FormationTemplate' • lib/screens/matches/lineup_builder_screen.dart:971:9 • assignment_to_final_no_setter
+  error • The method 'getDefaultPositionPreferences' isn't defined for the type 'FormationTemplate' • lib/screens/matches/lineup_builder_screen.dart:971:49 • undefined_method
+  error • 'isCustom' can't be used as a setter because it's final • lib/screens/matches/lineup_builder_screen.dart:972:9 • assignment_to_final
+  error • 'isDefault' can't be used as a setter because it's final • lib/screens/matches/lineup_builder_screen.dart:973:9 • assignment_to_final
+  error • The argument type 'String?' can't be assigned to the parameter type 'String'.  • lib/screens/matches/lineup_builder_screen.dart:1018:34 • argument_type_not_assignable
+  error • The argument type 'String' can't be assigned to the parameter type 'Location'.  • lib/screens/matches/match_detail_screen.dart:75:142 • argument_type_not_assignable
+  error • The argument type 'String' can't be assigned to the parameter type 'Competition'.  • lib/screens/matches/match_detail_screen.dart:75:159 • argument_type_not_assignable
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/matches/match_detail_screen.dart:80:24 • unrelated_type_equality_checks
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/match_detail_screen.dart:431:21 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/match_detail_screen.dart:431:21 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/matches/match_detail_screen.dart:431:23 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/match_detail_screen.dart:431:81 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/match_detail_screen.dart:431:81 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/match_detail_screen.dart:431:83 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/match_detail_screen.dart:431:107 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/match_detail_screen.dart:431:107 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/match_detail_screen.dart:431:121 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/match_detail_screen.dart:431:121 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/match_detail_screen.dart:431:138 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/match_detail_screen.dart:431:138 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/match_detail_screen.dart:431:153 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/match_detail_screen.dart:431:153 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/match_detail_screen.dart:431:155 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/matches/match_detail_screen.dart:431:180 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/matches/match_detail_screen.dart:431:180 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/matches/match_detail_screen.dart:431:182 • non_constant_default_value
+warning • The value of the local variable 'values' isn't used • lib/screens/players/add_player_screen.dart:276:15 • unused_local_variable
+  error • Expected to find ';' • lib/screens/players/add_player_screen.dart:278:306 • expected_token
+  error • The argument type 'int' can't be assigned to the parameter type 'String'.  • lib/screens/players/assessment_screen.dart:59:46 • argument_type_not_assignable
+  error • The argument type 'int' can't be assigned to the parameter type 'String'.  • lib/screens/players/assessment_screen.dart:65:50 • argument_type_not_assignable
+   info • Use 'const' with the constructor to improve performance • lib/screens/players/assessment_screen.dart:66:19 • prefer_const_constructors
+  error • The named parameter 'assessmentDate' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:66:19 • missing_required_argument
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:66:19 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:66:19 • missing_required_argument
+  error • The named parameter 'playerId' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:66:19 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:66:19 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:66:19 • missing_required_argument
+  error • 'playerId' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:66:39 • assignment_to_final
+   info • Use 'const' with the constructor to improve performance • lib/screens/players/assessment_screen.dart:70:20 • prefer_const_constructors
+  error • The named parameter 'assessmentDate' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:70:20 • missing_required_argument
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:70:20 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:70:20 • missing_required_argument
+  error • The named parameter 'playerId' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:70:20 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:70:20 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/players/assessment_screen.dart:70:20 • missing_required_argument
+  error • 'playerId' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:71:11 • assignment_to_final
+  error • 'type' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:72:11 • assignment_to_final
+  error • The setter 'assessorId' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:73:11 • undefined_setter
+  error • The getter 'strengths' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:80:48 • undefined_getter
+  error • The getter 'developmentGoals' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:82:44 • undefined_getter
+  error • The getter 'coachNotes' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:83:44 • undefined_getter
+  error • 'type' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:205:40 • assignment_to_final
+  error • 'assessmentDate' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:231:40 • assignment_to_final
+  error • The getter 'technicalSkills' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:250:24 • undefined_getter
+  error • The getter 'tacticalSkills' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:258:24 • undefined_getter
+  error • The getter 'physicalAttributes' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:266:24 • undefined_getter
+  error • The getter 'mentalAttributes' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:274:24 • undefined_getter
+  error • The setter 'strengths' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:365:34 • undefined_setter
+  error • 'areasForImprovement' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:378:34 • assignment_to_final
+  error • The setter 'developmentGoals' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:391:34 • undefined_setter
+  error • The setter 'coachNotes' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:404:34 • undefined_setter
+  error • 'ballControl' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:419:24 • assignment_to_final
+  error • 'passing' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:422:24 • assignment_to_final
+  error • 'shooting' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:425:24 • assignment_to_final
+  error • 'dribbling' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:428:24 • assignment_to_final
+  error • The setter 'defending' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:431:24 • undefined_setter
+  error • 'positioning' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:441:24 • assignment_to_final
+  error • The setter 'gameReading' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:444:24 • undefined_setter
+  error • 'decisionMaking' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:447:24 • assignment_to_final
+  error • 'communication' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:450:24 • assignment_to_final
+  error • 'teamwork' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:453:24 • assignment_to_final
+  error • 'speed' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:463:24 • assignment_to_final
+  error • 'stamina' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:466:24 • assignment_to_final
+  error • 'strength' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:469:24 • assignment_to_final
+  error • 'agility' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:472:24 • assignment_to_final
+  error • The setter 'coordination' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:475:24 • undefined_setter
+  error • 'confidence' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:485:24 • assignment_to_final
+  error • 'concentration' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:488:24 • assignment_to_final
+  error • 'leadership' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:491:24 • assignment_to_final
+  error • The setter 'coachability' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:494:24 • undefined_setter
+  error • The setter 'motivation' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:497:24 • undefined_setter
+  error • 'updatedAt' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:506:22 • assignment_to_final
+  error • The setter 'strengths' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:544:20 • undefined_setter
+  error • 'areasForImprovement' can't be used as a setter because it's final • lib/screens/players/assessment_screen.dart:545:20 • assignment_to_final
+  error • The setter 'developmentGoals' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:546:20 • undefined_setter
+  error • The setter 'coachNotes' isn't defined for the type 'PlayerAssessment' • lib/screens/players/assessment_screen.dart:547:20 • undefined_setter
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:22 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:22 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/players/edit_player_screen.dart:58:24 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:83 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:83 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:97 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:97 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:115 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:115 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:129 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:129 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:58:131 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:155 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:155 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:191 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:191 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:220 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:220 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:235 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:235 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:252 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:252 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:58:254 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:58:279 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:58:279 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:58:281 • non_constant_default_value
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/players/edit_player_screen.dart:65:40 • unrelated_type_equality_checks
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/players/edit_player_screen.dart:100:46 • unrelated_type_equality_checks
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:22 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:22 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/players/edit_player_screen.dart:405:24 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:83 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:83 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:97 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:97 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:115 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:115 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:129 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:129 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:405:131 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:155 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:155 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:191 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:191 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:220 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:220 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:235 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:235 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:252 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:252 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:405:254 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:405:279 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:405:279 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:405:281 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:32 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:32 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/players/edit_player_screen.dart:503:34 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:93 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:93 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:107 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:107 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:125 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:125 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:139 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:139 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:503:141 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:165 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:165 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:201 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:201 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:230 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:230 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:245 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:245 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:262 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:262 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:503:264 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/players/edit_player_screen.dart:503:289 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/players/edit_player_screen.dart:503:289 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/players/edit_player_screen.dart:503:291 • non_constant_default_value
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/players/player_detail_screen.dart:64:36 • unrelated_type_equality_checks
+  error • The argument type 'Future<List<Map<String, dynamic>>>' can't be assigned to the parameter type 'Future<List<PerformanceRating>>?'.  • lib/screens/players/player_detail_screen.dart:695:23 • argument_type_not_assignable
+  error • The getter 'overallRating' isn't defined for the type 'Map<String, dynamic>' • lib/screens/players/player_detail_screen.dart:1029:23 • undefined_getter
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/screens/players/player_detail_screen.dart:1030:29 • unchecked_use_of_nullable_value
+  error • The getter 'overallRating' isn't defined for the type 'Map<String, dynamic>' • lib/screens/players/player_detail_screen.dart:1035:37 • undefined_getter
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/screens/players/player_detail_screen.dart:1035:71 • unchecked_use_of_nullable_value
+  error • The getter 'type' isn't defined for the type 'Map<String, dynamic>' • lib/screens/players/player_detail_screen.dart:1039:52 • undefined_getter
+  error • The getter 'overallRating' isn't defined for the type 'Map<String, dynamic>' • lib/screens/players/player_detail_screen.dart:1041:37 • undefined_getter
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/screens/players/player_detail_screen.dart:1041:71 • unchecked_use_of_nullable_value
+  error • The getter 'type' isn't defined for the type 'Map<String, dynamic>' • lib/screens/players/player_detail_screen.dart:1045:55 • undefined_getter
+  error • The getter 'overallRating' isn't defined for the type 'Map<String, dynamic>' • lib/screens/players/player_detail_screen.dart:1047:40 • undefined_getter
+  error • The operator '+' can't be unconditionally invoked because the receiver can be 'null' • lib/screens/players/player_detail_screen.dart:1047:74 • unchecked_use_of_nullable_value
+  error • The type 'AssessmentType' is not exhaustively matched by the switch cases since it doesn't match 'AssessmentType.annual' • lib/screens/players/player_detail_screen.dart:1088:5 • non_exhaustive_switch_statement
+  error • The type 'AssessmentType' is not exhaustively matched by the switch cases since it doesn't match 'AssessmentType.annual' • lib/screens/players/player_detail_screen.dart:1099:5 • non_exhaustive_switch_statement
+  error • The type 'AssessmentType' is not exhaustively matched by the switch cases since it doesn't match 'AssessmentType.annual' • lib/screens/players/player_detail_screen.dart:1110:5 • non_exhaustive_switch_statement
+  error • The returned type 'List<Training>' isn't returnable from a 'Future<List<TrainingSession>>' function, as required by the closure's context • lib/screens/season/season_hub_screen.dart:24:10 • return_of_invalid_type_from_closure
+  error • The getter 'displayName' isn't defined for the type 'SeasonPhase' • lib/screens/season/season_hub_screen.dart:184:44 • undefined_getter
+  error • The type 'SeasonPhase' is not exhaustively matched by the switch cases since it doesn't match 'SeasonPhase.earlyseason' • lib/screens/season/season_hub_screen.dart:571:5 • non_exhaustive_switch_statement
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/add_training_screen.dart:362:32 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/add_training_screen.dart:362:32 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/training/add_training_screen.dart:362:34 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/add_training_screen.dart:362:89 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/add_training_screen.dart:362:89 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/add_training_screen.dart:362:103 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/add_training_screen.dart:362:103 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/add_training_screen.dart:362:105 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/add_training_screen.dart:362:130 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/add_training_screen.dart:362:130 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/add_training_screen.dart:362:132 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/add_training_screen.dart:362:157 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/add_training_screen.dart:362:157 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/add_training_screen.dart:362:159 • non_constant_default_value
+  error • The named parameter 'focus' isn't defined • lib/screens/training/add_training_screen.dart:407:9 • undefined_named_parameter
+  error • The named parameter 'intensity' isn't defined • lib/screens/training/add_training_screen.dart:408:9 • undefined_named_parameter
+  error • The named parameter 'status' isn't defined • lib/screens/training/add_training_screen.dart:409:9 • undefined_named_parameter
+  error • The type 'TrainingStatus' is not exhaustively matched by the switch cases since it doesn't match 'TrainingStatus.inProgress' • lib/screens/training/add_training_screen.dart:479:5 • non_exhaustive_switch_statement
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:58:24 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:58:24 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/training/edit_training_screen.dart:58:26 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:58:81 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:58:81 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:58:95 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:58:95 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:58:97 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:58:122 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:58:122 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:58:124 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:58:149 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:58:149 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:58:151 • non_constant_default_value
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/training/edit_training_screen.dart:65:44 • unrelated_type_equality_checks
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/training/edit_training_screen.dart:101:50 • unrelated_type_equality_checks
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:405:32 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:405:32 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/training/edit_training_screen.dart:405:34 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:405:89 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:405:89 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:405:103 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:405:103 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:405:105 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:405:130 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:405:130 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:405:132 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:405:157 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:405:157 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:405:159 • non_constant_default_value
+  error • The named parameter 'focus' isn't defined • lib/screens/training/edit_training_screen.dart:432:11 • undefined_named_parameter
+  error • The named parameter 'intensity' isn't defined • lib/screens/training/edit_training_screen.dart:433:11 • undefined_named_parameter
+  error • The named parameter 'status' isn't defined • lib/screens/training/edit_training_screen.dart:434:11 • undefined_named_parameter
+  error • Undefined name 'trainingProvider' • lib/screens/training/edit_training_screen.dart:439:24 • undefined_identifier
+  error • Undefined name 'trainingProvider' • lib/screens/training/edit_training_screen.dart:468:24 • undefined_identifier
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:518:34 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:518:34 • obsolete_colon_for_default_value
+  error • Methods can't be invoked in constant expressions • lib/screens/training/edit_training_screen.dart:518:36 • const_eval_method_invocation
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:518:91 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:518:91 • obsolete_colon_for_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:518:105 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:518:105 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:518:107 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:518:132 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:518:132 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:518:134 • non_constant_default_value
+  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/screens/training/edit_training_screen.dart:518:159 • named_parameter_outside_group
+  error • Using a colon as the separator before a default value is no longer supported • lib/screens/training/edit_training_screen.dart:518:159 • obsolete_colon_for_default_value
+  error • The default value of an optional parameter must be constant • lib/screens/training/edit_training_screen.dart:518:161 • non_constant_default_value
+warning • Dead code • lib/screens/training/edit_training_screen.dart:565:34 • dead_code
+warning • Dead code • lib/screens/training/edit_training_screen.dart:579:36 • dead_code
+  error • The type 'TrainingStatus' is not exhaustively matched by the switch cases since it doesn't match 'TrainingStatus.inProgress' • lib/screens/training/edit_training_screen.dart:584:5 • non_exhaustive_switch_statement
+warning • Dead code • lib/screens/training/edit_training_screen.dart:591:36 • dead_code
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/training/training_attendance_screen.dart:61:38 • unrelated_type_equality_checks
+warning • Dead code • lib/screens/training/training_attendance_screen.dart:336:34 • dead_code
+  error • A value of type 'String' can't be returned from the method '_getFocusColor' because it has a return type of 'Color' • lib/screens/training/training_attendance_screen.dart:352:16 • return_of_invalid_type
+warning • Dead code • lib/screens/training/training_attendance_screen.dart:352:34 • dead_code
+warning • Dead code • lib/screens/training/training_attendance_screen.dart:366:36 • dead_code
+  error • A value of type 'String' can't be returned from the method '_getIntensityColor' because it has a return type of 'Color' • lib/screens/training/training_attendance_screen.dart:380:16 • return_of_invalid_type
+warning • Dead code • lib/screens/training/training_attendance_screen.dart:380:36 • dead_code
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/training/training_attendance_screen.dart:512:34 • unrelated_type_equality_checks
+  error • 'trainingsTotal' can't be used as a setter because it's final • lib/screens/training/training_attendance_screen.dart:514:18 • assignment_to_final
+  error • 'trainingsAttended' can't be used as a setter because it's final • lib/screens/training/training_attendance_screen.dart:516:20 • assignment_to_final
+  error • A value of type 'String' can't be returned from the method '_buildFocusBadge' because it has a return type of 'Widget' • lib/screens/training/training_screen.dart:351:16 • return_of_invalid_type
+warning • Dead code • lib/screens/training/training_screen.dart:351:34 • dead_code
+  error • The type 'TrainingStatus' is not exhaustively matched by the switch cases since it doesn't match 'TrainingStatus.inProgress' • lib/screens/training/training_screen.dart:387:5 • non_exhaustive_switch_statement
+  error • A value of type 'String' can't be returned from the method '_buildStatusBadge' because it has a return type of 'Widget' • lib/screens/training/training_screen.dart:398:16 • return_of_invalid_type
+warning • Dead code • lib/screens/training/training_screen.dart:398:36 • dead_code
+  error • A value of type 'String' can't be returned from the method '_getIntensityColor' because it has a return type of 'Color' • lib/screens/training/training_screen.dart:430:16 • return_of_invalid_type
+warning • Dead code • lib/screens/training/training_screen.dart:430:36 • dead_code
+warning • Dead code • lib/screens/training/training_screen.dart:444:36 • dead_code
+  error • The getter 'primaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/screens/training_sessions/enhanced_exercise_library_screen.dart:149:43 • undefined_getter
+  error • The getter 'secondaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/screens/training_sessions/enhanced_exercise_library_screen.dart:153:45 • undefined_getter
+  error • The getter 'primaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/screens/training_sessions/exercise_library_screen.dart:183:43 • undefined_getter
+  error • The getter 'secondaryGameModelFocus' isn't defined for the type 'Morphocycle' • lib/screens/training_sessions/exercise_library_screen.dart:187:45 • undefined_getter
+  error • The getter 'intensityDistribution' isn't defined for the type 'Morphocycle' • lib/screens/training_sessions/exercise_library_screen.dart:208:40 • undefined_getter
+  error • The argument type 'int' can't be assigned to the parameter type 'String'.  • lib/screens/training_sessions/session_builder_screen.dart:75:58 • argument_type_not_assignable
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:96:15 • missing_required_argument
+  error • There isn't a setter named 'phases' in class 'TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:105:14 • assignment_to_final_no_setter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:112:7 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:113:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:114:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:115:11 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:116:11 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:117:11 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:118:11 • assignment_to_final_no_setter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:119:7 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:120:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:121:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:122:11 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:123:11 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:124:11 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:125:11 • assignment_to_final_no_setter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:126:7 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:127:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:128:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:129:11 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:130:11 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:131:11 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:132:11 • assignment_to_final_no_setter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:133:7 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:134:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:135:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:136:11 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:137:11 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:138:11 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:139:11 • assignment_to_final_no_setter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:140:7 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:141:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:142:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:143:11 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:144:11 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:145:11 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:146:11 • assignment_to_final_no_setter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:147:7 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:148:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:149:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:150:11 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:151:11 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:152:11 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:153:11 • assignment_to_final_no_setter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:154:7 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:155:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:156:11 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:157:11 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:158:11 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:159:11 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:160:11 • assignment_to_final_no_setter
+  error • The getter 'hasExercises' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:504:35 • undefined_getter
+  error • The getter 'exerciseCount' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:514:42 • undefined_getter
+  error • The getter 'exerciseCount' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:514:73 • undefined_getter
+warning • The receiver can't be null, so the null-aware operator '?.' is unnecessary • lib/screens/training_sessions/session_builder_screen.dart:523:46 • invalid_null_aware_operator
+warning • The '!' will have no effect because the receiver can't be null • lib/screens/training_sessions/session_builder_screen.dart:525:46 • unnecessary_non_null_assertion
+  error • The getter 'hasExercises' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:535:35 • undefined_getter
+  error • The type 'PhaseType' is not exhaustively matched by the switch cases since it doesn't match 'PhaseType.smallSidedGames' • lib/screens/training_sessions/session_builder_screen.dart:676:5 • non_exhaustive_switch_statement
+  error • The getter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:701:29 • undefined_getter
+  error • The getter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:702:27 • undefined_getter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:716:26 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:727:24 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:728:24 • undefined_setter
+  error • The getter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:729:38 • undefined_getter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:762:22 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:763:9 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:764:9 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:765:9 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:766:9 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:767:9 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:768:9 • assignment_to_final_no_setter
+  error • The type 'PhaseType' is not exhaustively matched by the switch cases since it doesn't match 'PhaseType.smallSidedGames' • lib/screens/training_sessions/session_builder_screen.dart:777:5 • non_exhaustive_switch_statement
+  error • The type 'PhaseType' is not exhaustively matched by the switch cases since it doesn't match 'PhaseType.smallSidedGames' • lib/screens/training_sessions/session_builder_screen.dart:921:5 • non_exhaustive_switch_statement
+  error • There isn't a setter named 'type' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:996:28 • assignment_to_final_no_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1095:30 • undefined_setter
+  error • The getter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1095:53 • undefined_getter
+  error • The named parameter 'createdAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'description' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'durationMinutes' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'exerciseIds' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'name' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'orderIndex' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'sessionId' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'type' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • The named parameter 'updatedAt' is required, but there's no corresponding argument • lib/screens/training_sessions/session_builder_screen.dart:1200:34 • missing_required_argument
+  error • There isn't a setter named 'name' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1201:21 • assignment_to_final_no_setter
+  error • There isn't a setter named 'type' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1202:21 • assignment_to_final_no_setter
+  error • There isn't a setter named 'orderIndex' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1203:21 • assignment_to_final_no_setter
+  error • The setter 'startTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1204:21 • undefined_setter
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1205:21 • undefined_setter
+  error • There isn't a setter named 'description' in class '_$SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1206:21 • assignment_to_final_no_setter
+  error • The type 'PhaseType' is not exhaustively matched by the switch cases since it doesn't match 'PhaseType.smallSidedGames' • lib/screens/training_sessions/session_builder_screen.dart:1223:5 • non_exhaustive_switch_statement
+  error • There isn't a setter named 'sessionObjective' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1250:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'teamFunction' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1251:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'coachingAccent' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1252:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'notes' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1253:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'phases' in class 'TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1254:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'sessionObjective' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1287:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'teamFunction' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1290:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'coachingAccent' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1293:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'notes' in class '_$TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1296:16 • assignment_to_final_no_setter
+  error • There isn't a setter named 'phases' in class 'TrainingSession' • lib/screens/training_sessions/session_builder_screen.dart:1297:16 • assignment_to_final_no_setter
+   info • The type of the right operand ('int') isn't a subtype or a supertype of the left operand ('String') • lib/screens/training_sessions/session_builder_screen.dart:1366:21 • unrelated_type_equality_checks
+  error • The method 'addExercise' isn't defined for the type 'SessionPhase' • lib/screens/training_sessions/session_builder_screen.dart:1401:15 • undefined_method
+  error • A value of type 'MaterialColor' can't be returned from the method '_getSmartCoachingTip' because it has a return type of 'String' • lib/screens/training_sessions/training_sessions_screen.dart:299:16 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getSmartCoachingTip' because it has a return type of 'String' • lib/screens/training_sessions/training_sessions_screen.dart:305:14 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getSmartCoachingTip' because it has a return type of 'String' • lib/screens/training_sessions/training_sessions_screen.dart:309:14 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getSmartCoachingTip' because it has a return type of 'String' • lib/screens/training_sessions/training_sessions_screen.dart:314:14 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getSmartCoachingTip' because it has a return type of 'String' • lib/screens/training_sessions/training_sessions_screen.dart:319:14 • return_of_invalid_type
+  error • A value of type 'MaterialColor' can't be returned from the method '_getSmartCoachingTip' because it has a return type of 'String' • lib/screens/training_sessions/training_sessions_screen.dart:323:12 • return_of_invalid_type
+  error • The named parameter 'id' is required, but there's no corresponding argument • lib/services/calendar_service.dart:130:23 • missing_required_argument
+  error • There isn't a setter named 'sessionObjective' in class '_$TrainingSession' • lib/services/calendar_service.dart:138:15 • assignment_to_final_no_setter
+  error • There isn't a setter named 'notes' in class '_$TrainingSession' • lib/services/calendar_service.dart:139:15 • assignment_to_final_no_setter
+  error • There isn't a setter named 'targetIntensity' in class '_$TrainingSession' • lib/services/calendar_service.dart:140:15 • assignment_to_final_no_setter
+  error • There isn't a setter named 'durationMinutes' in class '_$TrainingSession' • lib/services/calendar_service.dart:143:15 • assignment_to_final_no_setter
+  error • There isn't a setter named 'sessionObjective' in class '_$TrainingSession' • lib/services/calendar_service.dart:151:25 • assignment_to_final_no_setter
+  error • There isn't a setter named 'notes' in class '_$TrainingSession' • lib/services/calendar_service.dart:156:25 • assignment_to_final_no_setter
+  error • The argument type 'String' can't be assigned to the parameter type 'Location'.  • lib/services/calendar_service.dart:181:131 • argument_type_not_assignable
+  error • The argument type 'String' can't be assigned to the parameter type 'Competition'.  • lib/services/calendar_service.dart:181:148 • argument_type_not_assignable
+  error • Expected to find ';' • lib/services/calendar_service.dart:181:204 • expected_token
+  error • The getter 'id' isn't defined for the type 'PeriodizationPlan' • lib/services/database_service.dart:201:39 • undefined_getter
+   info • The argument type 'int' isn't related to 'String' • lib/services/database_service.dart:243:33 • collection_methods_unrelated_type
+  error • The argument type 'int' can't be assigned to the parameter type 'String'.  • lib/services/database_service.dart:243:33 • argument_type_not_assignable
+  error • The method 'toJson' isn't defined for the type 'PeriodizationPlan' • lib/services/database_service.dart:333:41 • undefined_method
+  error • The method 'isAfter' can't be unconditionally invoked because the receiver can be 'null' • lib/services/database_service.dart:472:31 • unchecked_use_of_nullable_value
+  error • The method 'isBefore' can't be unconditionally invoked because the receiver can be 'null' • lib/services/database_service.dart:473:31 • unchecked_use_of_nullable_value
+  error • The method 'compareTo' can't be unconditionally invoked because the receiver can be 'null' • lib/services/database_service.dart:475:36 • unchecked_use_of_nullable_value
+  error • The argument type 'DateTime?' can't be assigned to the parameter type 'DateTime'.  • lib/services/database_service.dart:475:46 • argument_type_not_assignable
+  error • The getter 'id' isn't defined for the type 'PeriodizationPlan' • lib/services/database_service.dart:678:35 • undefined_getter
+  error • The method 'isAfter' can't be unconditionally invoked because the receiver can be 'null' • lib/services/database_service.dart:722:47 • unchecked_use_of_nullable_value
+  error • The method 'compareTo' can't be unconditionally invoked because the receiver can be 'null' • lib/services/database_service.dart:724:36 • unchecked_use_of_nullable_value
+  error • The argument type 'DateTime?' can't be assigned to the parameter type 'DateTime'.  • lib/services/database_service.dart:724:46 • argument_type_not_assignable
+   info • The argument type 'int' isn't related to 'String' • lib/services/database_service.dart:729:29 • collection_methods_unrelated_type
+  error • The argument type 'int' can't be assigned to the parameter type 'String'.  • lib/services/database_service.dart:729:29 • argument_type_not_assignable
+  error • The method 'toJson' isn't defined for the type 'PeriodizationPlan' • lib/services/database_service.dart:858:80 • undefined_method
+  error • The named parameter 'matchesPlayed' isn't defined • lib/services/database_service.dart:911:7 • undefined_named_parameter
+  error • The named parameter 'matchesPlayed' isn't defined • lib/services/database_service.dart:949:9 • undefined_named_parameter
+  error • The named parameter 'goals' isn't defined • lib/services/database_service.dart:950:9 • undefined_named_parameter
+  error • The named parameter 'assists' isn't defined • lib/services/database_service.dart:951:9 • undefined_named_parameter
+  error • The named parameter 'trainingsAttended' isn't defined • lib/services/database_service.dart:952:9 • undefined_named_parameter
+  error • The named parameter 'trainingsTotal' isn't defined • lib/services/database_service.dart:953:9 • undefined_named_parameter
+  error • The argument type 'int' can't be assigned to the parameter type 'double?'.  • lib/services/database_service.dart:969:20 • argument_type_not_assignable
+warning • Dead code • lib/services/export_service.dart:332:34 • dead_code
+warning • Dead code • lib/services/export_service.dart:346:36 • dead_code
+  error • The type 'TrainingStatus' is not exhaustively matched by the switch cases since it doesn't match 'TrainingStatus.inProgress' • lib/services/export_service.dart:351:5 • non_exhaustive_switch_statement
+warning • Dead code • lib/services/export_service.dart:358:36 • dead_code
+  error • Expected to find ';' • lib/services/import_service.dart:127:306 • expected_token
+warning • The declaration '_parseDate' isn't referenced • lib/services/import_service.dart:154:12 • unused_element
+warning • The declaration '_parsePosition' isn't referenced • lib/services/import_service.dart:179:12 • unused_element
+warning • The declaration '_parsePreferredFoot' isn't referenced • lib/services/import_service.dart:195:17 • unused_element
+   info • Use 'const' for final variables initialized to a constant value • lib/services/organization_service.dart:21:7 • prefer_const_declarations
+  error • The getter 'startTime' isn't defined for the type 'SessionPhase' • lib/services/pdf_service.dart:336:64 • undefined_getter
+  error • The getter 'endTime' isn't defined for the type 'SessionPhase' • lib/services/pdf_service.dart:337:62 • undefined_getter
+warning • The receiver can't be null, so the null-aware operator '?.' is unnecessary • lib/services/pdf_service.dart:375:46 • invalid_null_aware_operator
+warning • The '!' will have no effect because the receiver can't be null • lib/services/pdf_service.dart:378:46 • unnecessary_non_null_assertion
+  error • The getter 'technicalSkills' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:886:79 • undefined_getter
+  error • The getter 'tacticalSkills' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:888:78 • undefined_getter
+  error • The getter 'physicalAttributes' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:896:77 • undefined_getter
+  error • The getter 'mentalAttributes' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:898:77 • undefined_getter
+  error • The getter 'strengths' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:976:40 • undefined_getter
+  error • The getter 'developmentGoals' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:978:21 • undefined_getter
+  error • The getter 'coachNotes' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:979:21 • undefined_getter
+  error • The getter 'strengths' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:1014:26 • undefined_getter
+  error • The getter 'strengths' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:1015:59 • undefined_getter
+  error • The getter 'developmentGoals' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:1020:26 • undefined_getter
+  error • The getter 'developmentGoals' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:1022:65 • undefined_getter
+  error • The getter 'coachNotes' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:1024:26 • undefined_getter
+  error • The getter 'coachNotes' isn't defined for the type 'PlayerAssessment' • lib/services/pdf_service.dart:1026:60 • undefined_getter
+  error • The type 'AssessmentType' is not exhaustively matched by the switch cases since it doesn't match 'AssessmentType.annual' • lib/services/pdf_service.dart:1119:5 • non_exhaustive_switch_statement
+   info • Use 'const' for final variables initialized to a constant value • lib/services/supabase_database_service.dart:22:7 • prefer_const_declarations
+  error • The argument type 'PerformanceRating' can't be assigned to the parameter type 'Map<String, dynamic>'.  • lib/widgets/common/rating_dialog.dart:67:44 • argument_type_not_assignable
+  error • The named parameter 'lastNRatings' isn't defined • lib/widgets/player/player_card.dart:20:76 • undefined_named_parameter
+  error • The argument type 'String' can't be assigned to the parameter type 'Position'.  • lib/widgets/player/player_card.dart:47:56 • argument_type_not_assignable
+  error • The setter 'endTime' isn't defined for the type 'SessionPhase' • lib/widgets/training/phase_designer.dart:174:18 • undefined_setter
+  error • The getter 'startTime' isn't defined for the type 'SessionPhase' • lib/widgets/training/phase_designer.dart:174:41 • undefined_getter
+  error • The type 'PhaseType' is not exhaustively matched by the switch cases since it doesn't match 'PhaseType.smallSidedGames' • lib/widgets/training/phase_designer.dart:179:5 • non_exhaustive_switch_statement
+  error • The type 'PhaseType' is not exhaustively matched by the switch cases since it doesn't match 'PhaseType.smallSidedGames' • lib/widgets/training/phase_designer.dart:204:5 • non_exhaustive_switch_statement
+  error • The type 'PhaseType' is not exhaustively matched by the switch cases since it doesn't match 'PhaseType.smallSidedGames' • lib/widgets/training/phase_designer.dart:229:5 • non_exhaustive_switch_statement
+
+1009 issues found. (ran in 8.2s)

@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'package:isar/isar.dart';
 import 'content_distribution.dart';
 
 // part 'training_period.g.dart'; // Disabled for web compatibility
 
-// @Collection() // Disabled for web compatibility
 class TrainingPeriod {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   // Relationship to periodization plan
   late String periodizationPlanId; // Links to PeriodizationPlan
@@ -15,7 +13,6 @@ class TrainingPeriod {
   late String name; // "Preparation", "Early Competition", "Peak", etc.
   late String description;
 
-  @Enumerated(EnumType.name)
   late PeriodType type; // preparation, competition_early, competition_peak, transition
 
   // Sequence and timing
@@ -39,7 +36,6 @@ class TrainingPeriod {
   late int restDaysBetweenSessions; // minimum rest days
 
   // Status tracking
-  @Enumerated(EnumType.name)
   late PeriodStatus status; // planned, active, completed, paused
 
   // Metadata
@@ -259,7 +255,7 @@ class TrainingPeriod {
 
   factory TrainingPeriod.fromJson(Map<String, dynamic> json) {
     final period = TrainingPeriod();
-    period.id = json['id'] ?? Isar.autoIncrement;
+    period.id = json['id'] ?? "";
     period.periodizationPlanId = json['periodizationPlanId'] ?? '';
     period.name = json['name'] ?? '';
     period.description = json['description'] ?? '';

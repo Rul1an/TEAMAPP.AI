@@ -23,6 +23,12 @@ class AppTheme {
   static const Color midfielderColor = Color(0xFF388E3C); // Green
   static const Color forwardColor = Color(0xFFD32F2F); // Red
 
+  // SaaS Tier colors
+  static const Color basicTierColor = Color(0xFF4CAF50); // Green
+  static const Color proTierColor = Color(0xFF2196F3); // Blue
+  static const Color enterpriseTierColor = Color(0xFF9C27B0); // Purple
+  static const Color adminColor = Color(0xFFD32F2F); // Red
+
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
@@ -130,18 +136,18 @@ class AppTheme {
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
-              chipTheme: ChipThemeData(
-          backgroundColor: backgroundColor,
-          selectedColor: primaryColor.withValues(alpha: 0.2),
-          labelStyle: GoogleFonts.inter(
-            fontSize: 14,
-            color: textPrimaryColor,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+      chipTheme: ChipThemeData(
+        backgroundColor: backgroundColor,
+        selectedColor: primaryColor.withValues(alpha: 0.2),
+        labelStyle: GoogleFonts.inter(
+          fontSize: 14,
+          color: textPrimaryColor,
         ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
     );
   }
 
@@ -169,4 +175,33 @@ class AppTheme {
         return textSecondaryColor;
     }
   }
+
+  // SaaS Tier helper methods
+  static Color getTierColor(String tier) {
+    switch (tier.toLowerCase()) {
+      case 'basic':
+        return basicTierColor;
+      case 'pro':
+        return proTierColor;
+      case 'enterprise':
+        return enterpriseTierColor;
+      default:
+        return basicTierColor;
+    }
+  }
+
+  static BoxDecoration getTierBadgeDecoration(String tier) {
+    return BoxDecoration(
+      color: getTierColor(tier),
+      borderRadius: BorderRadius.circular(12),
+    );
+  }
+
+  static Color getAdminColor() => adminColor;
+
+  static TextStyle get tierBadgeTextStyle => const TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontSize: 12,
+  );
 }

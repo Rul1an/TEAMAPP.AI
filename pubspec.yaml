@@ -14,6 +14,10 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
 
+  # Code generation annotations
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
   # State Management
   flutter_riverpod: ^2.5.1
   riverpod_annotation: ^2.3.5
@@ -23,8 +27,6 @@ dependencies:
 
   # Backend & Database
   supabase_flutter: ^2.5.6
-  isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
 
   # Utilities
   uuid: ^4.4.0
@@ -48,14 +50,20 @@ dependencies:
   file_saver: ^0.2.14
   web: ^1.1.1
   flutter_heatmap_calendar: ^1.0.5
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
   build_runner: ^2.4.9
-  isar_generator: ^3.1.0+1
   riverpod_generator: ^2.4.0
+
+  # Code generation
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
+  isar_generator: ^3.1.0+1
 
 flutter:
   uses-material-design: true

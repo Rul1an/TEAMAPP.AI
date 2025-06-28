@@ -82,7 +82,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
             },
           );
 
-          if (match.id == 0) {
+          if (match.id == "0") {
             return const Center(child: Text('Wedstrijd niet gevonden'));
           }
 
@@ -604,7 +604,6 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   }
 
   void _showRatingOptions(Match match, List<Player> players) {
-    final parentContext = context;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -654,11 +653,11 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                       Navigator.of(context).pop();
 
                       // Show the rating dialog after a small delay to ensure the bottom sheet is closed
-                      Future.delayed(const Duration(milliseconds: 100), () async {
+                      WidgetsBinding.instance.addPostFrameCallback((_) async {
                         if (!mounted) return;
 
                         final result = await showDialog<bool>(
-                          context: parentContext,
+                          context: context,
                           builder: (dialogContext) => RatingDialog(
                             player: player,
                             matchId: match.id.toString(),

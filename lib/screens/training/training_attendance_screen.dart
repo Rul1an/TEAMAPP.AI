@@ -62,7 +62,7 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
             },
           );
 
-          if (training.id == 0) {
+          if (training.id == '') {
             return const Center(child: Text('Training niet gevonden'));
           }
 
@@ -469,7 +469,7 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
                           ),
                         );
 
-                        if (result == true && mounted) {
+                        if (result == true && mounted && context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Beoordeling opgeslagen voor ${player.name}'),
@@ -508,7 +508,7 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
           orElse: () => Player(),
         );
 
-        if (player.id != 0) {
+        if (player.id != '') {
           // Update player training statistics
           player.trainingsTotal++;
           if (status == AttendanceStatus.present || status == AttendanceStatus.late) {

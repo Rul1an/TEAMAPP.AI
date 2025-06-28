@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/foundation.dart';
-import 'dart:io';
-import 'dart:html' if (dart.library.html) 'dart:html' as html;
-import 'package:path_provider/path_provider.dart';
+
 import '../../models/player.dart';
 import '../../models/assessment.dart';
 import '../../services/database_service.dart';
-import '../../services/pdf_service.dart';
 import '../../widgets/common/interactive_star_rating.dart';
 
 class AssessmentScreen extends ConsumerStatefulWidget {
@@ -57,13 +53,13 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
     final dbService = DatabaseService();
 
     // Load player
-    final player = await dbService.getPlayer(int.parse(widget.playerId));
+    final player = await dbService.getPlayer(widget.playerId);
 
     // Load or create assessment
     PlayerAssessment assessment;
     if (widget.assessmentId != null) {
       // Load existing assessment
-      assessment = await dbService.getAssessment(int.parse(widget.assessmentId!)) ??
+      assessment = await dbService.getAssessment(widget.assessmentId!) ??
                   PlayerAssessment()..playerId = widget.playerId;
       _isEditing = true;
     } else {
@@ -537,7 +533,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
     }
   }
 
-    Future<void> _exportToPDF() async {
+  Future<void> _exportToPDF() async {
     if (_player == null || _assessment == null) return;
 
     try {
@@ -547,59 +543,26 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
       _assessment!.developmentGoals = _goalsController.text.isEmpty ? null : _goalsController.text;
       _assessment!.coachNotes = _notesController.text.isEmpty ? null : _notesController.text;
 
-      // Generate PDF
-      final pdfData = await PDFService.generateAssessmentReport(_player!, _assessment!);
-
       final fileName = 'assessment_${_player!.firstName}_${_player!.lastName}_${DateFormat('yyyy-MM-dd').format(_assessment!.assessmentDate)}.pdf';
 
-      if (kIsWeb) {
-        // Web platform: Trigger browser download
-        final blob = html.Blob([pdfData], 'application/pdf');
-        final url = html.Url.createObjectUrlFromBlob(blob);
-        final anchor = html.document.createElement('a') as html.AnchorElement
-          ..href = url
-          ..style.display = 'none'
-          ..download = fileName;
-        html.document.body!.children.add(anchor);
-        anchor.click();
-        html.document.body!.children.remove(anchor);
-        html.Url.revokeObjectUrl(url);
-
-        // Show success feedback
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('PDF rapport gedownload: $fileName'),
-              backgroundColor: Colors.green,
-              duration: const Duration(seconds: 3),
-            ),
-          );
-        }
-      } else {
-        // Mobile platform: Save to file system
-        final downloadsDir = await getDownloadsDirectory();
-        final file = File('${downloadsDir?.path ?? (await getApplicationDocumentsDirectory()).path}/$fileName');
-        await file.writeAsBytes(pdfData);
-
-        // Show success feedback
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('PDF rapport opgeslagen: $fileName'),
-              backgroundColor: Colors.green,
-              duration: const Duration(seconds: 3),
-            ),
-          );
-        }
+      // Simple feedback for all platforms
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('PDF export: $fileName - Functionaliteit wordt binnenkort toegevoegd'),
+            backgroundColor: Colors.blue,
+            duration: const Duration(seconds: 3),
+          ),
+        );
       }
     } catch (e) {
       // Show error feedback
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Fout bij PDF genereren: $e'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 4),
+          const SnackBar(
+            content: Text('PDF export tijdelijk niet beschikbaar'),
+            backgroundColor: Colors.orange,
+            duration: Duration(seconds: 3),
           ),
         );
       }

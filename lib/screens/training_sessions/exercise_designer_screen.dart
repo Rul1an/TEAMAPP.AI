@@ -689,13 +689,15 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
       ref.read(exerciseDesignerProvider.notifier).setFormData(formData);
 
       // Toon een snackbar om te bevestigen
-      ScaffoldMessenger.of(context).showSnackBar(
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${selectedExercise.name} geladen om aan te passen'),
           backgroundColor: Colors.green[700],
           behavior: SnackBarBehavior.floating,
         ),
       );
+      }
     }
   }
 

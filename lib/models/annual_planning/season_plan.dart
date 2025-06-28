@@ -1,18 +1,15 @@
-import 'package:isar/isar.dart';
 import 'periodization_plan.dart';
 
 // part 'season_plan.g.dart'; // Disabled for web compatibility
 
-// @Collection() // Disabled for web compatibility
 class SeasonPlan {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   // Basic season information
   late String name; // "JO17-1 Seizoen 2024-2025"
   late String description;
   late String season; // "2024-2025"
 
-  @Enumerated(EnumType.name)
   late AgeGroup ageGroup; // U17, U16, etc.
 
   late String teamName; // "JO17-1", "JO16-2"
@@ -49,7 +46,6 @@ class SeasonPlan {
   // Template and tracking
   late bool isTemplate; // true for reusable season templates
 
-  @Enumerated(EnumType.name)
   late SeasonStatus status; // draft, active, completed, archived
 
   // Progress tracking
@@ -312,7 +308,7 @@ class SeasonPlan {
 
   factory SeasonPlan.fromJson(Map<String, dynamic> json) {
     final plan = SeasonPlan();
-    plan.id = json['id'] ?? Isar.autoIncrement;
+    plan.id = json['id'] ?? "";
     plan.name = json['name'] ?? '';
     plan.description = json['description'] ?? '';
     plan.season = json['season'] ?? '';

@@ -28,15 +28,14 @@ enum Formation {
   }
 }
 
-@collection
 class Team {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   late String name;
   late String ageGroup;
   late String season;
 
-  @enumerated
+  @Enumerated(EnumType.name)
   late Formation preferredFormation;
 
   String? coachName;

@@ -1,10 +1,8 @@
-import 'package:isar/isar.dart';
 
 // part 'content_distribution.g.dart'; // Disabled for web compatibility
 
-// @Collection() // Disabled for web compatibility
 class ContentDistribution {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
     // Training content percentages (must total 100%)
   late double technicalPercentage; // 0-100% (ball skills, passing, shooting)
@@ -91,7 +89,7 @@ class ContentDistribution {
 
   factory ContentDistribution.fromJson(Map<String, dynamic> json) {
     final distribution = ContentDistribution();
-    distribution.id = json['id'] ?? Isar.autoIncrement;
+    distribution.id = json['id'] ?? "";
     distribution.technicalPercentage = json['technicalPercentage']?.toDouble() ?? 0.0;
     distribution.tacticalPercentage = json['tacticalPercentage']?.toDouble() ?? 0.0;
     distribution.physicalPercentage = json['physicalPercentage']?.toDouble() ?? 0.0;

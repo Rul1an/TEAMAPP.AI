@@ -7,7 +7,7 @@ final playersProvider = FutureProvider<List<Player>>((ref) async {
   return await db.getAllPlayers();
 });
 
-final playerByIdProvider = FutureProvider.family<Player?, int>((ref, id) async {
+final playerByIdProvider = FutureProvider.family<Player?, String>((ref, id) async {
   final db = DatabaseService();
   return await db.getPlayer(id);
 });
@@ -58,7 +58,7 @@ class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
     }
   }
 
-  Future<void> deletePlayer(int id) async {
+  Future<void> deletePlayer(String id) async {
     state = const AsyncValue.loading();
     try {
       await _db.deletePlayer(id);

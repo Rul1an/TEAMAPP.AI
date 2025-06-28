@@ -1,20 +1,16 @@
-import 'package:isar/isar.dart';
 import 'content_distribution.dart';
 
 // part 'periodization_plan.g.dart'; // Disabled for web compatibility
 
-// @Collection() // Disabled for web compatibility
 class PeriodizationPlan {
-  Id id = Isar.autoIncrement;
+  String id = "";
 
   // Basic information
   late String name; // "KNVB Youth Development Model", "Traditional Linear"
   late String description;
 
-  @Enumerated(EnumType.name)
   late PeriodizationModel modelType; // linear, block, conjugate, knvb_youth, custom
 
-  @Enumerated(EnumType.name)
   late AgeGroup targetAgeGroup; // u10, u12, u14, u16, u17, u19, senior
 
   // Plan structure
@@ -181,7 +177,7 @@ class PeriodizationPlan {
 
   factory PeriodizationPlan.fromJson(Map<String, dynamic> json) {
     final plan = PeriodizationPlan();
-    plan.id = json['id'] ?? Isar.autoIncrement;
+    plan.id = json['id'] ?? "";
     plan.name = json['name'] ?? '';
     plan.description = json['description'] ?? '';
     plan.modelType = PeriodizationModel.values.firstWhere(
