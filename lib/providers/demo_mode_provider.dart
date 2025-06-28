@@ -119,6 +119,26 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
     state = DemoModeState();
   }
 
+  /// Get the current demo role as string
+  String? getDemoRole() {
+    switch (state.role) {
+      case DemoRole.boardMember:
+        return 'bestuurder';
+      case DemoRole.coach:
+        return 'hoofdcoach';
+      case DemoRole.assistantCoach:
+        return 'assistent';
+      case DemoRole.player:
+        return 'speler';
+      case DemoRole.clubAdmin:
+        return 'admin';
+      case DemoRole.technicalCommittee:
+        return 'technisch';
+      default:
+        return null;
+    }
+  }
+
   String _getDemoUserName(DemoRole role) {
     switch (role) {
       case DemoRole.clubAdmin:
@@ -160,8 +180,3 @@ final demoRoleProvider = Provider<DemoRole?>((ref) {
 final demoUserNameProvider = Provider<String?>((ref) {
   return ref.watch(demoModeProvider).userName;
 });
-
-  /// Get the current demo role
-  String? getDemoRole() {
-    return state.demoRole;
-  }

@@ -6,7 +6,11 @@ import '../../widgets/common/quick_actions_widget.dart';
 import 'package:intl/intl.dart';
 import '../../providers/statistics_provider.dart';
 import '../../providers/matches_provider.dart';
+import '../../providers/demo_mode_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/organization_provider.dart';
 import '../../services/database_service.dart';
+import '../../services/permission_service.dart';
 import '../../models/match.dart';
 import '../../models/training_session/training_session.dart';
 import '../../models/annual_planning/season_plan.dart';
@@ -38,22 +42,23 @@ class DashboardScreen extends ConsumerWidget {
     final seasonAsync = ref.watch(dashboardSeasonProvider);
     final trainingSessionsAsync = ref.watch(dashboardTrainingSessionsProvider);
 
+    // Get user role and permissions
+    final isDemoMode = ref.watch(demoModeProvider);
+    final currentUser = ref.watch(currentUserProvider);
+    final organization = ref.watch(currentOrganizationProvider);
+
+    String? userRole;
+    if (isDemoMode.isActive) {
+      userRole = ref.read(demoModeProvider.notifier).getDemoRole();
+    } else {
+      userRole = currentUser?.userMetadata?['role'] as String?;
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('JO17 Tactical Manager'),
+        title: Text(_getDashboardTitle(userRole)),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline),
-            onPressed: () => context.push('/session-builder'),
-            tooltip: 'Nieuwe Training',
-          ),
-          IconButton(
-            icon: const Icon(Icons.sports_soccer),
-            onPressed: () => context.go('/lineup'),
-            tooltip: 'Opstelling Maken',
-          ),
-        ],
+        actions: _buildAppBarActions(context, userRole, organization?.tier?.name),
       ),
       body: statisticsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -63,72 +68,16 @@ class DashboardScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Welcome Section & Season Status
+              // Role-specific welcome section
               seasonAsync.when(
-                data: (season) => _buildWelcomeSection(context, season),
-                loading: () => _buildLoadingWelcome(context),
-                error: (error, stack) => _buildNoSeasonWelcome(context),
+                data: (season) => _buildWelcomeSection(context, season, userRole),
+                loading: () => _buildLoadingWelcome(context, userRole),
+                error: (error, stack) => _buildNoSeasonWelcome(context, userRole),
               ),
               const SizedBox(height: 24),
 
-              // Smart Quick Actions
-              _buildSmartActions(context),
-                                const SizedBox(height: 24),
-
-                  // Quick Actions
-                  const QuickActionsWidget(),
-
-                  const SizedBox(height: 24),
-
-              // Statistics Cards
-              _buildStatisticsCards(context, statistics),
-              const SizedBox(height: 24),
-
-              // Today's Focus & Upcoming Items
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-              Text(
-                'Aankomende Wedstrijden',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 8),
-              upcomingMatchesAsync.when(
-                loading: () => const CircularProgressIndicator(),
-                error: (error, stack) => Text('Error: $error'),
-                data: (matches) => _buildUpcomingMatches(context, matches),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'VOAB Training Sessies',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(height: 8),
-                        trainingSessionsAsync.when(
-                          loading: () => const CircularProgressIndicator(),
-                          error: (error, stack) => const Text('Geen sessies'),
-                          data: (sessions) => _buildUpcomingTrainingSessions(context, sessions),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              // Performance Chart
-              _buildPerformanceChart(context, statistics),
+              // Role-specific content
+              ..._buildRoleSpecificContent(context, ref, userRole, organization?.tier?.name, statistics, upcomingMatchesAsync, trainingSessionsAsync),
             ],
           ),
         ),
@@ -136,13 +85,325 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildWelcomeSection(BuildContext context, SeasonPlan? season) {
+  String _getDashboardTitle(String? userRole) {
+    if (PermissionService.isPlayer(userRole)) {
+      return 'Mijn Dashboard';
+    } else if (PermissionService.isParent(userRole)) {
+      return 'Ouder Dashboard';
+    } else if (PermissionService.isAdmin(userRole)) {
+      return 'Bestuurder Dashboard';
+    } else {
+      return 'Coach Dashboard';
+    }
+  }
+
+  List<Widget> _buildAppBarActions(BuildContext context, String? userRole, String? tier) {
+    List<Widget> actions = [];
+
+    // Only coaches and admins can create training sessions
+    if (PermissionService.canManageTraining(userRole)) {
+      actions.add(
+        IconButton(
+          icon: const Icon(Icons.add_circle_outline),
+          onPressed: () => context.push('/session-builder'),
+          tooltip: 'Nieuwe Training',
+        ),
+      );
+    }
+
+    // Only coaches can create lineups
+    if (PermissionService.canManageMatches(userRole)) {
+      actions.add(
+        IconButton(
+          icon: const Icon(Icons.sports_soccer),
+          onPressed: () => context.go('/lineup'),
+          tooltip: 'Opstelling Maken',
+        ),
+      );
+    }
+
+    return actions;
+  }
+
+  List<Widget> _buildRoleSpecificContent(
+    BuildContext context,
+    WidgetRef ref,
+    String? userRole,
+    String? tier,
+    dynamic statistics,
+    AsyncValue<List<Match>> upcomingMatchesAsync,
+    AsyncValue<List<TrainingSession>> trainingSessionsAsync,
+  ) {
+    List<Widget> content = [];
+
+    if (PermissionService.isPlayer(userRole)) {
+      // Player-specific content
+      content.addAll([
+        _buildPlayerQuickActions(context),
+        const SizedBox(height: 24),
+        _buildPlayerStats(context, statistics),
+        const SizedBox(height: 24),
+        _buildUpcomingEventsForPlayer(context, upcomingMatchesAsync, trainingSessionsAsync),
+      ]);
+    } else if (PermissionService.isParent(userRole)) {
+      // Parent-specific content
+      content.addAll([
+        _buildParentOverview(context),
+        const SizedBox(height: 24),
+        _buildUpcomingEventsForParent(context, upcomingMatchesAsync, trainingSessionsAsync),
+      ]);
+    } else {
+      // Coach/Admin content (full access)
+      content.addAll([
+        _buildSmartActions(context),
+        const SizedBox(height: 24),
+        const QuickActionsWidget(),
+        const SizedBox(height: 24),
+        _buildStatisticsCards(context, statistics),
+        const SizedBox(height: 24),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Aankomende Wedstrijden',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  upcomingMatchesAsync.when(
+                    loading: () => const CircularProgressIndicator(),
+                    error: (error, stack) => Text('Error: $error'),
+                    data: (matches) => _buildUpcomingMatches(context, matches),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'VOAB Training Sessies',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  trainingSessionsAsync.when(
+                    loading: () => const CircularProgressIndicator(),
+                    error: (error, stack) => const Text('Geen sessies'),
+                    data: (sessions) => _buildUpcomingTrainingSessions(context, sessions),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        _buildPerformanceChart(context, statistics),
+      ]);
+    }
+
+    return content;
+  }
+
+  Widget _buildPlayerQuickActions(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Mijn Acties',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              childAspectRatio: 2.5,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              children: [
+                _buildActionCard(
+                  context,
+                  'Mijn Profiel',
+                  Icons.person,
+                  () => context.go('/players'),
+                ),
+                _buildActionCard(
+                  context,
+                  'Prestaties',
+                  Icons.analytics,
+                  () => context.go('/analytics'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlayerStats(BuildContext context, dynamic statistics) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Mijn Statistieken',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildStatCard(
+                    context,
+                    'Trainingen',
+                    '${statistics?.totalTrainingAttendance ?? 0}',
+                    Icons.sports,
+                    Colors.blue,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _buildStatCard(
+                    context,
+                    'Wedstrijden',
+                    '${statistics?.totalMatches ?? 0}',
+                    Icons.stadium,
+                    Colors.green,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildParentOverview(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Overzicht van uw kind',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('Spelersinformatie'),
+              subtitle: const Text('Bekijk profiel en prestaties'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => context.go('/players'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUpcomingEventsForPlayer(
+    BuildContext context,
+    AsyncValue<List<Match>> upcomingMatchesAsync,
+    AsyncValue<List<TrainingSession>> trainingSessionsAsync,
+  ) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Aankomende Evenementen',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            upcomingMatchesAsync.when(
+              loading: () => const CircularProgressIndicator(),
+              error: (error, stack) => const Text('Geen wedstrijden'),
+              data: (matches) => Column(
+                children: matches.take(3).map((match) => ListTile(
+                  leading: const Icon(Icons.stadium),
+                  title: Text(match.opponent),
+                  subtitle: Text(DateFormat('dd/MM/yyyy HH:mm').format(match.date)),
+                )).toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUpcomingEventsForParent(
+    BuildContext context,
+    AsyncValue<List<Match>> upcomingMatchesAsync,
+    AsyncValue<List<TrainingSession>> trainingSessionsAsync,
+  ) {
+    return _buildUpcomingEventsForPlayer(context, upcomingMatchesAsync, trainingSessionsAsync);
+  }
+
+  Widget _buildActionCard(
+    BuildContext context,
+    String title,
+    IconData icon,
+    VoidCallback onTap,
+  ) {
+    return Card(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              Icon(icon, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeSection(BuildContext context, SeasonPlan? season, String? userRole) {
     if (season == null) {
-      return _buildNoSeasonWelcome(context);
+      return _buildNoSeasonWelcome(context, userRole);
     }
 
     final currentPhase = season.getCurrentPhase();
     final progress = season.seasonProgressByDate;
+    String welcomeMessage = 'Welkom terug!';
+
+    if (PermissionService.isPlayer(userRole)) {
+      welcomeMessage = 'Hallo speler!';
+    } else if (PermissionService.isParent(userRole)) {
+      welcomeMessage = 'Welkom ouder!';
+    } else if (PermissionService.isAdmin(userRole)) {
+      welcomeMessage = 'Welkom bestuurder!';
+    } else {
+      welcomeMessage = 'Welkom terug, Coach!';
+    }
 
     return Card(
       child: Container(
@@ -173,7 +434,7 @@ class DashboardScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Welkom terug, Coach!',
+                        welcomeMessage,
                         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -215,7 +476,7 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildLoadingWelcome(BuildContext context) {
+  Widget _buildLoadingWelcome(BuildContext context, String? userRole) {
     return Card(
       child: Container(
         width: double.infinity,
@@ -225,7 +486,7 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildNoSeasonWelcome(BuildContext context) {
+  Widget _buildNoSeasonWelcome(BuildContext context, String? userRole) {
     return Card(
       child: Container(
         width: double.infinity,
@@ -282,9 +543,7 @@ class DashboardScreen extends ConsumerWidget {
                   child: _buildActionCard(
                     context,
                     'Nieuwe Training',
-                    'VOAB Session Builder',
                     Icons.add_circle,
-                    Colors.green,
                     () => context.push('/session-builder'),
                   ),
                 ),
@@ -293,9 +552,7 @@ class DashboardScreen extends ConsumerWidget {
                   child: _buildActionCard(
                     context,
                     'Seizoen Planning',
-                    'Jaarplanning & Periodisering',
                     Icons.calendar_today,
-                    Colors.blue,
                     () => context.push('/annual-planning'),
                   ),
                 ),
@@ -304,9 +561,7 @@ class DashboardScreen extends ConsumerWidget {
                   child: _buildActionCard(
                     context,
                     'Alle Trainingen',
-                    'Sessies & Oefeningen',
                     Icons.list_alt,
-                    Colors.orange,
                     () => context.push('/training-sessions'),
                   ),
                 ),
@@ -315,62 +570,13 @@ class DashboardScreen extends ConsumerWidget {
                   child: _buildActionCard(
                     context,
                     'Opstelling',
-                    'Lineup Builder',
                     Icons.sports_soccer,
-                    Colors.purple,
                     () => context.go('/lineup'),
                   ),
                 ),
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionCard(
-    BuildContext context,
-    String title,
-    String subtitle,
-    IconData icon,
-    Color color,
-    VoidCallback onTap,
-  ) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: color.withValues(alpha: 0.3)),
-          ),
-          child: Column(
-            children: [
-              Icon(icon, color: color, size: 32),
-              const SizedBox(height: 8),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: color,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
         ),
       ),
     );

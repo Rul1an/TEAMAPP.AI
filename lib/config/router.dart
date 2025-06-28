@@ -30,20 +30,15 @@ import '../widgets/common/main_scaffold.dart';
 import '../models/training_session/training_exercise.dart';
 import '../providers/demo_mode_provider.dart';
 import '../providers/auth_provider.dart';
-import '../providers/organization_provider.dart';
-import '../services/permission_service.dart';
 
-GoRouter createRouter(WidgetRef ref) {
+GoRouter createRouter(Ref ref) {
   return GoRouter(
     initialLocation: '/auth',
     redirect: (context, state) {
       final isLoggedIn = ref.read(isLoggedInProvider);
-      final currentUser = ref.read(currentUserProvider);
-      final isDemoMode = ref.read(demoModeProvider);
-      final organization = ref.read(organizationProvider);
-      
+      final isDemoMode = ref.read(demoModeProvider).isActive;
+
       final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
-      final path = state.fullPath ?? '';
 
       // Always allow access to auth page
       if (isOnAuthPage) {
@@ -53,40 +48,6 @@ GoRouter createRouter(WidgetRef ref) {
       // If not logged in and not in demo mode, redirect to auth
       if (!isLoggedIn && !isDemoMode) {
         return '/auth';
-      }
-
-      // Get user role
-      String? userRole;
-      if (isDemoMode) {
-        userRole = ref.read(demoModeProvider.notifier).getDemoRole();
-      } else {
-        userRole = currentUser?.userMetadata?['role'] as String?;
-      }
-
-      // Get organization tier
-      final tier = organization?.tier;
-
-      // Check if user has access to the requested route
-      final accessibleRoutes = PermissionService.getAccessibleRoutes(userRole, tier);
-      
-      // Check if the current path is accessible
-      bool hasAccess = false;
-      for (final route in accessibleRoutes) {
-        if (path.startsWith(route)) {
-          hasAccess = true;
-          break;
-        }
-      }
-
-      // If no access, redirect based on role
-      if (!hasAccess) {
-        if (PermissionService.isPlayer(userRole) || PermissionService.isParent(userRole)) {
-          // Players and parents go to limited dashboard
-          return '/dashboard';
-        } else {
-          // Others without access go to dashboard
-          return '/dashboard';
-        }
       }
 
       return null;
@@ -233,7 +194,7 @@ GoRouter createRouter(WidgetRef ref) {
                 name: 'session-builder',
                 builder: (context, state) {
                   final sessionId = state.uri.queryParameters['sessionId'];
-                  return SessionBuilderScreen(sessionId: sessionId);
+                  return SessionBuilderScreen(sessionId: sessionId != null ? int.tryParse(sessionId) : null);
                 },
               ),
             ],
@@ -289,7 +250,7 @@ GoRouter createRouter(WidgetRef ref) {
             path: '/svs',
             name: 'svs-dashboard',
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: const SVSDashboardScreen(),
+              child: SVSDashboardScreen(),
             ),
           ),
           GoRoute(

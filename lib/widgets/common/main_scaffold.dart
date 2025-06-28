@@ -110,7 +110,7 @@ class MainScaffold extends ConsumerWidget {
                           await ref.read(authNotifierProvider.notifier).signOut();
                         }
                         if (context.mounted) {
-                          context.go('/login');
+                          context.go('/auth');
                         }
                       },
                       tooltip: 'Uitloggen',
@@ -202,17 +202,13 @@ class MainScaffold extends ConsumerWidget {
     }
   }
 
-  int _getSelectedIndex(String route) {
-    if (route.startsWith('/dashboard')) return 0;
-    if (route.startsWith('/annual-planning') || route.startsWith('/season')) return 1;
-    if (route.startsWith('/training-sessions') || route.startsWith('/session-builder') ||
-        route.startsWith('/exercise-library') || route.startsWith('/exercise-designer') ||
-        route.startsWith('/field-diagram-editor')) {
-      return 2;
-    }
-    if (route.startsWith('/matches')) return 3;
-    if (route.startsWith('/players')) return 4;
-    if (route.startsWith('/analytics')) return 5;
+  int _getSelectedIndex(String currentRoute) {
+    if (currentRoute.startsWith('/dashboard')) return 0;
+    if (currentRoute.startsWith('/season') || currentRoute.startsWith('/annual-planning')) return 1;
+    if (currentRoute.startsWith('/training') || currentRoute.startsWith('/exercise')) return 2;
+    if (currentRoute.startsWith('/matches') || currentRoute.startsWith('/lineup')) return 3;
+    if (currentRoute.startsWith('/players')) return 4;
+    if (currentRoute.startsWith('/analytics') || currentRoute.startsWith('/svs')) return 5;
     return 0;
   }
 
@@ -222,10 +218,10 @@ class MainScaffold extends ConsumerWidget {
         context.go('/dashboard');
         break;
       case 1:
-        context.go('/annual-planning');
+        context.go('/season');
         break;
       case 2:
-        context.go('/training-sessions');
+        context.go('/training');
         break;
       case 3:
         context.go('/matches');
@@ -238,21 +234,4 @@ class MainScaffold extends ConsumerWidget {
         break;
     }
   }
-}
-
-// Navigation item with role-based access control
-class NavigationItem {
-  final IconData icon;
-  final String label;
-  final String route;
-  final Feature? feature;
-  final bool Function(String? role, OrganizationTier? tier) roleCheck;
-
-  const NavigationItem({
-    required this.icon,
-    required this.label,
-    required this.route,
-    this.feature,
-    required this.roleCheck,
-  });
 }
