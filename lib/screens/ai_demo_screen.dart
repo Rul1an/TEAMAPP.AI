@@ -205,7 +205,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
                               : const Icon(Icons.auto_awesome),
                           label: Text(_isGenerating
                               ? 'Genereren...'
-                              : 'Genereer AI Response'),
+                              : 'Genereer AI Response',),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.purple.shade700,
                             foregroundColor: Colors.white,
@@ -229,7 +229,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
                               Row(
                                 children: [
                                   Icon(Icons.smart_toy,
-                                      color: Colors.purple.shade700),
+                                      color: Colors.purple.shade700,),
                                   const SizedBox(width: 8),
                                   Text(
                                     'AI Response',
@@ -323,7 +323,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
                     const SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
+                          horizontal: 8, vertical: 4,),
                       decoration: BoxDecoration(
                         color: color.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),

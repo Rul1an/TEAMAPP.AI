@@ -18,7 +18,7 @@ class ClubService {
   // Club Operations
   Future<Club> getClub(String clubId) async {
     await Future.delayed(
-        const Duration(milliseconds: 500)); // Simulate API delay
+        const Duration(milliseconds: 500),); // Simulate API delay
     if (!_clubs.containsKey(clubId)) {
       throw Exception('Club not found');
     }

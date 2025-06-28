@@ -171,7 +171,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         appBar: AppBar(
           title: Text(widget.sessionId == null
               ? 'Nieuwe Training Sessie'
-              : 'Bewerk Training Sessie'),
+              : 'Bewerk Training Sessie',),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -291,7 +291,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                     // Date selection
                     ListTile(
                       leading: Icon(Icons.calendar_today,
-                          color: Theme.of(context).primaryColor),
+                          color: Theme.of(context).primaryColor,),
                       title: const Text('Training Datum'),
                       subtitle: Text(
                         '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
@@ -305,7 +305,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                     // Training type
                     ListTile(
                       leading: Icon(Icons.sports_soccer,
-                          color: Theme.of(context).primaryColor),
+                          color: Theme.of(context).primaryColor,),
                       title: const Text('Training Type'),
                       subtitle: Text(_getTrainingTypeDisplayName(selectedType)),
                       trailing: const Icon(Icons.chevron_right),
@@ -316,7 +316,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                     // Team info
                     ListTile(
                       leading: Icon(Icons.groups,
-                          color: Theme.of(context).primaryColor),
+                          color: Theme.of(context).primaryColor,),
                       title: const Text('Team'),
                       subtitle: const Text('JO17-1 (16 spelers verwacht)'),
                     ),
@@ -528,7 +528,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                             Text(
                               phase.description!,
                               style: TextStyle(
-                                  color: Colors.grey[700], fontSize: 12),
+                                  color: Colors.grey[700], fontSize: 12,),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -545,7 +545,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text(
-                                          'Oefeningen bekijken komt in volgende update')),
+                                          'Oefeningen bekijken komt in volgende update',),),
                                 );
                               },
                               tooltip: 'Bekijk oefeningen',
@@ -611,14 +611,14 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                       runSpacing: 8,
                       children: [
                         _buildPhaseTemplate(
-                            'Korte Warming-up', PhaseType.warmup, 10),
+                            'Korte Warming-up', PhaseType.warmup, 10,),
                         _buildPhaseTemplate(
-                            'Techniek Blok', PhaseType.technical, 20),
+                            'Techniek Blok', PhaseType.technical, 20,),
                         _buildPhaseTemplate(
-                            'Tactiek Vorm', PhaseType.tactical, 25),
+                            'Tactiek Vorm', PhaseType.tactical, 25,),
                         _buildPhaseTemplate('Partijtje', PhaseType.game, 15),
                         _buildPhaseTemplate(
-                            'Extra Uitloop', PhaseType.cooldown, 5),
+                            'Extra Uitloop', PhaseType.cooldown, 5,),
                       ],
                     ),
                   ],
@@ -650,7 +650,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                     if (_getTotalDuration() != 130)
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                            horizontal: 8, vertical: 4,),
                         decoration: BoxDecoration(
                           color: _getTotalDuration() > 130
                               ? Colors.orange
@@ -749,7 +749,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Fase Verwijderen'),
         content: Text(
-            'Weet je zeker dat je "${sessionPhases[index].name}" wilt verwijderen?'),
+            'Weet je zeker dat je "${sessionPhases[index].name}" wilt verwijderen?',),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -836,16 +836,16 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                     ),
                     const SizedBox(height: 12),
                     _buildSummaryRow('Datum',
-                        '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}'),
+                        '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',),
                     _buildSummaryRow(
-                        'Type', _getTrainingTypeDisplayName(selectedType)),
+                        'Type', _getTrainingTypeDisplayName(selectedType),),
                     _buildSummaryRow('Duur', '${_getTotalDuration()} minuten'),
                     _buildSummaryRow('Fasen', '${sessionPhases.length} fasen'),
                     _buildSummaryRow(
                         'Doelstelling',
                         _objectiveController.text.isEmpty
                             ? 'Niet ingevuld'
-                            : _objectiveController.text),
+                            : _objectiveController.text,),
                   ],
                 ),
               ),

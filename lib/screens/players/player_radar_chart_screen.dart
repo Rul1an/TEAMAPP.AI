@@ -55,7 +55,7 @@ class PlayerRadarChartScreen extends StatelessWidget {
                           radarBorderData:
                               const BorderSide(color: Colors.grey, width: 2),
                           titleTextStyle: const TextStyle(
-                              color: Colors.black, fontSize: 14),
+                              color: Colors.black, fontSize: 14,),
                           getTitle: (index, angle) {
                             switch (index) {
                               case 0:
@@ -72,7 +72,7 @@ class PlayerRadarChartScreen extends StatelessWidget {
                           },
                           tickCount: 5,
                           ticksTextStyle: const TextStyle(
-                              color: Colors.transparent, fontSize: 10),
+                              color: Colors.transparent, fontSize: 10,),
                           tickBorderData: const BorderSide(color: Colors.grey),
                           gridBorderData: const BorderSide(color: Colors.grey),
                         ),

@@ -251,7 +251,7 @@ class ImportService {
     // Add headers
     for (int i = 0; i < headers.length; i++) {
       sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0),
-          TextCellValue(headers[i]));
+          TextCellValue(headers[i]),);
     }
 
     // Add example row
@@ -270,7 +270,7 @@ class ImportService {
 
     for (int i = 0; i < example.length; i++) {
       sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 1),
-          TextCellValue(example[i]));
+          TextCellValue(example[i]),);
     }
 
     // Save file

@@ -66,14 +66,14 @@ class QuickActionsWidget extends ConsumerWidget {
               mainAxisSpacing: 12,
               childAspectRatio: 2.5,
               children: _getContextualActions(
-                  context, timeOfDay, isTrainingDay, isMatchDay),
+                  context, timeOfDay, isTrainingDay, isMatchDay,),
             ),
 
             const SizedBox(height: 16),
 
             // Smart suggestions
             _buildSmartSuggestions(
-                context, timeOfDay, isTrainingDay, isMatchDay),
+                context, timeOfDay, isTrainingDay, isMatchDay,),
           ],
         ),
       ),

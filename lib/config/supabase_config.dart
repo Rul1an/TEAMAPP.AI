@@ -163,11 +163,11 @@ class SupabaseConfig {
 
   /// Get organization subscription info
   static Future<Map<String, dynamic>?> getSubscriptionInfo(
-      String organizationId) async {
+      String organizationId,) async {
     final response = await _client
         .from('organizations')
         .select(
-            'subscription_tier, subscription_status, trial_ends_at, max_players, max_teams, max_coaches')
+            'subscription_tier, subscription_status, trial_ends_at, max_players, max_teams, max_coaches',)
         .eq('id', organizationId)
         .single();
 
@@ -236,12 +236,12 @@ class SupabaseConfig {
 
   /// Execute RPC (Remote Procedure Call) functions
   static Future<dynamic> rpc(String functionName,
-          [Map<String, dynamic>? params]) async =>
+          [Map<String, dynamic>? params,]) async =>
       await _client.rpc(functionName, params: params);
 
   /// Realtime subscription for organization data
   static RealtimeChannel subscribeToOrganization(String organizationId,
-          void Function(PostgresChangePayload) callback) =>
+          void Function(PostgresChangePayload) callback,) =>
       _client
           .channel('organization_$organizationId')
           .onPostgresChanges(

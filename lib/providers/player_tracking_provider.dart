@@ -65,7 +65,7 @@ final teamPerformanceOverviewProvider =
 
 // Helper functions
 PlayerDevelopmentTrends _calculateDevelopmentTrends(
-    List<PlayerPerformanceData> data) {
+    List<PlayerPerformanceData> data,) {
   // TODO(author): Implement trend calculation logic
   return PlayerDevelopmentTrends(
     physicalTrend: TrendDirection.stable,
@@ -80,7 +80,7 @@ PlayerDevelopmentTrends _calculateDevelopmentTrends(
 }
 
 TeamPerformanceOverview _calculateTeamOverview(
-    Map<String, PlayerPerformanceData> data) {
+    Map<String, PlayerPerformanceData> data,) {
   // TODO(author): Implement team overview calculation
   return TeamPerformanceOverview(
     averagePhysicalScore: 0,
@@ -199,4 +199,4 @@ class PlayerTrackingNotifier extends StateNotifier<AsyncValue<void>> {
 
 final playerTrackingNotifierProvider =
     StateNotifierProvider<PlayerTrackingNotifier, AsyncValue<void>>(
-        PlayerTrackingNotifier.new);
+        PlayerTrackingNotifier.new,);

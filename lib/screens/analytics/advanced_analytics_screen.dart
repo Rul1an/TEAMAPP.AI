@@ -58,7 +58,7 @@ class _AdvancedAnalyticsScreenState
           Row(
             children: [
               const Icon(Icons.analytics_outlined,
-                  size: 32, color: Colors.blue),
+                  size: 32, color: Colors.blue,),
               const SizedBox(width: 12),
               const Text(
                 'Advanced Analytics',
@@ -93,12 +93,12 @@ class _AdvancedAnalyticsScreenState
           underline: const SizedBox(),
           items: const [
             DropdownMenuItem(
-                value: 'Last 24 hours', child: Text('Last 24 hours')),
+                value: 'Last 24 hours', child: Text('Last 24 hours'),),
             DropdownMenuItem(value: 'Last 7 days', child: Text('Last 7 days')),
             DropdownMenuItem(
-                value: 'Last 30 days', child: Text('Last 30 days')),
+                value: 'Last 30 days', child: Text('Last 30 days'),),
             DropdownMenuItem(
-                value: 'Last 90 days', child: Text('Last 90 days')),
+                value: 'Last 90 days', child: Text('Last 90 days'),),
           ],
           onChanged: (value) {
             // Track time range change
@@ -242,7 +242,7 @@ class _AdvancedAnalyticsScreenState
                         const Text(
                           'Response Time',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16, fontWeight: FontWeight.bold,),
                         ),
                         const SizedBox(height: 16),
                         SizedBox(
@@ -289,7 +289,7 @@ class _AdvancedAnalyticsScreenState
                         const Text(
                           'Error Distribution',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16, fontWeight: FontWeight.bold,),
                         ),
                         const SizedBox(height: 16),
                         SizedBox(
@@ -385,7 +385,7 @@ class _AdvancedAnalyticsScreenState
       );
 
   Widget _buildEngagementMetric(
-          String title, String value, String change, IconData icon) =>
+          String title, String value, String change, IconData icon,) =>
       Column(
         children: [
           Icon(icon, size: 32, color: Colors.blue),
@@ -421,7 +421,7 @@ class _AdvancedAnalyticsScreenState
               Row(
                 children: [
                   const Icon(Icons.psychology_outlined,
-                      color: Colors.purple, size: 24),
+                      color: Colors.purple, size: 24,),
                   const SizedBox(width: 8),
                   const Text(
                     'AI Feature Usage',

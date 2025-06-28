@@ -99,7 +99,7 @@ class _MatchDialogState extends State<MatchDialog> {
                   ),
                   items: _commonOpponents
                       .map((opponent) => DropdownMenuItem(
-                          value: opponent, child: Text(opponent)))
+                          value: opponent, child: Text(opponent),),)
                       .toList(),
                   onChanged: (value) {
                     if (value != null) {

@@ -117,7 +117,7 @@ class ExportService {
         DoubleCellValue(player.height),
         DoubleCellValue(player.weight),
         TextCellValue(
-            player.preferredFoot == PreferredFoot.left ? 'Links' : 'Rechts'),
+            player.preferredFoot == PreferredFoot.left ? 'Links' : 'Rechts',),
         IntCellValue(player.matchesPlayed),
         IntCellValue(player.goals),
         IntCellValue(player.assists),

@@ -109,25 +109,25 @@ class TrainingPeriod {
     period.orderIndex = json['orderIndex'] ?? 0;
     period.durationWeeks = json['durationWeeks'] ?? 4;
     period.startDate =
-        json['startDate'] != null ? DateTime.parse(json['startDate']) : null;
+        json['startDate'] != null ? DateTime.parse(json['startDate'] as String) : null;
     period.endDate =
-        json['endDate'] != null ? DateTime.parse(json['endDate']) : null;
+        json['endDate'] != null ? DateTime.parse(json['endDate'] as String) : null;
     period.intensityPercentage =
         json['intensityPercentage']?.toDouble() ?? 70.0;
     period.contentFocusJson = json['contentFocusJson'];
-    period.keyObjectives = List<String>.from(json['keyObjectives'] ?? []);
+    period.keyObjectives = List<String>.from(json['keyObjectives'] as List<dynamic>? ?? <dynamic>[]);
     period.sessionsPerWeek = json['sessionsPerWeek'] ?? 3;
     period.averageSessionMinutes = json['averageSessionMinutes'] ?? 75;
     period.restDaysBetweenSessions = json['restDaysBetweenSessions'] ?? 1;
     period.status = PeriodStatus.values.firstWhere(
-      (e) => e.name == json['status'],
+      (e) => e.name == json['status'] as String,
       orElse: () => PeriodStatus.planned,
     );
     period.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
+        ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     period.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
+        ? DateTime.parse(json['updatedAt'] as String)
         : DateTime.now();
     return period;
   }
@@ -398,15 +398,15 @@ extension PeriodTypeExtension on PeriodType {
   String get description {
     switch (this) {
       case PeriodType.preparation:
-        return 'Conditie opbouw, basis technieken en teamwerk';
+        return 'Opbouw van fitness en basis vaardigheden';
       case PeriodType.competitionEarly:
-        return 'Technische verfijning en tactische systemen';
+        return 'Vroege competitie fase met focus op tactiek';
       case PeriodType.competitionPeak:
-        return 'Wedstrijdspecifieke training en prestatie optimalisatie';
+        return 'Piek prestatie periode';
       case PeriodType.competitionMaintenance:
-        return 'Prestatie niveau behouden tijdens competitie';
+        return 'Onderhoud van prestatie niveau';
       case PeriodType.transition:
-        return 'Actief herstel en regeneratie';
+        return 'Herstel en overgangsperiode';
       case PeriodType.tournamentPrep:
         return 'Specifieke voorbereiding op toernooien';
     }
@@ -443,4 +443,64 @@ extension PeriodStatusExtension on PeriodStatus {
         return 'Gepauzeerd';
     }
   }
+}
+
+// ContentDistribution class for training content focus
+class ContentDistribution {
+  ContentDistribution({
+    this.technical = 25.0,
+    this.tactical = 25.0,
+    this.physical = 25.0,
+    this.mental = 25.0,
+  });
+
+  factory ContentDistribution.fromJson(Map<String, dynamic> json) => ContentDistribution(
+      technical: (json['technical'] as num?)?.toDouble() ?? 25.0,
+      tactical: (json['tactical'] as num?)?.toDouble() ?? 25.0,
+      physical: (json['physical'] as num?)?.toDouble() ?? 25.0,
+      mental: (json['mental'] as num?)?.toDouble() ?? 25.0,
+    );
+
+  factory ContentDistribution.balanced() => ContentDistribution(
+      technical: 25.0,
+      tactical: 25.0,
+      physical: 25.0,
+      mental: 25.0,
+    );
+
+  factory ContentDistribution.tacticalFocus() => ContentDistribution(
+      technical: 20.0,
+      tactical: 40.0,
+      physical: 25.0,
+      mental: 15.0,
+    );
+
+  factory ContentDistribution.matchPrep() => ContentDistribution(
+      technical: 15.0,
+      tactical: 50.0,
+      physical: 20.0,
+      mental: 15.0,
+    );
+
+  factory ContentDistribution.recovery() => ContentDistribution(
+      technical: 30.0,
+      tactical: 10.0,
+      physical: 40.0,
+      mental: 20.0,
+    );
+
+  final double technical;
+  final double tactical;
+  final double physical;
+  final double mental;
+
+  Map<String, dynamic> toJson() => {
+      'technical': technical,
+      'tactical': tactical,
+      'physical': physical,
+      'mental': mental,
+    };
+
+  @override
+  String toString() => 'ContentDistribution(technical: $technical%, tactical: $tactical%, physical: $physical%, mental: $mental%)';
 }

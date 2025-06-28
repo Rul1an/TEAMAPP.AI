@@ -554,7 +554,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-                'PDF export: $fileName - Functionaliteit wordt binnenkort toegevoegd'),
+                'PDF export: $fileName - Functionaliteit wordt binnenkort toegevoegd',),
             backgroundColor: Colors.blue,
             duration: const Duration(seconds: 3),
           ),

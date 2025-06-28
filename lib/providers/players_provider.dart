@@ -21,7 +21,7 @@ final playersByPositionProvider =
 
 final playersNotifierProvider =
     StateNotifierProvider<PlayersNotifier, AsyncValue<List<Player>>>(
-        (ref) => PlayersNotifier());
+        (ref) => PlayersNotifier(),);
 
 class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
   PlayersNotifier() : super(const AsyncValue.loading()) {

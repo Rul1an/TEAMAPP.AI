@@ -196,14 +196,14 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
 
 // Provider
 final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>(
-    (ref) => DemoModeNotifier());
+    (ref) => DemoModeNotifier(),);
 
 // Helper providers
 final isDemoModeProvider =
     Provider<bool>((ref) => ref.watch(demoModeProvider).isDemo);
 
 final currentDemoRoleProvider = Provider<String?>(
-    (ref) => ref.watch(demoModeProvider.notifier).getDemoRole());
+    (ref) => ref.watch(demoModeProvider.notifier).getDemoRole(),);
 
 final demoTimeRemainingProvider = Provider<Duration?>((ref) {
   final state = ref.watch(demoModeProvider);

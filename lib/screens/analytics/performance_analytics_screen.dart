@@ -69,7 +69,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                     Row(
                       children: [
                         Icon(Icons.analytics,
-                            color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.primary,),
                         const SizedBox(width: 8),
                         Text(
                           'Performance Analytics',
@@ -95,7 +95,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
 
             // Quick Stats Overview
             _buildQuickStats(
-                context, playersAsync, assessmentsAsync, trainingsAsync),
+                context, playersAsync, assessmentsAsync, trainingsAsync,),
             const SizedBox(height: 24),
 
             // Feature Grid
@@ -161,7 +161,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
 
   // New method to navigate to the radar chart screen
   Future<void> _showLatestAssessmentRadar(
-      BuildContext context, WidgetRef ref) async {
+      BuildContext context, WidgetRef ref,) async {
     final assessments = await ref.read(assessmentsProvider.future);
     final players = await ref.read(playersProvider.future);
 
@@ -398,7 +398,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               data: (assessments) {
                 if (assessments.isEmpty) {
                   return const Center(
-                      child: Text('Voeg eerst assessments toe.'));
+                      child: Text('Voeg eerst assessments toe.'),);
                 }
 
                 // Create a map of Player ID to their latest assessment
@@ -407,7 +407,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                   if (!latestAssessments.containsKey(assessment.playerId) ||
                       assessment.assessmentDate.isAfter(
                           latestAssessments[assessment.playerId]!
-                              .assessmentDate)) {
+                              .assessmentDate,)) {
                     latestAssessments[assessment.playerId] = assessment;
                   }
                 }
@@ -418,7 +418,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                       final assessment =
                           latestAssessments[player.id.toString()];
                       return MapEntry(
-                          player, assessment?.overallAverage ?? 0.0);
+                          player, assessment?.overallAverage ?? 0.0,);
                     })
                     .where((entry) => entry.value > 0)
                     .toList();
@@ -459,7 +459,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
   }
 
   Widget _buildPlayerPerformanceChart(
-          List<MapEntry<Player, double>> topPlayers) =>
+          List<MapEntry<Player, double>> topPlayers,) =>
       BarChart(
         BarChartData(
           alignment: BarChartAlignment.spaceAround,
@@ -478,7 +478,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                       axisSide: meta.axisSide,
                       space: 4,
                       child: Text(topPlayers[index].key.name.split(' ').first,
-                          style: const TextStyle(fontSize: 10)),
+                          style: const TextStyle(fontSize: 10),),
                     );
                   }
                   return const Text('');
@@ -487,7 +487,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               ),
             ),
             leftTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: true, reservedSize: 28)),
+                sideTitles: SideTitles(showTitles: true, reservedSize: 28),),
             topTitles: const AxisTitles(),
             rightTitles: const AxisTitles(),
           ),
@@ -537,7 +537,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               // Sort players by attendance
               final sortedPlayers = players.toList()
                 ..sort((a, b) =>
-                    b.attendancePercentage.compareTo(a.attendancePercentage));
+                    b.attendancePercentage.compareTo(a.attendancePercentage),);
 
               final topPlayers = sortedPlayers.take(5).toList();
 
@@ -559,7 +559,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                             const Text(
                               'Gemiddelde Team Opkomst',
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                  fontSize: 18, fontWeight: FontWeight.bold,),
                             ),
                             const SizedBox(height: 8),
                             Text(
@@ -616,7 +616,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                   final index = value.toInt();
                   if (index >= 0 && index < topPlayers.length) {
                     return Text(topPlayers[index].name,
-                        style: const TextStyle(fontSize: 10));
+                        style: const TextStyle(fontSize: 10),);
                   }
                   return const Text('');
                 },
@@ -717,7 +717,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                           const Text(
                             'Team Statistieken',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18, fontWeight: FontWeight.bold,),
                           ),
                           const SizedBox(height: 12),
                           Row(
@@ -729,7 +729,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                                     '$totalGoals',
                                     style: const TextStyle(
                                         fontSize: 24,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,),
                                   ),
                                   const Text('Goals'),
                                 ],
@@ -740,7 +740,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                                     '$totalAssists',
                                     style: const TextStyle(
                                         fontSize: 24,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,),
                                   ),
                                   const Text('Assists'),
                                 ],
@@ -751,7 +751,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                                     avgAge.toStringAsFixed(1),
                                     style: const TextStyle(
                                         fontSize: 24,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,),
                                   ),
                                   const Text('Gem. Leeftijd'),
                                 ],
@@ -829,7 +829,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
   }
 
   List<Map<String, dynamic>> _generateInsights(
-      List<Player> players, List<PlayerAssessment> assessments) {
+      List<Player> players, List<PlayerAssessment> assessments,) {
     final insights = <Map<String, dynamic>>[];
 
     if (players.isEmpty) {

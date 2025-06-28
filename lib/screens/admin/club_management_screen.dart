@@ -61,7 +61,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
   }
 
   Widget _buildClubManagementContent(
-          BuildContext context, Club club, FeatureService featureService) =>
+          BuildContext context, Club club, FeatureService featureService,) =>
       SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -206,7 +206,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
       );
 
   Widget _buildStatItem(
-          BuildContext context, String label, String value, IconData icon) =>
+          BuildContext context, String label, String value, IconData icon,) =>
       Column(
         children: [
           Icon(icon, size: 24, color: Theme.of(context).primaryColor),
@@ -227,7 +227,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
       );
 
   Widget _buildSubscriptionCard(
-      BuildContext context, Club club, FeatureService featureService) {
+      BuildContext context, Club club, FeatureService featureService,) {
     final tierLimits =
         featureService.getTierLimits(club.tier.name.toLowerCase());
 
@@ -306,7 +306,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
   }
 
   Widget _buildLimitItem(
-      BuildContext context, String label, int current, int limit) {
+      BuildContext context, String label, int current, int limit,) {
     final isUnlimited = limit == -1;
     final percentage = isUnlimited ? 0.0 : (current / limit).clamp(0.0, 1.0);
     final isNearLimit = percentage > 0.8;
@@ -363,7 +363,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
   }
 
   Widget _buildTeamManagementSection(
-          BuildContext context, Club club, FeatureService featureService) =>
+          BuildContext context, Club club, FeatureService featureService,) =>
       Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -421,7 +421,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
                               Icon(Icons.delete, color: Colors.red),
                               SizedBox(width: 8),
                               Text('Verwijderen',
-                                  style: TextStyle(color: Colors.red)),
+                                  style: TextStyle(color: Colors.red),),
                             ],
                           ),
                         ),
@@ -442,7 +442,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
       );
 
   Widget _buildStaffManagementSection(
-          BuildContext context, Club club, FeatureService featureService) =>
+          BuildContext context, Club club, FeatureService featureService,) =>
       Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -500,7 +500,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
                               Icon(Icons.delete, color: Colors.red),
                               SizedBox(width: 8),
                               Text('Verwijderen',
-                                  style: TextStyle(color: Colors.red)),
+                                  style: TextStyle(color: Colors.red),),
                             ],
                           ),
                         ),
@@ -557,7 +557,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
               ListTile(
                 leading: const Icon(Icons.delete, color: Colors.red),
                 title: const Text('Club Verwijderen',
-                    style: TextStyle(color: Colors.red)),
+                    style: TextStyle(color: Colors.red),),
                 subtitle: const Text('Permanent verwijderen van alle data'),
                 trailing:
                     const Icon(Icons.arrow_forward_ios, color: Colors.red),

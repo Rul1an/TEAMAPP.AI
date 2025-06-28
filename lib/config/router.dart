@@ -196,7 +196,7 @@ GoRouter createRouter(Ref ref) => GoRouter(
                     final sessionId = state.uri.queryParameters['sessionId'];
                     return SessionBuilderScreen(
                         sessionId:
-                            sessionId != null ? int.tryParse(sessionId) : null);
+                            sessionId != null ? int.tryParse(sessionId) : null,);
                   },
                 ),
               ],

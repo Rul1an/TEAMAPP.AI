@@ -114,7 +114,7 @@ class SeasonPlan {
       (e) => e.name == json['ageGroup'],
       orElse: () => AgeGroup.u17,
     );
-    plan.teamName = json['teamName'] ?? '';
+    plan.teamName = json['teamName'] as String? ?? '';
     plan.seasonStartDate = json['seasonStartDate'] != null
         ? DateTime.parse(json['seasonStartDate'] as String)
         : DateTime.now();
@@ -122,11 +122,11 @@ class SeasonPlan {
         ? DateTime.parse(json['seasonEndDate'] as String)
         : DateTime.now().add(const Duration(days: 300));
     plan.holidayPeriods = List<String>.from(json['holidayPeriods'] as List<dynamic>? ?? []);
-    plan.periodizationPlanId = json['periodizationPlanId'] ?? '';
-    plan.totalWeeks = json['totalWeeks'] ?? 40;
-    plan.trainingWeeks = json['trainingWeeks'] ?? 36;
-    plan.competitionWeeks = json['competitionWeeks'] ?? 32;
-    plan.primaryCompetition = json['primaryCompetition'] ?? '';
+    plan.periodizationPlanId = json['periodizationPlanId'] as String? ?? '';
+    plan.totalWeeks = json['totalWeeks'] as int? ?? 40;
+    plan.trainingWeeks = json['trainingWeeks'] as int? ?? 36;
+    plan.competitionWeeks = json['competitionWeeks'] as int? ?? 32;
+    plan.primaryCompetition = json['primaryCompetition'] as String? ?? '';
     plan.additionalCompetitions =
         List<String>.from(json['additionalCompetitions'] as List<dynamic>? ?? []);
     plan.firstMatchDate = json['firstMatchDate'] != null
@@ -144,14 +144,14 @@ class SeasonPlan {
     plan.seasonObjectives = List<String>.from(json['seasonObjectives'] as List<dynamic>? ?? []);
     plan.keyPerformanceIndicators =
         List<String>.from(json['keyPerformanceIndicators'] as List<dynamic>? ?? []);
-    plan.isTemplate = json['isTemplate'] ?? false;
+    plan.isTemplate = json['isTemplate'] as bool? ?? false;
     plan.status = SeasonStatus.values.firstWhere(
       (e) => e.name == (json['status'] as String?),
       orElse: () => SeasonStatus.draft,
     );
-    plan.currentWeek = json['currentWeek'] ?? 1;
-    plan.progressPercentage = json['progressPercentage']?.toDouble() ?? 0.0;
-    plan.createdBy = json['createdBy'];
+    plan.currentWeek = json['currentWeek'] as int? ?? 1;
+    plan.progressPercentage = (json['progressPercentage'] as num?)?.toDouble() ?? 0.0;
+    plan.createdBy = json['createdBy'] as String?;
     plan.createdAt = json['createdAt'] != null
         ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();

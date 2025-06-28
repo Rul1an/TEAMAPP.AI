@@ -189,7 +189,7 @@ class CoachDashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildQuickActions(
-          BuildContext context, club, FeatureService featureService) =>
+          BuildContext context, club, FeatureService featureService,) =>
       Row(
         children: [
           Expanded(
@@ -224,14 +224,14 @@ class CoachDashboardScreen extends ConsumerWidget {
               Colors.orange,
               () => context.push('/players/assessment'),
               isAvailable: featureService.hasPermission(
-                  'hoofdcoach', 'view_player_data'),
+                  'hoofdcoach', 'view_player_data',),
             ),
           ),
         ],
       );
 
   Widget _buildTeamManagement(
-          BuildContext context, club, FeatureService featureService) =>
+          BuildContext context, club, FeatureService featureService,) =>
       GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -276,7 +276,7 @@ class CoachDashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildPlanningAnalysis(
-          BuildContext context, club, FeatureService featureService) =>
+          BuildContext context, club, FeatureService featureService,) =>
       GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -293,7 +293,7 @@ class CoachDashboardScreen extends ConsumerWidget {
             Colors.purple,
             () => context.push('/planning/week'),
             isAvailable: featureService.isFeatureAvailable(
-                'advanced_training_planning', club.tier),
+                'advanced_training_planning', club.tier,),
           ),
           _buildManagementCard(
             context,
@@ -313,7 +313,7 @@ class CoachDashboardScreen extends ConsumerWidget {
             Colors.teal,
             () => context.push('/analytics'),
             isAvailable: featureService.isFeatureAvailable(
-                'performance_analytics', club.tier),
+                'performance_analytics', club.tier,),
           ),
           _buildManagementCard(
             context,
@@ -323,7 +323,7 @@ class CoachDashboardScreen extends ConsumerWidget {
             Colors.pink,
             () => context.push('/player-tracking'),
             isAvailable: featureService.isFeatureAvailable(
-                'player_tracking_svs', club.tier),
+                'player_tracking_svs', club.tier,),
           ),
         ],
       );
@@ -441,7 +441,7 @@ class CoachDashboardScreen extends ConsumerWidget {
       {
         'title': 'Wedstrijd vs Ajax JO17',
         'time': 'Zaterdag 14:30',
-        'type': 'match'
+        'type': 'match',
       },
       {'title': 'Teambespreking', 'time': 'Vrijdag 18:00', 'type': 'meeting'},
     ];

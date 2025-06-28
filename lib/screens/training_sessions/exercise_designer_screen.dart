@@ -452,23 +452,23 @@ class _ExerciseDesignerScreenState
               icon: Icons.preview,
               children: [
                 _buildReviewItem('Naam',
-                    state.formData['name']?.toString() ?? 'Niet ingevuld'),
+                    state.formData['name']?.toString() ?? 'Niet ingevuld',),
                 _buildReviewItem(
                     'Beschrijving',
                     state.formData['description']?.toString() ??
-                        'Niet ingevuld'),
+                        'Niet ingevuld',),
                 _buildReviewItem(
-                    'Duur', '${state.formData['duration'] ?? 15} minuten'),
+                    'Duur', '${state.formData['duration'] ?? 15} minuten',),
                 _buildReviewItem('Materialen',
-                    state.formData['equipment']?.toString() ?? 'Geen'),
+                    state.formData['equipment']?.toString() ?? 'Geen',),
                 _buildReviewItem(
                     'Doelstellingen',
                     state.formData['objectives']?.toString() ??
-                        'Niet ingevuld'),
+                        'Niet ingevuld',),
                 _buildReviewItem(
                     'Coaching Punten',
                     state.formData['coachingPoints']?.toString() ??
-                        'Niet ingevuld'),
+                        'Niet ingevuld',),
               ],
             ),
           ],

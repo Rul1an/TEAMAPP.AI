@@ -46,7 +46,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
                     Row(
                       children: [
                         Icon(Icons.sports_soccer,
-                            color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.primary,),
                         const SizedBox(width: 8),
                         Text(
                           'Training Tools',
@@ -150,7 +150,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
                   Row(
                     children: [
                       const Icon(Icons.lightbulb,
-                          color: Colors.white, size: 20),
+                          color: Colors.white, size: 20,),
                       const SizedBox(width: 8),
                       Text(
                         'Coaching Tip',
@@ -181,12 +181,12 @@ class TrainingSessionsScreen extends ConsumerWidget {
                           children: [
                             Icon(Icons.schedule,
                                 color: Theme.of(context).primaryColor,
-                                size: 48),
+                                size: 48,),
                             const SizedBox(height: 16),
                             const Text(
                               'Start met je eerste training!',
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w600),
+                                  fontSize: 18, fontWeight: FontWeight.w600,),
                             ),
                             const SizedBox(height: 8),
                             const Text(
@@ -201,7 +201,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
                               label: const Text('Maak Training Plan'),
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 24, vertical: 12),
+                                    horizontal: 24, vertical: 12,),
                               ),
                             ),
                           ],
@@ -223,7 +223,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(Icons.sports_soccer,
-                                      color: Theme.of(context).primaryColor),
+                                      color: Theme.of(context).primaryColor,),
                                 ),
                                 title:
                                     Text('Training ${session.trainingNumber}'),
@@ -248,12 +248,12 @@ class TrainingSessionsScreen extends ConsumerWidget {
                                       '${session.phases.length} fasen',
                                       style: TextStyle(
                                           fontSize: 11,
-                                          color: Colors.grey[600]),
+                                          color: Colors.grey[600],),
                                     ),
                                   ],
                                 ),
                                 onTap: () => context.push(
-                                    '/session-builder?sessionId=${session.id}'),
+                                    '/session-builder?sessionId=${session.id}',),
                               ),
                             ),
                           )

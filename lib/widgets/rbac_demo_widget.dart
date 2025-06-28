@@ -58,15 +58,15 @@ class RBACDemoWidget extends ConsumerWidget {
               runSpacing: 8,
               children: [
                 _buildRoleButton(context, ref, 'bestuurder', 'Bestuurder',
-                    Icons.admin_panel_settings, Colors.red),
+                    Icons.admin_panel_settings, Colors.red,),
                 _buildRoleButton(context, ref, 'hoofdcoach', 'Hoofdcoach',
-                    Icons.sports, Colors.blue),
+                    Icons.sports, Colors.blue,),
                 _buildRoleButton(context, ref, 'assistent', 'Assistent',
-                    Icons.assistant, Colors.green),
+                    Icons.assistant, Colors.green,),
                 _buildRoleButton(context, ref, 'speler', 'Speler', Icons.person,
-                    Colors.orange),
+                    Colors.orange,),
                 _buildRoleButton(context, ref, 'ouder', 'Ouder',
-                    Icons.family_restroom, Colors.purple),
+                    Icons.family_restroom, Colors.purple,),
               ],
             ),
 
@@ -202,37 +202,37 @@ class RBACDemoWidget extends ConsumerWidget {
         const PermissionInfo('Wedstrijden bekijken', true), // Everyone
         const PermissionInfo('---MANAGEMENT---', false), // Separator
         PermissionInfo(
-            'Spelers beheren', PermissionService.canManagePlayers(role)),
+            'Spelers beheren', PermissionService.canManagePlayers(role),),
         PermissionInfo(
-            'Spelers bewerken', PermissionService.canEditPlayers(role)),
+            'Spelers bewerken', PermissionService.canEditPlayers(role),),
         PermissionInfo(
-            'Training beheren', PermissionService.canManageTraining(role)),
+            'Training beheren', PermissionService.canManageTraining(role),),
         PermissionInfo(
-            'Training aanmaken', PermissionService.canCreateTraining(role)),
+            'Training aanmaken', PermissionService.canCreateTraining(role),),
         PermissionInfo(
-            'Wedstrijden beheren', PermissionService.canManageMatches(role)),
+            'Wedstrijden beheren', PermissionService.canManageMatches(role),),
         PermissionInfo('Exercise Library',
-            PermissionService.canManageExerciseLibrary(role)),
+            PermissionService.canManageExerciseLibrary(role),),
         PermissionInfo('Field Diagram Editor',
-            PermissionService.canAccessFieldDiagramEditor(role)),
+            PermissionService.canAccessFieldDiagramEditor(role),),
         PermissionInfo('Exercise Designer',
-            PermissionService.canAccessExerciseDesigner(role)),
+            PermissionService.canAccessExerciseDesigner(role),),
         const PermissionInfo('---ADVANCED---', false), // Separator
         PermissionInfo(
-            'Analytics bekijken', PermissionService.canViewAnalytics(role)),
+            'Analytics bekijken', PermissionService.canViewAnalytics(role),),
         PermissionInfo('SVS toegang',
-            PermissionService.canAccessSVS(role, OrganizationTier.pro)),
+            PermissionService.canAccessSVS(role, OrganizationTier.pro),),
         PermissionInfo(
-            'Jaarplanning', PermissionService.canAccessAnnualPlanning(role)),
+            'Jaarplanning', PermissionService.canAccessAnnualPlanning(role),),
         PermissionInfo(
-            'Admin functies', PermissionService.canAccessAdmin(role)),
+            'Admin functies', PermissionService.canAccessAdmin(role),),
         const PermissionInfo('---STATUS---', false), // Separator
         PermissionInfo(
-            '🔒 Alleen bekijken', PermissionService.isViewOnlyUser(role)),
+            '🔒 Alleen bekijken', PermissionService.isViewOnlyUser(role),),
       ];
 
   List<QuickActionInfo> _getQuickActionsForRole(
-          BuildContext context, String? role) =>
+          BuildContext context, String? role,) =>
       [
         QuickActionInfo(
           'Dashboard',

@@ -20,7 +20,7 @@ final trainingsByDateRangeProvider =
 
 final trainingsNotifierProvider =
     StateNotifierProvider<TrainingsNotifier, AsyncValue<List<Training>>>(
-        (ref) => TrainingsNotifier());
+        (ref) => TrainingsNotifier(),);
 
 class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
   TrainingsNotifier() : super(const AsyncValue.loading()) {

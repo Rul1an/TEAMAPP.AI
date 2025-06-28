@@ -34,7 +34,7 @@ class AssessmentDetailScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                          'Overall Average: ${assessment.overallAverage.toStringAsFixed(1)}'),
+                          'Overall Average: ${assessment.overallAverage.toStringAsFixed(1)}',),
                       const SizedBox(height: 20),
                       SizedBox(
                         height: 300,

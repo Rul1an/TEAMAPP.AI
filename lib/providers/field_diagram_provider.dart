@@ -415,22 +415,22 @@ class FieldDiagramEditorNotifier
 
   // Save operations
   Future<void> saveDiagramToExercise(
-      String exerciseId, FieldDiagram diagram) async {
+      String exerciseId, FieldDiagram diagram,) async {
     // TODO(author): Implement save to exercise
     // This would integrate with the exercise library service
     await Future.delayed(
-        const Duration(milliseconds: 500)); // Simulate API call
+        const Duration(milliseconds: 500),); // Simulate API call
   }
 
   Future<void> saveDiagramTemplate(FieldDiagram diagram, String name) async {
     // TODO(author): Implement save as template
     await Future.delayed(
-        const Duration(milliseconds: 500)); // Simulate API call
+        const Duration(milliseconds: 500),); // Simulate API call
   }
 
   // Export operations
   Future<void> exportDiagramToPNG(FieldDiagram diagram,
-      {int width = 1920}) async {
+      {int width = 1920,}) async {
     try {
       // Use the canvas to generate a high-resolution PNG
       final recorder = ui.PictureRecorder();
@@ -498,13 +498,13 @@ class FieldDiagramEditorNotifier
                 pw.Text(
                   'Veld Diagram',
                   style: pw.TextStyle(
-                      fontSize: 24, fontWeight: pw.FontWeight.bold),
+                      fontSize: 24, fontWeight: pw.FontWeight.bold,),
                 ),
                 pw.SizedBox(height: 20),
                 pw.Image(pw.MemoryImage(imageBytes)),
                 pw.SizedBox(height: 20),
                 pw.Text(
-                    'Gegenereerd op: ${DateTime.now().toString().substring(0, 16)}'),
+                    'Gegenereerd op: ${DateTime.now().toString().substring(0, 16)}',),
                 pw.Text('Spelers: ${diagram.players.length}'),
                 pw.Text('Equipment: ${diagram.equipment.length}'),
                 pw.Text('Bewegingen: ${diagram.movements.length}'),

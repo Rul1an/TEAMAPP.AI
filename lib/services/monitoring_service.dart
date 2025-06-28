@@ -153,7 +153,7 @@ class MonitoringService {
 
     await transaction.finish(
         status:
-            success ? const SpanStatus.ok() : const SpanStatus.internalError());
+            success ? const SpanStatus.ok() : const SpanStatus.internalError(),);
   }
 
   /// Track business metrics
@@ -314,7 +314,7 @@ mixin MonitoringMixin {
       MonitoringService.trackEvent(name: name, parameters: parameters);
 
   Future<void> trackError(dynamic error,
-          {StackTrace? stackTrace, String? context}) =>
+          {StackTrace? stackTrace, String? context,}) =>
       MonitoringService.reportError(
         error: error,
         stackTrace: stackTrace,
@@ -322,7 +322,7 @@ mixin MonitoringMixin {
       );
 
   Future<T> monitorOperation<T>(
-          String operation, Future<T> Function() function) =>
+          String operation, Future<T> Function() function,) =>
       MonitoringService.monitorAsync(
         operation: operation,
         function: function,

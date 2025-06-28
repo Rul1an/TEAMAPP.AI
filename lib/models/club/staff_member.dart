@@ -232,7 +232,7 @@ extension StaffRoleExtension on StaffRole {
         return [
           StaffRole.headCoach,
           StaffRole.goalkeepingCoach,
-          StaffRole.fitnessCoach
+          StaffRole.fitnessCoach,
         ];
       case StaffRole.teamManager:
         return [StaffRole.coordinator, StaffRole.volunteer];

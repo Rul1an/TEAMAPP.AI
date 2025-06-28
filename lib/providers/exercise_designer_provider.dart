@@ -218,7 +218,7 @@ final equipmentSuggestions = {
 
 // Exercise Library Provider for the Enhanced Exercise Library Screen
 final exerciseLibraryProvider = FutureProvider<List<TrainingExercise>>(
-    (ref) async => _getSampleExercises());
+    (ref) async => _getSampleExercises(),);
 
 List<TrainingExercise> _getSampleExercises() => [
       TrainingExercise.create(
@@ -230,7 +230,7 @@ List<TrainingExercise> _getSampleExercises() => [
         coachingPoints: [
           'Keep head up',
           'Use both feet',
-          'Quick pass decisions'
+          'Quick pass decisions',
         ],
       ),
       TrainingExercise.create(
@@ -263,7 +263,7 @@ List<TrainingExercise> _getSampleExercises() => [
         coachingPoints: [
           'Press together',
           'Cut passing lanes',
-          'Win ball high'
+          'Win ball high',
         ],
       ),
       TrainingExercise.create(
@@ -277,7 +277,7 @@ List<TrainingExercise> _getSampleExercises() => [
         coachingPoints: [
           'Gradual intensity',
           'Full range of motion',
-          'Stay focused'
+          'Stay focused',
         ],
       ),
       TrainingExercise.create(
@@ -301,7 +301,7 @@ List<TrainingExercise> _getSampleExercises() => [
         coachingPoints: [
           'Set position',
           'Quick reactions',
-          'Accurate distribution'
+          'Accurate distribution',
         ],
       ),
       TrainingExercise.create(

@@ -226,7 +226,7 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
-                              RegExp(r'^\d+\.?\d{0,1}')),
+                              RegExp(r'^\d+\.?\d{0,1}'),),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {

@@ -45,7 +45,7 @@ class PlayerCard extends ConsumerWidget {
                       height: 48,
                       decoration: BoxDecoration(
                         color: AppTheme.getPositionColor(
-                            player.position.displayName),
+                            player.position.displayName,),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Center(

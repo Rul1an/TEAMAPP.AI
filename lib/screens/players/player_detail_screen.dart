@@ -85,7 +85,7 @@ class PlayerDetailScreen extends ConsumerWidget {
                         Text('Doelpunten: ${player.goals}'),
                         Text('Assists: ${player.assists}'),
                         Text(
-                            'Trainingen bijgewoond: ${player.trainingsAttended}/${player.trainingsTotal}'),
+                            'Trainingen bijgewoond: ${player.trainingsAttended}/${player.trainingsTotal}',),
                       ],
                     ),
                   ),

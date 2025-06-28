@@ -266,7 +266,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                                         (intensity) => DropdownMenuItem(
                                           value: intensity,
                                           child: Text(
-                                              _getIntensityText(intensity)),
+                                              _getIntensityText(intensity),),
                                         ),
                                       )
                                       .toList(),

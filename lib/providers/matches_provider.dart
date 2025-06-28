@@ -25,7 +25,7 @@ final matchByIdProvider =
 
 final matchesNotifierProvider =
     StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>(
-        (ref) => MatchesNotifier());
+        (ref) => MatchesNotifier(),);
 
 class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
   MatchesNotifier() : super(const AsyncValue.loading()) {

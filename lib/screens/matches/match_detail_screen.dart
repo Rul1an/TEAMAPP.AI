@@ -171,11 +171,11 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
               const SizedBox(height: 16),
               _buildInfoRow('Tegenstander', match.opponent),
               _buildInfoRow(
-                  'Datum', DateFormat('dd-MM-yyyy HH:mm').format(match.date)),
+                  'Datum', DateFormat('dd-MM-yyyy HH:mm').format(match.date),),
               _buildInfoRow(
-                  'Locatie', match.location == Location.home ? 'Thuis' : 'Uit'),
+                  'Locatie', match.location == Location.home ? 'Thuis' : 'Uit',),
               _buildInfoRow(
-                  'Competitie', _getCompetitionName(match.competition)),
+                  'Competitie', _getCompetitionName(match.competition),),
               _buildInfoRow('Status', _getStatusName(match.status)),
             ],
           ),
@@ -410,7 +410,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       builder: (context) => AlertDialog(
         title: Text(isStartingLineup
             ? 'Selecteer Spelers voor Opstelling'
-            : 'Selecteer Wisselspelers'),
+            : 'Selecteer Wisselspelers',),
         content: SizedBox(
           width: double.maxFinite,
           height: 400,
@@ -672,7 +672,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                  'Beoordeling opgeslagen voor ${player.name}'),
+                                  'Beoordeling opgeslagen voor ${player.name}',),
                               backgroundColor: Colors.green,
                             ),
                           );

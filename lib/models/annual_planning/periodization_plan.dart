@@ -150,7 +150,7 @@ class PeriodizationPlan {
 
   // Get recommended parameters based on model type
   static Map<String, dynamic> getRecommendedParameters(
-      PeriodizationModel model, AgeGroup ageGroup) {
+      PeriodizationModel model, AgeGroup ageGroup,) {
     switch (model) {
       case PeriodizationModel.knvbYouth:
         return {
@@ -160,7 +160,7 @@ class PeriodizationPlan {
             'Technical Development',
             'Tactical Understanding',
             'Game Intelligence',
-            'Competition'
+            'Competition',
           ],
           'intensityProgression': [65, 75, 85, 70], // percentage per period
         };

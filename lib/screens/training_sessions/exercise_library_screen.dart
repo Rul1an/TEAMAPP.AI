@@ -70,7 +70,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            '🏃‍♂️ Exercise Library ${widget.weekNumber > 1 ? "(Week ${widget.weekNumber})" : ""}'),
+            '🏃‍♂️ Exercise Library ${widget.weekNumber > 1 ? "(Week ${widget.weekNumber})" : ""}',),
         backgroundColor: Colors.orange[600],
         foregroundColor: Colors.white,
         bottom: TabBar(
@@ -195,16 +195,16 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
           Row(
             children: [
               _buildMorphocycleIntensityChip(
-                  'Recovery', TrainingIntensity.recovery, morphocycle),
+                  'Recovery', TrainingIntensity.recovery, morphocycle,),
               const SizedBox(width: 8),
               _buildMorphocycleIntensityChip(
-                  'Acquisition', TrainingIntensity.acquisition, morphocycle),
+                  'Acquisition', TrainingIntensity.acquisition, morphocycle,),
               const SizedBox(width: 8),
               _buildMorphocycleIntensityChip(
-                  'Development', TrainingIntensity.development, morphocycle),
+                  'Development', TrainingIntensity.development, morphocycle,),
               const SizedBox(width: 8),
               _buildMorphocycleIntensityChip(
-                  'Activation', TrainingIntensity.activation, morphocycle),
+                  'Activation', TrainingIntensity.activation, morphocycle,),
             ],
           ),
         ],
@@ -213,7 +213,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   }
 
   Widget _buildMorphocycleIntensityChip(
-      String label, TrainingIntensity intensity, Morphocycle morphocycle) {
+      String label, TrainingIntensity intensity, Morphocycle morphocycle,) {
     final intensityValue =
         morphocycle.intensityDistribution[intensity.name.toLowerCase()] ?? 0.0;
     final color = _getIntensityColor(intensity);
@@ -257,7 +257,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
       );
 
   Widget _buildRecommendedTab(
-      List<TrainingExercise> exercises, Morphocycle? morphocycle) {
+      List<TrainingExercise> exercises, Morphocycle? morphocycle,) {
     if (morphocycle == null) {
       return const Center(
         child: Text('No morphocycle data available for recommendations'),
@@ -265,7 +265,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     }
 
     final recommendations = TrainingExercise.getRecommendedExercisesForWeek(
-        exercises, widget.weekNumber);
+        exercises, widget.weekNumber,);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -321,7 +321,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   }
 
   Widget _buildRecommendationSection(String title, String description,
-      List<TrainingExercise> exercises, Color color, IconData icon) {
+      List<TrainingExercise> exercises, Color color, IconData icon,) {
     final filteredExercises = _applyFilters(exercises);
 
     return Container(
@@ -433,7 +433,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   }
 
   Widget _buildIntensitySection(
-          TrainingIntensity intensity, List<TrainingExercise> exercises) =>
+          TrainingIntensity intensity, List<TrainingExercise> exercises,) =>
       Container(
         margin: const EdgeInsets.only(bottom: 24),
         child: Column(
@@ -523,7 +523,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   }
 
   Widget _buildTacticalFocusSection(
-          TacticalFocus focus, List<TrainingExercise> exercises) =>
+          TacticalFocus focus, List<TrainingExercise> exercises,) =>
       Container(
         margin: const EdgeInsets.only(bottom: 24),
         child: Column(
@@ -624,7 +624,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 2),
+                          horizontal: 6, vertical: 2,),
                       decoration: BoxDecoration(
                         color: _getIntensityColor(exercise.trainingIntensity),
                         borderRadius: BorderRadius.circular(4),
@@ -642,7 +642,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                     if (exercise.tacticalFocus != null)
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 2),
+                            horizontal: 6, vertical: 2,),
                         decoration: BoxDecoration(
                           color:
                               _getTacticalFocusColor(exercise.tacticalFocus!),
@@ -757,21 +757,21 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
       exercises
           .search(_searchQuery)
           .where((e) =>
-              _selectedCategory == null || e.category == _selectedCategory)
+              _selectedCategory == null || e.category == _selectedCategory,)
           .where((e) =>
               _selectedComplexity == null ||
-              e.complexity == _selectedComplexity)
+              e.complexity == _selectedComplexity,)
           .where((e) =>
               _selectedIntensity == null ||
-              e.isCompatibleWithIntensity(_selectedIntensity!))
+              e.isCompatibleWithIntensity(_selectedIntensity!),)
           .where((e) =>
               _selectedTacticalFocus == null ||
-              e.isCompatibleWithTacticalFocus(_selectedTacticalFocus!))
+              e.isCompatibleWithTacticalFocus(_selectedTacticalFocus!),)
           .where((e) =>
               e.durationMinutes >= _minDuration &&
-              e.durationMinutes <= _maxDuration)
+              e.durationMinutes <= _maxDuration,)
           .where((e) =>
-              e.minPlayers <= _playerCount && e.maxPlayers >= _playerCount)
+              e.minPlayers <= _playerCount && e.maxPlayers >= _playerCount,)
           .toList();
 
   void _showFilterDialog() {
@@ -836,7 +836,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                 Text('Duration: $_minDuration - $_maxDuration minutes'),
                 RangeSlider(
                   values: RangeValues(
-                      _minDuration.toDouble(), _maxDuration.toDouble()),
+                      _minDuration.toDouble(), _maxDuration.toDouble(),),
                   min: 5,
                   max: 120,
                   divisions: 23,
@@ -890,13 +890,13 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
               Text(exercise.description),
               const SizedBox(height: 16),
               _buildDetailRow(
-                  'Duration', '${exercise.durationMinutes} minutes'),
+                  'Duration', '${exercise.durationMinutes} minutes',),
               _buildDetailRow(
-                  'Players', '${exercise.minPlayers}-${exercise.maxPlayers}'),
+                  'Players', '${exercise.minPlayers}-${exercise.maxPlayers}',),
               _buildDetailRow('Intensity', exercise.trainingIntensity.name),
               if (exercise.tacticalFocus != null)
                 _buildDetailRow(
-                    'Tactical Focus', exercise.tacticalFocus!.displayName),
+                    'Tactical Focus', exercise.tacticalFocus!.displayName,),
               _buildDetailRow('Complexity', exercise.complexity.displayName),
               _buildDetailRow('Space Required', exercise.spaceRequired),
               _buildDetailRow('Estimated RPE', '${exercise.estimatedRPE}/10'),
@@ -905,14 +905,14 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
               if (exercise.coachingPoints.isNotEmpty) ...[
                 const SizedBox(height: 16),
                 const Text('Coaching Points:',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontWeight: FontWeight.bold),),
                 ...exercise.coachingPoints.map((point) => Text('• $point')),
               ],
               // Field diagram section
               if (exercise.fieldDiagram != null) ...[
                 const SizedBox(height: 16),
                 const Text('Field Diagram:',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontWeight: FontWeight.bold),),
                 const SizedBox(height: 8),
                 Container(
                   height: 120,

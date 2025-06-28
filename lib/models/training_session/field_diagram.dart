@@ -50,35 +50,35 @@ class FieldDiagram {
         );
 
   factory FieldDiagram.fromJson(Map<String, dynamic> json) => FieldDiagram(
-        id: json['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
+        id: json['id'] as String? ?? DateTime.now().millisecondsSinceEpoch.toString(),
         fieldType: FieldType.values.firstWhere(
-          (e) => e.name == json['fieldType'],
+          (e) => e.name == json['fieldType'] as String,
           orElse: () => FieldType.halfField,
         ),
-        fieldSize: Dimensions.fromJson(json['fieldSize']),
+        fieldSize: Dimensions.fromJson(json['fieldSize'] as Map<String, dynamic>),
         players: (json['players'] as List<dynamic>?)
-                ?.map((p) => PlayerMarker.fromJson(p))
+                ?.map((p) => PlayerMarker.fromJson(p as Map<String, dynamic>))
                 .toList() ??
             [],
         equipment: (json['equipment'] as List<dynamic>?)
-                ?.map((e) => EquipmentMarker.fromJson(e))
+                ?.map((e) => EquipmentMarker.fromJson(e as Map<String, dynamic>))
                 .toList() ??
             [],
         movements: (json['movements'] as List<dynamic>?)
-                ?.map((m) => MovementLine.fromJson(m))
+                ?.map((m) => MovementLine.fromJson(m as Map<String, dynamic>))
                 .toList() ??
             [],
         areas: (json['areas'] as List<dynamic>?)
-                ?.map((a) => AreaMarker.fromJson(a))
+                ?.map((a) => AreaMarker.fromJson(a as Map<String, dynamic>))
                 .toList() ??
             [],
         labels: (json['labels'] as List<dynamic>?)
-                ?.map((l) => TextLabel.fromJson(l))
+                ?.map((l) => TextLabel.fromJson(l as Map<String, dynamic>))
                 .toList() ??
             [],
-        backgroundColor: json['backgroundColor'],
-        showFieldMarkings: json['showFieldMarkings'] ?? true,
-        showGoals: json['showGoals'] ?? true,
+        backgroundColor: json['backgroundColor'] as String?,
+        showFieldMarkings: json['showFieldMarkings'] as bool? ?? true,
+        showGoals: json['showGoals'] as bool? ?? true,
       );
   final String id;
   final FieldType fieldType;

@@ -80,7 +80,7 @@ class _TrainingAttendanceScreenState
                     // Sort players by jersey number
                     final sortedPlayers = List<Player>.from(players)
                       ..sort(
-                          (a, b) => a.jerseyNumber.compareTo(b.jerseyNumber));
+                          (a, b) => a.jerseyNumber.compareTo(b.jerseyNumber),);
 
                     return isDesktop
                         ? _buildDesktopLayout(sortedPlayers)
@@ -411,7 +411,7 @@ class _TrainingAttendanceScreenState
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-                'Markeer eerst aanwezige spelers om beoordelingen te geven'),
+                'Markeer eerst aanwezige spelers om beoordelingen te geven',),
             backgroundColor: Colors.orange,
           ),
         );
@@ -477,7 +477,7 @@ class _TrainingAttendanceScreenState
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                  'Beoordeling opgeslagen voor ${player.name}'),
+                                  'Beoordeling opgeslagen voor ${player.name}',),
                               backgroundColor: Colors.green,
                             ),
                           );

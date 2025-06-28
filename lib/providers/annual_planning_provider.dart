@@ -162,7 +162,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   List<TrainingPeriod> _generateTrainingPeriods(PeriodizationPlan template) {
     final periods = <TrainingPeriod>[];
     final params = PeriodizationPlan.getRecommendedParameters(
-        template.modelType, template.targetAgeGroup);
+        template.modelType, template.targetAgeGroup,);
     final intensityProgression = params['intensityProgression'] as List<int>;
     final focusAreas = params['focusAreas'] as List<String>;
 
@@ -190,7 +190,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   List<Morphocycle> _generateMorphocycles(
-      PeriodizationPlan template, List<TrainingPeriod> periods) {
+      PeriodizationPlan template, List<TrainingPeriod> periods,) {
     final morphocycles = <Morphocycle>[];
 
     for (int week = 1; week <= state.totalWeeks; week++) {
@@ -246,7 +246,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   void _assignPeriodDetails(TrainingPeriod period, int index,
-      PeriodizationModel modelType, List<String> focusAreas) {
+      PeriodizationModel modelType, List<String> focusAreas,) {
     switch (modelType) {
       case PeriodizationModel.knvbYouth:
         if (index == 0) {
@@ -256,7 +256,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           period.keyObjectives = [
             'Bal controle',
             'Passing precisie',
-            '1v1 situaties'
+            '1v1 situaties',
           ];
         } else if (index == 1) {
           period.name = 'Tactisch Begrip';
@@ -266,7 +266,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           period.keyObjectives = [
             'Positiespel',
             'Teamwork',
-            'Verdedigende organisatie'
+            'Verdedigende organisatie',
           ];
         } else if (index == 2) {
           period.name = 'Wedstrijdervaring';
@@ -275,7 +275,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           period.keyObjectives = [
             'Match fitness',
             'Pressure situations',
-            'Team cohesion'
+            'Team cohesion',
           ];
         } else {
           period.name = 'Evaluatie & Herstel';
@@ -284,7 +284,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           period.keyObjectives = [
             'Recovery',
             'Individual development',
-            'Fun activities'
+            'Fun activities',
           ];
         }
         break;
@@ -294,7 +294,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           'Voorbereiding',
           'Opbouw',
           'Competitie',
-          'Herstel'
+          'Herstel',
         ];
         period.name = periodNames[index % periodNames.length];
         period.type = PeriodType.values[index % PeriodType.values.length];
@@ -305,7 +305,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           'Techniek Blok',
           'Conditie Blok',
           'Tactiek Blok',
-          'Wedstrijd Blok'
+          'Wedstrijd Blok',
         ];
         period.name = blockNames[index % blockNames.length];
         period.type = PeriodType.values[index % PeriodType.values.length];
@@ -363,7 +363,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   WeekSchedule _createWeekScheduleWithPeriod(
-      int weekNumber, DateTime weekStart, TrainingPeriod? period) {
+      int weekNumber, DateTime weekStart, TrainingPeriod? period,) {
     // Check if this is a vacation week
     final vacationInfo = _getVacationInfo(weekNumber, weekStart);
 
@@ -459,7 +459,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   List<WeeklyTraining> _createMorphocycleTrainingSessions(
-      DateTime weekStart, Morphocycle morphocycle) {
+      DateTime weekStart, Morphocycle morphocycle,) {
     final sessions = <WeeklyTraining>[];
 
     // Day +1 (Sunday) - Recovery Session
@@ -529,7 +529,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   String _getWeekNotesWithMorphocycle(
-      int weekNumber, Morphocycle? morphocycle) {
+      int weekNumber, Morphocycle? morphocycle,) {
     if (morphocycle != null) {
       final loadStatus = morphocycle.weekDescription;
       final adaptation = morphocycle.expectedAdaptation.toInt();
@@ -694,7 +694,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       'Goes',
       'Borssele',
       'Middelburg',
-      'Vlissingen'
+      'Vlissingen',
     ];
     return locations[weekNumber % locations.length];
   }

@@ -219,7 +219,7 @@ class DatabaseService {
       'PSV JO17',
       'Feyenoord JO17',
       'AZ JO17',
-      'Utrecht JO17'
+      'Utrecht JO17',
     ];
     for (int i = 0; i < 5; i++) {
       final match = Match()
@@ -246,7 +246,7 @@ class DatabaseService {
             'Aanvallende opstelling met drie middenvelders en drie aanvallers',
         formation: Formation.fourThreeThree,
         positionPreferences: FormationTemplate.getDefaultPositionPreferences(
-            Formation.fourThreeThree),
+            Formation.fourThreeThree,),
       ),
       FormationTemplate.defaultTemplate(
         name: '4-4-2 Gebalanceerd',
@@ -254,7 +254,7 @@ class DatabaseService {
             'Gebalanceerde opstelling met vier middenvelders en twee spitsen',
         formation: Formation.fourFourTwo,
         positionPreferences: FormationTemplate.getDefaultPositionPreferences(
-            Formation.fourFourTwo),
+            Formation.fourFourTwo,),
       ),
       FormationTemplate.defaultTemplate(
         name: '4-3-3 Verdedigend',
@@ -262,14 +262,14 @@ class DatabaseService {
             'Verdedigende variant van 4-3-3 met een defensieve middenvelder',
         formation: Formation.fourThreeThreeDefensive,
         positionPreferences: FormationTemplate.getDefaultPositionPreferences(
-            Formation.fourThreeThreeDefensive),
+            Formation.fourThreeThreeDefensive,),
       ),
       FormationTemplate.defaultTemplate(
         name: '4-2-3-1 Modern',
         description: 'Moderne opstelling met dubbele pivot en één spits',
         formation: Formation.fourTwoThreeOne,
         positionPreferences: FormationTemplate.getDefaultPositionPreferences(
-            Formation.fourTwoThreeOne),
+            Formation.fourTwoThreeOne,),
       ),
       FormationTemplate.defaultTemplate(
         name: '3-4-3 Aanvallend',
@@ -277,7 +277,7 @@ class DatabaseService {
             'Zeer aanvallende opstelling met drie centrale verdedigers',
         formation: Formation.threeForThree,
         positionPreferences: FormationTemplate.getDefaultPositionPreferences(
-            Formation.threeForThree),
+            Formation.threeForThree,),
       ),
     ];
 
@@ -436,7 +436,7 @@ class DatabaseService {
     if (kIsWeb) {
       return _trainings
           .where(
-              (t) => t.date.isAfter(now) && t.status == TrainingStatus.planned)
+              (t) => t.date.isAfter(now) && t.status == TrainingStatus.planned,)
           .toList()
         ..sort((a, b) => a.date.compareTo(b.date));
     }
@@ -445,7 +445,7 @@ class DatabaseService {
   }
 
   Future<List<Training>> getTrainingsForDateRange(
-      DateTime start, DateTime end) async {
+      DateTime start, DateTime end,) async {
     if (kIsWeb) {
       return _trainings
           .where((t) => t.date.isAfter(start) && t.date.isBefore(end))
@@ -518,7 +518,7 @@ class DatabaseService {
     if (kIsWeb) {
       return _matches
           .where(
-              (m) => m.date.isAfter(now) && m.status == MatchStatus.scheduled)
+              (m) => m.date.isAfter(now) && m.status == MatchStatus.scheduled,)
           .toList()
         ..sort((a, b) => a.date.compareTo(b.date));
     }
@@ -624,7 +624,7 @@ class DatabaseService {
   }
 
   Future<double> getPlayerAverageRating(String playerId,
-      {int? lastNRatings}) async {
+      {int? lastNRatings,}) async {
     final ratings = await getPlayerRatings(playerId);
     if (ratings.isEmpty) return 0.0;
 
@@ -727,7 +727,7 @@ class DatabaseService {
   }
 
   Future<Map<String, dynamic>> applyFormationTemplate(
-      FormationTemplate template, List<Player> availablePlayers) async {
+      FormationTemplate template, List<Player> availablePlayers,) async {
     // Simple implementation - return formation data
     return {
       'formation': template.formation,
@@ -768,7 +768,7 @@ class DatabaseService {
   }
 
   Future<List<TrainingSession>> getRecentTrainingSessions(
-      {int limit = 5}) async {
+      {int limit = 5,}) async {
     if (kIsWeb) {
       final sessions = _trainingSessions.toList()
         ..sort((a, b) => b.date.compareTo(a.date));

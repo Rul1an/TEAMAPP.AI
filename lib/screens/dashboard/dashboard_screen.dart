@@ -92,7 +92,7 @@ class DashboardScreen extends ConsumerWidget {
                   organization?.tier.name,
                   statistics,
                   upcomingMatchesAsync,
-                  trainingSessionsAsync),
+                  trainingSessionsAsync,),
             ],
           ),
         ),
@@ -113,7 +113,7 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   List<Widget> _buildAppBarActions(
-      BuildContext context, String? userRole, String? tier) {
+      BuildContext context, String? userRole, String? tier,) {
     final List<Widget> actions = [];
 
     // Only coaches and admins can create training sessions
@@ -160,7 +160,7 @@ class DashboardScreen extends ConsumerWidget {
         _buildPlayerStats(context, statistics),
         const SizedBox(height: 24),
         _buildUpcomingEventsForPlayer(
-            context, upcomingMatchesAsync, trainingSessionsAsync),
+            context, upcomingMatchesAsync, trainingSessionsAsync,),
       ]);
     } else if (PermissionService.isParent(userRole)) {
       // Parent-specific content
@@ -168,7 +168,7 @@ class DashboardScreen extends ConsumerWidget {
         _buildParentOverview(context),
         const SizedBox(height: 24),
         _buildUpcomingEventsForParent(
-            context, upcomingMatchesAsync, trainingSessionsAsync),
+            context, upcomingMatchesAsync, trainingSessionsAsync,),
       ]);
     } else {
       // Coach/Admin content (full access)
@@ -355,7 +355,7 @@ class DashboardScreen extends ConsumerWidget {
                           leading: const Icon(Icons.stadium),
                           title: Text(match.opponent),
                           subtitle: Text(DateFormat('dd/MM/yyyy HH:mm')
-                              .format(match.date)),
+                              .format(match.date),),
                         ),
                       )
                       .toList(),
@@ -372,7 +372,7 @@ class DashboardScreen extends ConsumerWidget {
     AsyncValue<List<TrainingSession>> trainingSessionsAsync,
   ) =>
       _buildUpcomingEventsForPlayer(
-          context, upcomingMatchesAsync, trainingSessionsAsync);
+          context, upcomingMatchesAsync, trainingSessionsAsync,);
 
   Widget _buildActionCard(
     BuildContext context,
@@ -404,7 +404,7 @@ class DashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildWelcomeSection(
-      BuildContext context, SeasonPlan? season, String? userRole) {
+      BuildContext context, SeasonPlan? season, String? userRole,) {
     if (season == null) {
       return _buildNoSeasonWelcome(context, userRole);
     }
@@ -598,7 +598,7 @@ class DashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildUpcomingTrainingSessions(
-      BuildContext context, List<TrainingSession> sessions) {
+      BuildContext context, List<TrainingSession> sessions,) {
     if (sessions.isEmpty) {
       return Card(
         child: Container(
@@ -698,7 +698,7 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   Widget _buildStatisticsCards(
-          BuildContext context, Map<String, dynamic> statistics) =>
+          BuildContext context, Map<String, dynamic> statistics,) =>
       LayoutBuilder(
         builder: (context, constraints) {
           final crossAxisCount = constraints.maxWidth > 800 ? 4 : 2;
@@ -779,7 +779,7 @@ class DashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildPerformanceChart(
-      BuildContext context, Map<String, dynamic> statistics) {
+      BuildContext context, Map<String, dynamic> statistics,) {
     final wins = statistics['wins'] as int;
     final draws = statistics['draws'] as int;
     final losses = statistics['losses'] as int;

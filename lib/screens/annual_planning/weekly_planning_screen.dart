@@ -97,7 +97,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                       const SizedBox(width: 16),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
+                            horizontal: 12, vertical: 6,),
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
@@ -131,7 +131,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                         children: [
                           Icon(Icons.timeline,
                               size: 16,
-                              color: Colors.white.withValues(alpha: 0.8)),
+                              color: Colors.white.withValues(alpha: 0.8),),
                           const SizedBox(width: 6),
                           Text(
                             'Template: ${state.periodizationPlanName}',
@@ -148,7 +148,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                           children: [
                             Icon(Icons.sports_soccer,
                                 size: 16,
-                                color: Colors.white.withValues(alpha: 0.8)),
+                                color: Colors.white.withValues(alpha: 0.8),),
                             const SizedBox(width: 6),
                             Text(
                               'Periode: ${state.currentPeriodName}',
@@ -165,14 +165,14 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const LoadMonitoringScreen()),
+                                  const LoadMonitoringScreen(),),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.analytics,
                                 size: 16,
-                                color: Colors.white.withValues(alpha: 0.8)),
+                                color: Colors.white.withValues(alpha: 0.8),),
                             const SizedBox(width: 6),
                             Text(
                               'Load Monitor',
@@ -215,7 +215,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                   icon:
                       const Icon(Icons.timeline, color: Colors.white, size: 16),
                   label: const Text('Template',
-                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                      style: TextStyle(color: Colors.white, fontSize: 12),),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange[600],
                     padding:
@@ -228,7 +228,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                       .resetCurrentWeekToToday(),
                   icon: const Icon(Icons.today, color: Colors.white, size: 16),
                   label: const Text('Huidige Week',
-                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                      style: TextStyle(color: Colors.white, fontSize: 12),),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[600],
                     padding:
@@ -239,7 +239,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                   onPressed: () => _showAddEventDialog(context),
                   icon: const Icon(Icons.add, color: Colors.white, size: 16),
                   label: const Text('Bewerken',
-                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                      style: TextStyle(color: Colors.white, fontSize: 12),),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[600],
                     padding:
@@ -493,7 +493,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
             width: 150,
             style: match != null
                 ? const TextStyle(
-                    color: Colors.green, fontWeight: FontWeight.w600)
+                    color: Colors.green, fontWeight: FontWeight.w600,)
                 : null,
           ),
           _TableCell(
@@ -531,17 +531,17 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
           return const TextStyle(color: Colors.orange);
         case TrainingIntensity.acquisition:
           return const TextStyle(
-              color: Colors.red, fontWeight: FontWeight.w600);
+              color: Colors.red, fontWeight: FontWeight.w600,);
         case TrainingIntensity.competition:
           return const TextStyle(
-              color: Colors.purple, fontWeight: FontWeight.bold);
+              color: Colors.purple, fontWeight: FontWeight.bold,);
       }
     }
     return const TextStyle(color: Colors.blue);
   }
 
   String _getWeekNotesWithMorphocycle(
-      WeekSchedule week, Morphocycle? morphocycle) {
+      WeekSchedule week, Morphocycle? morphocycle,) {
     if (morphocycle != null) {
       final loadDescription = _getLoadDescription(morphocycle.weeklyLoad);
       final adaptationPercent = morphocycle.expectedAdaptation.toInt();
@@ -628,7 +628,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-                'Template "${selectedTemplate.name}" succesvol toegepast!'),
+                'Template "${selectedTemplate.name}" succesvol toegepast!',),
             backgroundColor: Colors.green,
             action: SnackBarAction(
               label: 'OK',
@@ -838,7 +838,7 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
                       margin: const EdgeInsets.symmetric(vertical: 4),
                       child: ListTile(
                         leading: const Icon(Icons.fitness_center,
-                            color: Colors.blue),
+                            color: Colors.blue,),
                         title: Text(training.name),
                         subtitle: Text(
                           '${training.dayName} ${training.timeString} • ${training.location}',
@@ -852,7 +852,7 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete,
-                                  size: 20, color: Colors.red),
+                                  size: 20, color: Colors.red,),
                               onPressed: () => _removeTraining(index),
                             ),
                           ],
@@ -912,7 +912,7 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete,
-                                  size: 20, color: Colors.red),
+                                  size: 20, color: Colors.red,),
                               onPressed: () => _removeMatch(index),
                             ),
                           ],

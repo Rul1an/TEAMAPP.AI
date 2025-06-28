@@ -454,7 +454,7 @@ class _PlayerCard extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.sports_soccer,
-                              size: 16, color: Colors.grey[600]),
+                              size: 16, color: Colors.grey[600],),
                           const SizedBox(width: 4),
                           Text(
                             '${player.matchesPlayed} wedstrijden',
@@ -462,7 +462,7 @@ class _PlayerCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 16),
                           Icon(Icons.sports_score,
-                              size: 16, color: Colors.grey[600]),
+                              size: 16, color: Colors.grey[600],),
                           const SizedBox(width: 4),
                           Text(
                             '${player.goals} goals',

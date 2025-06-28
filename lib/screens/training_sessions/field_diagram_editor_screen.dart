@@ -146,7 +146,7 @@ class _FieldDiagramEditorScreenState
             child: Row(
               children: [
                 Text(
-                    'Veld: ${_getFieldTypeText(diagramState.diagram.fieldType)}'),
+                    'Veld: ${_getFieldTypeText(diagramState.diagram.fieldType)}',),
                 const Spacer(),
                 Text('Spelers: ${diagramState.diagram.players.length}'),
                 const SizedBox(width: 16),
@@ -207,7 +207,7 @@ class _FieldDiagramEditorScreenState
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-                'Diagram succesvol geëxporteerd als ${format.toUpperCase()}!'),
+                'Diagram succesvol geëxporteerd als ${format.toUpperCase()}!',),
             backgroundColor: Colors.green,
           ),
         );

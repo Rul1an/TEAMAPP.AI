@@ -133,7 +133,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                   // Navigate to attendance if there's a training on this day
                   final dayTrainings = trainings
                       .where(
-                          (training) => isSameDay(training.date, selectedDay))
+                          (training) => isSameDay(training.date, selectedDay),)
                       .toList();
 
                   if (dayTrainings.isNotEmpty) {

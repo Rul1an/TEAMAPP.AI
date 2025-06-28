@@ -94,7 +94,7 @@ class _PerformanceMonitoringScreenState
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(Icons.monitor_heart,
-                    size: 32, color: Colors.blue),
+                    size: 32, color: Colors.blue,),
               ),
               const SizedBox(width: 16),
               Column(
@@ -282,12 +282,12 @@ class _PerformanceMonitoringScreenState
                         const Text(
                           'Real-time Metrics',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold,),
                         ),
                         const Spacer(),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
+                              horizontal: 8, vertical: 4,),
                           decoration: BoxDecoration(
                             color: Colors.green.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
@@ -331,7 +331,7 @@ class _PerformanceMonitoringScreenState
                                     '12:05',
                                     '12:10',
                                     '12:15',
-                                    '12:20'
+                                    '12:20',
                                   ];
                                   if (value.toInt() >= 0 &&
                                       value.toInt() < times.length) {
@@ -413,7 +413,7 @@ class _PerformanceMonitoringScreenState
                               strokeWidth: 12,
                               backgroundColor: Colors.grey.withValues(alpha: 0.2),
                               valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Colors.blue),
+                                  Colors.blue,),
                             ),
                           ),
                           Column(
@@ -483,7 +483,7 @@ class _PerformanceMonitoringScreenState
                                     'Thu',
                                     'Fri',
                                     'Sat',
-                                    'Sun'
+                                    'Sun',
                                   ];
                                   if (value.toInt() >= 0 &&
                                       value.toInt() < titles.length) {
@@ -513,26 +513,26 @@ class _PerformanceMonitoringScreenState
                           borderData: FlBorderData(show: false),
                           barGroups: [
                             BarChartGroupData(x: 0, barRods: [
-                              BarChartRodData(toY: 65, color: Colors.blue)
-                            ]),
+                              BarChartRodData(toY: 65, color: Colors.blue),
+                            ],),
                             BarChartGroupData(x: 1, barRods: [
-                              BarChartRodData(toY: 72, color: Colors.blue)
-                            ]),
+                              BarChartRodData(toY: 72, color: Colors.blue),
+                            ],),
                             BarChartGroupData(x: 2, barRods: [
-                              BarChartRodData(toY: 58, color: Colors.blue)
-                            ]),
+                              BarChartRodData(toY: 58, color: Colors.blue),
+                            ],),
                             BarChartGroupData(x: 3, barRods: [
-                              BarChartRodData(toY: 81, color: Colors.orange)
-                            ]),
+                              BarChartRodData(toY: 81, color: Colors.orange),
+                            ],),
                             BarChartGroupData(x: 4, barRods: [
-                              BarChartRodData(toY: 67, color: Colors.blue)
-                            ]),
+                              BarChartRodData(toY: 67, color: Colors.blue),
+                            ],),
                             BarChartGroupData(x: 5, barRods: [
-                              BarChartRodData(toY: 45, color: Colors.green)
-                            ]),
+                              BarChartRodData(toY: 45, color: Colors.green),
+                            ],),
                             BarChartGroupData(x: 6, barRods: [
-                              BarChartRodData(toY: 52, color: Colors.green)
-                            ]),
+                              BarChartRodData(toY: 52, color: Colors.green),
+                            ],),
                           ],
                         ),
                       ),

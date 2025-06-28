@@ -86,7 +86,7 @@ class _RatingDialogState extends State<RatingDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-              'Beoordeel ${widget.player.firstName} ${widget.player.lastName}'),
+              'Beoordeel ${widget.player.firstName} ${widget.player.lastName}',),
           const SizedBox(height: 4),
           Text(
             isMatch ? 'Wedstrijd prestatie' : 'Training prestatie',
