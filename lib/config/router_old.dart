@@ -1,5 +1,5 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/players/players_screen.dart';
@@ -24,82 +24,48 @@ import '../screens/training_sessions/field_diagram_editor_screen.dart';
 import '../screens/training_sessions/exercise_designer_screen.dart';
 import '../screens/season/season_hub_screen.dart';
 import '../screens/analytics/performance_analytics_screen.dart';
-import '../screens/admin/admin_panel_screen.dart';
-import '../screens/player_tracking/svs_dashboard_screen.dart';
 import '../widgets/common/main_scaffold.dart';
 import '../models/training_session/training_exercise.dart';
 import '../providers/demo_mode_provider.dart';
 import '../providers/auth_provider.dart';
-import '../providers/organization_provider.dart';
-import '../services/permission_service.dart';
 
-GoRouter createRouter(WidgetRef ref) {
+// Create router with Riverpod
+GoRouter createRouter(Ref ref) {
   return GoRouter(
-    initialLocation: '/auth',
+    initialLocation: '/login',
     redirect: (context, state) {
+      final demoMode = ref.read(demoModeProvider);
       final isLoggedIn = ref.read(isLoggedInProvider);
-      final currentUser = ref.read(currentUserProvider);
-      final isDemoMode = ref.read(demoModeProvider);
-      final organization = ref.read(organizationProvider);
-      
-      final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
-      final path = state.fullPath ?? '';
 
-      // Always allow access to auth page
-      if (isOnAuthPage) {
+      // Allow demo mode without auth
+      if (demoMode.isActive) {
+        // If trying to access login while in demo mode, redirect to dashboard
+        if (state.matchedLocation == '/login') {
+          return '/dashboard';
+        }
         return null;
       }
 
-      // If not logged in and not in demo mode, redirect to auth
-      if (!isLoggedIn && !isDemoMode) {
-        return '/auth';
+      // Redirect to login if not authenticated
+      if (!isLoggedIn && state.matchedLocation != '/login') {
+        return '/login';
       }
 
-      // Get user role
-      String? userRole;
-      if (isDemoMode) {
-        userRole = ref.read(demoModeProvider.notifier).getDemoRole();
-      } else {
-        userRole = currentUser?.userMetadata?['role'] as String?;
-      }
-
-      // Get organization tier
-      final tier = organization?.tier;
-
-      // Check if user has access to the requested route
-      final accessibleRoutes = PermissionService.getAccessibleRoutes(userRole, tier);
-      
-      // Check if the current path is accessible
-      bool hasAccess = false;
-      for (final route in accessibleRoutes) {
-        if (path.startsWith(route)) {
-          hasAccess = true;
-          break;
-        }
-      }
-
-      // If no access, redirect based on role
-      if (!hasAccess) {
-        if (PermissionService.isPlayer(userRole) || PermissionService.isParent(userRole)) {
-          // Players and parents go to limited dashboard
-          return '/dashboard';
-        } else {
-          // Others without access go to dashboard
-          return '/dashboard';
-        }
+      // Redirect to dashboard if authenticated and on login page
+      if (isLoggedIn && state.matchedLocation == '/login') {
+        return '/dashboard';
       }
 
       return null;
     },
     routes: [
-      // Auth route (outside of shell)
       GoRoute(
-        path: '/auth',
-        name: 'auth',
-        builder: (context, state) => const LoginScreen(),
+        path: '/login',
+        name: 'login',
+        pageBuilder: (context, state) => const NoTransitionPage(
+          child: LoginScreen(),
+        ),
       ),
-
-      // Protected routes (inside shell with auth guard)
       ShellRoute(
         builder: (context, state, child) => MainScaffold(child: child),
         routes: [
@@ -218,6 +184,13 @@ GoRouter createRouter(WidgetRef ref) {
             path: '/annual-planning',
             name: 'annual-planning',
             pageBuilder: (context, state) => const NoTransitionPage(
+              child: SeasonHubScreen(),
+            ),
+          ),
+          GoRoute(
+            path: '/annual-planning/details',
+            name: 'annual-planning-details',
+            pageBuilder: (context, state) => const NoTransitionPage(
               child: AnnualPlanningScreen(),
             ),
           ),
@@ -227,16 +200,15 @@ GoRouter createRouter(WidgetRef ref) {
             pageBuilder: (context, state) => const NoTransitionPage(
               child: TrainingSessionsScreen(),
             ),
-            routes: [
-              GoRoute(
-                path: 'builder',
-                name: 'session-builder',
-                builder: (context, state) {
-                  final sessionId = state.uri.queryParameters['sessionId'];
-                  return SessionBuilderScreen(sessionId: sessionId);
-                },
-              ),
-            ],
+          ),
+          GoRoute(
+            path: '/session-builder',
+            name: 'session-builder',
+            builder: (context, state) {
+              final sessionIdString = state.uri.queryParameters['sessionId'];
+              final sessionId = sessionIdString != null ? int.tryParse(sessionIdString) : null;
+              return SessionBuilderScreen(sessionId: sessionId);
+            },
           ),
           GoRoute(
             path: '/exercise-library',
@@ -248,7 +220,10 @@ GoRouter createRouter(WidgetRef ref) {
           GoRoute(
             path: '/field-diagram-editor',
             name: 'field-diagram-editor',
-            builder: (context, state) => const FieldDiagramEditorScreen(),
+            builder: (context, state) {
+              final exerciseId = state.uri.queryParameters['exerciseId'];
+              return FieldDiagramEditorScreen(exerciseId: exerciseId);
+            },
           ),
           GoRoute(
             path: '/exercise-designer',
@@ -272,31 +247,10 @@ GoRouter createRouter(WidgetRef ref) {
             },
           ),
           GoRoute(
-            path: '/season',
-            name: 'season-hub',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: SeasonHubScreen(),
-            ),
-          ),
-          GoRoute(
             path: '/analytics',
             name: 'performance-analytics',
             pageBuilder: (context, state) => const NoTransitionPage(
               child: PerformanceAnalyticsScreen(),
-            ),
-          ),
-          GoRoute(
-            path: '/svs',
-            name: 'svs-dashboard',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: const SVSDashboardScreen(),
-            ),
-          ),
-          GoRoute(
-            path: '/admin',
-            name: 'admin-panel',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: AdminPanelScreen(),
             ),
           ),
         ],
@@ -304,8 +258,3 @@ GoRouter createRouter(WidgetRef ref) {
     ],
   );
 }
-
-// Router provider - use autoDispose to get WidgetRef
-final routerProvider = Provider.autoDispose<GoRouter>((ref) {
-  return createRouter(ref);
-});

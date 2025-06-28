@@ -160,3 +160,8 @@ final demoRoleProvider = Provider<DemoRole?>((ref) {
 final demoUserNameProvider = Provider<String?>((ref) {
   return ref.watch(demoModeProvider).userName;
 });
+
+  /// Get the current demo role
+  String? getDemoRole() {
+    return state.demoRole;
+  }

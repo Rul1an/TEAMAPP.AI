@@ -239,3 +239,20 @@ class MainScaffold extends ConsumerWidget {
     }
   }
 }
+
+// Navigation item with role-based access control
+class NavigationItem {
+  final IconData icon;
+  final String label;
+  final String route;
+  final Feature? feature;
+  final bool Function(String? role, OrganizationTier? tier) roleCheck;
+
+  const NavigationItem({
+    required this.icon,
+    required this.label,
+    required this.route,
+    this.feature,
+    required this.roleCheck,
+  });
+}

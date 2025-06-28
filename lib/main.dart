@@ -48,3 +48,8 @@ class JO17TacticalManagerApp extends ConsumerWidget {
     );
   }
 }
+
+// Create router with WidgetRef
+GoRouter createRouterWithRef(WidgetRef ref) {
+  return createRouter(ref);
+}
