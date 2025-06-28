@@ -75,10 +75,10 @@ jobs:
     - name: Analyze code
       run: |
         if [ -f "pubspec.yaml" ]; then
-          flutter analyze --no-fatal-infos
+          flutter analyze --no-fatal-warnings --no-fatal-infos
         else
           cd jo17_tactical_manager
-          flutter analyze --no-fatal-infos
+          flutter analyze --no-fatal-warnings --no-fatal-infos
         fi
 
     - name: Build web

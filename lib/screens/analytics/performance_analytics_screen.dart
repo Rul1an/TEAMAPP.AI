@@ -78,8 +78,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Analyseer spelerontwikkeling, training effectiviteit en team prestaties.
-'
+                      'Analyseer spelerontwikkeling, training effectiviteit en team prestaties. '
                       'Realtime data analyse voor betere coaching beslissingen.',
                     ),
                   ],
@@ -521,7 +520,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               // Sort players by attendance
               final sortedPlayers = players.toList()
                 ..sort((a, b) => b.attendancePercentage.compareTo(a.attendancePercentage));
-              
+
               final topPlayers = sortedPlayers.take(5).toList();
 
               final avgAttendance = players

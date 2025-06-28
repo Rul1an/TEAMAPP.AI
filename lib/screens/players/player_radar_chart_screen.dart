@@ -54,7 +54,6 @@ class PlayerRadarChartScreen extends StatelessWidget {
                           radarBackgroundColor: Colors.transparent,
                           borderData: FlBorderData(show: false),
                           radarBorderData: const BorderSide(color: Colors.grey, width: 2),
-                          titleCount: 4,
                           titleTextStyle: const TextStyle(color: Colors.black, fontSize: 14),
                           getTitle: (index, angle) {
                             switch (index) {
@@ -97,7 +96,7 @@ class PlayerRadarChartScreen extends StatelessWidget {
 
     return [
       RadarDataSet(
-        fillColor: Colors.blue.withOpacity(0.4),
+        fillColor: Colors.blue.withValues(alpha: 0.4),
         borderColor: Colors.blue,
         borderWidth: 2,
         entryRadius: 4,

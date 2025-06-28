@@ -51,10 +51,9 @@ class AssessmentDetailScreen extends StatelessWidget {
   }
 
   Widget _buildRadarChart(PlayerAssessment assessment) {
-    final ticks = [1, 2, 3, 4, 5];
     final dataSets = [
       RadarDataSet(
-        fillColor: Colors.blue.withOpacity(0.2),
+        fillColor: Colors.blue.withValues(alpha: 0.2),
         borderColor: Colors.blue,
         entryRadius: 3,
         dataEntries: [
@@ -73,24 +72,22 @@ class AssessmentDetailScreen extends StatelessWidget {
         radarBackgroundColor: Colors.transparent,
         borderData: FlBorderData(show: false),
         radarBorderData: const BorderSide(color: Colors.grey, width: 2),
-        titleCount: 4,
-        titlesBuilder: (index, meta) {
-          const style = TextStyle(color: Colors.black, fontSize: 14);
+        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 14),
+        getTitle: (index, angle) {
           switch (index) {
             case 0:
-              return const Text('Technical', style: style);
+              return RadarChartTitle(text: 'Technical', angle: angle);
             case 1:
-              return const Text('Tactical', style: style);
+              return RadarChartTitle(text: 'Tactical', angle: angle);
             case 2:
-              return const Text('Physical', style: style);
+              return RadarChartTitle(text: 'Physical', angle: angle);
             case 3:
-              return const Text('Mental', style: style);
+              return RadarChartTitle(text: 'Mental', angle: angle);
             default:
-              return Container();
+              return const RadarChartTitle(text: '');
           }
         },
-        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 14),
-        tickCount: ticks.length,
+        tickCount: 5,
         ticksTextStyle: const TextStyle(color: Colors.grey, fontSize: 10),
         tickBorderData: const BorderSide(color: Colors.grey, width: 2),
         gridBorderData: const BorderSide(color: Colors.grey, width: 1),
