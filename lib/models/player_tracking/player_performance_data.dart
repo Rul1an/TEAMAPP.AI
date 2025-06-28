@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'player_performance_data.freezed.dart';
 part 'player_performance_data.g.dart';
+
 @freezed
 class PlayerPerformanceData with _$PlayerPerformanceData {
   const factory PlayerPerformanceData({
@@ -34,12 +35,14 @@ class PlayerPerformanceData with _$PlayerPerformanceData {
   factory PlayerPerformanceData.fromJson(Map<String, dynamic> json) =>
       _$PlayerPerformanceDataFromJson(json);
 }
+
 enum PerformanceType {
   training,
   match,
   test,
   assessment,
 }
+
 @freezed
 class PhysicalMetrics with _$PhysicalMetrics {
   const factory PhysicalMetrics({
@@ -77,6 +80,7 @@ class PhysicalMetrics with _$PhysicalMetrics {
   factory PhysicalMetrics.fromJson(Map<String, dynamic> json) =>
       _$PhysicalMetricsFromJson(json);
 }
+
 @freezed
 class TechnicalMetrics with _$TechnicalMetrics {
   const factory TechnicalMetrics({
@@ -116,6 +120,7 @@ class TechnicalMetrics with _$TechnicalMetrics {
   factory TechnicalMetrics.fromJson(Map<String, dynamic> json) =>
       _$TechnicalMetricsFromJson(json);
 }
+
 @freezed
 class TacticalMetrics with _$TacticalMetrics {
   const factory TacticalMetrics({
@@ -143,6 +148,7 @@ class TacticalMetrics with _$TacticalMetrics {
   factory TacticalMetrics.fromJson(Map<String, dynamic> json) =>
       _$TacticalMetricsFromJson(json);
 }
+
 @freezed
 class MentalMetrics with _$MentalMetrics {
   const factory MentalMetrics({
@@ -167,6 +173,7 @@ class MentalMetrics with _$MentalMetrics {
   factory MentalMetrics.fromJson(Map<String, dynamic> json) =>
       _$MentalMetricsFromJson(json);
 }
+
 @freezed
 class MatchMetrics with _$MatchMetrics {
   const factory MatchMetrics({
@@ -188,6 +195,7 @@ class MatchMetrics with _$MatchMetrics {
   factory MatchMetrics.fromJson(Map<String, dynamic> json) =>
       _$MatchMetricsFromJson(json);
 }
+
 @freezed
 class TrainingLoadMetrics with _$TrainingLoadMetrics {
   const factory TrainingLoadMetrics({
@@ -211,6 +219,7 @@ class TrainingLoadMetrics with _$TrainingLoadMetrics {
   factory TrainingLoadMetrics.fromJson(Map<String, dynamic> json) =>
       _$TrainingLoadMetricsFromJson(json);
 }
+
 @freezed
 class WellnessMetrics with _$WellnessMetrics {
   const factory WellnessMetrics({
@@ -236,6 +245,7 @@ class WellnessMetrics with _$WellnessMetrics {
   factory WellnessMetrics.fromJson(Map<String, dynamic> json) =>
       _$WellnessMetricsFromJson(json);
 }
+
 @freezed
 class CoachEvaluation with _$CoachEvaluation {
   const factory CoachEvaluation({
@@ -258,6 +268,7 @@ class CoachEvaluation with _$CoachEvaluation {
   factory CoachEvaluation.fromJson(Map<String, dynamic> json) =>
       _$CoachEvaluationFromJson(json);
 }
+
 @freezed
 class PerformanceInsight with _$PerformanceInsight {
   const factory PerformanceInsight({
@@ -278,6 +289,7 @@ class PerformanceInsight with _$PerformanceInsight {
   factory PerformanceInsight.fromJson(Map<String, dynamic> json) =>
       _$PerformanceInsightFromJson(json);
 }
+
 enum InsightType {
   performance,
   health,
@@ -285,6 +297,7 @@ enum InsightType {
   warning,
   achievement,
 }
+
 enum InsightPriority {
   low,
   medium,

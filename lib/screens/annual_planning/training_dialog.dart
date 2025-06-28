@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/annual_planning/week_schedule.dart';
 
 class TrainingDialog extends StatefulWidget {
-
   const TrainingDialog({
     super.key,
     this.existingTraining,
@@ -72,7 +71,8 @@ class _TrainingDialogState extends State<TrainingDialog> {
     } else {
       _nameController.text = _commonTrainingTypes.first;
       _locationController.text = _commonLocations.first;
-      _selectedDate = widget.weekStartDate.add(const Duration(days: 1)); // Default Tuesday
+      _selectedDate =
+          widget.weekStartDate.add(const Duration(days: 1)); // Default Tuesday
       _selectedTime = const TimeOfDay(hour: 19, minute: 30); // Default 19:30
     }
   }
@@ -87,167 +87,184 @@ class _TrainingDialogState extends State<TrainingDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-      title: Text(
-        widget.existingTraining != null ? 'Training Bewerken' : 'Training Toevoegen',
-        style: TextStyle(color: Colors.green[800]),
-      ),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Training Type Dropdown
-              DropdownButtonFormField<String>(
-                value: _nameController.text.isNotEmpty ? _nameController.text : null,
-                decoration: const InputDecoration(
-                  labelText: 'Type Training',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.sports_soccer),
+        title: Text(
+          widget.existingTraining != null
+              ? 'Training Bewerken'
+              : 'Training Toevoegen',
+          style: TextStyle(color: Colors.green[800]),
+        ),
+        content: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Training Type Dropdown
+                DropdownButtonFormField<String>(
+                  value: _nameController.text.isNotEmpty
+                      ? _nameController.text
+                      : null,
+                  decoration: const InputDecoration(
+                    labelText: 'Type Training',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.sports_soccer),
+                  ),
+                  items: _commonTrainingTypes
+                      .map((type) =>
+                          DropdownMenuItem(value: type, child: Text(type)))
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      _nameController.text = value;
+                    }
+                  },
+                  validator: (value) => value?.isEmpty == true
+                      ? 'Selecteer een training type'
+                      : null,
                 ),
-                items: _commonTrainingTypes.map((type) => DropdownMenuItem(value: type, child: Text(type))).toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    _nameController.text = value;
-                  }
-                },
-                validator: (value) => value?.isEmpty == true ? 'Selecteer een training type' : null,
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              // Custom name option
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Naam (optioneel aanpassen)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.edit),
+                // Custom name option
+                TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Naam (optioneel aanpassen)',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.edit),
+                  ),
+                  validator: (value) =>
+                      value?.isEmpty == true ? 'Voer een naam in' : null,
                 ),
-                validator: (value) => value?.isEmpty == true ? 'Voer een naam in' : null,
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              // Location Dropdown
-              DropdownButtonFormField<String>(
-                value: _locationController.text.isNotEmpty ? _locationController.text : null,
-                decoration: const InputDecoration(
-                  labelText: 'Locatie',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.location_on),
+                // Location Dropdown
+                DropdownButtonFormField<String>(
+                  value: _locationController.text.isNotEmpty
+                      ? _locationController.text
+                      : null,
+                  decoration: const InputDecoration(
+                    labelText: 'Locatie',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.location_on),
+                  ),
+                  items: _commonLocations
+                      .map((location) => DropdownMenuItem(
+                          value: location, child: Text(location)))
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      _locationController.text = value;
+                    }
+                  },
+                  validator: (value) =>
+                      value?.isEmpty == true ? 'Selecteer een locatie' : null,
                 ),
-                items: _commonLocations.map((location) => DropdownMenuItem(value: location, child: Text(location))).toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    _locationController.text = value;
-                  }
-                },
-                validator: (value) => value?.isEmpty == true ? 'Selecteer een locatie' : null,
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              // Date Selection
-              Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: _selectDate,
-                      child: InputDecorator(
-                        decoration: const InputDecoration(
-                          labelText: 'Datum',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.calendar_today),
+                // Date Selection
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: _selectDate,
+                        child: InputDecorator(
+                          decoration: const InputDecoration(
+                            labelText: 'Datum',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.calendar_today),
+                          ),
+                          child: Text(_formatDate(_selectedDate)),
                         ),
-                        child: Text(_formatDate(_selectedDate)),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: InkWell(
-                      onTap: _selectTime,
-                      child: InputDecorator(
-                        decoration: const InputDecoration(
-                          labelText: 'Tijd',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.access_time),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: InkWell(
+                        onTap: _selectTime,
+                        child: InputDecorator(
+                          decoration: const InputDecoration(
+                            labelText: 'Tijd',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.access_time),
+                          ),
+                          child: Text(_selectedTime.format(context)),
                         ),
-                        child: Text(_selectedTime.format(context)),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              // Duration Selection
-              DropdownButtonFormField<Duration>(
-                value: _duration,
-                decoration: const InputDecoration(
-                  labelText: 'Duur',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.timer),
+                  ],
                 ),
-                items: const [
-                  DropdownMenuItem(
-                    value: Duration(hours: 1),
-                    child: Text('1 uur'),
-                  ),
-                  DropdownMenuItem(
-                    value: Duration(hours: 1, minutes: 15),
-                    child: Text('1 uur 15 min'),
-                  ),
-                  DropdownMenuItem(
-                    value: Duration(hours: 1, minutes: 30),
-                    child: Text('1 uur 30 min'),
-                  ),
-                  DropdownMenuItem(
-                    value: Duration(hours: 1, minutes: 45),
-                    child: Text('1 uur 45 min'),
-                  ),
-                  DropdownMenuItem(
-                    value: Duration(hours: 2),
-                    child: Text('2 uur'),
-                  ),
-                ],
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      _duration = value;
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              // Notes
-              TextFormField(
-                controller: _notesController,
-                decoration: const InputDecoration(
-                  labelText: 'Notities (optioneel)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.note),
+                // Duration Selection
+                DropdownButtonFormField<Duration>(
+                  value: _duration,
+                  decoration: const InputDecoration(
+                    labelText: 'Duur',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.timer),
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: Duration(hours: 1),
+                      child: Text('1 uur'),
+                    ),
+                    DropdownMenuItem(
+                      value: Duration(hours: 1, minutes: 15),
+                      child: Text('1 uur 15 min'),
+                    ),
+                    DropdownMenuItem(
+                      value: Duration(hours: 1, minutes: 30),
+                      child: Text('1 uur 30 min'),
+                    ),
+                    DropdownMenuItem(
+                      value: Duration(hours: 1, minutes: 45),
+                      child: Text('1 uur 45 min'),
+                    ),
+                    DropdownMenuItem(
+                      value: Duration(hours: 2),
+                      child: Text('2 uur'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _duration = value;
+                      });
+                    }
+                  },
                 ),
-                maxLines: 2,
-              ),
-            ],
+                const SizedBox(height: 16),
+
+                // Notes
+                TextFormField(
+                  controller: _notesController,
+                  decoration: const InputDecoration(
+                    labelText: 'Notities (optioneel)',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.note),
+                  ),
+                  maxLines: 2,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuleren'),
-        ),
-        ElevatedButton(
-          onPressed: _saveTraining,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green[600],
-            foregroundColor: Colors.white,
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Annuleren'),
           ),
-          child: Text(widget.existingTraining != null ? 'Bijwerken' : 'Toevoegen'),
-        ),
-      ],
-    );
+          ElevatedButton(
+            onPressed: _saveTraining,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green[600],
+              foregroundColor: Colors.white,
+            ),
+            child: Text(
+                widget.existingTraining != null ? 'Bijwerken' : 'Toevoegen'),
+          ),
+        ],
+      );
 
   Future<void> _selectDate() async {
     final date = await showDatePicker(

@@ -4,7 +4,6 @@ import '../providers/demo_mode_provider.dart';
 
 /// 🚀 Demo Mode Starter - Automatically activates demo mode for testing
 class DemoModeStarter extends ConsumerStatefulWidget {
-
   const DemoModeStarter({
     required this.child,
     super.key,
@@ -19,7 +18,7 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
   @override
   void initState() {
     super.initState();
-    
+
     // Start demo mode automatically for testing RBAC
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _startDemoMode();
@@ -28,7 +27,7 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
 
   void _startDemoMode() {
     final demoNotifier = ref.read(demoModeProvider.notifier);
-    
+
     // Start demo mode with hoofdcoach role
     demoNotifier.startDemo(
       role: DemoRole.coach, // hoofdcoach

@@ -13,12 +13,14 @@ final seasonPlansProvider = FutureProvider<List<SeasonPlan>>((ref) async {
   return db.getAllSeasonPlans();
 });
 
-final periodizationPlansProvider = FutureProvider<List<PeriodizationPlan>>((ref) async {
+final periodizationPlansProvider =
+    FutureProvider<List<PeriodizationPlan>>((ref) async {
   final db = DatabaseService();
   return db.getAllPeriodizationPlans();
 });
 
-final trainingPeriodsProvider = FutureProvider<List<TrainingPeriod>>((ref) async {
+final trainingPeriodsProvider =
+    FutureProvider<List<TrainingPeriod>>((ref) async {
   final db = DatabaseService();
   return db.getAllTrainingPeriods();
 });
@@ -72,13 +74,17 @@ class AnnualPlanningScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.calendar_today, color: Theme.of(context).colorScheme.primary),
+                        Icon(Icons.calendar_today,
+                            color: Theme.of(context).colorScheme.primary),
                         const SizedBox(width: 8),
                         Text(
                           'Seizoen Overzicht',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                         ),
                       ],
                     ),
@@ -166,8 +172,8 @@ class AnnualPlanningScreen extends ConsumerWidget {
             Text(
               '⚡ Snelle Acties',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
 
@@ -187,7 +193,8 @@ class AnnualPlanningScreen extends ConsumerWidget {
                         padding: EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            Icon(Icons.trending_up, size: 32, color: Colors.orange),
+                            Icon(Icons.trending_up,
+                                size: 32, color: Colors.orange),
                             SizedBox(height: 8),
                             Text(
                               'Belasting Monitoring',
@@ -230,7 +237,8 @@ class AnnualPlanningScreen extends ConsumerWidget {
                         padding: EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            Icon(Icons.library_books, size: 32, color: Colors.purple),
+                            Icon(Icons.library_books,
+                                size: 32, color: Colors.purple),
                             SizedBox(height: 8),
                             Text(
                               'Templates',
@@ -266,20 +274,26 @@ class AnnualPlanningScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             seasonPlansAsync.when(
               data: (seasons) => Column(
-                children: seasons.map((season) => Card(
-                  child: ListTile(
-                    leading: Icon(Icons.calendar_today, color: Theme.of(context).primaryColor),
-                    title: Text(season.teamName),
-                    subtitle: Text(
-                      '${season.season} | ${season.seasonStartDate.day}/${season.seasonStartDate.month} - ${season.seasonEndDate.day}/${season.seasonEndDate.month}\n'
-                      'Status: ${season.status.name} | Vakantieperioden: ${season.holidayPeriods.length}',
-                    ),
-                    trailing: Chip(
-                      label: Text(season.getCurrentPhase().displayName),
-                      backgroundColor: _getPhaseColor(season.getCurrentPhase()),
-                    ),
-                  ),
-                ),).toList(),
+                children: seasons
+                    .map(
+                      (season) => Card(
+                        child: ListTile(
+                          leading: Icon(Icons.calendar_today,
+                              color: Theme.of(context).primaryColor),
+                          title: Text(season.teamName),
+                          subtitle: Text(
+                            '${season.season} | ${season.seasonStartDate.day}/${season.seasonStartDate.month} - ${season.seasonEndDate.day}/${season.seasonEndDate.month}\n'
+                            'Status: ${season.status.name} | Vakantieperioden: ${season.holidayPeriods.length}',
+                          ),
+                          trailing: Chip(
+                            label: Text(season.getCurrentPhase().displayName),
+                            backgroundColor:
+                                _getPhaseColor(season.getCurrentPhase()),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Text('Error: $error'),
@@ -294,23 +308,28 @@ class AnnualPlanningScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             periodizationPlansAsync.when(
               data: (plans) => Column(
-                children: plans.map((plan) => Card(
-                  child: ListTile(
-                    leading: Icon(Icons.fitness_center, color: Theme.of(context).primaryColor),
-                    title: Text(plan.name),
-                    subtitle: Text(
-                      '${plan.modelType.name} | Leeftijd: ${plan.targetAgeGroup.name}\n'
-                      'Template: ${plan.isTemplate ? "Ja" : "Nee"} | ${plan.description}',
-                    ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('${plan.totalDurationWeeks}w'),
-                        Text('${plan.numberOfPeriods} perioden'),
-                      ],
-                    ),
-                  ),
-                ),).toList(),
+                children: plans
+                    .map(
+                      (plan) => Card(
+                        child: ListTile(
+                          leading: Icon(Icons.fitness_center,
+                              color: Theme.of(context).primaryColor),
+                          title: Text(plan.name),
+                          subtitle: Text(
+                            '${plan.modelType.name} | Leeftijd: ${plan.targetAgeGroup.name}\n'
+                            'Template: ${plan.isTemplate ? "Ja" : "Nee"} | ${plan.description}',
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('${plan.totalDurationWeeks}w'),
+                              Text('${plan.numberOfPeriods} perioden'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Text('Error: $error'),
@@ -325,27 +344,36 @@ class AnnualPlanningScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             trainingPeriodsAsync.when(
               data: (periods) => Column(
-                children: periods.map((period) => Card(
-                  child: ListTile(
-                    leading: Icon(Icons.timeline, color: Theme.of(context).primaryColor),
-                    title: Text(period.name),
-                    subtitle: Text(
-                      '${period.type.name} | ${period.durationWeeks} weken\n'
-                      'Intensiteit: ${period.intensityPercentage}% | ${period.sessionsPerWeek} sessies/week\n'
-                      'Doelen: ${period.keyObjectives.take(2).join(", ")}${period.keyObjectives.length > 2 ? "..." : ""}',
-                    ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          period.isActive ? Icons.play_circle : Icons.pause_circle,
-                          color: period.isActive ? Colors.green : Colors.grey,
+                children: periods
+                    .map(
+                      (period) => Card(
+                        child: ListTile(
+                          leading: Icon(Icons.timeline,
+                              color: Theme.of(context).primaryColor),
+                          title: Text(period.name),
+                          subtitle: Text(
+                            '${period.type.name} | ${period.durationWeeks} weken\n'
+                            'Intensiteit: ${period.intensityPercentage}% | ${period.sessionsPerWeek} sessies/week\n'
+                            'Doelen: ${period.keyObjectives.take(2).join(", ")}${period.keyObjectives.length > 2 ? "..." : ""}',
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                period.isActive
+                                    ? Icons.play_circle
+                                    : Icons.pause_circle,
+                                color: period.isActive
+                                    ? Colors.green
+                                    : Colors.grey,
+                              ),
+                              Text(period.isActive ? 'Actief' : 'Inactief'),
+                            ],
+                          ),
                         ),
-                        Text(period.isActive ? 'Actief' : 'Inactief'),
-                      ],
-                    ),
-                  ),
-                ),).toList(),
+                      ),
+                    )
+                    .toList(),
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Text('Error: $error'),
@@ -362,13 +390,17 @@ class AnnualPlanningScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.lightbulb, color: Theme.of(context).colorScheme.primary),
+                        Icon(Icons.lightbulb,
+                            color: Theme.of(context).colorScheme.primary),
                         const SizedBox(width: 8),
                         Text(
                           'Planning Tips',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                         ),
                       ],
                     ),

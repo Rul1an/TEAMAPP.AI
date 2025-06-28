@@ -78,7 +78,6 @@ enum MatchStatus {
 }
 
 class Match {
-
   Match() {
     createdAt = DateTime.now();
     updatedAt = DateTime.now();

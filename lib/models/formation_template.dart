@@ -4,7 +4,6 @@ import 'team.dart';
 // part 'formation_template.g.dart'; // Temporarily commented out
 
 class FormationTemplate {
-
   FormationTemplate() {
     name = '';
     description = '';
@@ -12,7 +11,7 @@ class FormationTemplate {
     positionPreferences = {};
     isDefault = false;
     isCustom = true;
-    createdBy = 'coach_1'; // TODO: Get from auth
+    createdBy = 'coach_1'; // TODO(author): Get from auth
     createdAt = DateTime.now();
     updatedAt = DateTime.now();
   }
@@ -23,14 +22,15 @@ class FormationTemplate {
     required String description,
     required Formation formation,
     required Map<String, String> positionPreferences,
-  }) => FormationTemplate()
-      ..name = name
-      ..description = description
-      ..formation = formation
-      ..positionPreferences = positionPreferences
-      ..isDefault = true
-      ..isCustom = false
-      ..createdBy = 'system';
+  }) =>
+      FormationTemplate()
+        ..name = name
+        ..description = description
+        ..formation = formation
+        ..positionPreferences = positionPreferences
+        ..isDefault = true
+        ..isCustom = false
+        ..createdBy = 'system';
   String id = '';
 
   late String name;
@@ -41,7 +41,8 @@ class FormationTemplate {
 
   // Position mappings - position key to position preferences
   @Ignore()
-  late Map<String, String> positionPreferences; // e.g., {'GK': 'goalkeeper', 'CB1': 'defender'}
+  late Map<String, String>
+      positionPreferences; // e.g., {'GK': 'goalkeeper', 'CB1': 'defender'}
 
   // Template metadata
   late bool isDefault; // System-provided templates
@@ -52,7 +53,8 @@ class FormationTemplate {
   late DateTime updatedAt;
 
   // Helper method to get position preferences for a formation
-  static Map<String, String> getDefaultPositionPreferences(Formation formation) {
+  static Map<String, String> getDefaultPositionPreferences(
+      Formation formation) {
     switch (formation) {
       case Formation.fourThreeThree:
         return {

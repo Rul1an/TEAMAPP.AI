@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/annual_planning/week_schedule.dart';
 
 class MatchDialog extends StatefulWidget {
-
   const MatchDialog({
     super.key,
     this.existingMatch,
@@ -60,7 +59,8 @@ class _MatchDialogState extends State<MatchDialog> {
     } else {
       _opponentController.text = _commonOpponents.first;
       _locationController.text = 'Thuis';
-      _selectedDate = widget.weekStartDate.add(const Duration(days: 5)); // Default Saturday
+      _selectedDate =
+          widget.weekStartDate.add(const Duration(days: 5)); // Default Saturday
       _selectedTime = const TimeOfDay(hour: 14, minute: 30); // Default 14:30
     }
   }
@@ -75,180 +75,192 @@ class _MatchDialogState extends State<MatchDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-      title: Text(
-        widget.existingMatch != null ? 'Wedstrijd Bewerken' : 'Wedstrijd Toevoegen',
-        style: TextStyle(color: Colors.green[800]),
-      ),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Opponent Dropdown/Text
-              DropdownButtonFormField<String>(
-                value: _commonOpponents.contains(_opponentController.text)
-                    ? _opponentController.text
-                    : null,
-                decoration: const InputDecoration(
-                  labelText: 'Tegenstander',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.groups),
-                ),
-                items: _commonOpponents.map((opponent) => DropdownMenuItem(value: opponent, child: Text(opponent))).toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    _opponentController.text = value;
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Custom opponent field
-              TextFormField(
-                controller: _opponentController,
-                decoration: const InputDecoration(
-                  labelText: 'Tegenstander',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.edit),
-                ),
-                validator: (value) => value?.isEmpty == true ? 'Voer tegenstander in' : null,
-              ),
-              const SizedBox(height: 16),
-
-              // Match Type
-              DropdownButtonFormField<MatchType>(
-                value: _matchType,
-                decoration: const InputDecoration(
-                  labelText: 'Type Wedstrijd',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.sports_soccer),
-                ),
-                items: MatchType.values.map((type) => DropdownMenuItem(
-                    value: type,
-                    child: Text(type.displayName),
-                  ),).toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      _matchType = value;
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Home/Away Toggle
-              Row(
-                children: [
-                  const Text('Locatie: '),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Radio<bool>(
-                          value: true,
-                          groupValue: _isHomeMatch,
-                          onChanged: (value) {
-                            setState(() {
-                              _isHomeMatch = value!;
-                              _locationController.text = 'Thuis';
-                            });
-                          },
-                        ),
-                        const Text('Thuis'),
-                        Radio<bool>(
-                          value: false,
-                          groupValue: _isHomeMatch,
-                          onChanged: (value) {
-                            setState(() {
-                              _isHomeMatch = value!;
-                              _locationController.text = 'Uit';
-                            });
-                          },
-                        ),
-                        const Text('Uit'),
-                      ],
-                    ),
+        title: Text(
+          widget.existingMatch != null
+              ? 'Wedstrijd Bewerken'
+              : 'Wedstrijd Toevoegen',
+          style: TextStyle(color: Colors.green[800]),
+        ),
+        content: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Opponent Dropdown/Text
+                DropdownButtonFormField<String>(
+                  value: _commonOpponents.contains(_opponentController.text)
+                      ? _opponentController.text
+                      : null,
+                  decoration: const InputDecoration(
+                    labelText: 'Tegenstander',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.groups),
                   ),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              // Location
-              TextFormField(
-                controller: _locationController,
-                decoration: const InputDecoration(
-                  labelText: 'Locatie',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.location_on),
+                  items: _commonOpponents
+                      .map((opponent) => DropdownMenuItem(
+                          value: opponent, child: Text(opponent)))
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      _opponentController.text = value;
+                    }
+                  },
                 ),
-                validator: (value) => value?.isEmpty == true ? 'Voer locatie in' : null,
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              // Date and Time Selection
-              Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: _selectDate,
-                      child: InputDecorator(
-                        decoration: const InputDecoration(
-                          labelText: 'Datum',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.calendar_today),
+                // Custom opponent field
+                TextFormField(
+                  controller: _opponentController,
+                  decoration: const InputDecoration(
+                    labelText: 'Tegenstander',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.edit),
+                  ),
+                  validator: (value) =>
+                      value?.isEmpty == true ? 'Voer tegenstander in' : null,
+                ),
+                const SizedBox(height: 16),
+
+                // Match Type
+                DropdownButtonFormField<MatchType>(
+                  value: _matchType,
+                  decoration: const InputDecoration(
+                    labelText: 'Type Wedstrijd',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.sports_soccer),
+                  ),
+                  items: MatchType.values
+                      .map(
+                        (type) => DropdownMenuItem(
+                          value: type,
+                          child: Text(type.displayName),
                         ),
-                        child: Text(_formatDate(_selectedDate)),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _matchType = value;
+                      });
+                    }
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                // Home/Away Toggle
+                Row(
+                  children: [
+                    const Text('Locatie: '),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio<bool>(
+                            value: true,
+                            groupValue: _isHomeMatch,
+                            onChanged: (value) {
+                              setState(() {
+                                _isHomeMatch = value!;
+                                _locationController.text = 'Thuis';
+                              });
+                            },
+                          ),
+                          const Text('Thuis'),
+                          Radio<bool>(
+                            value: false,
+                            groupValue: _isHomeMatch,
+                            onChanged: (value) {
+                              setState(() {
+                                _isHomeMatch = value!;
+                                _locationController.text = 'Uit';
+                              });
+                            },
+                          ),
+                          const Text('Uit'),
+                        ],
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Location
+                TextFormField(
+                  controller: _locationController,
+                  decoration: const InputDecoration(
+                    labelText: 'Locatie',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.location_on),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: InkWell(
-                      onTap: _selectTime,
-                      child: InputDecorator(
-                        decoration: const InputDecoration(
-                          labelText: 'Aftrap',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.access_time),
+                  validator: (value) =>
+                      value?.isEmpty == true ? 'Voer locatie in' : null,
+                ),
+                const SizedBox(height: 16),
+
+                // Date and Time Selection
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: _selectDate,
+                        child: InputDecorator(
+                          decoration: const InputDecoration(
+                            labelText: 'Datum',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.calendar_today),
+                          ),
+                          child: Text(_formatDate(_selectedDate)),
                         ),
-                        child: Text(_selectedTime.format(context)),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              // Notes
-              TextFormField(
-                controller: _notesController,
-                decoration: const InputDecoration(
-                  labelText: 'Notities (optioneel)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.note),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: InkWell(
+                        onTap: _selectTime,
+                        child: InputDecorator(
+                          decoration: const InputDecoration(
+                            labelText: 'Aftrap',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.access_time),
+                          ),
+                          child: Text(_selectedTime.format(context)),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                maxLines: 2,
-              ),
-            ],
+                const SizedBox(height: 16),
+
+                // Notes
+                TextFormField(
+                  controller: _notesController,
+                  decoration: const InputDecoration(
+                    labelText: 'Notities (optioneel)',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.note),
+                  ),
+                  maxLines: 2,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuleren'),
-        ),
-        ElevatedButton(
-          onPressed: _saveMatch,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green[600],
-            foregroundColor: Colors.white,
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Annuleren'),
           ),
-          child: Text(widget.existingMatch != null ? 'Bijwerken' : 'Toevoegen'),
-        ),
-      ],
-    );
+          ElevatedButton(
+            onPressed: _saveMatch,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green[600],
+              foregroundColor: Colors.white,
+            ),
+            child:
+                Text(widget.existingMatch != null ? 'Bijwerken' : 'Toevoegen'),
+          ),
+        ],
+      );
 
   Future<void> _selectDate() async {
     final date = await showDatePicker(

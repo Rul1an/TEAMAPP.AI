@@ -6,7 +6,6 @@ import '../../services/database_service.dart';
 import '../common/star_rating.dart';
 
 class RatingDialog extends StatefulWidget {
-
   const RatingDialog({
     super.key,
     required this.player,
@@ -54,15 +53,20 @@ class _RatingDialogState extends State<RatingDialog> {
       date: DateTime.now(),
       type: widget.type,
       overallRating: _overallRating,
-      attackingRating: widget.type == RatingType.match ? _attackingRating : null,
-      defendingRating: widget.type == RatingType.match ? _defendingRating : null,
+      attackingRating:
+          widget.type == RatingType.match ? _attackingRating : null,
+      defendingRating:
+          widget.type == RatingType.match ? _defendingRating : null,
       tacticalRating: _tacticalRating,
       workRateRating: _workRateRating,
-      technicalRating: widget.type == RatingType.training ? _technicalRating : null,
-      coachabilityRating: widget.type == RatingType.training ? _coachabilityRating : null,
-      teamworkRating: widget.type == RatingType.training ? _teamworkRating : null,
+      technicalRating:
+          widget.type == RatingType.training ? _technicalRating : null,
+      coachabilityRating:
+          widget.type == RatingType.training ? _coachabilityRating : null,
+      teamworkRating:
+          widget.type == RatingType.training ? _teamworkRating : null,
       notes: _notesController.text.isNotEmpty ? _notesController.text : null,
-      coachId: 'coach1', // TODO: Get from auth
+      coachId: 'coach1', // TODO(author): Get from auth
     );
 
     await _dbService.savePerformanceRating(rating);
@@ -81,7 +85,8 @@ class _RatingDialogState extends State<RatingDialog> {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Beoordeel ${widget.player.firstName} ${widget.player.lastName}'),
+          Text(
+              'Beoordeel ${widget.player.firstName} ${widget.player.lastName}'),
           const SizedBox(height: 4),
           Text(
             isMatch ? 'Wedstrijd prestatie' : 'Training prestatie',
@@ -100,7 +105,8 @@ class _RatingDialogState extends State<RatingDialog> {
             InteractiveStarRating(
               label: 'Algemene prestatie *',
               initialRating: _overallRating,
-              onRatingChanged: (rating) => setState(() => _overallRating = rating),
+              onRatingChanged: (rating) =>
+                  setState(() => _overallRating = rating),
             ),
             const SizedBox(height: 16),
 
@@ -109,13 +115,15 @@ class _RatingDialogState extends State<RatingDialog> {
               InteractiveStarRating(
                 label: 'Aanvallend',
                 initialRating: _attackingRating ?? 0,
-                onRatingChanged: (rating) => setState(() => _attackingRating = rating),
+                onRatingChanged: (rating) =>
+                    setState(() => _attackingRating = rating),
               ),
               const SizedBox(height: 12),
               InteractiveStarRating(
                 label: 'Verdedigend',
                 initialRating: _defendingRating ?? 0,
-                onRatingChanged: (rating) => setState(() => _defendingRating = rating),
+                onRatingChanged: (rating) =>
+                    setState(() => _defendingRating = rating),
               ),
               const SizedBox(height: 12),
             ],
@@ -125,19 +133,22 @@ class _RatingDialogState extends State<RatingDialog> {
               InteractiveStarRating(
                 label: 'Technische uitvoering',
                 initialRating: _technicalRating ?? 0,
-                onRatingChanged: (rating) => setState(() => _technicalRating = rating),
+                onRatingChanged: (rating) =>
+                    setState(() => _technicalRating = rating),
               ),
               const SizedBox(height: 12),
               InteractiveStarRating(
                 label: 'Coachbaarheid',
                 initialRating: _coachabilityRating ?? 0,
-                onRatingChanged: (rating) => setState(() => _coachabilityRating = rating),
+                onRatingChanged: (rating) =>
+                    setState(() => _coachabilityRating = rating),
               ),
               const SizedBox(height: 12),
               InteractiveStarRating(
                 label: 'Teamwork',
                 initialRating: _teamworkRating ?? 0,
-                onRatingChanged: (rating) => setState(() => _teamworkRating = rating),
+                onRatingChanged: (rating) =>
+                    setState(() => _teamworkRating = rating),
               ),
               const SizedBox(height: 12),
             ],
@@ -146,13 +157,15 @@ class _RatingDialogState extends State<RatingDialog> {
             InteractiveStarRating(
               label: 'Tactisch inzicht',
               initialRating: _tacticalRating ?? 0,
-              onRatingChanged: (rating) => setState(() => _tacticalRating = rating),
+              onRatingChanged: (rating) =>
+                  setState(() => _tacticalRating = rating),
             ),
             const SizedBox(height: 12),
             InteractiveStarRating(
               label: 'Werkethiek/Inzet',
               initialRating: _workRateRating ?? 0,
-              onRatingChanged: (rating) => setState(() => _workRateRating = rating),
+              onRatingChanged: (rating) =>
+                  setState(() => _workRateRating = rating),
             ),
             const SizedBox(height: 16),
 

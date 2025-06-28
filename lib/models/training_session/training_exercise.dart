@@ -4,7 +4,6 @@ import 'field_diagram.dart';
 // part 'training_exercise.g.dart'; // Disabled for web compatibility
 
 class TrainingExercise {
-
   // Basic exercise data
   TrainingExercise({
     this.id = 0,
@@ -58,33 +57,34 @@ class TrainingExercise {
     double averageRating = 0.0,
     TacticalFocus? tacticalFocus,
     double primaryIntensity = 5.0,
-  }) => TrainingExercise(
-      name: name,
-      description: description,
-      durationMinutes: durationMinutes,
-      playerCount: playerCount,
-      equipment: equipment,
-      intensityLevel: intensityLevel,
-      type: type,
-      coachingPoints: coachingPoints ?? [],
-      trainingSessionId: trainingSessionId,
-      sessionPhaseId: sessionPhaseId,
-      orderIndex: orderIndex,
-      keyFocus: keyFocus,
-      objectives: objectives ?? [],
-      fieldDiagram: fieldDiagram,
-      minPlayers: minPlayers,
-      maxPlayers: maxPlayers,
-      category: category,
-      complexity: complexity,
-      spaceRequired: spaceRequired,
-      estimatedRPE: estimatedRPE,
-      averageRating: averageRating,
-      tacticalFocus: tacticalFocus,
-      primaryIntensity: primaryIntensity,
-    )
-      ..createdAt = DateTime.now()
-      ..updatedAt = DateTime.now();
+  }) =>
+      TrainingExercise(
+        name: name,
+        description: description,
+        durationMinutes: durationMinutes,
+        playerCount: playerCount,
+        equipment: equipment,
+        intensityLevel: intensityLevel,
+        type: type,
+        coachingPoints: coachingPoints ?? [],
+        trainingSessionId: trainingSessionId,
+        sessionPhaseId: sessionPhaseId,
+        orderIndex: orderIndex,
+        keyFocus: keyFocus,
+        objectives: objectives ?? [],
+        fieldDiagram: fieldDiagram,
+        minPlayers: minPlayers,
+        maxPlayers: maxPlayers,
+        category: category,
+        complexity: complexity,
+        spaceRequired: spaceRequired,
+        estimatedRPE: estimatedRPE,
+        averageRating: averageRating,
+        tacticalFocus: tacticalFocus,
+        primaryIntensity: primaryIntensity,
+      )
+        ..createdAt = DateTime.now()
+        ..updatedAt = DateTime.now();
 
   factory TrainingExercise.fromJson(Map<String, dynamic> json) {
     final exercise = TrainingExercise.create(
@@ -159,7 +159,7 @@ class TrainingExercise {
 
   // Additional properties for enhanced functionality
   String? trainingSessionId;
-  String? sessionPhaseId;  // Links exercise to specific phase
+  String? sessionPhaseId; // Links exercise to specific phase
   int orderIndex = 0;
   String? keyFocus;
   List<String> objectives = [];
@@ -334,7 +334,8 @@ class TrainingExercise {
   }
 
   // Check if exercise is compatible with a tactical focus
-  bool isCompatibleWithTacticalFocus(TacticalFocus focus) => tacticalFocus == focus || tacticalFocus == null;
+  bool isCompatibleWithTacticalFocus(TacticalFocus focus) =>
+      tacticalFocus == focus || tacticalFocus == null;
 
   // Static method for getting recommended exercises for a morphocycle week
   static Map<String, List<TrainingExercise>> getRecommendedExercisesForWeek(
@@ -379,88 +380,98 @@ class TrainingExercise {
 
 // Extension methods for filtering exercises
 extension TrainingExerciseFilters on List<TrainingExercise> {
-  List<TrainingExercise> forIntensity(TrainingIntensity intensity) => where((exercise) {
-      // Map TrainingIntensity enum to intensity level ranges
-      switch (intensity) {
-        case TrainingIntensity.recovery:
-          return exercise.intensityLevel <= 4.0;
-        case TrainingIntensity.activation:
-          return exercise.intensityLevel >= 4.0 && exercise.intensityLevel <= 6.0;
-        case TrainingIntensity.development:
-          return exercise.intensityLevel >= 6.0 && exercise.intensityLevel <= 8.0;
-        case TrainingIntensity.acquisition:
-          return exercise.intensityLevel >= 8.0;
-        case TrainingIntensity.competition:
-          return exercise.intensityLevel >= 9.0;
-      }
-    }).toList();
+  List<TrainingExercise> forIntensity(TrainingIntensity intensity) =>
+      where((exercise) {
+        // Map TrainingIntensity enum to intensity level ranges
+        switch (intensity) {
+          case TrainingIntensity.recovery:
+            return exercise.intensityLevel <= 4.0;
+          case TrainingIntensity.activation:
+            return exercise.intensityLevel >= 4.0 &&
+                exercise.intensityLevel <= 6.0;
+          case TrainingIntensity.development:
+            return exercise.intensityLevel >= 6.0 &&
+                exercise.intensityLevel <= 8.0;
+          case TrainingIntensity.acquisition:
+            return exercise.intensityLevel >= 8.0;
+          case TrainingIntensity.competition:
+            return exercise.intensityLevel >= 9.0;
+        }
+      }).toList();
 
-  List<TrainingExercise> forTacticalFocus(TacticalFocus focus) => where((exercise) =>
-      exercise.tacticalFocus == focus,
-    ).toList();
+  List<TrainingExercise> forTacticalFocus(TacticalFocus focus) => where(
+        (exercise) => exercise.tacticalFocus == focus,
+      ).toList();
 
   List<TrainingExercise> search(String query) {
     final lowerQuery = query.toLowerCase();
-    return where((exercise) =>
-      exercise.name.toLowerCase().contains(lowerQuery) ||
-      exercise.description.toLowerCase().contains(lowerQuery) ||
-      exercise.coachingPoints.any((point) =>
-        point.toLowerCase().contains(lowerQuery),
-      ),
+    return where(
+      (exercise) =>
+          exercise.name.toLowerCase().contains(lowerQuery) ||
+          exercise.description.toLowerCase().contains(lowerQuery) ||
+          exercise.coachingPoints.any(
+            (point) => point.toLowerCase().contains(lowerQuery),
+          ),
     ).toList();
   }
 
-  List<TrainingExercise> forCategory(ExerciseCategory category) => where((exercise) => exercise.category == category).toList();
+  List<TrainingExercise> forCategory(ExerciseCategory category) =>
+      where((exercise) => exercise.category == category).toList();
 
-  List<TrainingExercise> forComplexity(ExerciseComplexity complexity) => where((exercise) => exercise.complexity == complexity).toList();
+  List<TrainingExercise> forComplexity(ExerciseComplexity complexity) =>
+      where((exercise) => exercise.complexity == complexity).toList();
 
-  List<TrainingExercise> forDuration(int minMinutes, int maxMinutes) => where((exercise) =>
-      exercise.durationMinutes >= minMinutes &&
-      exercise.durationMinutes <= maxMinutes,
-    ).toList();
+  List<TrainingExercise> forDuration(int minMinutes, int maxMinutes) => where(
+        (exercise) =>
+            exercise.durationMinutes >= minMinutes &&
+            exercise.durationMinutes <= maxMinutes,
+      ).toList();
 
-  List<TrainingExercise> forPlayerCount(int minPlayers, int maxPlayers) => where((exercise) =>
-      exercise.minPlayers <= maxPlayers &&
-      exercise.maxPlayers >= minPlayers,
-    ).toList();
+  List<TrainingExercise> forPlayerCount(int minPlayers, int maxPlayers) =>
+      where(
+        (exercise) =>
+            exercise.minPlayers <= maxPlayers &&
+            exercise.maxPlayers >= minPlayers,
+      ).toList();
 }
 
 // Extension methods for individual exercises
 extension TrainingExerciseExtension on TrainingExercise {
-  bool isCompatibleWithTacticalFocus(TacticalFocus focus) => tacticalFocus == focus;
+  bool isCompatibleWithTacticalFocus(TacticalFocus focus) =>
+      tacticalFocus == focus;
 }
 
 // Exercise types following professional coaching methodology
 enum ExerciseType {
-  technical,       // Technical skills (passing, shooting, dribbling)
-  tactical,        // Tactical concepts (positioning, pressing, transitions)
-  physical,        // Conditioning, fitness, speed, agility
-  goalkeeping,     // Goalkeeper specific training
-  psychological,   // Mental skills, decision making
-  warmUp,          // Warm-up and activation exercises
-  coolDown,        // Cool-down and recovery
+  technical, // Technical skills (passing, shooting, dribbling)
+  tactical, // Tactical concepts (positioning, pressing, transitions)
+  physical, // Conditioning, fitness, speed, agility
+  goalkeeping, // Goalkeeper specific training
+  psychological, // Mental skills, decision making
+  warmUp, // Warm-up and activation exercises
+  coolDown, // Cool-down and recovery
   smallSidedGames, // Small-sided games for tactical development
-  conditioning,    // Physical conditioning and fitness
-  warmup,          // Alternative warm-up naming
-  cooldown,        // Alternative cool-down naming
-  smallSidedGame,  // Alternative small-sided game naming
-  possession,      // Possession-based exercises
-  finishing,       // Finishing and shooting exercises
-  defending,       // Defensive exercises
-  transition,      // Transition exercises (attack to defense)
+  conditioning, // Physical conditioning and fitness
+  warmup, // Alternative warm-up naming
+  cooldown, // Alternative cool-down naming
+  smallSidedGame, // Alternative small-sided game naming
+  possession, // Possession-based exercises
+  finishing, // Finishing and shooting exercises
+  defending, // Defensive exercises
+  transition, // Transition exercises (attack to defense)
 }
 
 // Exercise categories for organization
 enum ExerciseCategory {
-  warmup,         // Warm-up exercises
-  technical,      // Technical skill development
-  tactical,       // Tactical understanding
-  physical,       // Physical conditioning
-  finishing,      // Goal scoring
-  defending,      // Defensive work
-  goalkeeping,    // Goalkeeper training
-  smallSided,     // Small-sided games
-  cooldown,       // Cool-down and recovery
+  warmup, // Warm-up exercises
+  technical, // Technical skill development
+  tactical, // Tactical understanding
+  physical, // Physical conditioning
+  finishing, // Goal scoring
+  defending, // Defensive work
+  goalkeeping, // Goalkeeper training
+  smallSided, // Small-sided games
+  cooldown, // Cool-down and recovery
 }
 
 // Extension for ExerciseCategory display names
@@ -491,10 +502,10 @@ extension ExerciseCategoryExtension on ExerciseCategory {
 
 // Exercise complexity levels
 enum ExerciseComplexity {
-  basic,          // Basic/beginner level
-  intermediate,   // Intermediate level
-  advanced,       // Advanced level
-  expert,         // Expert/professional level
+  basic, // Basic/beginner level
+  intermediate, // Intermediate level
+  advanced, // Advanced level
+  expert, // Expert/professional level
 }
 
 // Extension for ExerciseComplexity display names

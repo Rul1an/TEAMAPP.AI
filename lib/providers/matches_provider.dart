@@ -17,12 +17,15 @@ final recentMatchesProvider = FutureProvider<List<Match>>((ref) async {
   return db.getRecentMatches();
 });
 
-final matchByIdProvider = FutureProvider.family<Match?, String>((ref, id) async {
+final matchByIdProvider =
+    FutureProvider.family<Match?, String>((ref, id) async {
   final db = DatabaseService();
   return db.getMatch(id);
 });
 
-final matchesNotifierProvider = StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>((ref) => MatchesNotifier());
+final matchesNotifierProvider =
+    StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>(
+        (ref) => MatchesNotifier());
 
 class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
   MatchesNotifier() : super(const AsyncValue.loading()) {

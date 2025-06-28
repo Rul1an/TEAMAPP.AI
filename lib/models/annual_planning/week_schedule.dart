@@ -1,7 +1,6 @@
 import 'morphocycle.dart';
 
 class WeekSchedule {
-
   WeekSchedule({
     required this.weekNumber,
     required this.weekStartDate,
@@ -25,15 +24,24 @@ class WeekSchedule {
 
   String get monthName {
     const months = [
-      'Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni',
-      'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December',
+      'Januari',
+      'Februari',
+      'Maart',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Augustus',
+      'September',
+      'Oktober',
+      'November',
+      'December',
     ];
     return months[weekStartDate.month - 1];
   }
 }
 
 class WeeklyTraining {
-
   WeeklyTraining({
     required this.name,
     required this.dateTime,
@@ -53,7 +61,8 @@ class WeeklyTraining {
   final int? durationMinutes;
   final int? rpe;
 
-  String get timeString => '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  String get timeString =>
+      '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
 
   String get dayName {
     const days = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
@@ -88,7 +97,6 @@ class WeeklyTraining {
 }
 
 class WeeklyMatch {
-
   WeeklyMatch({
     required this.opponent,
     required this.dateTime,
@@ -106,7 +114,8 @@ class WeeklyMatch {
   final String? notes;
   final MatchType type;
 
-  String get timeString => '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  String get timeString =>
+      '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
 
   String get dayName {
     const days = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];

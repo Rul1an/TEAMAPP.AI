@@ -47,9 +47,12 @@ class ExportService {
               'Speelminuten %',
             ],
             data: players.map((player) {
-              final age = DateTime.now().difference(player.birthDate).inDays ~/ 365;
+              final age =
+                  DateTime.now().difference(player.birthDate).inDays ~/ 365;
               final speelminutenPercentage = player.matchesInSelection > 0
-                  ? ((player.minutesPlayed / (player.matchesInSelection * 80)) * 100).toStringAsFixed(1)
+                  ? ((player.minutesPlayed / (player.matchesInSelection * 80)) *
+                          100)
+                      .toStringAsFixed(1)
                   : '0.0';
 
               return [
@@ -101,7 +104,8 @@ class ExportService {
     // Data
     for (final player in players) {
       final speelminutenPercentage = player.matchesInSelection > 0
-          ? ((player.minutesPlayed / (player.matchesInSelection * 80)) * 100).toStringAsFixed(1)
+          ? ((player.minutesPlayed / (player.matchesInSelection * 80)) * 100)
+              .toStringAsFixed(1)
           : '0.0';
 
       sheet.appendRow([
@@ -112,7 +116,8 @@ class ExportService {
         TextCellValue(DateFormat('dd-MM-yyyy').format(player.birthDate)),
         DoubleCellValue(player.height),
         DoubleCellValue(player.weight),
-        TextCellValue(player.preferredFoot == PreferredFoot.left ? 'Links' : 'Rechts'),
+        TextCellValue(
+            player.preferredFoot == PreferredFoot.left ? 'Links' : 'Rechts'),
         IntCellValue(player.matchesPlayed),
         IntCellValue(player.goals),
         IntCellValue(player.assists),
@@ -152,12 +157,12 @@ class ExportService {
               'Status',
             ],
             data: matches.map((match) {
-              final score = match.teamScore != null && match.opponentScore != null
-                  ? '${match.teamScore} - ${match.opponentScore}'
-                  : '-';
-              final result = match.result != null
-                  ? _getResultText(match.result!)
-                  : '-';
+              final score =
+                  match.teamScore != null && match.opponentScore != null
+                      ? '${match.teamScore} - ${match.opponentScore}'
+                      : '-';
+              final result =
+                  match.result != null ? _getResultText(match.result!) : '-';
 
               return [
                 DateFormat('dd-MM-yyyy').format(match.date),

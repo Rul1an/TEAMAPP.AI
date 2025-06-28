@@ -11,7 +11,6 @@ import '../../services/database_service.dart';
 import '../../widgets/common/rating_dialog.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
-
   const MatchDetailScreen({
     super.key,
     required this.matchId,
@@ -91,10 +90,12 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
           if (_teamScoreController.text.isEmpty && match.teamScore != null) {
             _teamScoreController.text = match.teamScore.toString();
           }
-          if (_opponentScoreController.text.isEmpty && match.opponentScore != null) {
+          if (_opponentScoreController.text.isEmpty &&
+              match.opponentScore != null) {
             _opponentScoreController.text = match.opponentScore.toString();
           }
-          if (_selectedStartingLineup.isEmpty && match.startingLineupIds.isNotEmpty) {
+          if (_selectedStartingLineup.isEmpty &&
+              match.startingLineupIds.isNotEmpty) {
             _selectedStartingLineup = List.from(match.startingLineupIds);
           }
           if (_selectedSubstitutes.isEmpty && match.substituteIds.isNotEmpty) {
@@ -130,7 +131,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                         children: [
                           Expanded(
                             child: ElevatedButton.icon(
-                              onPressed: () => context.go('/lineup?matchId=${match.id}'),
+                              onPressed: () =>
+                                  context.go('/lineup?matchId=${match.id}'),
                               icon: const Icon(Icons.people),
                               label: const Text('Opstelling Maken'),
                             ),
@@ -157,248 +159,258 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   }
 
   Widget _buildMatchInfo(Match match) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Wedstrijd Informatie',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
-            _buildInfoRow('Tegenstander', match.opponent),
-            _buildInfoRow('Datum', DateFormat('dd-MM-yyyy HH:mm').format(match.date)),
-            _buildInfoRow('Locatie', match.location == Location.home ? 'Thuis' : 'Uit'),
-            _buildInfoRow('Competitie', _getCompetitionName(match.competition)),
-            _buildInfoRow('Status', _getStatusName(match.status)),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Wedstrijd Informatie',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              _buildInfoRow('Tegenstander', match.opponent),
+              _buildInfoRow(
+                  'Datum', DateFormat('dd-MM-yyyy HH:mm').format(match.date)),
+              _buildInfoRow(
+                  'Locatie', match.location == Location.home ? 'Thuis' : 'Uit'),
+              _buildInfoRow(
+                  'Competitie', _getCompetitionName(match.competition)),
+              _buildInfoRow('Status', _getStatusName(match.status)),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   Widget _buildInfoRow(String label, String value) => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 120,
-            child: Text(
-              '$label:',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 120,
+              child: Text(
+                '$label:',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Expanded(child: Text(value)),
-        ],
-      ),
-    );
+            Expanded(child: Text(value)),
+          ],
+        ),
+      );
 
   Widget _buildScoreSection(Match match) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Score',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _teamScoreController,
-                    decoration: const InputDecoration(
-                      labelText: 'JO17',
-                      border: OutlineInputBorder(),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Score',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _teamScoreController,
+                      decoration: const InputDecoration(
+                        labelText: 'JO17',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    '-',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                ),
-                const SizedBox(width: 16),
-                Text(
-                  '-',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: TextFormField(
-                    controller: _opponentScoreController,
-                    decoration: InputDecoration(
-                      labelText: match.opponent,
-                      border: const OutlineInputBorder(),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _opponentScoreController,
+                      decoration: InputDecoration(
+                        labelText: match.opponent,
+                        border: const OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ],
+              ),
+              if (match.result != null) ...[
+                const SizedBox(height: 8),
+                Center(
+                  child: Chip(
+                    label: Text(
+                      _getResultName(match.result!),
+                      style: TextStyle(
+                        color: _getResultColor(match.result!),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    backgroundColor:
+                        _getResultColor(match.result!).withValues(alpha: 0.2),
                   ),
                 ),
               ],
-            ),
-            if (match.result != null) ...[
-              const SizedBox(height: 8),
-              Center(
-                child: Chip(
-                  label: Text(
-                    _getResultName(match.result!),
-                    style: TextStyle(
-                      color: _getResultColor(match.result!),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  backgroundColor: _getResultColor(match.result!).withValues(alpha: 0.2),
-                ),
-              ),
             ],
-          ],
+          ),
         ),
-      ),
-    );
+      );
 
   Widget _buildLineupSection(List<Player> players) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Opstelling (${_selectedStartingLineup.length}/11)',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                TextButton.icon(
-                  onPressed: () => _showPlayerSelectionDialog(players, true),
-                  icon: const Icon(Icons.add),
-                  label: const Text('Selecteer'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            if (_selectedStartingLineup.isEmpty)
-              const Text(
-                'Nog geen spelers geselecteerd',
-                style: TextStyle(fontStyle: FontStyle.italic),
-              )
-            else
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: _selectedStartingLineup.map((playerId) {
-                  final player = players.firstWhere(
-                    (p) => p.id.toString() == playerId,
-                    orElse: () {
-                      final newPlayer = Player();
-                      newPlayer.firstName = 'Onbekend';
-                      newPlayer.lastName = '';
-                      newPlayer.jerseyNumber = 0;
-                      newPlayer.birthDate = DateTime.now();
-                      newPlayer.position = Position.midfielder;
-                      newPlayer.preferredFoot = PreferredFoot.right;
-                      newPlayer.height = 0;
-                      newPlayer.weight = 0;
-                      return newPlayer;
-                    },
-                  );
-                  return Chip(
-                    label: Text('${player.jerseyNumber}. ${player.name}'),
-                    deleteIcon: const Icon(Icons.close, size: 18),
-                    onDeleted: () {
-                      setState(() {
-                        _selectedStartingLineup.remove(playerId);
-                      });
-                    },
-                    backgroundColor: _getPositionColor(player.position).withValues(alpha: 0.2),
-                  );
-                }).toList(),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Opstelling (${_selectedStartingLineup.length}/11)',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  TextButton.icon(
+                    onPressed: () => _showPlayerSelectionDialog(players, true),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Selecteer'),
+                  ),
+                ],
               ),
-          ],
+              const SizedBox(height: 8),
+              if (_selectedStartingLineup.isEmpty)
+                const Text(
+                  'Nog geen spelers geselecteerd',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                )
+              else
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _selectedStartingLineup.map((playerId) {
+                    final player = players.firstWhere(
+                      (p) => p.id.toString() == playerId,
+                      orElse: () {
+                        final newPlayer = Player();
+                        newPlayer.firstName = 'Onbekend';
+                        newPlayer.lastName = '';
+                        newPlayer.jerseyNumber = 0;
+                        newPlayer.birthDate = DateTime.now();
+                        newPlayer.position = Position.midfielder;
+                        newPlayer.preferredFoot = PreferredFoot.right;
+                        newPlayer.height = 0;
+                        newPlayer.weight = 0;
+                        return newPlayer;
+                      },
+                    );
+                    return Chip(
+                      label: Text('${player.jerseyNumber}. ${player.name}'),
+                      deleteIcon: const Icon(Icons.close, size: 18),
+                      onDeleted: () {
+                        setState(() {
+                          _selectedStartingLineup.remove(playerId);
+                        });
+                      },
+                      backgroundColor: _getPositionColor(player.position)
+                          .withValues(alpha: 0.2),
+                    );
+                  }).toList(),
+                ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   Widget _buildSubstitutesSection(List<Player> players) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Wisselspelers (${_selectedSubstitutes.length})',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                TextButton.icon(
-                  onPressed: () => _showPlayerSelectionDialog(players, false),
-                  icon: const Icon(Icons.add),
-                  label: const Text('Selecteer'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            if (_selectedSubstitutes.isEmpty)
-              const Text(
-                'Nog geen wisselspelers geselecteerd',
-                style: TextStyle(fontStyle: FontStyle.italic),
-              )
-            else
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: _selectedSubstitutes.map((playerId) {
-                  final player = players.firstWhere(
-                    (p) => p.id.toString() == playerId,
-                    orElse: () {
-                      final newPlayer = Player();
-                      newPlayer.firstName = 'Onbekend';
-                      newPlayer.lastName = '';
-                      newPlayer.jerseyNumber = 0;
-                      newPlayer.birthDate = DateTime.now();
-                      newPlayer.position = Position.midfielder;
-                      newPlayer.preferredFoot = PreferredFoot.right;
-                      newPlayer.height = 0;
-                      newPlayer.weight = 0;
-                      return newPlayer;
-                    },
-                  );
-                  return Chip(
-                    label: Text('${player.jerseyNumber}. ${player.name}'),
-                    deleteIcon: const Icon(Icons.close, size: 18),
-                    onDeleted: () {
-                      setState(() {
-                        _selectedSubstitutes.remove(playerId);
-                      });
-                    },
-                    backgroundColor: Colors.grey.withValues(alpha: 0.2),
-                  );
-                }).toList(),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Wisselspelers (${_selectedSubstitutes.length})',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  TextButton.icon(
+                    onPressed: () => _showPlayerSelectionDialog(players, false),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Selecteer'),
+                  ),
+                ],
               ),
-          ],
+              const SizedBox(height: 8),
+              if (_selectedSubstitutes.isEmpty)
+                const Text(
+                  'Nog geen wisselspelers geselecteerd',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                )
+              else
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _selectedSubstitutes.map((playerId) {
+                    final player = players.firstWhere(
+                      (p) => p.id.toString() == playerId,
+                      orElse: () {
+                        final newPlayer = Player();
+                        newPlayer.firstName = 'Onbekend';
+                        newPlayer.lastName = '';
+                        newPlayer.jerseyNumber = 0;
+                        newPlayer.birthDate = DateTime.now();
+                        newPlayer.position = Position.midfielder;
+                        newPlayer.preferredFoot = PreferredFoot.right;
+                        newPlayer.height = 0;
+                        newPlayer.weight = 0;
+                        return newPlayer;
+                      },
+                    );
+                    return Chip(
+                      label: Text('${player.jerseyNumber}. ${player.name}'),
+                      deleteIcon: const Icon(Icons.close, size: 18),
+                      onDeleted: () {
+                        setState(() {
+                          _selectedSubstitutes.remove(playerId);
+                        });
+                      },
+                      backgroundColor: Colors.grey.withValues(alpha: 0.2),
+                    );
+                  }).toList(),
+                ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   void _showPlayerSelectionDialog(List<Player> players, bool isStartingLineup) {
-    final selectedPlayers = isStartingLineup ? _selectedStartingLineup : _selectedSubstitutes;
-    final otherPlayers = isStartingLineup ? _selectedSubstitutes : _selectedStartingLineup;
+    final selectedPlayers =
+        isStartingLineup ? _selectedStartingLineup : _selectedSubstitutes;
+    final otherPlayers =
+        isStartingLineup ? _selectedSubstitutes : _selectedStartingLineup;
 
     // Filter out players already selected
     final availablePlayers = players.where((player) {
       final playerId = player.id.toString();
-      return !selectedPlayers.contains(playerId) && !otherPlayers.contains(playerId);
+      return !selectedPlayers.contains(playerId) &&
+          !otherPlayers.contains(playerId);
     }).toList();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(isStartingLineup ? 'Selecteer Spelers voor Opstelling' : 'Selecteer Wisselspelers'),
+        title: Text(isStartingLineup
+            ? 'Selecteer Spelers voor Opstelling'
+            : 'Selecteer Wisselspelers'),
         content: SizedBox(
           width: double.maxFinite,
           height: 400,
@@ -443,7 +455,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   Future<void> _saveMatch() async {
     if (_formKey.currentState!.validate()) {
       try {
-        // TODO: Implement actual save functionality
+        // TODO(author): Implement actual save functionality
         // final dbService = ref.read(databaseServiceProvider);
         // final teamScore = int.tryParse(_teamScoreController.text);
         // final opponentScore = int.tryParse(_opponentScoreController.text);
@@ -552,7 +564,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
     final participatingPlayers = players.where((player) {
       final playerId = player.id.toString();
       return _selectedStartingLineup.contains(playerId) ||
-             _selectedSubstitutes.contains(playerId);
+          _selectedSubstitutes.contains(playerId);
     }).toList();
 
     return Card(
@@ -570,8 +582,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                 ),
                 FilledButton.icon(
                   onPressed: participatingPlayers.isEmpty
-                    ? null
-                    : () => _showRatingOptions(match, participatingPlayers),
+                      ? null
+                      : () => _showRatingOptions(match, participatingPlayers),
                   icon: const Icon(Icons.star),
                   label: const Text('Beoordeel Spelers'),
                 ),
@@ -659,7 +671,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                         if (result == true && mounted && context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Beoordeling opgeslagen voor ${player.name}'),
+                              content: Text(
+                                  'Beoordeling opgeslagen voor ${player.name}'),
                               backgroundColor: Colors.green,
                             ),
                           );

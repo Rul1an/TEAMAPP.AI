@@ -15,7 +15,8 @@ export '../providers/organization_provider.dart';
 final clubServiceProvider = Provider<ClubService>((ref) => ClubService());
 
 // Feature service provider
-final featureServiceProvider = Provider<FeatureService>((ref) => FeatureService());
+final featureServiceProvider =
+    Provider<FeatureService>((ref) => FeatureService());
 
 // Club provider
 final clubProvider = ChangeNotifierProvider<ClubProvider>((ref) {
@@ -24,13 +25,17 @@ final clubProvider = ChangeNotifierProvider<ClubProvider>((ref) {
 });
 
 // Calendar provider
-final calendarProvider = ChangeNotifierProvider<CalendarProvider>((ref) => CalendarProvider());
+final calendarProvider =
+    ChangeNotifierProvider<CalendarProvider>((ref) => CalendarProvider());
 
 // Training sessions provider
-final trainingSessionsProvider = ChangeNotifierProvider<TrainingSessionsProvider>((ref) => TrainingSessionsProvider());
+final trainingSessionsProvider =
+    ChangeNotifierProvider<TrainingSessionsProvider>(
+        (ref) => TrainingSessionsProvider());
 
 // Player tracking provider
-final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>((ref) => PlayerTrackingProvider());
+final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>(
+    (ref) => PlayerTrackingProvider());
 
 // Calendar provider implementation
 class CalendarProvider extends ChangeNotifier {
@@ -48,13 +53,19 @@ class CalendarProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<CalendarEvent> getEventsForDate(DateTime date) => _events.where((event) => event.date.year == date.year &&
-             event.date.month == date.month &&
-             event.date.day == date.day,).toList();
+  List<CalendarEvent> getEventsForDate(DateTime date) => _events
+      .where(
+        (event) =>
+            event.date.year == date.year &&
+            event.date.month == date.month &&
+            event.date.day == date.day,
+      )
+      .toList();
 }
 
 // Calendar event model
-class CalendarEvent { // 'training', 'match', 'meeting', etc.
+class CalendarEvent {
+  // 'training', 'match', 'meeting', etc.
 
   CalendarEvent({
     required this.id,
@@ -85,7 +96,6 @@ class PlayerTrackingProvider extends ChangeNotifier {
 
 // Player performance data model
 class PlayerPerformanceData {
-
   PlayerPerformanceData({
     required this.playerId,
     required this.date,

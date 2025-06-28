@@ -5,7 +5,6 @@ import '../../models/player.dart';
 import '../../providers/database_provider.dart';
 
 class PlayerDetailScreen extends ConsumerWidget {
-
   const PlayerDetailScreen({
     super.key,
     required this.playerId,
@@ -85,7 +84,8 @@ class PlayerDetailScreen extends ConsumerWidget {
                         Text('Wedstrijden gespeeld: ${player.matchesPlayed}'),
                         Text('Doelpunten: ${player.goals}'),
                         Text('Assists: ${player.assists}'),
-                        Text('Trainingen bijgewoond: ${player.trainingsAttended}/${player.trainingsTotal}'),
+                        Text(
+                            'Trainingen bijgewoond: ${player.trainingsAttended}/${player.trainingsTotal}'),
                       ],
                     ),
                   ),

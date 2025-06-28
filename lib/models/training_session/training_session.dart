@@ -9,7 +9,6 @@ import 'session_phase.dart';
 // part 'training_session.g.dart'; // Disabled for web compatibility
 
 class TrainingSession {
-
   // Constructor
   TrainingSession();
 
@@ -28,9 +27,8 @@ class TrainingSession {
     final session = TrainingSession();
     session.id = json['id'] ?? '';
     session.teamId = json['teamId'] ?? '';
-    session.date = json['date'] != null
-        ? DateTime.parse(json['date'])
-        : DateTime.now();
+    session.date =
+        json['date'] != null ? DateTime.parse(json['date']) : DateTime.now();
     session.trainingNumber = json['trainingNumber'] ?? 1;
     session.type = TrainingType.values.firstWhere(
       (e) => e.name == json['type'],
@@ -50,12 +48,10 @@ class TrainingSession {
     session.periodizationPhaseId = json['periodizationPhaseId'];
     session.contentFocusJson = json['contentFocusJson'];
     session.targetIntensity = json['targetIntensity']?.toDouble();
-    session.startTime = json['startTime'] != null
-        ? DateTime.parse(json['startTime'])
-        : null;
-    session.endTime = json['endTime'] != null
-        ? DateTime.parse(json['endTime'])
-        : null;
+    session.startTime =
+        json['startTime'] != null ? DateTime.parse(json['startTime']) : null;
+    session.endTime =
+        json['endTime'] != null ? DateTime.parse(json['endTime']) : null;
     session.durationMinutes = json['durationMinutes'];
     session.status = SessionStatus.values.firstWhere(
       (e) => e.name == json['status'],
@@ -145,16 +141,18 @@ class TrainingSession {
     if (playerAttendanceJson == null) return {};
     try {
       final Map<String, dynamic> json = jsonDecode(playerAttendanceJson!);
-      return json.map((key, value) =>
-        MapEntry(key, PlayerAttendance.fromJson(value)),);
+      return json.map(
+        (key, value) => MapEntry(key, PlayerAttendance.fromJson(value)),
+      );
     } catch (e) {
       return {};
     }
   }
 
   set playerAttendance(Map<String, PlayerAttendance> attendance) {
-    final json = attendance.map((key, value) =>
-      MapEntry(key, value.toJson()),);
+    final json = attendance.map(
+      (key, value) => MapEntry(key, value.toJson()),
+    );
     playerAttendanceJson = jsonEncode(json);
   }
 
@@ -186,13 +184,13 @@ class TrainingSession {
 
   @Ignore()
   List<PlayerAttendance> get presentPlayers => playerAttendance.values
-        .where((p) => p.status == AttendanceStatus.present)
-        .toList();
+      .where((p) => p.status == AttendanceStatus.present)
+      .toList();
 
   @Ignore()
   List<PlayerAttendance> get absentPlayers => playerAttendance.values
-        .where((p) => p.status == AttendanceStatus.absent)
-        .toList();
+      .where((p) => p.status == AttendanceStatus.absent)
+      .toList();
 
   @Ignore()
   double get attendancePercentage {
@@ -208,32 +206,32 @@ class TrainingSession {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'teamId': teamId,
-    'date': date.toIso8601String(),
-    'trainingNumber': trainingNumber,
-    'type': type.name,
-    'sessionObjective': sessionObjective,
-    'teamFunction': teamFunction,
-    'coachingAccent': coachingAccent,
-    'technicalTacticalGoal': technicalTacticalGoal,
-    'phasesJson': phasesJson,
-    'warmupActivitiesJson': warmupActivitiesJson,
-    'playerAttendanceJson': playerAttendanceJson,
-    'expectedPlayers': expectedPlayers,
-    'actualPlayers': actualPlayers,
-    'notes': notes,
-    'postSessionEvaluation': postSessionEvaluation,
-    'periodizationPhaseId': periodizationPhaseId,
-    'contentFocusJson': contentFocusJson,
-    'targetIntensity': targetIntensity,
-    'startTime': startTime?.toIso8601String(),
-    'endTime': endTime?.toIso8601String(),
-    'durationMinutes': durationMinutes,
-    'status': status.name,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'teamId': teamId,
+        'date': date.toIso8601String(),
+        'trainingNumber': trainingNumber,
+        'type': type.name,
+        'sessionObjective': sessionObjective,
+        'teamFunction': teamFunction,
+        'coachingAccent': coachingAccent,
+        'technicalTacticalGoal': technicalTacticalGoal,
+        'phasesJson': phasesJson,
+        'warmupActivitiesJson': warmupActivitiesJson,
+        'playerAttendanceJson': playerAttendanceJson,
+        'expectedPlayers': expectedPlayers,
+        'actualPlayers': actualPlayers,
+        'notes': notes,
+        'postSessionEvaluation': postSessionEvaluation,
+        'periodizationPhaseId': periodizationPhaseId,
+        'contentFocusJson': contentFocusJson,
+        'targetIntensity': targetIntensity,
+        'startTime': startTime?.toIso8601String(),
+        'endTime': endTime?.toIso8601String(),
+        'durationMinutes': durationMinutes,
+        'status': status.name,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method
   TrainingSession copyWith({
@@ -269,7 +267,8 @@ class TrainingSession {
     copy.sessionObjective = sessionObjective ?? this.sessionObjective;
     copy.teamFunction = teamFunction ?? this.teamFunction;
     copy.coachingAccent = coachingAccent ?? this.coachingAccent;
-    copy.technicalTacticalGoal = technicalTacticalGoal ?? this.technicalTacticalGoal;
+    copy.technicalTacticalGoal =
+        technicalTacticalGoal ?? this.technicalTacticalGoal;
     copy.phasesJson = phasesJson;
     if (phases != null) copy.phases = phases;
     copy.warmupActivitiesJson = warmupActivitiesJson;
@@ -279,8 +278,10 @@ class TrainingSession {
     copy.expectedPlayers = expectedPlayers ?? this.expectedPlayers;
     copy.actualPlayers = actualPlayers ?? this.actualPlayers;
     copy.notes = notes ?? this.notes;
-    copy.postSessionEvaluation = postSessionEvaluation ?? this.postSessionEvaluation;
-    copy.periodizationPhaseId = periodizationPhaseId ?? this.periodizationPhaseId;
+    copy.postSessionEvaluation =
+        postSessionEvaluation ?? this.postSessionEvaluation;
+    copy.periodizationPhaseId =
+        periodizationPhaseId ?? this.periodizationPhaseId;
     copy.contentFocusJson = contentFocusJson;
     if (contentFocus != null) copy.contentFocus = contentFocus;
     copy.targetIntensity = targetIntensity ?? this.targetIntensity;
@@ -295,7 +296,7 @@ class TrainingSession {
 
   @override
   String toString() => 'TrainingSession(id: $id, date: $date, type: $type, '
-           'objective: $sessionObjective, players: $actualPlayers/$expectedPlayers)';
+      'objective: $sessionObjective, players: $actualPlayers/$expectedPlayers)';
 
   @override
   bool operator ==(Object other) {
@@ -308,10 +309,8 @@ class TrainingSession {
   }
 
   @override
-  int get hashCode => id.hashCode ^
-           teamId.hashCode ^
-           date.hashCode ^
-           trainingNumber.hashCode;
+  int get hashCode =>
+      id.hashCode ^ teamId.hashCode ^ date.hashCode ^ trainingNumber.hashCode;
 }
 
 enum TrainingType {
@@ -324,10 +323,4 @@ enum TrainingType {
   teamBuilding
 }
 
-enum SessionStatus {
-  planned,
-  inProgress,
-  completed,
-  cancelled,
-  postponed
-}
+enum SessionStatus { planned, inProgress, completed, cancelled, postponed }

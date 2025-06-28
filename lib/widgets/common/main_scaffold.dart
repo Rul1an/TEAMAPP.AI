@@ -7,7 +7,6 @@ import '../../providers/demo_mode_provider.dart';
 import '../organization/organization_badge.dart';
 
 class MainScaffold extends ConsumerWidget {
-
   const MainScaffold({
     super.key,
     required this.child,
@@ -108,7 +107,9 @@ class MainScaffold extends ConsumerWidget {
                         if (demoMode.isActive) {
                           ref.read(demoModeProvider.notifier).endDemo();
                         } else {
-                          await ref.read(authNotifierProvider.notifier).signOut();
+                          await ref
+                              .read(authNotifierProvider.notifier)
+                              .signOut();
                         }
                         if (context.mounted) {
                           context.go('/auth');
@@ -205,11 +206,15 @@ class MainScaffold extends ConsumerWidget {
 
   int _getSelectedIndex(String currentRoute) {
     if (currentRoute.startsWith('/dashboard')) return 0;
-    if (currentRoute.startsWith('/season') || currentRoute.startsWith('/annual-planning')) return 1;
-    if (currentRoute.startsWith('/training') || currentRoute.startsWith('/exercise')) return 2;
-    if (currentRoute.startsWith('/matches') || currentRoute.startsWith('/lineup')) return 3;
+    if (currentRoute.startsWith('/season') ||
+        currentRoute.startsWith('/annual-planning')) return 1;
+    if (currentRoute.startsWith('/training') ||
+        currentRoute.startsWith('/exercise')) return 2;
+    if (currentRoute.startsWith('/matches') ||
+        currentRoute.startsWith('/lineup')) return 3;
     if (currentRoute.startsWith('/players')) return 4;
-    if (currentRoute.startsWith('/analytics') || currentRoute.startsWith('/svs')) return 5;
+    if (currentRoute.startsWith('/analytics') ||
+        currentRoute.startsWith('/svs')) return 5;
     return 0;
   }
 

@@ -1,7 +1,6 @@
 // Core field diagram models for the tactical manager
 
 class FieldDiagram {
-
   FieldDiagram({
     required this.id,
     required this.fieldType,
@@ -51,36 +50,36 @@ class FieldDiagram {
         );
 
   factory FieldDiagram.fromJson(Map<String, dynamic> json) => FieldDiagram(
-      id: json['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
-      fieldType: FieldType.values.firstWhere(
-        (e) => e.name == json['fieldType'],
-        orElse: () => FieldType.halfField,
-      ),
-      fieldSize: Dimensions.fromJson(json['fieldSize']),
-      players: (json['players'] as List<dynamic>?)
-              ?.map((p) => PlayerMarker.fromJson(p))
-              .toList() ??
-          [],
-      equipment: (json['equipment'] as List<dynamic>?)
-              ?.map((e) => EquipmentMarker.fromJson(e))
-              .toList() ??
-          [],
-      movements: (json['movements'] as List<dynamic>?)
-              ?.map((m) => MovementLine.fromJson(m))
-              .toList() ??
-          [],
-      areas: (json['areas'] as List<dynamic>?)
-              ?.map((a) => AreaMarker.fromJson(a))
-              .toList() ??
-          [],
-      labels: (json['labels'] as List<dynamic>?)
-              ?.map((l) => TextLabel.fromJson(l))
-              .toList() ??
-          [],
-      backgroundColor: json['backgroundColor'],
-      showFieldMarkings: json['showFieldMarkings'] ?? true,
-      showGoals: json['showGoals'] ?? true,
-    );
+        id: json['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
+        fieldType: FieldType.values.firstWhere(
+          (e) => e.name == json['fieldType'],
+          orElse: () => FieldType.halfField,
+        ),
+        fieldSize: Dimensions.fromJson(json['fieldSize']),
+        players: (json['players'] as List<dynamic>?)
+                ?.map((p) => PlayerMarker.fromJson(p))
+                .toList() ??
+            [],
+        equipment: (json['equipment'] as List<dynamic>?)
+                ?.map((e) => EquipmentMarker.fromJson(e))
+                .toList() ??
+            [],
+        movements: (json['movements'] as List<dynamic>?)
+                ?.map((m) => MovementLine.fromJson(m))
+                .toList() ??
+            [],
+        areas: (json['areas'] as List<dynamic>?)
+                ?.map((a) => AreaMarker.fromJson(a))
+                .toList() ??
+            [],
+        labels: (json['labels'] as List<dynamic>?)
+                ?.map((l) => TextLabel.fromJson(l))
+                .toList() ??
+            [],
+        backgroundColor: json['backgroundColor'],
+        showFieldMarkings: json['showFieldMarkings'] ?? true,
+        showGoals: json['showGoals'] ?? true,
+      );
   final String id;
   final FieldType fieldType;
   final Dimensions fieldSize;
@@ -124,27 +123,28 @@ class FieldDiagram {
     String? backgroundColor,
     bool? showFieldMarkings,
     bool? showGoals,
-  }) => FieldDiagram(
-      id: id ?? this.id,
-      fieldType: fieldType ?? this.fieldType,
-      fieldSize: fieldSize ?? this.fieldSize,
-      players: players ?? this.players,
-      equipment: equipment ?? this.equipment,
-      movements: movements ?? this.movements,
-      areas: areas ?? this.areas,
-      labels: labels ?? this.labels,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      showFieldMarkings: showFieldMarkings ?? this.showFieldMarkings,
-      showGoals: showGoals ?? this.showGoals,
-    );
+  }) =>
+      FieldDiagram(
+        id: id ?? this.id,
+        fieldType: fieldType ?? this.fieldType,
+        fieldSize: fieldSize ?? this.fieldSize,
+        players: players ?? this.players,
+        equipment: equipment ?? this.equipment,
+        movements: movements ?? this.movements,
+        areas: areas ?? this.areas,
+        labels: labels ?? this.labels,
+        backgroundColor: backgroundColor ?? this.backgroundColor,
+        showFieldMarkings: showFieldMarkings ?? this.showFieldMarkings,
+        showGoals: showGoals ?? this.showGoals,
+      );
 
   @override
-  String toString() => 'FieldDiagram(type: $fieldType, players: ${players.length}, '
-           'equipment: ${equipment.length}, movements: ${movements.length})';
+  String toString() =>
+      'FieldDiagram(type: $fieldType, players: ${players.length}, '
+      'equipment: ${equipment.length}, movements: ${movements.length})';
 }
 
 class PlayerMarker {
-
   PlayerMarker({
     required this.id,
     required this.position,
@@ -154,15 +154,15 @@ class PlayerMarker {
   });
 
   factory PlayerMarker.fromJson(Map<String, dynamic> json) => PlayerMarker(
-      id: json['id'] ?? '',
-      position: Position.fromJson(json['position']),
-      type: PlayerType.values.firstWhere(
-        (e) => e.name == json['type'],
-        orElse: () => PlayerType.neutral,
-      ),
-      label: json['label'],
-      color: json['color'] ?? '#2196F3',
-    );
+        id: json['id'] ?? '',
+        position: Position.fromJson(json['position']),
+        type: PlayerType.values.firstWhere(
+          (e) => e.name == json['type'],
+          orElse: () => PlayerType.neutral,
+        ),
+        label: json['label'],
+        color: json['color'] ?? '#2196F3',
+      );
   final String id;
   final Position position;
   final PlayerType type;
@@ -182,7 +182,6 @@ class PlayerMarker {
 }
 
 class EquipmentMarker {
-
   EquipmentMarker({
     required this.id,
     required this.position,
@@ -191,16 +190,17 @@ class EquipmentMarker {
     this.size,
   });
 
-  factory EquipmentMarker.fromJson(Map<String, dynamic> json) => EquipmentMarker(
-      id: json['id'] ?? '',
-      position: Position.fromJson(json['position']),
-      type: EquipmentType.values.firstWhere(
-        (e) => e.name == json['type'],
-        orElse: () => EquipmentType.cone,
-      ),
-      color: json['color'] ?? '#FF9800',
-      size: json['size']?.toDouble(),
-    );
+  factory EquipmentMarker.fromJson(Map<String, dynamic> json) =>
+      EquipmentMarker(
+        id: json['id'] ?? '',
+        position: Position.fromJson(json['position']),
+        type: EquipmentType.values.firstWhere(
+          (e) => e.name == json['type'],
+          orElse: () => EquipmentType.cone,
+        ),
+        color: json['color'] ?? '#FF9800',
+        size: json['size']?.toDouble(),
+      );
   final String id;
   final Position position;
   final EquipmentType type;
@@ -217,7 +217,6 @@ class EquipmentMarker {
 }
 
 class MovementLine {
-
   MovementLine({
     required this.id,
     required this.points,
@@ -299,7 +298,6 @@ class MovementLine {
 }
 
 class AreaMarker {
-
   AreaMarker({
     required this.id,
     required this.topLeft,
@@ -310,13 +308,13 @@ class AreaMarker {
   });
 
   factory AreaMarker.fromJson(Map<String, dynamic> json) => AreaMarker(
-      id: json['id'] ?? '',
-      topLeft: Position.fromJson(json['topLeft']),
-      bottomRight: Position.fromJson(json['bottomRight']),
-      color: json['color'] ?? '#FFC107',
-      opacity: json['opacity']?.toDouble() ?? 0.3,
-      label: json['label'],
-    );
+        id: json['id'] ?? '',
+        topLeft: Position.fromJson(json['topLeft']),
+        bottomRight: Position.fromJson(json['bottomRight']),
+        color: json['color'] ?? '#FFC107',
+        opacity: json['opacity']?.toDouble() ?? 0.3,
+        label: json['label'],
+      );
   final String id;
   final Position topLeft;
   final Position bottomRight;
@@ -335,7 +333,6 @@ class AreaMarker {
 }
 
 class TextLabel {
-
   TextLabel({
     required this.id,
     required this.position,
@@ -345,12 +342,12 @@ class TextLabel {
   });
 
   factory TextLabel.fromJson(Map<String, dynamic> json) => TextLabel(
-      id: json['id'] ?? '',
-      position: Position.fromJson(json['position']),
-      text: json['text'] ?? '',
-      color: json['color'] ?? '#000000',
-      fontSize: json['fontSize']?.toDouble() ?? 14.0,
-    );
+        id: json['id'] ?? '',
+        position: Position.fromJson(json['position']),
+        text: json['text'] ?? '',
+        color: json['color'] ?? '#000000',
+        fontSize: json['fontSize']?.toDouble() ?? 14.0,
+      );
   final String id;
   final Position position;
   final String text;
@@ -367,13 +364,12 @@ class TextLabel {
 }
 
 class Position {
-
   const Position(this.x, this.y);
 
   factory Position.fromJson(Map<String, dynamic> json) => Position(
-      json['x']?.toDouble() ?? 0.0,
-      json['y']?.toDouble() ?? 0.0,
-    );
+        json['x']?.toDouble() ?? 0.0,
+        json['y']?.toDouble() ?? 0.0,
+      );
   final double x;
   final double y;
 
@@ -393,13 +389,12 @@ class Position {
 }
 
 class Dimensions {
-
   const Dimensions(this.width, this.height);
 
   factory Dimensions.fromJson(Map<String, dynamic> json) => Dimensions(
-      json['width']?.toDouble() ?? 0.0,
-      json['height']?.toDouble() ?? 0.0,
-    );
+        json['width']?.toDouble() ?? 0.0,
+        json['height']?.toDouble() ?? 0.0,
+      );
   final double width;
   final double height;
 
@@ -410,37 +405,37 @@ class Dimensions {
 }
 
 enum FieldType {
-  fullField,      // Volledig veld
-  halfField,      // Half veld
-  penaltyArea,    // Strafschopgebied
-  customGrid,     // Custom grid
-  thirdField,     // 1/3 veld
-  quarterField    // 1/4 veld
+  fullField, // Volledig veld
+  halfField, // Half veld
+  penaltyArea, // Strafschopgebied
+  customGrid, // Custom grid
+  thirdField, // 1/3 veld
+  quarterField // 1/4 veld
 }
 
 enum PlayerType {
-  attacking,      // Aanvallende speler (blauw)
-  defending,      // Verdedigende speler (rood)
-  neutral,        // Neutrale speler (geel)
-  goalkeeper      // Keeper (groen)
+  attacking, // Aanvallende speler (blauw)
+  defending, // Verdedigende speler (rood)
+  neutral, // Neutrale speler (geel)
+  goalkeeper // Keeper (groen)
 }
 
 enum EquipmentType {
-  cone,           // Kegel
-  ball,           // Bal
-  smallGoal,      // Klein doel
-  largeGoal,      // Groot doel
-  pole,           // Paal
-  mannequin,      // Pop
-  ladder,         // Ladder
-  hurdle          // Horde
+  cone, // Kegel
+  ball, // Bal
+  smallGoal, // Klein doel
+  largeGoal, // Groot doel
+  pole, // Paal
+  mannequin, // Pop
+  ladder, // Ladder
+  hurdle // Horde
 }
 
 enum LineType {
-  pass,           // Pass (doorgetrokken lijn met pijl)
-  run,            // Looplijn (gestreepte lijn)
-  dribble,        // Dribbel (golvende lijn)
-  shot,           // Schot (dikke lijn met pijl)
-  defensive,      // Verdedigende beweging (gestippelde lijn)
-  ballPath        // Bal beweging (dunne lijn)
+  pass, // Pass (doorgetrokken lijn met pijl)
+  run, // Looplijn (gestreepte lijn)
+  dribble, // Dribbel (golvende lijn)
+  shot, // Schot (dikke lijn met pijl)
+  defensive, // Verdedigende beweging (gestippelde lijn)
+  ballPath // Bal beweging (dunne lijn)
 }

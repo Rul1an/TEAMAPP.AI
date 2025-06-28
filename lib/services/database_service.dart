@@ -91,7 +91,7 @@ class DatabaseService {
     _isInitialized = true;
 
     if (!kIsWeb) {
-      // TODO: Enable when Isar schemas are generated
+      // TODO(author): Enable when Isar schemas are generated
       // _isar = await Isar.open(
       //   [
       //     TeamSchema,
@@ -133,7 +133,7 @@ class DatabaseService {
   Future<void> _initializeSampleData() async {
     // Add sample team
     final team = Team()
-      ..id = '1'  // Changed to String
+      ..id = '1' // Changed to String
       ..name = 'JO17-1'
       ..ageGroup = 'JO17'
       ..season = '2024-2025'
@@ -150,21 +150,35 @@ class DatabaseService {
     // Add sample players
     final positions = [
       Position.goalkeeper,
-      Position.defender, Position.defender, Position.defender, Position.defender,
-      Position.midfielder, Position.midfielder, Position.midfielder,
-      Position.forward, Position.forward, Position.forward,
+      Position.defender,
+      Position.defender,
+      Position.defender,
+      Position.defender,
+      Position.midfielder,
+      Position.midfielder,
+      Position.midfielder,
+      Position.forward,
+      Position.forward,
+      Position.forward,
     ];
 
     final names = [
-      ('Lars', 'de Jong'), ('Tom', 'Bakker'), ('Daan', 'Visser'),
-      ('Sem', 'de Vries'), ('Lucas', 'van Dijk'), ('Finn', 'Jansen'),
-      ('Milan', 'de Boer'), ('Jesse', 'Mulder'), ('Thijs', 'Peters'),
-      ('Max', 'Hendriks'), ('Noah', 'van der Berg'),
+      ('Lars', 'de Jong'),
+      ('Tom', 'Bakker'),
+      ('Daan', 'Visser'),
+      ('Sem', 'de Vries'),
+      ('Lucas', 'van Dijk'),
+      ('Finn', 'Jansen'),
+      ('Milan', 'de Boer'),
+      ('Jesse', 'Mulder'),
+      ('Thijs', 'Peters'),
+      ('Max', 'Hendriks'),
+      ('Noah', 'van der Berg'),
     ];
 
     for (int i = 0; i < names.length; i++) {
       final player = Player()
-        ..id = (i + 1).toString()  // Changed to String
+        ..id = (i + 1).toString() // Changed to String
         ..firstName = names[i].$1
         ..lastName = names[i].$2
         ..jerseyNumber = i + 1
@@ -185,11 +199,12 @@ class DatabaseService {
     // Add sample trainings
     for (int i = 0; i < 5; i++) {
       final training = Training()
-        ..id = (i + 1).toString()  // Changed to String
+        ..id = (i + 1).toString() // Changed to String
         ..date = DateTime.now().add(Duration(days: i * 2))
         ..duration = 90
         ..focus = TrainingFocus.values[i % TrainingFocus.values.length]
-        ..intensity = TrainingIntensity.values[i % TrainingIntensity.values.length]
+        ..intensity =
+            TrainingIntensity.values[i % TrainingIntensity.values.length]
         ..status = i < 2 ? TrainingStatus.completed : TrainingStatus.planned
         ..location = 'Sportpark De Toekomst'
         ..presentPlayerIds = _players.take(9).map((p) => p.id).toList()
@@ -199,10 +214,16 @@ class DatabaseService {
     }
 
     // Add sample matches
-    final opponents = ['Ajax JO17', 'PSV JO17', 'Feyenoord JO17', 'AZ JO17', 'Utrecht JO17'];
+    final opponents = [
+      'Ajax JO17',
+      'PSV JO17',
+      'Feyenoord JO17',
+      'AZ JO17',
+      'Utrecht JO17'
+    ];
     for (int i = 0; i < 5; i++) {
       final match = Match()
-        ..id = (i + 1).toString()  // Changed to String
+        ..id = (i + 1).toString() // Changed to String
         ..date = DateTime.now().add(Duration(days: i * 7))
         ..opponent = opponents[i]
         ..location = i % 2 == 0 ? Location.home : Location.away
@@ -221,44 +242,53 @@ class DatabaseService {
     final defaultTemplates = [
       FormationTemplate.defaultTemplate(
         name: '4-3-3 Aanvallend',
-        description: 'Aanvallende opstelling met drie middenvelders en drie aanvallers',
+        description:
+            'Aanvallende opstelling met drie middenvelders en drie aanvallers',
         formation: Formation.fourThreeThree,
-        positionPreferences: FormationTemplate.getDefaultPositionPreferences(Formation.fourThreeThree),
+        positionPreferences: FormationTemplate.getDefaultPositionPreferences(
+            Formation.fourThreeThree),
       ),
       FormationTemplate.defaultTemplate(
         name: '4-4-2 Gebalanceerd',
-        description: 'Gebalanceerde opstelling met vier middenvelders en twee spitsen',
+        description:
+            'Gebalanceerde opstelling met vier middenvelders en twee spitsen',
         formation: Formation.fourFourTwo,
-        positionPreferences: FormationTemplate.getDefaultPositionPreferences(Formation.fourFourTwo),
+        positionPreferences: FormationTemplate.getDefaultPositionPreferences(
+            Formation.fourFourTwo),
       ),
       FormationTemplate.defaultTemplate(
         name: '4-3-3 Verdedigend',
-        description: 'Verdedigende variant van 4-3-3 met een defensieve middenvelder',
+        description:
+            'Verdedigende variant van 4-3-3 met een defensieve middenvelder',
         formation: Formation.fourThreeThreeDefensive,
-        positionPreferences: FormationTemplate.getDefaultPositionPreferences(Formation.fourThreeThreeDefensive),
+        positionPreferences: FormationTemplate.getDefaultPositionPreferences(
+            Formation.fourThreeThreeDefensive),
       ),
       FormationTemplate.defaultTemplate(
         name: '4-2-3-1 Modern',
         description: 'Moderne opstelling met dubbele pivot en één spits',
         formation: Formation.fourTwoThreeOne,
-        positionPreferences: FormationTemplate.getDefaultPositionPreferences(Formation.fourTwoThreeOne),
+        positionPreferences: FormationTemplate.getDefaultPositionPreferences(
+            Formation.fourTwoThreeOne),
       ),
       FormationTemplate.defaultTemplate(
         name: '3-4-3 Aanvallend',
-        description: 'Zeer aanvallende opstelling met drie centrale verdedigers',
+        description:
+            'Zeer aanvallende opstelling met drie centrale verdedigers',
         formation: Formation.threeForThree,
-        positionPreferences: FormationTemplate.getDefaultPositionPreferences(Formation.threeForThree),
+        positionPreferences: FormationTemplate.getDefaultPositionPreferences(
+            Formation.threeForThree),
       ),
     ];
 
     for (int i = 0; i < defaultTemplates.length; i++) {
-      defaultTemplates[i].id = (i + 1).toString();  // Changed to String
+      defaultTemplates[i].id = (i + 1).toString(); // Changed to String
       _formationTemplates.add(defaultTemplates[i]);
     }
   }
 
   Future<void> _initializeAnnualPlanningData() async {
-    // TODO: Initialize annual planning data
+    // TODO(author): Initialize annual planning data
   }
 
   // Team operations
@@ -269,17 +299,20 @@ class DatabaseService {
       if (index >= 0) {
         _teams[index] = team;
       } else {
-        if (team.id.isEmpty) {  // Changed from == ""
-          team.id = (_teams.length + 1).toString();  // Changed to String generation
+        if (team.id.isEmpty) {
+          // Changed from == ""
+          team.id =
+              (_teams.length + 1).toString(); // Changed to String generation
         }
         _teams.add(team);
       }
     } else {
-      // TODO: Implement Isar save
+      // TODO(author): Implement Isar save
     }
   }
 
-  Future<Team?> getTeam(String id) async {  // Changed parameter to String
+  Future<Team?> getTeam(String id) async {
+    // Changed parameter to String
     if (kIsWeb) {
       try {
         return _teams.firstWhere((t) => t.id == id);
@@ -287,7 +320,7 @@ class DatabaseService {
         return null;
       }
     }
-    // TODO: Implement Isar get
+    // TODO(author): Implement Isar get
     return null;
   }
 
@@ -295,7 +328,7 @@ class DatabaseService {
     if (kIsWeb) {
       return List.from(_teams);
     }
-    // TODO: Implement Isar getAll
+    // TODO(author): Implement Isar getAll
     return [];
   }
 
@@ -307,17 +340,20 @@ class DatabaseService {
       if (index >= 0) {
         _players[index] = player;
       } else {
-        if (player.id.isEmpty) {  // Changed from == ""
-          player.id = (_players.length + 1).toString();  // Changed to String generation
+        if (player.id.isEmpty) {
+          // Changed from == ""
+          player.id =
+              (_players.length + 1).toString(); // Changed to String generation
         }
         _players.add(player);
       }
     } else {
-      // TODO: Implement Isar save
+      // TODO(author): Implement Isar save
     }
   }
 
-  Future<Player?> getPlayer(String id) async {  // Changed parameter to String
+  Future<Player?> getPlayer(String id) async {
+    // Changed parameter to String
     if (kIsWeb) {
       try {
         return _players.firstWhere((p) => p.id == id);
@@ -325,7 +361,7 @@ class DatabaseService {
         return null;
       }
     }
-    // TODO: Implement Isar get
+    // TODO(author): Implement Isar get
     return null;
   }
 
@@ -338,7 +374,7 @@ class DatabaseService {
     if (kIsWeb) {
       return List.from(_players);
     }
-    // TODO: Implement Isar getAll
+    // TODO(author): Implement Isar getAll
     return [];
   }
 
@@ -346,7 +382,7 @@ class DatabaseService {
     if (kIsWeb) {
       return _players.where((p) => p.position == position).toList();
     }
-    // TODO: Implement Isar query
+    // TODO(author): Implement Isar query
     return [];
   }
 
@@ -357,7 +393,8 @@ class DatabaseService {
     }
   }
 
-  Future<void> deletePlayer(String playerId) async {  // Changed parameter to String
+  Future<void> deletePlayer(String playerId) async {
+    // Changed parameter to String
     _players.removeWhere((p) => p.id == playerId);
   }
 
@@ -369,13 +406,15 @@ class DatabaseService {
       if (index >= 0) {
         _trainings[index] = training;
       } else {
-        if (training.id.isEmpty) {  // Changed from == ""
-          training.id = (_trainings.length + 1).toString();  // Changed to String generation
+        if (training.id.isEmpty) {
+          // Changed from == ""
+          training.id = (_trainings.length + 1)
+              .toString(); // Changed to String generation
         }
         _trainings.add(training);
       }
     } else {
-      // TODO: Implement Isar save
+      // TODO(author): Implement Isar save
     }
   }
 
@@ -388,7 +427,7 @@ class DatabaseService {
     if (kIsWeb) {
       return List.from(_trainings);
     }
-    // TODO: Implement Isar getAll
+    // TODO(author): Implement Isar getAll
     return [];
   }
 
@@ -396,22 +435,24 @@ class DatabaseService {
     final now = DateTime.now();
     if (kIsWeb) {
       return _trainings
-          .where((t) => t.date.isAfter(now) && t.status == TrainingStatus.planned)
+          .where(
+              (t) => t.date.isAfter(now) && t.status == TrainingStatus.planned)
           .toList()
         ..sort((a, b) => a.date.compareTo(b.date));
     }
-    // TODO: Implement Isar query
+    // TODO(author): Implement Isar query
     return [];
   }
 
-  Future<List<Training>> getTrainingsForDateRange(DateTime start, DateTime end) async {
+  Future<List<Training>> getTrainingsForDateRange(
+      DateTime start, DateTime end) async {
     if (kIsWeb) {
       return _trainings
           .where((t) => t.date.isAfter(start) && t.date.isBefore(end))
           .toList()
         ..sort((a, b) => a.date.compareTo(b.date));
     }
-    // TODO: Implement Isar query
+    // TODO(author): Implement Isar query
     return [];
   }
 
@@ -434,17 +475,20 @@ class DatabaseService {
       if (index >= 0) {
         _matches[index] = match;
       } else {
-        if (match.id.isEmpty) {  // Changed from == ""
-          match.id = (_matches.length + 1).toString();  // Changed to String generation
+        if (match.id.isEmpty) {
+          // Changed from == ""
+          match.id =
+              (_matches.length + 1).toString(); // Changed to String generation
         }
         _matches.add(match);
       }
     } else {
-      // TODO: Implement Isar save
+      // TODO(author): Implement Isar save
     }
   }
 
-  Future<Match?> getMatch(String id) async {  // Changed parameter to String
+  Future<Match?> getMatch(String id) async {
+    // Changed parameter to String
     if (kIsWeb) {
       try {
         return _matches.firstWhere((m) => m.id == id);
@@ -452,7 +496,7 @@ class DatabaseService {
         return null;
       }
     }
-    // TODO: Implement Isar get
+    // TODO(author): Implement Isar get
     return null;
   }
 
@@ -465,7 +509,7 @@ class DatabaseService {
     if (kIsWeb) {
       return List.from(_matches);
     }
-    // TODO: Implement Isar getAll
+    // TODO(author): Implement Isar getAll
     return [];
   }
 
@@ -473,11 +517,12 @@ class DatabaseService {
     final now = DateTime.now();
     if (kIsWeb) {
       return _matches
-          .where((m) => m.date.isAfter(now) && m.status == MatchStatus.scheduled)
+          .where(
+              (m) => m.date.isAfter(now) && m.status == MatchStatus.scheduled)
           .toList()
         ..sort((a, b) => a.date.compareTo(b.date));
     }
-    // TODO: Implement Isar query
+    // TODO(author): Implement Isar query
     return [];
   }
 
@@ -489,14 +534,14 @@ class DatabaseService {
         ..sort((a, b) => b.date.compareTo(a.date));
       return completed.take(limit).toList();
     }
-    // TODO: Implement Isar query
+    // TODO(author): Implement Isar query
     return [];
   }
 
   Future<List<Match>> getMatches() async => _matches;
 
   Future<void> addMatch(Match match) async {
-    match.id = (_matches.length + 1).toString();  // Changed to String
+    match.id = (_matches.length + 1).toString(); // Changed to String
     _matches.add(match);
   }
 
@@ -517,7 +562,8 @@ class DatabaseService {
     final players = await getAllPlayers();
     final trainings = await getAllTrainings();
     final matches = await getAllMatches();
-    final completedMatches = matches.where((m) => m.status == MatchStatus.completed).toList();
+    final completedMatches =
+        matches.where((m) => m.status == MatchStatus.completed).toList();
 
     int wins = 0;
     int draws = 0;
@@ -571,27 +617,24 @@ class DatabaseService {
 
   Future<List<PerformanceRating>> getPlayerRatings(String playerId) async {
     if (kIsWeb) {
-      return _performanceRatings
-          .where((r) => r.playerId == playerId)
-          .toList()
+      return _performanceRatings.where((r) => r.playerId == playerId).toList()
         ..sort((a, b) => b.date.compareTo(a.date));
     }
     return [];
   }
 
-  Future<double> getPlayerAverageRating(String playerId, {int? lastNRatings}) async {
+  Future<double> getPlayerAverageRating(String playerId,
+      {int? lastNRatings}) async {
     final ratings = await getPlayerRatings(playerId);
     if (ratings.isEmpty) return 0.0;
 
-    final ratingsToConsider = lastNRatings != null
-        ? ratings.take(lastNRatings).toList()
-        : ratings;
+    final ratingsToConsider =
+        lastNRatings != null ? ratings.take(lastNRatings).toList() : ratings;
 
     if (ratingsToConsider.isEmpty) return 0.0;
 
-    final sum = ratingsToConsider
-        .map((r) => r.overallRating)
-        .reduce((a, b) => a + b);
+    final sum =
+        ratingsToConsider.map((r) => r.overallRating).reduce((a, b) => a + b);
 
     return sum / ratingsToConsider.length;
   }
@@ -608,13 +651,12 @@ class DatabaseService {
     final mostRecent = recentRatings.take(midPoint).toList();
     final older = recentRatings.skip(midPoint).toList();
 
-    final recentAvg = mostRecent
-        .map((r) => r.overallRating)
-        .reduce((a, b) => a + b) / mostRecent.length;
+    final recentAvg =
+        mostRecent.map((r) => r.overallRating).reduce((a, b) => a + b) /
+            mostRecent.length;
 
-    final olderAvg = older
-        .map((r) => r.overallRating)
-        .reduce((a, b) => a + b) / older.length;
+    final olderAvg = older.map((r) => r.overallRating).reduce((a, b) => a + b) /
+        older.length;
 
     const threshold = 0.3;
     if (recentAvg > olderAvg + threshold) {
@@ -636,9 +678,7 @@ class DatabaseService {
 
   Future<List<PlayerAssessment>> getPlayerAssessments(String playerId) async {
     if (kIsWeb) {
-      return _assessments
-          .where((a) => a.playerId == playerId)
-          .toList()
+      return _assessments.where((a) => a.playerId == playerId).toList()
         ..sort((a, b) => b.assessmentDate.compareTo(a.assessmentDate));
     }
     return [];
@@ -686,7 +726,8 @@ class DatabaseService {
     _formationTemplates.removeWhere((t) => t.id == templateId);
   }
 
-  Future<Map<String, dynamic>> applyFormationTemplate(FormationTemplate template, List<Player> availablePlayers) async {
+  Future<Map<String, dynamic>> applyFormationTemplate(
+      FormationTemplate template, List<Player> availablePlayers) async {
     // Simple implementation - return formation data
     return {
       'formation': template.formation,
@@ -720,15 +761,14 @@ class DatabaseService {
   Future<List<TrainingSession>> getUpcomingTrainingSessions() async {
     final now = DateTime.now();
     if (kIsWeb) {
-      return _trainingSessions
-          .where((s) => s.date.isAfter(now))
-          .toList()
+      return _trainingSessions.where((s) => s.date.isAfter(now)).toList()
         ..sort((a, b) => a.date.compareTo(b.date));
     }
     return [];
   }
 
-  Future<List<TrainingSession>> getRecentTrainingSessions({int limit = 5}) async {
+  Future<List<TrainingSession>> getRecentTrainingSessions(
+      {int limit = 5}) async {
     if (kIsWeb) {
       final sessions = _trainingSessions.toList()
         ..sort((a, b) => b.date.compareTo(a.date));

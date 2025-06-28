@@ -3,7 +3,6 @@ import 'periodization_plan.dart';
 // part 'season_plan.g.dart'; // Disabled for web compatibility
 
 class SeasonPlan {
-
   // Constructor
   SeasonPlan();
 
@@ -15,7 +14,8 @@ class SeasonPlan {
     DateTime? endDate,
   }) {
     name = '$teamName Seizoen $season';
-    description = 'Nederlands voetbalseizoen planning voor $teamName volgens KNVB richtlijnen';
+    description =
+        'Nederlands voetbalseizoen planning voor $teamName volgens KNVB richtlijnen';
     ageGroup = AgeGroup.u17;
 
     // Default Dutch season dates (August to June)
@@ -106,55 +106,57 @@ class SeasonPlan {
 
   factory SeasonPlan.fromJson(Map<String, dynamic> json) {
     final plan = SeasonPlan();
-    plan.id = json['id'] ?? '';
-    plan.name = json['name'] ?? '';
-    plan.description = json['description'] ?? '';
-    plan.season = json['season'] ?? '';
+    plan.id = json['id'] as String? ?? '';
+    plan.name = json['name'] as String? ?? '';
+    plan.description = json['description'] as String? ?? '';
+    plan.season = json['season'] as String? ?? '';
     plan.ageGroup = AgeGroup.values.firstWhere(
       (e) => e.name == json['ageGroup'],
       orElse: () => AgeGroup.u17,
     );
     plan.teamName = json['teamName'] ?? '';
     plan.seasonStartDate = json['seasonStartDate'] != null
-        ? DateTime.parse(json['seasonStartDate'])
+        ? DateTime.parse(json['seasonStartDate'] as String)
         : DateTime.now();
     plan.seasonEndDate = json['seasonEndDate'] != null
-        ? DateTime.parse(json['seasonEndDate'])
+        ? DateTime.parse(json['seasonEndDate'] as String)
         : DateTime.now().add(const Duration(days: 300));
-    plan.holidayPeriods = List<String>.from(json['holidayPeriods'] ?? []);
+    plan.holidayPeriods = List<String>.from(json['holidayPeriods'] as List<dynamic>? ?? []);
     plan.periodizationPlanId = json['periodizationPlanId'] ?? '';
     plan.totalWeeks = json['totalWeeks'] ?? 40;
     plan.trainingWeeks = json['trainingWeeks'] ?? 36;
     plan.competitionWeeks = json['competitionWeeks'] ?? 32;
     plan.primaryCompetition = json['primaryCompetition'] ?? '';
-    plan.additionalCompetitions = List<String>.from(json['additionalCompetitions'] ?? []);
+    plan.additionalCompetitions =
+        List<String>.from(json['additionalCompetitions'] as List<dynamic>? ?? []);
     plan.firstMatchDate = json['firstMatchDate'] != null
-        ? DateTime.parse(json['firstMatchDate'])
+        ? DateTime.parse(json['firstMatchDate'] as String)
         : null;
     plan.lastMatchDate = json['lastMatchDate'] != null
-        ? DateTime.parse(json['lastMatchDate'])
+        ? DateTime.parse(json['lastMatchDate'] as String)
         : null;
     plan.midSeasonBreakStart = json['midSeasonBreakStart'] != null
-        ? DateTime.parse(json['midSeasonBreakStart'])
+        ? DateTime.parse(json['midSeasonBreakStart'] as String)
         : null;
     plan.midSeasonBreakEnd = json['midSeasonBreakEnd'] != null
-        ? DateTime.parse(json['midSeasonBreakEnd'])
+        ? DateTime.parse(json['midSeasonBreakEnd'] as String)
         : null;
-    plan.seasonObjectives = List<String>.from(json['seasonObjectives'] ?? []);
-    plan.keyPerformanceIndicators = List<String>.from(json['keyPerformanceIndicators'] ?? []);
+    plan.seasonObjectives = List<String>.from(json['seasonObjectives'] as List<dynamic>? ?? []);
+    plan.keyPerformanceIndicators =
+        List<String>.from(json['keyPerformanceIndicators'] as List<dynamic>? ?? []);
     plan.isTemplate = json['isTemplate'] ?? false;
     plan.status = SeasonStatus.values.firstWhere(
-      (e) => e.name == json['status'],
+      (e) => e.name == (json['status'] as String?),
       orElse: () => SeasonStatus.draft,
     );
     plan.currentWeek = json['currentWeek'] ?? 1;
     plan.progressPercentage = json['progressPercentage']?.toDouble() ?? 0.0;
     plan.createdBy = json['createdBy'];
     plan.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
+        ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     plan.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
+        ? DateTime.parse(json['updatedAt'] as String)
         : DateTime.now();
     return plan;
   }
@@ -195,8 +197,10 @@ class SeasonPlan {
   DateTime? midSeasonBreakEnd;
 
   // Season goals and objectives
-  late List<String> seasonObjectives; // ["Top 3 finish", "Youth development", "Style of play"]
-  late List<String> keyPerformanceIndicators; // ["Goals scored", "Clean sheets", "Pass accuracy"]
+  late List<String>
+      seasonObjectives; // ["Top 3 finish", "Youth development", "Style of play"]
+  late List<String>
+      keyPerformanceIndicators; // ["Goals scored", "Clean sheets", "Pass accuracy"]
 
   // Template and tracking
   late bool isTemplate; // true for reusable season templates
@@ -213,14 +217,16 @@ class SeasonPlan {
   DateTime updatedAt = DateTime.now();
 
   // Calculated properties
-  DateTime get currentDate => seasonStartDate.add(Duration(days: (currentWeek - 1) * 7));
+  DateTime get currentDate =>
+      seasonStartDate.add(Duration(days: (currentWeek - 1) * 7));
 
   bool get isActive {
     final now = DateTime.now();
     return now.isAfter(seasonStartDate) && now.isBefore(seasonEndDate);
   }
 
-  bool get isCompleted => status == SeasonStatus.completed || DateTime.now().isAfter(seasonEndDate);
+  bool get isCompleted =>
+      status == SeasonStatus.completed || DateTime.now().isAfter(seasonEndDate);
 
   int get remainingWeeks {
     final now = DateTime.now();
@@ -265,14 +271,14 @@ class SeasonPlan {
 
   // Season statistics
   Map<String, dynamic> getSeasonStatistics() => {
-      'totalWeeks': totalWeeks,
-      'completedWeeks': currentWeek - 1,
-      'remainingWeeks': remainingWeeks,
-      'progressPercentage': progressPercentage,
-      'currentPhase': getCurrentPhase().displayName,
-      'isActive': isActive,
-      'isCompleted': isCompleted,
-    };
+        'totalWeeks': totalWeeks,
+        'completedWeeks': currentWeek - 1,
+        'remainingWeeks': remainingWeeks,
+        'progressPercentage': progressPercentage,
+        'currentPhase': getCurrentPhase().displayName,
+        'isActive': isActive,
+        'isCompleted': isCompleted,
+      };
 
   // Update progress
   void updateProgress() {
@@ -295,13 +301,15 @@ class SeasonPlan {
   }
 
   // Validation
-  bool isValid() => name.isNotEmpty &&
-           season.isNotEmpty &&
-           teamName.isNotEmpty &&
-           seasonStartDate.isBefore(seasonEndDate) &&
-           totalWeeks > 0 &&
-           currentWeek >= 1 &&
-           progressPercentage >= 0.0 && progressPercentage <= 100.0;
+  bool isValid() =>
+      name.isNotEmpty &&
+      season.isNotEmpty &&
+      teamName.isNotEmpty &&
+      seasonStartDate.isBefore(seasonEndDate) &&
+      totalWeeks > 0 &&
+      currentWeek >= 1 &&
+      progressPercentage >= 0.0 &&
+      progressPercentage <= 100.0;
 
   List<String> getValidationErrors() {
     final List<String> errors = [];
@@ -323,35 +331,35 @@ class SeasonPlan {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'description': description,
-    'season': season,
-    'ageGroup': ageGroup.name,
-    'teamName': teamName,
-    'seasonStartDate': seasonStartDate.toIso8601String(),
-    'seasonEndDate': seasonEndDate.toIso8601String(),
-    'holidayPeriods': holidayPeriods,
-    'periodizationPlanId': periodizationPlanId,
-    'totalWeeks': totalWeeks,
-    'trainingWeeks': trainingWeeks,
-    'competitionWeeks': competitionWeeks,
-    'primaryCompetition': primaryCompetition,
-    'additionalCompetitions': additionalCompetitions,
-    'firstMatchDate': firstMatchDate?.toIso8601String(),
-    'lastMatchDate': lastMatchDate?.toIso8601String(),
-    'midSeasonBreakStart': midSeasonBreakStart?.toIso8601String(),
-    'midSeasonBreakEnd': midSeasonBreakEnd?.toIso8601String(),
-    'seasonObjectives': seasonObjectives,
-    'keyPerformanceIndicators': keyPerformanceIndicators,
-    'isTemplate': isTemplate,
-    'status': status.name,
-    'currentWeek': currentWeek,
-    'progressPercentage': progressPercentage,
-    'createdBy': createdBy,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'description': description,
+        'season': season,
+        'ageGroup': ageGroup.name,
+        'teamName': teamName,
+        'seasonStartDate': seasonStartDate.toIso8601String(),
+        'seasonEndDate': seasonEndDate.toIso8601String(),
+        'holidayPeriods': holidayPeriods,
+        'periodizationPlanId': periodizationPlanId,
+        'totalWeeks': totalWeeks,
+        'trainingWeeks': trainingWeeks,
+        'competitionWeeks': competitionWeeks,
+        'primaryCompetition': primaryCompetition,
+        'additionalCompetitions': additionalCompetitions,
+        'firstMatchDate': firstMatchDate?.toIso8601String(),
+        'lastMatchDate': lastMatchDate?.toIso8601String(),
+        'midSeasonBreakStart': midSeasonBreakStart?.toIso8601String(),
+        'midSeasonBreakEnd': midSeasonBreakEnd?.toIso8601String(),
+        'seasonObjectives': seasonObjectives,
+        'keyPerformanceIndicators': keyPerformanceIndicators,
+        'isTemplate': isTemplate,
+        'status': status.name,
+        'currentWeek': currentWeek,
+        'progressPercentage': progressPercentage,
+        'createdBy': createdBy,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method for updates
   SeasonPlan copyWith({
@@ -396,13 +404,16 @@ class SeasonPlan {
     copy.trainingWeeks = trainingWeeks ?? this.trainingWeeks;
     copy.competitionWeeks = competitionWeeks ?? this.competitionWeeks;
     copy.primaryCompetition = primaryCompetition ?? this.primaryCompetition;
-    copy.additionalCompetitions = additionalCompetitions ?? List.from(this.additionalCompetitions);
+    copy.additionalCompetitions =
+        additionalCompetitions ?? List.from(this.additionalCompetitions);
     copy.firstMatchDate = firstMatchDate ?? this.firstMatchDate;
     copy.lastMatchDate = lastMatchDate ?? this.lastMatchDate;
     copy.midSeasonBreakStart = midSeasonBreakStart ?? this.midSeasonBreakStart;
     copy.midSeasonBreakEnd = midSeasonBreakEnd ?? this.midSeasonBreakEnd;
-    copy.seasonObjectives = seasonObjectives ?? List.from(this.seasonObjectives);
-    copy.keyPerformanceIndicators = keyPerformanceIndicators ?? List.from(this.keyPerformanceIndicators);
+    copy.seasonObjectives =
+        seasonObjectives ?? List.from(this.seasonObjectives);
+    copy.keyPerformanceIndicators =
+        keyPerformanceIndicators ?? List.from(this.keyPerformanceIndicators);
     copy.isTemplate = isTemplate ?? this.isTemplate;
     copy.status = status ?? this.status;
     copy.currentWeek = currentWeek ?? this.currentWeek;
@@ -415,8 +426,8 @@ class SeasonPlan {
 
   @override
   String toString() => 'SeasonPlan(id: $id, name: $name, season: $season, '
-           'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '
-           'progress: ${progressPercentage.toStringAsFixed(1)}%)';
+      'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '
+      'progress: ${progressPercentage.toStringAsFixed(1)}%)';
 
   @override
   bool operator ==(Object other) {
@@ -429,10 +440,8 @@ class SeasonPlan {
   }
 
   @override
-  int get hashCode => name.hashCode ^
-           season.hashCode ^
-           teamName.hashCode ^
-           ageGroup.hashCode;
+  int get hashCode =>
+      name.hashCode ^ season.hashCode ^ teamName.hashCode ^ ageGroup.hashCode;
 }
 
 // Enums for season management

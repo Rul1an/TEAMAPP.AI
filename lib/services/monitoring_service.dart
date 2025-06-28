@@ -16,24 +16,25 @@ class MonitoringService {
           options.dsn = _sentryDsn;
           options.environment = kReleaseMode ? 'production' : 'staging';
           options.release = 'jo17-tactical-manager@1.0.0';
-          
+
           // Performance monitoring
           options.tracesSampleRate = 0.1; // 10% of transactions
           options.profilesSampleRate = 0.1; // 10% for profiling
-          
+
           // Error filtering
           options.beforeSend = (event, hint) {
             // Filter out development errors
             if (kDebugMode) return null;
-            
+
             // Filter out known non-critical errors
-            if (event.throwable?.toString().contains('SocketException') == true) {
+            if (event.throwable?.toString().contains('SocketException') ==
+                true) {
               return null; // Network errors are handled gracefully
             }
-            
+
             return event;
           };
-          
+
           // Performance transaction filtering
           options.beforeSendTransaction = (transaction, hint) {
             // Only send important transactions
@@ -44,7 +45,7 @@ class MonitoringService {
             }
             return null;
           };
-          
+
           // User context
           options.beforeBreadcrumb = (breadcrumb, hint) {
             // Add additional context to breadcrumbs
@@ -150,7 +151,9 @@ class MonitoringService {
     transaction.setData('error_message', errorMessage);
     transaction.setData('metadata', metadata);
 
-    await transaction.finish(status: success ? const SpanStatus.ok() : const SpanStatus.internalError());
+    await transaction.finish(
+        status:
+            success ? const SpanStatus.ok() : const SpanStatus.internalError());
   }
 
   /// Track business metrics
@@ -185,16 +188,18 @@ class MonitoringService {
     Map<String, dynamic>? additionalData,
   }) async {
     await Sentry.configureScope((scope) {
-      scope.setUser(SentryUser(
-        id: userId,
-        email: email,
-        data: {
-          'role': role,
-          'organization_id': organizationId,
-          'organization_tier': organizationTier,
-          ...?additionalData,
-        },
-      ),);
+      scope.setUser(
+        SentryUser(
+          id: userId,
+          email: email,
+          data: {
+            'role': role,
+            'organization_id': organizationId,
+            'organization_tier': organizationTier,
+            ...?additionalData,
+          },
+        ),
+      );
     });
   }
 
@@ -305,16 +310,21 @@ class MonitoringService {
 
 /// Mixin for easy monitoring integration in widgets and services
 mixin MonitoringMixin {
-  Future<void> trackEvent(String name, {Map<String, dynamic>? parameters}) => MonitoringService.trackEvent(name: name, parameters: parameters);
+  Future<void> trackEvent(String name, {Map<String, dynamic>? parameters}) =>
+      MonitoringService.trackEvent(name: name, parameters: parameters);
 
-  Future<void> trackError(dynamic error, {StackTrace? stackTrace, String? context}) => MonitoringService.reportError(
-      error: error,
-      stackTrace: stackTrace,
-      context: context,
-    );
+  Future<void> trackError(dynamic error,
+          {StackTrace? stackTrace, String? context}) =>
+      MonitoringService.reportError(
+        error: error,
+        stackTrace: stackTrace,
+        context: context,
+      );
 
-  Future<T> monitorOperation<T>(String operation, Future<T> Function() function) => MonitoringService.monitorAsync(
-      operation: operation,
-      function: function,
-    );
+  Future<T> monitorOperation<T>(
+          String operation, Future<T> Function() function) =>
+      MonitoringService.monitorAsync(
+        operation: operation,
+        function: function,
+      );
 }

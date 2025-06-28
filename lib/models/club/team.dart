@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'club.dart';
 part 'team.freezed.dart';
 part 'team.g.dart';
+
 /// ⚽ Team Model
 /// Represents a team within a club with age category, level, and staff
 @freezed
@@ -43,6 +44,7 @@ class Team with _$Team {
   }) = _Team;
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 }
+
 @freezed
 class TeamSettings with _$TeamSettings {
   const factory TeamSettings({
@@ -66,8 +68,10 @@ class TeamSettings with _$TeamSettings {
     @Default(true) bool requireInsurance,
     @Default(false) bool requireVOG,
   }) = _TeamSettings;
-  factory TeamSettings.fromJson(Map<String, dynamic> json) => _$TeamSettingsFromJson(json);
+  factory TeamSettings.fromJson(Map<String, dynamic> json) =>
+      _$TeamSettingsFromJson(json);
 }
+
 enum TeamLevel {
   recreational,
   competitive,
@@ -76,17 +80,20 @@ enum TeamLevel {
   reserve,
   first,
 }
+
 enum TeamGender {
   male,
   female,
   mixed,
 }
+
 enum TeamStatus {
   active,
   inactive,
   disbanded,
   suspended,
 }
+
 extension TeamLevelExtension on TeamLevel {
   String get displayName {
     switch (this) {
@@ -104,6 +111,7 @@ extension TeamLevelExtension on TeamLevel {
         return 'Eerste Elftal';
     }
   }
+
   int get priority {
     switch (this) {
       case TeamLevel.first:
@@ -121,6 +129,7 @@ extension TeamLevelExtension on TeamLevel {
     }
   }
 }
+
 extension TeamGenderExtension on TeamGender {
   String get displayName {
     switch (this) {
@@ -132,6 +141,7 @@ extension TeamGenderExtension on TeamGender {
         return 'Gemengd';
     }
   }
+
   String get shortName {
     switch (this) {
       case TeamGender.male:

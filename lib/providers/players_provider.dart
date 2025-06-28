@@ -7,17 +7,21 @@ final playersProvider = FutureProvider<List<Player>>((ref) async {
   return db.getAllPlayers();
 });
 
-final playerByIdProvider = FutureProvider.family<Player?, String>((ref, id) async {
+final playerByIdProvider =
+    FutureProvider.family<Player?, String>((ref, id) async {
   final db = DatabaseService();
   return db.getPlayer(id);
 });
 
-final playersByPositionProvider = FutureProvider.family<List<Player>, Position>((ref, position) async {
+final playersByPositionProvider =
+    FutureProvider.family<List<Player>, Position>((ref, position) async {
   final db = DatabaseService();
   return db.getPlayersByPosition(position);
 });
 
-final playersNotifierProvider = StateNotifierProvider<PlayersNotifier, AsyncValue<List<Player>>>((ref) => PlayersNotifier());
+final playersNotifierProvider =
+    StateNotifierProvider<PlayersNotifier, AsyncValue<List<Player>>>(
+        (ref) => PlayersNotifier());
 
 class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
   PlayersNotifier() : super(const AsyncValue.loading()) {

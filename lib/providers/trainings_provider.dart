@@ -12,12 +12,15 @@ final upcomingTrainingsProvider = FutureProvider<List<Training>>((ref) async {
   return db.getUpcomingTrainings();
 });
 
-final trainingsByDateRangeProvider = FutureProvider.family<List<Training>, DateRange>((ref, range) async {
+final trainingsByDateRangeProvider =
+    FutureProvider.family<List<Training>, DateRange>((ref, range) async {
   final db = DatabaseService();
   return db.getTrainingsForDateRange(range.start, range.end);
 });
 
-final trainingsNotifierProvider = StateNotifierProvider<TrainingsNotifier, AsyncValue<List<Training>>>((ref) => TrainingsNotifier());
+final trainingsNotifierProvider =
+    StateNotifierProvider<TrainingsNotifier, AsyncValue<List<Training>>>(
+        (ref) => TrainingsNotifier());
 
 class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
   TrainingsNotifier() : super(const AsyncValue.loading()) {
@@ -56,7 +59,6 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
 }
 
 class DateRange {
-
   DateRange({required this.start, required this.end});
   final DateTime start;
   final DateTime end;

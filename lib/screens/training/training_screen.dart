@@ -34,7 +34,6 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final trainingsAsync = ref.watch(trainingsNotifierProvider);
@@ -90,117 +89,119 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(child: Text('Fout: $error')),
         data: (trainings) => Column(
-            children: [
-              // Calendar
-              Card(
-                margin: EdgeInsets.all(isDesktop ? 24 : 16),
-                child: TableCalendar<Training>(
-                  firstDay: DateTime.utc(2020),
-                  lastDay: DateTime.utc(2030, 12, 31),
-                  focusedDay: _focusedDay,
-                  calendarFormat: _calendarFormat,
-                  locale: 'nl_NL',
-                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                  eventLoader: (day) => trainings
-                        .where((training) => isSameDay(training.date, day))
-                        .toList(),
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  calendarStyle: CalendarStyle(
-                    outsideDaysVisible: false,
-                    weekendTextStyle: TextStyle(color: Colors.grey[600]),
-                    selectedDecoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      shape: BoxShape.circle,
-                    ),
-                    todayDecoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withValues(alpha: 0.5),
-                      shape: BoxShape.circle,
-                    ),
-                    markerDecoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      shape: BoxShape.circle,
-                    ),
+          children: [
+            // Calendar
+            Card(
+              margin: EdgeInsets.all(isDesktop ? 24 : 16),
+              child: TableCalendar<Training>(
+                firstDay: DateTime.utc(2020),
+                lastDay: DateTime.utc(2030, 12, 31),
+                focusedDay: _focusedDay,
+                calendarFormat: _calendarFormat,
+                locale: 'nl_NL',
+                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                eventLoader: (day) => trainings
+                    .where((training) => isSameDay(training.date, day))
+                    .toList(),
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                calendarStyle: CalendarStyle(
+                  outsideDaysVisible: false,
+                  weekendTextStyle: TextStyle(color: Colors.grey[600]),
+                  selectedDecoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.circle,
                   ),
-                  headerStyle: const HeaderStyle(
-                    titleCentered: true,
+                  todayDecoration: BoxDecoration(
+                    color:
+                        Theme.of(context).primaryColor.withValues(alpha: 0.5),
+                    shape: BoxShape.circle,
                   ),
-                  onDaySelected: (selectedDay, focusedDay) {
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                    });
-
-                    // Navigate to attendance if there's a training on this day
-                    final dayTrainings = trainings
-                        .where((training) => isSameDay(training.date, selectedDay))
-                        .toList();
-
-                    if (dayTrainings.isNotEmpty) {
-                      context.go('/training/${dayTrainings.first.id}/attendance');
-                    }
-                  },
-                  onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() {
-                        _calendarFormat = format;
-                      });
-                    }
-                  },
-                  onPageChanged: (focusedDay) {
+                  markerDecoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                headerStyle: const HeaderStyle(
+                  titleCentered: true,
+                ),
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
                     _focusedDay = focusedDay;
-                  },
-                ),
-              ),
-              // Selected Day Trainings
-              Expanded(
-                child: ValueListenableBuilder<List<Training>>(
-                  valueListenable: _selectedTrainings,
-                  builder: (context, value, _) {
-                    if (value.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.fitness_center,
-                              size: 64,
-                              color: Colors.grey[400],
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Geen trainingen op ${DateFormat('d MMMM', 'nl').format(_selectedDay ?? DateTime.now())}',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 8),
-                            ElevatedButton.icon(
-                              onPressed: () => context.go('/training/add'),
-                              icon: const Icon(Icons.add),
-                              label: const Text('Plan training'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
+                  });
 
-                    return ListView.builder(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: isDesktop ? 24 : 16,
-                        vertical: 8,
-                      ),
-                      itemCount: value.length,
-                      itemBuilder: (context, index) {
-                        final training = value[index];
-                        return _TrainingCard(
-                          training: training,
-                          onTap: () => context.go('/training/${training.id}'),
-                        );
-                      },
-                    );
-                  },
-                ),
+                  // Navigate to attendance if there's a training on this day
+                  final dayTrainings = trainings
+                      .where(
+                          (training) => isSameDay(training.date, selectedDay))
+                      .toList();
+
+                  if (dayTrainings.isNotEmpty) {
+                    context.go('/training/${dayTrainings.first.id}/attendance');
+                  }
+                },
+                onFormatChanged: (format) {
+                  if (_calendarFormat != format) {
+                    setState(() {
+                      _calendarFormat = format;
+                    });
+                  }
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay = focusedDay;
+                },
               ),
-            ],
-          ),
+            ),
+            // Selected Day Trainings
+            Expanded(
+              child: ValueListenableBuilder<List<Training>>(
+                valueListenable: _selectedTrainings,
+                builder: (context, value, _) {
+                  if (value.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.fitness_center,
+                            size: 64,
+                            color: Colors.grey[400],
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Geen trainingen op ${DateFormat('d MMMM', 'nl').format(_selectedDay ?? DateTime.now())}',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton.icon(
+                            onPressed: () => context.go('/training/add'),
+                            icon: const Icon(Icons.add),
+                            label: const Text('Plan training'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isDesktop ? 24 : 16,
+                      vertical: 8,
+                    ),
+                    itemCount: value.length,
+                    itemBuilder: (context, index) {
+                      final training = value[index];
+                      return _TrainingCard(
+                        training: training,
+                        onTap: () => context.go('/training/${training.id}'),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.go('/training/add'),
@@ -211,7 +212,6 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
 }
 
 class _TrainingCard extends StatelessWidget {
-
   const _TrainingCard({
     required this.training,
     required this.onTap,
@@ -222,7 +222,8 @@ class _TrainingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final attendancePercentage = training.presentPlayerIds.length /
-        (training.presentPlayerIds.length + training.absentPlayerIds.length) * 100;
+        (training.presentPlayerIds.length + training.absentPlayerIds.length) *
+        100;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -235,9 +236,11 @@ class _TrainingCard extends StatelessWidget {
             children: [
               // Time and Duration
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: _getIntensityColor(training.intensity).withValues(alpha: 0.2),
+                  color: _getIntensityColor(training.intensity)
+                      .withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
@@ -245,8 +248,8 @@ class _TrainingCard extends StatelessWidget {
                     Text(
                       DateFormat('HH:mm').format(training.date),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     Text(
                       '${training.duration} min',
@@ -275,7 +278,8 @@ class _TrainingCard extends StatelessWidget {
                       training.location ?? 'Locatie onbekend',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    if (training.coachNotes != null && training.coachNotes!.isNotEmpty) ...[
+                    if (training.coachNotes != null &&
+                        training.coachNotes!.isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Text(
                         training.coachNotes!,
@@ -305,9 +309,11 @@ class _TrainingCard extends StatelessWidget {
                       Text(
                         '${attendancePercentage.toStringAsFixed(0)}%',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: attendancePercentage >= 80 ? Colors.green : Colors.orange,
-                        ),
+                              fontWeight: FontWeight.bold,
+                              color: attendancePercentage >= 80
+                                  ? Colors.green
+                                  : Colors.orange,
+                            ),
                       ),
                     ],
                   ),
@@ -356,20 +362,20 @@ class _TrainingCard extends StatelessWidget {
   }
 
   Widget _buildIntensityBadge(TrainingIntensity intensity) => Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: _getIntensityColor(intensity),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        _getIntensityText(intensity),
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: _getIntensityColor(intensity),
+          borderRadius: BorderRadius.circular(4),
         ),
-      ),
-    );
+        child: Text(
+          _getIntensityText(intensity),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
 
   Widget _buildStatusBadge(TrainingStatus status) {
     Color color;

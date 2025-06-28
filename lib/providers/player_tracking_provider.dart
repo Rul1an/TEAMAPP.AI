@@ -5,9 +5,11 @@ import '../models/player_tracking/player_performance_data.dart';
 /// Manages all player performance tracking and analytics
 
 // Performance data for a specific player
-final playerPerformanceProvider = FutureProvider.family<List<PlayerPerformanceData>, String>((ref, playerId) async {
+final playerPerformanceProvider =
+    FutureProvider.family<List<PlayerPerformanceData>, String>(
+        (ref, playerId) async {
   try {
-    // TODO: Implement actual database query
+    // TODO(author): Implement actual database query
     // For now, return empty list
     return [];
   } catch (e) {
@@ -17,9 +19,10 @@ final playerPerformanceProvider = FutureProvider.family<List<PlayerPerformanceDa
 });
 
 // Latest performance data for all players
-final allPlayersLatestPerformanceProvider = FutureProvider<Map<String, PlayerPerformanceData>>((ref) async {
+final allPlayersLatestPerformanceProvider =
+    FutureProvider<Map<String, PlayerPerformanceData>>((ref) async {
   try {
-    // TODO: Implement actual database query
+    // TODO(author): Implement actual database query
     final Map<String, PlayerPerformanceData> performanceMap = {};
     return performanceMap;
   } catch (e) {
@@ -29,9 +32,12 @@ final allPlayersLatestPerformanceProvider = FutureProvider<Map<String, PlayerPer
 });
 
 // Player development trends
-final playerDevelopmentTrendsProvider = FutureProvider.family<PlayerDevelopmentTrends, String>((ref, playerId) async {
+final playerDevelopmentTrendsProvider =
+    FutureProvider.family<PlayerDevelopmentTrends, String>(
+        (ref, playerId) async {
   try {
-    final performanceData = await ref.watch(playerPerformanceProvider(playerId).future);
+    final performanceData =
+        await ref.watch(playerPerformanceProvider(playerId).future);
     if (performanceData.isEmpty) {
       return PlayerDevelopmentTrends.empty();
     }
@@ -44,9 +50,11 @@ final playerDevelopmentTrendsProvider = FutureProvider.family<PlayerDevelopmentT
 });
 
 // Team performance overview
-final teamPerformanceOverviewProvider = FutureProvider<TeamPerformanceOverview>((ref) async {
+final teamPerformanceOverviewProvider =
+    FutureProvider<TeamPerformanceOverview>((ref) async {
   try {
-    final allPerformance = await ref.watch(allPlayersLatestPerformanceProvider.future);
+    final allPerformance =
+        await ref.watch(allPlayersLatestPerformanceProvider.future);
     // Calculate team averages and insights
     return _calculateTeamOverview(allPerformance);
   } catch (e) {
@@ -56,8 +64,9 @@ final teamPerformanceOverviewProvider = FutureProvider<TeamPerformanceOverview>(
 });
 
 // Helper functions
-PlayerDevelopmentTrends _calculateDevelopmentTrends(List<PlayerPerformanceData> data) {
-  // TODO: Implement trend calculation logic
+PlayerDevelopmentTrends _calculateDevelopmentTrends(
+    List<PlayerPerformanceData> data) {
+  // TODO(author): Implement trend calculation logic
   return PlayerDevelopmentTrends(
     physicalTrend: TrendDirection.stable,
     technicalTrend: TrendDirection.stable,
@@ -70,8 +79,9 @@ PlayerDevelopmentTrends _calculateDevelopmentTrends(List<PlayerPerformanceData> 
   );
 }
 
-TeamPerformanceOverview _calculateTeamOverview(Map<String, PlayerPerformanceData> data) {
-  // TODO: Implement team overview calculation
+TeamPerformanceOverview _calculateTeamOverview(
+    Map<String, PlayerPerformanceData> data) {
+  // TODO(author): Implement team overview calculation
   return TeamPerformanceOverview(
     averagePhysicalScore: 0,
     averageTechnicalScore: 0,
@@ -86,7 +96,6 @@ TeamPerformanceOverview _calculateTeamOverview(Map<String, PlayerPerformanceData
 
 // Data models for trends and analysis
 class PlayerDevelopmentTrends {
-
   PlayerDevelopmentTrends({
     required this.physicalTrend,
     required this.technicalTrend,
@@ -99,15 +108,15 @@ class PlayerDevelopmentTrends {
   });
 
   factory PlayerDevelopmentTrends.empty() => PlayerDevelopmentTrends(
-    physicalTrend: TrendDirection.stable,
-    technicalTrend: TrendDirection.stable,
-    tacticalTrend: TrendDirection.stable,
-    mentalTrend: TrendDirection.stable,
-    overallProgress: 0,
-    strengths: [],
-    areasForImprovement: [],
-    recommendedFocus: [],
-  );
+        physicalTrend: TrendDirection.stable,
+        technicalTrend: TrendDirection.stable,
+        tacticalTrend: TrendDirection.stable,
+        mentalTrend: TrendDirection.stable,
+        overallProgress: 0,
+        strengths: [],
+        areasForImprovement: [],
+        recommendedFocus: [],
+      );
   final TrendDirection physicalTrend;
   final TrendDirection technicalTrend;
   final TrendDirection tacticalTrend;
@@ -125,7 +134,6 @@ enum TrendDirection {
 }
 
 class TeamPerformanceOverview {
-
   TeamPerformanceOverview({
     required this.averagePhysicalScore,
     required this.averageTechnicalScore,
@@ -138,15 +146,15 @@ class TeamPerformanceOverview {
   });
 
   factory TeamPerformanceOverview.empty() => TeamPerformanceOverview(
-    averagePhysicalScore: 0,
-    averageTechnicalScore: 0,
-    averageTacticalScore: 0,
-    averageMentalScore: 0,
-    teamStrengths: [],
-    teamWeaknesses: [],
-    topPerformers: [],
-    needsAttention: [],
-  );
+        averagePhysicalScore: 0,
+        averageTechnicalScore: 0,
+        averageTacticalScore: 0,
+        averageMentalScore: 0,
+        teamStrengths: [],
+        teamWeaknesses: [],
+        topPerformers: [],
+        needsAttention: [],
+      );
   final double averagePhysicalScore;
   final double averageTechnicalScore;
   final double averageTacticalScore;
@@ -158,7 +166,6 @@ class TeamPerformanceOverview {
 }
 
 class PlayerSummary {
-
   PlayerSummary({
     required this.playerId,
     required this.playerName,
@@ -173,14 +180,13 @@ class PlayerSummary {
 
 // State notifier for managing player tracking actions
 class PlayerTrackingNotifier extends StateNotifier<AsyncValue<void>> {
-
   PlayerTrackingNotifier(this.ref) : super(const AsyncValue.data(null));
   final Ref ref;
 
   Future<void> recordPerformanceData(PlayerPerformanceData data) async {
     state = const AsyncValue.loading();
     try {
-      // TODO: Implement database save
+      // TODO(author): Implement database save
       // Invalidate related providers
       ref.invalidate(playerPerformanceProvider(data.playerId));
       ref.invalidate(allPlayersLatestPerformanceProvider);
@@ -191,4 +197,6 @@ class PlayerTrackingNotifier extends StateNotifier<AsyncValue<void>> {
   }
 }
 
-final playerTrackingNotifierProvider = StateNotifierProvider<PlayerTrackingNotifier, AsyncValue<void>>(PlayerTrackingNotifier.new);
+final playerTrackingNotifierProvider =
+    StateNotifierProvider<PlayerTrackingNotifier, AsyncValue<void>>(
+        PlayerTrackingNotifier.new);

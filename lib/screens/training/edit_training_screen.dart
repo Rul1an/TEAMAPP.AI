@@ -8,7 +8,6 @@ import '../../providers/database_provider.dart';
 import '../../services/database_service.dart';
 
 class EditTrainingScreen extends ConsumerStatefulWidget {
-
   const EditTrainingScreen({
     super.key,
     required this.trainingId,
@@ -134,7 +133,8 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                                     ),
                                     child: Text(
                                       _selectedDate != null
-                                          ? DateFormat('d MMMM yyyy', 'nl_NL').format(_selectedDate!)
+                                          ? DateFormat('d MMMM yyyy', 'nl_NL')
+                                              .format(_selectedDate!)
                                           : 'Selecteer datum',
                                     ),
                                   ),
@@ -182,7 +182,9 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                                       return 'Duur is verplicht';
                                     }
                                     final duration = int.tryParse(value);
-                                    if (duration == null || duration < 30 || duration > 180) {
+                                    if (duration == null ||
+                                        duration < 30 ||
+                                        duration > 180) {
                                       return 'Voer een duur tussen 30-180 minuten in';
                                     }
                                     return null;
@@ -229,10 +231,14 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                                     labelText: 'Focus',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: TrainingFocus.values.map((focus) => DropdownMenuItem(
-                                      value: focus,
-                                      child: Text(_getFocusText(focus)),
-                                    ),).toList(),
+                                  items: TrainingFocus.values
+                                      .map(
+                                        (focus) => DropdownMenuItem(
+                                          value: focus,
+                                          child: Text(_getFocusText(focus)),
+                                        ),
+                                      )
+                                      .toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedFocus = value;
@@ -248,16 +254,22 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                               ),
                               const SizedBox(width: 16),
                               Expanded(
-                                child: DropdownButtonFormField<TrainingIntensity>(
+                                child:
+                                    DropdownButtonFormField<TrainingIntensity>(
                                   value: _selectedIntensity,
                                   decoration: const InputDecoration(
                                     labelText: 'Intensiteit',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: TrainingIntensity.values.map((intensity) => DropdownMenuItem(
-                                      value: intensity,
-                                      child: Text(_getIntensityText(intensity)),
-                                    ),).toList(),
+                                  items: TrainingIntensity.values
+                                      .map(
+                                        (intensity) => DropdownMenuItem(
+                                          value: intensity,
+                                          child: Text(
+                                              _getIntensityText(intensity)),
+                                        ),
+                                      )
+                                      .toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedIntensity = value;
@@ -280,10 +292,14 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                               labelText: 'Status',
                               border: OutlineInputBorder(),
                             ),
-                            items: TrainingStatus.values.map((status) => DropdownMenuItem(
-                                value: status,
-                                child: Text(_getStatusText(status)),
-                              ),).toList(),
+                            items: TrainingStatus.values
+                                .map(
+                                  (status) => DropdownMenuItem(
+                                    value: status,
+                                    child: Text(_getStatusText(status)),
+                                  ),
+                                )
+                                .toList(),
                             onChanged: (value) {
                               setState(() {
                                 _selectedStatus = value;
@@ -433,10 +449,17 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
         _selectedTime!.minute,
       );
       _training!.duration = int.parse(_durationController.text);
-      _training!.location = _locationController.text.isEmpty ? null : _locationController.text;
-      _training!.description = _descriptionController.text.isEmpty ? null : _descriptionController.text;
-      _training!.objectives = _objectivesController.text.isEmpty ? null : _objectivesController.text;
-      _training!.coachNotes = _coachNotesController.text.isEmpty ? null : _coachNotesController.text;
+      _training!.location =
+          _locationController.text.isEmpty ? null : _locationController.text;
+      _training!.description = _descriptionController.text.isEmpty
+          ? null
+          : _descriptionController.text;
+      _training!.objectives = _objectivesController.text.isEmpty
+          ? null
+          : _objectivesController.text;
+      _training!.coachNotes = _coachNotesController.text.isEmpty
+          ? null
+          : _coachNotesController.text;
       _training!.focus = _selectedFocus!;
       _training!.intensity = _selectedIntensity!;
       _training!.status = _selectedStatus!;

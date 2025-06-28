@@ -11,7 +11,6 @@ import '../../services/database_service.dart';
 import '../../widgets/common/rating_dialog.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
-
   const TrainingAttendanceScreen({
     super.key,
     required this.trainingId,
@@ -19,10 +18,12 @@ class TrainingAttendanceScreen extends ConsumerStatefulWidget {
   final String trainingId;
 
   @override
-  ConsumerState<TrainingAttendanceScreen> createState() => _TrainingAttendanceScreenState();
+  ConsumerState<TrainingAttendanceScreen> createState() =>
+      _TrainingAttendanceScreenState();
 }
 
-class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScreen> {
+class _TrainingAttendanceScreenState
+    extends ConsumerState<TrainingAttendanceScreen> {
   final Map<String, AttendanceStatus> _attendance = {};
   bool _isLoading = false;
 
@@ -72,12 +73,14 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
               _buildTrainingHeader(training),
               Expanded(
                 child: playersAsync.when(
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   error: (error, stack) => Center(child: Text('Fout: $error')),
                   data: (players) {
                     // Sort players by jersey number
                     final sortedPlayers = List<Player>.from(players)
-                      ..sort((a, b) => a.jerseyNumber.compareTo(b.jerseyNumber));
+                      ..sort(
+                          (a, b) => a.jerseyNumber.compareTo(b.jerseyNumber));
 
                     return isDesktop
                         ? _buildDesktopLayout(sortedPlayers)
@@ -93,95 +96,99 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
   }
 
   Widget _buildTrainingHeader(Training training) => Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.fitness_center,
-            size: 32,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.fitness_center,
+              size: 32,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    DateFormat('EEEE d MMMM yyyy', 'nl_NL')
+                        .format(training.date),
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Chip(
+                        label: Text(_getFocusText(training.focus)),
+                        backgroundColor: _getFocusColor(training.focus)
+                            .withValues(alpha: 0.2),
+                      ),
+                      const SizedBox(width: 8),
+                      Chip(
+                        label: Text(_getIntensityText(training.intensity)),
+                        backgroundColor: _getIntensityColor(training.intensity)
+                            .withValues(alpha: 0.2),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Column(
               children: [
                 Text(
-                  DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(training.date),
-                  style: Theme.of(context).textTheme.titleLarge,
+                  '${_attendance.values.where((s) => s == AttendanceStatus.present).length}',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Chip(
-                      label: Text(_getFocusText(training.focus)),
-                      backgroundColor: _getFocusColor(training.focus).withValues(alpha: 0.2),
-                    ),
-                    const SizedBox(width: 8),
-                    Chip(
-                      label: Text(_getIntensityText(training.intensity)),
-                      backgroundColor: _getIntensityColor(training.intensity).withValues(alpha: 0.2),
-                    ),
-                  ],
-                ),
+                const Text('Aanwezig'),
               ],
             ),
-          ),
-          Column(
-            children: [
-              Text(
-                '${_attendance.values.where((s) => s == AttendanceStatus.present).length}',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const Text('Aanwezig'),
-            ],
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
 
   Widget _buildDesktopLayout(List<Player> players) => GridView.builder(
-      padding: const EdgeInsets.all(24),
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 300,
-        childAspectRatio: 3,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-      ),
-      itemCount: players.length,
-      itemBuilder: (context, index) {
-        final player = players[index];
-        return _buildPlayerAttendanceCard(player);
-      },
-    );
+        padding: const EdgeInsets.all(24),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 300,
+          childAspectRatio: 3,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+        ),
+        itemCount: players.length,
+        itemBuilder: (context, index) {
+          final player = players[index];
+          return _buildPlayerAttendanceCard(player);
+        },
+      );
 
   Widget _buildMobileLayout(List<Player> players) => ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: players.length,
-      itemBuilder: (context, index) {
-        final player = players[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: _buildPlayerAttendanceCard(player),
-        );
-      },
-    );
+        padding: const EdgeInsets.all(16),
+        itemCount: players.length,
+        itemBuilder: (context, index) {
+          final player = players[index];
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: _buildPlayerAttendanceCard(player),
+          );
+        },
+      );
 
   Widget _buildPlayerAttendanceCard(Player player) {
-    final status = _attendance[player.id.toString()] ?? AttendanceStatus.unknown;
+    final status =
+        _attendance[player.id.toString()] ?? AttendanceStatus.unknown;
 
     return Card(
       child: InkWell(
@@ -396,13 +403,15 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
       // Filter players who are present or late
       final presentPlayers = players.where((player) {
         final status = _attendance[player.id.toString()];
-        return status == AttendanceStatus.present || status == AttendanceStatus.late;
+        return status == AttendanceStatus.present ||
+            status == AttendanceStatus.late;
       }).toList();
 
       if (presentPlayers.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Markeer eerst aanwezige spelers om beoordelingen te geven'),
+            content: Text(
+                'Markeer eerst aanwezige spelers om beoordelingen te geven'),
             backgroundColor: Colors.orange,
           ),
         );
@@ -467,7 +476,8 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
                         if (result == true && mounted && context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Beoordeling opgeslagen voor ${player.name}'),
+                              content: Text(
+                                  'Beoordeling opgeslagen voor ${player.name}'),
                               backgroundColor: Colors.green,
                             ),
                           );
@@ -490,7 +500,7 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
     });
 
     try {
-      // TODO: Save attendance to database
+      // TODO(author): Save attendance to database
       // For now, just update player statistics
       final players = ref.read(playersProvider).value ?? [];
 
@@ -506,7 +516,8 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
         if (player.id != '') {
           // Update player training statistics
           player.trainingsTotal++;
-          if (status == AttendanceStatus.present || status == AttendanceStatus.late) {
+          if (status == AttendanceStatus.present ||
+              status == AttendanceStatus.late) {
             player.trainingsAttended++;
           }
 

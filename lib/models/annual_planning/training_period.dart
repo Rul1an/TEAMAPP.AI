@@ -4,7 +4,6 @@ import 'content_distribution.dart';
 // part 'training_period.g.dart'; // Disabled for web compatibility
 
 class TrainingPeriod {
-
   // Constructor
   TrainingPeriod();
 
@@ -109,13 +108,12 @@ class TrainingPeriod {
     );
     period.orderIndex = json['orderIndex'] ?? 0;
     period.durationWeeks = json['durationWeeks'] ?? 4;
-    period.startDate = json['startDate'] != null
-        ? DateTime.parse(json['startDate'])
-        : null;
-    period.endDate = json['endDate'] != null
-        ? DateTime.parse(json['endDate'])
-        : null;
-        period.intensityPercentage = json['intensityPercentage']?.toDouble() ?? 70.0;
+    period.startDate =
+        json['startDate'] != null ? DateTime.parse(json['startDate']) : null;
+    period.endDate =
+        json['endDate'] != null ? DateTime.parse(json['endDate']) : null;
+    period.intensityPercentage =
+        json['intensityPercentage']?.toDouble() ?? 70.0;
     period.contentFocusJson = json['contentFocusJson'];
     period.keyObjectives = List<String>.from(json['keyObjectives'] ?? []);
     period.sessionsPerWeek = json['sessionsPerWeek'] ?? 3;
@@ -142,7 +140,8 @@ class TrainingPeriod {
   late String name; // "Preparation", "Early Competition", "Peak", etc.
   late String description;
 
-  late PeriodType type; // preparation, competition_early, competition_peak, transition
+  late PeriodType
+      type; // preparation, competition_early, competition_peak, transition
 
   // Sequence and timing
   late int orderIndex; // sequence in the plan (0, 1, 2, ...)
@@ -157,7 +156,8 @@ class TrainingPeriod {
   String? contentFocusJson;
 
   // Key objectives for this period
-  late List<String> keyObjectives; // ["build fitness", "technical skills", "team cohesion"]
+  late List<String>
+      keyObjectives; // ["build fitness", "technical skills", "team cohesion"]
 
   // Load management parameters
   late int sessionsPerWeek; // recommended sessions per week
@@ -270,25 +270,25 @@ class TrainingPeriod {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'periodizationPlanId': periodizationPlanId,
-    'name': name,
-    'description': description,
-    'type': type.name,
-    'orderIndex': orderIndex,
-    'durationWeeks': durationWeeks,
-    'startDate': startDate?.toIso8601String(),
-    'endDate': endDate?.toIso8601String(),
-    'intensityPercentage': intensityPercentage,
-    'contentFocusJson': contentFocusJson,
-    'keyObjectives': keyObjectives,
-    'sessionsPerWeek': sessionsPerWeek,
-    'averageSessionMinutes': averageSessionMinutes,
-    'restDaysBetweenSessions': restDaysBetweenSessions,
-    'status': status.name,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'periodizationPlanId': periodizationPlanId,
+        'name': name,
+        'description': description,
+        'type': type.name,
+        'orderIndex': orderIndex,
+        'durationWeeks': durationWeeks,
+        'startDate': startDate?.toIso8601String(),
+        'endDate': endDate?.toIso8601String(),
+        'intensityPercentage': intensityPercentage,
+        'contentFocusJson': contentFocusJson,
+        'keyObjectives': keyObjectives,
+        'sessionsPerWeek': sessionsPerWeek,
+        'averageSessionMinutes': averageSessionMinutes,
+        'restDaysBetweenSessions': restDaysBetweenSessions,
+        'status': status.name,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method for updates
   TrainingPeriod copyWith({
@@ -323,8 +323,10 @@ class TrainingPeriod {
     if (contentFocus != null) copy.contentFocus = contentFocus;
     copy.keyObjectives = keyObjectives ?? List.from(this.keyObjectives);
     copy.sessionsPerWeek = sessionsPerWeek ?? this.sessionsPerWeek;
-    copy.averageSessionMinutes = averageSessionMinutes ?? this.averageSessionMinutes;
-    copy.restDaysBetweenSessions = restDaysBetweenSessions ?? this.restDaysBetweenSessions;
+    copy.averageSessionMinutes =
+        averageSessionMinutes ?? this.averageSessionMinutes;
+    copy.restDaysBetweenSessions =
+        restDaysBetweenSessions ?? this.restDaysBetweenSessions;
     copy.status = status ?? this.status;
     copy.createdAt = createdAt;
     copy.updatedAt = DateTime.now();
@@ -332,9 +334,10 @@ class TrainingPeriod {
   }
 
   @override
-  String toString() => 'TrainingPeriod(id: $id, name: $name, type: ${type.name}, '
-           'order: $orderIndex, weeks: $durationWeeks, intensity: $intensityPercentage%, '
-           'status: ${status.name})';
+  String toString() =>
+      'TrainingPeriod(id: $id, name: $name, type: ${type.name}, '
+      'order: $orderIndex, weeks: $durationWeeks, intensity: $intensityPercentage%, '
+      'status: ${status.name})';
 
   @override
   bool operator ==(Object other) {
@@ -348,11 +351,12 @@ class TrainingPeriod {
   }
 
   @override
-  int get hashCode => periodizationPlanId.hashCode ^
-           name.hashCode ^
-           type.hashCode ^
-           orderIndex.hashCode ^
-           durationWeeks.hashCode;
+  int get hashCode =>
+      periodizationPlanId.hashCode ^
+      name.hashCode ^
+      type.hashCode ^
+      orderIndex.hashCode ^
+      durationWeeks.hashCode;
 }
 
 // Enums for training periods

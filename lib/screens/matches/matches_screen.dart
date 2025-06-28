@@ -14,7 +14,8 @@ class MatchesScreen extends ConsumerStatefulWidget {
   ConsumerState<MatchesScreen> createState() => _MatchesScreenState();
 }
 
-class _MatchesScreenState extends ConsumerState<MatchesScreen> with SingleTickerProviderStateMixin {
+class _MatchesScreenState extends ConsumerState<MatchesScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -106,8 +107,10 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen> with SingleTicker
           return TabBarView(
             controller: _tabController,
             children: [
-              _buildMatchList(upcomingMatches, isDesktop, 'Geen aankomende wedstrijden'),
-              _buildMatchList(completedMatches, isDesktop, 'Geen afgelopen wedstrijden'),
+              _buildMatchList(
+                  upcomingMatches, isDesktop, 'Geen aankomende wedstrijden'),
+              _buildMatchList(
+                  completedMatches, isDesktop, 'Geen afgelopen wedstrijden'),
               _buildMatchList(allMatches, isDesktop, 'Geen wedstrijden'),
             ],
           );
@@ -122,7 +125,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen> with SingleTicker
     );
   }
 
-  Widget _buildMatchList(List<Match> matches, bool isDesktop, String emptyMessage) {
+  Widget _buildMatchList(
+      List<Match> matches, bool isDesktop, String emptyMessage) {
     if (matches.isEmpty) {
       return Center(
         child: Column(
@@ -169,7 +173,6 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen> with SingleTicker
 }
 
 class _MatchCard extends StatelessWidget {
-
   const _MatchCard({
     required this.match,
     required this.onTap,
@@ -196,7 +199,8 @@ class _MatchCard extends StatelessWidget {
                 children: [
                   // Date and Time
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primaryContainer,
                       borderRadius: BorderRadius.circular(8),
@@ -205,9 +209,10 @@ class _MatchCard extends StatelessWidget {
                       children: [
                         Text(
                           DateFormat('dd').format(match.date),
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         Text(
                           DateFormat('MMM').format(match.date),
@@ -232,14 +237,16 @@ class _MatchCard extends StatelessWidget {
                         const SizedBox(height: 8),
                         Text(
                           match.opponent,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Icon(Icons.location_on, size: 16, color: Colors.grey[600]),
+                            Icon(Icons.location_on,
+                                size: 16, color: Colors.grey[600]),
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
@@ -256,7 +263,8 @@ class _MatchCard extends StatelessWidget {
                   // Score or Time
                   if (isCompleted && hasScore)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
                         color: _getResultColor(match),
                         borderRadius: BorderRadius.circular(8),
@@ -265,30 +273,38 @@ class _MatchCard extends StatelessWidget {
                         children: [
                           Text(
                             '${match.teamScore} - ${match.opponentScore}',
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           Text(
                             _getResultText(match),
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.white,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.white,
+                                    ),
                           ),
                         ],
                       ),
                     )
                   else
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       child: Column(
                         children: [
                           Text(
                             DateFormat('HH:mm').format(match.date),
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           Text(
                             _getStatusText(match.status),
@@ -307,20 +323,20 @@ class _MatchCard extends StatelessWidget {
   }
 
   Widget _buildLocationBadge(Location location) => Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: location == Location.home ? Colors.green : Colors.blue,
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        location == Location.home ? 'THUIS' : 'UIT',
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: location == Location.home ? Colors.green : Colors.blue,
+          borderRadius: BorderRadius.circular(4),
         ),
-      ),
-    );
+        child: Text(
+          location == Location.home ? 'THUIS' : 'UIT',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
 
   Widget _buildCompetitionBadge(Competition competition) {
     String text;

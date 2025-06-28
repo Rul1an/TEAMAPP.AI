@@ -1,4 +1,3 @@
-
 /// 🎯 Feature System
 /// Manages subscription tiers and feature access control
 library;
@@ -36,7 +35,6 @@ enum SubscriptionTier {
 
 // Feature configuration
 class FeatureConfig {
-
   const FeatureConfig({
     required this.organizationId,
     required this.teamId,
@@ -50,7 +48,8 @@ class FeatureConfig {
   final Map<Feature, bool> overrides;
   final DateTime? expiresAt;
 
-  bool get isExpired => expiresAt != null && expiresAt!.isBefore(DateTime.now());
+  bool get isExpired =>
+      expiresAt != null && expiresAt!.isBefore(DateTime.now());
 }
 
 // SaaS Tier Management Service
@@ -128,13 +127,15 @@ class FeatureService {
   };
 
   // Check if a feature is available for a specific tier
-  bool isFeatureAvailable(String feature, String tier) => _tierFeatures[tier]?.contains(feature) ?? false;
+  bool isFeatureAvailable(String feature, String tier) =>
+      _tierFeatures[tier]?.contains(feature) ?? false;
 
   // Get all features for a tier
   List<String> getFeaturesForTier(String tier) => _tierFeatures[tier] ?? [];
 
   // Get tier limits
-  Map<String, dynamic> getTierLimits(String tier) => _tierLimits[tier] ?? _tierLimits['basic']!;
+  Map<String, dynamic> getTierLimits(String tier) =>
+      _tierLimits[tier] ?? _tierLimits['basic']!;
 
   // Check if a limit is reached
   bool isLimitReached(String tier, String limitType, int currentValue) {
@@ -227,15 +228,16 @@ class FeatureService {
 
   // Feature descriptions for upgrade prompts
   Map<String, String> getFeatureDescriptions() => {
-      'player_tracking_svs': 'Geavanceerd speler volg systeem met GPS integratie',
-      'performance_analytics': 'Uitgebreide prestatie analyses en rapporten',
-      'annual_planning': 'Volledige jaarplanning en periodisering',
-      'video_analysis': 'Video analyse tools en integratie',
-      'gps_integration': 'GPS tracking en fysieke data analyse',
-      'injury_prediction': 'AI-gedreven blessure voorspelling',
-      'custom_reports': 'Aangepaste rapporten en dashboards',
-      'api_access': 'API toegang voor externe integraties',
-      'multi_team_management': 'Beheer meerdere teams binnen één club',
-      'coach_collaboration': 'Samenwerking tussen coaches en staff',
-    };
+        'player_tracking_svs':
+            'Geavanceerd speler volg systeem met GPS integratie',
+        'performance_analytics': 'Uitgebreide prestatie analyses en rapporten',
+        'annual_planning': 'Volledige jaarplanning en periodisering',
+        'video_analysis': 'Video analyse tools en integratie',
+        'gps_integration': 'GPS tracking en fysieke data analyse',
+        'injury_prediction': 'AI-gedreven blessure voorspelling',
+        'custom_reports': 'Aangepaste rapporten en dashboards',
+        'api_access': 'API toegang voor externe integraties',
+        'multi_team_management': 'Beheer meerdere teams binnen één club',
+        'coach_collaboration': 'Samenwerking tussen coaches en staff',
+      };
 }

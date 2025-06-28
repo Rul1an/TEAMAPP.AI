@@ -11,7 +11,6 @@ import '../../services/database_service.dart';
 import '../../widgets/common/tactical_drawing_canvas.dart';
 
 class LineupBuilderScreen extends ConsumerStatefulWidget {
-
   const LineupBuilderScreen({
     super.key,
     this.matchId,
@@ -19,7 +18,8 @@ class LineupBuilderScreen extends ConsumerStatefulWidget {
   final String? matchId;
 
   @override
-  ConsumerState<LineupBuilderScreen> createState() => _LineupBuilderScreenState();
+  ConsumerState<LineupBuilderScreen> createState() =>
+      _LineupBuilderScreenState();
 }
 
 class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
@@ -150,7 +150,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.arrow,
                   child: Row(
                     children: [
-                      Icon(Icons.arrow_forward, color: _selectedDrawingTool == DrawingTool.arrow ? Colors.blue : null),
+                      Icon(Icons.arrow_forward,
+                          color: _selectedDrawingTool == DrawingTool.arrow
+                              ? Colors.blue
+                              : null),
                       const SizedBox(width: 8),
                       const Text('Pijl'),
                     ],
@@ -160,7 +163,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.line,
                   child: Row(
                     children: [
-                      Icon(Icons.remove, color: _selectedDrawingTool == DrawingTool.line ? Colors.blue : null),
+                      Icon(Icons.remove,
+                          color: _selectedDrawingTool == DrawingTool.line
+                              ? Colors.blue
+                              : null),
                       const SizedBox(width: 8),
                       const Text('Lijn'),
                     ],
@@ -170,7 +176,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.circle,
                   child: Row(
                     children: [
-                      Icon(Icons.circle_outlined, color: _selectedDrawingTool == DrawingTool.circle ? Colors.blue : null),
+                      Icon(Icons.circle_outlined,
+                          color: _selectedDrawingTool == DrawingTool.circle
+                              ? Colors.blue
+                              : null),
                       const SizedBox(width: 8),
                       const Text('Cirkel'),
                     ],
@@ -180,7 +189,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.text,
                   child: Row(
                     children: [
-                      Icon(Icons.text_fields, color: _selectedDrawingTool == DrawingTool.text ? Colors.blue : null),
+                      Icon(Icons.text_fields,
+                          color: _selectedDrawingTool == DrawingTool.text
+                              ? Colors.blue
+                              : null),
                       const SizedBox(width: 8),
                       const Text('Tekst'),
                     ],
@@ -190,7 +202,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.erase,
                   child: Row(
                     children: [
-                      Icon(Icons.cleaning_services, color: _selectedDrawingTool == DrawingTool.erase ? Colors.blue : null),
+                      Icon(Icons.cleaning_services,
+                          color: _selectedDrawingTool == DrawingTool.erase
+                              ? Colors.blue
+                              : null),
                       const SizedBox(width: 8),
                       const Text('Wissen'),
                     ],
@@ -242,7 +257,12 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: Colors.white,
                   child: Row(
                     children: [
-                      Container(width: 20, height: 20, color: Colors.white, child: Container(decoration: BoxDecoration(border: Border.all()))),
+                      Container(
+                          width: 20,
+                          height: 20,
+                          color: Colors.white,
+                          child: Container(
+                              decoration: BoxDecoration(border: Border.all()))),
                       const SizedBox(width: 8),
                       const Text('Wit'),
                     ],
@@ -281,9 +301,13 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(child: Text('Fout: $error')),
         data: (players) {
-          _availablePlayers = players.where((p) =>
-            !_fieldPositions.values.contains(p) && !_benchPlayers.contains(p),
-          ).toList();
+          _availablePlayers = players
+              .where(
+                (p) =>
+                    !_fieldPositions.values.contains(p) &&
+                    !_benchPlayers.contains(p),
+              )
+              .toList();
 
           return Row(
             children: [
@@ -309,7 +333,8 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                             final player = _availablePlayers[index];
                             return Draggable<Player>(
                               data: player,
-                              feedback: _buildPlayerChip(player, isDragging: true),
+                              feedback:
+                                  _buildPlayerChip(player, isDragging: true),
                               childWhenDragging: Opacity(
                                 opacity: 0.5,
                                 child: _buildPlayerCard(player),
@@ -331,31 +356,37 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   children: [
                     // Formation and Template selector (only in lineup mode)
                     if (!_isDrawingMode)
-                    Container(
-                      padding: const EdgeInsets.all(16),
+                      Container(
+                        padding: const EdgeInsets.all(16),
                         child: Column(
                           children: [
                             // Formation dropdown
                             Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Formatie: '),
-                          const SizedBox(width: 16),
-                          DropdownButton<Formation>(
-                            value: _selectedFormation,
-                            items: Formation.values.map((formation) => DropdownMenuItem(
-                                value: formation,
-                                child: Text(_getFormationText(formation)),
-                              ),).toList(),
-                            onChanged: (value) {
-                              if (value != null) {
-                                setState(() {
-                                  _selectedFormation = value;
-                                        _selectedTemplate = null; // Clear template when formation changes
-                                  _updateFormation();
-                                });
-                              }
-                            },
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Formatie: '),
+                                const SizedBox(width: 16),
+                                DropdownButton<Formation>(
+                                  value: _selectedFormation,
+                                  items: Formation.values
+                                      .map(
+                                        (formation) => DropdownMenuItem(
+                                          value: formation,
+                                          child: Text(
+                                              _getFormationText(formation)),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        _selectedFormation = value;
+                                        _selectedTemplate =
+                                            null; // Clear template when formation changes
+                                        _updateFormation();
+                                      });
+                                    }
+                                  },
                                 ),
                               ],
                             ),
@@ -370,10 +401,14 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                                   DropdownButton<FormationTemplate>(
                                     value: _selectedTemplate,
                                     hint: const Text('Kies template'),
-                                    items: _getTemplatesForCurrentFormation().map((template) => DropdownMenuItem(
-                                        value: template,
-                                        child: Text(template.name),
-                                      ),).toList(),
+                                    items: _getTemplatesForCurrentFormation()
+                                        .map(
+                                          (template) => DropdownMenuItem(
+                                            value: template,
+                                            child: Text(template.name),
+                                          ),
+                                        )
+                                        .toList(),
                                     onChanged: (value) {
                                       setState(() {
                                         _selectedTemplate = value;
@@ -382,7 +417,9 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                                   ),
                                   const SizedBox(width: 16),
                                   ElevatedButton(
-                                    onPressed: _selectedTemplate != null ? _applyTemplate : null,
+                                    onPressed: _selectedTemplate != null
+                                        ? _applyTemplate
+                                        : null,
                                     child: const Text('Toepassen'),
                                   ),
                                 ],
@@ -431,9 +468,12 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                               spacing: 8,
                               children: [
                                 Chip(
-                                  avatar: const Icon(Icons.arrow_forward, size: 16),
-                                  label: Text('${_selectedDrawingTool.name} - ${_getDrawingToolName(_selectedDrawingTool)}'),
-                                  backgroundColor: _selectedDrawingColor.withValues(alpha: 0.2),
+                                  avatar:
+                                      const Icon(Icons.arrow_forward, size: 16),
+                                  label: Text(
+                                      '${_selectedDrawingTool.name} - ${_getDrawingToolName(_selectedDrawingTool)}'),
+                                  backgroundColor: _selectedDrawingColor
+                                      .withValues(alpha: 0.2),
                                 ),
                                 Chip(
                                   avatar: Container(
@@ -447,10 +487,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                                   label: const Text('Geselecteerde kleur'),
                                 ),
                               ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
 
                     // Field with Tactical Drawing Overlay
                     Expanded(
@@ -467,13 +507,13 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                             });
                           },
                           child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.green[700],
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.white, width: 3),
-                        ),
-                        child: Stack(
-                          children: _buildFieldPositions(),
+                            decoration: BoxDecoration(
+                              color: Colors.green[700],
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.white, width: 3),
+                            ),
+                            child: Stack(
+                              children: _buildFieldPositions(),
                             ),
                           ),
                         ),
@@ -514,32 +554,34 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                               }
                             });
                           },
-                          builder: (context, candidateData, rejectedData) => ColoredBox(
-                              color: candidateData.isNotEmpty
+                          builder: (context, candidateData, rejectedData) =>
+                              ColoredBox(
+                            color: candidateData.isNotEmpty
                                 ? Colors.blue.withValues(alpha: 0.1)
                                 : Colors.transparent,
-                              child: ListView.builder(
-                                padding: const EdgeInsets.all(8),
-                                itemCount: _benchPlayers.length,
-                                itemBuilder: (context, index) {
-                                  final player = _benchPlayers[index];
-                                  return Draggable<Player>(
-                                    data: player,
-                                    feedback: _buildPlayerChip(player, isDragging: true),
-                                    childWhenDragging: Opacity(
-                                      opacity: 0.5,
-                                      child: _buildPlayerCard(player),
-                                    ),
-                                    onDragCompleted: () {
-                                      setState(() {
-                                        _benchPlayers.remove(player);
-                                      });
-                                    },
+                            child: ListView.builder(
+                              padding: const EdgeInsets.all(8),
+                              itemCount: _benchPlayers.length,
+                              itemBuilder: (context, index) {
+                                final player = _benchPlayers[index];
+                                return Draggable<Player>(
+                                  data: player,
+                                  feedback: _buildPlayerChip(player,
+                                      isDragging: true),
+                                  childWhenDragging: Opacity(
+                                    opacity: 0.5,
                                     child: _buildPlayerCard(player),
-                                  );
-                                },
-                              ),
+                                  ),
+                                  onDragCompleted: () {
+                                    setState(() {
+                                      _benchPlayers.remove(player);
+                                    });
+                                  },
+                                  child: _buildPlayerCard(player),
+                                );
+                              },
                             ),
+                          ),
                         ),
                       ),
                     ],
@@ -555,119 +597,123 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
 
   List<Widget> _buildFieldPositions() {
     final positions = _getPositionsForFormation();
-    return positions.entries.map((entry) => Positioned(
-        left: entry.value['x']! * MediaQuery.of(context).size.width * 0.4,
-        top: entry.value['y']! * MediaQuery.of(context).size.height * 0.6,
-        child: DragTarget<Player>(
-          onAcceptWithDetails: (details) {
-            final player = details.data;
-            setState(() {
-              // Remove player from other positions
-              _fieldPositions.forEach((key, value) {
-                if (value == player) {
-                  _fieldPositions[key] = null;
-                }
-              });
-              _benchPlayers.remove(player);
-              // Assign to new position
-              _fieldPositions[entry.key] = player;
-            });
-          },
-          builder: (context, candidateData, rejectedData) {
-            final player = _fieldPositions[entry.key];
-            return Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: candidateData.isNotEmpty
-                  ? Colors.blue.withValues(alpha: 0.3)
-                  : Colors.white.withValues(alpha: 0.9),
-                shape: BoxShape.circle,
-                border: Border.all(
-                  width: 2,
-                ),
-              ),
-              child: player != null
-                ? Draggable<Player>(
-                    data: player,
-                    feedback: _buildPlayerChip(player, isDragging: true),
-                    childWhenDragging: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withValues(alpha: 0.5),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    onDragCompleted: () {
-                      setState(() {
-                        _fieldPositions[entry.key] = null;
-                      });
-                    },
-                    child: _buildPlayerChip(player),
-                  )
-                : Center(
-                    child: Text(
-                      entry.key,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
+    return positions.entries
+        .map(
+          (entry) => Positioned(
+            left: entry.value['x']! * MediaQuery.of(context).size.width * 0.4,
+            top: entry.value['y']! * MediaQuery.of(context).size.height * 0.6,
+            child: DragTarget<Player>(
+              onAcceptWithDetails: (details) {
+                final player = details.data;
+                setState(() {
+                  // Remove player from other positions
+                  _fieldPositions.forEach((key, value) {
+                    if (value == player) {
+                      _fieldPositions[key] = null;
+                    }
+                  });
+                  _benchPlayers.remove(player);
+                  // Assign to new position
+                  _fieldPositions[entry.key] = player;
+                });
+              },
+              builder: (context, candidateData, rejectedData) {
+                final player = _fieldPositions[entry.key];
+                return Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: candidateData.isNotEmpty
+                        ? Colors.blue.withValues(alpha: 0.3)
+                        : Colors.white.withValues(alpha: 0.9),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      width: 2,
                     ),
                   ),
-            );
-          },
-        ),
-      ),).toList();
+                  child: player != null
+                      ? Draggable<Player>(
+                          data: player,
+                          feedback: _buildPlayerChip(player, isDragging: true),
+                          childWhenDragging: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withValues(alpha: 0.5),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          onDragCompleted: () {
+                            setState(() {
+                              _fieldPositions[entry.key] = null;
+                            });
+                          },
+                          child: _buildPlayerChip(player),
+                        )
+                      : Center(
+                          child: Text(
+                            entry.key,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                );
+              },
+            ),
+          ),
+        )
+        .toList();
   }
 
   Widget _buildPlayerCard(Player player) => Card(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: _getPositionColor(player.position),
-          child: Text(
-            player.jerseyNumber.toString(),
-            style: const TextStyle(color: Colors.white),
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundColor: _getPositionColor(player.position),
+            child: Text(
+              player.jerseyNumber.toString(),
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
+          title: Text('${player.firstName} ${player.lastName}'),
+          subtitle: Text(_getPositionText(player.position)),
+          dense: true,
         ),
-        title: Text('${player.firstName} ${player.lastName}'),
-        subtitle: Text(_getPositionText(player.position)),
-        dense: true,
-      ),
-    );
+      );
 
   Widget _buildPlayerChip(Player player, {bool isDragging = false}) => Material(
-      elevation: isDragging ? 8 : 0,
-      shape: const CircleBorder(),
-      child: Container(
-        width: 80,
-        height: 80,
-        decoration: BoxDecoration(
-          color: _getPositionColor(player.position),
-          shape: BoxShape.circle,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              player.jerseyNumber.toString(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+        elevation: isDragging ? 8 : 0,
+        shape: const CircleBorder(),
+        child: Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            color: _getPositionColor(player.position),
+            shape: BoxShape.circle,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                player.jerseyNumber.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-            ),
-            Text(
-              player.lastName,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 10,
+              Text(
+                player.lastName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   Map<String, Map<String, double>> _getPositionsForFormation() {
     switch (_selectedFormation) {
@@ -772,7 +818,8 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
           .where((e) => e.value != null)
           .map((e) => e.value!.id.toString())
           .toList();
-      _match!.substituteIds = _benchPlayers.map((p) => p.id.toString()).toList();
+      _match!.substituteIds =
+          _benchPlayers.map((p) => p.id.toString()).toList();
 
       // Save field positions
       _match!.fieldPositions = {};
@@ -867,15 +914,17 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
   }
 
   // Template functionality methods
-  List<FormationTemplate> _getTemplatesForCurrentFormation() => _availableTemplates
-        .where((template) => template.formation == _selectedFormation)
-        .toList();
+  List<FormationTemplate> _getTemplatesForCurrentFormation() =>
+      _availableTemplates
+          .where((template) => template.formation == _selectedFormation)
+          .toList();
 
   Future<void> _applyTemplate() async {
     if (_selectedTemplate == null) return;
 
     final allPlayers = await DatabaseService().getAllPlayers();
-    final lineup = await DatabaseService().applyFormationTemplate(_selectedTemplate!, allPlayers);
+    final lineup = await DatabaseService()
+        .applyFormationTemplate(_selectedTemplate!, allPlayers);
 
     setState(() {
       // Clear current positions
@@ -954,7 +1003,8 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
       ..name = name
       ..description = description
       ..formation = _selectedFormation
-      ..positionPreferences = FormationTemplate.getDefaultPositionPreferences(_selectedFormation)
+      ..positionPreferences =
+          FormationTemplate.getDefaultPositionPreferences(_selectedFormation)
       ..isCustom = true
       ..isDefault = false;
 
@@ -1050,7 +1100,8 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Template Verwijderen'),
-        content: Text('Weet je zeker dat je "${template.name}" wilt verwijderen?'),
+        content:
+            Text('Weet je zeker dat je "${template.name}" wilt verwijderen?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -1075,7 +1126,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         });
       }
 
-            if (mounted && context.mounted) {
+      if (mounted && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Template "${template.name}" verwijderd'),

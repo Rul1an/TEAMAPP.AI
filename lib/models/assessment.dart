@@ -38,7 +38,6 @@ enum SkillCategory {
 }
 
 class PlayerAssessment {
-
   PlayerAssessment() {
     assessmentDate = DateTime.now();
     createdAt = DateTime.now();
@@ -91,53 +90,61 @@ class PlayerAssessment {
   late DateTime updatedAt;
 
   // Helper methods
-  double get technicalAverage => (ballControl + passing + shooting + dribbling + defending) / 5.0;
-  double get tacticalAverage => (positioning + gameReading + decisionMaking + communication + teamwork) / 5.0;
-  double get physicalAverage => (speed + stamina + strength + agility + coordination) / 5.0;
-  double get mentalAverage => (confidence + concentration + leadership + coachability + motivation) / 5.0;
-  double get overallAverage => (technicalAverage + tacticalAverage + physicalAverage + mentalAverage) / 4.0;
+  double get technicalAverage =>
+      (ballControl + passing + shooting + dribbling + defending) / 5.0;
+  double get tacticalAverage =>
+      (positioning + gameReading + decisionMaking + communication + teamwork) /
+      5.0;
+  double get physicalAverage =>
+      (speed + stamina + strength + agility + coordination) / 5.0;
+  double get mentalAverage =>
+      (confidence + concentration + leadership + coachability + motivation) /
+      5.0;
+  double get overallAverage =>
+      (technicalAverage + tacticalAverage + physicalAverage + mentalAverage) /
+      4.0;
 
   @ignore
   Map<String, int> get technicalSkills => {
-    'Balbeheersing': ballControl,
-    'Passen': passing,
-    'Schieten': shooting,
-    'Dribbelen': dribbling,
-    'Verdedigen': defending,
-  };
+        'Balbeheersing': ballControl,
+        'Passen': passing,
+        'Schieten': shooting,
+        'Dribbelen': dribbling,
+        'Verdedigen': defending,
+      };
 
   @ignore
   Map<String, int> get tacticalSkills => {
-    'Positiespel': positioning,
-    'Spellezing': gameReading,
-    'Besluitvorming': decisionMaking,
-    'Communicatie': communication,
-    'Teamwork': teamwork,
-  };
+        'Positiespel': positioning,
+        'Spellezing': gameReading,
+        'Besluitvorming': decisionMaking,
+        'Communicatie': communication,
+        'Teamwork': teamwork,
+      };
 
   @ignore
   Map<String, int> get physicalAttributes => {
-    'Snelheid': speed,
-    'Conditie': stamina,
-    'Kracht': strength,
-    'Beweeglijkheid': agility,
-    'Coördinatie': coordination,
-  };
+        'Snelheid': speed,
+        'Conditie': stamina,
+        'Kracht': strength,
+        'Beweeglijkheid': agility,
+        'Coördinatie': coordination,
+      };
 
   @ignore
   Map<String, int> get mentalAttributes => {
-    'Zelfvertrouwen': confidence,
-    'Concentratie': concentration,
-    'Leiderschap': leadership,
-    'Coachbaarheid': coachability,
-    'Motivatie': motivation,
-  };
+        'Zelfvertrouwen': confidence,
+        'Concentratie': concentration,
+        'Leiderschap': leadership,
+        'Coachbaarheid': coachability,
+        'Motivatie': motivation,
+      };
 }
 
 class DevelopmentGoal {
-
   DevelopmentGoal() {
-    targetDate = DateTime.now().add(const Duration(days: 90)); // 3 months default
+    targetDate =
+        DateTime.now().add(const Duration(days: 90)); // 3 months default
     createdAt = DateTime.now();
     updatedAt = DateTime.now();
   }

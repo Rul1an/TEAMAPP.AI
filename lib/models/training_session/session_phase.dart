@@ -3,7 +3,6 @@ import 'package:isar/isar.dart';
 // part 'session_phase.g.dart'; // Disabled for web compatibility
 
 class SessionPhase {
-
   // Constructor
   SessionPhase();
 
@@ -124,8 +123,7 @@ class SessionPhase {
   int get durationMinutes => duration.inMinutes;
 
   @Ignore()
-  String get timeRange =>
-    '${_formatTime(startTime)} - ${_formatTime(endTime)}';
+  String get timeRange => '${_formatTime(startTime)} - ${_formatTime(endTime)}';
 
   @Ignore()
   int get exerciseCount => exerciseIds.length;
@@ -133,8 +131,9 @@ class SessionPhase {
   @Ignore()
   bool get hasExercises => exerciseIds.isNotEmpty;
 
-  String _formatTime(DateTime time) => '${time.hour.toString().padLeft(2, '0')}:'
-           '${time.minute.toString().padLeft(2, '0')}';
+  String _formatTime(DateTime time) =>
+      '${time.hour.toString().padLeft(2, '0')}:'
+      '${time.minute.toString().padLeft(2, '0')}';
 
   // Exercise management methods
   void addExercise(String exerciseId) {
@@ -160,17 +159,17 @@ class SessionPhase {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'startTime': startTime.toIso8601String(),
-    'endTime': endTime.toIso8601String(),
-    'description': description,
-    'orderIndex': orderIndex,
-    'type': type.name,
-    'exerciseIds': exerciseIds,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'startTime': startTime.toIso8601String(),
+        'endTime': endTime.toIso8601String(),
+        'description': description,
+        'orderIndex': orderIndex,
+        'type': type.name,
+        'exerciseIds': exerciseIds,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method
   SessionPhase copyWith({
@@ -197,7 +196,8 @@ class SessionPhase {
   }
 
   @override
-  String toString() => 'SessionPhase(name: $name, time: $timeRange, type: $type, exercises: ${exerciseIds.length})';
+  String toString() =>
+      'SessionPhase(name: $name, time: $timeRange, type: $type, exercises: ${exerciseIds.length})';
 
   @override
   bool operator ==(Object other) {
@@ -210,21 +210,19 @@ class SessionPhase {
   }
 
   @override
-  int get hashCode => id.hashCode ^
-           name.hashCode ^
-           startTime.hashCode ^
-           endTime.hashCode;
+  int get hashCode =>
+      id.hashCode ^ name.hashCode ^ startTime.hashCode ^ endTime.hashCode;
 }
 
 enum PhaseType {
-  preparation,    // Training uitzetten, materiaal klaarzetten
-  warmup,        // Warming-up
-  technical,     // Technische training
-  tactical,      // Tactische training
-  physical,      // Fysieke training
-  main,          // Hoofdtraining (algemeen)
-  game,          // Partijtje/spelvormen
-  discussion,    // Bespreking/tactiekbespreking
-  evaluation,    // Evaluatie van training
-  cooldown       // Afkoeling
+  preparation, // Training uitzetten, materiaal klaarzetten
+  warmup, // Warming-up
+  technical, // Technische training
+  tactical, // Tactische training
+  physical, // Fysieke training
+  main, // Hoofdtraining (algemeen)
+  game, // Partijtje/spelvormen
+  discussion, // Bespreking/tactiekbespreking
+  evaluation, // Evaluatie van training
+  cooldown // Afkoeling
 }

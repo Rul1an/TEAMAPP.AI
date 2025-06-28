@@ -40,7 +40,6 @@ enum PreferredFoot {
 }
 
 class Player {
-
   Player() {
     createdAt = DateTime.now();
     updatedAt = DateTime.now();

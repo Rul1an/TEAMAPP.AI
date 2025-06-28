@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class StarRating extends StatelessWidget {
-
   const StarRating({
     super.key,
     required this.rating,
@@ -24,7 +23,8 @@ class StarRating extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final starColor = color ?? theme.colorScheme.primary;
-    final emptyStarColor = emptyColor ?? theme.colorScheme.onSurface.withValues(alpha: 0.3);
+    final emptyStarColor =
+        emptyColor ?? theme.colorScheme.onSurface.withValues(alpha: 0.3);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -34,7 +34,9 @@ class StarRating extends StatelessWidget {
           final isFilled = starIndex <= rating;
 
           return GestureDetector(
-            onTap: onRatingChanged != null ? () => onRatingChanged!(starIndex) : null,
+            onTap: onRatingChanged != null
+                ? () => onRatingChanged!(starIndex)
+                : null,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2),
               child: Icon(
@@ -61,7 +63,6 @@ class StarRating extends StatelessWidget {
 }
 
 class InteractiveStarRating extends StatefulWidget {
-
   const InteractiveStarRating({
     super.key,
     required this.initialRating,

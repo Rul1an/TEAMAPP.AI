@@ -4,7 +4,6 @@ import '../../models/performance_rating.dart';
 import '../common/star_rating.dart';
 
 class PerformanceBadge extends StatelessWidget {
-
   const PerformanceBadge({
     super.key,
     this.averageRating,
@@ -79,7 +78,6 @@ class PerformanceBadge extends StatelessWidget {
 }
 
 class PerformanceTrendIndicator extends StatelessWidget {
-
   const PerformanceTrendIndicator({
     super.key,
     required this.trend,

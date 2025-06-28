@@ -12,7 +12,6 @@ import '../widgets/field_diagram/field_painter.dart';
 
 // State class for the field diagram editor
 class FieldDiagramEditorState {
-
   const FieldDiagramEditorState({
     required this.diagram,
     this.currentTool = DiagramTool.select,
@@ -50,19 +49,21 @@ class FieldDiagramEditorState {
     LineType? selectedLineType,
     List<Position>? currentLinePoints,
     bool? isDrawingLine,
-  }) => FieldDiagramEditorState(
-      diagram: diagram ?? this.diagram,
-      currentTool: currentTool ?? this.currentTool,
-      selectedElementId: selectedElementId,
-      history: history ?? this.history,
-      historyIndex: historyIndex ?? this.historyIndex,
-      isModified: isModified ?? this.isModified,
-      selectedPlayerType: selectedPlayerType ?? this.selectedPlayerType,
-      selectedEquipmentType: selectedEquipmentType ?? this.selectedEquipmentType,
-      selectedLineType: selectedLineType ?? this.selectedLineType,
-      currentLinePoints: currentLinePoints ?? this.currentLinePoints,
-      isDrawingLine: isDrawingLine ?? this.isDrawingLine,
-    );
+  }) =>
+      FieldDiagramEditorState(
+        diagram: diagram ?? this.diagram,
+        currentTool: currentTool ?? this.currentTool,
+        selectedElementId: selectedElementId,
+        history: history ?? this.history,
+        historyIndex: historyIndex ?? this.historyIndex,
+        isModified: isModified ?? this.isModified,
+        selectedPlayerType: selectedPlayerType ?? this.selectedPlayerType,
+        selectedEquipmentType:
+            selectedEquipmentType ?? this.selectedEquipmentType,
+        selectedLineType: selectedLineType ?? this.selectedLineType,
+        currentLinePoints: currentLinePoints ?? this.currentLinePoints,
+        isDrawingLine: isDrawingLine ?? this.isDrawingLine,
+      );
 
   bool get canUndo => historyIndex > 0;
   bool get canRedo => historyIndex < history.length - 1;
@@ -70,22 +71,26 @@ class FieldDiagramEditorState {
 
 // Diagram tools enum
 enum DiagramTool {
-  select,    // Selectie/beweging
-  player,    // Speler plaatsen
+  select, // Selectie/beweging
+  player, // Speler plaatsen
   equipment, // Equipment plaatsen
-  line,      // Lijnen tekenen
-  text,      // Text toevoegen
-  area,      // Gebied markeren
-  delete,    // Verwijderen
+  line, // Lijnen tekenen
+  text, // Text toevoegen
+  area, // Gebied markeren
+  delete, // Verwijderen
 }
 
 // Field diagram editor provider
-class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> {
-  FieldDiagramEditorNotifier() : super(FieldDiagramEditorState(
-    diagram: FieldDiagram.halfField(),
-    history: [FieldDiagram.halfField()],
-    historyIndex: 0,
-  ),);
+class FieldDiagramEditorNotifier
+    extends StateNotifier<FieldDiagramEditorState> {
+  FieldDiagramEditorNotifier()
+      : super(
+          FieldDiagramEditorState(
+            diagram: FieldDiagram.halfField(),
+            history: [FieldDiagram.halfField()],
+            historyIndex: 0,
+          ),
+        );
 
   // Initialize with existing diagram
   void initializeDiagram(FieldDiagram diagram) {
@@ -272,8 +277,10 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
   void removeElement(String elementId) {
     final newDiagram = state.diagram.copyWith(
       players: state.diagram.players.where((p) => p.id != elementId).toList(),
-      equipment: state.diagram.equipment.where((e) => e.id != elementId).toList(),
-      movements: state.diagram.movements.where((m) => m.id != elementId).toList(),
+      equipment:
+          state.diagram.equipment.where((e) => e.id != elementId).toList(),
+      movements:
+          state.diagram.movements.where((m) => m.id != elementId).toList(),
       areas: state.diagram.areas.where((a) => a.id != elementId).toList(),
       labels: state.diagram.labels.where((l) => l.id != elementId).toList(),
     );
@@ -291,7 +298,8 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
     FieldDiagram newDiagram = state.diagram;
 
     // Find and update the element
-    final playerIndex = state.diagram.players.indexWhere((p) => p.id == elementId);
+    final playerIndex =
+        state.diagram.players.indexWhere((p) => p.id == elementId);
     if (playerIndex != -1) {
       final updatedPlayers = [...state.diagram.players];
       updatedPlayers[playerIndex] = PlayerMarker(
@@ -304,7 +312,8 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
       newDiagram = state.diagram.copyWith(players: updatedPlayers);
     }
 
-    final equipmentIndex = state.diagram.equipment.indexWhere((e) => e.id == elementId);
+    final equipmentIndex =
+        state.diagram.equipment.indexWhere((e) => e.id == elementId);
     if (equipmentIndex != -1) {
       final updatedEquipment = [...state.diagram.equipment];
       updatedEquipment[equipmentIndex] = EquipmentMarker(
@@ -317,7 +326,8 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
       newDiagram = state.diagram.copyWith(equipment: updatedEquipment);
     }
 
-    final labelIndex = state.diagram.labels.indexWhere((l) => l.id == elementId);
+    final labelIndex =
+        state.diagram.labels.indexWhere((l) => l.id == elementId);
     if (labelIndex != -1) {
       final updatedLabels = [...state.diagram.labels];
       updatedLabels[labelIndex] = TextLabel(
@@ -404,24 +414,29 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
   }
 
   // Save operations
-  Future<void> saveDiagramToExercise(String exerciseId, FieldDiagram diagram) async {
-    // TODO: Implement save to exercise
+  Future<void> saveDiagramToExercise(
+      String exerciseId, FieldDiagram diagram) async {
+    // TODO(author): Implement save to exercise
     // This would integrate with the exercise library service
-    await Future.delayed(const Duration(milliseconds: 500)); // Simulate API call
+    await Future.delayed(
+        const Duration(milliseconds: 500)); // Simulate API call
   }
 
   Future<void> saveDiagramTemplate(FieldDiagram diagram, String name) async {
-    // TODO: Implement save as template
-    await Future.delayed(const Duration(milliseconds: 500)); // Simulate API call
+    // TODO(author): Implement save as template
+    await Future.delayed(
+        const Duration(milliseconds: 500)); // Simulate API call
   }
 
   // Export operations
-  Future<void> exportDiagramToPNG(FieldDiagram diagram, {int width = 1920}) async {
+  Future<void> exportDiagramToPNG(FieldDiagram diagram,
+      {int width = 1920}) async {
     try {
       // Use the canvas to generate a high-resolution PNG
       final recorder = ui.PictureRecorder();
       final canvas = Canvas(recorder);
-      final size = Size(width.toDouble(), (width * 0.75).toDouble()); // 4:3 aspect ratio
+      final size =
+          Size(width.toDouble(), (width * 0.75).toDouble()); // 4:3 aspect ratio
 
       // Create a field painter and paint to the canvas
       final painter = FieldPainter(
@@ -478,21 +493,23 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
           pw.Page(
             pageFormat: PdfPageFormat.a4,
             build: (context) => pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    'Veld Diagram',
-                    style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
-                  ),
-                  pw.SizedBox(height: 20),
-                  pw.Image(pw.MemoryImage(imageBytes)),
-                  pw.SizedBox(height: 20),
-                  pw.Text('Gegenereerd op: ${DateTime.now().toString().substring(0, 16)}'),
-                  pw.Text('Spelers: ${diagram.players.length}'),
-                  pw.Text('Equipment: ${diagram.equipment.length}'),
-                  pw.Text('Bewegingen: ${diagram.movements.length}'),
-                ],
-              ),
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text(
+                  'Veld Diagram',
+                  style: pw.TextStyle(
+                      fontSize: 24, fontWeight: pw.FontWeight.bold),
+                ),
+                pw.SizedBox(height: 20),
+                pw.Image(pw.MemoryImage(imageBytes)),
+                pw.SizedBox(height: 20),
+                pw.Text(
+                    'Gegenereerd op: ${DateTime.now().toString().substring(0, 16)}'),
+                pw.Text('Spelers: ${diagram.players.length}'),
+                pw.Text('Equipment: ${diagram.equipment.length}'),
+                pw.Text('Bewegingen: ${diagram.movements.length}'),
+              ],
+            ),
           ),
         );
 
@@ -566,12 +583,14 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
     // Add players based on formation template
     for (int i = 0; i < template.positions.length; i++) {
       final position = template.positions[i];
-      players.add(PlayerMarker(
-        id: 'player_${i + 1}',
-        position: position,
-        type: PlayerType.attacking,
-        label: '${i + 1}',
-      ),);
+      players.add(
+        PlayerMarker(
+          id: 'player_${i + 1}',
+          position: position,
+          type: PlayerType.attacking,
+          label: '${i + 1}',
+        ),
+      );
     }
 
     return state.diagram.copyWith(
@@ -581,93 +600,92 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
 
   // Predefined formation templates
   static List<FormationTemplate> getFormationTemplates() => [
-      const FormationTemplate(
-        name: '4-3-3',
-        description: 'Klassieke aanvallende opstelling',
-        positions: [
-          Position(50, 90), // Keeper
-          Position(20, 70), // LB
-          Position(35, 75), // CB
-          Position(65, 75), // CB
-          Position(80, 70), // RB
-          Position(30, 50), // CM
-          Position(50, 45), // CM
-          Position(70, 50), // CM
-          Position(20, 25), // LW
-          Position(50, 20), // ST
-          Position(80, 25), // RW
-        ],
-      ),
-      const FormationTemplate(
-        name: '4-4-2',
-        description: 'Gebalanceerde opstelling',
-        positions: [
-          Position(50, 90), // Keeper
-          Position(20, 70), // LB
-          Position(35, 75), // CB
-          Position(65, 75), // CB
-          Position(80, 70), // RB
-          Position(20, 50), // LM
-          Position(35, 45), // CM
-          Position(65, 45), // CM
-          Position(80, 50), // RM
-          Position(40, 20), // ST
-          Position(60, 20), // ST
-        ],
-      ),
-      const FormationTemplate(
-        name: '3-5-2',
-        description: 'Moderne opstelling met wingbacks',
-        positions: [
-          Position(50, 90), // Keeper
-          Position(30, 75), // CB
-          Position(50, 80), // CB
-          Position(70, 75), // CB
-          Position(15, 55), // LWB
-          Position(35, 45), // CM
-          Position(50, 40), // CM
-          Position(65, 45), // CM
-          Position(85, 55), // RWB
-          Position(40, 20), // ST
-          Position(60, 20), // ST
-        ],
-      ),
-      const FormationTemplate(
-        name: '4-2-3-1',
-        description: 'Moderne aanvallende opstelling',
-        positions: [
-          Position(50, 90), // Keeper
-          Position(20, 70), // LB
-          Position(35, 75), // CB
-          Position(65, 75), // CB
-          Position(80, 70), // RB
-          Position(35, 55), // CDM
-          Position(65, 55), // CDM
-          Position(20, 35), // LW
-          Position(50, 30), // CAM
-          Position(80, 35), // RW
-          Position(50, 15), // ST
-        ],
-      ),
-      const FormationTemplate(
-        name: 'JO17 Training (7v7)',
-        description: 'Aangepaste opstelling voor training',
-        positions: [
-          Position(50, 85), // Keeper
-          Position(25, 65), // LB
-          Position(50, 70), // CB
-          Position(75, 65), // RB
-          Position(35, 45), // CM
-          Position(65, 45), // CM
-          Position(50, 25), // ST
-        ],
-      ),
-    ];
+        const FormationTemplate(
+          name: '4-3-3',
+          description: 'Klassieke aanvallende opstelling',
+          positions: [
+            Position(50, 90), // Keeper
+            Position(20, 70), // LB
+            Position(35, 75), // CB
+            Position(65, 75), // CB
+            Position(80, 70), // RB
+            Position(30, 50), // CM
+            Position(50, 45), // CM
+            Position(70, 50), // CM
+            Position(20, 25), // LW
+            Position(50, 20), // ST
+            Position(80, 25), // RW
+          ],
+        ),
+        const FormationTemplate(
+          name: '4-4-2',
+          description: 'Gebalanceerde opstelling',
+          positions: [
+            Position(50, 90), // Keeper
+            Position(20, 70), // LB
+            Position(35, 75), // CB
+            Position(65, 75), // CB
+            Position(80, 70), // RB
+            Position(20, 50), // LM
+            Position(35, 45), // CM
+            Position(65, 45), // CM
+            Position(80, 50), // RM
+            Position(40, 20), // ST
+            Position(60, 20), // ST
+          ],
+        ),
+        const FormationTemplate(
+          name: '3-5-2',
+          description: 'Moderne opstelling met wingbacks',
+          positions: [
+            Position(50, 90), // Keeper
+            Position(30, 75), // CB
+            Position(50, 80), // CB
+            Position(70, 75), // CB
+            Position(15, 55), // LWB
+            Position(35, 45), // CM
+            Position(50, 40), // CM
+            Position(65, 45), // CM
+            Position(85, 55), // RWB
+            Position(40, 20), // ST
+            Position(60, 20), // ST
+          ],
+        ),
+        const FormationTemplate(
+          name: '4-2-3-1',
+          description: 'Moderne aanvallende opstelling',
+          positions: [
+            Position(50, 90), // Keeper
+            Position(20, 70), // LB
+            Position(35, 75), // CB
+            Position(65, 75), // CB
+            Position(80, 70), // RB
+            Position(35, 55), // CDM
+            Position(65, 55), // CDM
+            Position(20, 35), // LW
+            Position(50, 30), // CAM
+            Position(80, 35), // RW
+            Position(50, 15), // ST
+          ],
+        ),
+        const FormationTemplate(
+          name: 'JO17 Training (7v7)',
+          description: 'Aangepaste opstelling voor training',
+          positions: [
+            Position(50, 85), // Keeper
+            Position(25, 65), // LB
+            Position(50, 70), // CB
+            Position(75, 65), // RB
+            Position(35, 45), // CM
+            Position(65, 45), // CM
+            Position(50, 25), // ST
+          ],
+        ),
+      ];
 }
 
 // Formation Template Model
 class FormationTemplate {
-
   const FormationTemplate({
     required this.name,
     required this.description,
@@ -679,6 +697,7 @@ class FormationTemplate {
 }
 
 // Provider instance
-final fieldDiagramProvider = StateNotifierProvider<FieldDiagramEditorNotifier, FieldDiagramEditorState>(
+final fieldDiagramProvider =
+    StateNotifierProvider<FieldDiagramEditorNotifier, FieldDiagramEditorState>(
   (ref) => FieldDiagramEditorNotifier(),
 );

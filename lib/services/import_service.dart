@@ -61,7 +61,8 @@ class ImportService {
   Future<ImportResult> _importPlayersFromCSV(Uint8List bytes) async {
     try {
       final csvString = utf8.decode(bytes);
-      final List<List<dynamic>> rows = const CsvToListConverter().convert(csvString);
+      final List<List<dynamic>> rows =
+          const CsvToListConverter().convert(csvString);
 
       if (rows.isEmpty) {
         return ImportResult(
@@ -97,7 +98,10 @@ class ImportService {
       }
 
       // Convert to list and skip header
-      final dataRows = rows.skip(1).map((row) => row.map((cell) => cell?.value).toList()).toList();
+      final dataRows = rows
+          .skip(1)
+          .map((row) => row.map((cell) => cell?.value).toList())
+          .toList();
 
       return await _processPlayerRows(dataRows);
     } catch (e) {
@@ -135,7 +139,9 @@ class ImportService {
           ..preferredFoot = _parsePreferredFoot(row[7].toString());
 
         // Validate required fields
-        if (player.firstName.isEmpty || player.lastName.isEmpty || player.jerseyNumber == 0) {
+        if (player.firstName.isEmpty ||
+            player.lastName.isEmpty ||
+            player.jerseyNumber == 0) {
           errors.add('Rij ${i + 2}: Verplichte velden ontbreken');
           skipped++;
           continue;
@@ -152,7 +158,8 @@ class ImportService {
 
     return ImportResult(
       success: imported > 0,
-      message: 'Import voltooid: $imported spelers geïmporteerd, $skipped overgeslagen',
+      message:
+          'Import voltooid: $imported spelers geïmporteerd, $skipped overgeslagen',
       imported: imported,
       skipped: skipped,
       errors: errors,
@@ -187,13 +194,25 @@ class ImportService {
   Position _parsePosition(String positionStr) {
     final pos = positionStr.toLowerCase().trim();
 
-    if (pos.contains('keeper') || pos.contains('goalkeeper') || pos == 'gk' || pos == 'k') {
+    if (pos.contains('keeper') ||
+        pos.contains('goalkeeper') ||
+        pos == 'gk' ||
+        pos == 'k') {
       return Position.goalkeeper;
-    } else if (pos.contains('verdedig') || pos.contains('defender') || pos == 'def' || pos == 'v') {
+    } else if (pos.contains('verdedig') ||
+        pos.contains('defender') ||
+        pos == 'def' ||
+        pos == 'v') {
       return Position.defender;
-    } else if (pos.contains('middenvel') || pos.contains('midfielder') || pos == 'mid' || pos == 'm') {
+    } else if (pos.contains('middenvel') ||
+        pos.contains('midfielder') ||
+        pos == 'mid' ||
+        pos == 'm') {
       return Position.midfielder;
-    } else if (pos.contains('aanval') || pos.contains('forward') || pos == 'fw' || pos == 'a') {
+    } else if (pos.contains('aanval') ||
+        pos.contains('forward') ||
+        pos == 'fw' ||
+        pos == 'a') {
       return Position.forward;
     }
 
@@ -231,7 +250,8 @@ class ImportService {
 
     // Add headers
     for (int i = 0; i < headers.length; i++) {
-      sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0), TextCellValue(headers[i]));
+      sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0),
+          TextCellValue(headers[i]));
     }
 
     // Add example row
@@ -249,7 +269,8 @@ class ImportService {
     ];
 
     for (int i = 0; i < example.length; i++) {
-      sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 1), TextCellValue(example[i]));
+      sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 1),
+          TextCellValue(example[i]));
     }
 
     // Save file
@@ -266,7 +287,6 @@ class ImportService {
 }
 
 class ImportResult {
-
   ImportResult({
     required this.success,
     required this.message,

@@ -5,7 +5,6 @@ import '../../models/assessment.dart';
 import '../../models/player.dart';
 
 class AssessmentDetailScreen extends StatelessWidget {
-
   const AssessmentDetailScreen({
     super.key,
     required this.assessment,
@@ -16,38 +15,39 @@ class AssessmentDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: Text('Assessment for ${player.name}'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Assessment Details',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 16),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Text('Overall Average: ${assessment.overallAverage.toStringAsFixed(1)}'),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      height: 300,
-                      child: _buildRadarChart(assessment),
-                    ),
-                  ],
+        appBar: AppBar(
+          title: Text('Assessment for ${player.name}'),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Assessment Details',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 16),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Text(
+                          'Overall Average: ${assessment.overallAverage.toStringAsFixed(1)}'),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        height: 300,
+                        child: _buildRadarChart(assessment),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   Widget _buildRadarChart(PlayerAssessment assessment) {
     final dataSets = [

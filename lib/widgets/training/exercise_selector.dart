@@ -4,7 +4,6 @@ import '../../models/training_session/training_exercise.dart';
 import '../../screens/training_sessions/exercise_library_screen.dart';
 
 class ExerciseSelector extends StatefulWidget {
-
   const ExerciseSelector({
     super.key,
     required this.availableExercises,
@@ -85,8 +84,8 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
                       },
                     ),
                     const SizedBox(width: 8),
-                    ...ExerciseType.values.map((type) =>
-                      Padding(
+                    ...ExerciseType.values.map(
+                      (type) => Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: FilterChip(
                           label: Text(_getTypeDisplayName(type)),
@@ -131,11 +130,13 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
                   ),
                   trailing: isSelected
                       ? IconButton(
-                          icon: const Icon(Icons.remove_circle, color: Colors.red),
+                          icon: const Icon(Icons.remove_circle,
+                              color: Colors.red),
                           onPressed: () => widget.onExerciseRemoved(exercise),
                         )
                       : IconButton(
-                          icon: const Icon(Icons.add_circle, color: Colors.green),
+                          icon:
+                              const Icon(Icons.add_circle, color: Colors.green),
                           onPressed: () => widget.onExerciseSelected(exercise),
                         ),
                   onTap: () => _showExercisePreview(exercise),
@@ -148,22 +149,27 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
     );
   }
 
-  List<TrainingExercise> _filterExercises() => widget.availableExercises.where((exercise) {
-      // Search filter
-      if (searchQuery.isNotEmpty) {
-        if (!exercise.name.toLowerCase().contains(searchQuery.toLowerCase()) &&
-            !exercise.description.toLowerCase().contains(searchQuery.toLowerCase())) {
+  List<TrainingExercise> _filterExercises() =>
+      widget.availableExercises.where((exercise) {
+        // Search filter
+        if (searchQuery.isNotEmpty) {
+          if (!exercise.name
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase()) &&
+              !exercise.description
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase())) {
+            return false;
+          }
+        }
+
+        // Type filter
+        if (selectedType != null && exercise.type != selectedType) {
           return false;
         }
-      }
 
-      // Type filter
-      if (selectedType != null && exercise.type != selectedType) {
-        return false;
-      }
-
-      return true;
-    }).toList();
+        return true;
+      }).toList();
 
   String _getTypeDisplayName(ExerciseType type) {
     switch (type) {
@@ -294,7 +300,6 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
                 Text(exercise.description),
                 const SizedBox(height: 12),
               ],
-
               Row(
                 children: [
                   const Icon(Icons.timer, size: 16),
@@ -306,32 +311,29 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
                   Text(_getTypeDisplayName(exercise.type)),
                 ],
               ),
-
               ...[
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  const Icon(Icons.trending_up, size: 16),
-                  const SizedBox(width: 4),
-                  Text('Intensiteit: ${exercise.intensityLevel}/10'),
-                ],
-              ),
-            ],
-
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(Icons.trending_up, size: 16),
+                    const SizedBox(width: 4),
+                    Text('Intensiteit: ${exercise.intensityLevel}/10'),
+                  ],
+                ),
+              ],
               if (exercise.coachingPoints.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
                   'Coaching Points:',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                ...exercise.coachingPoints.map((point) =>
-                  Padding(
+                ...exercise.coachingPoints.map(
+                  (point) => Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Text('• $point'),
                   ),
                 ),
               ],
-
               if (exercise.equipment.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(

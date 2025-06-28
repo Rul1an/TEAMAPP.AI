@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'player_progress.freezed.dart';
 part 'player_progress.g.dart';
+
 /// 📈 Player Progress Model
 /// Tracks player development across seasons and teams
 @freezed
@@ -41,8 +42,10 @@ class PlayerProgress with _$PlayerProgress {
     DateTime? updatedAt,
     String? assessedBy,
   }) = _PlayerProgress;
-  factory PlayerProgress.fromJson(Map<String, dynamic> json) => _$PlayerProgressFromJson(json);
+  factory PlayerProgress.fromJson(Map<String, dynamic> json) =>
+      _$PlayerProgressFromJson(json);
 }
+
 @freezed
 class TechnicalSkills with _$TechnicalSkills {
   const factory TechnicalSkills({
@@ -63,8 +66,10 @@ class TechnicalSkills with _$TechnicalSkills {
     double? handling,
     double? communication,
   }) = _TechnicalSkills;
-  factory TechnicalSkills.fromJson(Map<String, dynamic> json) => _$TechnicalSkillsFromJson(json);
+  factory TechnicalSkills.fromJson(Map<String, dynamic> json) =>
+      _$TechnicalSkillsFromJson(json);
 }
+
 @freezed
 class PhysicalAttributes with _$PhysicalAttributes {
   const factory PhysicalAttributes({
@@ -88,8 +93,10 @@ class PhysicalAttributes with _$PhysicalAttributes {
     double? verticalJump,
     double? vo2Max,
   }) = _PhysicalAttributes;
-  factory PhysicalAttributes.fromJson(Map<String, dynamic> json) => _$PhysicalAttributesFromJson(json);
+  factory PhysicalAttributes.fromJson(Map<String, dynamic> json) =>
+      _$PhysicalAttributesFromJson(json);
 }
+
 @freezed
 class TacticalSkills with _$TacticalSkills {
   const factory TacticalSkills({
@@ -104,8 +111,10 @@ class TacticalSkills with _$TacticalSkills {
     @Default(5.0) double adaptability,
     @Default(5.0) double gameIntelligence,
   }) = _TacticalSkills;
-  factory TacticalSkills.fromJson(Map<String, dynamic> json) => _$TacticalSkillsFromJson(json);
+  factory TacticalSkills.fromJson(Map<String, dynamic> json) =>
+      _$TacticalSkillsFromJson(json);
 }
+
 @freezed
 class MentalAttributes with _$MentalAttributes {
   const factory MentalAttributes({
@@ -120,8 +129,10 @@ class MentalAttributes with _$MentalAttributes {
     @Default(5.0) double competitiveness,
     @Default(5.0) double emotionalControl,
   }) = _MentalAttributes;
-  factory MentalAttributes.fromJson(Map<String, dynamic> json) => _$MentalAttributesFromJson(json);
+  factory MentalAttributes.fromJson(Map<String, dynamic> json) =>
+      _$MentalAttributesFromJson(json);
 }
+
 @freezed
 class PerformanceMetrics with _$PerformanceMetrics {
   const factory PerformanceMetrics({
@@ -143,8 +154,10 @@ class PerformanceMetrics with _$PerformanceMetrics {
     @Default(0.0) double consistencyScore,
     @Default(0.0) double potentialRating,
   }) = _PerformanceMetrics;
-  factory PerformanceMetrics.fromJson(Map<String, dynamic> json) => _$PerformanceMetricsFromJson(json);
+  factory PerformanceMetrics.fromJson(Map<String, dynamic> json) =>
+      _$PerformanceMetricsFromJson(json);
 }
+
 @freezed
 class DevelopmentGoal with _$DevelopmentGoal {
   const factory DevelopmentGoal({
@@ -167,8 +180,10 @@ class DevelopmentGoal with _$DevelopmentGoal {
     DateTime? completedAt,
     String? createdBy,
   }) = _DevelopmentGoal;
-  factory DevelopmentGoal.fromJson(Map<String, dynamic> json) => _$DevelopmentGoalFromJson(json);
+  factory DevelopmentGoal.fromJson(Map<String, dynamic> json) =>
+      _$DevelopmentGoalFromJson(json);
 }
+
 @freezed
 class GoalMilestone with _$GoalMilestone {
   const factory GoalMilestone({
@@ -179,8 +194,10 @@ class GoalMilestone with _$GoalMilestone {
     DateTime? completedAt,
     String? notes,
   }) = _GoalMilestone;
-  factory GoalMilestone.fromJson(Map<String, dynamic> json) => _$GoalMilestoneFromJson(json);
+  factory GoalMilestone.fromJson(Map<String, dynamic> json) =>
+      _$GoalMilestoneFromJson(json);
 }
+
 @freezed
 class ProgressAssessment with _$ProgressAssessment {
   const factory ProgressAssessment({
@@ -199,8 +216,10 @@ class ProgressAssessment with _$ProgressAssessment {
     @Default([]) List<String> actionPoints,
     DateTime? nextAssessmentDate,
   }) = _ProgressAssessment;
-  factory ProgressAssessment.fromJson(Map<String, dynamic> json) => _$ProgressAssessmentFromJson(json);
+  factory ProgressAssessment.fromJson(Map<String, dynamic> json) =>
+      _$ProgressAssessmentFromJson(json);
 }
+
 @freezed
 class OverallRating with _$OverallRating {
   const factory OverallRating({
@@ -217,14 +236,17 @@ class OverallRating with _$OverallRating {
     @Default(5.0) double peerComparison,
     @Default(5.0) double ageGroupComparison,
   }) = _OverallRating;
-  factory OverallRating.fromJson(Map<String, dynamic> json) => _$OverallRatingFromJson(json);
+  factory OverallRating.fromJson(Map<String, dynamic> json) =>
+      _$OverallRatingFromJson(json);
 }
+
 enum ProgressStatus {
   active,
   completed,
   onHold,
   cancelled,
 }
+
 enum GoalCategory {
   technical,
   physical,
@@ -233,12 +255,14 @@ enum GoalCategory {
   behavioral,
   academic,
 }
+
 enum GoalPriority {
   low,
   medium,
   high,
   critical,
 }
+
 enum GoalStatus {
   notStarted,
   inProgress,
@@ -246,6 +270,7 @@ enum GoalStatus {
   overdue,
   cancelled,
 }
+
 enum AssessmentType {
   monthly,
   quarterly,
@@ -255,6 +280,7 @@ enum AssessmentType {
   injury,
   development,
 }
+
 extension GoalCategoryExtension on GoalCategory {
   String get displayName {
     switch (this) {
@@ -273,6 +299,7 @@ extension GoalCategoryExtension on GoalCategory {
     }
   }
 }
+
 extension GoalPriorityExtension on GoalPriority {
   String get displayName {
     switch (this) {
@@ -286,6 +313,7 @@ extension GoalPriorityExtension on GoalPriority {
         return 'Kritiek';
     }
   }
+
   int get value {
     switch (this) {
       case GoalPriority.low:

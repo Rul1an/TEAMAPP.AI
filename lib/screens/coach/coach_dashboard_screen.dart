@@ -22,7 +22,7 @@ class CoachDashboardScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
-              // TODO: Implement notifications
+              // TODO(author): Implement notifications
             },
           ),
         ],
@@ -39,7 +39,8 @@ class CoachDashboardScreen extends ConsumerWidget {
                       Text('Error: ${clubProviderInstance.error}'),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () => clubProviderInstance.loadClub('default-club'),
+                        onPressed: () =>
+                            clubProviderInstance.loadClub('default-club'),
                         child: const Text('Probeer Opnieuw'),
                       ),
                     ],
@@ -57,9 +58,10 @@ class CoachDashboardScreen extends ConsumerWidget {
                       // Quick Actions
                       Text(
                         'Snelle Acties',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                       const SizedBox(height: 16),
                       _buildQuickActions(context, club, featureService),
@@ -69,9 +71,10 @@ class CoachDashboardScreen extends ConsumerWidget {
                       // Team Management
                       Text(
                         'Team Management',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                       const SizedBox(height: 16),
                       _buildTeamManagement(context, club, featureService),
@@ -81,9 +84,10 @@ class CoachDashboardScreen extends ConsumerWidget {
                       // Planning & Analysis
                       Text(
                         'Planning & Analyse',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                       const SizedBox(height: 16),
                       _buildPlanningAnalysis(context, club, featureService),
@@ -93,9 +97,10 @@ class CoachDashboardScreen extends ConsumerWidget {
                       // Upcoming Events
                       Text(
                         'Aankomende Activiteiten',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                       const SizedBox(height: 16),
                       _buildUpcomingEvents(context),
@@ -111,204 +116,217 @@ class CoachDashboardScreen extends ConsumerWidget {
   }
 
   Widget _buildWelcomeCard(BuildContext context) => Card(
-      elevation: 4,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor.withValues(alpha: 0.7),
+        elevation: 4,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            gradient: LinearGradient(
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor.withValues(alpha: 0.7),
+              ],
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Welkom terug, Coach!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Klaar om je team naar het volgende niveau te brengen?',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  _buildStatChip('Volgende Training', 'Morgen 19:00'),
+                  const SizedBox(width: 12),
+                  _buildStatChip('Volgende Wedstrijd', 'Zaterdag 14:30'),
+                ],
+              ),
             ],
           ),
         ),
+      );
+
+  Widget _buildStatChip(String label, String value) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.2),
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Welkom terug, Coach!',
-              style: TextStyle(
+            Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 10,
+              ),
+            ),
+            Text(
+              value,
+              style: const TextStyle(
                 color: Colors.white,
-                fontSize: 24,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'Klaar om je team naar het volgende niveau te brengen?',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                _buildStatChip('Volgende Training', 'Morgen 19:00'),
-                const SizedBox(width: 12),
-                _buildStatChip('Volgende Wedstrijd', 'Zaterdag 14:30'),
-              ],
-            ),
           ],
         ),
-      ),
-    );
+      );
 
-  Widget _buildStatChip(String label, String value) => Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
+  Widget _buildQuickActions(
+          BuildContext context, club, FeatureService featureService) =>
+      Row(
         children: [
-          Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 10,
+          Expanded(
+            child: _buildActionCard(
+              context,
+              'Training Plannen',
+              Icons.calendar_today,
+              Colors.blue,
+              () => context.push('/training/quick'),
+              isAvailable:
+                  featureService.hasPermission('hoofdcoach', 'manage_training'),
             ),
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+          const SizedBox(width: 12),
+          Expanded(
+            child: _buildActionCard(
+              context,
+              'Opstelling Maken',
+              Icons.sports_soccer,
+              Colors.green,
+              () => context.push('/matches/lineup'),
+              isAvailable:
+                  featureService.hasPermission('hoofdcoach', 'manage_tactics'),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: _buildActionCard(
+              context,
+              'Speler Beoordelen',
+              Icons.assessment,
+              Colors.orange,
+              () => context.push('/players/assessment'),
+              isAvailable: featureService.hasPermission(
+                  'hoofdcoach', 'view_player_data'),
             ),
           ),
         ],
-      ),
-    );
+      );
 
-  Widget _buildQuickActions(BuildContext context, club, FeatureService featureService) => Row(
-      children: [
-        Expanded(
-          child: _buildActionCard(
+  Widget _buildTeamManagement(
+          BuildContext context, club, FeatureService featureService) =>
+      GridView.count(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        crossAxisCount: 2,
+        childAspectRatio: 1.5,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        children: [
+          _buildManagementCard(
             context,
-            'Training Plannen',
-            Icons.calendar_today,
+            'Spelers Overzicht',
+            'Bekijk en beheer je spelersgroep',
+            Icons.people,
             Colors.blue,
-            () => context.push('/training/quick'),
-            isAvailable: featureService.hasPermission('hoofdcoach', 'manage_training'),
+            () => context.push('/players'),
           ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _buildActionCard(
+          _buildManagementCard(
             context,
-            'Opstelling Maken',
-            Icons.sports_soccer,
+            'Training Sessies',
+            'Plan en organiseer trainingen',
+            Icons.fitness_center,
             Colors.green,
-            () => context.push('/matches/lineup'),
-            isAvailable: featureService.hasPermission('hoofdcoach', 'manage_tactics'),
+            () => context.push('/training'),
           ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _buildActionCard(
+          _buildManagementCard(
             context,
-            'Speler Beoordelen',
-            Icons.assessment,
-            Colors.orange,
-            () => context.push('/players/assessment'),
-            isAvailable: featureService.hasPermission('hoofdcoach', 'view_player_data'),
+            'Wedstrijden',
+            'Beheer wedstrijden en resultaten',
+            Icons.stadium,
+            Colors.red,
+            () => context.push('/matches'),
           ),
-        ),
-      ],
-    );
+          _buildManagementCard(
+            context,
+            'Aanwezigheid',
+            'Bijhouden van training aanwezigheid',
+            Icons.check_circle,
+            Colors.orange,
+            () => context.push('/training/attendance'),
+          ),
+        ],
+      );
 
-  Widget _buildTeamManagement(BuildContext context, club, FeatureService featureService) => GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      childAspectRatio: 1.5,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      children: [
-        _buildManagementCard(
-          context,
-          'Spelers Overzicht',
-          'Bekijk en beheer je spelersgroep',
-          Icons.people,
-          Colors.blue,
-          () => context.push('/players'),
-        ),
-        _buildManagementCard(
-          context,
-          'Training Sessies',
-          'Plan en organiseer trainingen',
-          Icons.fitness_center,
-          Colors.green,
-          () => context.push('/training'),
-        ),
-        _buildManagementCard(
-          context,
-          'Wedstrijden',
-          'Beheer wedstrijden en resultaten',
-          Icons.stadium,
-          Colors.red,
-          () => context.push('/matches'),
-        ),
-        _buildManagementCard(
-          context,
-          'Aanwezigheid',
-          'Bijhouden van training aanwezigheid',
-          Icons.check_circle,
-          Colors.orange,
-          () => context.push('/training/attendance'),
-        ),
-      ],
-    );
-
-  Widget _buildPlanningAnalysis(BuildContext context, club, FeatureService featureService) => GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      childAspectRatio: 1.5,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      children: [
-        _buildManagementCard(
-          context,
-          'Weekplanning',
-          'Plan je trainingsweek',
-          Icons.view_week,
-          Colors.purple,
-          () => context.push('/planning/week'),
-          isAvailable: featureService.isFeatureAvailable('advanced_training_planning', club.tier),
-        ),
-        _buildManagementCard(
-          context,
-          'Jaarplanning',
-          'Seizoen en periodisering',
-                                Icons.calendar_today,
-          Colors.indigo,
-          () => context.push('/planning/annual'),
-          isAvailable: featureService.isFeatureAvailable('annual_planning', club.tier),
-        ),
-        _buildManagementCard(
-          context,
-          'Prestatie Analyse',
-          'Speler en team statistieken',
-          Icons.analytics,
-          Colors.teal,
-          () => context.push('/analytics'),
-          isAvailable: featureService.isFeatureAvailable('performance_analytics', club.tier),
-        ),
-        _buildManagementCard(
-          context,
-          'SVS Dashboard',
-          'Speler Volg Systeem',
-          Icons.monitor_heart,
-          Colors.pink,
-          () => context.push('/player-tracking'),
-          isAvailable: featureService.isFeatureAvailable('player_tracking_svs', club.tier),
-        ),
-      ],
-    );
+  Widget _buildPlanningAnalysis(
+          BuildContext context, club, FeatureService featureService) =>
+      GridView.count(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        crossAxisCount: 2,
+        childAspectRatio: 1.5,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        children: [
+          _buildManagementCard(
+            context,
+            'Weekplanning',
+            'Plan je trainingsweek',
+            Icons.view_week,
+            Colors.purple,
+            () => context.push('/planning/week'),
+            isAvailable: featureService.isFeatureAvailable(
+                'advanced_training_planning', club.tier),
+          ),
+          _buildManagementCard(
+            context,
+            'Jaarplanning',
+            'Seizoen en periodisering',
+            Icons.calendar_today,
+            Colors.indigo,
+            () => context.push('/planning/annual'),
+            isAvailable:
+                featureService.isFeatureAvailable('annual_planning', club.tier),
+          ),
+          _buildManagementCard(
+            context,
+            'Prestatie Analyse',
+            'Speler en team statistieken',
+            Icons.analytics,
+            Colors.teal,
+            () => context.push('/analytics'),
+            isAvailable: featureService.isFeatureAvailable(
+                'performance_analytics', club.tier),
+          ),
+          _buildManagementCard(
+            context,
+            'SVS Dashboard',
+            'Speler Volg Systeem',
+            Icons.monitor_heart,
+            Colors.pink,
+            () => context.push('/player-tracking'),
+            isAvailable: featureService.isFeatureAvailable(
+                'player_tracking_svs', club.tier),
+          ),
+        ],
+      );
 
   Widget _buildActionCard(
     BuildContext context,
@@ -317,39 +335,42 @@ class CoachDashboardScreen extends ConsumerWidget {
     Color color,
     VoidCallback onTap, {
     bool isAvailable = true,
-  }) => Card(
-      elevation: isAvailable ? 2 : 1,
-      child: InkWell(
-        onTap: isAvailable ? onTap : null,
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: isAvailable ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.1),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 32,
-                color: isAvailable ? color : Colors.grey,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+  }) =>
+      Card(
+        elevation: isAvailable ? 2 : 1,
+        child: InkWell(
+          onTap: isAvailable ? onTap : null,
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: isAvailable
+                  ? color.withValues(alpha: 0.1)
+                  : Colors.grey.withValues(alpha: 0.1),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 32,
                   color: isAvailable ? color : Colors.grey,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: isAvailable ? color : Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
 
   Widget _buildManagementCard(
     BuildContext context,
@@ -359,85 +380,94 @@ class CoachDashboardScreen extends ConsumerWidget {
     Color color,
     VoidCallback onTap, {
     bool isAvailable = true,
-  }) => Card(
-      elevation: isAvailable ? 2 : 1,
-      child: InkWell(
-        onTap: isAvailable ? onTap : () => _showUpgradeDialog(context, title),
-        borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  Icon(
-                    icon,
-                    size: 28,
-                    color: isAvailable ? color : Colors.grey,
-                  ),
-                  if (!isAvailable)
-                    const Positioned(
-                      right: -4,
-                      top: -4,
-                      child: Icon(
-                        Icons.lock,
-                        size: 14,
-                        color: Colors.grey,
-                      ),
+  }) =>
+      Card(
+        elevation: isAvailable ? 2 : 1,
+        child: InkWell(
+          onTap: isAvailable ? onTap : () => _showUpgradeDialog(context, title),
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    Icon(
+                      icon,
+                      size: 28,
+                      color: isAvailable ? color : Colors.grey,
                     ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: isAvailable ? null : Colors.grey,
+                    if (!isAvailable)
+                      const Positioned(
+                        right: -4,
+                        top: -4,
+                        child: Icon(
+                          Icons.lock,
+                          size: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                  ],
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                description,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: isAvailable ? null : Colors.grey,
+                      ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
 
   Widget _buildUpcomingEvents(BuildContext context) {
     final events = [
       {'title': 'Training JO17-1', 'time': 'Morgen 19:00', 'type': 'training'},
-      {'title': 'Wedstrijd vs Ajax JO17', 'time': 'Zaterdag 14:30', 'type': 'match'},
+      {
+        'title': 'Wedstrijd vs Ajax JO17',
+        'time': 'Zaterdag 14:30',
+        'type': 'match'
+      },
       {'title': 'Teambespreking', 'time': 'Vrijdag 18:00', 'type': 'meeting'},
     ];
 
     return Card(
       child: Column(
-        children: events.map((event) => ListTile(
-          leading: CircleAvatar(
-            backgroundColor: _getEventColor(event['type']!),
-            child: Icon(
-              _getEventIcon(event['type']!),
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-          title: Text(event['title']!),
-          subtitle: Text(event['time']!),
-          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-          onTap: () {
-            // Navigate to event details
-          },
-        ),).toList(),
+        children: events
+            .map(
+              (event) => ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: _getEventColor(event['type']!),
+                  child: Icon(
+                    _getEventIcon(event['type']!),
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                title: Text(event['title']!),
+                subtitle: Text(event['time']!),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  // Navigate to event details
+                },
+              ),
+            )
+            .toList(),
       ),
     );
   }
@@ -520,7 +550,7 @@ class CoachDashboardScreen extends ConsumerWidget {
               title: const Text('Vergadering Plannen'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Implement meeting planning
+                // TODO(author): Implement meeting planning
               },
             ),
           ],

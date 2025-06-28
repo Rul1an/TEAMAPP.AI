@@ -14,7 +14,6 @@ final exerciseSearchProvider = StateProvider<String>((ref) => '');
 final exerciseTypeFilterProvider = StateProvider<ExerciseType?>((ref) => null);
 
 class ExerciseLibraryScreen extends ConsumerStatefulWidget {
-
   const ExerciseLibraryScreen({
     super.key,
     this.filterIntensity,
@@ -30,7 +29,8 @@ class ExerciseLibraryScreen extends ConsumerStatefulWidget {
   final Function(TrainingExercise)? onExerciseSelected;
 
   @override
-  ConsumerState<ExerciseLibraryScreen> createState() => _ExerciseLibraryScreenState();
+  ConsumerState<ExerciseLibraryScreen> createState() =>
+      _ExerciseLibraryScreenState();
 }
 
 class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
@@ -64,11 +64,13 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   Widget build(BuildContext context) {
     final exercisesAsync = ref.watch(exerciseLibraryProvider);
     final planningState = ref.watch(annualPlanningProvider);
-    final currentMorphocycle = planningState.getMorphocycleForWeek(widget.weekNumber);
+    final currentMorphocycle =
+        planningState.getMorphocycleForWeek(widget.weekNumber);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('🏃‍♂️ Exercise Library ${widget.weekNumber > 1 ? "(Week ${widget.weekNumber})" : ""}'),
+        title: Text(
+            '🏃‍♂️ Exercise Library ${widget.weekNumber > 1 ? "(Week ${widget.weekNumber})" : ""}'),
         backgroundColor: Colors.orange[600],
         foregroundColor: Colors.white,
         bottom: TabBar(
@@ -175,7 +177,8 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.close, color: Colors.white, size: 20),
-                onPressed: () => setState(() => _showMorphocycleRecommendations = false),
+                onPressed: () =>
+                    setState(() => _showMorphocycleRecommendations = false),
               ),
             ],
           ),
@@ -191,13 +194,17 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
           const SizedBox(height: 8),
           Row(
             children: [
-              _buildMorphocycleIntensityChip('Recovery', TrainingIntensity.recovery, morphocycle),
+              _buildMorphocycleIntensityChip(
+                  'Recovery', TrainingIntensity.recovery, morphocycle),
               const SizedBox(width: 8),
-              _buildMorphocycleIntensityChip('Acquisition', TrainingIntensity.acquisition, morphocycle),
+              _buildMorphocycleIntensityChip(
+                  'Acquisition', TrainingIntensity.acquisition, morphocycle),
               const SizedBox(width: 8),
-              _buildMorphocycleIntensityChip('Development', TrainingIntensity.development, morphocycle),
+              _buildMorphocycleIntensityChip(
+                  'Development', TrainingIntensity.development, morphocycle),
               const SizedBox(width: 8),
-              _buildMorphocycleIntensityChip('Activation', TrainingIntensity.activation, morphocycle),
+              _buildMorphocycleIntensityChip(
+                  'Activation', TrainingIntensity.activation, morphocycle),
             ],
           ),
         ],
@@ -205,8 +212,10 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     );
   }
 
-  Widget _buildMorphocycleIntensityChip(String label, TrainingIntensity intensity, Morphocycle morphocycle) {
-    final intensityValue = morphocycle.intensityDistribution[intensity.name.toLowerCase()] ?? 0.0;
+  Widget _buildMorphocycleIntensityChip(
+      String label, TrainingIntensity intensity, Morphocycle morphocycle) {
+    final intensityValue =
+        morphocycle.intensityDistribution[intensity.name.toLowerCase()] ?? 0.0;
     final color = _getIntensityColor(intensity);
 
     return Container(
@@ -228,33 +237,35 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   }
 
   Widget _buildSearchBar() => Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'Search exercises...',
-          prefixIcon: const Icon(Icons.search),
-          suffixIcon: _searchQuery.isNotEmpty
-              ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () => setState(() => _searchQuery = ''),
-                )
-              : null,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: 'Search exercises...',
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: _searchQuery.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () => setState(() => _searchQuery = ''),
+                  )
+                : null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
+          onChanged: (value) => setState(() => _searchQuery = value),
         ),
-        onChanged: (value) => setState(() => _searchQuery = value),
-      ),
-    );
+      );
 
-  Widget _buildRecommendedTab(List<TrainingExercise> exercises, Morphocycle? morphocycle) {
+  Widget _buildRecommendedTab(
+      List<TrainingExercise> exercises, Morphocycle? morphocycle) {
     if (morphocycle == null) {
       return const Center(
         child: Text('No morphocycle data available for recommendations'),
       );
     }
 
-    final recommendations = TrainingExercise.getRecommendedExercisesForWeek(exercises, widget.weekNumber);
+    final recommendations = TrainingExercise.getRecommendedExercisesForWeek(
+        exercises, widget.weekNumber);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -264,8 +275,8 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
           Text(
             'Morphocycle-Based Recommendations',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           const SizedBox(height: 16),
 
@@ -309,7 +320,8 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     );
   }
 
-  Widget _buildRecommendationSection(String title, String description, List<TrainingExercise> exercises, Color color, IconData icon) {
+  Widget _buildRecommendationSection(String title, String description,
+      List<TrainingExercise> exercises, Color color, IconData icon) {
     final filteredExercises = _applyFilters(exercises);
 
     return Container(
@@ -393,7 +405,8 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                 mainAxisSpacing: 12,
               ),
               itemCount: filteredExercises.length,
-              itemBuilder: (context, index) => _buildExerciseCard(filteredExercises[index]),
+              itemBuilder: (context, index) =>
+                  _buildExerciseCard(filteredExercises[index]),
             ),
         ],
       ),
@@ -411,79 +424,85 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
       padding: const EdgeInsets.all(16),
       child: Column(
         children: TrainingIntensity.values.map((intensity) {
-          final intensityExercises = _applyFilters(intensityGroups[intensity] ?? []);
+          final intensityExercises =
+              _applyFilters(intensityGroups[intensity] ?? []);
           return _buildIntensitySection(intensity, intensityExercises);
         }).toList(),
       ),
     );
   }
 
-  Widget _buildIntensitySection(TrainingIntensity intensity, List<TrainingExercise> exercises) => Container(
-      margin: const EdgeInsets.only(bottom: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: _getIntensityColor(intensity),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  intensity.name.toUpperCase(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
+  Widget _buildIntensitySection(
+          TrainingIntensity intensity, List<TrainingExercise> exercises) =>
+      Container(
+        margin: const EdgeInsets.only(bottom: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: _getIntensityColor(intensity),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    intensity.name.toUpperCase(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                _getIntensityDescription(intensity),
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  '${exercises.length}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
+                const SizedBox(width: 12),
+                Text(
+                  _getIntensityDescription(intensity),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          if (exercises.isEmpty)
-            const Text('No exercises found for this intensity')
-          else
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-              ),
-              itemCount: exercises.length,
-              itemBuilder: (context, index) => _buildExerciseCard(exercises[index]),
+                const Spacer(),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '${exercises.length}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
             ),
-        ],
-      ),
-    );
+            const SizedBox(height: 12),
+            if (exercises.isEmpty)
+              const Text('No exercises found for this intensity')
+            else
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                ),
+                itemCount: exercises.length,
+                itemBuilder: (context, index) =>
+                    _buildExerciseCard(exercises[index]),
+              ),
+          ],
+        ),
+      );
 
   Widget _buildTacticalFocusTab(List<TrainingExercise> exercises) {
     final focusGroups = <TacticalFocus, List<TrainingExercise>>{};
@@ -503,64 +522,69 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     );
   }
 
-  Widget _buildTacticalFocusSection(TacticalFocus focus, List<TrainingExercise> exercises) => Container(
-      margin: const EdgeInsets.only(bottom: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: _getTacticalFocusColor(focus),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  focus.displayName,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
+  Widget _buildTacticalFocusSection(
+          TacticalFocus focus, List<TrainingExercise> exercises) =>
+      Container(
+        margin: const EdgeInsets.only(bottom: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: _getTacticalFocusColor(focus),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    focus.displayName,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  '${exercises.length}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
+                const Spacer(),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '${exercises.length}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          if (exercises.isEmpty)
-            const Text('No exercises found for this tactical focus')
-          else
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-              ),
-              itemCount: exercises.length,
-              itemBuilder: (context, index) => _buildExerciseCard(exercises[index]),
+              ],
             ),
-        ],
-      ),
-    );
+            const SizedBox(height: 12),
+            if (exercises.isEmpty)
+              const Text('No exercises found for this tactical focus')
+            else
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                ),
+                itemCount: exercises.length,
+                itemBuilder: (context, index) =>
+                    _buildExerciseCard(exercises[index]),
+              ),
+          ],
+        ),
+      );
 
   Widget _buildAllExercisesTab(List<TrainingExercise> exercises) {
     final filteredExercises = _applyFilters(exercises);
@@ -574,54 +598,39 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
         mainAxisSpacing: 12,
       ),
       itemCount: filteredExercises.length,
-      itemBuilder: (context, index) => _buildExerciseCard(filteredExercises[index]),
+      itemBuilder: (context, index) =>
+          _buildExerciseCard(filteredExercises[index]),
     );
   }
 
   Widget _buildExerciseCard(TrainingExercise exercise) => Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: InkWell(
-        onTap: () {
-          if (widget.isSelectMode && widget.onExerciseSelected != null) {
-            widget.onExerciseSelected!(exercise);
-          } else {
-            _showExerciseDetails(exercise);
-          }
-        },
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: _getIntensityColor(exercise.trainingIntensity),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      exercise.trainingIntensity.name[0].toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  if (exercise.tacticalFocus != null)
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: InkWell(
+          onTap: () {
+            if (widget.isSelectMode && widget.onExerciseSelected != null) {
+              widget.onExerciseSelected!(exercise);
+            } else {
+              _showExerciseDetails(exercise);
+            }
+          },
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: _getTacticalFocusColor(exercise.tacticalFocus!),
+                        color: _getIntensityColor(exercise.trainingIntensity),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
-                        exercise.tacticalFocus!.displayName[0],
+                        exercise.trainingIntensity.name[0].toUpperCase(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 10,
@@ -629,110 +638,141 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                         ),
                       ),
                     ),
-                  const Spacer(),
-                  Text(
-                    '${exercise.durationMinutes}m',
-                    style: const TextStyle(
-                      fontSize: 10,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                exercise.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                exercise.description,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 8),
-              // Field diagram indicator
-              if (exercise.fieldDiagram != null)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.green[100],
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Colors.green[300]!),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.sports_soccer,
-                        size: 12,
-                        color: Colors.green[700],
+                    const SizedBox(width: 4),
+                    if (exercise.tacticalFocus != null)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color:
+                              _getTacticalFocusColor(exercise.tacticalFocus!),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          exercise.tacticalFocus!.displayName[0],
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Field Diagram',
-                        style: TextStyle(
-                          fontSize: 10,
+                    const Spacer(),
+                    Text(
+                      '${exercise.durationMinutes}m',
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  exercise.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  exercise.description,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                // Field diagram indicator
+                if (exercise.fieldDiagram != null)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.green[100],
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: Colors.green[300]!),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.sports_soccer,
+                          size: 12,
                           color: Colors.green[700],
-                          fontWeight: FontWeight.w500,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${exercise.minPlayers}-${exercise.maxPlayers} players',
-                    style: const TextStyle(
-                      fontSize: 10,
-                      color: Colors.grey,
+                        const SizedBox(width: 4),
+                        Text(
+                          'Field Diagram',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.green[700],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        size: 12,
-                        color: Colors.amber,
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${exercise.minPlayers}-${exercise.maxPlayers} players',
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey,
                       ),
-                      Text(
-                        exercise.averageRating.toStringAsFixed(1),
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          size: 12,
+                          color: Colors.amber,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                        Text(
+                          exercise.averageRating.toStringAsFixed(1),
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
 
-  List<TrainingExercise> _applyFilters(List<TrainingExercise> exercises) => exercises
-        .search(_searchQuery)
-        .where((e) => _selectedCategory == null || e.category == _selectedCategory)
-        .where((e) => _selectedComplexity == null || e.complexity == _selectedComplexity)
-        .where((e) => _selectedIntensity == null || e.isCompatibleWithIntensity(_selectedIntensity!))
-        .where((e) => _selectedTacticalFocus == null || e.isCompatibleWithTacticalFocus(_selectedTacticalFocus!))
-        .where((e) => e.durationMinutes >= _minDuration && e.durationMinutes <= _maxDuration)
-        .where((e) => e.minPlayers <= _playerCount && e.maxPlayers >= _playerCount)
-        .toList();
+  List<TrainingExercise> _applyFilters(List<TrainingExercise> exercises) =>
+      exercises
+          .search(_searchQuery)
+          .where((e) =>
+              _selectedCategory == null || e.category == _selectedCategory)
+          .where((e) =>
+              _selectedComplexity == null ||
+              e.complexity == _selectedComplexity)
+          .where((e) =>
+              _selectedIntensity == null ||
+              e.isCompatibleWithIntensity(_selectedIntensity!))
+          .where((e) =>
+              _selectedTacticalFocus == null ||
+              e.isCompatibleWithTacticalFocus(_selectedTacticalFocus!))
+          .where((e) =>
+              e.durationMinutes >= _minDuration &&
+              e.durationMinutes <= _maxDuration)
+          .where((e) =>
+              e.minPlayers <= _playerCount && e.maxPlayers >= _playerCount)
+          .toList();
 
   void _showFilterDialog() {
     showDialog(
@@ -750,12 +790,15 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                   value: _selectedCategory,
                   items: [
                     const DropdownMenuItem(child: Text('All Categories')),
-                    ...ExerciseCategory.values.map((cat) => DropdownMenuItem(
-                      value: cat,
-                      child: Text(cat.displayName),
-                    ),),
+                    ...ExerciseCategory.values.map(
+                      (cat) => DropdownMenuItem(
+                        value: cat,
+                        child: Text(cat.displayName),
+                      ),
+                    ),
                   ],
-                  onChanged: (value) => setDialogState(() => _selectedCategory = value),
+                  onChanged: (value) =>
+                      setDialogState(() => _selectedCategory = value),
                 ),
                 const SizedBox(height: 16),
 
@@ -765,12 +808,15 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                   value: _selectedComplexity,
                   items: [
                     const DropdownMenuItem(child: Text('All Complexities')),
-                    ...ExerciseComplexity.values.map((comp) => DropdownMenuItem(
-                      value: comp,
-                      child: Text(comp.displayName),
-                    ),),
+                    ...ExerciseComplexity.values.map(
+                      (comp) => DropdownMenuItem(
+                        value: comp,
+                        child: Text(comp.displayName),
+                      ),
+                    ),
                   ],
-                  onChanged: (value) => setDialogState(() => _selectedComplexity = value),
+                  onChanged: (value) =>
+                      setDialogState(() => _selectedComplexity = value),
                 ),
                 const SizedBox(height: 16),
 
@@ -781,14 +827,16 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                   min: 6,
                   max: 22,
                   divisions: 16,
-                  onChanged: (value) => setDialogState(() => _playerCount = value.round()),
+                  onChanged: (value) =>
+                      setDialogState(() => _playerCount = value.round()),
                 ),
                 const SizedBox(height: 16),
 
                 // Duration range
                 Text('Duration: $_minDuration - $_maxDuration minutes'),
                 RangeSlider(
-                  values: RangeValues(_minDuration.toDouble(), _maxDuration.toDouble()),
+                  values: RangeValues(
+                      _minDuration.toDouble(), _maxDuration.toDouble()),
                   min: 5,
                   max: 120,
                   divisions: 23,
@@ -841,11 +889,14 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
             children: [
               Text(exercise.description),
               const SizedBox(height: 16),
-              _buildDetailRow('Duration', '${exercise.durationMinutes} minutes'),
-              _buildDetailRow('Players', '${exercise.minPlayers}-${exercise.maxPlayers}'),
+              _buildDetailRow(
+                  'Duration', '${exercise.durationMinutes} minutes'),
+              _buildDetailRow(
+                  'Players', '${exercise.minPlayers}-${exercise.maxPlayers}'),
               _buildDetailRow('Intensity', exercise.trainingIntensity.name),
               if (exercise.tacticalFocus != null)
-                _buildDetailRow('Tactical Focus', exercise.tacticalFocus!.displayName),
+                _buildDetailRow(
+                    'Tactical Focus', exercise.tacticalFocus!.displayName),
               _buildDetailRow('Complexity', exercise.complexity.displayName),
               _buildDetailRow('Space Required', exercise.spaceRequired),
               _buildDetailRow('Estimated RPE', '${exercise.estimatedRPE}/10'),
@@ -853,13 +904,15 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                 _buildDetailRow('Equipment', exercise.equipment),
               if (exercise.coachingPoints.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                const Text('Coaching Points:', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Coaching Points:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 ...exercise.coachingPoints.map((point) => Text('• $point')),
               ],
               // Field diagram section
               if (exercise.fieldDiagram != null) ...[
                 const SizedBox(height: 16),
-                const Text('Field Diagram:', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Field Diagram:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
                 Container(
                   height: 120,
@@ -931,7 +984,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
           else
             ElevatedButton(
               onPressed: () {
-                // TODO: Add to training session or edit
+                // TODO(author): Add to training session or edit
                 Navigator.pop(context);
               },
               child: const Text('Add to Session'),
@@ -954,21 +1007,21 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   }
 
   Widget _buildDetailRow(String label, String value) => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 100,
-            child: Text(
-              '$label:',
-              style: const TextStyle(fontWeight: FontWeight.w500),
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 100,
+              child: Text(
+                '$label:',
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
             ),
-          ),
-          Expanded(child: Text(value)),
-        ],
-      ),
-    );
+            Expanded(child: Text(value)),
+          ],
+        ),
+      );
 
   Color _getIntensityColor(TrainingIntensity intensity) {
     switch (intensity) {

@@ -3,7 +3,6 @@ import 'package:isar/isar.dart';
 // part 'player_attendance.g.dart'; // Disabled for web compatibility
 
 class PlayerAttendance {
-
   // Constructor
   PlayerAttendance();
 
@@ -144,17 +143,17 @@ class PlayerAttendance {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'playerId': playerId,
-    'playerName': playerName,
-    'playerNumber': playerNumber,
-    'position': position.name,
-    'status': status.name,
-    'notes': notes,
-    'arrivalTime': arrivalTime?.toIso8601String(),
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'playerId': playerId,
+        'playerName': playerName,
+        'playerNumber': playerNumber,
+        'position': position.name,
+        'status': status.name,
+        'notes': notes,
+        'arrivalTime': arrivalTime?.toIso8601String(),
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method
   PlayerAttendance copyWith({
@@ -209,8 +208,9 @@ class PlayerAttendance {
   }
 
   @override
-  String toString() => 'PlayerAttendance(name: $playerName, number: $playerNumber, '
-           'position: $position, status: $status)';
+  String toString() =>
+      'PlayerAttendance(name: $playerName, number: $playerNumber, '
+      'position: $position, status: $status)';
 
   @override
   bool operator ==(Object other) {
@@ -225,16 +225,16 @@ class PlayerAttendance {
 }
 
 enum PlayerPosition {
-  K,  // Keeper
-  V,  // Verdediger
-  M,  // Middenvelder
-  A   // Aanvaller
+  K, // Keeper
+  V, // Verdediger
+  M, // Middenvelder
+  A // Aanvaller
 }
 
 enum AttendanceStatus {
-  present,   // Aanwezig
-  absent,    // Afwezig
-  late,      // Te laat
-  injured,   // Geblesseerd
-  unknown    // Onbekend
+  present, // Aanwezig
+  absent, // Afwezig
+  late, // Te laat
+  injured, // Geblesseerd
+  unknown // Onbekend
 }

@@ -8,7 +8,6 @@ import '../../providers/database_provider.dart';
 import '../../services/database_service.dart';
 
 class EditMatchScreen extends ConsumerStatefulWidget {
-
   const EditMatchScreen({
     super.key,
     required this.matchId,
@@ -141,7 +140,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     ),
                                     child: Text(
                                       _selectedDate != null
-                                          ? DateFormat('d MMMM yyyy', 'nl_NL').format(_selectedDate!)
+                                          ? DateFormat('d MMMM yyyy', 'nl_NL')
+                                              .format(_selectedDate!)
                                           : 'Selecteer datum',
                                     ),
                                   ),
@@ -177,10 +177,15 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     labelText: 'Locatie',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: Location.values.map((location) => DropdownMenuItem(
-                                      value: location,
-                                      child: Text(_getLocationText(location)),
-                                    ),).toList(),
+                                  items: Location.values
+                                      .map(
+                                        (location) => DropdownMenuItem(
+                                          value: location,
+                                          child:
+                                              Text(_getLocationText(location)),
+                                        ),
+                                      )
+                                      .toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedLocation = value;
@@ -202,10 +207,15 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     labelText: 'Competitie',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: Competition.values.map((competition) => DropdownMenuItem(
-                                      value: competition,
-                                      child: Text(_getCompetitionText(competition)),
-                                    ),).toList(),
+                                  items: Competition.values
+                                      .map(
+                                        (competition) => DropdownMenuItem(
+                                          value: competition,
+                                          child: Text(
+                                              _getCompetitionText(competition)),
+                                        ),
+                                      )
+                                      .toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedCompetition = value;
@@ -245,10 +255,14 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                               labelText: 'Status',
                               border: OutlineInputBorder(),
                             ),
-                            items: MatchStatus.values.map((status) => DropdownMenuItem(
-                                value: status,
-                                child: Text(_getStatusText(status)),
-                              ),).toList(),
+                            items: MatchStatus.values
+                                .map(
+                                  (status) => DropdownMenuItem(
+                                    value: status,
+                                    child: Text(_getStatusText(status)),
+                                  ),
+                                )
+                                .toList(),
                             onChanged: (value) {
                               setState(() {
                                 _selectedStatus = value;
@@ -276,8 +290,10 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     decoration: InputDecoration(
                                       labelText: 'JO17 Score',
                                       border: const OutlineInputBorder(),
-                                      prefixIcon: const Icon(Icons.sports_score),
-                                      fillColor: Colors.green.withValues(alpha: 0.1),
+                                      prefixIcon:
+                                          const Icon(Icons.sports_score),
+                                      fillColor:
+                                          Colors.green.withValues(alpha: 0.1),
                                       filled: true,
                                     ),
                                     keyboardType: TextInputType.number,
@@ -286,7 +302,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                       LengthLimitingTextInputFormatter(2),
                                     ],
                                     validator: (value) {
-                                      if (_selectedStatus == MatchStatus.completed) {
+                                      if (_selectedStatus ==
+                                          MatchStatus.completed) {
                                         if (value == null || value.isEmpty) {
                                           return 'Score verplicht';
                                         }
@@ -311,8 +328,10 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     decoration: InputDecoration(
                                       labelText: 'Tegenstander Score',
                                       border: const OutlineInputBorder(),
-                                      prefixIcon: const Icon(Icons.sports_score),
-                                      fillColor: Colors.red.withValues(alpha: 0.1),
+                                      prefixIcon:
+                                          const Icon(Icons.sports_score),
+                                      fillColor:
+                                          Colors.red.withValues(alpha: 0.1),
                                       filled: true,
                                     ),
                                     keyboardType: TextInputType.number,
@@ -321,7 +340,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                       LengthLimitingTextInputFormatter(2),
                                     ],
                                     validator: (value) {
-                                      if (_selectedStatus == MatchStatus.completed) {
+                                      if (_selectedStatus ==
+                                          MatchStatus.completed) {
                                         if (value == null || value.isEmpty) {
                                           return 'Score verplicht';
                                         }
@@ -342,7 +362,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     vertical: 12,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: _getResultColor().withValues(alpha: 0.2),
+                                    color: _getResultColor()
+                                        .withValues(alpha: 0.2),
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
                                       color: _getResultColor(),
@@ -415,7 +436,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
   }
 
   Color _getResultColor() {
-    if (_teamScoreController.text.isEmpty || _opponentScoreController.text.isEmpty) {
+    if (_teamScoreController.text.isEmpty ||
+        _opponentScoreController.text.isEmpty) {
       return Colors.grey;
     }
     final teamScore = int.parse(_teamScoreController.text);
@@ -427,7 +449,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
   }
 
   String _getResultText() {
-    if (_teamScoreController.text.isEmpty || _opponentScoreController.text.isEmpty) {
+    if (_teamScoreController.text.isEmpty ||
+        _opponentScoreController.text.isEmpty) {
       return '';
     }
     final teamScore = int.parse(_teamScoreController.text);
@@ -437,7 +460,6 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
     if (teamScore < opponentScore) return 'Verloren';
     return 'Gelijkspel';
   }
-
 
   Future<void> _saveMatch() async {
     if (!_formKey.currentState!.validate() ||
@@ -524,7 +546,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Wedstrijd verwijderen'),
-        content: Text('Weet je zeker dat je de wedstrijd tegen ${_match!.opponent} wilt verwijderen?'),
+        content: Text(
+            'Weet je zeker dat je de wedstrijd tegen ${_match!.opponent} wilt verwijderen?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

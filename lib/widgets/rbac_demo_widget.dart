@@ -34,13 +34,14 @@ class RBACDemoWidget extends ConsumerWidget {
                 Text(
                   'RBAC Demo Mode',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 const Spacer(),
                 Chip(
                   label: Text('Rol: ${_getRoleDisplayName(currentRole)}'),
-                  backgroundColor: _getRoleColor(currentRole).withValues(alpha: 0.1),
+                  backgroundColor:
+                      _getRoleColor(currentRole).withValues(alpha: 0.1),
                 ),
               ],
             ),
@@ -56,11 +57,16 @@ class RBACDemoWidget extends ConsumerWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                _buildRoleButton(context, ref, 'bestuurder', 'Bestuurder', Icons.admin_panel_settings, Colors.red),
-                _buildRoleButton(context, ref, 'hoofdcoach', 'Hoofdcoach', Icons.sports, Colors.blue),
-                _buildRoleButton(context, ref, 'assistent', 'Assistent', Icons.assistant, Colors.green),
-                _buildRoleButton(context, ref, 'speler', 'Speler', Icons.person, Colors.orange),
-                _buildRoleButton(context, ref, 'ouder', 'Ouder', Icons.family_restroom, Colors.purple),
+                _buildRoleButton(context, ref, 'bestuurder', 'Bestuurder',
+                    Icons.admin_panel_settings, Colors.red),
+                _buildRoleButton(context, ref, 'hoofdcoach', 'Hoofdcoach',
+                    Icons.sports, Colors.blue),
+                _buildRoleButton(context, ref, 'assistent', 'Assistent',
+                    Icons.assistant, Colors.green),
+                _buildRoleButton(context, ref, 'speler', 'Speler', Icons.person,
+                    Colors.orange),
+                _buildRoleButton(context, ref, 'ouder', 'Ouder',
+                    Icons.family_restroom, Colors.purple),
               ],
             ),
 
@@ -130,28 +136,36 @@ class RBACDemoWidget extends ConsumerWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
-        children: permissions.map((permission) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
-          child: Row(
-            children: [
-              Icon(
-                permission.hasAccess ? Icons.check_circle : Icons.cancel,
-                color: permission.hasAccess ? Colors.green : Colors.red,
-                size: 16,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  permission.description,
-                  style: TextStyle(
-                    color: permission.hasAccess ? Colors.black87 : Colors.grey,
-                    fontWeight: permission.description.startsWith('---') ? FontWeight.bold : null,
-                  ),
+        children: permissions
+            .map(
+              (permission) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  children: [
+                    Icon(
+                      permission.hasAccess ? Icons.check_circle : Icons.cancel,
+                      color: permission.hasAccess ? Colors.green : Colors.red,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        permission.description,
+                        style: TextStyle(
+                          color: permission.hasAccess
+                              ? Colors.black87
+                              : Colors.grey,
+                          fontWeight: permission.description.startsWith('---')
+                              ? FontWeight.bold
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),).toList(),
+            )
+            .toList(),
       ),
     );
   }
@@ -162,85 +176,107 @@ class RBACDemoWidget extends ConsumerWidget {
     return Wrap(
       spacing: 8,
       runSpacing: 8,
-      children: actions.map((action) => ElevatedButton.icon(
-        onPressed: action.isEnabled ? action.onPressed : null,
-        icon: Icon(action.icon, size: 16),
-        label: Text(action.label),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: action.isEnabled ? Colors.blue.shade100 : Colors.grey.shade200,
-          foregroundColor: action.isEnabled ? Colors.blue.shade800 : Colors.grey,
-        ),
-      ),).toList(),
+      children: actions
+          .map(
+            (action) => ElevatedButton.icon(
+              onPressed: action.isEnabled ? action.onPressed : null,
+              icon: Icon(action.icon, size: 16),
+              label: Text(action.label),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: action.isEnabled
+                    ? Colors.blue.shade100
+                    : Colors.grey.shade200,
+                foregroundColor:
+                    action.isEnabled ? Colors.blue.shade800 : Colors.grey,
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 
   List<PermissionInfo> _getPermissionsForRole(String? role) => [
-      const PermissionInfo('Dashboard bekijken', true), // Everyone
-      const PermissionInfo('Spelers bekijken', true), // Everyone
-      const PermissionInfo('Training bekijken', true), // Everyone
-      const PermissionInfo('Wedstrijden bekijken', true), // Everyone
-      const PermissionInfo('---MANAGEMENT---', false), // Separator
-      PermissionInfo('Spelers beheren', PermissionService.canManagePlayers(role)),
-      PermissionInfo('Spelers bewerken', PermissionService.canEditPlayers(role)),
-      PermissionInfo('Training beheren', PermissionService.canManageTraining(role)),
-      PermissionInfo('Training aanmaken', PermissionService.canCreateTraining(role)),
-      PermissionInfo('Wedstrijden beheren', PermissionService.canManageMatches(role)),
-      PermissionInfo('Exercise Library', PermissionService.canManageExerciseLibrary(role)),
-      PermissionInfo('Field Diagram Editor', PermissionService.canAccessFieldDiagramEditor(role)),
-      PermissionInfo('Exercise Designer', PermissionService.canAccessExerciseDesigner(role)),
-      const PermissionInfo('---ADVANCED---', false), // Separator
-      PermissionInfo('Analytics bekijken', PermissionService.canViewAnalytics(role)),
-      PermissionInfo('SVS toegang', PermissionService.canAccessSVS(role, OrganizationTier.pro)),
-      PermissionInfo('Jaarplanning', PermissionService.canAccessAnnualPlanning(role)),
-      PermissionInfo('Admin functies', PermissionService.canAccessAdmin(role)),
-      const PermissionInfo('---STATUS---', false), // Separator
-      PermissionInfo('🔒 Alleen bekijken', PermissionService.isViewOnlyUser(role)),
-    ];
+        const PermissionInfo('Dashboard bekijken', true), // Everyone
+        const PermissionInfo('Spelers bekijken', true), // Everyone
+        const PermissionInfo('Training bekijken', true), // Everyone
+        const PermissionInfo('Wedstrijden bekijken', true), // Everyone
+        const PermissionInfo('---MANAGEMENT---', false), // Separator
+        PermissionInfo(
+            'Spelers beheren', PermissionService.canManagePlayers(role)),
+        PermissionInfo(
+            'Spelers bewerken', PermissionService.canEditPlayers(role)),
+        PermissionInfo(
+            'Training beheren', PermissionService.canManageTraining(role)),
+        PermissionInfo(
+            'Training aanmaken', PermissionService.canCreateTraining(role)),
+        PermissionInfo(
+            'Wedstrijden beheren', PermissionService.canManageMatches(role)),
+        PermissionInfo('Exercise Library',
+            PermissionService.canManageExerciseLibrary(role)),
+        PermissionInfo('Field Diagram Editor',
+            PermissionService.canAccessFieldDiagramEditor(role)),
+        PermissionInfo('Exercise Designer',
+            PermissionService.canAccessExerciseDesigner(role)),
+        const PermissionInfo('---ADVANCED---', false), // Separator
+        PermissionInfo(
+            'Analytics bekijken', PermissionService.canViewAnalytics(role)),
+        PermissionInfo('SVS toegang',
+            PermissionService.canAccessSVS(role, OrganizationTier.pro)),
+        PermissionInfo(
+            'Jaarplanning', PermissionService.canAccessAnnualPlanning(role)),
+        PermissionInfo(
+            'Admin functies', PermissionService.canAccessAdmin(role)),
+        const PermissionInfo('---STATUS---', false), // Separator
+        PermissionInfo(
+            '🔒 Alleen bekijken', PermissionService.isViewOnlyUser(role)),
+      ];
 
-  List<QuickActionInfo> _getQuickActionsForRole(BuildContext context, String? role) => [
-      QuickActionInfo(
-        'Dashboard',
-        Icons.dashboard,
-        true,
-        () => context.go('/dashboard'),
-      ),
-      QuickActionInfo(
-        'Spelers',
-        Icons.people,
-        true,
-        () => context.go('/players'),
-      ),
-      QuickActionInfo(
-        'Training',
-        Icons.fitness_center,
-        true,
-        () => context.go('/training'),
-      ),
-      QuickActionInfo(
-        'Wedstrijden',
-        Icons.sports_soccer,
-        true,
-        () => context.go('/matches'),
-      ),
-      QuickActionInfo(
-        'Analytics',
-        Icons.analytics,
-        PermissionService.canViewAnalytics(role),
-        () => context.go('/analytics'),
-      ),
-      QuickActionInfo(
-        'SVS Dashboard',
-        Icons.track_changes,
-        PermissionService.canAccessSVS(role, OrganizationTier.pro),
-        () => context.go('/svs'),
-      ),
-      QuickActionInfo(
-        'Admin Panel',
-        Icons.admin_panel_settings,
-        PermissionService.canAccessAdmin(role),
-        () => context.go('/admin'),
-      ),
-    ];
+  List<QuickActionInfo> _getQuickActionsForRole(
+          BuildContext context, String? role) =>
+      [
+        QuickActionInfo(
+          'Dashboard',
+          Icons.dashboard,
+          true,
+          () => context.go('/dashboard'),
+        ),
+        QuickActionInfo(
+          'Spelers',
+          Icons.people,
+          true,
+          () => context.go('/players'),
+        ),
+        QuickActionInfo(
+          'Training',
+          Icons.fitness_center,
+          true,
+          () => context.go('/training'),
+        ),
+        QuickActionInfo(
+          'Wedstrijden',
+          Icons.sports_soccer,
+          true,
+          () => context.go('/matches'),
+        ),
+        QuickActionInfo(
+          'Analytics',
+          Icons.analytics,
+          PermissionService.canViewAnalytics(role),
+          () => context.go('/analytics'),
+        ),
+        QuickActionInfo(
+          'SVS Dashboard',
+          Icons.track_changes,
+          PermissionService.canAccessSVS(role, OrganizationTier.pro),
+          () => context.go('/svs'),
+        ),
+        QuickActionInfo(
+          'Admin Panel',
+          Icons.admin_panel_settings,
+          PermissionService.canAccessAdmin(role),
+          () => context.go('/admin'),
+        ),
+      ];
 
   String _getRoleDisplayName(String? role) {
     switch (role) {
@@ -282,14 +318,12 @@ class RBACDemoWidget extends ConsumerWidget {
 }
 
 class PermissionInfo {
-
   const PermissionInfo(this.description, this.hasAccess);
   final String description;
   final bool hasAccess;
 }
 
 class QuickActionInfo {
-
   const QuickActionInfo(this.label, this.icon, this.isEnabled, this.onPressed);
   final String label;
   final IconData icon;

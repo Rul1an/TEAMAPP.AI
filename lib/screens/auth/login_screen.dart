@@ -21,11 +21,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _startDemoMode(DemoRole role) {
     ref.read(demoModeProvider.notifier).startDemo(
-      role: role,
-      organizationId: 'demo-org-1',
-      userId: 'demo-user-${role.name}',
-      userName: 'Demo User',
-    );
+          role: role,
+          organizationId: 'demo-org-1',
+          userId: 'demo-user-${role.name}',
+          userName: 'Demo User',
+        );
     context.go('/dashboard');
   }
 
@@ -132,7 +132,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           children: [
                             const Expanded(child: Divider()),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
                                 'OF',
                                 style: theme.textTheme.bodySmall?.copyWith(
@@ -184,7 +185,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           icon: Icons.analytics,
                           label: 'Demo als Technische Commissie',
                           subtitle: 'Analyseer prestaties en ontwikkeling',
-                          onPressed: () => _startDemoMode(DemoRole.technicalCommittee),
+                          onPressed: () =>
+                              _startDemoMode(DemoRole.technicalCommittee),
                         ),
                         const SizedBox(height: 12),
 
@@ -202,7 +204,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           icon: Icons.assistant,
                           label: 'Demo als Assistent Trainer',
                           subtitle: 'Ondersteun de hoofdtrainer',
-                          onPressed: () => _startDemoMode(DemoRole.assistantCoach),
+                          onPressed: () =>
+                              _startDemoMode(DemoRole.assistantCoach),
                         ),
                         const SizedBox(height: 12),
 
@@ -221,7 +224,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+                            color: theme.colorScheme.primaryContainer
+                                .withValues(alpha: 0.3),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -257,7 +261,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 }
 
 class _DemoRoleButton extends StatelessWidget {
-
   const _DemoRoleButton({
     required this.icon,
     required this.label,
@@ -293,8 +296,10 @@ class _DemoRoleButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: isPrimary ? null : theme.colorScheme.secondaryContainer,
-        foregroundColor: isPrimary ? null : theme.colorScheme.onSecondaryContainer,
+        backgroundColor:
+            isPrimary ? null : theme.colorScheme.secondaryContainer,
+        foregroundColor:
+            isPrimary ? null : theme.colorScheme.onSecondaryContainer,
         padding: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -306,30 +311,30 @@ class _DemoRoleButton extends StatelessWidget {
   }
 
   Widget _buildContent(ThemeData theme) => Row(
-      children: [
-        Icon(icon, size: 24),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
+        children: [
+          Icon(icon, size: 24),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                subtitle,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const Icon(Icons.arrow_forward_ios, size: 16),
-      ],
-    );
+          const Icon(Icons.arrow_forward_ios, size: 16),
+        ],
+      );
 }

@@ -69,20 +69,22 @@ class SupabaseConfig {
     required String email,
     required String password,
     Map<String, dynamic>? data,
-  }) async => _client.auth.signUp(
-      email: email,
-      password: password,
-      data: data,
-    );
+  }) async =>
+      _client.auth.signUp(
+        email: email,
+        password: password,
+        data: data,
+      );
 
   /// Sign in user
   static Future<AuthResponse> signIn({
     required String email,
     required String password,
-  }) async => _client.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
+  }) async =>
+      _client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
 
   /// Sign out user
   static Future<void> signOut() async {
@@ -98,9 +100,7 @@ class SupabaseConfig {
   static Future<List<Map<String, dynamic>>> getUserOrganizations() async {
     if (!isAuthenticated) return [];
 
-    final response = await _client
-        .from('organization_members')
-        .select('''
+    final response = await _client.from('organization_members').select('''
           organization_id,
           role,
           organizations (
@@ -115,8 +115,7 @@ class SupabaseConfig {
             settings,
             branding
           )
-        ''')
-        .eq('user_id', currentUserId!);
+        ''').eq('user_id', currentUserId!);
 
     return List<Map<String, dynamic>>.from(response);
   }
@@ -124,7 +123,9 @@ class SupabaseConfig {
   /// Get user's current organization (first one for now)
   static Future<Map<String, dynamic>?> getCurrentOrganization() async {
     final orgs = await getUserOrganizations();
-    return orgs.isNotEmpty ? orgs.first['organizations'] as Map<String, dynamic>? : null;
+    return orgs.isNotEmpty
+        ? orgs.first['organizations'] as Map<String, dynamic>?
+        : null;
   }
 
   /// Create new organization (for onboarding)
@@ -151,22 +152,22 @@ class SupabaseConfig {
         .single();
 
     // Add user as owner
-    await _client
-        .from('organization_members')
-        .insert({
-          'organization_id': orgResponse['id'],
-          'user_id': currentUserId,
-          'role': 'owner',
-        });
+    await _client.from('organization_members').insert({
+      'organization_id': orgResponse['id'],
+      'user_id': currentUserId,
+      'role': 'owner',
+    });
 
     return orgResponse;
   }
 
   /// Get organization subscription info
-  static Future<Map<String, dynamic>?> getSubscriptionInfo(String organizationId) async {
+  static Future<Map<String, dynamic>?> getSubscriptionInfo(
+      String organizationId) async {
     final response = await _client
         .from('organizations')
-        .select('subscription_tier, subscription_status, trial_ends_at, max_players, max_teams, max_coaches')
+        .select(
+            'subscription_tier, subscription_status, trial_ends_at, max_players, max_teams, max_coaches')
         .eq('id', organizationId)
         .single();
 
@@ -180,73 +181,87 @@ class SupabaseConfig {
     required String status,
     DateTime? trialEndsAt,
   }) async {
-    await _client
-        .from('organizations')
-        .update({
-          'subscription_tier': tier,
-          'subscription_status': status,
-          'trial_ends_at': trialEndsAt?.toIso8601String(),
-          // Update limits based on tier
-          'max_players': _getMaxPlayers(tier),
-          'max_teams': _getMaxTeams(tier),
-          'max_coaches': _getMaxCoaches(tier),
-        })
-        .eq('id', organizationId);
+    await _client.from('organizations').update({
+      'subscription_tier': tier,
+      'subscription_status': status,
+      'trial_ends_at': trialEndsAt?.toIso8601String(),
+      // Update limits based on tier
+      'max_players': _getMaxPlayers(tier),
+      'max_teams': _getMaxTeams(tier),
+      'max_coaches': _getMaxCoaches(tier),
+    }).eq('id', organizationId);
   }
 
   /// Helper: Get max players for subscription tier
   static int _getMaxPlayers(String tier) {
     switch (tier) {
-      case 'basic': return 25;
-      case 'pro': return 50;
-      case 'enterprise': return 999999; // Unlimited
-      default: return 25;
+      case 'basic':
+        return 25;
+      case 'pro':
+        return 50;
+      case 'enterprise':
+        return 999999; // Unlimited
+      default:
+        return 25;
     }
   }
 
   /// Helper: Get max teams for subscription tier
   static int _getMaxTeams(String tier) {
     switch (tier) {
-      case 'basic': return 1;
-      case 'pro': return 3;
-      case 'enterprise': return 999999; // Unlimited
-      default: return 1;
+      case 'basic':
+        return 1;
+      case 'pro':
+        return 3;
+      case 'enterprise':
+        return 999999; // Unlimited
+      default:
+        return 1;
     }
   }
 
   /// Helper: Get max coaches for subscription tier
   static int _getMaxCoaches(String tier) {
     switch (tier) {
-      case 'basic': return 3;
-      case 'pro': return 5;
-      case 'enterprise': return 999999; // Unlimited
-      default: return 3;
+      case 'basic':
+        return 3;
+      case 'pro':
+        return 5;
+      case 'enterprise':
+        return 999999; // Unlimited
+      default:
+        return 3;
     }
   }
 
   /// Execute RPC (Remote Procedure Call) functions
-  static Future<dynamic> rpc(String functionName, [Map<String, dynamic>? params]) async => await _client.rpc(functionName, params: params);
+  static Future<dynamic> rpc(String functionName,
+          [Map<String, dynamic>? params]) async =>
+      await _client.rpc(functionName, params: params);
 
   /// Realtime subscription for organization data
-  static RealtimeChannel subscribeToOrganization(String organizationId, void Function(PostgresChangePayload) callback) => _client
-        .channel('organization_$organizationId')
-        .onPostgresChanges(
-          event: PostgresChangeEvent.all,
-          schema: 'public',
-          filter: PostgresChangeFilter(
-            type: PostgresChangeFilterType.eq,
-            column: 'organization_id',
-            value: organizationId,
-          ),
-          callback: callback,
-        )
-        .subscribe();
+  static RealtimeChannel subscribeToOrganization(String organizationId,
+          void Function(PostgresChangePayload) callback) =>
+      _client
+          .channel('organization_$organizationId')
+          .onPostgresChanges(
+            event: PostgresChangeEvent.all,
+            schema: 'public',
+            filter: PostgresChangeFilter(
+              type: PostgresChangeFilterType.eq,
+              column: 'organization_id',
+              value: organizationId,
+            ),
+            callback: callback,
+          )
+          .subscribe();
 }
 
 /// Extension for easier access to Supabase client
 extension SupabaseExtension on SupabaseClient {
   /// Quick access to current organization ID (stored in user metadata)
-  String? get currentOrganizationId => auth.currentUser?.userMetadata?['organization_id'] as String?;
+  String? get currentOrganizationId =>
+      auth.currentUser?.userMetadata?['organization_id'] as String?;
 
   /// Set current organization ID in user metadata
   Future<void> setCurrentOrganizationId(String organizationId) async {

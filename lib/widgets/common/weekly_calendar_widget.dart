@@ -33,14 +33,15 @@ class _WeeklyCalendarWidgetState extends State<WeeklyCalendarWidget> {
                 Text(
                   'Deze Week',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 const Spacer(),
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      selectedWeek = selectedWeek.subtract(const Duration(days: 7));
+                      selectedWeek =
+                          selectedWeek.subtract(const Duration(days: 7));
                     });
                   },
                   icon: const Icon(Icons.chevron_left),
@@ -128,11 +129,13 @@ class _WeeklyCalendarWidgetState extends State<WeeklyCalendarWidget> {
     }
   }
 
-  bool _isSameDay(DateTime a, DateTime b) => a.year == b.year && a.month == b.month && a.day == b.day;
+  bool _isSameDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
 
   bool _hasTraining(DateTime date) {
     // Mock data: Tuesday and Thursday have training
-    return date.weekday == DateTime.tuesday || date.weekday == DateTime.thursday;
+    return date.weekday == DateTime.tuesday ||
+        date.weekday == DateTime.thursday;
   }
 
   bool _hasMatch(DateTime date) {
@@ -149,7 +152,6 @@ class _WeeklyCalendarWidgetState extends State<WeeklyCalendarWidget> {
 }
 
 class _DayTile extends StatelessWidget {
-
   const _DayTile({
     required this.date,
     required this.isToday,
@@ -165,92 +167,91 @@ class _DayTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: isToday ? Border.all(color: Theme.of(context).primaryColor, width: 2) : null,
-          color: isToday
-            ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
-            : null,
-        ),
-        child: Column(
-          children: [
-            // Day name
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Text(
-                DateFormat.E('nl').format(date),
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                  color: isToday
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey[600],
-                ),
-              ),
-            ),
-
-            // Day number
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isToday
-                  ? Theme.of(context).primaryColor
-                  : null,
-              ),
-              child: Center(
+        onTap: onTap,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: isToday
+                ? Border.all(color: Theme.of(context).primaryColor, width: 2)
+                : null,
+            color: isToday
+                ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
+                : null,
+          ),
+          child: Column(
+            children: [
+              // Day name
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Text(
-                  '${date.day}',
+                  DateFormat.E('nl').format(date),
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: isToday ? Colors.white : null,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: isToday
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey[600],
                   ),
                 ),
               ),
-            ),
 
-            const SizedBox(height: 4),
-
-            // Event indicators
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (hasTraining)
-                  Container(
-                    width: 6,
-                    height: 6,
-                    margin: const EdgeInsets.symmetric(horizontal: 1),
-                    decoration: const BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
+              // Day number
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isToday ? Theme.of(context).primaryColor : null,
+                ),
+                child: Center(
+                  child: Text(
+                    '${date.day}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isToday ? Colors.white : null,
                     ),
                   ),
-                if (hasMatch)
-                  Container(
-                    width: 6,
-                    height: 6,
-                    margin: const EdgeInsets.symmetric(horizontal: 1),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-              ],
-            ),
+                ),
+              ),
 
-            const SizedBox(height: 8),
-          ],
+              const SizedBox(height: 4),
+
+              // Event indicators
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (hasTraining)
+                    Container(
+                      width: 6,
+                      height: 6,
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      decoration: const BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  if (hasMatch)
+                    Container(
+                      width: 6,
+                      height: 6,
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                ],
+              ),
+
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 }
 
 class _LegendItem extends StatelessWidget {
-
   const _LegendItem({
     required this.color,
     required this.label,
@@ -262,30 +263,30 @@ class _LegendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color, size: 16),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: color,
-            fontWeight: FontWeight.w500,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: color, size: 16),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: color,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
 }
 
 class _DayDetailsSheet extends StatelessWidget {
-
   const _DayDetailsSheet({required this.date});
   final DateTime date;
 
   @override
   Widget build(BuildContext context) {
-    final hasTraining = date.weekday == DateTime.tuesday || date.weekday == DateTime.thursday;
+    final hasTraining =
+        date.weekday == DateTime.tuesday || date.weekday == DateTime.thursday;
     final hasMatch = date.weekday == DateTime.saturday;
 
     return Container(
@@ -298,9 +299,7 @@ class _DayDetailsSheet extends StatelessWidget {
             DateFormat.yMMMMEEEEd('nl').format(date),
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-
           const SizedBox(height: 16),
-
           if (hasTraining) ...[
             ListTile(
               leading: const CircleAvatar(
@@ -318,7 +317,6 @@ class _DayDetailsSheet extends StatelessWidget {
               ),
             ),
           ],
-
           if (hasMatch) ...[
             ListTile(
               leading: const CircleAvatar(
@@ -326,7 +324,8 @@ class _DayDetailsSheet extends StatelessWidget {
                 child: Icon(Icons.sports_soccer, color: Colors.white),
               ),
               title: const Text('Wedstrijd'),
-              subtitle: const Text('14:00 - vs Tegenstander\nUitverkiezing om 13:30'),
+              subtitle:
+                  const Text('14:00 - vs Tegenstander\nUitverkiezing om 13:30'),
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: () {
@@ -336,7 +335,6 @@ class _DayDetailsSheet extends StatelessWidget {
               ),
             ),
           ],
-
           if (!hasTraining && !hasMatch) ...[
             const Center(
               child: Padding(
@@ -354,9 +352,7 @@ class _DayDetailsSheet extends StatelessWidget {
               ),
             ),
           ],
-
           const SizedBox(height: 16),
-
           Row(
             children: [
               Expanded(

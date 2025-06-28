@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 enum EnvironmentType { development, test, production }
 
 class EnvConfig {
-
   const EnvConfig({
     required this.supabaseUrl,
     required this.supabaseAnonKey,
@@ -27,7 +26,6 @@ class EnvConfig {
 }
 
 class Environment {
-
   const Environment._({
     required this.name,
     required this.supabaseUrl,
@@ -49,7 +47,8 @@ class Environment {
   static const Environment development = Environment._(
     name: 'Development',
     supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
-    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+    supabaseAnonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
     appName: 'JO17 Tactical Manager',
     enableDebugFeatures: true,
     enablePerformanceLogging: true,
@@ -60,7 +59,8 @@ class Environment {
   static const Environment test = Environment._(
     name: 'Test',
     supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
-    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+    supabaseAnonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
     appName: 'JO17 Tactical Manager (Test)',
     enableDebugFeatures: true,
     enablePerformanceLogging: false,
@@ -71,7 +71,8 @@ class Environment {
   static const Environment production = Environment._(
     name: 'Production',
     supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
-    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+    supabaseAnonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
     appName: 'JO17 Tactical Manager',
     enableDebugFeatures: false,
     enablePerformanceLogging: false,

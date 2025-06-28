@@ -7,7 +7,6 @@ import '../../models/player.dart';
 import '../../providers/players_provider.dart';
 
 class EditPlayerScreen extends ConsumerStatefulWidget {
-
   const EditPlayerScreen({
     super.key,
     required this.playerId,
@@ -184,7 +183,8 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                               ),
                               child: Text(
                                 _selectedDate != null
-                                    ? DateFormat('d MMMM yyyy', 'nl_NL').format(_selectedDate!)
+                                    ? DateFormat('d MMMM yyyy', 'nl_NL')
+                                        .format(_selectedDate!)
                                     : 'Selecteer datum',
                               ),
                             ),
@@ -227,7 +227,9 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                                       return 'Rugnummer is verplicht';
                                     }
                                     final number = int.tryParse(value);
-                                    if (number == null || number < 1 || number > 99) {
+                                    if (number == null ||
+                                        number < 1 ||
+                                        number > 99) {
                                       return 'Voer een nummer tussen 1-99 in';
                                     }
                                     return null;
@@ -242,10 +244,15 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                                     labelText: 'Positie',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: Position.values.map((position) => DropdownMenuItem(
-                                      value: position,
-                                      child: Text(_getPositionText(position)),
-                                    ),).toList(),
+                                  items: Position.values
+                                      .map(
+                                        (position) => DropdownMenuItem(
+                                          value: position,
+                                          child:
+                                              Text(_getPositionText(position)),
+                                        ),
+                                      )
+                                      .toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedPosition = value;
@@ -268,10 +275,14 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                               labelText: 'Voorkeur voet',
                               border: OutlineInputBorder(),
                             ),
-                            items: PreferredFoot.values.map((foot) => DropdownMenuItem(
-                                value: foot,
-                                child: Text(_getFootText(foot)),
-                              ),).toList(),
+                            items: PreferredFoot.values
+                                .map(
+                                  (foot) => DropdownMenuItem(
+                                    value: foot,
+                                    child: Text(_getFootText(foot)),
+                                  ),
+                                )
+                                .toList(),
                             onChanged: (value) {
                               setState(() {
                                 _selectedFoot = value;
@@ -322,7 +333,9 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                                       return 'Lengte is verplicht';
                                     }
                                     final height = int.tryParse(value);
-                                    if (height == null || height < 100 || height > 250) {
+                                    if (height == null ||
+                                        height < 100 ||
+                                        height > 250) {
                                       return 'Voer een realistische lengte in';
                                     }
                                     return null;
@@ -348,7 +361,9 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                                       return 'Gewicht is verplicht';
                                     }
                                     final weight = int.tryParse(value);
-                                    if (weight == null || weight < 30 || weight > 150) {
+                                    if (weight == null ||
+                                        weight < 30 ||
+                                        weight > 150) {
                                       return 'Voer een realistisch gewicht in';
                                     }
                                     return null;
@@ -386,7 +401,8 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _selectedDate ?? DateTime.now().subtract(const Duration(days: 365 * 16)),
+      initialDate: _selectedDate ??
+          DateTime.now().subtract(const Duration(days: 365 * 16)),
       firstDate: DateTime(1990),
       lastDate: DateTime.now(),
       locale: const Locale('nl', 'NL'),
@@ -425,7 +441,8 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
       _player!.preferredFoot = _selectedFoot!;
       _player!.height = double.parse(_heightController.text);
       _player!.weight = double.parse(_weightController.text);
-      _player!.email = _emailController.text.isEmpty ? null : _emailController.text;
+      _player!.email =
+          _emailController.text.isEmpty ? null : _emailController.text;
 
       await ref.read(playersNotifierProvider.notifier).updatePlayer(_player!);
 
@@ -461,7 +478,8 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Speler verwijderen'),
-        content: Text('Weet je zeker dat je ${_player!.name} wilt verwijderen?'),
+        content:
+            Text('Weet je zeker dat je ${_player!.name} wilt verwijderen?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -486,7 +504,9 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
     });
 
     try {
-      await ref.read(playersNotifierProvider.notifier).deletePlayer(_player!.id);
+      await ref
+          .read(playersNotifierProvider.notifier)
+          .deletePlayer(_player!.id);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

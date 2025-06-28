@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/training_session/field_diagram.dart';
 
 class FormationTemplateSelector extends StatefulWidget {
-
   const FormationTemplateSelector({
     super.key,
     required this.onFormationSelected,
@@ -10,114 +9,116 @@ class FormationTemplateSelector extends StatefulWidget {
   final Function(List<PlayerMarker>) onFormationSelected;
 
   @override
-  State<FormationTemplateSelector> createState() => _FormationTemplateSelectorState();
+  State<FormationTemplateSelector> createState() =>
+      _FormationTemplateSelectorState();
 }
 
 class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
   @override
   Widget build(BuildContext context) => Dialog(
-      child: Container(
-        width: 600,
-        height: 500,
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.sports_soccer, color: Colors.green[700]),
-                const SizedBox(width: 8),
-                Text(
-                  'Kies Opstelling',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemCount: _formations.length,
-                itemBuilder: (context, index) {
-                  final formation = _formations[index];
-                  return _buildFormationCard(formation);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
-  Widget _buildFormationCard(FormationData formation) => Card(
-      elevation: 2,
-      child: InkWell(
-        onTap: () => _selectFormation(formation),
-        borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
+        child: Container(
+          width: 600,
+          height: 500,
+          padding: const EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                formation.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+              Row(
+                children: [
+                  Icon(Icons.sports_soccer, color: Colors.green[700]),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Kies Opstelling',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
               Expanded(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.green[50],
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Colors.green[200]!),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.2,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
                   ),
-                  child: CustomPaint(
-                    painter: FormationPreviewPainter(formation.positions),
-                    size: const Size(double.infinity, double.infinity),
-                  ),
+                  itemCount: _formations.length,
+                  itemBuilder: (context, index) {
+                    final formation = _formations[index];
+                    return _buildFormationCard(formation);
+                  },
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                formation.description,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
         ),
-      ),
-    );
+      );
+
+  Widget _buildFormationCard(FormationData formation) => Card(
+        elevation: 2,
+        child: InkWell(
+          onTap: () => _selectFormation(formation),
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              children: [
+                Text(
+                  formation.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.green[50],
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: Colors.green[200]!),
+                    ),
+                    child: CustomPaint(
+                      painter: FormationPreviewPainter(formation.positions),
+                      size: const Size(double.infinity, double.infinity),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  formation.description,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 
   void _selectFormation(FormationData formation) {
     final players = <PlayerMarker>[];
 
     for (int i = 0; i < formation.positions.length; i++) {
       final position = formation.positions[i];
-      players.add(PlayerMarker(
-        id: 'player_${i + 1}',
-        position: position,
-        type: PlayerType.attacking,
-        label: '${i + 1}',
-      ),);
+      players.add(
+        PlayerMarker(
+          id: 'player_${i + 1}',
+          position: position,
+          type: PlayerType.attacking,
+          label: '${i + 1}',
+        ),
+      );
     }
 
     widget.onFormationSelected(players);
@@ -130,7 +131,8 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
       description: 'Aanvallende opstelling',
       positions: [
         Position(50, 90), // Keeper
-        Position(20, 70), Position(35, 75), Position(65, 75), Position(80, 70), // Defense
+        Position(20, 70), Position(35, 75), Position(65, 75),
+        Position(80, 70), // Defense
         Position(30, 50), Position(50, 45), Position(70, 50), // Midfield
         Position(20, 25), Position(50, 20), Position(80, 25), // Attack
       ],
@@ -140,8 +142,10 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
       description: 'Gebalanceerde opstelling',
       positions: [
         Position(50, 90), // Keeper
-        Position(20, 70), Position(35, 75), Position(65, 75), Position(80, 70), // Defense
-        Position(20, 50), Position(35, 45), Position(65, 45), Position(80, 50), // Midfield
+        Position(20, 70), Position(35, 75), Position(65, 75),
+        Position(80, 70), // Defense
+        Position(20, 50), Position(35, 45), Position(65, 45),
+        Position(80, 50), // Midfield
         Position(40, 20), Position(60, 20), // Attack
       ],
     ),
@@ -150,7 +154,8 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
       description: 'Moderne opstelling',
       positions: [
         Position(50, 90), // Keeper
-        Position(20, 70), Position(35, 75), Position(65, 75), Position(80, 70), // Defense
+        Position(20, 70), Position(35, 75), Position(65, 75),
+        Position(80, 70), // Defense
         Position(35, 55), Position(65, 55), // CDM
         Position(20, 35), Position(50, 30), Position(80, 35), // CAM/Wings
         Position(50, 15), // ST
@@ -170,7 +175,6 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
 }
 
 class FormationData {
-
   const FormationData({
     required this.name,
     required this.description,
@@ -182,7 +186,6 @@ class FormationData {
 }
 
 class FormationPreviewPainter extends CustomPainter {
-
   FormationPreviewPainter(this.positions);
   final List<Position> positions;
 

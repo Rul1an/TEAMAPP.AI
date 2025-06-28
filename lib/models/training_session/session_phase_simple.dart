@@ -14,7 +14,6 @@ enum PhaseType {
 
 @JsonSerializable()
 class SessionPhase {
-
   const SessionPhase({
     required this.id,
     required this.sessionId,
@@ -28,7 +27,8 @@ class SessionPhase {
     required this.updatedAt,
   });
 
-  factory SessionPhase.fromJson(Map<String, dynamic> json) => _$SessionPhaseFromJson(json);
+  factory SessionPhase.fromJson(Map<String, dynamic> json) =>
+      _$SessionPhaseFromJson(json);
   final String id;
   final String sessionId;
   final String name;

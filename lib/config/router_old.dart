@@ -32,228 +32,230 @@ import '../widgets/common/main_scaffold.dart';
 
 // Create router with Riverpod
 GoRouter createRouter(Ref ref) => GoRouter(
-    initialLocation: '/login',
-    redirect: (context, state) {
-      final demoMode = ref.read(demoModeProvider);
-      final isLoggedIn = ref.read(isLoggedInProvider);
+      initialLocation: '/login',
+      redirect: (context, state) {
+        final demoMode = ref.read(demoModeProvider);
+        final isLoggedIn = ref.read(isLoggedInProvider);
 
-      // Allow demo mode without auth
-      if (demoMode.isActive) {
-        // If trying to access login while in demo mode, redirect to dashboard
-        if (state.matchedLocation == '/login') {
+        // Allow demo mode without auth
+        if (demoMode.isActive) {
+          // If trying to access login while in demo mode, redirect to dashboard
+          if (state.matchedLocation == '/login') {
+            return '/dashboard';
+          }
+          return null;
+        }
+
+        // Redirect to login if not authenticated
+        if (!isLoggedIn && state.matchedLocation != '/login') {
+          return '/login';
+        }
+
+        // Redirect to dashboard if authenticated and on login page
+        if (isLoggedIn && state.matchedLocation == '/login') {
           return '/dashboard';
         }
+
         return null;
-      }
-
-      // Redirect to login if not authenticated
-      if (!isLoggedIn && state.matchedLocation != '/login') {
-        return '/login';
-      }
-
-      // Redirect to dashboard if authenticated and on login page
-      if (isLoggedIn && state.matchedLocation == '/login') {
-        return '/dashboard';
-      }
-
-      return null;
-    },
-    routes: [
-      GoRoute(
-        path: '/login',
-        name: 'login',
-        pageBuilder: (context, state) => const NoTransitionPage(
-          child: LoginScreen(),
+      },
+      routes: [
+        GoRoute(
+          path: '/login',
+          name: 'login',
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: LoginScreen(),
+          ),
         ),
-      ),
-      ShellRoute(
-        builder: (context, state, child) => MainScaffold(child: child),
-        routes: [
-          GoRoute(
-            path: '/dashboard',
-            name: 'dashboard',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: DashboardScreen(),
+        ShellRoute(
+          builder: (context, state, child) => MainScaffold(child: child),
+          routes: [
+            GoRoute(
+              path: '/dashboard',
+              name: 'dashboard',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: DashboardScreen(),
+              ),
             ),
-          ),
-          GoRoute(
-            path: '/players',
-            name: 'players',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlayersScreen(),
+            GoRoute(
+              path: '/players',
+              name: 'players',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: PlayersScreen(),
+              ),
+              routes: [
+                GoRoute(
+                  path: 'add',
+                  name: 'add-player',
+                  builder: (context, state) => const AddPlayerScreen(),
+                ),
+                GoRoute(
+                  path: ':playerId',
+                  name: 'player-detail',
+                  builder: (context, state) => PlayerDetailScreen(
+                    playerId: state.pathParameters['playerId'] ?? '',
+                  ),
+                ),
+                GoRoute(
+                  path: ':playerId/edit',
+                  builder: (context, state) => EditPlayerScreen(
+                    playerId: state.pathParameters['playerId'] ?? '',
+                  ),
+                ),
+                GoRoute(
+                  path: ':playerId/assessment',
+                  name: 'new-assessment',
+                  builder: (context, state) => AssessmentScreen(
+                    playerId: state.pathParameters['playerId'] ?? '',
+                  ),
+                ),
+                GoRoute(
+                  path: ':playerId/assessment/:assessmentId',
+                  name: 'edit-assessment',
+                  builder: (context, state) => AssessmentScreen(
+                    playerId: state.pathParameters['playerId'] ?? '',
+                    assessmentId: state.pathParameters['assessmentId'],
+                  ),
+                ),
+              ],
             ),
-            routes: [
-              GoRoute(
-                path: 'add',
-                name: 'add-player',
-                builder: (context, state) => const AddPlayerScreen(),
+            GoRoute(
+              path: '/training',
+              name: 'training',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: TrainingScreen(),
               ),
-              GoRoute(
-                path: ':playerId',
-                name: 'player-detail',
-                builder: (context, state) => PlayerDetailScreen(
-                  playerId: state.pathParameters['playerId'] ?? '',
+              routes: [
+                GoRoute(
+                  path: 'add',
+                  name: 'add-training',
+                  builder: (context, state) => const AddTrainingScreen(),
                 ),
-              ),
-              GoRoute(
-                path: ':playerId/edit',
-                builder: (context, state) => EditPlayerScreen(
-                  playerId: state.pathParameters['playerId'] ?? '',
+                GoRoute(
+                  path: 'attendance/:id',
+                  builder: (context, state) => TrainingAttendanceScreen(
+                    trainingId: state.pathParameters['id']!,
+                  ),
                 ),
-              ),
-              GoRoute(
-                path: ':playerId/assessment',
-                name: 'new-assessment',
-                builder: (context, state) => AssessmentScreen(
-                  playerId: state.pathParameters['playerId'] ?? '',
+                GoRoute(
+                  path: 'edit/:id',
+                  builder: (context, state) => EditTrainingScreen(
+                    trainingId: state.pathParameters['id']!,
+                  ),
                 ),
-              ),
-              GoRoute(
-                path: ':playerId/assessment/:assessmentId',
-                name: 'edit-assessment',
-                builder: (context, state) => AssessmentScreen(
-                  playerId: state.pathParameters['playerId'] ?? '',
-                  assessmentId: state.pathParameters['assessmentId'],
-                ),
-              ),
-            ],
-          ),
-          GoRoute(
-            path: '/training',
-            name: 'training',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: TrainingScreen(),
+              ],
             ),
-            routes: [
-              GoRoute(
-                path: 'add',
-                name: 'add-training',
-                builder: (context, state) => const AddTrainingScreen(),
+            GoRoute(
+              path: '/matches',
+              name: 'matches',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: MatchesScreen(),
               ),
-              GoRoute(
-                path: 'attendance/:id',
-                builder: (context, state) => TrainingAttendanceScreen(
-                  trainingId: state.pathParameters['id']!,
+              routes: [
+                GoRoute(
+                  path: 'add',
+                  name: 'add-match',
+                  builder: (context, state) => const AddMatchScreen(),
                 ),
-              ),
-              GoRoute(
-                path: 'edit/:id',
-                builder: (context, state) => EditTrainingScreen(
-                  trainingId: state.pathParameters['id']!,
+                GoRoute(
+                  path: ':matchId',
+                  builder: (context, state) => MatchDetailScreen(
+                    matchId: state.pathParameters['matchId'] ?? '',
+                  ),
                 ),
-              ),
-            ],
-          ),
-          GoRoute(
-            path: '/matches',
-            name: 'matches',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: MatchesScreen(),
-            ),
-            routes: [
-              GoRoute(
-                path: 'add',
-                name: 'add-match',
-                builder: (context, state) => const AddMatchScreen(),
-              ),
-              GoRoute(
-                path: ':matchId',
-                builder: (context, state) => MatchDetailScreen(
-                  matchId: state.pathParameters['matchId'] ?? '',
+                GoRoute(
+                  path: ':matchId/edit',
+                  builder: (context, state) => EditMatchScreen(
+                    matchId: state.pathParameters['matchId'] ?? '',
+                  ),
                 ),
-              ),
-              GoRoute(
-                path: ':matchId/edit',
-                builder: (context, state) => EditMatchScreen(
-                  matchId: state.pathParameters['matchId'] ?? '',
-                ),
-              ),
-            ],
-          ),
-          GoRoute(
-            path: '/lineup',
-            name: 'lineup-builder',
-            pageBuilder: (context, state) {
-              final matchId = state.uri.queryParameters['matchId'];
-              return NoTransitionPage(
-                child: LineupBuilderScreen(matchId: matchId),
-              );
-            },
-          ),
-          GoRoute(
-            path: '/annual-planning',
-            name: 'annual-planning',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: SeasonHubScreen(),
+              ],
             ),
-          ),
-          GoRoute(
-            path: '/annual-planning/details',
-            name: 'annual-planning-details',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: AnnualPlanningScreen(),
-            ),
-          ),
-          GoRoute(
-            path: '/training-sessions',
-            name: 'training-sessions',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: TrainingSessionsScreen(),
-            ),
-          ),
-          GoRoute(
-            path: '/session-builder',
-            name: 'session-builder',
-            builder: (context, state) {
-              final sessionIdString = state.uri.queryParameters['sessionId'];
-              final sessionId = sessionIdString != null ? int.tryParse(sessionIdString) : null;
-              return SessionBuilderScreen(sessionId: sessionId);
-            },
-          ),
-          GoRoute(
-            path: '/exercise-library',
-            name: 'exercise-library',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: ExerciseLibraryScreen(),
-            ),
-          ),
-          GoRoute(
-            path: '/field-diagram-editor',
-            name: 'field-diagram-editor',
-            builder: (context, state) {
-              final exerciseId = state.uri.queryParameters['exerciseId'];
-              return FieldDiagramEditorScreen(exerciseId: exerciseId);
-            },
-          ),
-          GoRoute(
-            path: '/exercise-designer',
-            name: 'exercise-designer',
-            builder: (context, state) {
-              final sessionId = state.uri.queryParameters['sessionId'];
-              final typeString = state.uri.queryParameters['type'];
-              ExerciseType? type;
-
-              if (typeString != null) {
-                type = ExerciseType.values.firstWhere(
-                  (e) => e.name == typeString,
-                  orElse: () => ExerciseType.technical,
+            GoRoute(
+              path: '/lineup',
+              name: 'lineup-builder',
+              pageBuilder: (context, state) {
+                final matchId = state.uri.queryParameters['matchId'];
+                return NoTransitionPage(
+                  child: LineupBuilderScreen(matchId: matchId),
                 );
-              }
-
-              return ExerciseDesignerScreen(
-                sessionId: sessionId,
-                initialType: type,
-              );
-            },
-          ),
-          GoRoute(
-            path: '/analytics',
-            name: 'performance-analytics',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: PerformanceAnalyticsScreen(),
+              },
             ),
-          ),
-        ],
-      ),
-    ],
-  );
+            GoRoute(
+              path: '/annual-planning',
+              name: 'annual-planning',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: SeasonHubScreen(),
+              ),
+            ),
+            GoRoute(
+              path: '/annual-planning/details',
+              name: 'annual-planning-details',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: AnnualPlanningScreen(),
+              ),
+            ),
+            GoRoute(
+              path: '/training-sessions',
+              name: 'training-sessions',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: TrainingSessionsScreen(),
+              ),
+            ),
+            GoRoute(
+              path: '/session-builder',
+              name: 'session-builder',
+              builder: (context, state) {
+                final sessionIdString = state.uri.queryParameters['sessionId'];
+                final sessionId = sessionIdString != null
+                    ? int.tryParse(sessionIdString)
+                    : null;
+                return SessionBuilderScreen(sessionId: sessionId);
+              },
+            ),
+            GoRoute(
+              path: '/exercise-library',
+              name: 'exercise-library',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: ExerciseLibraryScreen(),
+              ),
+            ),
+            GoRoute(
+              path: '/field-diagram-editor',
+              name: 'field-diagram-editor',
+              builder: (context, state) {
+                final exerciseId = state.uri.queryParameters['exerciseId'];
+                return FieldDiagramEditorScreen(exerciseId: exerciseId);
+              },
+            ),
+            GoRoute(
+              path: '/exercise-designer',
+              name: 'exercise-designer',
+              builder: (context, state) {
+                final sessionId = state.uri.queryParameters['sessionId'];
+                final typeString = state.uri.queryParameters['type'];
+                ExerciseType? type;
+
+                if (typeString != null) {
+                  type = ExerciseType.values.firstWhere(
+                    (e) => e.name == typeString,
+                    orElse: () => ExerciseType.technical,
+                  );
+                }
+
+                return ExerciseDesignerScreen(
+                  sessionId: sessionId,
+                  initialType: type,
+                );
+              },
+            ),
+            GoRoute(
+              path: '/analytics',
+              name: 'performance-analytics',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: PerformanceAnalyticsScreen(),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );

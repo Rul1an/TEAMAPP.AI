@@ -7,7 +7,8 @@ import '../models/training.dart';
 import '../services/database_service.dart';
 
 // Database service provider
-final databaseServiceProvider = Provider<DatabaseService>((ref) => DatabaseService());
+final databaseServiceProvider =
+    Provider<DatabaseService>((ref) => DatabaseService());
 
 // Initialize database
 final initializeDatabaseProvider = FutureProvider<void>((ref) async {
@@ -21,7 +22,8 @@ final teamsProvider = FutureProvider<List<Team>>((ref) async {
   return dbService.getAllTeams();
 });
 
-final selectedTeamProvider = FutureProvider.family<Team?, String?>((ref, teamId) async {
+final selectedTeamProvider =
+    FutureProvider.family<Team?, String?>((ref, teamId) async {
   if (teamId == null) return null;
   final dbService = ref.read(databaseServiceProvider);
   return dbService.getTeam(teamId);
@@ -33,13 +35,15 @@ final playersProvider = FutureProvider<List<Player>>((ref) async {
   return dbService.getAllPlayers();
 });
 
-final selectedPlayerProvider = FutureProvider.family<Player?, String?>((ref, playerId) async {
+final selectedPlayerProvider =
+    FutureProvider.family<Player?, String?>((ref, playerId) async {
   if (playerId == null) return null;
   final dbService = ref.read(databaseServiceProvider);
   return dbService.getPlayer(playerId);
 });
 
-final playersByPositionProvider = FutureProvider.family<List<Player>, Position>((ref, position) async {
+final playersByPositionProvider =
+    FutureProvider.family<List<Player>, Position>((ref, position) async {
   final dbService = ref.read(databaseServiceProvider);
   return dbService.getPlayersByPosition(position);
 });
@@ -79,7 +83,6 @@ final selectedTrainingIdProvider = StateProvider<String?>((ref) => null);
 
 // Helper class for date range
 class DateTimeRange {
-
   DateTimeRange({required this.start, required this.end});
   final DateTime start;
   final DateTime end;

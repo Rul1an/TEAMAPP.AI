@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'staff_member.freezed.dart';
 part 'staff_member.g.dart';
+
 /// 👨‍🏫 Staff Member Model
 /// Represents staff members with roles, permissions, and qualifications
 @freezed
@@ -53,8 +54,10 @@ class StaffMember with _$StaffMember {
     String? createdBy,
     String? updatedBy,
   }) = _StaffMember;
-  factory StaffMember.fromJson(Map<String, dynamic> json) => _$StaffMemberFromJson(json);
+  factory StaffMember.fromJson(Map<String, dynamic> json) =>
+      _$StaffMemberFromJson(json);
 }
+
 @freezed
 class StaffPermissions with _$StaffPermissions {
   const factory StaffPermissions({
@@ -86,8 +89,10 @@ class StaffPermissions with _$StaffPermissions {
     @Default(false) bool canViewLogs,
     @Default(false) bool canManageIntegrations,
   }) = _StaffPermissions;
-  factory StaffPermissions.fromJson(Map<String, dynamic> json) => _$StaffPermissionsFromJson(json);
+  factory StaffPermissions.fromJson(Map<String, dynamic> json) =>
+      _$StaffPermissionsFromJson(json);
 }
+
 @freezed
 class StaffAvailability with _$StaffAvailability {
   const factory StaffAvailability({
@@ -99,8 +104,10 @@ class StaffAvailability with _$StaffAvailability {
     bool? availableForTraining,
     bool? availableForEvents,
   }) = _StaffAvailability;
-  factory StaffAvailability.fromJson(Map<String, dynamic> json) => _$StaffAvailabilityFromJson(json);
+  factory StaffAvailability.fromJson(Map<String, dynamic> json) =>
+      _$StaffAvailabilityFromJson(json);
 }
+
 @freezed
 class Qualification with _$Qualification {
   const factory Qualification({
@@ -114,8 +121,10 @@ class Qualification with _$Qualification {
     String? level,
     bool? isValid,
   }) = _Qualification;
-  factory Qualification.fromJson(Map<String, dynamic> json) => _$QualificationFromJson(json);
+  factory Qualification.fromJson(Map<String, dynamic> json) =>
+      _$QualificationFromJson(json);
 }
+
 @freezed
 class Certificate with _$Certificate {
   const factory Certificate({
@@ -128,8 +137,10 @@ class Certificate with _$Certificate {
     String? documentUrl,
     bool? isVerified,
   }) = _Certificate;
-  factory Certificate.fromJson(Map<String, dynamic> json) => _$CertificateFromJson(json);
+  factory Certificate.fromJson(Map<String, dynamic> json) =>
+      _$CertificateFromJson(json);
 }
+
 enum StaffRole {
   // Coaching
   headCoach,
@@ -158,6 +169,7 @@ enum StaffRole {
   parent,
   boardMember,
 }
+
 enum StaffStatus {
   active,
   inactive,
@@ -165,6 +177,7 @@ enum StaffStatus {
   terminated,
   onLeave,
 }
+
 extension StaffRoleExtension on StaffRole {
   String get displayName {
     switch (this) {
@@ -210,12 +223,17 @@ extension StaffRoleExtension on StaffRole {
         return 'Bestuurslid';
     }
   }
+
   List<StaffRole> get compatibleRoles {
     switch (this) {
       case StaffRole.headCoach:
         return [StaffRole.assistantCoach, StaffRole.youthCoach];
       case StaffRole.assistantCoach:
-        return [StaffRole.headCoach, StaffRole.goalkeepingCoach, StaffRole.fitnessCoach];
+        return [
+          StaffRole.headCoach,
+          StaffRole.goalkeepingCoach,
+          StaffRole.fitnessCoach
+        ];
       case StaffRole.teamManager:
         return [StaffRole.coordinator, StaffRole.volunteer];
       case StaffRole.parent:
@@ -224,6 +242,7 @@ extension StaffRoleExtension on StaffRole {
         return [];
     }
   }
+
   int get permissionLevel {
     switch (this) {
       case StaffRole.technicalDirector:

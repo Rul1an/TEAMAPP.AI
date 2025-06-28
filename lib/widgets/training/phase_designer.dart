@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/training_session/session_phase.dart';
 
 class PhaseDesigner extends StatefulWidget {
-
   const PhaseDesigner({
     super.key,
     required this.phase,
@@ -27,7 +26,8 @@ class _PhaseDesignerState extends State<PhaseDesigner> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.phase.name);
-    _descriptionController = TextEditingController(text: widget.phase.description);
+    _descriptionController =
+        TextEditingController(text: widget.phase.description);
     _duration = widget.phase.durationMinutes;
     _type = widget.phase.type;
   }
@@ -41,126 +41,129 @@ class _PhaseDesignerState extends State<PhaseDesigner> {
 
   @override
   Widget build(BuildContext context) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header with phase type
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: _getPhaseTypeColor(_type),
-                    borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header with phase type
+              Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: _getPhaseTypeColor(_type),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(
+                      _getPhaseTypeIcon(_type),
+                      color: Colors.white,
+                    ),
                   ),
-                  child: Icon(
-                    _getPhaseTypeIcon(_type),
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _getPhaseTypeDisplayName(_type),
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Colors.grey[600],
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _getPhaseTypeDisplayName(_type),
+                          style:
+                              Theme.of(context).textTheme.labelSmall?.copyWith(
+                                    color: Colors.grey[600],
+                                  ),
                         ),
-                      ),
-                      TextField(
-                        controller: _nameController,
-                        style: Theme.of(context).textTheme.titleMedium,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          isDense: true,
-                          contentPadding: EdgeInsets.zero,
+                        TextField(
+                          controller: _nameController,
+                          style: Theme.of(context).textTheme.titleMedium,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            isDense: true,
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                          onChanged: (_) => _updatePhase(),
                         ),
-                        onChanged: (_) => _updatePhase(),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                if (widget.onPhaseDeleted != null)
-                  IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: widget.onPhaseDeleted,
-                  ),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-
-            // Duration slider
-            Row(
-              children: [
-                const Icon(Icons.timer, size: 20),
-                const SizedBox(width: 8),
-                Text('Duur: $_duration min'),
-                Expanded(
-                  child: Slider(
-                    value: _duration.toDouble(),
-                    min: 5,
-                    max: 60,
-                    divisions: 11,
-                    onChanged: (value) {
-                      setState(() {
-                        _duration = value.round();
-                      });
-                      _updatePhase();
-                    },
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 12),
-
-            // Description
-            TextField(
-              controller: _descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Beschrijving',
-                border: OutlineInputBorder(),
-                isDense: true,
+                  if (widget.onPhaseDeleted != null)
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: widget.onPhaseDeleted,
+                    ),
+                ],
               ),
-              maxLines: 2,
-              onChanged: (_) => _updatePhase(),
-            ),
 
-            const SizedBox(height: 12),
+              const SizedBox(height: 16),
 
-            // Phase type selector
-            Text(
-              'Fase Type:',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            const SizedBox(height: 4),
-            Wrap(
-              spacing: 8,
-              children: PhaseType.values.map((type) =>
-                ChoiceChip(
-                  label: Text(_getPhaseTypeDisplayName(type)),
-                  selected: _type == type,
-                  onSelected: (selected) {
-                    if (selected) {
-                      setState(() {
-                        _type = type;
-                      });
-                      _updatePhase();
-                    }
-                  },
+              // Duration slider
+              Row(
+                children: [
+                  const Icon(Icons.timer, size: 20),
+                  const SizedBox(width: 8),
+                  Text('Duur: $_duration min'),
+                  Expanded(
+                    child: Slider(
+                      value: _duration.toDouble(),
+                      min: 5,
+                      max: 60,
+                      divisions: 11,
+                      onChanged: (value) {
+                        setState(() {
+                          _duration = value.round();
+                        });
+                        _updatePhase();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
+              // Description
+              TextField(
+                controller: _descriptionController,
+                decoration: const InputDecoration(
+                  labelText: 'Beschrijving',
+                  border: OutlineInputBorder(),
+                  isDense: true,
                 ),
-              ).toList(),
-            ),
-          ],
+                maxLines: 2,
+                onChanged: (_) => _updatePhase(),
+              ),
+
+              const SizedBox(height: 12),
+
+              // Phase type selector
+              Text(
+                'Fase Type:',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              const SizedBox(height: 4),
+              Wrap(
+                spacing: 8,
+                children: PhaseType.values
+                    .map(
+                      (type) => ChoiceChip(
+                        label: Text(_getPhaseTypeDisplayName(type)),
+                        selected: _type == type,
+                        onSelected: (selected) {
+                          if (selected) {
+                            setState(() {
+                              _type = type;
+                            });
+                            _updatePhase();
+                          }
+                        },
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   void _updatePhase() {
     final updatedPhase = widget.phase.copyWith(
@@ -169,7 +172,8 @@ class _PhaseDesignerState extends State<PhaseDesigner> {
       type: _type,
     );
     // Update timing based on duration
-    updatedPhase.endTime = updatedPhase.startTime.add(Duration(minutes: _duration));
+    updatedPhase.endTime =
+        updatedPhase.startTime.add(Duration(minutes: _duration));
     widget.onPhaseUpdated(updatedPhase);
   }
 

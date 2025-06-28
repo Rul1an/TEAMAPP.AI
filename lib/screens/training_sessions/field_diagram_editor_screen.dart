@@ -7,7 +7,6 @@ import '../../widgets/field_diagram/field_canvas.dart';
 import '../../widgets/field_diagram/field_diagram_toolbar.dart';
 
 class FieldDiagramEditorScreen extends ConsumerStatefulWidget {
-
   const FieldDiagramEditorScreen({
     super.key,
     this.exerciseId,
@@ -17,10 +16,12 @@ class FieldDiagramEditorScreen extends ConsumerStatefulWidget {
   final FieldDiagram? initialDiagram;
 
   @override
-  ConsumerState<FieldDiagramEditorScreen> createState() => _FieldDiagramEditorScreenState();
+  ConsumerState<FieldDiagramEditorScreen> createState() =>
+      _FieldDiagramEditorScreenState();
 }
 
-class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScreen> {
+class _FieldDiagramEditorScreenState
+    extends ConsumerState<FieldDiagramEditorScreen> {
   @override
   void initState() {
     super.initState();
@@ -28,7 +29,9 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
     // Initialize the provider with the diagram if provided
     if (widget.initialDiagram != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ref.read(fieldDiagramProvider.notifier).initializeDiagram(widget.initialDiagram!);
+        ref
+            .read(fieldDiagramProvider.notifier)
+            .initializeDiagram(widget.initialDiagram!);
       });
     }
   }
@@ -45,12 +48,16 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
         actions: [
           IconButton(
             icon: const Icon(Icons.undo),
-            onPressed: diagramState.canUndo ? () => ref.read(fieldDiagramProvider.notifier).undo() : null,
+            onPressed: diagramState.canUndo
+                ? () => ref.read(fieldDiagramProvider.notifier).undo()
+                : null,
             tooltip: 'Ongedaan maken',
           ),
           IconButton(
             icon: const Icon(Icons.redo),
-            onPressed: diagramState.canRedo ? () => ref.read(fieldDiagramProvider.notifier).redo() : null,
+            onPressed: diagramState.canRedo
+                ? () => ref.read(fieldDiagramProvider.notifier).redo()
+                : null,
             tooltip: 'Opnieuw',
           ),
           IconButton(
@@ -98,7 +105,8 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
             ),
             child: FieldDiagramToolbar(
               selectedTool: diagramState.currentTool,
-              onToolSelected: (tool) => ref.read(fieldDiagramProvider.notifier).selectTool(tool),
+              onToolSelected: (tool) =>
+                  ref.read(fieldDiagramProvider.notifier).selectTool(tool),
             ),
           ),
           // Canvas
@@ -114,10 +122,17 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
                 selectedLineType: diagramState.selectedLineType,
                 currentLinePoints: diagramState.currentLinePoints,
                 isDrawingLine: diagramState.isDrawingLine,
-                onElementSelected: (elementId) => ref.read(fieldDiagramProvider.notifier).selectElement(elementId),
-                onElementMoved: (elementId, newPosition) => ref.read(fieldDiagramProvider.notifier).moveElement(elementId, newPosition),
-                onElementAdded: (element) => ref.read(fieldDiagramProvider.notifier).addElement(element),
-                onElementRemoved: (elementId) => ref.read(fieldDiagramProvider.notifier).removeElement(elementId),
+                onElementSelected: (elementId) => ref
+                    .read(fieldDiagramProvider.notifier)
+                    .selectElement(elementId),
+                onElementMoved: (elementId, newPosition) => ref
+                    .read(fieldDiagramProvider.notifier)
+                    .moveElement(elementId, newPosition),
+                onElementAdded: (element) =>
+                    ref.read(fieldDiagramProvider.notifier).addElement(element),
+                onElementRemoved: (elementId) => ref
+                    .read(fieldDiagramProvider.notifier)
+                    .removeElement(elementId),
               ),
             ),
           ),
@@ -130,7 +145,8 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
             ),
             child: Row(
               children: [
-                Text('Veld: ${_getFieldTypeText(diagramState.diagram.fieldType)}'),
+                Text(
+                    'Veld: ${_getFieldTypeText(diagramState.diagram.fieldType)}'),
                 const Spacer(),
                 Text('Spelers: ${diagramState.diagram.players.length}'),
                 const SizedBox(width: 16),
@@ -183,14 +199,15 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
       }
 
       await ref.read(fieldDiagramProvider.notifier).exportDiagram(
-        diagramState.diagram,
-        format,
-      );
+            diagramState.diagram,
+            format,
+          );
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Diagram succesvol geëxporteerd als ${format.toUpperCase()}!'),
+            content: Text(
+                'Diagram succesvol geëxporteerd als ${format.toUpperCase()}!'),
             backgroundColor: Colors.green,
           ),
         );
@@ -213,14 +230,14 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
     try {
       if (widget.exerciseId != null) {
         await ref.read(fieldDiagramProvider.notifier).saveDiagramToExercise(
-          widget.exerciseId!,
-          diagramState.diagram,
-        );
+              widget.exerciseId!,
+              diagramState.diagram,
+            );
       } else {
         await ref.read(fieldDiagramProvider.notifier).saveDiagramTemplate(
-          diagramState.diagram,
-          'Nieuwe diagram ${DateTime.now().toString().substring(0, 16)}',
-        );
+              diagramState.diagram,
+              'Nieuwe diagram ${DateTime.now().toString().substring(0, 16)}',
+            );
       }
 
       if (mounted) {
@@ -250,13 +267,19 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
         title: const Text('Veld Type Selecteren'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: FieldType.values.map((type) => ListTile(
-            title: Text(_getFieldTypeText(type)),
-            onTap: () {
-              ref.read(fieldDiagramProvider.notifier).changeFieldType(type);
-              Navigator.of(context).pop();
-            },
-          ),).toList(),
+          children: FieldType.values
+              .map(
+                (type) => ListTile(
+                  title: Text(_getFieldTypeText(type)),
+                  onTap: () {
+                    ref
+                        .read(fieldDiagramProvider.notifier)
+                        .changeFieldType(type);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              )
+              .toList(),
         ),
         actions: [
           TextButton(

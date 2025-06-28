@@ -20,12 +20,14 @@ final currentSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
   }
 });
 
-final recentTrainingSessionsProvider = FutureProvider<List<TrainingSession>>((ref) async {
+final recentTrainingSessionsProvider =
+    FutureProvider<List<TrainingSession>>((ref) async {
   final db = DatabaseService();
   return db.getRecentTrainingSessions();
 });
 
-final upcomingTrainingSessionsProvider = FutureProvider<List<TrainingSession>>((ref) async {
+final upcomingTrainingSessionsProvider =
+    FutureProvider<List<TrainingSession>>((ref) async {
   final db = DatabaseService();
   return db.getUpcomingTrainingSessions();
 });
@@ -95,9 +97,11 @@ class SeasonHubScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
                       recentSessionsAsync.when(
-                        data: (sessions) => _buildTrainingSessionsList(context, sessions, false),
+                        data: (sessions) => _buildTrainingSessionsList(
+                            context, sessions, false),
                         loading: () => const CircularProgressIndicator(),
-                        error: (error, stack) => const Text('Geen recente trainingen'),
+                        error: (error, stack) =>
+                            const Text('Geen recente trainingen'),
                       ),
                     ],
                   ),
@@ -115,9 +119,11 @@ class SeasonHubScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
                       upcomingSessionsAsync.when(
-                        data: (sessions) => _buildTrainingSessionsList(context, sessions, true),
+                        data: (sessions) =>
+                            _buildTrainingSessionsList(context, sessions, true),
                         loading: () => const CircularProgressIndicator(),
-                        error: (error, stack) => const Text('Geen geplande trainingen'),
+                        error: (error, stack) =>
+                            const Text('Geen geplande trainingen'),
                       ),
                     ],
                   ),
@@ -175,8 +181,8 @@ class SeasonHubScreen extends ConsumerWidget {
                       Text(
                         '${season.teamName} | ${season.season}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[600],
-                        ),
+                              color: Colors.grey[600],
+                            ),
                       ),
                     ],
                   ),
@@ -202,7 +208,8 @@ class SeasonHubScreen extends ConsumerWidget {
             LinearProgressIndicator(
               value: progress / 100,
               backgroundColor: Colors.grey.shade300,
-              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
             ),
 
             const SizedBox(height: 16),
@@ -251,116 +258,118 @@ class SeasonHubScreen extends ConsumerWidget {
   }
 
   Widget _buildNoSeasonCard(BuildContext context) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
-            Icon(
-              Icons.sports_soccer_outlined,
-              size: 64,
-              color: Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Geen Actief Seizoen',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Start door een seizoenplanning aan te maken',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            children: [
+              Icon(
+                Icons.sports_soccer_outlined,
+                size: 64,
+                color: Colors.grey[400],
               ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: () => context.push('/annual-planning/details'),
-              icon: const Icon(Icons.add),
-              label: const Text('Maak Seizoenplan'),
-            ),
-          ],
+              const SizedBox(height: 16),
+              Text(
+                'Geen Actief Seizoen',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Start door een seizoenplanning aan te maken',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.grey[600],
+                    ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                onPressed: () => context.push('/annual-planning/details'),
+                icon: const Icon(Icons.add),
+                label: const Text('Maak Seizoenplan'),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
-  Widget _buildStatItem(BuildContext context, String label, String value, IconData icon) => Column(
-      children: [
-        Icon(icon, color: Theme.of(context).primaryColor, size: 20),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
+  Widget _buildStatItem(
+          BuildContext context, String label, String value, IconData icon) =>
+      Column(
+        children: [
+          Icon(icon, color: Theme.of(context).primaryColor, size: 20),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
           ),
-        ),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Colors.grey[600],
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Colors.grey[600],
+                ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
+        ],
+      );
 
   Widget _buildQuickActions(BuildContext context) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Snelle Acties',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildActionButton(
-                    context,
-                    'Nieuwe Training',
-                    Icons.add_circle,
-                    Colors.green,
-                    () => context.push('/session-builder'),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Snelle Acties',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildActionButton(
+                      context,
+                      'Nieuwe Training',
+                      Icons.add_circle,
+                      Colors.green,
+                      () => context.push('/session-builder'),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildActionButton(
-                    context,
-                    'Alle Trainingen',
-                    Icons.list,
-                    Colors.blue,
-                    () => context.push('/training-sessions'),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildActionButton(
+                      context,
+                      'Alle Trainingen',
+                      Icons.list,
+                      Colors.blue,
+                      () => context.push('/training-sessions'),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildActionButton(
-                    context,
-                    'Jaarplanning',
-                    Icons.calendar_today,
-                    Colors.orange,
-                    () => context.push('/annual-planning/details'),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildActionButton(
+                      context,
+                      'Jaarplanning',
+                      Icons.calendar_today,
+                      Colors.orange,
+                      () => context.push('/annual-planning/details'),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildActionButton(
-                    context,
-                    'Wedstrijd Prep',
-                    Icons.stadium,
-                    Colors.purple,
-                    () => context.push('/matches'),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildActionButton(
+                      context,
+                      'Wedstrijd Prep',
+                      Icons.stadium,
+                      Colors.purple,
+                      () => context.push('/matches'),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   Widget _buildActionButton(
     BuildContext context,
@@ -368,54 +377,56 @@ class SeasonHubScreen extends ConsumerWidget {
     IconData icon,
     Color color,
     VoidCallback onTap,
-  ) => Material(
-      color: color.withValues(alpha: 0.1),
-      borderRadius: BorderRadius.circular(8),
-      child: InkWell(
-        onTap: onTap,
+  ) =>
+      Material(
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-          child: Column(
-            children: [
-              Icon(icon, color: color, size: 24),
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: TextStyle(
-                  color: color,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            child: Column(
+              children: [
+                Icon(icon, color: color, size: 24),
+                const SizedBox(height: 4),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
 
   Widget _buildSectionHeader(
     BuildContext context,
     String title,
     IconData icon, {
     VoidCallback? onViewAll,
-  }) => Row(
-      children: [
-        Icon(icon, color: Theme.of(context).primaryColor, size: 20),
-        const SizedBox(width: 8),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        const Spacer(),
-        if (onViewAll != null)
-          TextButton(
-            onPressed: onViewAll,
-            child: const Text('Alles bekijken'),
+  }) =>
+      Row(
+        children: [
+          Icon(icon, color: Theme.of(context).primaryColor, size: 20),
+          const SizedBox(width: 8),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-      ],
-    );
+          const Spacer(),
+          if (onViewAll != null)
+            TextButton(
+              onPressed: onViewAll,
+              child: const Text('Alles bekijken'),
+            ),
+        ],
+      );
 
   Widget _buildTrainingSessionsList(
     BuildContext context,
@@ -435,83 +446,88 @@ class SeasonHubScreen extends ConsumerWidget {
     }
 
     return Column(
-      children: sessions.take(3).map((session) => Card(
-        margin: const EdgeInsets.only(bottom: 8),
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: _getTrainingTypeColor(session.type),
-            child: Icon(
-              _getTrainingTypeIcon(session.type),
-              color: Colors.white,
-              size: 20,
+      children: sessions
+          .take(3)
+          .map(
+            (session) => Card(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: _getTrainingTypeColor(session.type),
+                  child: Icon(
+                    _getTrainingTypeIcon(session.type),
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                title: Text('Training ${session.trainingNumber}'),
+                subtitle: Text(
+                  '${session.date.day}/${session.date.month} | ${session.type.name}\n'
+                  '${session.sessionObjective ?? 'Geen doelstelling'}',
+                ),
+                trailing: Icon(
+                  isUpcoming ? Icons.schedule : Icons.check_circle,
+                  color: isUpcoming ? Colors.orange : Colors.green,
+                ),
+                onTap: () {
+                  // TODO(author): Navigate to session detail
+                },
+              ),
             ),
-          ),
-          title: Text('Training ${session.trainingNumber}'),
-          subtitle: Text(
-            '${session.date.day}/${session.date.month} | ${session.type.name}\n'
-            '${session.sessionObjective ?? 'Geen doelstelling'}',
-          ),
-          trailing: Icon(
-            isUpcoming ? Icons.schedule : Icons.check_circle,
-            color: isUpcoming ? Colors.orange : Colors.green,
-          ),
-          onTap: () {
-            // TODO: Navigate to session detail
-          },
-        ),
-      ),).toList(),
+          )
+          .toList(),
     );
   }
 
   Widget _buildPeriodizationStatus(BuildContext context) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.timeline, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
-                Text(
-                  'Periodisering Status',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () => context.push('/annual-planning/details'),
-                  child: const Text('Details'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildPeriodCard(
-                    context,
-                    'Huidige Periode',
-                    'Voorbereiding',
-                    'Week 3 van 6',
-                    Colors.blue,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.timeline, color: Theme.of(context).primaryColor),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Periodisering Status',
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _buildPeriodCard(
-                    context,
-                    'Volgende Periode',
-                    'Vroeg Seizoen',
-                    'Over 3 weken',
-                    Colors.green,
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => context.push('/annual-planning/details'),
+                    child: const Text('Details'),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildPeriodCard(
+                      context,
+                      'Huidige Periode',
+                      'Voorbereiding',
+                      'Week 3 van 6',
+                      Colors.blue,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildPeriodCard(
+                      context,
+                      'Volgende Periode',
+                      'Vroeg Seizoen',
+                      'Over 3 weken',
+                      Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   Widget _buildPeriodCard(
     BuildContext context,
@@ -519,40 +535,41 @@ class SeasonHubScreen extends ConsumerWidget {
     String period,
     String detail,
     Color color,
-  ) => Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: color,
-              fontWeight: FontWeight.w500,
+  ) =>
+      Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            period,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 4),
+            Text(
+              period,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            detail,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Colors.grey[600],
+            const SizedBox(height: 2),
+            Text(
+              detail,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey[600],
+                  ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
 
   Color _getPhaseColor(SeasonPhase phase) {
     switch (phase) {

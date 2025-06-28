@@ -29,15 +29,18 @@ class QuickActionsWidget extends ConsumerWidget {
                 Text(
                   'Snelle Acties',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 if (isTrainingDay || isMatchDay) ...[
                   const SizedBox(width: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: isMatchDay ? Colors.red.withValues(alpha: 0.1) : Colors.green.withValues(alpha: 0.1),
+                      color: isMatchDay
+                          ? Colors.red.withValues(alpha: 0.1)
+                          : Colors.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -62,13 +65,15 @@ class QuickActionsWidget extends ConsumerWidget {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
               childAspectRatio: 2.5,
-              children: _getContextualActions(context, timeOfDay, isTrainingDay, isMatchDay),
+              children: _getContextualActions(
+                  context, timeOfDay, isTrainingDay, isMatchDay),
             ),
 
             const SizedBox(height: 16),
 
             // Smart suggestions
-            _buildSmartSuggestions(context, timeOfDay, isTrainingDay, isMatchDay),
+            _buildSmartSuggestions(
+                context, timeOfDay, isTrainingDay, isMatchDay),
           ],
         ),
       ),
@@ -147,7 +152,8 @@ class QuickActionsWidget extends ConsumerWidget {
           onTap: () => context.push('/training'),
         ),
       ]);
-    } else { // evening
+    } else {
+      // evening
       actions.addAll([
         _QuickAction(
           icon: Icons.analytics,
@@ -166,15 +172,20 @@ class QuickActionsWidget extends ConsumerWidget {
 
     // Ensure we have exactly 4 actions, fill with defaults if needed
     while (actions.length < 4) {
-      actions.add(_QuickAction(
-        icon: Icons.dashboard,
-        label: 'Dashboard',
-        color: Colors.grey,
-        onTap: () => context.go('/dashboard'),
-      ),);
+      actions.add(
+        _QuickAction(
+          icon: Icons.dashboard,
+          label: 'Dashboard',
+          color: Colors.grey,
+          onTap: () => context.go('/dashboard'),
+        ),
+      );
     }
 
-    return actions.take(4).map((action) => _QuickActionTile(action: action)).toList();
+    return actions
+        .take(4)
+        .map((action) => _QuickActionTile(action: action))
+        .toList();
   }
 
   Widget _buildSmartSuggestions(
@@ -188,15 +199,18 @@ class QuickActionsWidget extends ConsumerWidget {
     Color suggestionColor = Colors.blue;
 
     if (isMatchDay) {
-      suggestion = 'Vergeet niet de opstelling klaar te maken en speler statistieken te checken!';
+      suggestion =
+          'Vergeet niet de opstelling klaar te maken en speler statistieken te checken!';
       suggestionIcon = Icons.sports_soccer;
       suggestionColor = Colors.red;
     } else if (isTrainingDay && timeOfDay == TimeOfDay.afternoon) {
-      suggestion = 'Training vandaag! Plan je sessie en check beschikbaarheid spelers.';
+      suggestion =
+          'Training vandaag! Plan je sessie en check beschikbaarheid spelers.';
       suggestionIcon = Icons.fitness_center;
       suggestionColor = Colors.green;
     } else if (timeOfDay == TimeOfDay.morning) {
-      suggestion = 'Goedemorgen! Perfect moment om het seizoensplan door te nemen.';
+      suggestion =
+          'Goedemorgen! Perfect moment om het seizoensplan door te nemen.';
       suggestionIcon = Icons.wb_sunny;
       suggestionColor = Colors.orange;
     } else {
@@ -238,7 +252,8 @@ class QuickActionsWidget extends ConsumerWidget {
 
   bool _isTrainingDay(DateTime date) {
     // Assume Tuesday and Thursday are training days
-    return date.weekday == DateTime.tuesday || date.weekday == DateTime.thursday;
+    return date.weekday == DateTime.tuesday ||
+        date.weekday == DateTime.thursday;
   }
 
   bool _isMatchDay(DateTime date) {
@@ -283,7 +298,6 @@ class QuickActionsWidget extends ConsumerWidget {
 enum TimeOfDay { morning, afternoon, evening }
 
 class _QuickAction {
-
   _QuickAction({
     required this.icon,
     required this.label,
@@ -297,57 +311,56 @@ class _QuickAction {
 }
 
 class _QuickActionTile extends StatelessWidget {
-
   const _QuickActionTile({required this.action});
   final _QuickAction action;
 
   @override
   Widget build(BuildContext context) => Material(
-      elevation: 1,
-      borderRadius: BorderRadius.circular(8),
-      child: InkWell(
-        onTap: action.onTap,
+        elevation: 1,
         borderRadius: BorderRadius.circular(8),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            gradient: LinearGradient(
-              colors: [
-                action.color.withValues(alpha: 0.1),
-                action.color.withValues(alpha: 0.05),
-              ],
+        child: InkWell(
+          onTap: action.onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              gradient: LinearGradient(
+                colors: [
+                  action.color.withValues(alpha: 0.1),
+                  action.color.withValues(alpha: 0.05),
+                ],
+              ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 16,
-                  backgroundColor: action.color,
-                  child: Icon(
-                    action.icon,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    action.label,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
-                      color: action.color,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundColor: action.color,
+                    child: Icon(
+                      action.icon,
+                      color: Colors.white,
+                      size: 16,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      action.label,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        color: action.color,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
 }

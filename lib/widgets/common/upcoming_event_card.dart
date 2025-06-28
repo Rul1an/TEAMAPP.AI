@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class UpcomingEventCard extends StatelessWidget {
-
   const UpcomingEventCard({
     super.key,
     required this.title,

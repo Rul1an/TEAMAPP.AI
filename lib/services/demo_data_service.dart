@@ -9,7 +9,7 @@ import '../providers/demo_mode_provider.dart';
 
 class DemoDataService {
   static const _uuid = Uuid();
-  
+
   static Map<String, dynamic> generateDemoData(DemoRole role) {
     switch (role) {
       case DemoRole.clubAdmin:
@@ -24,16 +24,16 @@ class DemoDataService {
         return _generatePlayerData();
     }
   }
-  
+
   static Map<String, dynamic> _generateAdminData() {
     final club = _createDemoClub();
     final teams = _createDemoTeams(club.id);
     final allPlayers = <Player>[];
-    
+
     for (final team in teams) {
       allPlayers.addAll(_createDemoPlayers(18, teamId: team.id));
     }
-    
+
     return {
       'club': club,
       'teams': teams,
@@ -43,7 +43,7 @@ class DemoDataService {
       'trainings': _createDemoTrainings(teams.first.id),
     };
   }
-  
+
   static Map<String, dynamic> _generateTechnicalData() {
     final data = _generateAdminData();
     // Add technical specific data
@@ -51,11 +51,11 @@ class DemoDataService {
     data['playerStats'] = _createDemoPlayerStats();
     return data;
   }
-  
+
   static Map<String, dynamic> _generateCoachData() {
     final teamId = _uuid.v4();
     final players = _createDemoPlayers(18, teamId: teamId);
-    
+
     return {
       'team': _createDemoTeam(teamId: teamId, name: 'JO17-1'),
       'players': players,
@@ -63,11 +63,11 @@ class DemoDataService {
       'matches': _createDemoMatches(teamId),
     };
   }
-  
+
   static Map<String, dynamic> _generatePlayerData() {
     final playerId = _uuid.v4();
     final teamId = _uuid.v4();
-    
+
     return {
       'profile': _createDemoPlayerProfile(playerId),
       'team': _createDemoTeam(teamId: teamId, name: 'JO17-1'),
@@ -75,30 +75,68 @@ class DemoDataService {
       'stats': _createDemoPlayerStats(playerId),
     };
   }
-  
+
   static Club _createDemoClub() => Club(
-      id: 'demo-club-voab',
-      name: 'VOAB Utrecht',
-      shortName: 'VOAB',
-      logoUrl: 'https://placehold.co/200x200/1976d2/ffffff?text=VOAB',
-      colors: '#1976d2,#ffffff',
-      foundedDate: DateTime(1928),
-      street: 'Sportpark Overvecht',
-      city: 'Utrecht',
-      country: 'Nederland',
-      website: 'https://voab.nl',
-      settings: const ClubSettings(),
-      status: ClubStatus.active,
-      createdAt: DateTime.now().subtract(const Duration(days: 365)),
-      updatedAt: DateTime.now(),
-    );
-  
+        id: 'demo-club-voab',
+        name: 'VOAB Utrecht',
+        shortName: 'VOAB',
+        logoUrl: 'https://placehold.co/200x200/1976d2/ffffff?text=VOAB',
+        colors: '#1976d2,#ffffff',
+        foundedDate: DateTime(1928),
+        street: 'Sportpark Overvecht',
+        city: 'Utrecht',
+        country: 'Nederland',
+        website: 'https://voab.nl',
+        settings: const ClubSettings(),
+        status: ClubStatus.active,
+        createdAt: DateTime.now().subtract(const Duration(days: 365)),
+        updatedAt: DateTime.now(),
+      );
+
   static List<Team> _createDemoTeams(String clubId) => [
+        Team(
+          id: _uuid.v4(),
+          clubId: clubId,
+          name: 'JO17-1',
+          shortName: 'JO17-1',
+          ageCategory: AgeCategory.jo17,
+          level: TeamLevel.competitive,
+          gender: TeamGender.male,
+          currentSeason: '2024-2025',
+          league: 'KNVB',
+          division: '1e klasse',
+          headCoachId: _uuid.v4(),
+          assistantCoachId: _uuid.v4(),
+          settings: const TeamSettings(),
+          status: TeamStatus.active,
+          createdAt: DateTime.now().subtract(const Duration(days: 180)),
+          updatedAt: DateTime.now(),
+        ),
+        Team(
+          id: _uuid.v4(),
+          clubId: clubId,
+          name: 'JO17-2',
+          shortName: 'JO17-2',
+          ageCategory: AgeCategory.jo17,
+          level: TeamLevel.recreational,
+          gender: TeamGender.male,
+          currentSeason: '2024-2025',
+          league: 'KNVB',
+          division: '3e klasse',
+          headCoachId: _uuid.v4(),
+          settings: const TeamSettings(),
+          status: TeamStatus.active,
+          createdAt: DateTime.now().subtract(const Duration(days: 180)),
+          updatedAt: DateTime.now(),
+        ),
+      ];
+
+  static Team _createDemoTeam({required String teamId, required String name}) =>
       Team(
-        id: _uuid.v4(),
-        clubId: clubId,
-        name: 'JO17-1',
-        shortName: 'JO17-1',
+        id: teamId,
+        clubId: 'demo-club-voab',
+        name: name,
+        shortName: name,
         ageCategory: AgeCategory.jo17,
         level: TeamLevel.competitive,
         gender: TeamGender.male,
@@ -111,55 +149,30 @@ class DemoDataService {
         status: TeamStatus.active,
         createdAt: DateTime.now().subtract(const Duration(days: 180)),
         updatedAt: DateTime.now(),
-      ),
-      Team(
-        id: _uuid.v4(),
-        clubId: clubId,
-        name: 'JO17-2',
-        shortName: 'JO17-2',
-        ageCategory: AgeCategory.jo17,
-        level: TeamLevel.recreational,
-        gender: TeamGender.male,
-        currentSeason: '2024-2025',
-        league: 'KNVB',
-        division: '3e klasse',
-        headCoachId: _uuid.v4(),
-        settings: const TeamSettings(),
-        status: TeamStatus.active,
-        createdAt: DateTime.now().subtract(const Duration(days: 180)),
-        updatedAt: DateTime.now(),
-      ),
-    ];
-  
-  static Team _createDemoTeam({required String teamId, required String name}) => Team(
-      id: teamId,
-      clubId: 'demo-club-voab',
-      name: name,
-      shortName: name,
-      ageCategory: AgeCategory.jo17,
-      level: TeamLevel.competitive,
-      gender: TeamGender.male,
-      currentSeason: '2024-2025',
-      league: 'KNVB',
-      division: '1e klasse',
-      headCoachId: _uuid.v4(),
-      assistantCoachId: _uuid.v4(),
-      settings: const TeamSettings(),
-      status: TeamStatus.active,
-      createdAt: DateTime.now().subtract(const Duration(days: 180)),
-      updatedAt: DateTime.now(),
-    );
-  
+      );
+
   static List<Player> _createDemoPlayers(int count, {String? teamId}) {
-    final positions = [Position.goalkeeper, Position.defender, Position.defender, Position.defender, 
-                      Position.defender, Position.midfielder, Position.midfielder, Position.midfielder,
-                      Position.forward, Position.forward, Position.forward,];
+    final positions = [
+      Position.goalkeeper,
+      Position.defender,
+      Position.defender,
+      Position.defender,
+      Position.defender,
+      Position.midfielder,
+      Position.midfielder,
+      Position.midfielder,
+      Position.forward,
+      Position.forward,
+      Position.forward,
+    ];
     final players = <Player>[];
-    
+
     for (int i = 0; i < count; i++) {
-      final position = i == 0 ? Position.goalkeeper : positions[(i - 1) % (positions.length - 1) + 1];
+      final position = i == 0
+          ? Position.goalkeeper
+          : positions[(i - 1) % (positions.length - 1) + 1];
       final names = _generateDutchName().split(' ');
-      
+
       final player = Player()
         ..id = _uuid.v4()
         ..firstName = names[0]
@@ -175,13 +188,13 @@ class DemoDataService {
         ..assists = i > 5 ? 2 + (i % 3) : 0
         ..trainingsAttended = 18 + (i % 5)
         ..trainingsTotal = 20;
-      
+
       players.add(player);
     }
-    
+
     return players;
   }
-  
+
   static Player _createDemoPlayerProfile(String playerId) {
     final player = Player()
       ..id = playerId
@@ -189,7 +202,8 @@ class DemoDataService {
       ..lastName = 'van der Berg'
       ..jerseyNumber = 10
       ..position = Position.midfielder
-      ..birthDate = DateTime.now().subtract(const Duration(days: 16 * 365 + 180))
+      ..birthDate =
+          DateTime.now().subtract(const Duration(days: 16 * 365 + 180))
       ..preferredFoot = PreferredFoot.right
       ..height = 175.0
       ..weight = 68.0
@@ -200,19 +214,24 @@ class DemoDataService {
       ..assists = 12
       ..trainingsAttended = 28
       ..trainingsTotal = 30;
-    
+
     return player;
   }
-  
+
   static List<Match> _createDemoMatches(String teamId) {
     final opponents = [
-      'Ajax JO17', 'PSV JO17', 'Feyenoord JO17', 'AZ JO17', 
-      'Vitesse JO17', 'FC Utrecht JO17', 'FC Twente JO17',
+      'Ajax JO17',
+      'PSV JO17',
+      'Feyenoord JO17',
+      'AZ JO17',
+      'Vitesse JO17',
+      'FC Utrecht JO17',
+      'FC Twente JO17',
     ];
-    
+
     final matches = <Match>[];
     final now = DateTime.now();
-    
+
     // Past matches
     for (int i = 3; i >= 1; i--) {
       final date = now.subtract(Duration(days: i * 7));
@@ -226,10 +245,10 @@ class DemoDataService {
         ..venue = i % 2 == 0 ? 'Sportpark Overvecht' : 'Uitstadion'
         ..teamScore = i % 2 == 0 ? 2 : 1
         ..opponentScore = i % 2 == 0 ? 1 : 2;
-      
+
       matches.add(match);
     }
-    
+
     // Upcoming matches
     for (int i = 1; i <= 4; i++) {
       final date = now.add(Duration(days: i * 7));
@@ -241,105 +260,153 @@ class DemoDataService {
         ..competition = Competition.league
         ..status = MatchStatus.scheduled
         ..venue = i % 2 == 0 ? 'Uitstadion' : 'Sportpark Overvecht';
-      
+
       matches.add(match);
     }
-    
+
     return matches;
   }
-  
+
   static List<TrainingSession> _createDemoTrainings(String teamId) {
     final sessions = <TrainingSession>[];
     final now = DateTime.now();
-    
+
     // Create trainings for the next 2 weeks
     for (int week = 0; week < 2; week++) {
       // Tuesday training
-      final tuesday = now.add(Duration(days: (2 - now.weekday + 7 * week) % 7 + 7 * week));
+      final tuesday =
+          now.add(Duration(days: (2 - now.weekday + 7 * week) % 7 + 7 * week));
       if (tuesday.isAfter(now)) {
-        sessions.add(_createTrainingSession(teamId, tuesday, 'Techniek & Passing'));
+        sessions
+            .add(_createTrainingSession(teamId, tuesday, 'Techniek & Passing'));
       }
-      
+
       // Thursday training
-      final thursday = now.add(Duration(days: (4 - now.weekday + 7 * week) % 7 + 7 * week));
+      final thursday =
+          now.add(Duration(days: (4 - now.weekday + 7 * week) % 7 + 7 * week));
       if (thursday.isAfter(now)) {
-        sessions.add(_createTrainingSession(teamId, thursday, 'Tactiek & Positiespel'));
+        sessions.add(
+            _createTrainingSession(teamId, thursday, 'Tactiek & Positiespel'));
       }
     }
-    
+
     return sessions;
   }
-  
-  static TrainingSession _createTrainingSession(String teamId, DateTime date, String focus) {
+
+  static TrainingSession _createTrainingSession(
+      String teamId, DateTime date, String focus) {
     final session = TrainingSession.create(
       teamId: teamId,
       date: date,
       trainingNumber: 1,
     );
-    
+
     session.id = _uuid.v4();
     session.sessionObjective = focus;
     session.technicalTacticalGoal = focus;
     session.startTime = DateTime(date.year, date.month, date.day, 19);
     session.endTime = DateTime(date.year, date.month, date.day, 20, 30);
     session.durationMinutes = 90;
-    
+
     return session;
   }
-  
+
   static List<Map<String, dynamic>> _createDemoCoaches() => [
-      {
-        'id': _uuid.v4(),
-        'name': 'Johan de Vries',
-        'role': 'Hoofdtrainer',
-        'email': 'johan.devries@voab.nl',
-        'phone': '06-11111111',
-        'licenseLevel': 'UEFA B',
-      },
-      {
-        'id': _uuid.v4(),
-        'name': 'Henk Jansen',
-        'role': 'Assistent Trainer',
-        'email': 'henk.jansen@voab.nl',
-        'phone': '06-22222222',
-        'licenseLevel': 'TC3',
-      },
-    ];
-  
+        {
+          'id': _uuid.v4(),
+          'name': 'Johan de Vries',
+          'role': 'Hoofdtrainer',
+          'email': 'johan.devries@voab.nl',
+          'phone': '06-11111111',
+          'licenseLevel': 'UEFA B',
+        },
+        {
+          'id': _uuid.v4(),
+          'name': 'Henk Jansen',
+          'role': 'Assistent Trainer',
+          'email': 'henk.jansen@voab.nl',
+          'phone': '06-22222222',
+          'licenseLevel': 'TC3',
+        },
+      ];
+
   static List<Map<String, dynamic>> _createDemoAssessments() {
     // Technical assessments data
     return [];
   }
-  
+
   static Map<String, dynamic> _createDemoPlayerStats([String? playerId]) => {
-      'goals': 8,
-      'assists': 12,
-      'yellowCards': 2,
-      'redCards': 0,
-      'trainingsAttended': 28,
-      'trainingsTotal': 30,
-      'matchesPlayed': 14,
-      'matchesTotal': 15,
-      'averageRating': 7.5,
-    };
-  
+        'goals': 8,
+        'assists': 12,
+        'yellowCards': 2,
+        'redCards': 0,
+        'trainingsAttended': 28,
+        'trainingsTotal': 30,
+        'matchesPlayed': 14,
+        'matchesTotal': 15,
+        'averageRating': 7.5,
+      };
+
   static String _generateDutchName() {
     final firstNames = [
-      'Jan', 'Piet', 'Klaas', 'Henk', 'Willem', 'Jeroen', 'Mark', 'Dennis',
-      'Robin', 'Thomas', 'Lars', 'Niels', 'Bram', 'Tim', 'Sven', 'Daan',
-      'Luuk', 'Jesse', 'Ruben', 'Tom', 'Max', 'Finn', 'Sem', 'Lucas',
+      'Jan',
+      'Piet',
+      'Klaas',
+      'Henk',
+      'Willem',
+      'Jeroen',
+      'Mark',
+      'Dennis',
+      'Robin',
+      'Thomas',
+      'Lars',
+      'Niels',
+      'Bram',
+      'Tim',
+      'Sven',
+      'Daan',
+      'Luuk',
+      'Jesse',
+      'Ruben',
+      'Tom',
+      'Max',
+      'Finn',
+      'Sem',
+      'Lucas',
     ];
-    
+
     final lastNames = [
-      'de Jong', 'Jansen', 'de Vries', 'van den Berg', 'van Dijk', 'Bakker',
-      'Visser', 'Smit', 'Meijer', 'de Boer', 'Mulder', 'de Groot', 'Bos',
-      'Vos', 'Peters', 'Hendriks', 'van der Meer', 'van der Linden', 'Dekker',
-      'Brouwer', 'de Wit', 'Dijkstra', 'van Leeuwen', 'de Bruijn', 'van der Heijden',
+      'de Jong',
+      'Jansen',
+      'de Vries',
+      'van den Berg',
+      'van Dijk',
+      'Bakker',
+      'Visser',
+      'Smit',
+      'Meijer',
+      'de Boer',
+      'Mulder',
+      'de Groot',
+      'Bos',
+      'Vos',
+      'Peters',
+      'Hendriks',
+      'van der Meer',
+      'van der Linden',
+      'Dekker',
+      'Brouwer',
+      'de Wit',
+      'Dijkstra',
+      'van Leeuwen',
+      'de Bruijn',
+      'van der Heijden',
     ];
-    
-    final firstName = firstNames[DateTime.now().millisecond % firstNames.length];
+
+    final firstName =
+        firstNames[DateTime.now().millisecond % firstNames.length];
     final lastName = lastNames[DateTime.now().microsecond % lastNames.length];
-    
+
     return '$firstName $lastName';
   }
 }

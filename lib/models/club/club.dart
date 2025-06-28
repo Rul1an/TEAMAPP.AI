@@ -131,7 +131,8 @@ class ClubSettings with _$ClubSettings {
     // Data Retention
     @Default(7) int dataRetentionYears,
   }) = _ClubSettings;
-  factory ClubSettings.fromJson(Map<String, dynamic> json) => _$ClubSettingsFromJson(json);
+  factory ClubSettings.fromJson(Map<String, dynamic> json) =>
+      _$ClubSettingsFromJson(json);
 }
 
 enum ClubStatus {
@@ -201,6 +202,7 @@ extension AgeCategoryExtension on AgeCategory {
         return 'Veteranen';
     }
   }
+
   int get minAge {
     switch (this) {
       case AgeCategory.jo7:
@@ -235,6 +237,7 @@ extension AgeCategoryExtension on AgeCategory {
         return 35;
     }
   }
+
   int get maxAge {
     switch (this) {
       case AgeCategory.jo7:

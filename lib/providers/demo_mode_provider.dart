@@ -4,15 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum DemoRole {
   clubAdmin,
-  boardMember,  // Bestuurder
-  technicalCommittee,  // Technische Commissie
+  boardMember, // Bestuurder
+  technicalCommittee, // Technische Commissie
   coach,
   assistantCoach,
   player
 }
 
 class DemoModeState {
-
   DemoModeState({
     this.isActive = false,
     this.role,
@@ -35,22 +34,23 @@ class DemoModeState {
     String? userId,
     String? userName,
     DateTime? expiresAt,
-  }) => DemoModeState(
-      isActive: isActive ?? this.isActive,
-      role: role ?? this.role,
-      organizationId: organizationId ?? this.organizationId,
-      userId: userId ?? this.userId,
-      userName: userName ?? this.userName,
-      expiresAt: expiresAt ?? this.expiresAt,
-    );
+  }) =>
+      DemoModeState(
+        isActive: isActive ?? this.isActive,
+        role: role ?? this.role,
+        organizationId: organizationId ?? this.organizationId,
+        userId: userId ?? this.userId,
+        userName: userName ?? this.userName,
+        expiresAt: expiresAt ?? this.expiresAt,
+      );
 
   bool get isDemo => isActive;
-  bool get isAdmin => role == DemoRole.boardMember || role == DemoRole.clubAdmin;
+  bool get isAdmin =>
+      role == DemoRole.boardMember || role == DemoRole.clubAdmin;
   bool get isExpired => expiresAt != null && DateTime.now().isAfter(expiresAt!);
 }
 
 class DemoModeNotifier extends StateNotifier<DemoModeState> {
-
   DemoModeNotifier() : super(DemoModeState());
   Timer? _expirationTimer;
 
@@ -62,7 +62,7 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
     int durationMinutes = 30,
   }) {
     final expiresAt = DateTime.now().add(Duration(minutes: durationMinutes));
-    
+
     state = DemoModeState(
       isActive: true,
       role: role,
@@ -104,11 +104,13 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
 
   void extendDemo(int additionalMinutes) {
     if (state.isActive && state.expiresAt != null) {
-      final newExpiresAt = state.expiresAt!.add(Duration(minutes: additionalMinutes));
+      final newExpiresAt =
+          state.expiresAt!.add(Duration(minutes: additionalMinutes));
       state = state.copyWith(expiresAt: newExpiresAt);
-      
+
       _expirationTimer?.cancel();
-      final remainingMinutes = newExpiresAt.difference(DateTime.now()).inMinutes;
+      final remainingMinutes =
+          newExpiresAt.difference(DateTime.now()).inMinutes;
       _startExpirationTimer(remainingMinutes);
     }
   }
@@ -193,17 +195,20 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
 }
 
 // Provider
-final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>((ref) => DemoModeNotifier());
+final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>(
+    (ref) => DemoModeNotifier());
 
 // Helper providers
-final isDemoModeProvider = Provider<bool>((ref) => ref.watch(demoModeProvider).isDemo);
+final isDemoModeProvider =
+    Provider<bool>((ref) => ref.watch(demoModeProvider).isDemo);
 
-final currentDemoRoleProvider = Provider<String?>((ref) => ref.watch(demoModeProvider.notifier).getDemoRole());
+final currentDemoRoleProvider = Provider<String?>(
+    (ref) => ref.watch(demoModeProvider.notifier).getDemoRole());
 
 final demoTimeRemainingProvider = Provider<Duration?>((ref) {
   final state = ref.watch(demoModeProvider);
   if (!state.isActive || state.expiresAt == null) return null;
-  
+
   final remaining = state.expiresAt!.difference(DateTime.now());
   return remaining.isNegative ? Duration.zero : remaining;
 });

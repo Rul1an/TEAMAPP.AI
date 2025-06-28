@@ -5,7 +5,6 @@ import '../../providers/field_diagram_provider.dart';
 import 'field_painter.dart';
 
 class FieldCanvas extends ConsumerStatefulWidget {
-
   const FieldCanvas({
     super.key,
     required this.diagram,
@@ -63,111 +62,113 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     super.dispose();
   }
 
-    @override
+  @override
   Widget build(BuildContext context) => Column(
-      children: [
-        _buildCanvasControls(),
-        Expanded(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.green[50],
-              border: Border.all(color: Colors.green[300]!, width: 2),
-            ),
-            child: InteractiveViewer(
-              transformationController: _transformController,
-              minScale: 0.5,
-              maxScale: 3,
-              panEnabled: widget.currentTool == DiagramTool.select,
-              child: GestureDetector(
-                onTapDown: _handleTapDown,
-                onPanStart: _handlePanStart,
-                onPanUpdate: _handlePanUpdate,
-                onPanEnd: _handlePanEnd,
-                child: SizedBox(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: CustomPaint(
-                    painter: FieldPainter(
-                      diagram: widget.diagram,
-                      selectedElementId: widget.selectedElementId,
-                      showGrid: _showGrid,
-                      gridSize: _gridSize,
-                      currentLinePoints: widget.currentLinePoints,
-                      isDrawingLine: widget.isDrawingLine,
-                      selectedLineType: widget.selectedLineType,
+        children: [
+          _buildCanvasControls(),
+          Expanded(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.green[50],
+                border: Border.all(color: Colors.green[300]!, width: 2),
+              ),
+              child: InteractiveViewer(
+                transformationController: _transformController,
+                minScale: 0.5,
+                maxScale: 3,
+                panEnabled: widget.currentTool == DiagramTool.select,
+                child: GestureDetector(
+                  onTapDown: _handleTapDown,
+                  onPanStart: _handlePanStart,
+                  onPanUpdate: _handlePanUpdate,
+                  onPanEnd: _handlePanEnd,
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: CustomPaint(
+                      painter: FieldPainter(
+                        diagram: widget.diagram,
+                        selectedElementId: widget.selectedElementId,
+                        showGrid: _showGrid,
+                        gridSize: _gridSize,
+                        currentLinePoints: widget.currentLinePoints,
+                        isDrawingLine: widget.isDrawingLine,
+                        selectedLineType: widget.selectedLineType,
+                      ),
+                      size: Size.infinite,
                     ),
-                    size: Size.infinite,
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
 
   Widget _buildCanvasControls() => Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
-      ),
-      child: Row(
-        children: [
-          // Zoom controls
-          IconButton(
-            icon: const Icon(Icons.zoom_in),
-            onPressed: _zoomIn,
-            tooltip: 'Inzoomen',
-            iconSize: 20,
-          ),
-          IconButton(
-            icon: const Icon(Icons.zoom_out),
-            onPressed: _zoomOut,
-            tooltip: 'Uitzoomen',
-            iconSize: 20,
-          ),
-          IconButton(
-            icon: const Icon(Icons.center_focus_strong),
-            onPressed: _resetZoom,
-            tooltip: 'Reset Zoom',
-            iconSize: 20,
-          ),
-          const SizedBox(width: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: Colors.grey[50],
+          border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
+        ),
+        child: Row(
+          children: [
+            // Zoom controls
+            IconButton(
+              icon: const Icon(Icons.zoom_in),
+              onPressed: _zoomIn,
+              tooltip: 'Inzoomen',
+              iconSize: 20,
+            ),
+            IconButton(
+              icon: const Icon(Icons.zoom_out),
+              onPressed: _zoomOut,
+              tooltip: 'Uitzoomen',
+              iconSize: 20,
+            ),
+            IconButton(
+              icon: const Icon(Icons.center_focus_strong),
+              onPressed: _resetZoom,
+              tooltip: 'Reset Zoom',
+              iconSize: 20,
+            ),
+            const SizedBox(width: 16),
 
-          // Grid controls
-          Row(
-            children: [
-              Checkbox(
-                value: _showGrid,
-                onChanged: (value) => setState(() => _showGrid = value ?? true),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              const Text('Grid', style: TextStyle(fontSize: 12)),
-            ],
-          ),
-          const SizedBox(width: 8),
-          Row(
-            children: [
-              Checkbox(
-                value: _snapToGrid,
-                onChanged: (value) => setState(() => _snapToGrid = value ?? true),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              const Text('Snap', style: TextStyle(fontSize: 12)),
-            ],
-          ),
+            // Grid controls
+            Row(
+              children: [
+                Checkbox(
+                  value: _showGrid,
+                  onChanged: (value) =>
+                      setState(() => _showGrid = value ?? true),
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                const Text('Grid', style: TextStyle(fontSize: 12)),
+              ],
+            ),
+            const SizedBox(width: 8),
+            Row(
+              children: [
+                Checkbox(
+                  value: _snapToGrid,
+                  onChanged: (value) =>
+                      setState(() => _snapToGrid = value ?? true),
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                const Text('Snap', style: TextStyle(fontSize: 12)),
+              ],
+            ),
 
-          const Spacer(),
+            const Spacer(),
 
-          // Scale indicator
-          Text(
-            'Zoom: ${(_getCurrentScale() * 100).toInt()}%',
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
-          ),
-        ],
-      ),
-    );
+            // Scale indicator
+            Text(
+              'Zoom: ${(_getCurrentScale() * 100).toInt()}%',
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+          ],
+        ),
+      );
 
   void _handleTapDown(TapDownDetails details) {
     final localPosition = details.localPosition;
@@ -221,7 +222,8 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
 
     if (_isDragging && _draggedElementId != null) {
       // Moving an element
-      final snappedPosition = _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
+      final snappedPosition =
+          _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
       widget.onElementMoved(_draggedElementId!, snappedPosition);
     } else if (widget.currentTool == DiagramTool.line && widget.isDrawingLine) {
       // Drawing a line - add points
@@ -245,7 +247,8 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _addPlayer(Position fieldPosition) {
-    final snappedPosition = _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
+    final snappedPosition =
+        _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
 
     // Get color based on player type
     String playerColor;
@@ -275,7 +278,8 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _addEquipment(Position fieldPosition) {
-    final snappedPosition = _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
+    final snappedPosition =
+        _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
     final newEquipment = EquipmentMarker(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       position: snappedPosition,
@@ -285,7 +289,8 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _addText(Position fieldPosition) {
-    final snappedPosition = _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
+    final snappedPosition =
+        _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
 
     // Show text input dialog
     _showTextInputDialog((text) {
@@ -380,7 +385,8 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
         fieldAspectRatio = 16.5 / 40.3;
         break;
       default:
-        fieldAspectRatio = widget.diagram.fieldSize.width / widget.diagram.fieldSize.height;
+        fieldAspectRatio =
+            widget.diagram.fieldSize.width / widget.diagram.fieldSize.height;
         break;
     }
 
@@ -409,10 +415,13 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
 
     // Convert grid size to normalized coordinates
     // Grid size is in pixels, we need to convert to 0-100 scale
-    final normalizedGridSize = _gridSize / 10; // Rough conversion for field scale
+    final normalizedGridSize =
+        _gridSize / 10; // Rough conversion for field scale
 
-    final snappedX = (position.x / normalizedGridSize).round() * normalizedGridSize;
-    final snappedY = (position.y / normalizedGridSize).round() * normalizedGridSize;
+    final snappedX =
+        (position.x / normalizedGridSize).round() * normalizedGridSize;
+    final snappedY =
+        (position.y / normalizedGridSize).round() * normalizedGridSize;
 
     return Position(
       snappedX.clamp(0, 100),

@@ -37,7 +37,6 @@ final organizationIdProvider = Provider<String?>((ref) {
 
 // Auth state notifier for handling auth actions
 class AuthNotifier extends StateNotifier<AuthState?> {
-
   AuthNotifier(this._authService) : super(null) {
     // Listen to auth state changes
     _authService.authStateChanges.listen((authState) {
@@ -64,7 +63,8 @@ class AuthNotifier extends StateNotifier<AuthState?> {
 }
 
 // Auth notifier provider
-final authNotifierProvider = StateNotifierProvider<AuthNotifier, AuthState?>((ref) {
+final authNotifierProvider =
+    StateNotifierProvider<AuthNotifier, AuthState?>((ref) {
   final authService = ref.watch(authServiceProvider);
   return AuthNotifier(authService);
 });

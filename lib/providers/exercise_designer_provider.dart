@@ -5,17 +5,16 @@ import '../models/training_session/training_exercise.dart';
 
 // Exercise Designer Wizard Steps
 enum ExerciseDesignerStep {
-  basicInfo,     // Step 1: Name, description, category
-  setup,         // Step 2: Duration, players, equipment
-  objectives,    // Step 3: Learning objectives, coaching points
-  fieldDiagram,  // Step 4: Visual field diagram creation
-  details,       // Step 5: Variations, safety notes
-  review,        // Step 6: Final review and save
+  basicInfo, // Step 1: Name, description, category
+  setup, // Step 2: Duration, players, equipment
+  objectives, // Step 3: Learning objectives, coaching points
+  fieldDiagram, // Step 4: Visual field diagram creation
+  details, // Step 5: Variations, safety notes
+  review, // Step 6: Final review and save
 }
 
 // Exercise Designer State
 class ExerciseDesignerState {
-
   const ExerciseDesignerState({
     this.currentStepIndex = 0,
     this.stepTitles = const [
@@ -42,11 +41,12 @@ class ExerciseDesignerState {
     int? currentStepIndex,
     List<String>? stepTitles,
     Map<String, dynamic>? formData,
-  }) => ExerciseDesignerState(
-      currentStepIndex: currentStepIndex ?? this.currentStepIndex,
-      stepTitles: stepTitles ?? this.stepTitles,
-      formData: formData ?? this.formData,
-    );
+  }) =>
+      ExerciseDesignerState(
+        currentStepIndex: currentStepIndex ?? this.currentStepIndex,
+        stepTitles: stepTitles ?? this.stepTitles,
+        formData: formData ?? this.formData,
+      );
 }
 
 // Exercise Designer Notifier
@@ -84,7 +84,8 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
       durationMinutes: (state.formData['duration'] as num?)?.toDouble() ?? 15.0,
       playerCount: (state.formData['playerCount'] as int?) ?? 18,
       equipment: state.formData['equipment'] ?? '',
-      intensityLevel: (state.formData['intensityLevel'] as num?)?.toDouble() ?? 5.0,
+      intensityLevel:
+          (state.formData['intensityLevel'] as num?)?.toDouble() ?? 5.0,
       type: state.formData['type'] ?? ExerciseType.technical,
       coachingPoints: [],
     );
@@ -97,7 +98,8 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
             .where((line) => line.trim().isNotEmpty)
             .toList();
       } else if (state.formData['coachingPoints'] is List) {
-        exercise.coachingPoints = List<String>.from(state.formData['coachingPoints']);
+        exercise.coachingPoints =
+            List<String>.from(state.formData['coachingPoints']);
       }
     }
 
@@ -125,7 +127,8 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
             state.formData['fieldDiagram'] as Map<String, dynamic>,
           );
         } else if (state.formData['fieldDiagram'] is FieldDiagram) {
-          exercise.fieldDiagram = state.formData['fieldDiagram'] as FieldDiagram;
+          exercise.fieldDiagram =
+              state.formData['fieldDiagram'] as FieldDiagram;
         }
       } catch (e) {
         // Silent fail for field diagram parsing issues
@@ -142,7 +145,8 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
 }
 
 // Provider
-final exerciseDesignerProvider = StateNotifierProvider<ExerciseDesignerNotifier, ExerciseDesignerState>(
+final exerciseDesignerProvider =
+    StateNotifierProvider<ExerciseDesignerNotifier, ExerciseDesignerState>(
   (ref) => ExerciseDesignerNotifier(),
 );
 
@@ -213,84 +217,101 @@ final equipmentSuggestions = {
 };
 
 // Exercise Library Provider for the Enhanced Exercise Library Screen
-final exerciseLibraryProvider = FutureProvider<List<TrainingExercise>>((ref) async => _getSampleExercises());
+final exerciseLibraryProvider = FutureProvider<List<TrainingExercise>>(
+    (ref) async => _getSampleExercises());
 
 List<TrainingExercise> _getSampleExercises() => [
-    TrainingExercise.create(
-      name: 'Passing Square',
-      description: '4v4 passing exercise in a 20x20m square',
-      durationMinutes: 15,
-      playerCount: 8,
-      equipment: 'Cones, balls',
-      coachingPoints: ['Keep head up', 'Use both feet', 'Quick pass decisions'],
-    ),
-    TrainingExercise.create(
-      name: '1v1 Finishing',
-      description: 'Individual finishing practice with keeper',
-      durationMinutes: 20,
-      playerCount: 10,
-      equipment: 'Goals, balls',
-      intensityLevel: 7,
-      coachingPoints: ['Pick your spot', 'Follow through', 'Be decisive'],
-    ),
-    TrainingExercise.create(
-      name: 'Small Sided Game',
-      description: '7v7 game focusing on possession',
-      durationMinutes: 25,
-      playerCount: 14,
-      equipment: 'Goals, balls, bibs',
-      intensityLevel: 8,
-      type: ExerciseType.smallSidedGames,
-      coachingPoints: ['Keep possession', 'Switch play', 'Support teammate'],
-    ),
-    TrainingExercise.create(
-      name: 'Tactical Pressing',
-      description: 'Practice coordinated team pressing',
-      durationMinutes: 20,
-      playerCount: 16,
-      equipment: 'Cones, balls, bibs',
-      intensityLevel: 6,
-      type: ExerciseType.tactical,
-      coachingPoints: ['Press together', 'Cut passing lanes', 'Win ball high'],
-    ),
-    TrainingExercise.create(
-      name: 'Warm-up Jogging',
-      description: 'Light jogging and dynamic stretching',
-      durationMinutes: 10,
-      playerCount: 18,
-      equipment: 'None',
-      intensityLevel: 2,
-      type: ExerciseType.warmUp,
-      coachingPoints: ['Gradual intensity', 'Full range of motion', 'Stay focused'],
-    ),
-    TrainingExercise.create(
-      name: 'Physical Conditioning',
-      description: 'Sprint intervals and agility work',
-      durationMinutes: 15,
-      playerCount: 18,
-      equipment: 'Cones, ladders',
-      intensityLevel: 8.5,
-      type: ExerciseType.physical,
-      coachingPoints: ['Maximum effort', 'Proper form', 'Active recovery'],
-    ),
-    TrainingExercise.create(
-      name: 'Goalkeeper Training',
-      description: 'Shot stopping and distribution practice',
-      durationMinutes: 20,
-      playerCount: 3,
-      equipment: 'Goals, balls, gloves',
-      intensityLevel: 6.5,
-      type: ExerciseType.goalkeeping,
-      coachingPoints: ['Set position', 'Quick reactions', 'Accurate distribution'],
-    ),
-    TrainingExercise.create(
-      name: 'Cool-down Stretching',
-      description: 'Static stretching and relaxation',
-      durationMinutes: 10,
-      playerCount: 18,
-      equipment: 'Mats',
-      intensityLevel: 1,
-      type: ExerciseType.coolDown,
-      coachingPoints: ['Hold stretches', 'Breathe deeply', 'Relax muscles'],
-    ),
-  ];
+      TrainingExercise.create(
+        name: 'Passing Square',
+        description: '4v4 passing exercise in a 20x20m square',
+        durationMinutes: 15,
+        playerCount: 8,
+        equipment: 'Cones, balls',
+        coachingPoints: [
+          'Keep head up',
+          'Use both feet',
+          'Quick pass decisions'
+        ],
+      ),
+      TrainingExercise.create(
+        name: '1v1 Finishing',
+        description: 'Individual finishing practice with keeper',
+        durationMinutes: 20,
+        playerCount: 10,
+        equipment: 'Goals, balls',
+        intensityLevel: 7,
+        coachingPoints: ['Pick your spot', 'Follow through', 'Be decisive'],
+      ),
+      TrainingExercise.create(
+        name: 'Small Sided Game',
+        description: '7v7 game focusing on possession',
+        durationMinutes: 25,
+        playerCount: 14,
+        equipment: 'Goals, balls, bibs',
+        intensityLevel: 8,
+        type: ExerciseType.smallSidedGames,
+        coachingPoints: ['Keep possession', 'Switch play', 'Support teammate'],
+      ),
+      TrainingExercise.create(
+        name: 'Tactical Pressing',
+        description: 'Practice coordinated team pressing',
+        durationMinutes: 20,
+        playerCount: 16,
+        equipment: 'Cones, balls, bibs',
+        intensityLevel: 6,
+        type: ExerciseType.tactical,
+        coachingPoints: [
+          'Press together',
+          'Cut passing lanes',
+          'Win ball high'
+        ],
+      ),
+      TrainingExercise.create(
+        name: 'Warm-up Jogging',
+        description: 'Light jogging and dynamic stretching',
+        durationMinutes: 10,
+        playerCount: 18,
+        equipment: 'None',
+        intensityLevel: 2,
+        type: ExerciseType.warmUp,
+        coachingPoints: [
+          'Gradual intensity',
+          'Full range of motion',
+          'Stay focused'
+        ],
+      ),
+      TrainingExercise.create(
+        name: 'Physical Conditioning',
+        description: 'Sprint intervals and agility work',
+        durationMinutes: 15,
+        playerCount: 18,
+        equipment: 'Cones, ladders',
+        intensityLevel: 8.5,
+        type: ExerciseType.physical,
+        coachingPoints: ['Maximum effort', 'Proper form', 'Active recovery'],
+      ),
+      TrainingExercise.create(
+        name: 'Goalkeeper Training',
+        description: 'Shot stopping and distribution practice',
+        durationMinutes: 20,
+        playerCount: 3,
+        equipment: 'Goals, balls, gloves',
+        intensityLevel: 6.5,
+        type: ExerciseType.goalkeeping,
+        coachingPoints: [
+          'Set position',
+          'Quick reactions',
+          'Accurate distribution'
+        ],
+      ),
+      TrainingExercise.create(
+        name: 'Cool-down Stretching',
+        description: 'Static stretching and relaxation',
+        durationMinutes: 10,
+        playerCount: 18,
+        equipment: 'Mats',
+        intensityLevel: 1,
+        type: ExerciseType.coolDown,
+        coachingPoints: ['Hold stretches', 'Breathe deeply', 'Relax muscles'],
+      ),
+    ];

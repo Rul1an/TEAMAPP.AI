@@ -10,10 +10,9 @@ import '../services/club_service.dart';
 /// 🏆 Club Provider
 /// Manages club-level operations, teams, staff, and player progress
 class ClubProvider extends ChangeNotifier {
-  
   ClubProvider({required ClubService clubService}) : _clubService = clubService;
   final ClubService _clubService;
-  
+
   // State
   Club? _currentClub;
   final List<Team> _teams = [];
@@ -22,7 +21,7 @@ class ClubProvider extends ChangeNotifier {
   final List<PlayerProgress> _playerProgress = [];
   bool _isLoading = false;
   String? _error;
-  
+
   // Getters
   Club? get currentClub => _currentClub;
   List<Team> get teams => List.unmodifiable(_teams);
@@ -32,29 +31,41 @@ class ClubProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get hasClub => _currentClub != null;
-  
+
   // Filtered Data
-  List<Team> getTeamsByAgeCategory(AgeCategory ageCategory) => _teams.where((team) => team.ageCategory == ageCategory).toList();
-  
-  List<Team> getTeamsByGender(TeamGender gender) => _teams.where((team) => team.gender == gender).toList();
-  
-  List<Team> getActiveTeams() => _teams.where((team) => team.status == TeamStatus.active).toList();
-  
-  List<StaffMember> getStaffByRole(StaffRole role) => _staff.where((member) =>
-      member.primaryRole == role || member.additionalRoles.contains(role),
-    ).toList();
-  
-  List<StaffMember> getStaffForTeam(String teamId) => _staff.where((member) => member.teamIds.contains(teamId)).toList();
-  
+  List<Team> getTeamsByAgeCategory(AgeCategory ageCategory) =>
+      _teams.where((team) => team.ageCategory == ageCategory).toList();
+
+  List<Team> getTeamsByGender(TeamGender gender) =>
+      _teams.where((team) => team.gender == gender).toList();
+
+  List<Team> getActiveTeams() =>
+      _teams.where((team) => team.status == TeamStatus.active).toList();
+
+  List<StaffMember> getStaffByRole(StaffRole role) => _staff
+      .where(
+        (member) =>
+            member.primaryRole == role || member.additionalRoles.contains(role),
+      )
+      .toList();
+
+  List<StaffMember> getStaffForTeam(String teamId) =>
+      _staff.where((member) => member.teamIds.contains(teamId)).toList();
+
   List<Player> getPlayersForTeam(String teamId) {
     final team = _teams.firstWhere((t) => t.id == teamId);
-    return _allPlayers.where((player) => team.playerIds.contains(player.id.toString())).toList();
+    return _allPlayers
+        .where((player) => team.playerIds.contains(player.id.toString()))
+        .toList();
   }
-  
-  List<PlayerProgress> getProgressForPlayer(String playerId) => _playerProgress.where((progress) => progress.playerId == playerId).toList();
-  
-  List<PlayerProgress> getProgressForSeason(String season) => _playerProgress.where((progress) => progress.season == season).toList();
-  
+
+  List<PlayerProgress> getProgressForPlayer(String playerId) => _playerProgress
+      .where((progress) => progress.playerId == playerId)
+      .toList();
+
+  List<PlayerProgress> getProgressForSeason(String season) =>
+      _playerProgress.where((progress) => progress.season == season).toList();
+
   // Club Management
   Future<void> loadClub(String clubId) async {
     _setLoading(true);
@@ -68,7 +79,7 @@ class ClubProvider extends ChangeNotifier {
       _setLoading(false);
     }
   }
-  
+
   Future<void> updateClub(Club club) async {
     _setLoading(true);
     try {
@@ -80,7 +91,7 @@ class ClubProvider extends ChangeNotifier {
       _setLoading(false);
     }
   }
-  
+
   Future<void> _loadClubData() async {
     if (_currentClub == null) return;
     await Future.wait([
@@ -90,19 +101,19 @@ class ClubProvider extends ChangeNotifier {
       _loadPlayerProgress(),
     ]);
   }
-  
+
   // Team Management
   Future<void> _loadTeams() async {
     if (_currentClub == null) return;
-    // TODO: Implement when ClubService has getTeamsForClub method
+    // TODO(author): Implement when ClubService has getTeamsForClub method
     // _teams = await _clubService.getTeamsForClub(_currentClub!.id);
     notifyListeners();
   }
-  
+
   Future<void> addTeam(Team team) async {
     _setLoading(true);
     try {
-      // TODO: Implement when ClubService has createTeam method
+      // TODO(author): Implement when ClubService has createTeam method
       // final newTeam = await _clubService.createTeam(team);
       // _teams.add(newTeam);
       _clearError();
@@ -112,45 +123,45 @@ class ClubProvider extends ChangeNotifier {
       _setLoading(false);
     }
   }
-  
+
   // Data loading methods
   Future<void> _loadStaff() async {
     if (_currentClub == null) return;
-    // TODO: Implement when ClubService has getStaffForClub method
+    // TODO(author): Implement when ClubService has getStaffForClub method
     // _staff = await _clubService.getStaffForClub(_currentClub!.id);
     notifyListeners();
   }
-  
+
   Future<void> _loadAllPlayers() async {
     if (_currentClub == null) return;
-    // TODO: Implement when ClubService has getPlayersForClub method
+    // TODO(author): Implement when ClubService has getPlayersForClub method
     // _allPlayers = await _clubService.getPlayersForClub(_currentClub!.id);
     notifyListeners();
   }
-  
+
   Future<void> _loadPlayerProgress() async {
     if (_currentClub == null) return;
-    // TODO: Implement when ClubService has getPlayerProgressForClub method
+    // TODO(author): Implement when ClubService has getPlayerProgressForClub method
     // _playerProgress = await _clubService.getPlayerProgressForClub(_currentClub!.id);
     notifyListeners();
   }
-  
+
   // Helper Methods
   void _setLoading(bool loading) {
     _isLoading = loading;
     notifyListeners();
   }
-  
+
   void _setError(String error) {
     _error = error;
     notifyListeners();
   }
-  
+
   void _clearError() {
     _error = null;
     notifyListeners();
   }
-  
+
   void clearData() {
     _currentClub = null;
     _teams.clear();

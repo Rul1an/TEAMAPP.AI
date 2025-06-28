@@ -63,7 +63,6 @@ enum TrainingStatus {
 }
 
 class Training {
-
   Training() {
     createdAt = DateTime.now();
     updatedAt = DateTime.now();

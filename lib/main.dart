@@ -7,6 +7,7 @@ import 'config/environment.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
 import 'widgets/demo_mode_starter.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -35,11 +36,11 @@ class JO17TacticalManagerApp extends ConsumerWidget {
 
     return DemoModeStarter(
       child: MaterialApp.router(
-      title: 'JO17 Tactical Manager',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      routerConfig: router,
-      debugShowCheckedModeBanner: false,
+        title: 'JO17 Tactical Manager',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        routerConfig: router,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

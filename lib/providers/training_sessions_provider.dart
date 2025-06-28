@@ -51,7 +51,8 @@ class TrainingSessionsProvider extends ChangeNotifier {
       final session = TrainingSession.create(
         teamId: 'jo17-1',
         date: dateTime,
-        trainingNumber: DateTime.now().millisecondsSinceEpoch ~/ (1000 * 60 * 60 * 24),
+        trainingNumber:
+            DateTime.now().millisecondsSinceEpoch ~/ (1000 * 60 * 60 * 24),
         type: TrainingType.technicalSession,
       );
 
@@ -95,7 +96,7 @@ class TrainingSessionsProvider extends ChangeNotifier {
       _sessions.removeWhere((session) => session.id == sessionId);
       notifyListeners();
 
-      // TODO: Implement actual deletion from database when available
+      // TODO(author): Implement actual deletion from database when available
     } catch (e) {
       _setError(e.toString());
     } finally {

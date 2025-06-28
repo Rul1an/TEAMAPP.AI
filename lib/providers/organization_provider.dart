@@ -6,7 +6,8 @@ import 'auth_provider.dart';
 import 'demo_mode_provider.dart';
 
 // Organization service provider
-final organizationServiceProvider = Provider<OrganizationService>((ref) => OrganizationService());
+final organizationServiceProvider =
+    Provider<OrganizationService>((ref) => OrganizationService());
 
 // Current organization provider
 final currentOrganizationProvider = StateProvider<Organization?>((ref) {
@@ -26,7 +27,7 @@ final currentOrganizationProvider = StateProvider<Organization?>((ref) {
   // For MVP: return default organization for logged in users
   final user = ref.watch(currentUserProvider);
   if (user != null) {
-    // TODO: Fetch real organization from database
+    // TODO(author): Fetch real organization from database
     return Organization(
       id: 'default-org',
       name: 'Mijn Voetbalclub',

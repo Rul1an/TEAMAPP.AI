@@ -5,7 +5,6 @@ enum RatingType { match, training }
 enum PerformanceTrend { improving, stable, declining }
 
 class PerformanceRating {
-
   PerformanceRating({
     String? id,
     required this.playerId,
@@ -29,25 +28,26 @@ class PerformanceRating {
         assert(overallRating >= 1 && overallRating <= 5),
         assert(type == RatingType.match ? matchId != null : trainingId != null);
 
-  factory PerformanceRating.fromJson(Map<String, dynamic> json) => PerformanceRating(
-      id: json['id'],
-      playerId: json['playerId'],
-      matchId: json['matchId'],
-      trainingId: json['trainingId'],
-      date: DateTime.parse(json['date']),
-      type: RatingType.values.firstWhere((e) => e.name == json['type']),
-      overallRating: json['overallRating'],
-      attackingRating: json['attackingRating'],
-      defendingRating: json['defendingRating'],
-      tacticalRating: json['tacticalRating'],
-      workRateRating: json['workRateRating'],
-      technicalRating: json['technicalRating'],
-      coachabilityRating: json['coachabilityRating'],
-      teamworkRating: json['teamworkRating'],
-      notes: json['notes'],
-      coachId: json['coachId'],
-      createdAt: DateTime.parse(json['createdAt']),
-    );
+  factory PerformanceRating.fromJson(Map<String, dynamic> json) =>
+      PerformanceRating(
+        id: json['id'],
+        playerId: json['playerId'],
+        matchId: json['matchId'],
+        trainingId: json['trainingId'],
+        date: DateTime.parse(json['date']),
+        type: RatingType.values.firstWhere((e) => e.name == json['type']),
+        overallRating: json['overallRating'],
+        attackingRating: json['attackingRating'],
+        defendingRating: json['defendingRating'],
+        tacticalRating: json['tacticalRating'],
+        workRateRating: json['workRateRating'],
+        technicalRating: json['technicalRating'],
+        coachabilityRating: json['coachabilityRating'],
+        teamworkRating: json['teamworkRating'],
+        notes: json['notes'],
+        coachId: json['coachId'],
+        createdAt: DateTime.parse(json['createdAt']),
+      );
   final String id;
   final String playerId;
   final String? matchId;
@@ -86,13 +86,15 @@ class PerformanceRating {
     // Calculate average of first half vs second half
     final midPoint = ratingsToConsider.length ~/ 2;
     final recentAvg = ratingsToConsider
-        .take(midPoint)
-        .map((r) => r.overallRating)
-        .reduce((a, b) => a + b) / midPoint;
+            .take(midPoint)
+            .map((r) => r.overallRating)
+            .reduce((a, b) => a + b) /
+        midPoint;
     final olderAvg = ratingsToConsider
-        .skip(midPoint)
-        .map((r) => r.overallRating)
-        .reduce((a, b) => a + b) / (ratingsToConsider.length - midPoint);
+            .skip(midPoint)
+            .map((r) => r.overallRating)
+            .reduce((a, b) => a + b) /
+        (ratingsToConsider.length - midPoint);
 
     if (recentAvg > olderAvg + 0.3) return '↗️';
     if (recentAvg < olderAvg - 0.3) return '↘️';
@@ -137,23 +139,24 @@ class PerformanceRating {
     String? notes,
     String? coachId,
     DateTime? createdAt,
-  }) => PerformanceRating(
-      id: id ?? this.id,
-      playerId: playerId ?? this.playerId,
-      matchId: matchId ?? this.matchId,
-      trainingId: trainingId ?? this.trainingId,
-      date: date ?? this.date,
-      type: type ?? this.type,
-      overallRating: overallRating ?? this.overallRating,
-      attackingRating: attackingRating ?? this.attackingRating,
-      defendingRating: defendingRating ?? this.defendingRating,
-      tacticalRating: tacticalRating ?? this.tacticalRating,
-      workRateRating: workRateRating ?? this.workRateRating,
-      technicalRating: technicalRating ?? this.technicalRating,
-      coachabilityRating: coachabilityRating ?? this.coachabilityRating,
-      teamworkRating: teamworkRating ?? this.teamworkRating,
-      notes: notes ?? this.notes,
-      coachId: coachId ?? this.coachId,
-      createdAt: createdAt ?? this.createdAt,
-    );
+  }) =>
+      PerformanceRating(
+        id: id ?? this.id,
+        playerId: playerId ?? this.playerId,
+        matchId: matchId ?? this.matchId,
+        trainingId: trainingId ?? this.trainingId,
+        date: date ?? this.date,
+        type: type ?? this.type,
+        overallRating: overallRating ?? this.overallRating,
+        attackingRating: attackingRating ?? this.attackingRating,
+        defendingRating: defendingRating ?? this.defendingRating,
+        tacticalRating: tacticalRating ?? this.tacticalRating,
+        workRateRating: workRateRating ?? this.workRateRating,
+        technicalRating: technicalRating ?? this.technicalRating,
+        coachabilityRating: coachabilityRating ?? this.coachabilityRating,
+        teamworkRating: teamworkRating ?? this.teamworkRating,
+        notes: notes ?? this.notes,
+        coachId: coachId ?? this.coachId,
+        createdAt: createdAt ?? this.createdAt,
+      );
 }

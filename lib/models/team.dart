@@ -29,7 +29,6 @@ enum Formation {
 }
 
 class Team {
-
   Team() {
     createdAt = DateTime.now();
     updatedAt = DateTime.now();

@@ -94,7 +94,8 @@ class AuthService {
   // Helper to get redirect URL based on platform
   String _getRedirectUrl() {
     // For web, use the current origin
-    if (identical(0, 0.0)) { // Check if running on web
+    if (identical(0, 0.0)) {
+      // Check if running on web
       return 'https://app.jo17manager.nl/auth/callback';
     }
     // For mobile, use deep link
@@ -103,7 +104,6 @@ class AuthService {
 }
 
 class AuthException implements Exception {
-
   AuthException(this.message);
   final String message;
 

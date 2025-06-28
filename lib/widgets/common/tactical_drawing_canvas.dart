@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 enum DrawingTool { line, arrow, circle, text, erase }
 
 class DrawingElement {
-
   DrawingElement({
     required this.tool,
     required this.points,
@@ -20,7 +19,6 @@ class DrawingElement {
 }
 
 class TacticalDrawingCanvas extends StatefulWidget {
-
   const TacticalDrawingCanvas({
     super.key,
     required this.child,
@@ -47,28 +45,28 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
 
   @override
   Widget build(BuildContext context) => Stack(
-      children: [
-        widget.child,
-        if (widget.isDrawingMode)
-          Positioned.fill(
-            child: GestureDetector(
-              onPanStart: _onPanStart,
-              onPanUpdate: _onPanUpdate,
-              onPanEnd: _onPanEnd,
-              onTapUp: _onTap,
-              child: CustomPaint(
-                painter: TacticalDrawingPainter(
-                  drawings: widget.drawings,
-                  currentPoints: _currentPoints,
-                  currentTool: widget.selectedTool,
-                  currentColor: widget.selectedColor,
-                  isDrawing: _isDrawing,
+        children: [
+          widget.child,
+          if (widget.isDrawingMode)
+            Positioned.fill(
+              child: GestureDetector(
+                onPanStart: _onPanStart,
+                onPanUpdate: _onPanUpdate,
+                onPanEnd: _onPanEnd,
+                onTapUp: _onTap,
+                child: CustomPaint(
+                  painter: TacticalDrawingPainter(
+                    drawings: widget.drawings,
+                    currentPoints: _currentPoints,
+                    currentTool: widget.selectedTool,
+                    currentColor: widget.selectedColor,
+                    isDrawing: _isDrawing,
+                  ),
                 ),
               ),
             ),
-          ),
-      ],
-    );
+        ],
+      );
 
   void _onPanStart(DragStartDetails details) {
     if (!widget.isDrawingMode) return;
@@ -122,7 +120,8 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
 
     DrawingElement element;
 
-    if (widget.selectedTool == DrawingTool.arrow && _currentPoints.length >= 2) {
+    if (widget.selectedTool == DrawingTool.arrow &&
+        _currentPoints.length >= 2) {
       // For arrows, we only need start and end points
       element = DrawingElement(
         tool: DrawingTool.arrow,
@@ -184,10 +183,14 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
   void _eraseAtPosition(Offset position) {
     const eraseRadius = 30.0;
 
-    final updatedDrawings = widget.drawings.where((element) => !element.points.any((point) {
-        final distance = (point - position).distance;
-        return distance <= eraseRadius;
-      }),).toList();
+    final updatedDrawings = widget.drawings
+        .where(
+          (element) => !element.points.any((point) {
+            final distance = (point - position).distance;
+            return distance <= eraseRadius;
+          }),
+        )
+        .toList();
 
     widget.onDrawingsChanged(updatedDrawings);
   }
@@ -208,7 +211,6 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
 }
 
 class TacticalDrawingPainter extends CustomPainter {
-
   TacticalDrawingPainter({
     required this.drawings,
     required this.currentPoints,
@@ -299,8 +301,10 @@ class TacticalDrawingPainter extends CustomPainter {
     final perpVector = Offset(-unitVector.dy, unitVector.dx);
 
     final arrowBase = end - unitVector * arrowLength;
-    final arrowLeft = arrowBase + perpVector * arrowLength * math.sin(arrowAngle);
-    final arrowRight = arrowBase - perpVector * arrowLength * math.sin(arrowAngle);
+    final arrowLeft =
+        arrowBase + perpVector * arrowLength * math.sin(arrowAngle);
+    final arrowRight =
+        arrowBase - perpVector * arrowLength * math.sin(arrowAngle);
 
     final arrowPath = Path();
     arrowPath.moveTo(end.dx, end.dy);
