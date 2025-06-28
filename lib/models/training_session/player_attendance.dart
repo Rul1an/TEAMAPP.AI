@@ -3,7 +3,87 @@ import 'package:isar/isar.dart';
 // part 'player_attendance.g.dart'; // Disabled for web compatibility
 
 class PlayerAttendance {
-  String id = "";
+
+  // Constructor
+  PlayerAttendance();
+
+  // Named constructors
+  PlayerAttendance.present({
+    required this.playerId,
+    required this.playerName,
+    required this.playerNumber,
+    required this.position,
+    this.arrivalTime,
+  }) {
+    status = AttendanceStatus.present;
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+
+  PlayerAttendance.absent({
+    required this.playerId,
+    required this.playerName,
+    required this.playerNumber,
+    required this.position,
+    this.notes,
+  }) {
+    status = AttendanceStatus.absent;
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+
+  PlayerAttendance.late({
+    required this.playerId,
+    required this.playerName,
+    required this.playerNumber,
+    required this.position,
+    required this.arrivalTime,
+    this.notes,
+  }) {
+    status = AttendanceStatus.late;
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+
+  PlayerAttendance.injured({
+    required this.playerId,
+    required this.playerName,
+    required this.playerNumber,
+    required this.position,
+    this.notes,
+  }) {
+    status = AttendanceStatus.injured;
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+
+  factory PlayerAttendance.fromJson(Map<String, dynamic> json) {
+    final attendance = PlayerAttendance();
+    attendance.id = json['id'] ?? '';
+    attendance.playerId = json['playerId'] ?? '';
+    attendance.playerName = json['playerName'] ?? '';
+    attendance.playerNumber = json['playerNumber'] ?? 0;
+    attendance.position = PlayerPosition.values.firstWhere(
+      (e) => e.name == json['position'],
+      orElse: () => PlayerPosition.V,
+    );
+    attendance.status = AttendanceStatus.values.firstWhere(
+      (e) => e.name == json['status'],
+      orElse: () => AttendanceStatus.unknown,
+    );
+    attendance.notes = json['notes'];
+    attendance.arrivalTime = json['arrivalTime'] != null
+        ? DateTime.parse(json['arrivalTime'])
+        : null;
+    attendance.createdAt = json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'])
+        : DateTime.now();
+    attendance.updatedAt = json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'])
+        : DateTime.now();
+    return attendance;
+  }
+  String id = '';
 
   late String playerId;
   late String playerName;
@@ -62,59 +142,6 @@ class PlayerAttendance {
     }
   }
 
-  // Constructor
-  PlayerAttendance();
-
-  // Named constructors
-  PlayerAttendance.present({
-    required this.playerId,
-    required this.playerName,
-    required this.playerNumber,
-    required this.position,
-    this.arrivalTime,
-  }) {
-    status = AttendanceStatus.present;
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-  }
-
-  PlayerAttendance.absent({
-    required this.playerId,
-    required this.playerName,
-    required this.playerNumber,
-    required this.position,
-    this.notes,
-  }) {
-    status = AttendanceStatus.absent;
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-  }
-
-  PlayerAttendance.late({
-    required this.playerId,
-    required this.playerName,
-    required this.playerNumber,
-    required this.position,
-    required this.arrivalTime,
-    this.notes,
-  }) {
-    status = AttendanceStatus.late;
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-  }
-
-  PlayerAttendance.injured({
-    required this.playerId,
-    required this.playerName,
-    required this.playerNumber,
-    required this.position,
-    this.notes,
-  }) {
-    status = AttendanceStatus.injured;
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-  }
-
   // JSON serialization
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -128,33 +155,6 @@ class PlayerAttendance {
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
   };
-
-  factory PlayerAttendance.fromJson(Map<String, dynamic> json) {
-    final attendance = PlayerAttendance();
-    attendance.id = json['id'] ?? "";
-    attendance.playerId = json['playerId'] ?? '';
-    attendance.playerName = json['playerName'] ?? '';
-    attendance.playerNumber = json['playerNumber'] ?? 0;
-    attendance.position = PlayerPosition.values.firstWhere(
-      (e) => e.name == json['position'],
-      orElse: () => PlayerPosition.V,
-    );
-    attendance.status = AttendanceStatus.values.firstWhere(
-      (e) => e.name == json['status'],
-      orElse: () => AttendanceStatus.unknown,
-    );
-    attendance.notes = json['notes'];
-    attendance.arrivalTime = json['arrivalTime'] != null
-        ? DateTime.parse(json['arrivalTime'])
-        : null;
-    attendance.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now();
-    attendance.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
-        : DateTime.now();
-    return attendance;
-  }
 
   // Copy with method
   PlayerAttendance copyWith({
@@ -209,10 +209,8 @@ class PlayerAttendance {
   }
 
   @override
-  String toString() {
-    return 'PlayerAttendance(name: $playerName, number: $playerNumber, '
+  String toString() => 'PlayerAttendance(name: $playerName, number: $playerNumber, '
            'position: $position, status: $status)';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -223,9 +221,7 @@ class PlayerAttendance {
   }
 
   @override
-  int get hashCode {
-    return playerId.hashCode ^ playerNumber.hashCode;
-  }
+  int get hashCode => playerId.hashCode ^ playerNumber.hashCode;
 }
 
 enum PlayerPosition {

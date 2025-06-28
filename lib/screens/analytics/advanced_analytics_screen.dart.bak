@@ -31,7 +31,8 @@ class _AdvancedAnalyticsScreenState extends ConsumerState<AdvancedAnalyticsScree
 
   @override
   Widget build(BuildContext context) => MainScaffold(
-      child: SingleChildScrollView(
+      currentIndex: 4, // Analytics tab
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

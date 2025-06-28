@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../models/player.dart';
+
 import '../../config/theme.dart';
+import '../../models/player.dart';
 import '../../services/database_service.dart';
 import '../common/performance_badge.dart';
 
 class PlayerCard extends ConsumerWidget {
-  final Player player;
-  final VoidCallback? onTap;
 
   const PlayerCard({
     super.key,
     required this.player,
     this.onTap,
   });
+  final Player player;
+  final VoidCallback? onTap;
 
   Future<Map<String, dynamic>> _getPerformanceData(String playerId) async {
     final dbService = DatabaseService();
@@ -27,8 +28,7 @@ class PlayerCard extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Card(
+  Widget build(BuildContext context, WidgetRef ref) => Card(
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
@@ -140,19 +140,18 @@ class PlayerCard extends ConsumerWidget {
         ),
       ),
     );
-  }
 }
 
 class _PerformanceIndicator extends StatelessWidget {
-  final String label;
-  final double value;
-  final IconData icon;
 
   const _PerformanceIndicator({
     required this.label,
     required this.value,
     required this.icon,
   });
+  final String label;
+  final double value;
+  final IconData icon;
 
   Color _getPerformanceColor(double value) {
     if (value >= 80) return AppTheme.successColor;
@@ -161,8 +160,7 @@ class _PerformanceIndicator extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: _getPerformanceColor(value).withValues(alpha: 0.1),
@@ -187,23 +185,21 @@ class _PerformanceIndicator extends StatelessWidget {
         ],
       ),
     );
-  }
 }
 
 class _StatIndicator extends StatelessWidget {
-  final String label;
-  final String value;
-  final IconData icon;
 
   const _StatIndicator({
     required this.label,
     required this.value,
     required this.icon,
   });
+  final String label;
+  final String value;
+  final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.grey.withValues(alpha: 0.1),
@@ -227,5 +223,4 @@ class _StatIndicator extends StatelessWidget {
         ],
       ),
     );
-  }
 }

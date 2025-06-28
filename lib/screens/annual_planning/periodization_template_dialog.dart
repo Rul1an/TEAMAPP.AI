@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import '../../models/annual_planning/periodization_plan.dart';
 
 class PeriodizationTemplateDialog extends StatefulWidget {
-  final PeriodizationPlan? currentTemplate;
 
   const PeriodizationTemplateDialog({
     super.key,
     this.currentTemplate,
   });
+  final PeriodizationPlan? currentTemplate;
 
   @override
   State<PeriodizationTemplateDialog> createState() => _PeriodizationTemplateDialogState();
@@ -30,8 +30,7 @@ class _PeriodizationTemplateDialogState extends State<PeriodizationTemplateDialo
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Dialog(
+  Widget build(BuildContext context) => Dialog(
       child: Container(
         width: 600,
         height: 700,
@@ -231,10 +230,8 @@ class _PeriodizationTemplateDialogState extends State<PeriodizationTemplateDialo
         ),
       ),
     );
-  }
 
-  Widget _buildDetailChip(IconData icon, String label) {
-    return Container(
+  Widget _buildDetailChip(IconData icon, String label) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: Colors.grey.shade100,
@@ -256,7 +253,6 @@ class _PeriodizationTemplateDialogState extends State<PeriodizationTemplateDialo
         ],
       ),
     );
-  }
 
   List<Widget> _buildPeriodPreview(PeriodizationPlan template) {
     final params = PeriodizationPlan.getRecommendedParameters(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+
 import '../../models/player.dart';
 import '../../providers/players_provider.dart';
 
@@ -19,8 +20,7 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
   bool _isSubmitting = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Text('Speler Toevoegen'),
         leading: IconButton(
@@ -140,12 +140,10 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
                         labelText: 'Positie',
                         prefixIcon: Icon(Icons.sports_soccer),
                       ),
-                      items: Position.values.map((position) {
-                        return DropdownMenuItem(
+                      items: Position.values.map((position) => DropdownMenuItem(
                           value: position,
                           child: Text(_getPositionText(position)),
-                        );
-                      }).toList(),
+                        ),).toList(),
                       validator: (value) {
                         if (value == null) {
                           return 'Positie is verplicht';
@@ -162,12 +160,10 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
                         labelText: 'Voorkeursbeen',
                         prefixIcon: Icon(Icons.directions_walk),
                       ),
-                      items: PreferredFoot.values.map((foot) {
-                        return DropdownMenuItem(
+                      items: PreferredFoot.values.map((foot) => DropdownMenuItem(
                           value: foot,
                           child: Text(_getPreferredFootText(foot)),
-                        );
-                      }).toList(),
+                        ),).toList(),
                       validator: (value) {
                         if (value == null) {
                           return 'Voorkeursbeen is verplicht';
@@ -257,16 +253,13 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildSectionHeader(String title) {
-    return Text(
+  Widget _buildSectionHeader(String title) => Text(
       title,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.bold,
       ),
     );
-  }
 
   Future<void> _submitForm() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {

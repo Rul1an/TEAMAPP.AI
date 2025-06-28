@@ -1,17 +1,18 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../services/database_service.dart';
-import '../../models/player.dart';
+
 import '../../models/assessment.dart';
+import '../../models/player.dart';
 import '../../models/training_session/training_session.dart';
+import '../../services/database_service.dart';
 import '../players/assessment_detail_screen.dart'; // Import the new screen
 
 // Analytics Data Providers
 final playersProvider = FutureProvider<List<Player>>((ref) async {
   final db = DatabaseService();
   await db.initialize();
-  return await db.getAllPlayers();
+  return db.getAllPlayers();
 });
 
 final assessmentsProvider = FutureProvider<List<PlayerAssessment>>((ref) async {
@@ -52,7 +53,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -60,7 +61,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
             Card(
               color: Theme.of(context).colorScheme.primaryContainer,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -153,7 +154,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
   }
 
   // New method to navigate to the radar chart screen
-  void _showLatestAssessmentRadar(BuildContext context, WidgetRef ref) async {
+  Future<void> _showLatestAssessmentRadar(BuildContext context, WidgetRef ref) async {
     final assessments = await ref.read(assessmentsProvider.future);
     final players = await ref.read(playersProvider.future);
 
@@ -189,8 +190,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     AsyncValue<List<Player>> playersAsync,
     AsyncValue<List<PlayerAssessment>> assessmentsAsync,
     AsyncValue<List<TrainingSession>> trainingsAsync,
-  ) {
-    return Row(
+  ) => Row(
       children: [
         Expanded(
           child: Card(
@@ -268,7 +268,6 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
         ),
       ],
     );
-  }
 
   Widget _buildFeatureCard({
     required BuildContext context,
@@ -277,8 +276,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     required IconData icon,
     required Color color,
     required VoidCallback onTap,
-  }) {
-    return Card(
+  }) => Card(
       elevation: 4,
       child: InkWell(
         onTap: onTap,
@@ -319,14 +317,12 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildRecentActivity(
     BuildContext context,
     AsyncValue<List<PlayerAssessment>> assessmentsAsync,
     AsyncValue<List<TrainingSession>> trainingsAsync,
-  ) {
-    return Card(
+  ) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -365,7 +361,6 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   // Feature implementations
   void _showPlayerDevelopment(BuildContext context, WidgetRef ref) {
@@ -389,12 +384,12 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
             data: (players) => assessmentsAsync.when(
               data: (assessments) {
                 if (assessments.isEmpty) {
-                  return const Center(child: Text("Voeg eerst assessments toe."));
+                  return const Center(child: Text('Voeg eerst assessments toe.'));
                 }
 
                 // Create a map of Player ID to their latest assessment
                 final latestAssessments = <String, PlayerAssessment>{};
-                for (var assessment in assessments) {
+                for (final assessment in assessments) {
                   if (!latestAssessments.containsKey(assessment.playerId) ||
                       assessment.assessmentDate.isAfter(latestAssessments[assessment.playerId]!.assessmentDate)) {
                     latestAssessments[assessment.playerId] = assessment;
@@ -442,8 +437,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildPlayerPerformanceChart(List<MapEntry<Player, double>> topPlayers) {
-    return BarChart(
+  Widget _buildPlayerPerformanceChart(List<MapEntry<Player, double>> topPlayers) => BarChart(
       BarChartData(
         alignment: BarChartAlignment.spaceAround,
         maxY: 5,
@@ -451,7 +445,6 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
           enabled: false,
         ),
         titlesData: FlTitlesData(
-          show: true,
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
@@ -469,9 +462,9 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               reservedSize: 30,
             ),
           ),
-          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 28)),
-          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 28)),
+          topTitles: const AxisTitles(),
+          rightTitles: const AxisTitles(),
         ),
         borderData: FlBorderData(show: false),
         barGroups: topPlayers.asMap().entries.map((entry) {
@@ -484,14 +477,13 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                 toY: playerData.value,
                 color: Colors.blue,
                 width: 20,
-              )
+              ),
             ],
             showingTooltipIndicators: [0],
           );
         }).toList(),
       ),
     );
-  }
 
   void _showTrainingEffectiveness(BuildContext context, WidgetRef ref) {
     final playersAsync = ref.read(playersProvider);
@@ -584,13 +576,11 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildAttendanceChart(List<Player> topPlayers) {
-    return BarChart(
+  Widget _buildAttendanceChart(List<Player> topPlayers) => BarChart(
       BarChartData(
         alignment: BarChartAlignment.spaceAround,
         barTouchData: BarTouchData(enabled: false),
         titlesData: FlTitlesData(
-          show: true,
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
@@ -614,8 +604,8 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               reservedSize: 20,
             ),
           ),
-          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: const AxisTitles(),
+          rightTitles: const AxisTitles(),
         ),
         borderData: FlBorderData(show: false),
         barGroups: topPlayers.asMap().entries.map((entry) {
@@ -634,8 +624,6 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
           );
         }).toList(),
         gridData: FlGridData(
-          show: true,
-          drawVerticalLine: true,
           getDrawingHorizontalLine: (value) => const FlLine(
             color: Colors.black12,
             strokeWidth: 1,
@@ -646,10 +634,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
           ),
         ),
       ),
-      swapAnimationDuration: const Duration(milliseconds: 150), // Optional
-      swapAnimationCurve: Curves.linear, // Optional
     );
-  }
 
   void _showTeamOverview(BuildContext context, WidgetRef ref) {
     final playersAsync = ref.read(playersProvider);
@@ -763,7 +748,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
   }
 
   Widget _buildPositionChart(Map<Position, List<Player>> positionGroups) {
-    int touchedIndex = -1;
+    const int touchedIndex = -1;
     final data = positionGroups.entries.map((entry) {
       final position = entry.key;
       final players = entry.value;
@@ -827,7 +812,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
 
     // Best attendance
     final bestAttendance = players.reduce((a, b) =>
-        a.attendancePercentage > b.attendancePercentage ? a : b);
+        a.attendancePercentage > b.attendancePercentage ? a : b,);
     insights.add({
       'icon': Icons.emoji_events,
       'color': Colors.green,
@@ -836,7 +821,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     });
 
     // Team balance
-    final avgAge = players.map((p) => p.age).fold(0.0, (a, b) => a + b) / players.length;
+    final avgAge = players.map((p) => p.age).fold(0, (a, b) => a + b) / players.length;
     insights.add({
       'icon': Icons.balance,
       'color': Colors.blue,

@@ -13,10 +13,6 @@ class SupabaseConfig {
       url: Environment.current.supabaseUrl,
       anonKey: Environment.current.supabaseAnonKey,
       debug: Environment.current.enableDebugFeatures,
-      authOptions: const FlutterAuthClientOptions(
-        authFlowType: AuthFlowType.pkce,
-        autoRefreshToken: true,
-      ),
       realtimeClientOptions: const RealtimeClientOptions(
         logLevel: RealtimeLogLevel.info,
       ),
@@ -73,24 +69,20 @@ class SupabaseConfig {
     required String email,
     required String password,
     Map<String, dynamic>? data,
-  }) async {
-    return await _client.auth.signUp(
+  }) async => _client.auth.signUp(
       email: email,
       password: password,
       data: data,
     );
-  }
 
   /// Sign in user
   static Future<AuthResponse> signIn({
     required String email,
     required String password,
-  }) async {
-    return await _client.auth.signInWithPassword(
+  }) async => _client.auth.signInWithPassword(
       email: email,
       password: password,
     );
-  }
 
   /// Sign out user
   static Future<void> signOut() async {
@@ -163,7 +155,7 @@ class SupabaseConfig {
         .from('organization_members')
         .insert({
           'organization_id': orgResponse['id'],
-          'user_id': currentUserId!,
+          'user_id': currentUserId,
           'role': 'owner',
         });
 
@@ -233,13 +225,10 @@ class SupabaseConfig {
   }
 
   /// Execute RPC (Remote Procedure Call) functions
-  static Future<dynamic> rpc(String functionName, [Map<String, dynamic>? params]) async {
-    return await _client.rpc(functionName, params: params);
-  }
+  static Future<dynamic> rpc(String functionName, [Map<String, dynamic>? params]) async => await _client.rpc(functionName, params: params);
 
   /// Realtime subscription for organization data
-  static RealtimeChannel subscribeToOrganization(String organizationId, void Function(PostgresChangePayload) callback) {
-    return _client
+  static RealtimeChannel subscribeToOrganization(String organizationId, void Function(PostgresChangePayload) callback) => _client
         .channel('organization_$organizationId')
         .onPostgresChanges(
           event: PostgresChangeEvent.all,
@@ -252,15 +241,12 @@ class SupabaseConfig {
           callback: callback,
         )
         .subscribe();
-  }
 }
 
 /// Extension for easier access to Supabase client
 extension SupabaseExtension on SupabaseClient {
   /// Quick access to current organization ID (stored in user metadata)
-  String? get currentOrganizationId {
-    return auth.currentUser?.userMetadata?['organization_id'] as String?;
-  }
+  String? get currentOrganizationId => auth.currentUser?.userMetadata?['organization_id'] as String?;
 
   /// Set current organization ID in user metadata
   Future<void> setCurrentOrganizationId(String organizationId) async {

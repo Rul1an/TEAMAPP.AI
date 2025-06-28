@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../widgets/common/weekly_calendar_widget.dart';
-import '../../services/database_service.dart';
+
 import '../../models/annual_planning/season_plan.dart';
 import '../../models/training_session/training_session.dart';
+import '../../services/database_service.dart';
+import '../../widgets/common/weekly_calendar_widget.dart';
 
 final currentSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
   final db = DatabaseService();
@@ -21,12 +22,12 @@ final currentSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
 
 final recentTrainingSessionsProvider = FutureProvider<List<TrainingSession>>((ref) async {
   final db = DatabaseService();
-  return await db.getRecentTrainingSessions(limit: 5);
+  return db.getRecentTrainingSessions();
 });
 
 final upcomingTrainingSessionsProvider = FutureProvider<List<TrainingSession>>((ref) async {
   final db = DatabaseService();
-  return await db.getUpcomingTrainingSessions();
+  return db.getUpcomingTrainingSessions();
 });
 
 class SeasonHubScreen extends ConsumerWidget {
@@ -249,8 +250,7 @@ class SeasonHubScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildNoSeasonCard(BuildContext context) {
-    return Card(
+  Widget _buildNoSeasonCard(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
@@ -282,10 +282,8 @@ class SeasonHubScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
-  Widget _buildStatItem(BuildContext context, String label, String value, IconData icon) {
-    return Column(
+  Widget _buildStatItem(BuildContext context, String label, String value, IconData icon) => Column(
       children: [
         Icon(icon, color: Theme.of(context).primaryColor, size: 20),
         const SizedBox(height: 4),
@@ -304,10 +302,8 @@ class SeasonHubScreen extends ConsumerWidget {
         ),
       ],
     );
-  }
 
-  Widget _buildQuickActions(BuildContext context) {
-    return Card(
+  Widget _buildQuickActions(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -365,7 +361,6 @@ class SeasonHubScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildActionButton(
     BuildContext context,
@@ -373,8 +368,7 @@ class SeasonHubScreen extends ConsumerWidget {
     IconData icon,
     Color color,
     VoidCallback onTap,
-  ) {
-    return Material(
+  ) => Material(
       color: color.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(8),
       child: InkWell(
@@ -400,15 +394,13 @@ class SeasonHubScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildSectionHeader(
     BuildContext context,
     String title,
     IconData icon, {
     VoidCallback? onViewAll,
-  }) {
-    return Row(
+  }) => Row(
       children: [
         Icon(icon, color: Theme.of(context).primaryColor, size: 20),
         const SizedBox(width: 8),
@@ -424,7 +416,6 @@ class SeasonHubScreen extends ConsumerWidget {
           ),
       ],
     );
-  }
 
   Widget _buildTrainingSessionsList(
     BuildContext context,
@@ -468,12 +459,11 @@ class SeasonHubScreen extends ConsumerWidget {
             // TODO: Navigate to session detail
           },
         ),
-      )).toList(),
+      ),).toList(),
     );
   }
 
-  Widget _buildPeriodizationStatus(BuildContext context) {
-    return Card(
+  Widget _buildPeriodizationStatus(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -522,7 +512,6 @@ class SeasonHubScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildPeriodCard(
     BuildContext context,
@@ -530,8 +519,7 @@ class SeasonHubScreen extends ConsumerWidget {
     String period,
     String detail,
     Color color,
-  ) {
-    return Container(
+  ) => Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
@@ -565,7 +553,6 @@ class SeasonHubScreen extends ConsumerWidget {
         ],
       ),
     );
-  }
 
   Color _getPhaseColor(SeasonPhase phase) {
     switch (phase) {

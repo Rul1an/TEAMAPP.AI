@@ -1,22 +1,21 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:go_router/go_router.dart';
-import '../../widgets/common/quick_actions_widget.dart';
 import 'package:intl/intl.dart';
-import '../../widgets/rbac_demo_widget.dart';
-import '../../providers/statistics_provider.dart';
-import '../../providers/matches_provider.dart';
-import '../../providers/demo_mode_provider.dart';
-import '../../providers/auth_provider.dart';
-import '../../providers/organization_provider.dart';
-import '../../services/database_service.dart';
-import '../../services/permission_service.dart';
+
+import '../../models/annual_planning/season_plan.dart';
 import '../../models/match.dart';
 import '../../models/training_session/training_session.dart';
-import '../../models/annual_planning/season_plan.dart';
-
-import '../ai_demo_screen.dart';// New providers for integrated data
+import '../../providers/auth_provider.dart';
+import '../../providers/demo_mode_provider.dart';
+import '../../providers/matches_provider.dart';
+import '../../providers/organization_provider.dart';
+import '../../providers/statistics_provider.dart';
+import '../../services/database_service.dart';
+import '../../services/permission_service.dart';
+import '../../widgets/common/quick_actions_widget.dart';
+import '../../widgets/rbac_demo_widget.dart';
 final dashboardSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
   final db = DatabaseService();
   final seasons = await db.getAllSeasonPlans();
@@ -30,7 +29,7 @@ final dashboardSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
 
 final dashboardTrainingSessionsProvider = FutureProvider<List<TrainingSession>>((ref) async {
   final db = DatabaseService();
-  return await db.getUpcomingTrainingSessions();
+  return db.getUpcomingTrainingSessions();
 });
 
 class DashboardScreen extends ConsumerWidget {
@@ -102,7 +101,7 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   List<Widget> _buildAppBarActions(BuildContext context, String? userRole, String? tier) {
-    List<Widget> actions = [];
+    final List<Widget> actions = [];
 
     // Only coaches and admins can create training sessions
     if (PermissionService.canManageTraining(userRole)) {
@@ -138,7 +137,7 @@ class DashboardScreen extends ConsumerWidget {
     AsyncValue<List<Match>> upcomingMatchesAsync,
     AsyncValue<List<TrainingSession>> trainingSessionsAsync,
   ) {
-    List<Widget> content = [];
+    final List<Widget> content = [];
 
     if (PermissionService.isPlayer(userRole)) {
       // Player-specific content
@@ -213,8 +212,7 @@ class DashboardScreen extends ConsumerWidget {
     return content;
   }
 
-  Widget _buildPlayerQuickActions(BuildContext context) {
-    return Card(
+  Widget _buildPlayerQuickActions(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -251,10 +249,8 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
-  Widget _buildPlayerStats(BuildContext context, dynamic statistics) {
-    return Card(
+  Widget _buildPlayerStats(BuildContext context, dynamic statistics) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -292,10 +288,8 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
-  Widget _buildParentOverview(BuildContext context) {
-    return Card(
+  Widget _buildParentOverview(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -317,14 +311,12 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildUpcomingEventsForPlayer(
     BuildContext context,
     AsyncValue<List<Match>> upcomingMatchesAsync,
     AsyncValue<List<TrainingSession>> trainingSessionsAsync,
-  ) {
-    return Card(
+  ) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -343,30 +335,26 @@ class DashboardScreen extends ConsumerWidget {
                   leading: const Icon(Icons.stadium),
                   title: Text(match.opponent),
                   subtitle: Text(DateFormat('dd/MM/yyyy HH:mm').format(match.date)),
-                )).toList(),
+                ),).toList(),
               ),
             ),
           ],
         ),
       ),
     );
-  }
 
   Widget _buildUpcomingEventsForParent(
     BuildContext context,
     AsyncValue<List<Match>> upcomingMatchesAsync,
     AsyncValue<List<TrainingSession>> trainingSessionsAsync,
-  ) {
-    return _buildUpcomingEventsForPlayer(context, upcomingMatchesAsync, trainingSessionsAsync);
-  }
+  ) => _buildUpcomingEventsForPlayer(context, upcomingMatchesAsync, trainingSessionsAsync);
 
   Widget _buildActionCard(
     BuildContext context,
     String title,
     IconData icon,
     VoidCallback onTap,
-  ) {
-    return Card(
+  ) => Card(
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(8),
@@ -388,7 +376,6 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildWelcomeSection(BuildContext context, SeasonPlan? season, String? userRole) {
     if (season == null) {
@@ -480,18 +467,15 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildLoadingWelcome(BuildContext context, String? userRole) {
-    return Card(
+  Widget _buildLoadingWelcome(BuildContext context, String? userRole) => Card(
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         child: const Center(child: CircularProgressIndicator()),
       ),
     );
-  }
 
-  Widget _buildNoSeasonWelcome(BuildContext context, String? userRole) {
-    return Card(
+  Widget _buildNoSeasonWelcome(BuildContext context, String? userRole) => Card(
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
@@ -521,10 +505,8 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
-  Widget _buildSmartActions(BuildContext context) {
-    return Card(
+  Widget _buildSmartActions(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -584,7 +566,6 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildUpcomingTrainingSessions(BuildContext context, List<TrainingSession> sessions) {
     if (sessions.isEmpty) {
@@ -608,8 +589,7 @@ class DashboardScreen extends ConsumerWidget {
     }
 
     return Column(
-      children: sessions.take(3).map((session) {
-        return Card(
+      children: sessions.take(3).map((session) => Card(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             leading: CircleAvatar(
@@ -639,8 +619,7 @@ class DashboardScreen extends ConsumerWidget {
               // TODO: Navigate to session detail
             },
           ),
-        );
-      }).toList(),
+        ),).toList(),
     );
   }
 
@@ -682,8 +661,7 @@ class DashboardScreen extends ConsumerWidget {
     }
   }
 
-  Widget _buildStatisticsCards(BuildContext context, Map<String, dynamic> statistics) {
-    return LayoutBuilder(
+  Widget _buildStatisticsCards(BuildContext context, Map<String, dynamic> statistics) => LayoutBuilder(
       builder: (context, constraints) {
         final crossAxisCount = constraints.maxWidth > 800 ? 4 : 2;
         final childAspectRatio = constraints.maxWidth > 800 ? 1.5 : 1.2;
@@ -728,7 +706,6 @@ class DashboardScreen extends ConsumerWidget {
         );
       },
     );
-  }
 
   Widget _buildStatCard(
     BuildContext context,
@@ -736,8 +713,7 @@ class DashboardScreen extends ConsumerWidget {
     String value,
     IconData icon,
     Color color,
-  ) {
-    return Card(
+  ) => Card(
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -762,7 +738,6 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildPerformanceChart(BuildContext context, Map<String, dynamic> statistics) {
     final wins = statistics['wins'] as int;
@@ -855,8 +830,7 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildLegendItem(String label, Color color, int value) {
-    return Row(
+  Widget _buildLegendItem(String label, Color color, int value) => Row(
       children: [
         Container(
           width: 16,
@@ -867,7 +841,6 @@ class DashboardScreen extends ConsumerWidget {
         Text('$label: $value'),
       ],
     );
-  }
 
   Widget _buildUpcomingMatches(BuildContext context, List<Match> matches) {
     if (matches.isEmpty) {
@@ -880,8 +853,7 @@ class DashboardScreen extends ConsumerWidget {
     }
 
     return Column(
-      children: matches.take(3).map((match) {
-        return Card(
+      children: matches.take(3).map((match) => Card(
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: match.location == Location.home ? Colors.green : Colors.blue,
@@ -899,8 +871,7 @@ class DashboardScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-        );
-      }).toList(),
+        ),).toList(),
     );
   }
 }

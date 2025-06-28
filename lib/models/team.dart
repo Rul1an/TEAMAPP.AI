@@ -29,7 +29,12 @@ enum Formation {
 }
 
 class Team {
-  String id = "";
+
+  Team() {
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+  String id = '';
 
   late String name;
   late String ageGroup;
@@ -64,10 +69,5 @@ class Team {
   double get winPercentage {
     if (matchesPlayed == 0) return 0;
     return (wins / matchesPlayed) * 100;
-  }
-
-  Team() {
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
   }
 }

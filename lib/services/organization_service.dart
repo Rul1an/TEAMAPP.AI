@@ -47,7 +47,6 @@ class OrganizationService {
           id: id,
           name: 'Mijn Voetbalclub',
           slug: 'mijn-voetbalclub',
-          tier: OrganizationTier.basic,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
@@ -68,7 +67,6 @@ class OrganizationService {
           id: 'default-org',
           name: 'Mijn Voetbalclub',
           slug: 'mijn-voetbalclub',
-          tier: OrganizationTier.basic,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ),

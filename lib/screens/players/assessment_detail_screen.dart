@@ -1,26 +1,26 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+
 import '../../models/assessment.dart';
 import '../../models/player.dart';
 
 class AssessmentDetailScreen extends StatelessWidget {
-  final PlayerAssessment assessment;
-  final Player player;
 
   const AssessmentDetailScreen({
     super.key,
     required this.assessment,
     required this.player,
   });
+  final PlayerAssessment assessment;
+  final Player player;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: Text('Assessment for ${player.name}'),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -31,7 +31,7 @@ class AssessmentDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     Text('Overall Average: ${assessment.overallAverage.toStringAsFixed(1)}'),
@@ -48,7 +48,6 @@ class AssessmentDetailScreen extends StatelessWidget {
         ),
       ),
     );
-  }
 
   Widget _buildRadarChart(PlayerAssessment assessment) {
     final dataSets = [
@@ -90,7 +89,7 @@ class AssessmentDetailScreen extends StatelessWidget {
         tickCount: 5,
         ticksTextStyle: const TextStyle(color: Colors.grey, fontSize: 10),
         tickBorderData: const BorderSide(color: Colors.grey, width: 2),
-        gridBorderData: const BorderSide(color: Colors.grey, width: 1),
+        gridBorderData: const BorderSide(color: Colors.grey),
       ),
     );
   }

@@ -5,18 +5,6 @@ import '../../providers/field_diagram_provider.dart';
 import 'field_painter.dart';
 
 class FieldCanvas extends ConsumerStatefulWidget {
-  final FieldDiagram diagram;
-  final DiagramTool currentTool;
-  final String? selectedElementId;
-  final PlayerType selectedPlayerType;
-  final EquipmentType selectedEquipmentType;
-  final LineType selectedLineType;
-  final List<Position> currentLinePoints;
-  final bool isDrawingLine;
-  final Function(String?) onElementSelected;
-  final Function(String, Position) onElementMoved;
-  final Function(dynamic) onElementAdded;
-  final Function(String) onElementRemoved;
 
   const FieldCanvas({
     super.key,
@@ -33,6 +21,18 @@ class FieldCanvas extends ConsumerStatefulWidget {
     required this.onElementAdded,
     required this.onElementRemoved,
   });
+  final FieldDiagram diagram;
+  final DiagramTool currentTool;
+  final String? selectedElementId;
+  final PlayerType selectedPlayerType;
+  final EquipmentType selectedEquipmentType;
+  final LineType selectedLineType;
+  final List<Position> currentLinePoints;
+  final bool isDrawingLine;
+  final Function(String?) onElementSelected;
+  final Function(String, Position) onElementMoved;
+  final Function(dynamic) onElementAdded;
+  final Function(String) onElementRemoved;
 
   @override
   ConsumerState<FieldCanvas> createState() => _FieldCanvasState();
@@ -49,7 +49,7 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   // Grid and snap settings
   bool _showGrid = true;
   bool _snapToGrid = true;
-  final double _gridSize = 10.0;
+  final double _gridSize = 10;
 
   @override
   void initState() {
@@ -64,12 +64,11 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
     @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       children: [
         _buildCanvasControls(),
         Expanded(
-          child: Container(
+          child: DecoratedBox(
             decoration: BoxDecoration(
               color: Colors.green[50],
               border: Border.all(color: Colors.green[300]!, width: 2),
@@ -77,9 +76,8 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
             child: InteractiveViewer(
               transformationController: _transformController,
               minScale: 0.5,
-              maxScale: 3.0,
+              maxScale: 3,
               panEnabled: widget.currentTool == DiagramTool.select,
-              scaleEnabled: true,
               child: GestureDetector(
                 onTapDown: _handleTapDown,
                 onPanStart: _handlePanStart,
@@ -107,11 +105,9 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
         ),
       ],
     );
-  }
 
-  Widget _buildCanvasControls() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+  Widget _buildCanvasControls() => Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: Colors.grey[50],
         border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
@@ -172,7 +168,6 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
         ],
       ),
     );
-  }
 
   void _handleTapDown(TapDownDetails details) {
     final localPosition = details.localPosition;
@@ -285,7 +280,6 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       position: snappedPosition,
       type: widget.selectedEquipmentType,
-      color: '#FF9800',
     );
     widget.onElementAdded(newEquipment);
   }
@@ -300,8 +294,6 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           position: snappedPosition,
           text: text,
-          color: '#000000',
-          fontSize: 14.0,
         );
         widget.onElementAdded(newText);
       }
@@ -346,7 +338,7 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     // Calculate distance in normalized coordinates (0-100)
     final dx = pos1.x - pos2.x;
     final dy = pos1.y - pos2.y;
-    final distance = (dx * dx + dy * dy);
+    final distance = dx * dx + dy * dy;
 
     // Convert tolerance to normalized coordinate tolerance
     final normalizedTolerance = tolerance / 10; // Adjust for 0-100 scale
@@ -417,14 +409,14 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
 
     // Convert grid size to normalized coordinates
     // Grid size is in pixels, we need to convert to 0-100 scale
-    final normalizedGridSize = (_gridSize / 10); // Rough conversion for field scale
+    final normalizedGridSize = _gridSize / 10; // Rough conversion for field scale
 
     final snappedX = (position.x / normalizedGridSize).round() * normalizedGridSize;
     final snappedY = (position.y / normalizedGridSize).round() * normalizedGridSize;
 
     return Position(
       snappedX.clamp(0, 100),
-      snappedY.clamp(0, 100)
+      snappedY.clamp(0, 100),
     );
   }
 
@@ -476,7 +468,5 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     _transformController.value = Matrix4.identity();
   }
 
-  double _getCurrentScale() {
-    return _transformController.value.getMaxScaleOnAxis();
-  }
+  double _getCurrentScale() => _transformController.value.getMaxScaleOnAxis();
 }

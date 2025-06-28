@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'team.dart';
+
 import 'staff_member.dart';
+import 'team.dart';
 
 part 'club.freezed.dart';
 part 'club.g.dart';
@@ -65,12 +66,12 @@ class Club with _$Club {
     String? updatedBy,
   }) = _Club;
 
+  factory Club.fromJson(Map<String, dynamic> json) => _$ClubFromJson(json);
+
   // Add computed property for foundedYear
   const Club._();
 
   int get foundedYear => foundedDate.year;
-
-  factory Club.fromJson(Map<String, dynamic> json) => _$ClubFromJson(json);
 }
 
 // SaaS Tier Enum

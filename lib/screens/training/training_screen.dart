@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import '../../providers/trainings_provider.dart';
+import 'package:table_calendar/table_calendar.dart';
+
 import '../../models/training.dart';
+import '../../providers/trainings_provider.dart';
 import '../../services/export_service.dart';
 
 class TrainingScreen extends ConsumerStatefulWidget {
@@ -88,26 +89,21 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
       body: trainingsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(child: Text('Fout: $error')),
-        data: (trainings) {
-          return Column(
+        data: (trainings) => Column(
             children: [
               // Calendar
               Card(
                 margin: EdgeInsets.all(isDesktop ? 24 : 16),
                 child: TableCalendar<Training>(
-                  firstDay: DateTime.utc(2020, 1, 1),
+                  firstDay: DateTime.utc(2020),
                   lastDay: DateTime.utc(2030, 12, 31),
                   focusedDay: _focusedDay,
                   calendarFormat: _calendarFormat,
                   locale: 'nl_NL',
-                  selectedDayPredicate: (day) {
-                    return isSameDay(_selectedDay, day);
-                  },
-                  eventLoader: (day) {
-                    return trainings
+                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                  eventLoader: (day) => trainings
                         .where((training) => isSameDay(training.date, day))
-                        .toList();
-                  },
+                        .toList(),
                   startingDayOfWeek: StartingDayOfWeek.monday,
                   calendarStyle: CalendarStyle(
                     outsideDaysVisible: false,
@@ -126,7 +122,6 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                     ),
                   ),
                   headerStyle: const HeaderStyle(
-                    formatButtonVisible: true,
                     titleCentered: true,
                   ),
                   onDaySelected: (selectedDay, focusedDay) {
@@ -205,8 +200,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                 ),
               ),
             ],
-          );
-        },
+          ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.go('/training/add'),
@@ -217,13 +211,13 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
 }
 
 class _TrainingCard extends StatelessWidget {
-  final Training training;
-  final VoidCallback onTap;
 
   const _TrainingCard({
     required this.training,
     required this.onTap,
   });
+  final Training training;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -361,8 +355,7 @@ class _TrainingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIntensityBadge(TrainingIntensity intensity) {
-    return Container(
+  Widget _buildIntensityBadge(TrainingIntensity intensity) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: _getIntensityColor(intensity),
@@ -377,7 +370,6 @@ class _TrainingCard extends StatelessWidget {
         ),
       ),
     );
-  }
 
   Widget _buildStatusBadge(TrainingStatus status) {
     Color color;

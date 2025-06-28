@@ -8,12 +8,12 @@ import '../../providers/database_provider.dart';
 import '../../services/database_service.dart';
 
 class EditTrainingScreen extends ConsumerStatefulWidget {
-  final String trainingId;
 
   const EditTrainingScreen({
     super.key,
     required this.trainingId,
   });
+  final String trainingId;
 
   @override
   ConsumerState<EditTrainingScreen> createState() => _EditTrainingScreenState();
@@ -59,7 +59,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
     final trainings = ref.read(trainingsProvider).value ?? [];
     _training = trainings.firstWhere(
       (t) => t.id.toString() == widget.trainingId,
-      orElse: () => Training(),
+      orElse: Training.new,
     );
 
     if (_training != null && _training!.id != '') {
@@ -229,12 +229,10 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                                     labelText: 'Focus',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: TrainingFocus.values.map((focus) {
-                                    return DropdownMenuItem(
+                                  items: TrainingFocus.values.map((focus) => DropdownMenuItem(
                                       value: focus,
                                       child: Text(_getFocusText(focus)),
-                                    );
-                                  }).toList(),
+                                    ),).toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedFocus = value;
@@ -256,12 +254,10 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                                     labelText: 'Intensiteit',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: TrainingIntensity.values.map((intensity) {
-                                    return DropdownMenuItem(
+                                  items: TrainingIntensity.values.map((intensity) => DropdownMenuItem(
                                       value: intensity,
                                       child: Text(_getIntensityText(intensity)),
-                                    );
-                                  }).toList(),
+                                    ),).toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedIntensity = value;
@@ -284,12 +280,10 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                               labelText: 'Status',
                               border: OutlineInputBorder(),
                             ),
-                            items: TrainingStatus.values.map((status) {
-                              return DropdownMenuItem(
+                            items: TrainingStatus.values.map((status) => DropdownMenuItem(
                                 value: status,
                                 child: Text(_getStatusText(status)),
-                              );
-                            }).toList(),
+                              ),).toList(),
                             onChanged: (value) {
                               setState(() {
                                 _selectedStatus = value;
@@ -483,7 +477,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Training verwijderen'),
         content: Text(
-          'Weet je zeker dat je de training van ${_selectedDate != null ? DateFormat('d MMMM yyyy', 'nl_NL').format(_selectedDate!) : 'deze datum'} wilt verwijderen?'
+          'Weet je zeker dat je de training van ${_selectedDate != null ? DateFormat('d MMMM yyyy', 'nl_NL').format(_selectedDate!) : 'deze datum'} wilt verwijderen?',
         ),
         actions: [
           TextButton(

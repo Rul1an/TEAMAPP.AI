@@ -1,20 +1,6 @@
 // Core field diagram models for the tactical manager
 
 class FieldDiagram {
-  final String id;
-  final FieldType fieldType;
-  final Dimensions fieldSize;
-
-  final List<PlayerMarker> players;
-  final List<EquipmentMarker> equipment;
-  final List<MovementLine> movements;
-  final List<AreaMarker> areas;
-  final List<TextLabel> labels;
-
-  // Visual styling
-  final String? backgroundColor;
-  final bool showFieldMarkings;
-  final bool showGoals;
 
   FieldDiagram({
     required this.id,
@@ -64,23 +50,7 @@ class FieldDiagram {
           showGoals: false,
         );
 
-  // JSON serialization
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'fieldType': fieldType.name,
-        'fieldSize': fieldSize.toJson(),
-        'players': players.map((p) => p.toJson()).toList(),
-        'equipment': equipment.map((e) => e.toJson()).toList(),
-        'movements': movements.map((m) => m.toJson()).toList(),
-        'areas': areas.map((a) => a.toJson()).toList(),
-        'labels': labels.map((l) => l.toJson()).toList(),
-        'backgroundColor': backgroundColor,
-        'showFieldMarkings': showFieldMarkings,
-        'showGoals': showGoals,
-      };
-
-  factory FieldDiagram.fromJson(Map<String, dynamic> json) {
-    return FieldDiagram(
+  factory FieldDiagram.fromJson(Map<String, dynamic> json) => FieldDiagram(
       id: json['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       fieldType: FieldType.values.firstWhere(
         (e) => e.name == json['fieldType'],
@@ -111,7 +81,35 @@ class FieldDiagram {
       showFieldMarkings: json['showFieldMarkings'] ?? true,
       showGoals: json['showGoals'] ?? true,
     );
-  }
+  final String id;
+  final FieldType fieldType;
+  final Dimensions fieldSize;
+
+  final List<PlayerMarker> players;
+  final List<EquipmentMarker> equipment;
+  final List<MovementLine> movements;
+  final List<AreaMarker> areas;
+  final List<TextLabel> labels;
+
+  // Visual styling
+  final String? backgroundColor;
+  final bool showFieldMarkings;
+  final bool showGoals;
+
+  // JSON serialization
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'fieldType': fieldType.name,
+        'fieldSize': fieldSize.toJson(),
+        'players': players.map((p) => p.toJson()).toList(),
+        'equipment': equipment.map((e) => e.toJson()).toList(),
+        'movements': movements.map((m) => m.toJson()).toList(),
+        'areas': areas.map((a) => a.toJson()).toList(),
+        'labels': labels.map((l) => l.toJson()).toList(),
+        'backgroundColor': backgroundColor,
+        'showFieldMarkings': showFieldMarkings,
+        'showGoals': showGoals,
+      };
 
   // Copy with method
   FieldDiagram copyWith({
@@ -126,8 +124,7 @@ class FieldDiagram {
     String? backgroundColor,
     bool? showFieldMarkings,
     bool? showGoals,
-  }) {
-    return FieldDiagram(
+  }) => FieldDiagram(
       id: id ?? this.id,
       fieldType: fieldType ?? this.fieldType,
       fieldSize: fieldSize ?? this.fieldSize,
@@ -140,21 +137,13 @@ class FieldDiagram {
       showFieldMarkings: showFieldMarkings ?? this.showFieldMarkings,
       showGoals: showGoals ?? this.showGoals,
     );
-  }
 
   @override
-  String toString() {
-    return 'FieldDiagram(type: $fieldType, players: ${players.length}, '
+  String toString() => 'FieldDiagram(type: $fieldType, players: ${players.length}, '
            'equipment: ${equipment.length}, movements: ${movements.length})';
-  }
 }
 
 class PlayerMarker {
-  final String id;
-  final Position position;
-  final PlayerType type;
-  final String? label;
-  final String color;
 
   PlayerMarker({
     required this.id,
@@ -164,16 +153,7 @@ class PlayerMarker {
     this.color = '#2196F3', // Default blue
   });
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'position': position.toJson(),
-        'type': type.name,
-        'label': label,
-        'color': color,
-      };
-
-  factory PlayerMarker.fromJson(Map<String, dynamic> json) {
-    return PlayerMarker(
+  factory PlayerMarker.fromJson(Map<String, dynamic> json) => PlayerMarker(
       id: json['id'] ?? '',
       position: Position.fromJson(json['position']),
       type: PlayerType.values.firstWhere(
@@ -183,20 +163,25 @@ class PlayerMarker {
       label: json['label'],
       color: json['color'] ?? '#2196F3',
     );
-  }
+  final String id;
+  final Position position;
+  final PlayerType type;
+  final String? label;
+  final String color;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'position': position.toJson(),
+        'type': type.name,
+        'label': label,
+        'color': color,
+      };
 
   @override
-  String toString() {
-    return 'PlayerMarker(id: $id, type: $type, label: $label)';
-  }
+  String toString() => 'PlayerMarker(id: $id, type: $type, label: $label)';
 }
 
 class EquipmentMarker {
-  final String id;
-  final Position position;
-  final EquipmentType type;
-  final String color;
-  final double? size;
 
   EquipmentMarker({
     required this.id,
@@ -206,16 +191,7 @@ class EquipmentMarker {
     this.size,
   });
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'position': position.toJson(),
-        'type': type.name,
-        'color': color,
-        'size': size,
-      };
-
-  factory EquipmentMarker.fromJson(Map<String, dynamic> json) {
-    return EquipmentMarker(
+  factory EquipmentMarker.fromJson(Map<String, dynamic> json) => EquipmentMarker(
       id: json['id'] ?? '',
       position: Position.fromJson(json['position']),
       type: EquipmentType.values.firstWhere(
@@ -225,17 +201,22 @@ class EquipmentMarker {
       color: json['color'] ?? '#FF9800',
       size: json['size']?.toDouble(),
     );
-  }
+  final String id;
+  final Position position;
+  final EquipmentType type;
+  final String color;
+  final double? size;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'position': position.toJson(),
+        'type': type.name,
+        'color': color,
+        'size': size,
+      };
 }
 
 class MovementLine {
-  final String id;
-  final List<Position> points;
-  final LineType type;
-  final String color;
-  final double strokeWidth;
-  final bool hasArrowHead;
-  final String? label;
 
   MovementLine({
     required this.id,
@@ -262,16 +243,6 @@ class MovementLine {
           color: color,
           label: label,
         );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'points': points.map((p) => p.toJson()).toList(),
-        'type': type.name,
-        'color': color,
-        'strokeWidth': strokeWidth,
-        'hasArrowHead': hasArrowHead,
-        'label': label,
-      };
 
   factory MovementLine.fromJson(Map<String, dynamic> json) {
     // Handle legacy format with start/end
@@ -308,15 +279,26 @@ class MovementLine {
       label: json['label'],
     );
   }
+  final String id;
+  final List<Position> points;
+  final LineType type;
+  final String color;
+  final double strokeWidth;
+  final bool hasArrowHead;
+  final String? label;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'points': points.map((p) => p.toJson()).toList(),
+        'type': type.name,
+        'color': color,
+        'strokeWidth': strokeWidth,
+        'hasArrowHead': hasArrowHead,
+        'label': label,
+      };
 }
 
 class AreaMarker {
-  final String id;
-  final Position topLeft;
-  final Position bottomRight;
-  final String color;
-  final double opacity;
-  final String? label;
 
   AreaMarker({
     required this.id,
@@ -327,6 +309,21 @@ class AreaMarker {
     this.label,
   });
 
+  factory AreaMarker.fromJson(Map<String, dynamic> json) => AreaMarker(
+      id: json['id'] ?? '',
+      topLeft: Position.fromJson(json['topLeft']),
+      bottomRight: Position.fromJson(json['bottomRight']),
+      color: json['color'] ?? '#FFC107',
+      opacity: json['opacity']?.toDouble() ?? 0.3,
+      label: json['label'],
+    );
+  final String id;
+  final Position topLeft;
+  final Position bottomRight;
+  final String color;
+  final double opacity;
+  final String? label;
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'topLeft': topLeft.toJson(),
@@ -335,25 +332,9 @@ class AreaMarker {
         'opacity': opacity,
         'label': label,
       };
-
-  factory AreaMarker.fromJson(Map<String, dynamic> json) {
-    return AreaMarker(
-      id: json['id'] ?? '',
-      topLeft: Position.fromJson(json['topLeft']),
-      bottomRight: Position.fromJson(json['bottomRight']),
-      color: json['color'] ?? '#FFC107',
-      opacity: json['opacity']?.toDouble() ?? 0.3,
-      label: json['label'],
-    );
-  }
 }
 
 class TextLabel {
-  final String id;
-  final Position position;
-  final String text;
-  final String color;
-  final double fontSize;
 
   TextLabel({
     required this.id,
@@ -363,6 +344,19 @@ class TextLabel {
     this.fontSize = 14.0,
   });
 
+  factory TextLabel.fromJson(Map<String, dynamic> json) => TextLabel(
+      id: json['id'] ?? '',
+      position: Position.fromJson(json['position']),
+      text: json['text'] ?? '',
+      color: json['color'] ?? '#000000',
+      fontSize: json['fontSize']?.toDouble() ?? 14.0,
+    );
+  final String id;
+  final Position position;
+  final String text;
+  final String color;
+  final double fontSize;
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'position': position.toJson(),
@@ -370,32 +364,20 @@ class TextLabel {
         'color': color,
         'fontSize': fontSize,
       };
-
-  factory TextLabel.fromJson(Map<String, dynamic> json) {
-    return TextLabel(
-      id: json['id'] ?? '',
-      position: Position.fromJson(json['position']),
-      text: json['text'] ?? '',
-      color: json['color'] ?? '#000000',
-      fontSize: json['fontSize']?.toDouble() ?? 14.0,
-    );
-  }
 }
 
 class Position {
-  final double x;
-  final double y;
 
   const Position(this.x, this.y);
 
-  Map<String, dynamic> toJson() => {'x': x, 'y': y};
-
-  factory Position.fromJson(Map<String, dynamic> json) {
-    return Position(
+  factory Position.fromJson(Map<String, dynamic> json) => Position(
       json['x']?.toDouble() ?? 0.0,
       json['y']?.toDouble() ?? 0.0,
     );
-  }
+  final double x;
+  final double y;
+
+  Map<String, dynamic> toJson() => {'x': x, 'y': y};
 
   @override
   String toString() => 'Position($x, $y)';
@@ -411,19 +393,17 @@ class Position {
 }
 
 class Dimensions {
-  final double width;
-  final double height;
 
   const Dimensions(this.width, this.height);
 
-  Map<String, dynamic> toJson() => {'width': width, 'height': height};
-
-  factory Dimensions.fromJson(Map<String, dynamic> json) {
-    return Dimensions(
+  factory Dimensions.fromJson(Map<String, dynamic> json) => Dimensions(
       json['width']?.toDouble() ?? 0.0,
       json['height']?.toDouble() ?? 0.0,
     );
-  }
+  final double width;
+  final double height;
+
+  Map<String, dynamic> toJson() => {'width': width, 'height': height};
 
   @override
   String toString() => 'Dimensions($width x $height)';

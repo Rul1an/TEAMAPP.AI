@@ -128,9 +128,7 @@ class _WeeklyCalendarWidgetState extends State<WeeklyCalendarWidget> {
     }
   }
 
-  bool _isSameDay(DateTime a, DateTime b) {
-    return a.year == b.year && a.month == b.month && a.day == b.day;
-  }
+  bool _isSameDay(DateTime a, DateTime b) => a.year == b.year && a.month == b.month && a.day == b.day;
 
   bool _hasTraining(DateTime date) {
     // Mock data: Tuesday and Thursday have training
@@ -151,11 +149,6 @@ class _WeeklyCalendarWidgetState extends State<WeeklyCalendarWidget> {
 }
 
 class _DayTile extends StatelessWidget {
-  final DateTime date;
-  final bool isToday;
-  final bool hasTraining;
-  final bool hasMatch;
-  final VoidCallback onTap;
 
   const _DayTile({
     required this.date,
@@ -164,10 +157,14 @@ class _DayTile extends StatelessWidget {
     required this.hasMatch,
     required this.onTap,
   });
+  final DateTime date;
+  final bool isToday;
+  final bool hasTraining;
+  final bool hasMatch;
+  final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
+  Widget build(BuildContext context) => GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 2),
@@ -250,23 +247,21 @@ class _DayTile extends StatelessWidget {
         ),
       ),
     );
-  }
 }
 
 class _LegendItem extends StatelessWidget {
-  final Color color;
-  final String label;
-  final IconData icon;
 
   const _LegendItem({
     required this.color,
     required this.label,
     required this.icon,
   });
+  final Color color;
+  final String label;
+  final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
+  Widget build(BuildContext context) => Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, color: color, size: 16),
@@ -281,13 +276,12 @@ class _LegendItem extends StatelessWidget {
         ),
       ],
     );
-  }
 }
 
 class _DayDetailsSheet extends StatelessWidget {
-  final DateTime date;
 
   const _DayDetailsSheet({required this.date});
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {

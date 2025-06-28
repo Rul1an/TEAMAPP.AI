@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../models/organization.dart';
 import '../providers/demo_mode_provider.dart';
 import '../services/permission_service.dart';
-import '../models/organization.dart';
 
 /// 🎭 RBAC Demo Widget for testing role-based access control
 /// Allows quick switching between roles and shows available features
@@ -150,7 +151,7 @@ class RBACDemoWidget extends ConsumerWidget {
               ),
             ],
           ),
-        )).toList(),
+        ),).toList(),
       ),
     );
   }
@@ -169,17 +170,16 @@ class RBACDemoWidget extends ConsumerWidget {
           backgroundColor: action.isEnabled ? Colors.blue.shade100 : Colors.grey.shade200,
           foregroundColor: action.isEnabled ? Colors.blue.shade800 : Colors.grey,
         ),
-      )).toList(),
+      ),).toList(),
     );
   }
 
-  List<PermissionInfo> _getPermissionsForRole(String? role) {
-    return [
-      PermissionInfo('Dashboard bekijken', true), // Everyone
-      PermissionInfo('Spelers bekijken', true), // Everyone
-      PermissionInfo('Training bekijken', true), // Everyone
-      PermissionInfo('Wedstrijden bekijken', true), // Everyone
-      PermissionInfo('---MANAGEMENT---', false), // Separator
+  List<PermissionInfo> _getPermissionsForRole(String? role) => [
+      const PermissionInfo('Dashboard bekijken', true), // Everyone
+      const PermissionInfo('Spelers bekijken', true), // Everyone
+      const PermissionInfo('Training bekijken', true), // Everyone
+      const PermissionInfo('Wedstrijden bekijken', true), // Everyone
+      const PermissionInfo('---MANAGEMENT---', false), // Separator
       PermissionInfo('Spelers beheren', PermissionService.canManagePlayers(role)),
       PermissionInfo('Spelers bewerken', PermissionService.canEditPlayers(role)),
       PermissionInfo('Training beheren', PermissionService.canManageTraining(role)),
@@ -188,18 +188,16 @@ class RBACDemoWidget extends ConsumerWidget {
       PermissionInfo('Exercise Library', PermissionService.canManageExerciseLibrary(role)),
       PermissionInfo('Field Diagram Editor', PermissionService.canAccessFieldDiagramEditor(role)),
       PermissionInfo('Exercise Designer', PermissionService.canAccessExerciseDesigner(role)),
-      PermissionInfo('---ADVANCED---', false), // Separator
+      const PermissionInfo('---ADVANCED---', false), // Separator
       PermissionInfo('Analytics bekijken', PermissionService.canViewAnalytics(role)),
       PermissionInfo('SVS toegang', PermissionService.canAccessSVS(role, OrganizationTier.pro)),
       PermissionInfo('Jaarplanning', PermissionService.canAccessAnnualPlanning(role)),
       PermissionInfo('Admin functies', PermissionService.canAccessAdmin(role)),
-      PermissionInfo('---STATUS---', false), // Separator
+      const PermissionInfo('---STATUS---', false), // Separator
       PermissionInfo('🔒 Alleen bekijken', PermissionService.isViewOnlyUser(role)),
     ];
-  }
 
-  List<QuickActionInfo> _getQuickActionsForRole(BuildContext context, String? role) {
-    return [
+  List<QuickActionInfo> _getQuickActionsForRole(BuildContext context, String? role) => [
       QuickActionInfo(
         'Dashboard',
         Icons.dashboard,
@@ -243,7 +241,6 @@ class RBACDemoWidget extends ConsumerWidget {
         () => context.go('/admin'),
       ),
     ];
-  }
 
   String _getRoleDisplayName(String? role) {
     switch (role) {
@@ -285,17 +282,17 @@ class RBACDemoWidget extends ConsumerWidget {
 }
 
 class PermissionInfo {
-  final String description;
-  final bool hasAccess;
 
   const PermissionInfo(this.description, this.hasAccess);
+  final String description;
+  final bool hasAccess;
 }
 
 class QuickActionInfo {
+
+  const QuickActionInfo(this.label, this.icon, this.isEnabled, this.onPressed);
   final String label;
   final IconData icon;
   final bool isEnabled;
   final VoidCallback onPressed;
-
-  const QuickActionInfo(this.label, this.icon, this.isEnabled, this.onPressed);
 }

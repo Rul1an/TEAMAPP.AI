@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class UpcomingEventCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final DateTime date;
-  final IconData icon;
-  final Color color;
-  final VoidCallback? onTap;
 
   const UpcomingEventCard({
     super.key,
@@ -18,6 +12,12 @@ class UpcomingEventCard extends StatelessWidget {
     required this.color,
     this.onTap,
   });
+  final String title;
+  final String subtitle;
+  final DateTime date;
+  final IconData icon;
+  final Color color;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

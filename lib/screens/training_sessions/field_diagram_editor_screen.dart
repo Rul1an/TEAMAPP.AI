@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../models/training_session/field_diagram.dart';
+import '../../providers/field_diagram_provider.dart';
 import '../../widgets/field_diagram/field_canvas.dart';
 import '../../widgets/field_diagram/field_diagram_toolbar.dart';
-import '../../providers/field_diagram_provider.dart';
 
 class FieldDiagramEditorScreen extends ConsumerStatefulWidget {
-  final String? exerciseId;
-  final FieldDiagram? initialDiagram;
 
   const FieldDiagramEditorScreen({
     super.key,
     this.exerciseId,
     this.initialDiagram,
   });
+  final String? exerciseId;
+  final FieldDiagram? initialDiagram;
 
   @override
   ConsumerState<FieldDiagramEditorScreen> createState() => _FieldDiagramEditorScreenState();
@@ -90,7 +91,7 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
         children: [
           // Toolbar
           Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.grey[100],
               border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
@@ -122,7 +123,7 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
           ),
           // Bottom info bar
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.grey[100],
               border: Border(top: BorderSide(color: Colors.grey[300]!)),
@@ -167,7 +168,7 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
     }
   }
 
-  void _exportDiagram(String format) async {
+  Future<void> _exportDiagram(String format) async {
     final diagramState = ref.read(fieldDiagramProvider);
 
     try {
@@ -206,7 +207,7 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
     }
   }
 
-  void _saveDiagram() async {
+  Future<void> _saveDiagram() async {
     final diagramState = ref.read(fieldDiagramProvider);
 
     try {
@@ -255,7 +256,7 @@ class _FieldDiagramEditorScreenState extends ConsumerState<FieldDiagramEditorScr
               ref.read(fieldDiagramProvider.notifier).changeFieldType(type);
               Navigator.of(context).pop();
             },
-          )).toList(),
+          ),).toList(),
         ),
         actions: [
           TextButton(

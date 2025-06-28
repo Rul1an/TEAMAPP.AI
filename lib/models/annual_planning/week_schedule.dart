@@ -1,13 +1,6 @@
 import 'morphocycle.dart';
 
 class WeekSchedule {
-  final int weekNumber;
-  final DateTime weekStartDate;
-  final List<WeeklyTraining> trainingSessions;
-  final List<WeeklyMatch> matches;
-  final String? notes;
-  final bool isVacation;
-  final String? vacationDescription;
 
   WeekSchedule({
     required this.weekNumber,
@@ -18,6 +11,13 @@ class WeekSchedule {
     this.isVacation = false,
     this.vacationDescription,
   });
+  final int weekNumber;
+  final DateTime weekStartDate;
+  final List<WeeklyTraining> trainingSessions;
+  final List<WeeklyMatch> matches;
+  final String? notes;
+  final bool isVacation;
+  final String? vacationDescription;
 
   DateTime get weekEndDate => weekStartDate.add(const Duration(days: 6));
 
@@ -26,21 +26,13 @@ class WeekSchedule {
   String get monthName {
     const months = [
       'Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni',
-      'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'
+      'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December',
     ];
     return months[weekStartDate.month - 1];
   }
 }
 
 class WeeklyTraining {
-  final String name;
-  final DateTime dateTime;
-  final String location;
-  final Duration duration;
-  final String? notes;
-  final TrainingIntensity? intensity;
-  final int? durationMinutes;
-  final int? rpe;
 
   WeeklyTraining({
     required this.name,
@@ -52,10 +44,16 @@ class WeeklyTraining {
     this.durationMinutes,
     this.rpe,
   });
+  final String name;
+  final DateTime dateTime;
+  final String location;
+  final Duration duration;
+  final String? notes;
+  final TrainingIntensity? intensity;
+  final int? durationMinutes;
+  final int? rpe;
 
-  String get timeString {
-    return '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
-  }
+  String get timeString => '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
 
   String get dayName {
     const days = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
@@ -67,7 +65,7 @@ class WeeklyTraining {
     if (rpe != null && durationMinutes != null) {
       return rpe! * durationMinutes!.toDouble();
     }
-    return 0.0;
+    return 0;
   }
 
   // Get intensity description
@@ -90,13 +88,6 @@ class WeeklyTraining {
 }
 
 class WeeklyMatch {
-  final String opponent;
-  final DateTime dateTime;
-  final String location;
-  final bool isHomeMatch;
-  final String? result;
-  final String? notes;
-  final MatchType type;
 
   WeeklyMatch({
     required this.opponent,
@@ -107,19 +98,22 @@ class WeeklyMatch {
     this.notes,
     this.type = MatchType.regular,
   });
+  final String opponent;
+  final DateTime dateTime;
+  final String location;
+  final bool isHomeMatch;
+  final String? result;
+  final String? notes;
+  final MatchType type;
 
-  String get timeString {
-    return '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
-  }
+  String get timeString => '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
 
   String get dayName {
     const days = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
     return days[dateTime.weekday - 1];
   }
 
-  String get locationDisplay {
-    return isHomeMatch ? 'Thuis' : location;
-  }
+  String get locationDisplay => isHomeMatch ? 'Thuis' : location;
 }
 
 enum MatchType {

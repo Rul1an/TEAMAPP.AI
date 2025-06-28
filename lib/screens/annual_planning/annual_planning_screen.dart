@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../services/database_service.dart';
-import '../../models/annual_planning/season_plan.dart';
+
 import '../../models/annual_planning/periodization_plan.dart';
+import '../../models/annual_planning/season_plan.dart';
 import '../../models/annual_planning/training_period.dart';
-import 'weekly_planning_screen.dart';
+import '../../services/database_service.dart';
 import 'load_monitoring_screen.dart';
+import 'weekly_planning_screen.dart';
 
 final seasonPlansProvider = FutureProvider<List<SeasonPlan>>((ref) async {
   final db = DatabaseService();
-  return await db.getAllSeasonPlans();
+  return db.getAllSeasonPlans();
 });
 
 final periodizationPlansProvider = FutureProvider<List<PeriodizationPlan>>((ref) async {
   final db = DatabaseService();
-  return await db.getAllPeriodizationPlans();
+  return db.getAllPeriodizationPlans();
 });
 
 final trainingPeriodsProvider = FutureProvider<List<TrainingPeriod>>((ref) async {
   final db = DatabaseService();
-  return await db.getAllTrainingPeriods();
+  return db.getAllTrainingPeriods();
 });
 
 class AnnualPlanningScreen extends ConsumerWidget {
@@ -57,7 +58,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -65,7 +66,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
             Card(
               color: Theme.of(context).colorScheme.primaryContainer,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -102,7 +103,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                   ),
                 ),
                 child: Container(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [Colors.green[600]!, Colors.green[400]!],
@@ -278,7 +279,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                       backgroundColor: _getPhaseColor(season.getCurrentPhase()),
                     ),
                   ),
-                )).toList(),
+                ),).toList(),
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Text('Error: $error'),
@@ -309,7 +310,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
-                )).toList(),
+                ),).toList(),
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Text('Error: $error'),
@@ -344,7 +345,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
-                )).toList(),
+                ),).toList(),
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Text('Error: $error'),
@@ -355,7 +356,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
             Card(
               color: Theme.of(context).colorScheme.surfaceContainerHighest,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

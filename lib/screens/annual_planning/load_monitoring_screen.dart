@@ -1,8 +1,9 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fl_chart/fl_chart.dart';
-import '../../providers/annual_planning_provider.dart';
+
 import '../../models/annual_planning/morphocycle.dart';
+import '../../providers/annual_planning_provider.dart';
 
 class LoadMonitoringScreen extends ConsumerStatefulWidget {
   const LoadMonitoringScreen({super.key});
@@ -147,8 +148,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     }
 
     final currentLoad = morphocycles.isNotEmpty ? morphocycles.last.weeklyLoad : 0.0;
-    final averageLoad = morphocycles.fold(0.0, (sum, m) => sum + m.weeklyLoad) / morphocycles.length;
-    final maxLoad = morphocycles.fold(0.0, (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max);
+    final averageLoad = morphocycles.fold(0, (sum, m) => sum + m.weeklyLoad) / morphocycles.length;
+    final maxLoad = morphocycles.fold(0, (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max);
     final currentAcr = morphocycles.isNotEmpty ? morphocycles.last.acuteChronicRatio : 1.0;
 
     return Row(
@@ -196,8 +197,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     );
   }
 
-  Widget _buildSummaryCard(String title, String value, String unit, Color color, IconData icon) {
-    return Card(
+  Widget _buildSummaryCard(String title, String value, String unit, Color color, IconData icon) => Card(
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -244,10 +244,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         ),
       ),
     );
-  }
 
-  Widget _buildWeeklyLoadChart(List<Morphocycle> morphocycles) {
-    return Card(
+  Widget _buildWeeklyLoadChart(List<Morphocycle> morphocycles) => Card(
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -268,13 +266,10 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                   : LineChart(
                       LineChartData(
                         gridData: const FlGridData(
-                          show: true,
-                          drawVerticalLine: true,
                           horizontalInterval: 200,
                           verticalInterval: 2,
                         ),
                         titlesData: FlTitlesData(
-                          show: true,
                           bottomTitles: AxisTitles(
                             sideTitles: SideTitles(
                               showTitles: true,
@@ -297,16 +292,14 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                               showTitles: true,
                               reservedSize: 50,
                               interval: 200,
-                              getTitlesWidget: (value, meta) {
-                                return Text(
+                              getTitlesWidget: (value, meta) => Text(
                                   '${value.toInt()}',
                                   style: const TextStyle(fontSize: 10),
-                                );
-                              },
+                                ),
                             ),
                           ),
-                          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                          topTitles: const AxisTitles(),
+                          rightTitles: const AxisTitles(),
                         ),
                         borderData: FlBorderData(
                           show: true,
@@ -324,14 +317,13 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                                 .map((entry) => FlSpot(
                                       entry.key.toDouble(),
                                       entry.value.weeklyLoad,
-                                    ))
+                                    ),)
                                 .toList(),
                             isCurved: true,
                             color: Colors.blue,
                             barWidth: 3,
                             isStrokeCapRound: true,
                             dotData: FlDotData(
-                              show: true,
                               getDotPainter: (spot, percent, barData, index) {
                                 final load = spot.y;
                                 return FlDotCirclePainter(
@@ -355,10 +347,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         ),
       ),
     );
-  }
 
-  Widget _buildAcuteChronicChart(List<Morphocycle> morphocycles) {
-    return Card(
+  Widget _buildAcuteChronicChart(List<Morphocycle> morphocycles) => Card(
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -387,12 +377,10 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                   : LineChart(
                       LineChartData(
                         gridData: const FlGridData(
-                          show: true,
                           horizontalInterval: 0.2,
                           verticalInterval: 2,
                         ),
                         titlesData: FlTitlesData(
-                          show: true,
                           bottomTitles: AxisTitles(
                             sideTitles: SideTitles(
                               showTitles: true,
@@ -415,16 +403,14 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                               showTitles: true,
                               reservedSize: 40,
                               interval: 0.2,
-                              getTitlesWidget: (value, meta) {
-                                return Text(
+                              getTitlesWidget: (value, meta) => Text(
                                   value.toStringAsFixed(1),
                                   style: const TextStyle(fontSize: 10),
-                                );
-                              },
+                                ),
                             ),
                           ),
-                          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                          topTitles: const AxisTitles(),
+                          rightTitles: const AxisTitles(),
                         ),
                         borderData: FlBorderData(
                           show: true,
@@ -433,19 +419,17 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                         minX: 0,
                         maxX: (morphocycles.length - 1).toDouble(),
                         minY: 0,
-                        maxY: 2.0,
+                        maxY: 2,
                         extraLinesData: ExtraLinesData(
                           horizontalLines: [
                             HorizontalLine(
                               y: 0.8,
                               color: Colors.green.withValues(alpha: 0.5),
-                              strokeWidth: 2,
                               dashArray: [5, 5],
                             ),
                             HorizontalLine(
                               y: 1.3,
                               color: Colors.green.withValues(alpha: 0.5),
-                              strokeWidth: 2,
                               dashArray: [5, 5],
                             ),
                           ],
@@ -458,14 +442,13 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                                 .map((entry) => FlSpot(
                                       entry.key.toDouble(),
                                       entry.value.acuteChronicRatio,
-                                    ))
+                                    ),)
                                 .toList(),
                             isCurved: true,
                             color: Colors.orange,
                             barWidth: 3,
                             isStrokeCapRound: true,
                             dotData: FlDotData(
-                              show: true,
                               getDotPainter: (spot, percent, barData, index) {
                                 final acr = spot.y;
                                 return FlDotCirclePainter(
@@ -485,7 +468,6 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         ),
       ),
     );
-  }
 
   Widget _buildIntensityDistributionChart(List<Morphocycle> morphocycles) {
     if (morphocycles.isEmpty) return const SizedBox.shrink();
@@ -535,8 +517,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
             Wrap(
               spacing: 16,
               runSpacing: 8,
-              children: distribution.entries.map((entry) {
-                return Row(
+              children: distribution.entries.map((entry) => Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
@@ -553,8 +534,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
-                );
-              }).toList(),
+                ),).toList(),
             ),
           ],
         ),
@@ -601,7 +581,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     }
 
     final currentMorphocycle = morphocycles.last;
-    final avgAcr = morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) / morphocycles.length;
+    final avgAcr = morphocycles.fold(0, (sum, m) => sum + m.acuteChronicRatio) / morphocycles.length;
     final highRiskWeeks = morphocycles.where((m) => m.currentInjuryRisk == InjuryRisk.high || m.currentInjuryRisk == InjuryRisk.extreme).length;
     final overloadWeeks = morphocycles.where((m) => m.weeklyLoad > 1400).length;
 
@@ -654,8 +634,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     );
   }
 
-  Widget _buildRiskCard(String title, String value, Color color, IconData icon) {
-    return Card(
+  Widget _buildRiskCard(String title, String value, Color color, IconData icon) => Card(
       elevation: 4,
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -699,10 +678,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         ),
       ),
     );
-  }
 
-  Widget _buildRiskFactorsChart(List<Morphocycle> morphocycles) {
-    return Card(
+  Widget _buildRiskFactorsChart(List<Morphocycle> morphocycles) => Card(
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -722,9 +699,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                   ? const Center(child: Text('No data available'))
                   : LineChart(
                       LineChartData(
-                        gridData: const FlGridData(show: true),
                         titlesData: FlTitlesData(
-                          show: true,
                           bottomTitles: AxisTitles(
                             sideTitles: SideTitles(
                               showTitles: true,
@@ -745,16 +720,14 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                             sideTitles: SideTitles(
                               showTitles: true,
                               reservedSize: 40,
-                              getTitlesWidget: (value, meta) {
-                                return Text(
+                              getTitlesWidget: (value, meta) => Text(
                                   value.toStringAsFixed(1),
                                   style: const TextStyle(fontSize: 10),
-                                );
-                              },
+                                ),
                             ),
                           ),
-                          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                          topTitles: const AxisTitles(),
+                          rightTitles: const AxisTitles(),
                         ),
                         borderData: FlBorderData(show: true),
                         lineBarsData: [
@@ -765,13 +738,12 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                                 .map((entry) => FlSpot(
                                       entry.key.toDouble(),
                                       entry.value.acuteChronicRatio,
-                                    ))
+                                    ),)
                                 .toList(),
                             isCurved: true,
                             color: Colors.red,
                             barWidth: 3,
                             dotData: FlDotData(
-                              show: true,
                               getDotPainter: (spot, percent, barData, index) {
                                 final acr = spot.y;
                                 final risk = Morphocycle.assessInjuryRisk(acr);
@@ -814,7 +786,6 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         ),
       ),
     );
-  }
 
   Widget _buildRiskRecommendations(List<Morphocycle> morphocycles) {
     if (morphocycles.isEmpty) return const SizedBox.shrink();
@@ -875,7 +846,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                   ),
                 ],
               ),
-            )),
+            ),),
           ],
         ),
       ),
@@ -1060,8 +1031,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     }
   }
 
-  Widget _buildAdaptationTab(AnnualPlanningState state) {
-    return const Padding(
+  Widget _buildAdaptationTab(AnnualPlanningState state) => const Padding(
       padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1095,10 +1065,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         ],
       ),
     );
-  }
 
-  Widget _buildAnalyticsTab(AnnualPlanningState state) {
-    return const Padding(
+  Widget _buildAnalyticsTab(AnnualPlanningState state) => const Padding(
       padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1132,10 +1100,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         ],
       ),
     );
-  }
 
-  Widget _buildMorphocycleInfo(Morphocycle morphocycle) {
-    return Container(
+  Widget _buildMorphocycleInfo(Morphocycle morphocycle) => Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -1246,13 +1212,12 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-              )).toList(),
+              ),).toList(),
             ),
           ],
         ],
       ),
     );
-  }
 
   IconData _getACWRIcon(double acwr) {
     if (acwr > 1.3) return Icons.warning;

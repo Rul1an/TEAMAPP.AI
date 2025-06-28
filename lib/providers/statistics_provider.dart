@@ -3,5 +3,5 @@ import '../services/database_service.dart';
 
 final statisticsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   final db = DatabaseService();
-  return await db.getStatistics();
+  return db.getStatistics();
 });

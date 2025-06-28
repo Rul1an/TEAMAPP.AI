@@ -3,9 +3,6 @@ import '../../config/theme.dart';
 /// 🏆 Tier Badge Widget
 /// Displays subscription tier with appropriate styling
 class TierBadge extends StatelessWidget {
-  final String tier;
-  final bool showIcon;
-  final double fontSize;
 
   const TierBadge({
     required this.tier,
@@ -13,10 +10,12 @@ class TierBadge extends StatelessWidget {
     this.fontSize = 12,
     super.key,
   });
+  final String tier;
+  final bool showIcon;
+  final double fontSize;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: AppTheme.getTierBadgeDecoration(tier),
       child: Row(
@@ -41,7 +40,6 @@ class TierBadge extends StatelessWidget {
         ],
       ),
     );
-  }
 
   IconData _getTierIcon(String tier) {
     switch (tier.toLowerCase()) {
@@ -72,9 +70,6 @@ class TierBadge extends StatelessWidget {
 /// 🔒 Feature Lock Widget
 /// Shows when a feature is locked due to subscription tier
 class FeatureLockWidget extends StatelessWidget {
-  final String featureName;
-  final String requiredTier;
-  final VoidCallback? onUpgrade;
 
   const FeatureLockWidget({
     required this.featureName,
@@ -82,10 +77,12 @@ class FeatureLockWidget extends StatelessWidget {
     this.onUpgrade,
     super.key,
   });
+  final String featureName;
+  final String requiredTier;
+  final VoidCallback? onUpgrade;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
+  Widget build(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -138,15 +135,10 @@ class FeatureLockWidget extends StatelessWidget {
         ),
       ),
     );
-  }
 }
 /// 📈 Upgrade Prompt Widget
 /// Encourages users to upgrade their subscription
 class UpgradePromptWidget extends StatelessWidget {
-  final String currentTier;
-  final String targetTier;
-  final List<String> benefits;
-  final VoidCallback? onUpgrade;
 
   const UpgradePromptWidget({
     required this.currentTier,
@@ -155,10 +147,13 @@ class UpgradePromptWidget extends StatelessWidget {
     this.onUpgrade,
     super.key,
   });
+  final String currentTier;
+  final String targetTier;
+  final List<String> benefits;
+  final VoidCallback? onUpgrade;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
+  Widget build(BuildContext context) => Card(
       elevation: 4,
       child: Container(
         decoration: BoxDecoration(
@@ -223,7 +218,7 @@ class UpgradePromptWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            )),
+            ),),
             if (onUpgrade != null) ...[
               const SizedBox(height: 16),
               SizedBox(
@@ -244,5 +239,4 @@ class UpgradePromptWidget extends StatelessWidget {
         ),
       ),
     );
-  }
 }

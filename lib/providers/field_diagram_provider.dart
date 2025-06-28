@@ -1,26 +1,17 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
-import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf/pdf.dart';
+
 import 'package:file_saver/file_saver.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+
 import '../models/training_session/field_diagram.dart';
 import '../widgets/field_diagram/field_painter.dart';
 
 // State class for the field diagram editor
 class FieldDiagramEditorState {
-  final FieldDiagram diagram;
-  final DiagramTool currentTool;
-  final String? selectedElementId;
-  final List<FieldDiagram> history;
-  final int historyIndex;
-  final bool isModified;
-  final PlayerType selectedPlayerType;
-  final EquipmentType selectedEquipmentType;
-  final LineType selectedLineType;
-  final List<Position> currentLinePoints;
-  final bool isDrawingLine;
 
   const FieldDiagramEditorState({
     required this.diagram,
@@ -35,6 +26,17 @@ class FieldDiagramEditorState {
     this.currentLinePoints = const [],
     this.isDrawingLine = false,
   });
+  final FieldDiagram diagram;
+  final DiagramTool currentTool;
+  final String? selectedElementId;
+  final List<FieldDiagram> history;
+  final int historyIndex;
+  final bool isModified;
+  final PlayerType selectedPlayerType;
+  final EquipmentType selectedEquipmentType;
+  final LineType selectedLineType;
+  final List<Position> currentLinePoints;
+  final bool isDrawingLine;
 
   FieldDiagramEditorState copyWith({
     FieldDiagram? diagram,
@@ -48,8 +50,7 @@ class FieldDiagramEditorState {
     LineType? selectedLineType,
     List<Position>? currentLinePoints,
     bool? isDrawingLine,
-  }) {
-    return FieldDiagramEditorState(
+  }) => FieldDiagramEditorState(
       diagram: diagram ?? this.diagram,
       currentTool: currentTool ?? this.currentTool,
       selectedElementId: selectedElementId,
@@ -62,7 +63,6 @@ class FieldDiagramEditorState {
       currentLinePoints: currentLinePoints ?? this.currentLinePoints,
       isDrawingLine: isDrawingLine ?? this.isDrawingLine,
     );
-  }
 
   bool get canUndo => historyIndex > 0;
   bool get canRedo => historyIndex < history.length - 1;
@@ -85,7 +85,7 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
     diagram: FieldDiagram.halfField(),
     history: [FieldDiagram.halfField()],
     historyIndex: 0,
-  ));
+  ),);
 
   // Initialize with existing diagram
   void initializeDiagram(FieldDiagram diagram) {
@@ -100,7 +100,6 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
   void selectTool(DiagramTool tool) {
     state = state.copyWith(
       currentTool: tool,
-      selectedElementId: null, // Clear selection when changing tools
     );
   }
 
@@ -213,12 +212,12 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
   double _getLineStrokeWidth(LineType type) {
     switch (type) {
       case LineType.shot:
-        return 4.0; // Thick for shots
+        return 4; // Thick for shots
       case LineType.pass:
       case LineType.dribble:
         return 2.5;
       default:
-        return 2.0;
+        return 2;
     }
   }
 
@@ -283,7 +282,7 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
 
     // Clear selection if the selected element was removed
     if (state.selectedElementId == elementId) {
-      state = state.copyWith(selectedElementId: null);
+      state = state.copyWith();
     }
   }
 
@@ -372,7 +371,6 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
         diagram: state.history[newIndex],
         historyIndex: newIndex,
         isModified: true,
-        selectedElementId: null,
       );
     }
   }
@@ -384,7 +382,6 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
         diagram: state.history[newIndex],
         historyIndex: newIndex,
         isModified: true,
-        selectedElementId: null,
       );
     }
   }
@@ -403,7 +400,6 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
       history: newHistory,
       historyIndex: newHistory.length - 1,
       isModified: true,
-      selectedElementId: null,
     );
   }
 
@@ -431,7 +427,7 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
       final painter = FieldPainter(
         diagram: diagram,
         showGrid: false, // No grid in exports
-        gridSize: 10.0,
+        gridSize: 10,
       );
 
       painter.paint(canvas, size);
@@ -466,7 +462,7 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
       final painter = FieldPainter(
         diagram: diagram,
         showGrid: false,
-        gridSize: 10.0,
+        gridSize: 10,
       );
 
       painter.paint(canvas, size);
@@ -481,8 +477,7 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
         pdf.addPage(
           pw.Page(
             pageFormat: PdfPageFormat.a4,
-            build: (context) {
-              return pw.Column(
+            build: (context) => pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
                   pw.Text(
@@ -497,8 +492,7 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
                   pw.Text('Equipment: ${diagram.equipment.length}'),
                   pw.Text('Bewegingen: ${diagram.movements.length}'),
                 ],
-              );
-            },
+              ),
           ),
         );
 
@@ -577,8 +571,7 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
         position: position,
         type: PlayerType.attacking,
         label: '${i + 1}',
-        color: '#2196F3', // Blue for home team
-      ));
+      ),);
     }
 
     return state.diagram.copyWith(
@@ -587,8 +580,7 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
   }
 
   // Predefined formation templates
-  static List<FormationTemplate> getFormationTemplates() {
-    return [
+  static List<FormationTemplate> getFormationTemplates() => [
       const FormationTemplate(
         name: '4-3-3',
         description: 'Klassieke aanvallende opstelling',
@@ -671,20 +663,19 @@ class FieldDiagramEditorNotifier extends StateNotifier<FieldDiagramEditorState> 
         ],
       ),
     ];
-  }
 }
 
 // Formation Template Model
 class FormationTemplate {
-  final String name;
-  final String description;
-  final List<Position> positions;
 
   const FormationTemplate({
     required this.name,
     required this.description,
     required this.positions,
   });
+  final String name;
+  final String description;
+  final List<Position> positions;
 }
 
 // Provider instance

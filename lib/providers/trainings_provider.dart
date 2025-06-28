@@ -4,22 +4,20 @@ import '../services/database_service.dart';
 
 final trainingsProvider = FutureProvider<List<Training>>((ref) async {
   final db = DatabaseService();
-  return await db.getAllTrainings();
+  return db.getAllTrainings();
 });
 
 final upcomingTrainingsProvider = FutureProvider<List<Training>>((ref) async {
   final db = DatabaseService();
-  return await db.getUpcomingTrainings();
+  return db.getUpcomingTrainings();
 });
 
 final trainingsByDateRangeProvider = FutureProvider.family<List<Training>, DateRange>((ref, range) async {
   final db = DatabaseService();
-  return await db.getTrainingsForDateRange(range.start, range.end);
+  return db.getTrainingsForDateRange(range.start, range.end);
 });
 
-final trainingsNotifierProvider = StateNotifierProvider<TrainingsNotifier, AsyncValue<List<Training>>>((ref) {
-  return TrainingsNotifier();
-});
+final trainingsNotifierProvider = StateNotifierProvider<TrainingsNotifier, AsyncValue<List<Training>>>((ref) => TrainingsNotifier());
 
 class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
   TrainingsNotifier() : super(const AsyncValue.loading()) {
@@ -58,8 +56,8 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
 }
 
 class DateRange {
-  final DateTime start;
-  final DateTime end;
 
   DateRange({required this.start, required this.end});
+  final DateTime start;
+  final DateTime end;
 }

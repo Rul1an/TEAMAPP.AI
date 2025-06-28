@@ -4,12 +4,12 @@ import '../providers/demo_mode_provider.dart';
 
 /// 🚀 Demo Mode Starter - Automatically activates demo mode for testing
 class DemoModeStarter extends ConsumerStatefulWidget {
-  final Widget child;
 
   const DemoModeStarter({
     required this.child,
     super.key,
   });
+  final Widget child;
 
   @override
   ConsumerState<DemoModeStarter> createState() => _DemoModeStarterState();
@@ -47,14 +47,11 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.blue,
-          duration: Duration(seconds: 4),
         ),
       );
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
+  Widget build(BuildContext context) => widget.child;
 }

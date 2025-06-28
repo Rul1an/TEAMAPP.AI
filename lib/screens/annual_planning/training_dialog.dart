@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/annual_planning/week_schedule.dart';
 
 class TrainingDialog extends StatefulWidget {
-  final WeeklyTraining? existingTraining;
-  final DateTime weekStartDate;
-  final Function(WeeklyTraining) onSave;
 
   const TrainingDialog({
     super.key,
@@ -12,6 +9,9 @@ class TrainingDialog extends StatefulWidget {
     required this.weekStartDate,
     required this.onSave,
   });
+  final WeeklyTraining? existingTraining;
+  final DateTime weekStartDate;
+  final Function(WeeklyTraining) onSave;
 
   @override
   State<TrainingDialog> createState() => _TrainingDialogState();
@@ -86,8 +86,7 @@ class _TrainingDialogState extends State<TrainingDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
+  Widget build(BuildContext context) => AlertDialog(
       title: Text(
         widget.existingTraining != null ? 'Training Bewerken' : 'Training Toevoegen',
         style: TextStyle(color: Colors.green[800]),
@@ -106,9 +105,7 @@ class _TrainingDialogState extends State<TrainingDialog> {
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.sports_soccer),
                 ),
-                items: _commonTrainingTypes.map((type) {
-                  return DropdownMenuItem(value: type, child: Text(type));
-                }).toList(),
+                items: _commonTrainingTypes.map((type) => DropdownMenuItem(value: type, child: Text(type))).toList(),
                 onChanged: (value) {
                   if (value != null) {
                     _nameController.text = value;
@@ -138,9 +135,7 @@ class _TrainingDialogState extends State<TrainingDialog> {
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.location_on),
                 ),
-                items: _commonLocations.map((location) {
-                  return DropdownMenuItem(value: location, child: Text(location));
-                }).toList(),
+                items: _commonLocations.map((location) => DropdownMenuItem(value: location, child: Text(location))).toList(),
                 onChanged: (value) {
                   if (value != null) {
                     _locationController.text = value;
@@ -253,9 +248,8 @@ class _TrainingDialogState extends State<TrainingDialog> {
         ),
       ],
     );
-  }
 
-  void _selectDate() async {
+  Future<void> _selectDate() async {
     final date = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
@@ -269,7 +263,7 @@ class _TrainingDialogState extends State<TrainingDialog> {
     }
   }
 
-  void _selectTime() async {
+  Future<void> _selectTime() async {
     final time = await showTimePicker(
       context: context,
       initialTime: _selectedTime,

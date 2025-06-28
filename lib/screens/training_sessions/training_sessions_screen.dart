@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../services/database_service.dart';
+
 import '../../models/training_session/training_session.dart';
+import '../../services/database_service.dart';
 
 final trainingSessionsProvider = FutureProvider<List<TrainingSession>>((ref) async {
   final db = DatabaseService();
-  return await db.getAllTrainingSessions();
+  return db.getAllTrainingSessions();
 });
 
 class TrainingSessionsScreen extends ConsumerWidget {
@@ -29,7 +30,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,7 +38,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
             Card(
               color: Theme.of(context).colorScheme.primaryContainer,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -167,7 +168,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
               data: (sessions) => sessions.isEmpty
                 ? Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.all(24),
                       child: Column(
                         children: [
                           Icon(Icons.schedule, color: Theme.of(context).primaryColor, size: 48),
@@ -233,12 +234,12 @@ class TrainingSessionsScreen extends ConsumerWidget {
                         ),
                         onTap: () => context.push('/session-builder?sessionId=${session.id}'),
                       ),
-                    )).toList(),
+                    ),).toList(),
                   ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16),
                   child: Text('Error: $error'),
                 ),
               ),
@@ -283,9 +284,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
     }
   }
 
-  int _getTotalDuration(TrainingSession session) {
-    return session.phases.fold(0, (sum, phase) => sum + phase.durationMinutes);
-  }
+  int _getTotalDuration(TrainingSession session) => session.phases.fold(0, (sum, phase) => sum + phase.durationMinutes);
 
   String _getSmartCoachingTip() {
     final now = DateTime.now();
@@ -296,27 +295,27 @@ class TrainingSessionsScreen extends ConsumerWidget {
     if (hour >= 17 && hour <= 20) {
       // Training time (17:00-20:00)
       if (weekday == 2 || weekday == 4) { // Tuesday or Thursday
-        return "🏃‍♂️ Training tijd! Gebruik de Session Builder voor gestructureerde VOAB-plannen. Start met warming-up, focus op techniek/tactiek, eindig met cooling-down.";
+        return '🏃‍♂️ Training tijd! Gebruik de Session Builder voor gestructureerde VOAB-plannen. Start met warming-up, focus op techniek/tactiek, eindig met cooling-down.';
       }
     }
 
     // Match preparation (Friday/Saturday)
     if (weekday == 5) {
-      return "⚽ Wedstrijdvoorbereiding! Maak een tactical session met positiespel oefeningen. Gebruik de Exercise Library voor finishing en set pieces.";
+      return '⚽ Wedstrijdvoorbereiding! Maak een tactical session met positiespel oefeningen. Gebruik de Exercise Library voor finishing en set pieces.';
     }
 
     if (weekday == 6) {
-      return "🥅 Wedstrijddag! Korte activatie training (30-45 min). Focus op passing, shooting en team shape. Gebruik low-intensity oefeningen.";
+      return '🥅 Wedstrijddag! Korte activatie training (30-45 min). Focus op passing, shooting en team shape. Gebruik low-intensity oefeningen.';
     }
 
     // Recovery day (Sunday/Monday)
     if (weekday == 7 || weekday == 1) {
-      return "💆‍♂️ Hersteldag! Perfecte tijd om trainingsplannen voor te bereiden. Verken de Exercise Library en maak templates voor volgende week.";
+      return '💆‍♂️ Hersteldag! Perfecte tijd om trainingsplannen voor te bereiden. Verken de Exercise Library en maak templates voor volgende week.';
     }
 
     // Wednesday - Technical focus
     if (weekday == 3) {
-      return "🎯 Midden van de week! Ideaal voor technische ontwikkeling. Gebruik de Field Diagram Editor om passing patterns en 1v1 situaties te visualiseren.";
+      return '🎯 Midden van de week! Ideaal voor technische ontwikkeling. Gebruik de Field Diagram Editor om passing patterns en 1v1 situaties te visualiseren.';
     }
 
     // Default suggestion

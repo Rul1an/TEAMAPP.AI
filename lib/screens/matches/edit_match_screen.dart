@@ -8,12 +8,12 @@ import '../../providers/database_provider.dart';
 import '../../services/database_service.dart';
 
 class EditMatchScreen extends ConsumerStatefulWidget {
-  final String matchId;
 
   const EditMatchScreen({
     super.key,
     required this.matchId,
   });
+  final String matchId;
 
   @override
   ConsumerState<EditMatchScreen> createState() => _EditMatchScreenState();
@@ -53,7 +53,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
     final matches = ref.read(matchesProvider).value ?? [];
     _match = matches.firstWhere(
       (m) => m.id.toString() == widget.matchId,
-      orElse: () => Match(),
+      orElse: Match.new,
     );
 
     if (_match != null && _match!.id != '') {
@@ -177,12 +177,10 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     labelText: 'Locatie',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: Location.values.map((location) {
-                                    return DropdownMenuItem(
+                                  items: Location.values.map((location) => DropdownMenuItem(
                                       value: location,
                                       child: Text(_getLocationText(location)),
-                                    );
-                                  }).toList(),
+                                    ),).toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedLocation = value;
@@ -204,12 +202,10 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     labelText: 'Competitie',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: Competition.values.map((competition) {
-                                    return DropdownMenuItem(
+                                  items: Competition.values.map((competition) => DropdownMenuItem(
                                       value: competition,
                                       child: Text(_getCompetitionText(competition)),
-                                    );
-                                  }).toList(),
+                                    ),).toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedCompetition = value;
@@ -249,12 +245,10 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                               labelText: 'Status',
                               border: OutlineInputBorder(),
                             ),
-                            items: MatchStatus.values.map((status) {
-                              return DropdownMenuItem(
+                            items: MatchStatus.values.map((status) => DropdownMenuItem(
                                 value: status,
                                 child: Text(_getStatusText(status)),
-                              );
-                            }).toList(),
+                              ),).toList(),
                             onChanged: (value) {
                               setState(() {
                                 _selectedStatus = value;

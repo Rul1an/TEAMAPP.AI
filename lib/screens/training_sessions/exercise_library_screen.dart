@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../models/training_session/training_exercise.dart';
+
 import '../../models/annual_planning/morphocycle.dart';
-import '../../providers/exercise_designer_provider.dart';
+import '../../models/training_session/training_exercise.dart';
 import '../../providers/annual_planning_provider.dart';
+import '../../providers/exercise_designer_provider.dart';
 import './exercise_designer_screen.dart';
 import './field_diagram_editor_screen.dart';
 
@@ -13,11 +14,6 @@ final exerciseSearchProvider = StateProvider<String>((ref) => '');
 final exerciseTypeFilterProvider = StateProvider<ExerciseType?>((ref) => null);
 
 class ExerciseLibraryScreen extends ConsumerStatefulWidget {
-  final TrainingIntensity? filterIntensity;
-  final TacticalFocus? filterTacticalFocus;
-  final int weekNumber;
-  final bool isSelectMode;
-  final Function(TrainingExercise)? onExerciseSelected;
 
   const ExerciseLibraryScreen({
     super.key,
@@ -27,6 +23,11 @@ class ExerciseLibraryScreen extends ConsumerStatefulWidget {
     this.isSelectMode = false,
     this.onExerciseSelected,
   });
+  final TrainingIntensity? filterIntensity;
+  final TacticalFocus? filterTacticalFocus;
+  final int weekNumber;
+  final bool isSelectMode;
+  final Function(TrainingExercise)? onExerciseSelected;
 
   @override
   ConsumerState<ExerciseLibraryScreen> createState() => _ExerciseLibraryScreenState();
@@ -226,8 +227,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     );
   }
 
-  Widget _buildSearchBar() {
-    return Container(
+  Widget _buildSearchBar() => Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: TextField(
         decoration: InputDecoration(
@@ -246,7 +246,6 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
         onChanged: (value) => setState(() => _searchQuery = value),
       ),
     );
-  }
 
   Widget _buildRecommendedTab(List<TrainingExercise> exercises, Morphocycle? morphocycle) {
     if (morphocycle == null) {
@@ -419,8 +418,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     );
   }
 
-  Widget _buildIntensitySection(TrainingIntensity intensity, List<TrainingExercise> exercises) {
-    return Container(
+  Widget _buildIntensitySection(TrainingIntensity intensity, List<TrainingExercise> exercises) => Container(
       margin: const EdgeInsets.only(bottom: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -486,7 +484,6 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
         ],
       ),
     );
-  }
 
   Widget _buildTacticalFocusTab(List<TrainingExercise> exercises) {
     final focusGroups = <TacticalFocus, List<TrainingExercise>>{};
@@ -506,8 +503,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     );
   }
 
-  Widget _buildTacticalFocusSection(TacticalFocus focus, List<TrainingExercise> exercises) {
-    return Container(
+  Widget _buildTacticalFocusSection(TacticalFocus focus, List<TrainingExercise> exercises) => Container(
       margin: const EdgeInsets.only(bottom: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -565,7 +561,6 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
         ],
       ),
     );
-  }
 
   Widget _buildAllExercisesTab(List<TrainingExercise> exercises) {
     final filteredExercises = _applyFilters(exercises);
@@ -583,8 +578,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     );
   }
 
-  Widget _buildExerciseCard(TrainingExercise exercise) {
-    return Card(
+  Widget _buildExerciseCard(TrainingExercise exercise) => Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
@@ -729,10 +723,8 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
         ),
       ),
     );
-  }
 
-  List<TrainingExercise> _applyFilters(List<TrainingExercise> exercises) {
-    return exercises
+  List<TrainingExercise> _applyFilters(List<TrainingExercise> exercises) => exercises
         .search(_searchQuery)
         .where((e) => _selectedCategory == null || e.category == _selectedCategory)
         .where((e) => _selectedComplexity == null || e.complexity == _selectedComplexity)
@@ -741,7 +733,6 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
         .where((e) => e.durationMinutes >= _minDuration && e.durationMinutes <= _maxDuration)
         .where((e) => e.minPlayers <= _playerCount && e.maxPlayers >= _playerCount)
         .toList();
-  }
 
   void _showFilterDialog() {
     showDialog(
@@ -758,11 +749,11 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                   decoration: const InputDecoration(labelText: 'Category'),
                   value: _selectedCategory,
                   items: [
-                    const DropdownMenuItem(value: null, child: Text('All Categories')),
+                    const DropdownMenuItem(child: Text('All Categories')),
                     ...ExerciseCategory.values.map((cat) => DropdownMenuItem(
                       value: cat,
                       child: Text(cat.displayName),
-                    )),
+                    ),),
                   ],
                   onChanged: (value) => setDialogState(() => _selectedCategory = value),
                 ),
@@ -773,11 +764,11 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
                   decoration: const InputDecoration(labelText: 'Complexity'),
                   value: _selectedComplexity,
                   items: [
-                    const DropdownMenuItem(value: null, child: Text('All Complexities')),
+                    const DropdownMenuItem(child: Text('All Complexities')),
                     ...ExerciseComplexity.values.map((comp) => DropdownMenuItem(
                       value: comp,
                       child: Text(comp.displayName),
-                    )),
+                    ),),
                   ],
                   onChanged: (value) => setDialogState(() => _selectedComplexity = value),
                 ),
@@ -962,8 +953,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
-    return Padding(
+  Widget _buildDetailRow(String label, String value) => Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -979,7 +969,6 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
         ],
       ),
     );
-  }
 
   Color _getIntensityColor(TrainingIntensity intensity) {
     switch (intensity) {

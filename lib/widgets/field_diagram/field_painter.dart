@@ -1,15 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
 import '../../models/training_session/field_diagram.dart';
 
 class FieldPainter extends CustomPainter {
-  final FieldDiagram diagram;
-  final String? selectedElementId;
-  final bool showGrid;
-  final double gridSize;
-  final List<Position> currentLinePoints;
-  final bool isDrawingLine;
-  final LineType selectedLineType;
 
   FieldPainter({
     required this.diagram,
@@ -20,6 +15,13 @@ class FieldPainter extends CustomPainter {
     this.isDrawingLine = false,
     this.selectedLineType = LineType.pass,
   });
+  final FieldDiagram diagram;
+  final String? selectedElementId;
+  final bool showGrid;
+  final double gridSize;
+  final List<Position> currentLinePoints;
+  final bool isDrawingLine;
+  final LineType selectedLineType;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -469,7 +471,7 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawGoals(Canvas canvas, Rect fieldRect, Paint linePaint) {
-    _drawSingleGoal(canvas, fieldRect, linePaint, isLeft: true);
+    _drawSingleGoal(canvas, fieldRect, linePaint);
     _drawSingleGoal(canvas, fieldRect, linePaint, isLeft: false);
   }
 
@@ -814,7 +816,7 @@ class FieldPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     // Apply line style based on type
-    Path path = Path();
+    final Path path = Path();
     final firstPoint = _fieldToCanvasPosition(line.points.first, fieldRect);
 
     // Validate first point
@@ -933,7 +935,7 @@ class FieldPainter extends CustomPainter {
   void _drawDashedPath(Canvas canvas, List<Position> points, Rect fieldRect, Paint paint) {
     const dashLength = 10.0;
     const dashSpace = 5.0;
-    double distance = 0.0;
+    double distance = 0;
 
     for (int i = 0; i < points.length - 1; i++) {
       final start = _fieldToCanvasPosition(points[i], fieldRect);
@@ -1129,9 +1131,7 @@ class FieldPainter extends CustomPainter {
     );
   }
 
-  bool _isValidOffset(Offset offset) {
-    return offset.dx.isFinite && offset.dy.isFinite;
-  }
+  bool _isValidOffset(Offset offset) => offset.dx.isFinite && offset.dy.isFinite;
 
   Color _parseColor(String colorString) {
     try {
@@ -1142,13 +1142,11 @@ class FieldPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(FieldPainter oldDelegate) {
-    return diagram != oldDelegate.diagram ||
+  bool shouldRepaint(FieldPainter oldDelegate) => diagram != oldDelegate.diagram ||
            selectedElementId != oldDelegate.selectedElementId ||
            showGrid != oldDelegate.showGrid ||
            gridSize != oldDelegate.gridSize ||
            currentLinePoints != oldDelegate.currentLinePoints ||
            isDrawingLine != oldDelegate.isDrawingLine ||
            selectedLineType != oldDelegate.selectedLineType;
-  }
 }

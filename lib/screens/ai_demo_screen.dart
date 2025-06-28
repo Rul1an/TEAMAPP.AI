@@ -22,8 +22,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Text('AI Assistant Demo'),
         backgroundColor: Colors.purple.shade700,
@@ -36,7 +35,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -44,14 +43,14 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
             Card(
               color: Colors.purple.shade50,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         Icon(Icons.auto_awesome, 
-                             color: Colors.purple.shade700, size: 32),
+                             color: Colors.purple.shade700, size: 32,),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
@@ -154,7 +153,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
             
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -242,7 +241,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
             Card(
               color: Colors.grey.shade50,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -266,7 +265,6 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
         ),
       ),
     );
-  }
 
   Widget _buildFeatureCard({
     required IconData icon,
@@ -274,10 +272,9 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
     required String description,
     required String status,
     required Color color,
-  }) {
-    return Card(
+  }) => Card(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -328,10 +325,8 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildTechSpec(String label, String value) {
-    return Padding(
+  Widget _buildTechSpec(String label, String value) => Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
@@ -346,7 +341,6 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
         ],
       ),
     );
-  }
 
   Future<void> _generateDemoResponse() async {
     if (_promptController.text.trim().isEmpty) {
@@ -368,7 +362,8 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
     String response;
 
     if (prompt.contains('training') || prompt.contains('oefening')) {
-      response = '''🏃‍♂️ AI-gegenereerde Training: "Verdedigende Organisatie"
+      response = '''
+🏃‍♂️ AI-gegenereerde Training: "Verdedigende Organisatie"
 
 ⏱️ Duur: 90 minuten
 🎯 Focus: Verdediging, Pressing, Compactheid
@@ -389,7 +384,8 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
 
 💡 Coach Tips: Focus op communicatie en tijdig druk zetten!''';
     } else if (prompt.contains('tactiek') || prompt.contains('formatie')) {
-      response = '''⚽ Tactische Analyse: 4-3-3 Formatie
+      response = '''
+⚽ Tactische Analyse: 4-3-3 Formatie
 
 📊 Aanbevolen opstelling tegen aanvallende tegenstander:
 
@@ -412,7 +408,8 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
 • Bij achterstand: 4-2-4
 • Bij voorsprong: 5-3-2''';
     } else if (prompt.contains('speler') || prompt.contains('prestatie')) {
-      response = '''📈 Speler Performance Analyse
+      response = '''
+📈 Speler Performance Analyse
 
 🎯 Gebaseerd op recente wedstrijddata:
 
@@ -433,7 +430,8 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
 
 ⏰ Verwachte verbetering: 6-8 weken''';
     } else {
-      response = '''🤖 AI Assistent Response:
+      response = '''
+🤖 AI Assistent Response:
 
 Bedankt voor je vraag! In de volledige versie kan ik helpen met:
 

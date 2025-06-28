@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../config/providers.dart';
 import '../../models/club/club.dart';
-import '../../models/club/team.dart';
 import '../../models/club/staff_member.dart';
+import '../../models/club/team.dart';
 import '../../services/feature_service.dart';
 import '../../widgets/common/tier_badge.dart';
 
@@ -57,8 +58,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
     );
   }
 
-  Widget _buildClubManagementContent(BuildContext context, Club club, FeatureService featureService) {
-    return SingleChildScrollView(
+  Widget _buildClubManagementContent(BuildContext context, Club club, FeatureService featureService) => SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,10 +115,8 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
         ],
       ),
     );
-  }
 
-  Widget _buildClubInfoCard(BuildContext context, Club club) {
-    return Card(
+  Widget _buildClubInfoCard(BuildContext context, Club club) => Card(
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -198,10 +196,8 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildStatItem(BuildContext context, String label, String value, IconData icon) {
-    return Column(
+  Widget _buildStatItem(BuildContext context, String label, String value, IconData icon) => Column(
       children: [
         Icon(icon, size: 24, color: Theme.of(context).primaryColor),
         const SizedBox(height: 8),
@@ -219,7 +215,6 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
         ),
       ],
     );
-  }
 
   Widget _buildSubscriptionCard(BuildContext context, Club club, FeatureService featureService) {
     final tierLimits = featureService.getTierLimits(club.tier.name.toLowerCase());
@@ -345,8 +340,7 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
     );
   }
 
-  Widget _buildTeamManagementSection(BuildContext context, Club club, FeatureService featureService) {
-    return Card(
+  Widget _buildTeamManagementSection(BuildContext context, Club club, FeatureService featureService) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -414,15 +408,13 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
                     }
                   },
                 ),
-              )),
+              ),),
           ],
         ),
       ),
     );
-  }
 
-  Widget _buildStaffManagementSection(BuildContext context, Club club, FeatureService featureService) {
-    return Card(
+  Widget _buildStaffManagementSection(BuildContext context, Club club, FeatureService featureService) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -490,15 +482,13 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
                     }
                   },
                 ),
-              )),
+              ),),
           ],
         ),
       ),
     );
-  }
 
-  Widget _buildClubSettingsSection(BuildContext context, Club club) {
-    return Card(
+  Widget _buildClubSettingsSection(BuildContext context, Club club) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -543,7 +533,6 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
         ),
       ),
     );
-  }
 
   String _getStaffRoleDisplayName(StaffRole role) {
     switch (role) {

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../models/player.dart';
+
 import '../../models/performance_rating.dart';
+import '../../models/player.dart';
 import '../../services/database_service.dart';
 import '../common/star_rating.dart';
 
 class RatingDialog extends StatefulWidget {
-  final Player player;
-  final String? matchId;
-  final String? trainingId;
-  final RatingType type;
 
   const RatingDialog({
     super.key,
@@ -17,6 +14,10 @@ class RatingDialog extends StatefulWidget {
     this.trainingId,
     required this.type,
   });
+  final Player player;
+  final String? matchId;
+  final String? trainingId;
+  final RatingType type;
 
   @override
   State<RatingDialog> createState() => _RatingDialogState();

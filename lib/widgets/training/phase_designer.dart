@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/training_session/session_phase.dart';
 
 class PhaseDesigner extends StatefulWidget {
-  final SessionPhase phase;
-  final Function(SessionPhase) onPhaseUpdated;
-  final VoidCallback? onPhaseDeleted;
 
   const PhaseDesigner({
     super.key,
@@ -12,6 +9,9 @@ class PhaseDesigner extends StatefulWidget {
     required this.onPhaseUpdated,
     this.onPhaseDeleted,
   });
+  final SessionPhase phase;
+  final Function(SessionPhase) onPhaseUpdated;
+  final VoidCallback? onPhaseDeleted;
 
   @override
   State<PhaseDesigner> createState() => _PhaseDesignerState();
@@ -40,8 +40,7 @@ class _PhaseDesignerState extends State<PhaseDesigner> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
+  Widget build(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -162,7 +161,6 @@ class _PhaseDesignerState extends State<PhaseDesigner> {
         ),
       ),
     );
-  }
 
   void _updatePhase() {
     final updatedPhase = widget.phase.copyWith(

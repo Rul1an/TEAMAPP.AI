@@ -36,11 +36,6 @@ enum SubscriptionTier {
 
 // Feature configuration
 class FeatureConfig {
-  final String organizationId;
-  final String teamId;
-  final SubscriptionTier tier;
-  final Map<Feature, bool> overrides;
-  final DateTime? expiresAt;
 
   const FeatureConfig({
     required this.organizationId,
@@ -49,6 +44,11 @@ class FeatureConfig {
     this.overrides = const {},
     this.expiresAt,
   });
+  final String organizationId;
+  final String teamId;
+  final SubscriptionTier tier;
+  final Map<Feature, bool> overrides;
+  final DateTime? expiresAt;
 
   bool get isExpired => expiresAt != null && expiresAt!.isBefore(DateTime.now());
 }
@@ -128,19 +128,13 @@ class FeatureService {
   };
 
   // Check if a feature is available for a specific tier
-  bool isFeatureAvailable(String feature, String tier) {
-    return _tierFeatures[tier]?.contains(feature) ?? false;
-  }
+  bool isFeatureAvailable(String feature, String tier) => _tierFeatures[tier]?.contains(feature) ?? false;
 
   // Get all features for a tier
-  List<String> getFeaturesForTier(String tier) {
-    return _tierFeatures[tier] ?? [];
-  }
+  List<String> getFeaturesForTier(String tier) => _tierFeatures[tier] ?? [];
 
   // Get tier limits
-  Map<String, dynamic> getTierLimits(String tier) {
-    return _tierLimits[tier] ?? _tierLimits['basic']!;
-  }
+  Map<String, dynamic> getTierLimits(String tier) => _tierLimits[tier] ?? _tierLimits['basic']!;
 
   // Check if a limit is reached
   bool isLimitReached(String tier, String limitType, int currentValue) {
@@ -232,8 +226,7 @@ class FeatureService {
   }
 
   // Feature descriptions for upgrade prompts
-  Map<String, String> getFeatureDescriptions() {
-    return {
+  Map<String, String> getFeatureDescriptions() => {
       'player_tracking_svs': 'Geavanceerd speler volg systeem met GPS integratie',
       'performance_analytics': 'Uitgebreide prestatie analyses en rapporten',
       'annual_planning': 'Volledige jaarplanning en periodisering',
@@ -245,5 +238,4 @@ class FeatureService {
       'multi_team_management': 'Beheer meerdere teams binnen één club',
       'coach_collaboration': 'Samenwerking tussen coaches en staff',
     };
-  }
 }

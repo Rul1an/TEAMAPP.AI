@@ -6,13 +6,12 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
-import 'package:jo17_tactical_manager/main.dart';
 import 'package:jo17_tactical_manager/config/environment.dart';
+import 'package:jo17_tactical_manager/main.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   setUpAll(() async {
@@ -20,7 +19,7 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     
     // Initialize date formatting for Dutch locale
-    await initializeDateFormatting('nl', null);
+    await initializeDateFormatting('nl');
     
     // Initialize Supabase for tests
     await Supabase.initialize(
@@ -33,7 +32,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const ProviderScope(
       child: JO17TacticalManagerApp(),
-    ));
+    ),);
 
     // Wait for any async operations to complete
     await tester.pumpAndSettle();

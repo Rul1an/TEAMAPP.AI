@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+
 import '../../models/training.dart';
 import '../../services/database_service.dart';
 
@@ -54,8 +55,7 @@ class _AddTrainingScreenState extends ConsumerState<AddTrainingScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Text('Training Toevoegen'),
       ),
@@ -192,12 +192,10 @@ class _AddTrainingScreenState extends ConsumerState<AddTrainingScreen> {
                                 labelText: 'Focus',
                                 border: OutlineInputBorder(),
                               ),
-                              items: TrainingFocus.values.map((focus) {
-                                return DropdownMenuItem(
+                              items: TrainingFocus.values.map((focus) => DropdownMenuItem(
                                   value: focus,
                                   child: Text(_getFocusText(focus)),
-                                );
-                              }).toList(),
+                                ),).toList(),
                               onChanged: (value) {
                                 setState(() {
                                   _selectedFocus = value;
@@ -219,12 +217,10 @@ class _AddTrainingScreenState extends ConsumerState<AddTrainingScreen> {
                                 labelText: 'Intensiteit',
                                 border: OutlineInputBorder(),
                               ),
-                              items: TrainingIntensity.values.map((intensity) {
-                                return DropdownMenuItem(
+                              items: TrainingIntensity.values.map((intensity) => DropdownMenuItem(
                                   value: intensity,
                                   child: Text(_getIntensityText(intensity)),
-                                );
-                              }).toList(),
+                                ),).toList(),
                               onChanged: (value) {
                                 setState(() {
                                   _selectedIntensity = value;
@@ -247,12 +243,10 @@ class _AddTrainingScreenState extends ConsumerState<AddTrainingScreen> {
                           labelText: 'Status',
                           border: OutlineInputBorder(),
                         ),
-                        items: TrainingStatus.values.map((status) {
-                          return DropdownMenuItem(
+                        items: TrainingStatus.values.map((status) => DropdownMenuItem(
                             value: status,
                             child: Text(_getStatusText(status)),
-                          );
-                        }).toList(),
+                          ),).toList(),
                         onChanged: (value) {
                           setState(() {
                             _selectedStatus = value!;
@@ -330,7 +324,6 @@ class _AddTrainingScreenState extends ConsumerState<AddTrainingScreen> {
         ),
       ),
     );
-  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(

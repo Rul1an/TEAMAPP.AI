@@ -4,6 +4,144 @@ import 'field_diagram.dart';
 // part 'training_exercise.g.dart'; // Disabled for web compatibility
 
 class TrainingExercise {
+
+  // Basic exercise data
+  TrainingExercise({
+    this.id = 0,
+    required this.name,
+    required this.description,
+    required this.durationMinutes,
+    required this.playerCount,
+    required this.equipment,
+    required this.intensityLevel,
+    required this.type,
+    required this.coachingPoints,
+    this.trainingSessionId,
+    this.sessionPhaseId,
+    this.orderIndex = 0,
+    this.keyFocus,
+    this.objectives = const [],
+    this.fieldDiagram,
+    this.minPlayers = 1,
+    this.maxPlayers = 22,
+    this.category = ExerciseCategory.technical,
+    this.complexity = ExerciseComplexity.basic,
+    this.spaceRequired = 'Half field',
+    this.estimatedRPE = 5.0,
+    this.averageRating = 0.0,
+    this.tacticalFocus,
+    this.primaryIntensity = 5.0,
+  });
+
+  // Factory constructor for creating a new exercise
+  factory TrainingExercise.create({
+    required String name,
+    required String description,
+    required double durationMinutes,
+    required int playerCount,
+    String equipment = '',
+    double intensityLevel = 5.0,
+    ExerciseType type = ExerciseType.technical,
+    List<String>? coachingPoints,
+    String? trainingSessionId,
+    String? sessionPhaseId,
+    int orderIndex = 0,
+    String? keyFocus,
+    List<String>? objectives,
+    FieldDiagram? fieldDiagram,
+    int minPlayers = 1,
+    int maxPlayers = 22,
+    ExerciseCategory category = ExerciseCategory.technical,
+    ExerciseComplexity complexity = ExerciseComplexity.basic,
+    String spaceRequired = 'Half field',
+    double estimatedRPE = 5.0,
+    double averageRating = 0.0,
+    TacticalFocus? tacticalFocus,
+    double primaryIntensity = 5.0,
+  }) => TrainingExercise(
+      name: name,
+      description: description,
+      durationMinutes: durationMinutes,
+      playerCount: playerCount,
+      equipment: equipment,
+      intensityLevel: intensityLevel,
+      type: type,
+      coachingPoints: coachingPoints ?? [],
+      trainingSessionId: trainingSessionId,
+      sessionPhaseId: sessionPhaseId,
+      orderIndex: orderIndex,
+      keyFocus: keyFocus,
+      objectives: objectives ?? [],
+      fieldDiagram: fieldDiagram,
+      minPlayers: minPlayers,
+      maxPlayers: maxPlayers,
+      category: category,
+      complexity: complexity,
+      spaceRequired: spaceRequired,
+      estimatedRPE: estimatedRPE,
+      averageRating: averageRating,
+      tacticalFocus: tacticalFocus,
+      primaryIntensity: primaryIntensity,
+    )
+      ..createdAt = DateTime.now()
+      ..updatedAt = DateTime.now();
+
+  factory TrainingExercise.fromJson(Map<String, dynamic> json) {
+    final exercise = TrainingExercise.create(
+      name: json['name'],
+      description: json['description'],
+      durationMinutes: (json['durationMinutes'] as num).toDouble(),
+      playerCount: json['playerCount'],
+      equipment: json['equipment'] ?? '',
+      intensityLevel: (json['intensityLevel'] as num?)?.toDouble() ?? 5.0,
+      type: ExerciseType.values.firstWhere(
+        (e) => e.name == json['type'],
+        orElse: () => ExerciseType.technical,
+      ),
+      coachingPoints: json['coachingPoints'] != null
+          ? List<String>.from(json['coachingPoints'])
+          : [],
+      trainingSessionId: json['trainingSessionId'],
+      sessionPhaseId: json['sessionPhaseId'],
+      orderIndex: json['orderIndex'] ?? 0,
+      keyFocus: json['keyFocus'],
+      objectives: json['objectives'] != null
+          ? List<String>.from(json['objectives'])
+          : [],
+      minPlayers: json['minPlayers'] ?? 1,
+      maxPlayers: json['maxPlayers'] ?? 22,
+      category: json['category'] != null
+          ? ExerciseCategory.values.firstWhere(
+              (e) => e.name == json['category'],
+              orElse: () => ExerciseCategory.technical,
+            )
+          : ExerciseCategory.technical,
+      complexity: json['complexity'] != null
+          ? ExerciseComplexity.values.firstWhere(
+              (e) => e.name == json['complexity'],
+              orElse: () => ExerciseComplexity.basic,
+            )
+          : ExerciseComplexity.basic,
+      spaceRequired: json['spaceRequired'] ?? 'Half field',
+      estimatedRPE: (json['estimatedRPE'] as num?)?.toDouble() ?? 5.0,
+      averageRating: (json['averageRating'] as num?)?.toDouble() ?? 0.0,
+      tacticalFocus: json['tacticalFocus'] != null
+          ? TacticalFocus.values.firstWhere(
+              (e) => e.name == json['tacticalFocus'],
+              orElse: () => TacticalFocus.gameModel,
+            )
+          : null,
+      primaryIntensity: (json['primaryIntensity'] as num?)?.toDouble() ?? 5.0,
+    );
+    exercise.id = json['id'] ?? 0;
+    exercise.createdAt = json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'])
+        : DateTime.now();
+    exercise.updatedAt = json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'])
+        : DateTime.now();
+    return exercise;
+  }
   // String id = ""; // Disabled for web compatibility
   int id = 0;
 
@@ -32,13 +170,13 @@ class TrainingExercise {
   int maxPlayers = 22;
   ExerciseCategory category = ExerciseCategory.technical;
   ExerciseComplexity complexity = ExerciseComplexity.basic;
-  String spaceRequired = "Half field";
-  double estimatedRPE = 5.0;
-  double averageRating = 0.0;
+  String spaceRequired = 'Half field';
+  double estimatedRPE = 5;
+  double averageRating = 0;
 
   // Tactical focus for morphocycle compatibility
   TacticalFocus? tacticalFocus;
-  double primaryIntensity = 5.0;
+  double primaryIntensity = 5;
 
   // Get training intensity enum based on intensity level
   TrainingIntensity get trainingIntensity {
@@ -47,89 +185,6 @@ class TrainingExercise {
     if (intensityLevel <= 8.0) return TrainingIntensity.development;
     if (intensityLevel <= 9.0) return TrainingIntensity.acquisition;
     return TrainingIntensity.competition;
-  }
-
-  // Basic exercise data
-  TrainingExercise({
-    this.id = 0,
-    required this.name,
-    required this.description,
-    required this.durationMinutes,
-    required this.playerCount,
-    required this.equipment,
-    required this.intensityLevel,
-    required this.type,
-    required this.coachingPoints,
-    this.trainingSessionId,
-    this.sessionPhaseId,
-    this.orderIndex = 0,
-    this.keyFocus,
-    this.objectives = const [],
-    this.fieldDiagram,
-    this.minPlayers = 1,
-    this.maxPlayers = 22,
-    this.category = ExerciseCategory.technical,
-    this.complexity = ExerciseComplexity.basic,
-    this.spaceRequired = "Half field",
-    this.estimatedRPE = 5.0,
-    this.averageRating = 0.0,
-    this.tacticalFocus,
-    this.primaryIntensity = 5.0,
-  });
-
-  // Factory constructor for creating a new exercise
-  factory TrainingExercise.create({
-    required String name,
-    required String description,
-    required double durationMinutes,
-    required int playerCount,
-    String equipment = '',
-    double intensityLevel = 5.0,
-    ExerciseType type = ExerciseType.technical,
-    List<String>? coachingPoints,
-    String? trainingSessionId,
-    String? sessionPhaseId,
-    int orderIndex = 0,
-    String? keyFocus,
-    List<String>? objectives,
-    FieldDiagram? fieldDiagram,
-    int minPlayers = 1,
-    int maxPlayers = 22,
-    ExerciseCategory category = ExerciseCategory.technical,
-    ExerciseComplexity complexity = ExerciseComplexity.basic,
-    String spaceRequired = "Half field",
-    double estimatedRPE = 5.0,
-    double averageRating = 0.0,
-    TacticalFocus? tacticalFocus,
-    double primaryIntensity = 5.0,
-  }) {
-    return TrainingExercise(
-      name: name,
-      description: description,
-      durationMinutes: durationMinutes,
-      playerCount: playerCount,
-      equipment: equipment,
-      intensityLevel: intensityLevel,
-      type: type,
-      coachingPoints: coachingPoints ?? [],
-      trainingSessionId: trainingSessionId,
-      sessionPhaseId: sessionPhaseId,
-      orderIndex: orderIndex,
-      keyFocus: keyFocus,
-      objectives: objectives ?? [],
-      fieldDiagram: fieldDiagram,
-      minPlayers: minPlayers,
-      maxPlayers: maxPlayers,
-      category: category,
-      complexity: complexity,
-      spaceRequired: spaceRequired,
-      estimatedRPE: estimatedRPE,
-      averageRating: averageRating,
-      tacticalFocus: tacticalFocus,
-      primaryIntensity: primaryIntensity,
-    )
-      ..createdAt = DateTime.now()
-      ..updatedAt = DateTime.now();
   }
 
   // Computed properties
@@ -193,63 +248,6 @@ class TrainingExercise {
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
       };
-
-  factory TrainingExercise.fromJson(Map<String, dynamic> json) {
-    final exercise = TrainingExercise.create(
-      name: json['name'],
-      description: json['description'],
-      durationMinutes: (json['durationMinutes'] as num).toDouble(),
-      playerCount: json['playerCount'],
-      equipment: json['equipment'] ?? '',
-      intensityLevel: (json['intensityLevel'] as num?)?.toDouble() ?? 5.0,
-      type: ExerciseType.values.firstWhere(
-        (e) => e.name == json['type'],
-        orElse: () => ExerciseType.technical,
-      ),
-      coachingPoints: json['coachingPoints'] != null
-          ? List<String>.from(json['coachingPoints'])
-          : [],
-      trainingSessionId: json['trainingSessionId'],
-      sessionPhaseId: json['sessionPhaseId'],
-      orderIndex: json['orderIndex'] ?? 0,
-      keyFocus: json['keyFocus'],
-      objectives: json['objectives'] != null
-          ? List<String>.from(json['objectives'])
-          : [],
-      minPlayers: json['minPlayers'] ?? 1,
-      maxPlayers: json['maxPlayers'] ?? 22,
-      category: json['category'] != null
-          ? ExerciseCategory.values.firstWhere(
-              (e) => e.name == json['category'],
-              orElse: () => ExerciseCategory.technical,
-            )
-          : ExerciseCategory.technical,
-      complexity: json['complexity'] != null
-          ? ExerciseComplexity.values.firstWhere(
-              (e) => e.name == json['complexity'],
-              orElse: () => ExerciseComplexity.basic,
-            )
-          : ExerciseComplexity.basic,
-      spaceRequired: json['spaceRequired'] ?? "Half field",
-      estimatedRPE: (json['estimatedRPE'] as num?)?.toDouble() ?? 5.0,
-      averageRating: (json['averageRating'] as num?)?.toDouble() ?? 0.0,
-      tacticalFocus: json['tacticalFocus'] != null
-          ? TacticalFocus.values.firstWhere(
-              (e) => e.name == json['tacticalFocus'],
-              orElse: () => TacticalFocus.gameModel,
-            )
-          : null,
-      primaryIntensity: (json['primaryIntensity'] as num?)?.toDouble() ?? 5.0,
-    );
-    exercise.id = json['id'] ?? 0;
-    exercise.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now();
-    exercise.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
-        : DateTime.now();
-    return exercise;
-  }
 
   // Copy method
   TrainingExercise copyWith({
@@ -336,14 +334,12 @@ class TrainingExercise {
   }
 
   // Check if exercise is compatible with a tactical focus
-  bool isCompatibleWithTacticalFocus(TacticalFocus focus) {
-    return tacticalFocus == focus || tacticalFocus == null;
-  }
+  bool isCompatibleWithTacticalFocus(TacticalFocus focus) => tacticalFocus == focus || tacticalFocus == null;
 
   // Static method for getting recommended exercises for a morphocycle week
   static Map<String, List<TrainingExercise>> getRecommendedExercisesForWeek(
     List<TrainingExercise> exercises,
-    int weekNumber
+    int weekNumber,
   ) {
     // Organize exercises by morphocycle day based on week number
     final Map<String, List<TrainingExercise>> recommendations = {
@@ -383,8 +379,7 @@ class TrainingExercise {
 
 // Extension methods for filtering exercises
 extension TrainingExerciseFilters on List<TrainingExercise> {
-  List<TrainingExercise> forIntensity(TrainingIntensity intensity) {
-    return where((exercise) {
+  List<TrainingExercise> forIntensity(TrainingIntensity intensity) => where((exercise) {
       // Map TrainingIntensity enum to intensity level ranges
       switch (intensity) {
         case TrainingIntensity.recovery:
@@ -399,13 +394,10 @@ extension TrainingExerciseFilters on List<TrainingExercise> {
           return exercise.intensityLevel >= 9.0;
       }
     }).toList();
-  }
 
-  List<TrainingExercise> forTacticalFocus(TacticalFocus focus) {
-    return where((exercise) =>
-      exercise.tacticalFocus == focus
+  List<TrainingExercise> forTacticalFocus(TacticalFocus focus) => where((exercise) =>
+      exercise.tacticalFocus == focus,
     ).toList();
-  }
 
   List<TrainingExercise> search(String query) {
     final lowerQuery = query.toLowerCase();
@@ -413,39 +405,29 @@ extension TrainingExerciseFilters on List<TrainingExercise> {
       exercise.name.toLowerCase().contains(lowerQuery) ||
       exercise.description.toLowerCase().contains(lowerQuery) ||
       exercise.coachingPoints.any((point) =>
-        point.toLowerCase().contains(lowerQuery)
-      )
+        point.toLowerCase().contains(lowerQuery),
+      ),
     ).toList();
   }
 
-  List<TrainingExercise> forCategory(ExerciseCategory category) {
-    return where((exercise) => exercise.category == category).toList();
-  }
+  List<TrainingExercise> forCategory(ExerciseCategory category) => where((exercise) => exercise.category == category).toList();
 
-  List<TrainingExercise> forComplexity(ExerciseComplexity complexity) {
-    return where((exercise) => exercise.complexity == complexity).toList();
-  }
+  List<TrainingExercise> forComplexity(ExerciseComplexity complexity) => where((exercise) => exercise.complexity == complexity).toList();
 
-  List<TrainingExercise> forDuration(int minMinutes, int maxMinutes) {
-    return where((exercise) =>
+  List<TrainingExercise> forDuration(int minMinutes, int maxMinutes) => where((exercise) =>
       exercise.durationMinutes >= minMinutes &&
-      exercise.durationMinutes <= maxMinutes
+      exercise.durationMinutes <= maxMinutes,
     ).toList();
-  }
 
-  List<TrainingExercise> forPlayerCount(int minPlayers, int maxPlayers) {
-    return where((exercise) =>
+  List<TrainingExercise> forPlayerCount(int minPlayers, int maxPlayers) => where((exercise) =>
       exercise.minPlayers <= maxPlayers &&
-      exercise.maxPlayers >= minPlayers
+      exercise.maxPlayers >= minPlayers,
     ).toList();
-  }
 }
 
 // Extension methods for individual exercises
 extension TrainingExerciseExtension on TrainingExercise {
-  bool isCompatibleWithTacticalFocus(TacticalFocus focus) {
-    return tacticalFocus == focus;
-  }
+  bool isCompatibleWithTacticalFocus(TacticalFocus focus) => tacticalFocus == focus;
 }
 
 // Exercise types following professional coaching methodology

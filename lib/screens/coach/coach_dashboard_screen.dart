@@ -110,8 +110,7 @@ class CoachDashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildWelcomeCard(BuildContext context) {
-    return Card(
+  Widget _buildWelcomeCard(BuildContext context) => Card(
       elevation: 4,
       child: Container(
         width: double.infinity,
@@ -156,10 +155,8 @@ class CoachDashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
-  Widget _buildStatChip(String label, String value) {
-    return Container(
+  Widget _buildStatChip(String label, String value) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.2),
@@ -185,10 +182,8 @@ class CoachDashboardScreen extends ConsumerWidget {
         ],
       ),
     );
-  }
 
-  Widget _buildQuickActions(BuildContext context, club, FeatureService featureService) {
-    return Row(
+  Widget _buildQuickActions(BuildContext context, club, FeatureService featureService) => Row(
       children: [
         Expanded(
           child: _buildActionCard(
@@ -224,10 +219,8 @@ class CoachDashboardScreen extends ConsumerWidget {
         ),
       ],
     );
-  }
 
-  Widget _buildTeamManagement(BuildContext context, club, FeatureService featureService) {
-    return GridView.count(
+  Widget _buildTeamManagement(BuildContext context, club, FeatureService featureService) => GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
@@ -242,7 +235,6 @@ class CoachDashboardScreen extends ConsumerWidget {
           Icons.people,
           Colors.blue,
           () => context.push('/players'),
-          isAvailable: true,
         ),
         _buildManagementCard(
           context,
@@ -251,7 +243,6 @@ class CoachDashboardScreen extends ConsumerWidget {
           Icons.fitness_center,
           Colors.green,
           () => context.push('/training'),
-          isAvailable: true,
         ),
         _buildManagementCard(
           context,
@@ -260,7 +251,6 @@ class CoachDashboardScreen extends ConsumerWidget {
           Icons.stadium,
           Colors.red,
           () => context.push('/matches'),
-          isAvailable: true,
         ),
         _buildManagementCard(
           context,
@@ -269,14 +259,11 @@ class CoachDashboardScreen extends ConsumerWidget {
           Icons.check_circle,
           Colors.orange,
           () => context.push('/training/attendance'),
-          isAvailable: true,
         ),
       ],
     );
-  }
 
-  Widget _buildPlanningAnalysis(BuildContext context, club, FeatureService featureService) {
-    return GridView.count(
+  Widget _buildPlanningAnalysis(BuildContext context, club, FeatureService featureService) => GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
@@ -322,7 +309,6 @@ class CoachDashboardScreen extends ConsumerWidget {
         ),
       ],
     );
-  }
 
   Widget _buildActionCard(
     BuildContext context,
@@ -331,8 +317,7 @@ class CoachDashboardScreen extends ConsumerWidget {
     Color color,
     VoidCallback onTap, {
     bool isAvailable = true,
-  }) {
-    return Card(
+  }) => Card(
       elevation: isAvailable ? 2 : 1,
       child: InkWell(
         onTap: isAvailable ? onTap : null,
@@ -365,7 +350,6 @@ class CoachDashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildManagementCard(
     BuildContext context,
@@ -375,8 +359,7 @@ class CoachDashboardScreen extends ConsumerWidget {
     Color color,
     VoidCallback onTap, {
     bool isAvailable = true,
-  }) {
-    return Card(
+  }) => Card(
       elevation: isAvailable ? 2 : 1,
       child: InkWell(
         onTap: isAvailable ? onTap : () => _showUpgradeDialog(context, title),
@@ -429,7 +412,6 @@ class CoachDashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
 
   Widget _buildUpcomingEvents(BuildContext context) {
     final events = [
@@ -442,20 +424,20 @@ class CoachDashboardScreen extends ConsumerWidget {
       child: Column(
         children: events.map((event) => ListTile(
           leading: CircleAvatar(
-            backgroundColor: _getEventColor(event['type'] as String),
+            backgroundColor: _getEventColor(event['type']!),
             child: Icon(
-              _getEventIcon(event['type'] as String),
+              _getEventIcon(event['type']!),
               color: Colors.white,
               size: 20,
             ),
           ),
-          title: Text(event['title'] as String),
-          subtitle: Text(event['time'] as String),
+          title: Text(event['title']!),
+          subtitle: Text(event['time']!),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: () {
             // Navigate to event details
           },
-        )).toList(),
+        ),).toList(),
       ),
     );
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/organization_provider.dart';
+
 import '../../models/organization.dart';
+import '../../providers/organization_provider.dart';
 
 class OrganizationBadge extends ConsumerWidget {
   const OrganizationBadge({super.key});

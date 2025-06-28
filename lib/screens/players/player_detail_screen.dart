@@ -5,12 +5,12 @@ import '../../models/player.dart';
 import '../../providers/database_provider.dart';
 
 class PlayerDetailScreen extends ConsumerWidget {
-  final String playerId;
 
   const PlayerDetailScreen({
     super.key,
     required this.playerId,
   });
+  final String playerId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

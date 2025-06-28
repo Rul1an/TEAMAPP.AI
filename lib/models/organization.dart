@@ -1,18 +1,6 @@
 enum OrganizationTier { basic, pro, enterprise }
 
 class Organization {
-  final String id;
-  final String name;
-  final String slug;
-  final OrganizationTier tier;
-  final String? logoUrl;
-  final String primaryColor;
-  final String secondaryColor;
-  final Map<String, dynamic> settings;
-  final String subscriptionStatus;
-  final DateTime? subscriptionEndDate;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
   Organization({
     required this.id,
@@ -29,55 +17,7 @@ class Organization {
     required this.updatedAt,
   }) : settings = settings ?? {};
 
-  Organization copyWith({
-    String? id,
-    String? name,
-    String? slug,
-    OrganizationTier? tier,
-    String? logoUrl,
-    String? primaryColor,
-    String? secondaryColor,
-    Map<String, dynamic>? settings,
-    String? subscriptionStatus,
-    DateTime? subscriptionEndDate,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) {
-    return Organization(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      slug: slug ?? this.slug,
-      tier: tier ?? this.tier,
-      logoUrl: logoUrl ?? this.logoUrl,
-      primaryColor: primaryColor ?? this.primaryColor,
-      secondaryColor: secondaryColor ?? this.secondaryColor,
-      settings: settings ?? this.settings,
-      subscriptionStatus: subscriptionStatus ?? this.subscriptionStatus,
-      subscriptionEndDate: subscriptionEndDate ?? this.subscriptionEndDate,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'slug': slug,
-      'tier': tier.name,
-      'logoUrl': logoUrl,
-      'primaryColor': primaryColor,
-      'secondaryColor': secondaryColor,
-      'settings': settings,
-      'subscriptionStatus': subscriptionStatus,
-      'subscriptionEndDate': subscriptionEndDate?.toIso8601String(),
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-    };
-  }
-
-  factory Organization.fromJson(Map<String, dynamic> json) {
-    return Organization(
+  factory Organization.fromJson(Map<String, dynamic> json) => Organization(
       id: json['id'] as String,
       name: json['name'] as String,
       slug: json['slug'] as String,
@@ -96,16 +36,64 @@ class Organization {
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
-  }
+  final String id;
+  final String name;
+  final String slug;
+  final OrganizationTier tier;
+  final String? logoUrl;
+  final String primaryColor;
+  final String secondaryColor;
+  final Map<String, dynamic> settings;
+  final String subscriptionStatus;
+  final DateTime? subscriptionEndDate;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  Organization copyWith({
+    String? id,
+    String? name,
+    String? slug,
+    OrganizationTier? tier,
+    String? logoUrl,
+    String? primaryColor,
+    String? secondaryColor,
+    Map<String, dynamic>? settings,
+    String? subscriptionStatus,
+    DateTime? subscriptionEndDate,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => Organization(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      slug: slug ?? this.slug,
+      tier: tier ?? this.tier,
+      logoUrl: logoUrl ?? this.logoUrl,
+      primaryColor: primaryColor ?? this.primaryColor,
+      secondaryColor: secondaryColor ?? this.secondaryColor,
+      settings: settings ?? this.settings,
+      subscriptionStatus: subscriptionStatus ?? this.subscriptionStatus,
+      subscriptionEndDate: subscriptionEndDate ?? this.subscriptionEndDate,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+
+  Map<String, dynamic> toJson() => {
+      'id': id,
+      'name': name,
+      'slug': slug,
+      'tier': tier.name,
+      'logoUrl': logoUrl,
+      'primaryColor': primaryColor,
+      'secondaryColor': secondaryColor,
+      'settings': settings,
+      'subscriptionStatus': subscriptionStatus,
+      'subscriptionEndDate': subscriptionEndDate?.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+    };
 }
 
 class OrganizationSettings {
-  final int maxPlayers;
-  final int maxTeams;
-  final int maxCoaches;
-  final bool svsEnabled;
-  final bool analyticsEnabled;
-  final bool apiAccess;
 
   const OrganizationSettings({
     this.maxPlayers = 25,
@@ -116,19 +104,7 @@ class OrganizationSettings {
     this.apiAccess = false,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'maxPlayers': maxPlayers,
-      'maxTeams': maxTeams,
-      'maxCoaches': maxCoaches,
-      'svsEnabled': svsEnabled,
-      'analyticsEnabled': analyticsEnabled,
-      'apiAccess': apiAccess,
-    };
-  }
-
-  factory OrganizationSettings.fromJson(Map<String, dynamic> json) {
-    return OrganizationSettings(
+  factory OrganizationSettings.fromJson(Map<String, dynamic> json) => OrganizationSettings(
       maxPlayers: json['maxPlayers'] as int? ?? 25,
       maxTeams: json['maxTeams'] as int? ?? 1,
       maxCoaches: json['maxCoaches'] as int? ?? 2,
@@ -136,7 +112,21 @@ class OrganizationSettings {
       analyticsEnabled: json['analyticsEnabled'] as bool? ?? false,
       apiAccess: json['apiAccess'] as bool? ?? false,
     );
-  }
+  final int maxPlayers;
+  final int maxTeams;
+  final int maxCoaches;
+  final bool svsEnabled;
+  final bool analyticsEnabled;
+  final bool apiAccess;
+
+  Map<String, dynamic> toJson() => {
+      'maxPlayers': maxPlayers,
+      'maxTeams': maxTeams,
+      'maxCoaches': maxCoaches,
+      'svsEnabled': svsEnabled,
+      'analyticsEnabled': analyticsEnabled,
+      'apiAccess': apiAccess,
+    };
 }
 
 // Helper extension for tier features
@@ -145,12 +135,7 @@ extension OrganizationTierExtension on OrganizationTier {
     switch (this) {
       case OrganizationTier.basic:
         return const OrganizationSettings(
-          maxPlayers: 25,
-          maxTeams: 1,
-          maxCoaches: 2,
-          svsEnabled: false,
-          analyticsEnabled: false,
-          apiAccess: false,
+          
         );
       case OrganizationTier.pro:
         return const OrganizationSettings(
@@ -159,7 +144,6 @@ extension OrganizationTierExtension on OrganizationTier {
           maxCoaches: 5,
           svsEnabled: true,
           analyticsEnabled: true,
-          apiAccess: false,
         );
       case OrganizationTier.enterprise:
         return const OrganizationSettings(
@@ -187,11 +171,11 @@ extension OrganizationTierExtension on OrganizationTier {
   double get monthlyPrice {
     switch (this) {
       case OrganizationTier.basic:
-        return 9.0;
+        return 9;
       case OrganizationTier.pro:
-        return 29.0;
+        return 29;
       case OrganizationTier.enterprise:
-        return 99.0;
+        return 99;
     }
   }
 }

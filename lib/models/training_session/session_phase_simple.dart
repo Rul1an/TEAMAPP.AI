@@ -14,16 +14,6 @@ enum PhaseType {
 
 @JsonSerializable()
 class SessionPhase {
-  final String id;
-  final String sessionId;
-  final String name;
-  final String description;
-  final PhaseType type;
-  final int orderIndex;
-  final int durationMinutes;
-  final List<String> exerciseIds;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
   const SessionPhase({
     required this.id,
@@ -38,6 +28,18 @@ class SessionPhase {
     required this.updatedAt,
   });
 
+  factory SessionPhase.fromJson(Map<String, dynamic> json) => _$SessionPhaseFromJson(json);
+  final String id;
+  final String sessionId;
+  final String name;
+  final String description;
+  final PhaseType type;
+  final int orderIndex;
+  final int durationMinutes;
+  final List<String> exerciseIds;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
   // Computed properties
   bool get hasExercises => exerciseIds.isNotEmpty;
   int get exerciseCount => exerciseIds.length;
@@ -50,7 +52,5 @@ class SessionPhase {
   void addExercise(String exerciseId) {
     // Mock implementation - in real app this would be handled by copyWith
   }
-
-  factory SessionPhase.fromJson(Map<String, dynamic> json) => _$SessionPhaseFromJson(json);
   Map<String, dynamic> toJson() => _$SessionPhaseToJson(this);
 }

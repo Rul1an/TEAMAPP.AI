@@ -1,16 +1,17 @@
+import 'dart:io' as io;
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'dart:io' as io;
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import '../../models/training_session/training_session.dart';
+
 import '../../models/training_session/session_phase.dart';
 import '../../models/training_session/training_exercise.dart';
+import '../../models/training_session/training_session.dart';
 import '../../services/database_service.dart';
 import '../../services/pdf_service.dart';
-
 import '../../widgets/training/session_wizard_stepper.dart';
 import '../training_sessions/exercise_library_screen.dart';
 
@@ -19,9 +20,9 @@ import '../training_sessions/exercise_library_screen.dart';
 // Web functionality removed - use notifications instead for 2025 compatibility
 
 class SessionBuilderScreen extends ConsumerStatefulWidget {
-  final int? sessionId;
 
   const SessionBuilderScreen({super.key, this.sessionId});
+  final int? sessionId;
 
   @override
   ConsumerState<SessionBuilderScreen> createState() => _SessionBuilderScreenState();
@@ -71,7 +72,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     }
   }
 
-  void _loadExistingSession() async {
+  Future<void> _loadExistingSession() async {
     if (widget.sessionId != null) {
       final loadedSession = await _db.getTrainingSession(widget.sessionId!.toString());
       if (loadedSession != null) {
@@ -107,7 +108,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   }
 
   List<SessionPhase> _createDefaultVOABPhases() {
-    final baseTime = DateTime(2024, 1, 1, 18, 0); // 18:00 base time
+    final baseTime = DateTime(2024, 1, 1, 18); // 18:00 base time
 
     return [
       SessionPhase()
@@ -163,8 +164,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: Text(widget.sessionId == null ? 'Nieuwe Training Sessie' : 'Bewerk Training Sessie'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -240,7 +240,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         ],
       ),
     );
-  }
 
   int get _stepCount => 4;
 
@@ -268,8 +267,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     }
   }
 
-  Widget _buildBasicInfoStep() {
-    return SingleChildScrollView(
+  Widget _buildBasicInfoStep() => SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -349,10 +347,8 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         ],
       ),
     );
-  }
 
-  Widget _buildObjectivesStep() {
-    return SingleChildScrollView(
+  Widget _buildObjectivesStep() => SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -433,7 +429,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                         onPressed: () {
                           _objectiveController.text = objective;
                         },
-                      )
+                      ),
                     ).toList(),
                   ),
                 ],
@@ -443,10 +439,8 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         ],
       ),
     );
-  }
 
-  Widget _buildPhasePlanningStep() {
-    return SingleChildScrollView(
+  Widget _buildPhasePlanningStep() => SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -465,7 +459,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
           const SizedBox(height: 16),
 
           // Reorderable Phase list
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey.shade300),
               borderRadius: BorderRadius.circular(8),
@@ -660,10 +654,8 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         ],
       ),
     );
-  }
 
-  Widget _buildPhaseTemplate(String name, PhaseType type, int duration) {
-    return ActionChip(
+  Widget _buildPhaseTemplate(String name, PhaseType type, int duration) => ActionChip(
       label: Text('$name ($duration min)'),
       onPressed: () => _addPhaseFromTemplate(name, type, duration),
       avatar: Icon(
@@ -671,7 +663,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         size: 16,
       ),
     );
-  }
 
   IconData _getPhaseIcon(PhaseType type) {
     switch (type) {
@@ -721,7 +712,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   }
 
   void _recalculatePhaseTimes() {
-    final baseTime = DateTime(2024, 1, 1, 18, 0); // 18:00 base time
+    final baseTime = DateTime(2024, 1, 1, 18); // 18:00 base time
     DateTime currentTime = baseTime;
 
     for (int i = 0; i < sessionPhases.length; i++) {
@@ -759,7 +750,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   }
 
   void _addPhaseFromTemplate(String name, PhaseType type, int duration) {
-    final baseTime = DateTime(2024, 1, 1, 18, 0);
+    final baseTime = DateTime(2024, 1, 1, 18);
     final newPhase = SessionPhase()
       ..name = name
       ..type = type
@@ -799,8 +790,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     }
   }
 
-  Widget _buildEvaluationStep() {
-    return SingleChildScrollView(
+  Widget _buildEvaluationStep() => SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -895,10 +885,8 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         ],
       ),
     );
-  }
 
-  Widget _buildSummaryRow(String label, String value) {
-    return Padding(
+  Widget _buildSummaryRow(String label, String value) => Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -916,7 +904,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         ],
       ),
     );
-  }
 
   Color _getPhaseColor(PhaseType type) {
     switch (type) {
@@ -962,11 +949,9 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     }
   }
 
-  int _getTotalDuration() {
-    return sessionPhases.fold(0, (sum, phase) => sum + phase.durationMinutes);
-  }
+  int _getTotalDuration() => sessionPhases.fold(0, (sum, phase) => sum + phase.durationMinutes);
 
-  void _selectDate() async {
+  Future<void> _selectDate() async {
     final date = await showDatePicker(
       context: context,
       initialDate: selectedDate,
@@ -1049,7 +1034,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                         Text(_getPhaseTypeName(type)),
                       ],
                     ),
-                  )).toList(),
+                  ),).toList(),
                   onChanged: (value) {
                     if (value != null) {
                       setDialogState(() {
@@ -1149,7 +1134,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                         Text(_getPhaseTypeName(type)),
                       ],
                     ),
-                  )).toList(),
+                  ),).toList(),
                   onChanged: (value) {
                     if (value != null) {
                       setDialogState(() {
@@ -1198,7 +1183,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                 }
 
                 final duration = int.tryParse(durationController.text) ?? 15;
-                final baseTime = DateTime(2024, 1, 1, 18, 0);
+                final baseTime = DateTime(2024, 1, 1, 18);
                 final newPhase = SessionPhase()
                   ..name = nameController.text.trim()
                   ..type = selectedType
@@ -1246,7 +1231,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     }
   }
 
-  void _saveSession() async {
+  Future<void> _saveSession() async {
     try {
       // Update session with form data
       session!.sessionObjective = _objectiveController.text;
@@ -1356,16 +1341,15 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
           SnackBar(
             content: Text('Fout bij PDF genereren: $e'),
             backgroundColor: Colors.red,
-            duration: const Duration(seconds: 4),
           ),
         ); }
       }
     }
   }
 
-  void _addExerciseToPhaseQuick(SessionPhase phase) async {
+  Future<void> _addExerciseToPhaseQuick(SessionPhase phase) async {
     // Controleer of de sessie al is opgeslagen
-    if (session!.id == "0") {
+    if (session!.id == '0') {
       _saveSession();
       if (mounted && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

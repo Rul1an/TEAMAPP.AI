@@ -4,10 +4,6 @@ import '../../models/training_session/training_exercise.dart';
 import '../../screens/training_sessions/exercise_library_screen.dart';
 
 class ExerciseSelector extends StatefulWidget {
-  final List<TrainingExercise> availableExercises;
-  final List<TrainingExercise> selectedExercises;
-  final Function(TrainingExercise) onExerciseSelected;
-  final Function(TrainingExercise) onExerciseRemoved;
 
   const ExerciseSelector({
     super.key,
@@ -16,6 +12,10 @@ class ExerciseSelector extends StatefulWidget {
     required this.onExerciseSelected,
     required this.onExerciseRemoved,
   });
+  final List<TrainingExercise> availableExercises;
+  final List<TrainingExercise> selectedExercises;
+  final Function(TrainingExercise) onExerciseSelected;
+  final Function(TrainingExercise) onExerciseRemoved;
 
   @override
   State<ExerciseSelector> createState() => _ExerciseSelectorState();
@@ -148,8 +148,7 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
     );
   }
 
-  List<TrainingExercise> _filterExercises() {
-    return widget.availableExercises.where((exercise) {
+  List<TrainingExercise> _filterExercises() => widget.availableExercises.where((exercise) {
       // Search filter
       if (searchQuery.isNotEmpty) {
         if (!exercise.name.toLowerCase().contains(searchQuery.toLowerCase()) &&
@@ -165,7 +164,6 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
 
       return true;
     }).toList();
-  }
 
   String _getTypeDisplayName(ExerciseType type) {
     switch (type) {

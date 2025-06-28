@@ -3,20 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../models/player.dart';
 import '../../models/assessment.dart';
+import '../../models/player.dart';
 import '../../services/database_service.dart';
 import '../../widgets/common/interactive_star_rating.dart';
 
 class AssessmentScreen extends ConsumerStatefulWidget {
-  final String playerId;
-  final String? assessmentId;
 
   const AssessmentScreen({
     super.key,
     required this.playerId,
     this.assessmentId,
   });
+  final String playerId;
+  final String? assessmentId;
 
   @override
   ConsumerState<AssessmentScreen> createState() => _AssessmentScreenState();
@@ -129,8 +129,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
     );
   }
 
-  Widget _buildPlayerHeader() {
-    return Card(
+  Widget _buildPlayerHeader() => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -167,10 +166,8 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildAssessmentInfo() {
-    return Card(
+  Widget _buildAssessmentInfo() => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -190,12 +187,10 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
                       labelText: 'Type Assessment',
                       border: OutlineInputBorder(),
                     ),
-                    items: AssessmentType.values.map((type) {
-                      return DropdownMenuItem(
+                    items: AssessmentType.values.map((type) => DropdownMenuItem(
                         value: type,
                         child: Text(type.displayName),
-                      );
-                    }).toList(),
+                      ),).toList(),
                     onChanged: (value) {
                       if (value != null) {
                         setState(() {
@@ -237,17 +232,15 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildSkillsAssessment() {
-    return Column(
+  Widget _buildSkillsAssessment() => Column(
       children: [
         _buildSkillCategory(
           'Technische Vaardigheden',
           _assessment!.technicalSkills,
           Icons.sports_soccer,
           Colors.blue,
-          (skill, rating) => _updateTechnicalSkill(skill, rating),
+          _updateTechnicalSkill,
         ),
         const SizedBox(height: 16),
         _buildSkillCategory(
@@ -255,7 +248,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
           _assessment!.tacticalSkills,
           Icons.psychology,
           Colors.green,
-          (skill, rating) => _updateTacticalSkill(skill, rating),
+          _updateTacticalSkill,
         ),
         const SizedBox(height: 16),
         _buildSkillCategory(
@@ -263,7 +256,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
           _assessment!.physicalAttributes,
           Icons.fitness_center,
           Colors.orange,
-          (skill, rating) => _updatePhysicalSkill(skill, rating),
+          _updatePhysicalSkill,
         ),
         const SizedBox(height: 16),
         _buildSkillCategory(
@@ -271,11 +264,10 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
           _assessment!.mentalAttributes,
           Icons.lightbulb,
           Colors.purple,
-          (skill, rating) => _updateMentalSkill(skill, rating),
+          _updateMentalSkill,
         ),
       ],
     );
-  }
 
   Widget _buildSkillCategory(
     String title,
@@ -283,8 +275,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
     IconData icon,
     Color color,
     Function(String, int) onRatingChanged,
-  ) {
-    return Card(
+  ) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -301,8 +292,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
               ],
             ),
             const SizedBox(height: 16),
-            ...skills.entries.map((entry) {
-              return Padding(
+            ...skills.entries.map((entry) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,16 +318,13 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
                     ),
                   ],
                 ),
-              );
-            }),
+              ),),
           ],
         ),
       ),
     );
-  }
 
-  Widget _buildTextFields() {
-    return Column(
+  Widget _buildTextFields() => Column(
       children: [
         Card(
           child: Padding(
@@ -407,7 +394,6 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
         ),
       ],
     );
-  }
 
   void _updateTechnicalSkill(String skill, int rating) {
     setState(() {
@@ -514,7 +500,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
             SnackBar(
               content: Text(_isEditing
                 ? 'Assessment bijgewerkt'
-                : 'Assessment opgeslagen'),
+                : 'Assessment opgeslagen',),
               backgroundColor: Colors.green,
             ),
           );

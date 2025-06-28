@@ -1,37 +1,37 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../models/training_session/training_exercise.dart';
+import '../providers/auth_provider.dart';
+import '../providers/demo_mode_provider.dart';
+import '../screens/analytics/performance_analytics_screen.dart';
+import '../screens/annual_planning/annual_planning_screen.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
-import '../screens/players/players_screen.dart';
-import '../screens/players/player_detail_screen.dart';
-import '../screens/players/add_player_screen.dart';
-import '../screens/players/edit_player_screen.dart';
-import '../screens/training/training_screen.dart';
-import '../screens/training/training_attendance_screen.dart';
-import '../screens/training/edit_training_screen.dart';
-import '../screens/training/add_training_screen.dart';
-import '../screens/matches/matches_screen.dart';
-import '../screens/matches/match_detail_screen.dart';
 import '../screens/matches/add_match_screen.dart';
 import '../screens/matches/edit_match_screen.dart';
 import '../screens/matches/lineup_builder_screen.dart';
+import '../screens/matches/match_detail_screen.dart';
+import '../screens/matches/matches_screen.dart';
+import '../screens/players/add_player_screen.dart';
 import '../screens/players/assessment_screen.dart';
-import '../screens/annual_planning/annual_planning_screen.dart';
-import '../screens/training_sessions/training_sessions_screen.dart';
-import '../screens/training_sessions/session_builder_screen.dart';
+import '../screens/players/edit_player_screen.dart';
+import '../screens/players/player_detail_screen.dart';
+import '../screens/players/players_screen.dart';
+import '../screens/season/season_hub_screen.dart';
+import '../screens/training/add_training_screen.dart';
+import '../screens/training/edit_training_screen.dart';
+import '../screens/training/training_attendance_screen.dart';
+import '../screens/training/training_screen.dart';
+import '../screens/training_sessions/exercise_designer_screen.dart';
 import '../screens/training_sessions/exercise_library_screen.dart';
 import '../screens/training_sessions/field_diagram_editor_screen.dart';
-import '../screens/training_sessions/exercise_designer_screen.dart';
-import '../screens/season/season_hub_screen.dart';
-import '../screens/analytics/performance_analytics_screen.dart';
+import '../screens/training_sessions/session_builder_screen.dart';
+import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
-import '../models/training_session/training_exercise.dart';
-import '../providers/demo_mode_provider.dart';
-import '../providers/auth_provider.dart';
 
 // Create router with Riverpod
-GoRouter createRouter(Ref ref) {
-  return GoRouter(
+GoRouter createRouter(Ref ref) => GoRouter(
     initialLocation: '/login',
     redirect: (context, state) {
       final demoMode = ref.read(demoModeProvider);
@@ -257,4 +257,3 @@ GoRouter createRouter(Ref ref) {
       ),
     ],
   );
-}

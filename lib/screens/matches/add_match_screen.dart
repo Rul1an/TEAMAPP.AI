@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+
 import '../../models/match.dart';
 import '../../providers/matches_provider.dart';
 
@@ -18,8 +19,7 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
   bool _isSubmitting = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Text('Wedstrijd Toevoegen'),
         leading: IconButton(
@@ -112,12 +112,10 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
                         labelText: 'Thuis/Uit',
                         prefixIcon: Icon(Icons.location_on),
                       ),
-                      items: Location.values.map((location) {
-                        return DropdownMenuItem(
+                      items: Location.values.map((location) => DropdownMenuItem(
                           value: location,
                           child: Text(_getLocationText(location)),
-                        );
-                      }).toList(),
+                        ),).toList(),
                       validator: (value) {
                         if (value == null) {
                           return 'Locatie is verplicht';
@@ -134,12 +132,10 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
                         labelText: 'Competitie',
                         prefixIcon: Icon(Icons.emoji_events),
                       ),
-                      items: Competition.values.map((competition) {
-                        return DropdownMenuItem(
+                      items: Competition.values.map((competition) => DropdownMenuItem(
                           value: competition,
                           child: Text(_getCompetitionText(competition)),
-                        );
-                      }).toList(),
+                        ),).toList(),
                       validator: (value) {
                         if (value == null) {
                           return 'Competitie is verplicht';
@@ -197,16 +193,13 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildSectionHeader(String title) {
-    return Text(
+  Widget _buildSectionHeader(String title) => Text(
       title,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.bold,
       ),
     );
-  }
 
   Future<void> _submitForm() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {

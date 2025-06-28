@@ -3,6 +3,6 @@
 
 export 'content_distribution.dart';
 export 'periodization_plan.dart';
-export 'training_period.dart';
 export 'season_plan.dart';
+export 'training_period.dart';
 export 'week_schedule.dart';

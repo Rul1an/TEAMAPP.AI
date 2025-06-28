@@ -3,7 +3,162 @@ import 'periodization_plan.dart';
 // part 'season_plan.g.dart'; // Disabled for web compatibility
 
 class SeasonPlan {
-  String id = "";
+
+  // Constructor
+  SeasonPlan();
+
+  // Named constructor for JO17 Dutch season
+  SeasonPlan.jo17DutchSeason({
+    required this.teamName,
+    required this.season,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) {
+    name = '$teamName Seizoen $season';
+    description = 'Nederlands voetbalseizoen planning voor $teamName volgens KNVB richtlijnen';
+    ageGroup = AgeGroup.u17;
+
+    // Default Dutch season dates (August to June)
+    seasonStartDate = startDate ?? DateTime(DateTime.now().year, 8, 15);
+    seasonEndDate = endDate ?? DateTime(DateTime.now().year + 1, 6, 15);
+
+    // Calculate weeks
+    totalWeeks = seasonEndDate.difference(seasonStartDate).inDays ~/ 7;
+    trainingWeeks = totalWeeks - 12; // Subtract holiday weeks
+    competitionWeeks = 32; // Standard Dutch season
+
+    // Default Dutch holiday periods
+    holidayPeriods = [
+      'Herfstvakantie (Week 43)',
+      'Kerstvakantie (Week 52-2)',
+      'Voorjaarsvakantie (Week 8)',
+      'Meivakantie (Week 18)',
+      'Zomervakantie (Week 27-34)',
+    ];
+
+    primaryCompetition = 'Jeugdcompetitie';
+    additionalCompetitions = ['Beker', 'Toernooien', 'Oefenwedstrijden'];
+
+    // Season objectives
+    seasonObjectives = [
+      'Technische ontwikkeling spelers',
+      'Tactisch begrip verbeteren',
+      'Wedstrijdervaring opdoen',
+      'Teamsamenhang versteken',
+    ];
+
+    keyPerformanceIndicators = [
+      'Individuele spelerontwikkeling',
+      'Team prestaties',
+      'Blessure preventie',
+      'Speeltijd verdeling',
+    ];
+
+    isTemplate = false;
+    status = SeasonStatus.draft;
+    currentWeek = 1;
+    progressPercentage = 0.0;
+  }
+
+  // Standard template constructor
+  SeasonPlan.standardTemplate({
+    required this.ageGroup,
+    required this.name,
+  }) {
+    description = 'Standard seizoen template voor \\${ageGroup.dutchName}';
+    season = 'Template';
+    teamName = '${ageGroup.dutchName} Template';
+
+    // Template defaults
+    seasonStartDate = DateTime(2024, 8, 15);
+    seasonEndDate = DateTime(2025, 6, 15);
+    totalWeeks = 43;
+    trainingWeeks = 36;
+    competitionWeeks = 32;
+
+    holidayPeriods = [
+      'Herfstvakantie',
+      'Kerstvakantie',
+      'Voorjaarsvakantie',
+      'Meivakantie',
+    ];
+
+    primaryCompetition = 'Hoofdcompetitie';
+    additionalCompetitions = ['Beker', 'Toernooien'];
+
+    seasonObjectives = [
+      'Spelerontwikkeling',
+      'Team prestaties',
+      'Positief voetbal',
+    ];
+
+    keyPerformanceIndicators = [
+      'Technische vooruitgang',
+      'Tactisch begrip',
+      'Plezier in het spel',
+    ];
+
+    isTemplate = true;
+    status = SeasonStatus.draft;
+    currentWeek = 1;
+    progressPercentage = 0.0;
+  }
+
+  factory SeasonPlan.fromJson(Map<String, dynamic> json) {
+    final plan = SeasonPlan();
+    plan.id = json['id'] ?? '';
+    plan.name = json['name'] ?? '';
+    plan.description = json['description'] ?? '';
+    plan.season = json['season'] ?? '';
+    plan.ageGroup = AgeGroup.values.firstWhere(
+      (e) => e.name == json['ageGroup'],
+      orElse: () => AgeGroup.u17,
+    );
+    plan.teamName = json['teamName'] ?? '';
+    plan.seasonStartDate = json['seasonStartDate'] != null
+        ? DateTime.parse(json['seasonStartDate'])
+        : DateTime.now();
+    plan.seasonEndDate = json['seasonEndDate'] != null
+        ? DateTime.parse(json['seasonEndDate'])
+        : DateTime.now().add(const Duration(days: 300));
+    plan.holidayPeriods = List<String>.from(json['holidayPeriods'] ?? []);
+    plan.periodizationPlanId = json['periodizationPlanId'] ?? '';
+    plan.totalWeeks = json['totalWeeks'] ?? 40;
+    plan.trainingWeeks = json['trainingWeeks'] ?? 36;
+    plan.competitionWeeks = json['competitionWeeks'] ?? 32;
+    plan.primaryCompetition = json['primaryCompetition'] ?? '';
+    plan.additionalCompetitions = List<String>.from(json['additionalCompetitions'] ?? []);
+    plan.firstMatchDate = json['firstMatchDate'] != null
+        ? DateTime.parse(json['firstMatchDate'])
+        : null;
+    plan.lastMatchDate = json['lastMatchDate'] != null
+        ? DateTime.parse(json['lastMatchDate'])
+        : null;
+    plan.midSeasonBreakStart = json['midSeasonBreakStart'] != null
+        ? DateTime.parse(json['midSeasonBreakStart'])
+        : null;
+    plan.midSeasonBreakEnd = json['midSeasonBreakEnd'] != null
+        ? DateTime.parse(json['midSeasonBreakEnd'])
+        : null;
+    plan.seasonObjectives = List<String>.from(json['seasonObjectives'] ?? []);
+    plan.keyPerformanceIndicators = List<String>.from(json['keyPerformanceIndicators'] ?? []);
+    plan.isTemplate = json['isTemplate'] ?? false;
+    plan.status = SeasonStatus.values.firstWhere(
+      (e) => e.name == json['status'],
+      orElse: () => SeasonStatus.draft,
+    );
+    plan.currentWeek = json['currentWeek'] ?? 1;
+    plan.progressPercentage = json['progressPercentage']?.toDouble() ?? 0.0;
+    plan.createdBy = json['createdBy'];
+    plan.createdAt = json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'])
+        : DateTime.now();
+    plan.updatedAt = json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'])
+        : DateTime.now();
+    return plan;
+  }
+  String id = '';
 
   // Basic season information
   late String name; // "JO17-1 Seizoen 2024-2025"
@@ -57,119 +212,15 @@ class SeasonPlan {
   DateTime createdAt = DateTime.now();
   DateTime updatedAt = DateTime.now();
 
-  // Constructor
-  SeasonPlan();
-
-  // Named constructor for JO17 Dutch season
-  SeasonPlan.jo17DutchSeason({
-    required this.teamName,
-    required this.season,
-    DateTime? startDate,
-    DateTime? endDate,
-  }) {
-    name = "$teamName Seizoen $season";
-    description = "Nederlands voetbalseizoen planning voor $teamName volgens KNVB richtlijnen";
-    ageGroup = AgeGroup.u17;
-
-    // Default Dutch season dates (August to June)
-    seasonStartDate = startDate ?? DateTime(DateTime.now().year, 8, 15);
-    seasonEndDate = endDate ?? DateTime(DateTime.now().year + 1, 6, 15);
-
-    // Calculate weeks
-    totalWeeks = seasonEndDate.difference(seasonStartDate).inDays ~/ 7;
-    trainingWeeks = totalWeeks - 12; // Subtract holiday weeks
-    competitionWeeks = 32; // Standard Dutch season
-
-    // Default Dutch holiday periods
-    holidayPeriods = [
-      "Herfstvakantie (Week 43)",
-      "Kerstvakantie (Week 52-2)",
-      "Voorjaarsvakantie (Week 8)",
-      "Meivakantie (Week 18)",
-      "Zomervakantie (Week 27-34)"
-    ];
-
-    primaryCompetition = "Jeugdcompetitie";
-    additionalCompetitions = ["Beker", "Toernooien", "Oefenwedstrijden"];
-
-    // Season objectives
-    seasonObjectives = [
-      "Technische ontwikkeling spelers",
-      "Tactisch begrip verbeteren",
-      "Wedstrijdervaring opdoen",
-      "Teamsamenhang versteken"
-    ];
-
-    keyPerformanceIndicators = [
-      "Individuele spelerontwikkeling",
-      "Team prestaties",
-      "Blessure preventie",
-      "Speeltijd verdeling"
-    ];
-
-    isTemplate = false;
-    status = SeasonStatus.draft;
-    currentWeek = 1;
-    progressPercentage = 0.0;
-  }
-
-  // Standard template constructor
-  SeasonPlan.standardTemplate({
-    required this.ageGroup,
-    required this.name,
-  }) {
-    description = "Standard seizoen template voor \\${ageGroup.dutchName}";
-    season = "Template";
-    teamName = "${ageGroup.dutchName} Template";
-
-    // Template defaults
-    seasonStartDate = DateTime(2024, 8, 15);
-    seasonEndDate = DateTime(2025, 6, 15);
-    totalWeeks = 43;
-    trainingWeeks = 36;
-    competitionWeeks = 32;
-
-    holidayPeriods = [
-      "Herfstvakantie",
-      "Kerstvakantie",
-      "Voorjaarsvakantie",
-      "Meivakantie"
-    ];
-
-    primaryCompetition = "Hoofdcompetitie";
-    additionalCompetitions = ["Beker", "Toernooien"];
-
-    seasonObjectives = [
-      "Spelerontwikkeling",
-      "Team prestaties",
-      "Positief voetbal"
-    ];
-
-    keyPerformanceIndicators = [
-      "Technische vooruitgang",
-      "Tactisch begrip",
-      "Plezier in het spel"
-    ];
-
-    isTemplate = true;
-    status = SeasonStatus.draft;
-    currentWeek = 1;
-    progressPercentage = 0.0;
-  }
-
   // Calculated properties
-  DateTime get currentDate {
-    return seasonStartDate.add(Duration(days: (currentWeek - 1) * 7));
-  }
+  DateTime get currentDate => seasonStartDate.add(Duration(days: (currentWeek - 1) * 7));
 
   bool get isActive {
     final now = DateTime.now();
     return now.isAfter(seasonStartDate) && now.isBefore(seasonEndDate);
   }
 
-  bool get isCompleted {
-    return status == SeasonStatus.completed || DateTime.now().isAfter(seasonEndDate);
-  }
+  bool get isCompleted => status == SeasonStatus.completed || DateTime.now().isAfter(seasonEndDate);
 
   int get remainingWeeks {
     final now = DateTime.now();
@@ -179,8 +230,8 @@ class SeasonPlan {
 
   double get seasonProgressByDate {
     final now = DateTime.now();
-    if (now.isBefore(seasonStartDate)) return 0.0;
-    if (now.isAfter(seasonEndDate)) return 100.0;
+    if (now.isBefore(seasonStartDate)) return 0;
+    if (now.isAfter(seasonEndDate)) return 100;
 
     final totalDays = seasonEndDate.difference(seasonStartDate).inDays;
     final elapsedDays = now.difference(seasonStartDate).inDays;
@@ -213,8 +264,7 @@ class SeasonPlan {
   }
 
   // Season statistics
-  Map<String, dynamic> getSeasonStatistics() {
-    return {
+  Map<String, dynamic> getSeasonStatistics() => {
       'totalWeeks': totalWeeks,
       'completedWeeks': currentWeek - 1,
       'remainingWeeks': remainingWeeks,
@@ -223,7 +273,6 @@ class SeasonPlan {
       'isActive': isActive,
       'isCompleted': isCompleted,
     };
-  }
 
   // Update progress
   void updateProgress() {
@@ -246,29 +295,27 @@ class SeasonPlan {
   }
 
   // Validation
-  bool isValid() {
-    return name.isNotEmpty &&
+  bool isValid() => name.isNotEmpty &&
            season.isNotEmpty &&
            teamName.isNotEmpty &&
            seasonStartDate.isBefore(seasonEndDate) &&
            totalWeeks > 0 &&
            currentWeek >= 1 &&
            progressPercentage >= 0.0 && progressPercentage <= 100.0;
-  }
 
   List<String> getValidationErrors() {
-    List<String> errors = [];
+    final List<String> errors = [];
 
-    if (name.isEmpty) errors.add("Season name is required");
-    if (season.isEmpty) errors.add("Season year is required");
-    if (teamName.isEmpty) errors.add("Team name is required");
+    if (name.isEmpty) errors.add('Season name is required');
+    if (season.isEmpty) errors.add('Season year is required');
+    if (teamName.isEmpty) errors.add('Team name is required');
     if (!seasonStartDate.isBefore(seasonEndDate)) {
-      errors.add("Start date must be before end date");
+      errors.add('Start date must be before end date');
     }
-    if (totalWeeks <= 0) errors.add("Total weeks must be positive");
-    if (currentWeek < 1) errors.add("Current week must be at least 1");
+    if (totalWeeks <= 0) errors.add('Total weeks must be positive');
+    if (currentWeek < 1) errors.add('Current week must be at least 1');
     if (progressPercentage < 0.0 || progressPercentage > 100.0) {
-      errors.add("Progress percentage must be between 0 and 100");
+      errors.add('Progress percentage must be between 0 and 100');
     }
 
     return errors;
@@ -305,61 +352,6 @@ class SeasonPlan {
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
   };
-
-  factory SeasonPlan.fromJson(Map<String, dynamic> json) {
-    final plan = SeasonPlan();
-    plan.id = json['id'] ?? "";
-    plan.name = json['name'] ?? '';
-    plan.description = json['description'] ?? '';
-    plan.season = json['season'] ?? '';
-    plan.ageGroup = AgeGroup.values.firstWhere(
-      (e) => e.name == json['ageGroup'],
-      orElse: () => AgeGroup.u17,
-    );
-    plan.teamName = json['teamName'] ?? '';
-    plan.seasonStartDate = json['seasonStartDate'] != null
-        ? DateTime.parse(json['seasonStartDate'])
-        : DateTime.now();
-    plan.seasonEndDate = json['seasonEndDate'] != null
-        ? DateTime.parse(json['seasonEndDate'])
-        : DateTime.now().add(const Duration(days: 300));
-    plan.holidayPeriods = List<String>.from(json['holidayPeriods'] ?? []);
-    plan.periodizationPlanId = json['periodizationPlanId'] ?? '';
-    plan.totalWeeks = json['totalWeeks'] ?? 40;
-    plan.trainingWeeks = json['trainingWeeks'] ?? 36;
-    plan.competitionWeeks = json['competitionWeeks'] ?? 32;
-    plan.primaryCompetition = json['primaryCompetition'] ?? '';
-    plan.additionalCompetitions = List<String>.from(json['additionalCompetitions'] ?? []);
-    plan.firstMatchDate = json['firstMatchDate'] != null
-        ? DateTime.parse(json['firstMatchDate'])
-        : null;
-    plan.lastMatchDate = json['lastMatchDate'] != null
-        ? DateTime.parse(json['lastMatchDate'])
-        : null;
-    plan.midSeasonBreakStart = json['midSeasonBreakStart'] != null
-        ? DateTime.parse(json['midSeasonBreakStart'])
-        : null;
-    plan.midSeasonBreakEnd = json['midSeasonBreakEnd'] != null
-        ? DateTime.parse(json['midSeasonBreakEnd'])
-        : null;
-    plan.seasonObjectives = List<String>.from(json['seasonObjectives'] ?? []);
-    plan.keyPerformanceIndicators = List<String>.from(json['keyPerformanceIndicators'] ?? []);
-    plan.isTemplate = json['isTemplate'] ?? false;
-    plan.status = SeasonStatus.values.firstWhere(
-      (e) => e.name == json['status'],
-      orElse: () => SeasonStatus.draft,
-    );
-    plan.currentWeek = json['currentWeek'] ?? 1;
-    plan.progressPercentage = json['progressPercentage']?.toDouble() ?? 0.0;
-    plan.createdBy = json['createdBy'];
-    plan.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now();
-    plan.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
-        : DateTime.now();
-    return plan;
-  }
 
   // Copy with method for updates
   SeasonPlan copyWith({
@@ -422,11 +414,9 @@ class SeasonPlan {
   }
 
   @override
-  String toString() {
-    return 'SeasonPlan(id: $id, name: $name, season: $season, '
+  String toString() => 'SeasonPlan(id: $id, name: $name, season: $season, '
            'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '
            'progress: ${progressPercentage.toStringAsFixed(1)}%)';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -439,12 +429,10 @@ class SeasonPlan {
   }
 
   @override
-  int get hashCode {
-    return name.hashCode ^
+  int get hashCode => name.hashCode ^
            season.hashCode ^
            teamName.hashCode ^
            ageGroup.hashCode;
-  }
 }
 
 // Enums for season management

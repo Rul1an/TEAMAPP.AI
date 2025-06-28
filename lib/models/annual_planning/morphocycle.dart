@@ -79,43 +79,6 @@ enum InjuryRisk {
 }
 
 class Morphocycle {
-  String id = "";
-
-  // Basic identification
-  late int weekNumber;          // Week number in season (1-43)
-  late String periodId;         // Link to training period
-  late String seasonPlanId;     // Link to season plan
-
-  // Morphocycle structure following Vítor Frade methodology
-  String? recoverySessionId;     // Day +1: Recovery session
-  String? acquisitionSessionId;  // Day +2: High-intensity acquisition
-  String? developmentSessionId;  // Day +3: Medium-intensity development
-  String? activationSessionId;   // Day +4: Low-intensity activation
-  String? matchEventId;          // Competition day event
-
-  // Load management
-  late double weeklyLoad;                    // Total weekly training load (RPE × minutes)
-  late Map<String, double> intensityDistribution; // Daily intensity percentages
-  late double acuteChronicRatio;            // Injury risk indicator
-
-  // Tactical focus
-  late List<String> tacticalFocusAreas;     // Main tactical themes for the week
-  late String primaryGameModelFocus;        // Main game model emphasis
-  late String secondaryGameModelFocus;      // Secondary emphasis
-
-  // Performance indicators
-  late double expectedAdaptation;           // Predicted training adaptation (0-100%)
-  late List<String> keyPerformanceIndicators; // Measurable outcomes
-  late List<String> trainingObjectives;    // Weekly objectives
-
-  // Load calculation parameters
-  late int totalTrainingMinutes;           // Total planned training time
-  late double averageRPE;                  // Average RPE for the week
-  late int numberOfSessions;               // Number of training sessions
-
-  // Metadata
-  DateTime createdAt = DateTime.now();
-  DateTime updatedAt = DateTime.now();
 
   // Constructor
   Morphocycle();
@@ -185,17 +148,73 @@ class Morphocycle {
     trainingObjectives = _getTacticalObjectives(gameModelFocus);
   }
 
-  // Load calculation methods
-  double _calculateWeeklyLoad() {
-    return averageRPE * totalTrainingMinutes;
+  factory Morphocycle.fromJson(Map<String, dynamic> json) {
+    final morphocycle = Morphocycle();
+    morphocycle.id = json['id'] as String? ?? '';
+    morphocycle.weekNumber = json['weekNumber'] as int? ?? 1;
+    morphocycle.periodId = json['periodId'] as String? ?? '';
+    morphocycle.seasonPlanId = json['seasonPlanId'] as String? ?? '';
+    morphocycle.weeklyLoad = (json['weeklyLoad'] as num?)?.toDouble() ?? 0.0;
+    morphocycle.intensityDistribution = Map<String, double>.from(json['intensityDistribution'] as Map<String, dynamic>? ?? <String, dynamic>{});
+    morphocycle.acuteChronicRatio = (json['acuteChronicRatio'] as num?)?.toDouble() ?? 1.0;
+    morphocycle.tacticalFocusAreas = List<String>.from(json['tacticalFocusAreas'] as List<dynamic>? ?? <dynamic>[]);
+    morphocycle.primaryGameModelFocus = json['primaryGameModelFocus'] as String? ?? '';
+    morphocycle.secondaryGameModelFocus = json['secondaryGameModelFocus'] as String? ?? '';
+    morphocycle.expectedAdaptation = (json['expectedAdaptation'] as num?)?.toDouble() ?? 60.0;
+    morphocycle.keyPerformanceIndicators = List<String>.from(json['keyPerformanceIndicators'] as List<dynamic>? ?? <dynamic>[]);
+    morphocycle.trainingObjectives = List<String>.from(json['trainingObjectives'] as List<dynamic>? ?? <dynamic>[]);
+    morphocycle.totalTrainingMinutes = json['totalTrainingMinutes'] as int? ?? 240;
+    morphocycle.averageRPE = (json['averageRPE'] as num?)?.toDouble() ?? 6.0;
+    morphocycle.numberOfSessions = json['numberOfSessions'] as int? ?? 3;
+    morphocycle.createdAt = DateTime.tryParse(json['createdAt'] as String? ?? '') ?? DateTime.now();
+    morphocycle.updatedAt = DateTime.tryParse(json['updatedAt'] as String? ?? '') ?? DateTime.now();
+    return morphocycle;
   }
+  String id = '';
 
-  static double calculateSessionLoad(int rpeScore, int durationMinutes) {
-    return rpeScore * durationMinutes.toDouble();
-  }
+  // Basic identification
+  late int weekNumber;          // Week number in season (1-43)
+  late String periodId;         // Link to training period
+  late String seasonPlanId;     // Link to season plan
+
+  // Morphocycle structure following Vítor Frade methodology
+  String? recoverySessionId;     // Day +1: Recovery session
+  String? acquisitionSessionId;  // Day +2: High-intensity acquisition
+  String? developmentSessionId;  // Day +3: Medium-intensity development
+  String? activationSessionId;   // Day +4: Low-intensity activation
+  String? matchEventId;          // Competition day event
+
+  // Load management
+  late double weeklyLoad;                    // Total weekly training load (RPE × minutes)
+  late Map<String, double> intensityDistribution; // Daily intensity percentages
+  late double acuteChronicRatio;            // Injury risk indicator
+
+  // Tactical focus
+  late List<String> tacticalFocusAreas;     // Main tactical themes for the week
+  late String primaryGameModelFocus;        // Main game model emphasis
+  late String secondaryGameModelFocus;      // Secondary emphasis
+
+  // Performance indicators
+  late double expectedAdaptation;           // Predicted training adaptation (0-100%)
+  late List<String> keyPerformanceIndicators; // Measurable outcomes
+  late List<String> trainingObjectives;    // Weekly objectives
+
+  // Load calculation parameters
+  late int totalTrainingMinutes;           // Total planned training time
+  late double averageRPE;                  // Average RPE for the week
+  late int numberOfSessions;               // Number of training sessions
+
+  // Metadata
+  DateTime createdAt = DateTime.now();
+  DateTime updatedAt = DateTime.now();
+
+  // Load calculation methods
+  double _calculateWeeklyLoad() => averageRPE * totalTrainingMinutes;
+
+  static double calculateSessionLoad(int rpeScore, int durationMinutes) => rpeScore * durationMinutes.toDouble();
 
   static double calculateACWR(List<double> last28DaysLoads) {
-    if (last28DaysLoads.length < 28) return 1.0;
+    if (last28DaysLoads.length < 28) return 1;
 
     final acute = last28DaysLoads.take(7).reduce((a, b) => a + b) / 7;
     final chronic = last28DaysLoads.reduce((a, b) => a + b) / 28;
@@ -281,9 +300,9 @@ class Morphocycle {
 
   // Performance calculation methods
   double _calculateExpectedAdaptation(TrainingPeriod? period) {
-    if (period == null) return 50.0;
+    if (period == null) return 50;
 
-    double baseAdaptation = period.intensityPercentage;
+    final double baseAdaptation = period.intensityPercentage;
 
     // Adjust based on morphocycle structure
     if (acuteChronicRatio > 1.2) {
@@ -326,60 +345,56 @@ class Morphocycle {
         return [
           'Build aerobic endurance base',
           'Establish technical fundamentals',
-          'Develop team communication'
+          'Develop team communication',
         ];
       case PeriodType.competitionEarly:
         return [
           'Implement game model principles',
           'Establish defensive organization',
-          'Build match rhythm'
+          'Build match rhythm',
         ];
       case PeriodType.competitionPeak:
         return [
           'Optimize match performance',
           'Fine-tune tactical execution',
-          'Maintain peak physical condition'
+          'Maintain peak physical condition',
         ];
       case PeriodType.competitionMaintenance:
         return [
           'Maintain performance levels',
           'Manage player loads',
-          'Develop squad depth'
+          'Develop squad depth',
         ];
       case PeriodType.transition:
         return [
           'Encourage creative expression',
           'Develop individual skills',
-          'Prepare for next phase'
+          'Prepare for next phase',
         ];
       case PeriodType.tournamentPrep:
         return [
           'Prepare mentally for tournament',
           'Refine set piece execution',
-          'Strengthen squad unity'
+          'Strengthen squad unity',
         ];
     }
   }
 
-  List<String> _getTacticalKPIs(String gameModelFocus) {
-    return [
+  List<String> _getTacticalKPIs(String gameModelFocus) => [
       'Game Model Understanding Score',
       'Tactical Decision Speed',
       'Positional Discipline Rating',
       'Collective Action Success Rate',
-      '$gameModelFocus Specific Metrics'
+      '$gameModelFocus Specific Metrics',
     ];
-  }
 
-  List<String> _getTacticalObjectives(String gameModelFocus) {
-    return [
+  List<String> _getTacticalObjectives(String gameModelFocus) => [
       'Master $gameModelFocus principles',
       'Improve collective understanding',
       'Enhance decision making speed',
       'Perfect tactical execution',
-      'Develop game intelligence'
+      'Develop game intelligence',
     ];
-  }
 
   // Utility methods
   bool get isHighLoadWeek => weeklyLoad > 1400;
@@ -451,29 +466,6 @@ class Morphocycle {
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
   };
-
-  factory Morphocycle.fromJson(Map<String, dynamic> json) {
-    final morphocycle = Morphocycle();
-    morphocycle.id = json['id'] ?? "";
-    morphocycle.weekNumber = json['weekNumber'] ?? 1;
-    morphocycle.periodId = json['periodId'] ?? '';
-    morphocycle.seasonPlanId = json['seasonPlanId'] ?? '';
-    morphocycle.weeklyLoad = json['weeklyLoad']?.toDouble() ?? 0.0;
-    morphocycle.intensityDistribution = Map<String, double>.from(json['intensityDistribution'] ?? {});
-    morphocycle.acuteChronicRatio = json['acuteChronicRatio']?.toDouble() ?? 1.0;
-    morphocycle.tacticalFocusAreas = List<String>.from(json['tacticalFocusAreas'] ?? []);
-    morphocycle.primaryGameModelFocus = json['primaryGameModelFocus'] ?? '';
-    morphocycle.secondaryGameModelFocus = json['secondaryGameModelFocus'] ?? '';
-    morphocycle.expectedAdaptation = json['expectedAdaptation']?.toDouble() ?? 60.0;
-    morphocycle.keyPerformanceIndicators = List<String>.from(json['keyPerformanceIndicators'] ?? []);
-    morphocycle.trainingObjectives = List<String>.from(json['trainingObjectives'] ?? []);
-    morphocycle.totalTrainingMinutes = json['totalTrainingMinutes'] ?? 240;
-    morphocycle.averageRPE = json['averageRPE']?.toDouble() ?? 6.0;
-    morphocycle.numberOfSessions = json['numberOfSessions'] ?? 3;
-    morphocycle.createdAt = DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now();
-    morphocycle.updatedAt = DateTime.tryParse(json['updatedAt'] ?? '') ?? DateTime.now();
-    return morphocycle;
-  }
 }
 
 /// Extension to add morphocycle helpers to WeekSchedule

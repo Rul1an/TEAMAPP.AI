@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SessionWizardStepper extends StatelessWidget {
-  final int currentStep;
-  final List<String> steps;
-  final Function(int)? onStepTapped;
 
   const SessionWizardStepper({
     super.key,
@@ -11,10 +8,12 @@ class SessionWizardStepper extends StatelessWidget {
     required this.steps,
     this.onStepTapped,
   });
+  final int currentStep;
+  final List<String> steps;
+  final Function(int)? onStepTapped;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         children: [
@@ -104,5 +103,4 @@ class SessionWizardStepper extends StatelessWidget {
         ],
       ),
     );
-  }
 }

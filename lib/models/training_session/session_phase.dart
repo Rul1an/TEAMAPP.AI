@@ -3,7 +3,104 @@ import 'package:isar/isar.dart';
 // part 'session_phase.g.dart'; // Disabled for web compatibility
 
 class SessionPhase {
-  String id = "";
+
+  // Constructor
+  SessionPhase();
+
+  // Named constructors for common phases
+  SessionPhase.warmup({
+    required DateTime start,
+    int durationMinutes = 15,
+  }) {
+    name = 'Warming-up';
+    type = PhaseType.warmup;
+    startTime = start;
+    endTime = start.add(Duration(minutes: durationMinutes));
+    description = 'Spelers warming-up en voorbereiding';
+    orderIndex = 1;
+    exerciseIds = [];
+  }
+
+  SessionPhase.trainingSetup({
+    required DateTime start,
+    int durationMinutes = 10,
+  }) {
+    name = 'Training uitzetten';
+    type = PhaseType.preparation;
+    startTime = start;
+    endTime = start.add(Duration(minutes: durationMinutes));
+    description = 'Veld inrichten en materiaal klaarzetten';
+    orderIndex = 2;
+    exerciseIds = [];
+  }
+
+  SessionPhase.mainTraining({
+    required DateTime start,
+    int durationMinutes = 60,
+  }) {
+    name = 'Hoofdtraining';
+    type = PhaseType.main;
+    startTime = start;
+    endTime = start.add(Duration(minutes: durationMinutes));
+    description = 'Hoofddeel van de training';
+    orderIndex = 3;
+    exerciseIds = [];
+  }
+
+  SessionPhase.evaluation({
+    required DateTime start,
+    int durationMinutes = 10,
+  }) {
+    name = 'Evaluatie';
+    type = PhaseType.evaluation;
+    startTime = start;
+    endTime = start.add(Duration(minutes: durationMinutes));
+    description = 'Bespreking en evaluatie van de training';
+    orderIndex = 4;
+    exerciseIds = [];
+  }
+
+  SessionPhase.cooldown({
+    required DateTime start,
+    int durationMinutes = 10,
+  }) {
+    name = 'Cool-down';
+    type = PhaseType.cooldown;
+    startTime = start;
+    endTime = start.add(Duration(minutes: durationMinutes));
+    description = 'Afkoeling en stretching';
+    orderIndex = 5;
+    exerciseIds = [];
+  }
+
+  factory SessionPhase.fromJson(Map<String, dynamic> json) {
+    final phase = SessionPhase();
+    phase.id = json['id'] ?? '';
+    phase.name = json['name'] ?? '';
+    phase.startTime = json['startTime'] != null
+        ? DateTime.parse(json['startTime'])
+        : DateTime.now();
+    phase.endTime = json['endTime'] != null
+        ? DateTime.parse(json['endTime'])
+        : DateTime.now();
+    phase.description = json['description'];
+    phase.orderIndex = json['orderIndex'] ?? 0;
+    phase.type = PhaseType.values.firstWhere(
+      (e) => e.name == json['type'],
+      orElse: () => PhaseType.main,
+    );
+    phase.exerciseIds = json['exerciseIds'] != null
+        ? List<String>.from(json['exerciseIds'])
+        : [];
+    phase.createdAt = json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'])
+        : DateTime.now();
+    phase.updatedAt = json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'])
+        : DateTime.now();
+    return phase;
+  }
+  String id = '';
 
   late String name; // "training uitzetten", "bespreking", "evaluatie"
   late DateTime startTime;
@@ -36,10 +133,8 @@ class SessionPhase {
   @Ignore()
   bool get hasExercises => exerciseIds.isNotEmpty;
 
-  String _formatTime(DateTime time) {
-    return '${time.hour.toString().padLeft(2, '0')}:'
+  String _formatTime(DateTime time) => '${time.hour.toString().padLeft(2, '0')}:'
            '${time.minute.toString().padLeft(2, '0')}';
-  }
 
   // Exercise management methods
   void addExercise(String exerciseId) {
@@ -63,75 +158,6 @@ class SessionPhase {
     }
   }
 
-  // Constructor
-  SessionPhase();
-
-  // Named constructors for common phases
-  SessionPhase.warmup({
-    required DateTime start,
-    int durationMinutes = 15,
-  }) {
-    name = "Warming-up";
-    type = PhaseType.warmup;
-    startTime = start;
-    endTime = start.add(Duration(minutes: durationMinutes));
-    description = "Spelers warming-up en voorbereiding";
-    orderIndex = 1;
-    exerciseIds = [];
-  }
-
-  SessionPhase.trainingSetup({
-    required DateTime start,
-    int durationMinutes = 10,
-  }) {
-    name = "Training uitzetten";
-    type = PhaseType.preparation;
-    startTime = start;
-    endTime = start.add(Duration(minutes: durationMinutes));
-    description = "Veld inrichten en materiaal klaarzetten";
-    orderIndex = 2;
-    exerciseIds = [];
-  }
-
-  SessionPhase.mainTraining({
-    required DateTime start,
-    int durationMinutes = 60,
-  }) {
-    name = "Hoofdtraining";
-    type = PhaseType.main;
-    startTime = start;
-    endTime = start.add(Duration(minutes: durationMinutes));
-    description = "Hoofddeel van de training";
-    orderIndex = 3;
-    exerciseIds = [];
-  }
-
-  SessionPhase.evaluation({
-    required DateTime start,
-    int durationMinutes = 10,
-  }) {
-    name = "Evaluatie";
-    type = PhaseType.evaluation;
-    startTime = start;
-    endTime = start.add(Duration(minutes: durationMinutes));
-    description = "Bespreking en evaluatie van de training";
-    orderIndex = 4;
-    exerciseIds = [];
-  }
-
-  SessionPhase.cooldown({
-    required DateTime start,
-    int durationMinutes = 10,
-  }) {
-    name = "Cool-down";
-    type = PhaseType.cooldown;
-    startTime = start;
-    endTime = start.add(Duration(minutes: durationMinutes));
-    description = "Afkoeling en stretching";
-    orderIndex = 5;
-    exerciseIds = [];
-  }
-
   // JSON serialization
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -145,34 +171,6 @@ class SessionPhase {
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
   };
-
-  factory SessionPhase.fromJson(Map<String, dynamic> json) {
-    final phase = SessionPhase();
-    phase.id = json['id'] ?? "";
-    phase.name = json['name'] ?? '';
-    phase.startTime = json['startTime'] != null
-        ? DateTime.parse(json['startTime'])
-        : DateTime.now();
-    phase.endTime = json['endTime'] != null
-        ? DateTime.parse(json['endTime'])
-        : DateTime.now();
-    phase.description = json['description'];
-    phase.orderIndex = json['orderIndex'] ?? 0;
-    phase.type = PhaseType.values.firstWhere(
-      (e) => e.name == json['type'],
-      orElse: () => PhaseType.main,
-    );
-    phase.exerciseIds = json['exerciseIds'] != null
-        ? List<String>.from(json['exerciseIds'])
-        : [];
-    phase.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now();
-    phase.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
-        : DateTime.now();
-    return phase;
-  }
 
   // Copy with method
   SessionPhase copyWith({
@@ -199,9 +197,7 @@ class SessionPhase {
   }
 
   @override
-  String toString() {
-    return 'SessionPhase(name: $name, time: $timeRange, type: $type, exercises: ${exerciseIds.length})';
-  }
+  String toString() => 'SessionPhase(name: $name, time: $timeRange, type: $type, exercises: ${exerciseIds.length})';
 
   @override
   bool operator ==(Object other) {
@@ -214,12 +210,10 @@ class SessionPhase {
   }
 
   @override
-  int get hashCode {
-    return id.hashCode ^
+  int get hashCode => id.hashCode ^
            name.hashCode ^
            startTime.hashCode ^
            endTime.hashCode;
-  }
 }
 
 enum PhaseType {

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/annual_planning/week_schedule.dart';
 
 class MatchDialog extends StatefulWidget {
-  final WeeklyMatch? existingMatch;
-  final DateTime weekStartDate;
-  final Function(WeeklyMatch) onSave;
 
   const MatchDialog({
     super.key,
@@ -12,6 +9,9 @@ class MatchDialog extends StatefulWidget {
     required this.weekStartDate,
     required this.onSave,
   });
+  final WeeklyMatch? existingMatch;
+  final DateTime weekStartDate;
+  final Function(WeeklyMatch) onSave;
 
   @override
   State<MatchDialog> createState() => _MatchDialogState();
@@ -74,8 +74,7 @@ class _MatchDialogState extends State<MatchDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
+  Widget build(BuildContext context) => AlertDialog(
       title: Text(
         widget.existingMatch != null ? 'Wedstrijd Bewerken' : 'Wedstrijd Toevoegen',
         style: TextStyle(color: Colors.green[800]),
@@ -96,9 +95,7 @@ class _MatchDialogState extends State<MatchDialog> {
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.groups),
                 ),
-                items: _commonOpponents.map((opponent) {
-                  return DropdownMenuItem(value: opponent, child: Text(opponent));
-                }).toList(),
+                items: _commonOpponents.map((opponent) => DropdownMenuItem(value: opponent, child: Text(opponent))).toList(),
                 onChanged: (value) {
                   if (value != null) {
                     _opponentController.text = value;
@@ -127,12 +124,10 @@ class _MatchDialogState extends State<MatchDialog> {
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.sports_soccer),
                 ),
-                items: MatchType.values.map((type) {
-                  return DropdownMenuItem(
+                items: MatchType.values.map((type) => DropdownMenuItem(
                     value: type,
                     child: Text(type.displayName),
-                  );
-                }).toList(),
+                  ),).toList(),
                 onChanged: (value) {
                   if (value != null) {
                     setState(() {
@@ -254,9 +249,8 @@ class _MatchDialogState extends State<MatchDialog> {
         ),
       ],
     );
-  }
 
-  void _selectDate() async {
+  Future<void> _selectDate() async {
     final date = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
@@ -270,7 +264,7 @@ class _MatchDialogState extends State<MatchDialog> {
     }
   }
 
-  void _selectTime() async {
+  Future<void> _selectTime() async {
     final time = await showTimePicker(
       context: context,
       initialTime: _selectedTime,

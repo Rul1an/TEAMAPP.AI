@@ -1,17 +1,18 @@
 import 'package:flutter/foundation.dart';
+
 import '../models/club/club.dart';
-import '../models/club/team.dart';
-import '../models/club/staff_member.dart';
 import '../models/club/player_progress.dart';
+import '../models/club/staff_member.dart';
+import '../models/club/team.dart';
 import '../models/player.dart';
 import '../services/club_service.dart';
 
 /// 🏆 Club Provider
 /// Manages club-level operations, teams, staff, and player progress
 class ClubProvider extends ChangeNotifier {
-  final ClubService _clubService;
   
   ClubProvider({required ClubService clubService}) : _clubService = clubService;
+  final ClubService _clubService;
   
   // State
   Club? _currentClub;
@@ -33,40 +34,26 @@ class ClubProvider extends ChangeNotifier {
   bool get hasClub => _currentClub != null;
   
   // Filtered Data
-  List<Team> getTeamsByAgeCategory(AgeCategory ageCategory) {
-    return _teams.where((team) => team.ageCategory == ageCategory).toList();
-  }
+  List<Team> getTeamsByAgeCategory(AgeCategory ageCategory) => _teams.where((team) => team.ageCategory == ageCategory).toList();
   
-  List<Team> getTeamsByGender(TeamGender gender) {
-    return _teams.where((team) => team.gender == gender).toList();
-  }
+  List<Team> getTeamsByGender(TeamGender gender) => _teams.where((team) => team.gender == gender).toList();
   
-  List<Team> getActiveTeams() {
-    return _teams.where((team) => team.status == TeamStatus.active).toList();
-  }
+  List<Team> getActiveTeams() => _teams.where((team) => team.status == TeamStatus.active).toList();
   
-  List<StaffMember> getStaffByRole(StaffRole role) {
-    return _staff.where((member) =>
-      member.primaryRole == role || member.additionalRoles.contains(role)
+  List<StaffMember> getStaffByRole(StaffRole role) => _staff.where((member) =>
+      member.primaryRole == role || member.additionalRoles.contains(role),
     ).toList();
-  }
   
-  List<StaffMember> getStaffForTeam(String teamId) {
-    return _staff.where((member) => member.teamIds.contains(teamId)).toList();
-  }
+  List<StaffMember> getStaffForTeam(String teamId) => _staff.where((member) => member.teamIds.contains(teamId)).toList();
   
   List<Player> getPlayersForTeam(String teamId) {
     final team = _teams.firstWhere((t) => t.id == teamId);
     return _allPlayers.where((player) => team.playerIds.contains(player.id.toString())).toList();
   }
   
-  List<PlayerProgress> getProgressForPlayer(String playerId) {
-    return _playerProgress.where((progress) => progress.playerId == playerId).toList();
-  }
+  List<PlayerProgress> getProgressForPlayer(String playerId) => _playerProgress.where((progress) => progress.playerId == playerId).toList();
   
-  List<PlayerProgress> getProgressForSeason(String season) {
-    return _playerProgress.where((progress) => progress.season == season).toList();
-  }
+  List<PlayerProgress> getProgressForSeason(String season) => _playerProgress.where((progress) => progress.season == season).toList();
   
   // Club Management
   Future<void> loadClub(String clubId) async {

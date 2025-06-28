@@ -4,27 +4,25 @@ import '../services/database_service.dart';
 
 final matchesProvider = FutureProvider<List<Match>>((ref) async {
   final db = DatabaseService();
-  return await db.getAllMatches();
+  return db.getAllMatches();
 });
 
 final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
   final db = DatabaseService();
-  return await db.getUpcomingMatches();
+  return db.getUpcomingMatches();
 });
 
 final recentMatchesProvider = FutureProvider<List<Match>>((ref) async {
   final db = DatabaseService();
-  return await db.getRecentMatches();
+  return db.getRecentMatches();
 });
 
 final matchByIdProvider = FutureProvider.family<Match?, String>((ref, id) async {
   final db = DatabaseService();
-  return await db.getMatch(id);
+  return db.getMatch(id);
 });
 
-final matchesNotifierProvider = StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>((ref) {
-  return MatchesNotifier();
-});
+final matchesNotifierProvider = StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>((ref) => MatchesNotifier());
 
 class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
   MatchesNotifier() : super(const AsyncValue.loading()) {

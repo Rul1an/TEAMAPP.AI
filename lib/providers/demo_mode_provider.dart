@@ -1,5 +1,6 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum DemoRole {
   clubAdmin,
@@ -11,12 +12,6 @@ enum DemoRole {
 }
 
 class DemoModeState {
-  final bool isActive;
-  final DemoRole? role;
-  final String? organizationId;
-  final String? userId;
-  final String? userName;
-  final DateTime? expiresAt;
 
   DemoModeState({
     this.isActive = false,
@@ -26,6 +21,12 @@ class DemoModeState {
     this.userName,
     this.expiresAt,
   });
+  final bool isActive;
+  final DemoRole? role;
+  final String? organizationId;
+  final String? userId;
+  final String? userName;
+  final DateTime? expiresAt;
 
   DemoModeState copyWith({
     bool? isActive,
@@ -34,8 +35,7 @@ class DemoModeState {
     String? userId,
     String? userName,
     DateTime? expiresAt,
-  }) {
-    return DemoModeState(
+  }) => DemoModeState(
       isActive: isActive ?? this.isActive,
       role: role ?? this.role,
       organizationId: organizationId ?? this.organizationId,
@@ -43,7 +43,6 @@ class DemoModeState {
       userName: userName ?? this.userName,
       expiresAt: expiresAt ?? this.expiresAt,
     );
-  }
 
   bool get isDemo => isActive;
   bool get isAdmin => role == DemoRole.boardMember || role == DemoRole.clubAdmin;
@@ -51,9 +50,9 @@ class DemoModeState {
 }
 
 class DemoModeNotifier extends StateNotifier<DemoModeState> {
-  Timer? _expirationTimer;
 
   DemoModeNotifier() : super(DemoModeState());
+  Timer? _expirationTimer;
 
   void startDemo({
     required DemoRole role,
@@ -68,7 +67,7 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
       isActive: true,
       role: role,
       organizationId: organizationId ?? 'demo-org-1',
-      userId: userId ?? 'demo-user-\${role.name}',
+      userId: userId ?? r'demo-user-${role.name}',
       userName: userName ?? _getDefaultUserName(role),
       expiresAt: expiresAt,
     );
@@ -81,7 +80,7 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
     if (demoRole != null) {
       state = state.copyWith(
         role: demoRole,
-        userId: 'demo-user-\${demoRole.name}',
+        userId: r'demo-user-${demoRole.name}',
         userName: _getDefaultUserName(demoRole),
       );
     }
@@ -96,8 +95,7 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
       final role = isAdmin ? DemoRole.boardMember : DemoRole.coach;
       startDemo(
         role: role,
-        organizationId: 'demo-org-\$tier',
-        durationMinutes: 30,
+        organizationId: r'demo-org-$tier',
       );
     } else {
       endDemo();
@@ -146,9 +144,7 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
 
   void _startExpirationTimer(int minutes) {
     _expirationTimer?.cancel();
-    _expirationTimer = Timer(Duration(minutes: minutes), () {
-      endDemo();
-    });
+    _expirationTimer = Timer(Duration(minutes: minutes), endDemo);
   }
 
   String _getDefaultUserName(DemoRole role) {
@@ -197,18 +193,12 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
 }
 
 // Provider
-final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>((ref) {
-  return DemoModeNotifier();
-});
+final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>((ref) => DemoModeNotifier());
 
 // Helper providers
-final isDemoModeProvider = Provider<bool>((ref) {
-  return ref.watch(demoModeProvider).isDemo;
-});
+final isDemoModeProvider = Provider<bool>((ref) => ref.watch(demoModeProvider).isDemo);
 
-final currentDemoRoleProvider = Provider<String?>((ref) {
-  return ref.watch(demoModeProvider.notifier).getDemoRole();
-});
+final currentDemoRoleProvider = Provider<String?>((ref) => ref.watch(demoModeProvider.notifier).getDemoRole());
 
 final demoTimeRemainingProvider = Provider<Duration?>((ref) {
   final state = ref.watch(demoModeProvider);

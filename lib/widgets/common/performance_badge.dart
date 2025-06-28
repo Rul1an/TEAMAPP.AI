@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import '../common/star_rating.dart';
+
 import '../../models/performance_rating.dart';
+import '../common/star_rating.dart';
 
 class PerformanceBadge extends StatelessWidget {
-  final double? averageRating;
-  final PerformanceTrend? trend;
-  final bool compact;
 
   const PerformanceBadge({
     super.key,
@@ -13,6 +11,9 @@ class PerformanceBadge extends StatelessWidget {
     this.trend,
     this.compact = false,
   });
+  final double? averageRating;
+  final PerformanceTrend? trend;
+  final bool compact;
 
   String _getTrendEmoji(PerformanceTrend trend) {
     switch (trend) {
@@ -78,14 +79,14 @@ class PerformanceBadge extends StatelessWidget {
 }
 
 class PerformanceTrendIndicator extends StatelessWidget {
-  final PerformanceTrend trend;
-  final double size;
 
   const PerformanceTrendIndicator({
     super.key,
     required this.trend,
     this.size = 24,
   });
+  final PerformanceTrend trend;
+  final double size;
 
   String _getTrendEmoji(PerformanceTrend trend) {
     switch (trend) {

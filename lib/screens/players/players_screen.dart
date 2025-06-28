@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../providers/players_provider.dart';
+
 import '../../models/player.dart';
-import '../../utils/colors.dart';
-import '../../services/import_service.dart';
+import '../../providers/players_provider.dart';
 import '../../services/export_service.dart';
+import '../../services/import_service.dart';
+import '../../utils/colors.dart';
 
 class PlayersScreen extends ConsumerStatefulWidget {
   const PlayersScreen({super.key});
@@ -213,13 +214,12 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                       ),
                       items: [
                         const DropdownMenuItem(
-                          value: null,
                           child: Text('Alle posities'),
                         ),
                         ...Position.values.map((position) => DropdownMenuItem(
                               value: position,
                               child: Text(_getPositionText(position)),
-                            )),
+                            ),),
                       ],
                       onChanged: (value) {
                         setState(() {
@@ -261,7 +261,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                             });
                           },
                         ),
-                      )),
+                      ),),
                 ],
               ),
             ),
@@ -397,17 +397,16 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
 }
 
 class _PlayerCard extends StatelessWidget {
-  final Player player;
-  final VoidCallback onTap;
 
   const _PlayerCard({
     required this.player,
     required this.onTap,
   });
+  final Player player;
+  final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
+  Widget build(BuildContext context) => Card(
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
@@ -473,7 +472,6 @@ class _PlayerCard extends StatelessWidget {
         ),
       ),
     );
-  }
 
   String _getPositionText(Position position) {
     switch (position) {

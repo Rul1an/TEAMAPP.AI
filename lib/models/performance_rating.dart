@@ -5,28 +5,6 @@ enum RatingType { match, training }
 enum PerformanceTrend { improving, stable, declining }
 
 class PerformanceRating {
-  final String id;
-  final String playerId;
-  final String? matchId;
-  final String? trainingId;
-  final DateTime date;
-  final RatingType type;
-
-  // Ratings (1-5)
-  final int overallRating;
-  final int? attackingRating;
-  final int? defendingRating;
-  final int? tacticalRating;
-  final int? workRateRating;
-
-  // Training specific ratings
-  final int? technicalRating;
-  final int? coachabilityRating;
-  final int? teamworkRating;
-
-  final String? notes;
-  final String coachId;
-  final DateTime createdAt;
 
   PerformanceRating({
     String? id,
@@ -50,6 +28,48 @@ class PerformanceRating {
         createdAt = createdAt ?? DateTime.now(),
         assert(overallRating >= 1 && overallRating <= 5),
         assert(type == RatingType.match ? matchId != null : trainingId != null);
+
+  factory PerformanceRating.fromJson(Map<String, dynamic> json) => PerformanceRating(
+      id: json['id'],
+      playerId: json['playerId'],
+      matchId: json['matchId'],
+      trainingId: json['trainingId'],
+      date: DateTime.parse(json['date']),
+      type: RatingType.values.firstWhere((e) => e.name == json['type']),
+      overallRating: json['overallRating'],
+      attackingRating: json['attackingRating'],
+      defendingRating: json['defendingRating'],
+      tacticalRating: json['tacticalRating'],
+      workRateRating: json['workRateRating'],
+      technicalRating: json['technicalRating'],
+      coachabilityRating: json['coachabilityRating'],
+      teamworkRating: json['teamworkRating'],
+      notes: json['notes'],
+      coachId: json['coachId'],
+      createdAt: DateTime.parse(json['createdAt']),
+    );
+  final String id;
+  final String playerId;
+  final String? matchId;
+  final String? trainingId;
+  final DateTime date;
+  final RatingType type;
+
+  // Ratings (1-5)
+  final int overallRating;
+  final int? attackingRating;
+  final int? defendingRating;
+  final int? tacticalRating;
+  final int? workRateRating;
+
+  // Training specific ratings
+  final int? technicalRating;
+  final int? coachabilityRating;
+  final int? teamworkRating;
+
+  final String? notes;
+  final String coachId;
+  final DateTime createdAt;
 
   // Calculate performance trend based on recent ratings
   static String calculateTrend(List<PerformanceRating> recentRatings) {
@@ -99,28 +119,6 @@ class PerformanceRating {
         'createdAt': createdAt.toIso8601String(),
       };
 
-  factory PerformanceRating.fromJson(Map<String, dynamic> json) {
-    return PerformanceRating(
-      id: json['id'],
-      playerId: json['playerId'],
-      matchId: json['matchId'],
-      trainingId: json['trainingId'],
-      date: DateTime.parse(json['date']),
-      type: RatingType.values.firstWhere((e) => e.name == json['type']),
-      overallRating: json['overallRating'],
-      attackingRating: json['attackingRating'],
-      defendingRating: json['defendingRating'],
-      tacticalRating: json['tacticalRating'],
-      workRateRating: json['workRateRating'],
-      technicalRating: json['technicalRating'],
-      coachabilityRating: json['coachabilityRating'],
-      teamworkRating: json['teamworkRating'],
-      notes: json['notes'],
-      coachId: json['coachId'],
-      createdAt: DateTime.parse(json['createdAt']),
-    );
-  }
-
   PerformanceRating copyWith({
     String? id,
     String? playerId,
@@ -139,8 +137,7 @@ class PerformanceRating {
     String? notes,
     String? coachId,
     DateTime? createdAt,
-  }) {
-    return PerformanceRating(
+  }) => PerformanceRating(
       id: id ?? this.id,
       playerId: playerId ?? this.playerId,
       matchId: matchId ?? this.matchId,
@@ -159,5 +156,4 @@ class PerformanceRating {
       coachId: coachId ?? this.coachId,
       createdAt: createdAt ?? this.createdAt,
     );
-  }
 }

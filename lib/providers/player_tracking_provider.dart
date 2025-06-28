@@ -63,7 +63,7 @@ PlayerDevelopmentTrends _calculateDevelopmentTrends(List<PlayerPerformanceData> 
     technicalTrend: TrendDirection.stable,
     tacticalTrend: TrendDirection.stable,
     mentalTrend: TrendDirection.stable,
-    overallProgress: 0.0,
+    overallProgress: 0,
     strengths: [],
     areasForImprovement: [],
     recommendedFocus: [],
@@ -73,10 +73,10 @@ PlayerDevelopmentTrends _calculateDevelopmentTrends(List<PlayerPerformanceData> 
 TeamPerformanceOverview _calculateTeamOverview(Map<String, PlayerPerformanceData> data) {
   // TODO: Implement team overview calculation
   return TeamPerformanceOverview(
-    averagePhysicalScore: 0.0,
-    averageTechnicalScore: 0.0,
-    averageTacticalScore: 0.0,
-    averageMentalScore: 0.0,
+    averagePhysicalScore: 0,
+    averageTechnicalScore: 0,
+    averageTacticalScore: 0,
+    averageMentalScore: 0,
     teamStrengths: [],
     teamWeaknesses: [],
     topPerformers: [],
@@ -86,14 +86,6 @@ TeamPerformanceOverview _calculateTeamOverview(Map<String, PlayerPerformanceData
 
 // Data models for trends and analysis
 class PlayerDevelopmentTrends {
-  final TrendDirection physicalTrend;
-  final TrendDirection technicalTrend;
-  final TrendDirection tacticalTrend;
-  final TrendDirection mentalTrend;
-  final double overallProgress; // -100 to 100
-  final List<String> strengths;
-  final List<String> areasForImprovement;
-  final List<String> recommendedFocus;
 
   PlayerDevelopmentTrends({
     required this.physicalTrend,
@@ -111,11 +103,19 @@ class PlayerDevelopmentTrends {
     technicalTrend: TrendDirection.stable,
     tacticalTrend: TrendDirection.stable,
     mentalTrend: TrendDirection.stable,
-    overallProgress: 0.0,
+    overallProgress: 0,
     strengths: [],
     areasForImprovement: [],
     recommendedFocus: [],
   );
+  final TrendDirection physicalTrend;
+  final TrendDirection technicalTrend;
+  final TrendDirection tacticalTrend;
+  final TrendDirection mentalTrend;
+  final double overallProgress; // -100 to 100
+  final List<String> strengths;
+  final List<String> areasForImprovement;
+  final List<String> recommendedFocus;
 }
 
 enum TrendDirection {
@@ -125,14 +125,6 @@ enum TrendDirection {
 }
 
 class TeamPerformanceOverview {
-  final double averagePhysicalScore;
-  final double averageTechnicalScore;
-  final double averageTacticalScore;
-  final double averageMentalScore;
-  final List<String> teamStrengths;
-  final List<String> teamWeaknesses;
-  final List<PlayerSummary> topPerformers;
-  final List<PlayerSummary> needsAttention;
 
   TeamPerformanceOverview({
     required this.averagePhysicalScore,
@@ -146,22 +138,26 @@ class TeamPerformanceOverview {
   });
 
   factory TeamPerformanceOverview.empty() => TeamPerformanceOverview(
-    averagePhysicalScore: 0.0,
-    averageTechnicalScore: 0.0,
-    averageTacticalScore: 0.0,
-    averageMentalScore: 0.0,
+    averagePhysicalScore: 0,
+    averageTechnicalScore: 0,
+    averageTacticalScore: 0,
+    averageMentalScore: 0,
     teamStrengths: [],
     teamWeaknesses: [],
     topPerformers: [],
     needsAttention: [],
   );
+  final double averagePhysicalScore;
+  final double averageTechnicalScore;
+  final double averageTacticalScore;
+  final double averageMentalScore;
+  final List<String> teamStrengths;
+  final List<String> teamWeaknesses;
+  final List<PlayerSummary> topPerformers;
+  final List<PlayerSummary> needsAttention;
 }
 
 class PlayerSummary {
-  final String playerId;
-  final String playerName;
-  final double score;
-  final String reason;
 
   PlayerSummary({
     required this.playerId,
@@ -169,13 +165,17 @@ class PlayerSummary {
     required this.score,
     required this.reason,
   });
+  final String playerId;
+  final String playerName;
+  final double score;
+  final String reason;
 }
 
 // State notifier for managing player tracking actions
 class PlayerTrackingNotifier extends StateNotifier<AsyncValue<void>> {
-  final Ref ref;
 
   PlayerTrackingNotifier(this.ref) : super(const AsyncValue.data(null));
+  final Ref ref;
 
   Future<void> recordPerformanceData(PlayerPerformanceData data) async {
     state = const AsyncValue.loading();
@@ -191,6 +191,4 @@ class PlayerTrackingNotifier extends StateNotifier<AsyncValue<void>> {
   }
 }
 
-final playerTrackingNotifierProvider = StateNotifierProvider<PlayerTrackingNotifier, AsyncValue<void>>((ref) {
-  return PlayerTrackingNotifier(ref);
-});
+final playerTrackingNotifierProvider = StateNotifierProvider<PlayerTrackingNotifier, AsyncValue<void>>(PlayerTrackingNotifier.new);

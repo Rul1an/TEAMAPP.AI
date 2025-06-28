@@ -14,8 +14,7 @@ class _AdminPanelScreenState extends ConsumerState<AdminPanelScreen> {
   String selectedTier = 'basic';
   
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Text('🎛️ Admin Panel'),
         backgroundColor: Colors.red[600],
@@ -78,5 +77,4 @@ class _AdminPanelScreenState extends ConsumerState<AdminPanelScreen> {
         ),
       ),
     );
-  }
 }

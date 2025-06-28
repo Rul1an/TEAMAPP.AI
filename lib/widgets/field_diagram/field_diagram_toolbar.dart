@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/field_diagram_provider.dart';
+
 import '../../models/training_session/field_diagram.dart';
+import '../../providers/field_diagram_provider.dart';
 
 class FieldDiagramToolbar extends ConsumerStatefulWidget {
-  final DiagramTool selectedTool;
-  final Function(DiagramTool) onToolSelected;
 
   const FieldDiagramToolbar({
     super.key,
     required this.selectedTool,
     required this.onToolSelected,
   });
+  final DiagramTool selectedTool;
+  final Function(DiagramTool) onToolSelected;
 
   @override
   ConsumerState<FieldDiagramToolbar> createState() => _FieldDiagramToolbarState();
@@ -19,8 +20,7 @@ class FieldDiagramToolbar extends ConsumerStatefulWidget {
 
 class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
   @override
-  Widget build(BuildContext context) {
-    return Row(
+  Widget build(BuildContext context) => Row(
       children: [
         _buildToolButton(
           icon: Icons.pan_tool,
@@ -105,7 +105,6 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
         _buildEquipmentTypeSelector(),
       ],
     );
-  }
 
   Widget _buildToolButton({
     required IconData icon,
@@ -168,7 +167,7 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
           borderRadius: BorderRadius.circular(8),
           color: widget.selectedTool == DiagramTool.player ? Colors.green[100] : Colors.grey[100],
           border: widget.selectedTool == DiagramTool.player
-              ? Border.all(color: Colors.green, width: 1)
+              ? Border.all(color: Colors.green)
               : null,
         ),
         child: Row(
@@ -180,7 +179,7 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
               decoration: BoxDecoration(
                 color: playerIconColor,
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 1),
+                border: Border.all(color: Colors.white),
               ),
             ),
             const SizedBox(width: 4),
@@ -316,7 +315,7 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
           borderRadius: BorderRadius.circular(8),
           color: widget.selectedTool == DiagramTool.equipment ? Colors.green[100] : Colors.grey[100],
           border: widget.selectedTool == DiagramTool.equipment
-              ? Border.all(color: Colors.green, width: 1)
+              ? Border.all(color: Colors.green)
               : null,
         ),
         child: Row(
@@ -506,8 +505,8 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
 
 // Custom painters for line type visualization
 class DashedLinePainter extends CustomPainter {
-  final Color color;
   DashedLinePainter({required this.color});
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -534,8 +533,8 @@ class DashedLinePainter extends CustomPainter {
 }
 
 class DottedLinePainter extends CustomPainter {
-  final Color color;
   DottedLinePainter({required this.color});
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -561,8 +560,8 @@ class DottedLinePainter extends CustomPainter {
 }
 
 class WavyLinePainter extends CustomPainter {
-  final Color color;
   WavyLinePainter({required this.color});
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -1,25 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import '../models/team.dart';
-import '../models/player.dart';
-import '../models/training.dart';
-import '../models/match.dart';
-import '../models/performance_rating.dart';
-import '../models/formation_template.dart';
+
 import '../models/annual_planning/index.dart';
-import '../models/training_session/training_session.dart';
-import '../models/training_session/training_exercise.dart';
 // import '../models/club/club.dart'; // Unused import
 import '../models/assessment.dart';
+import '../models/formation_template.dart';
+import '../models/match.dart';
+import '../models/performance_rating.dart';
+import '../models/player.dart';
+import '../models/team.dart';
+import '../models/training.dart';
+import '../models/training_session/training_exercise.dart';
+import '../models/training_session/training_session.dart';
 import '../providers/demo_mode_provider.dart';
 import '../providers/organization_provider.dart';
 import '../services/demo_data_service.dart';
 
 class DatabaseService {
-  static final DatabaseService _instance = DatabaseService._internal();
   factory DatabaseService() => _instance;
   DatabaseService._internal();
+  static final DatabaseService _instance = DatabaseService._internal();
 
   Isar? _isar;
   bool _isInitialized = false;
@@ -492,9 +493,7 @@ class DatabaseService {
     return [];
   }
 
-  Future<List<Match>> getMatches() async {
-    return _matches;
-  }
+  Future<List<Match>> getMatches() async => _matches;
 
   Future<void> addMatch(Match match) async {
     match.id = (_matches.length + 1).toString();  // Changed to String

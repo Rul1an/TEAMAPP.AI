@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import '../../providers/matches_provider.dart';
+
 import '../../models/match.dart';
+import '../../providers/matches_provider.dart';
 import '../../services/export_service.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
@@ -168,13 +169,13 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen> with SingleTicker
 }
 
 class _MatchCard extends StatelessWidget {
-  final Match match;
-  final VoidCallback onTap;
 
   const _MatchCard({
     required this.match,
     required this.onTap,
   });
+  final Match match;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -305,8 +306,7 @@ class _MatchCard extends StatelessWidget {
     );
   }
 
-  Widget _buildLocationBadge(Location location) {
-    return Container(
+  Widget _buildLocationBadge(Location location) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: location == Location.home ? Colors.green : Colors.blue,
@@ -321,7 +321,6 @@ class _MatchCard extends StatelessWidget {
         ),
       ),
     );
-  }
 
   Widget _buildCompetitionBadge(Competition competition) {
     String text;

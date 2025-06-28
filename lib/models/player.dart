@@ -40,7 +40,12 @@ enum PreferredFoot {
 }
 
 class Player {
-  String id = "";
+
+  Player() {
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+  String id = '';
 
   late String firstName;
   late String lastName;
@@ -104,10 +109,5 @@ class Player {
   double get averageMinutesPerMatch {
     if (matchesPlayed == 0) return 0;
     return minutesPlayed / matchesPlayed;
-  }
-
-  Player() {
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
   }
 }

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../models/formation_template.dart';
+import '../../models/match.dart';
 import '../../models/player.dart';
 import '../../models/team.dart';
-import '../../models/match.dart';
-import '../../models/formation_template.dart';
 import '../../providers/database_provider.dart';
 import '../../services/database_service.dart';
 import '../../widgets/common/tactical_drawing_canvas.dart';
 
 class LineupBuilderScreen extends ConsumerStatefulWidget {
-  final String? matchId;
 
   const LineupBuilderScreen({
     super.key,
     this.matchId,
   });
+  final String? matchId;
 
   @override
   ConsumerState<LineupBuilderScreen> createState() => _LineupBuilderScreenState();
@@ -80,7 +81,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
     match.fieldPositions.forEach((position, playerId) {
       final player = players.firstWhere(
         (p) => p.id.toString() == playerId,
-        orElse: () => Player(),
+        orElse: Player.new,
       );
       if (player.id != '') {
         _fieldPositions[position] = player;
@@ -91,7 +92,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
     for (final playerId in match.substituteIds) {
       final player = players.firstWhere(
         (p) => p.id.toString() == playerId,
-        orElse: () => Player(),
+        orElse: Player.new,
       );
       if (player.id != '') {
         _benchPlayers.add(player);
@@ -281,7 +282,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         error: (error, stack) => Center(child: Text('Fout: $error')),
         data: (players) {
           _availablePlayers = players.where((p) =>
-            !_fieldPositions.values.contains(p) && !_benchPlayers.contains(p)
+            !_fieldPositions.values.contains(p) && !_benchPlayers.contains(p),
           ).toList();
 
           return Row(
@@ -342,12 +343,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                           const SizedBox(width: 16),
                           DropdownButton<Formation>(
                             value: _selectedFormation,
-                            items: Formation.values.map((formation) {
-                              return DropdownMenuItem(
+                            items: Formation.values.map((formation) => DropdownMenuItem(
                                 value: formation,
                                 child: Text(_getFormationText(formation)),
-                              );
-                            }).toList(),
+                              ),).toList(),
                             onChanged: (value) {
                               if (value != null) {
                                 setState(() {
@@ -371,12 +370,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                                   DropdownButton<FormationTemplate>(
                                     value: _selectedTemplate,
                                     hint: const Text('Kies template'),
-                                    items: _getTemplatesForCurrentFormation().map((template) {
-                                      return DropdownMenuItem(
+                                    items: _getTemplatesForCurrentFormation().map((template) => DropdownMenuItem(
                                         value: template,
                                         child: Text(template.name),
-                                      );
-                                    }).toList(),
+                                      ),).toList(),
                                     onChanged: (value) {
                                       setState(() {
                                         _selectedTemplate = value;
@@ -469,7 +466,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                               _tacticalDrawings = drawings;
                             });
                           },
-                          child: Container(
+                          child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: Colors.green[700],
                           borderRadius: BorderRadius.circular(8),
@@ -517,8 +514,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                               }
                             });
                           },
-                          builder: (context, candidateData, rejectedData) {
-                            return Container(
+                          builder: (context, candidateData, rejectedData) => ColoredBox(
                               color: candidateData.isNotEmpty
                                 ? Colors.blue.withValues(alpha: 0.1)
                                 : Colors.transparent,
@@ -543,8 +539,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                                   );
                                 },
                               ),
-                            );
-                          },
+                            ),
                         ),
                       ),
                     ],
@@ -560,8 +555,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
 
   List<Widget> _buildFieldPositions() {
     final positions = _getPositionsForFormation();
-    return positions.entries.map((entry) {
-      return Positioned(
+    return positions.entries.map((entry) => Positioned(
         left: entry.value['x']! * MediaQuery.of(context).size.width * 0.4,
         top: entry.value['y']! * MediaQuery.of(context).size.height * 0.6,
         child: DragTarget<Player>(
@@ -590,7 +584,6 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   : Colors.white.withValues(alpha: 0.9),
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.black,
                   width: 2,
                 ),
               ),
@@ -623,12 +616,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
             );
           },
         ),
-      );
-    }).toList();
+      ),).toList();
   }
 
-  Widget _buildPlayerCard(Player player) {
-    return Card(
+  Widget _buildPlayerCard(Player player) => Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
         leading: CircleAvatar(
@@ -643,10 +634,8 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         dense: true,
       ),
     );
-  }
 
-  Widget _buildPlayerChip(Player player, {bool isDragging = false}) {
-    return Material(
+  Widget _buildPlayerChip(Player player, {bool isDragging = false}) => Material(
       elevation: isDragging ? 8 : 0,
       shape: const CircleBorder(),
       child: Container(
@@ -679,7 +668,6 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         ),
       ),
     );
-  }
 
   Map<String, Map<String, double>> _getPositionsForFormation() {
     switch (_selectedFormation) {
@@ -776,7 +764,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
     _initializePositions();
   }
 
-  void _saveLineup() async {
+  Future<void> _saveLineup() async {
     if (_match != null) {
       // Save lineup to match
       _match!.selectedFormation = _selectedFormation;
@@ -879,11 +867,9 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
   }
 
   // Template functionality methods
-  List<FormationTemplate> _getTemplatesForCurrentFormation() {
-    return _availableTemplates
+  List<FormationTemplate> _getTemplatesForCurrentFormation() => _availableTemplates
         .where((template) => template.formation == _selectedFormation)
         .toList();
-  }
 
   Future<void> _applyTemplate() async {
     if (_selectedTemplate == null) return;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
+import '../../providers/demo_mode_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -22,10 +22,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void _startDemoMode(DemoRole role) {
     ref.read(demoModeProvider.notifier).startDemo(
       role: role,
-      organizationId: "demo-org-1",
-      userId: "demo-user-${role.name}",
-      userName: "Demo User",
-      durationMinutes: 30,
+      organizationId: 'demo-org-1',
+      userId: 'demo-user-${role.name}',
+      userName: 'Demo User',
     );
     context.go('/dashboard');
   }
@@ -35,7 +34,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      body: Container(
+      body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -258,12 +257,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 }
 
 class _DemoRoleButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String subtitle;
-  final VoidCallback onPressed;
-  final bool isPrimary;
-  final bool isOutlined;
 
   const _DemoRoleButton({
     required this.icon,
@@ -273,6 +266,12 @@ class _DemoRoleButton extends StatelessWidget {
     this.isPrimary = false,
     this.isOutlined = false,
   });
+  final IconData icon;
+  final String label;
+  final String subtitle;
+  final VoidCallback onPressed;
+  final bool isPrimary;
+  final bool isOutlined;
 
   @override
   Widget build(BuildContext context) {
@@ -306,8 +305,7 @@ class _DemoRoleButton extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(ThemeData theme) {
-    return Row(
+  Widget _buildContent(ThemeData theme) => Row(
       children: [
         Icon(icon, size: 24),
         const SizedBox(width: 16),
@@ -334,5 +332,4 @@ class _DemoRoleButton extends StatelessWidget {
         const Icon(Icons.arrow_forward_ios, size: 16),
       ],
     );
-  }
 }

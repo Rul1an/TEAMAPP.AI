@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import '../../models/training_session/field_diagram.dart';
 
 class FormationTemplateSelector extends StatefulWidget {
-  final Function(List<PlayerMarker>) onFormationSelected;
 
   const FormationTemplateSelector({
     super.key,
     required this.onFormationSelected,
   });
+  final Function(List<PlayerMarker>) onFormationSelected;
 
   @override
   State<FormationTemplateSelector> createState() => _FormationTemplateSelectorState();
@@ -15,8 +15,7 @@ class FormationTemplateSelector extends StatefulWidget {
 
 class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
   @override
-  Widget build(BuildContext context) {
-    return Dialog(
+  Widget build(BuildContext context) => Dialog(
       child: Container(
         width: 600,
         height: 500,
@@ -60,10 +59,8 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         ),
       ),
     );
-  }
 
-  Widget _buildFormationCard(FormationData formation) {
-    return Card(
+  Widget _buildFormationCard(FormationData formation) => Card(
       elevation: 2,
       child: InkWell(
         onTap: () => _selectFormation(formation),
@@ -81,7 +78,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
               ),
               const SizedBox(height: 8),
               Expanded(
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: Colors.green[50],
                     borderRadius: BorderRadius.circular(4),
@@ -109,7 +106,6 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         ),
       ),
     );
-  }
 
   void _selectFormation(FormationData formation) {
     final players = <PlayerMarker>[];
@@ -121,8 +117,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         position: position,
         type: PlayerType.attacking,
         label: '${i + 1}',
-        color: '#2196F3',
-      ));
+      ),);
     }
 
     widget.onFormationSelected(players);
@@ -175,21 +170,21 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
 }
 
 class FormationData {
-  final String name;
-  final String description;
-  final List<Position> positions;
 
   const FormationData({
     required this.name,
     required this.description,
     required this.positions,
   });
+  final String name;
+  final String description;
+  final List<Position> positions;
 }
 
 class FormationPreviewPainter extends CustomPainter {
-  final List<Position> positions;
 
   FormationPreviewPainter(this.positions);
+  final List<Position> positions;
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -1,14 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../models/match.dart';
 import '../models/player.dart';
 import '../models/team.dart';
 import '../models/training.dart';
-import '../models/match.dart';
 import '../services/database_service.dart';
 
 // Database service provider
-final databaseServiceProvider = Provider<DatabaseService>((ref) {
-  return DatabaseService();
-});
+final databaseServiceProvider = Provider<DatabaseService>((ref) => DatabaseService());
 
 // Initialize database
 final initializeDatabaseProvider = FutureProvider<void>((ref) async {
@@ -19,58 +18,58 @@ final initializeDatabaseProvider = FutureProvider<void>((ref) async {
 // Team providers
 final teamsProvider = FutureProvider<List<Team>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getAllTeams();
+  return dbService.getAllTeams();
 });
 
 final selectedTeamProvider = FutureProvider.family<Team?, String?>((ref, teamId) async {
   if (teamId == null) return null;
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getTeam(teamId);
+  return dbService.getTeam(teamId);
 });
 
 // Player providers
 final playersProvider = FutureProvider<List<Player>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getAllPlayers();
+  return dbService.getAllPlayers();
 });
 
 final selectedPlayerProvider = FutureProvider.family<Player?, String?>((ref, playerId) async {
   if (playerId == null) return null;
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getPlayer(playerId);
+  return dbService.getPlayer(playerId);
 });
 
 final playersByPositionProvider = FutureProvider.family<List<Player>, Position>((ref, position) async {
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getPlayersByPosition(position);
+  return dbService.getPlayersByPosition(position);
 });
 
 // Training providers
 final trainingsProvider = FutureProvider<List<Training>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getAllTrainings();
+  return dbService.getAllTrainings();
 });
 
 final upcomingTrainingsProvider = FutureProvider<List<Training>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getUpcomingTrainings();
+  return dbService.getUpcomingTrainings();
 });
 
 // Match providers
 final matchesProvider = FutureProvider<List<Match>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getAllMatches();
+  return dbService.getAllMatches();
 });
 
 final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getUpcomingMatches();
+  return dbService.getUpcomingMatches();
 });
 
 // Statistics provider
 final statisticsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getStatistics();
+  return dbService.getStatistics();
 });
 
 // Selected item providers
@@ -80,8 +79,8 @@ final selectedTrainingIdProvider = StateProvider<String?>((ref) => null);
 
 // Helper class for date range
 class DateTimeRange {
-  final DateTime start;
-  final DateTime end;
 
   DateTimeRange({required this.start, required this.end});
+  final DateTime start;
+  final DateTime end;
 }

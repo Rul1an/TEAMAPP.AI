@@ -1,11 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:jo17_tactical_manager/services/auth_service.dart';
+import '../services/auth_service.dart';
 
 // Auth service provider
-final authServiceProvider = Provider<AuthService>((ref) {
-  return AuthService();
-});
+final authServiceProvider = Provider<AuthService>((ref) => AuthService());
 
 // Current user provider
 final currentUserProvider = Provider<User?>((ref) {
@@ -39,7 +37,6 @@ final organizationIdProvider = Provider<String?>((ref) {
 
 // Auth state notifier for handling auth actions
 class AuthNotifier extends StateNotifier<AuthState?> {
-  final AuthService _authService;
 
   AuthNotifier(this._authService) : super(null) {
     // Listen to auth state changes
@@ -47,6 +44,7 @@ class AuthNotifier extends StateNotifier<AuthState?> {
       state = authState;
     });
   }
+  final AuthService _authService;
 
   Future<void> signInWithEmail(String email) async {
     try {

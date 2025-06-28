@@ -10,8 +10,7 @@ class TrainingSessionPlannerScreen extends StatefulWidget {
 
 class _TrainingSessionPlannerScreenState extends State<TrainingSessionPlannerScreen> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Text('Training Session Planner'),
         actions: [
@@ -36,7 +35,7 @@ class _TrainingSessionPlannerScreenState extends State<TrainingSessionPlannerScr
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -72,13 +71,12 @@ class _TrainingSessionPlannerScreenState extends State<TrainingSessionPlannerScr
         ),
       ),
     );
-  }
 
   // Helper method to get current week number
   int _getCurrentWeekNumber() {
     // Get current week from annual planning or default to 1
     final now = DateTime.now();
-    final seasonStart = DateTime(now.year, 8, 1); // Assume season starts August 1st
+    final seasonStart = DateTime(now.year, 8); // Assume season starts August 1st
     final weeksSinceStart = now.difference(seasonStart).inDays ~/ 7;
     return (weeksSinceStart + 1).clamp(1, 52);
   }

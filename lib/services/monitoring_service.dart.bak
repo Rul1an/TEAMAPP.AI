@@ -37,9 +37,9 @@ class MonitoringService {
           // Performance transaction filtering
           options.beforeSendTransaction = (transaction, hint) {
             // Only send important transactions
-            if (transaction.operation?.contains('navigation') == true ||
-                transaction.operation?.contains('ai_') == true ||
-                transaction.operation?.contains('auth') == true) {
+            if (transaction.name?.contains('navigation') == true ||
+                transaction.name?.contains('ai_') == true ||
+                transaction.name?.contains('auth') == true) {
               return transaction;
             }
             return null;

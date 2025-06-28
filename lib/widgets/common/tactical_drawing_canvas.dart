@@ -4,11 +4,6 @@ import 'package:flutter/material.dart';
 enum DrawingTool { line, arrow, circle, text, erase }
 
 class DrawingElement {
-  final DrawingTool tool;
-  final List<Offset> points;
-  final Color color;
-  final double strokeWidth;
-  final String? text;
 
   DrawingElement({
     required this.tool,
@@ -17,15 +12,14 @@ class DrawingElement {
     this.strokeWidth = 3.0,
     this.text,
   });
+  final DrawingTool tool;
+  final List<Offset> points;
+  final Color color;
+  final double strokeWidth;
+  final String? text;
 }
 
 class TacticalDrawingCanvas extends StatefulWidget {
-  final Widget child;
-  final List<DrawingElement> drawings;
-  final Function(List<DrawingElement>) onDrawingsChanged;
-  final bool isDrawingMode;
-  final DrawingTool selectedTool;
-  final Color selectedColor;
 
   const TacticalDrawingCanvas({
     super.key,
@@ -36,6 +30,12 @@ class TacticalDrawingCanvas extends StatefulWidget {
     required this.selectedTool,
     required this.selectedColor,
   });
+  final Widget child;
+  final List<DrawingElement> drawings;
+  final Function(List<DrawingElement>) onDrawingsChanged;
+  final bool isDrawingMode;
+  final DrawingTool selectedTool;
+  final Color selectedColor;
 
   @override
   State<TacticalDrawingCanvas> createState() => _TacticalDrawingCanvasState();
@@ -46,8 +46,7 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
   bool _isDrawing = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
+  Widget build(BuildContext context) => Stack(
       children: [
         widget.child,
         if (widget.isDrawingMode)
@@ -70,7 +69,6 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
           ),
       ],
     );
-  }
 
   void _onPanStart(DragStartDetails details) {
     if (!widget.isDrawingMode) return;
@@ -186,12 +184,10 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
   void _eraseAtPosition(Offset position) {
     const eraseRadius = 30.0;
 
-    final updatedDrawings = widget.drawings.where((element) {
-      return !element.points.any((point) {
+    final updatedDrawings = widget.drawings.where((element) => !element.points.any((point) {
         final distance = (point - position).distance;
         return distance <= eraseRadius;
-      });
-    }).toList();
+      }),).toList();
 
     widget.onDrawingsChanged(updatedDrawings);
   }
@@ -212,11 +208,6 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
 }
 
 class TacticalDrawingPainter extends CustomPainter {
-  final List<DrawingElement> drawings;
-  final List<Offset> currentPoints;
-  final DrawingTool currentTool;
-  final Color currentColor;
-  final bool isDrawing;
 
   TacticalDrawingPainter({
     required this.drawings,
@@ -225,6 +216,11 @@ class TacticalDrawingPainter extends CustomPainter {
     required this.currentColor,
     required this.isDrawing,
   });
+  final List<DrawingElement> drawings;
+  final List<Offset> currentPoints;
+  final DrawingTool currentTool;
+  final Color currentColor;
+  final bool isDrawing;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -295,7 +291,7 @@ class TacticalDrawingPainter extends CustomPainter {
     const arrowLength = 20.0;
     const arrowAngle = 0.5;
 
-    final direction = (end - start);
+    final direction = end - start;
     final length = direction.distance;
     if (length == 0) return;
 
@@ -353,7 +349,5 @@ class TacticalDrawingPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

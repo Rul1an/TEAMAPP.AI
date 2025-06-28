@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+
 import '../../models/match.dart';
-import '../../models/player.dart';
 import '../../models/performance_rating.dart';
+import '../../models/player.dart';
 import '../../providers/database_provider.dart';
 import '../../services/database_service.dart';
 import '../../widgets/common/rating_dialog.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
-  final String matchId;
 
   const MatchDetailScreen({
     super.key,
     required this.matchId,
   });
+  final String matchId;
 
   @override
   ConsumerState<MatchDetailScreen> createState() => _MatchDetailScreenState();
@@ -82,7 +83,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
             },
           );
 
-          if (match.id == "0") {
+          if (match.id == '0') {
             return const Center(child: Text('Wedstrijd niet gevonden'));
           }
 
@@ -155,8 +156,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
     );
   }
 
-  Widget _buildMatchInfo(Match match) {
-    return Card(
+  Widget _buildMatchInfo(Match match) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -176,10 +176,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildInfoRow(String label, String value) {
-    return Padding(
+  Widget _buildInfoRow(String label, String value) => Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,10 +193,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         ],
       ),
     );
-  }
 
-  Widget _buildScoreSection(Match match) {
-    return Card(
+  Widget _buildScoreSection(Match match) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -262,10 +258,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildLineupSection(List<Player> players) {
-    return Card(
+  Widget _buildLineupSection(List<Player> players) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -327,10 +321,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         ),
       ),
     );
-  }
 
-  Widget _buildSubstitutesSection(List<Player> players) {
-    return Card(
+  Widget _buildSubstitutesSection(List<Player> players) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -392,7 +384,6 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         ),
       ),
     );
-  }
 
   void _showPlayerSelectionDialog(List<Player> players, bool isStartingLineup) {
     final selectedPlayers = isStartingLineup ? _selectedStartingLineup : _selectedSubstitutes;
@@ -449,7 +440,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
     );
   }
 
-  void _saveMatch() async {
+  Future<void> _saveMatch() async {
     if (_formKey.currentState!.validate()) {
       try {
         // TODO: Implement actual save functionality

@@ -1,10 +1,11 @@
-import 'package:jo17_tactical_manager/models/player.dart';
-import 'package:jo17_tactical_manager/models/match.dart';
-import 'package:jo17_tactical_manager/models/training_session/training_session.dart';
-import 'package:jo17_tactical_manager/models/club/club.dart';
-import 'package:jo17_tactical_manager/models/club/team.dart';
-import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
 import 'package:uuid/uuid.dart';
+
+import '../models/club/club.dart';
+import '../models/club/team.dart';
+import '../models/match.dart';
+import '../models/player.dart';
+import '../models/training_session/training_session.dart';
+import '../providers/demo_mode_provider.dart';
 
 class DemoDataService {
   static const _uuid = Uuid();
@@ -75,14 +76,13 @@ class DemoDataService {
     };
   }
   
-  static Club _createDemoClub() {
-    return Club(
+  static Club _createDemoClub() => Club(
       id: 'demo-club-voab',
       name: 'VOAB Utrecht',
       shortName: 'VOAB',
       logoUrl: 'https://placehold.co/200x200/1976d2/ffffff?text=VOAB',
       colors: '#1976d2,#ffffff',
-      foundedDate: DateTime(1928, 1, 1),
+      foundedDate: DateTime(1928),
       street: 'Sportpark Overvecht',
       city: 'Utrecht',
       country: 'Nederland',
@@ -92,10 +92,8 @@ class DemoDataService {
       createdAt: DateTime.now().subtract(const Duration(days: 365)),
       updatedAt: DateTime.now(),
     );
-  }
   
-  static List<Team> _createDemoTeams(String clubId) {
-    return [
+  static List<Team> _createDemoTeams(String clubId) => [
       Team(
         id: _uuid.v4(),
         clubId: clubId,
@@ -132,10 +130,8 @@ class DemoDataService {
         updatedAt: DateTime.now(),
       ),
     ];
-  }
   
-  static Team _createDemoTeam({required String teamId, required String name}) {
-    return Team(
+  static Team _createDemoTeam({required String teamId, required String name}) => Team(
       id: teamId,
       clubId: 'demo-club-voab',
       name: name,
@@ -153,12 +149,11 @@ class DemoDataService {
       createdAt: DateTime.now().subtract(const Duration(days: 180)),
       updatedAt: DateTime.now(),
     );
-  }
   
   static List<Player> _createDemoPlayers(int count, {String? teamId}) {
     final positions = [Position.goalkeeper, Position.defender, Position.defender, Position.defender, 
                       Position.defender, Position.midfielder, Position.midfielder, Position.midfielder,
-                      Position.forward, Position.forward, Position.forward];
+                      Position.forward, Position.forward, Position.forward,];
     final players = <Player>[];
     
     for (int i = 0; i < count; i++) {
@@ -212,7 +207,7 @@ class DemoDataService {
   static List<Match> _createDemoMatches(String teamId) {
     final opponents = [
       'Ajax JO17', 'PSV JO17', 'Feyenoord JO17', 'AZ JO17', 
-      'Vitesse JO17', 'FC Utrecht JO17', 'FC Twente JO17'
+      'Vitesse JO17', 'FC Utrecht JO17', 'FC Twente JO17',
     ];
     
     final matches = <Match>[];
@@ -280,21 +275,19 @@ class DemoDataService {
       teamId: teamId,
       date: date,
       trainingNumber: 1,
-      type: TrainingType.regularTraining,
     );
     
     session.id = _uuid.v4();
     session.sessionObjective = focus;
     session.technicalTacticalGoal = focus;
-    session.startTime = DateTime(date.year, date.month, date.day, 19, 0);
+    session.startTime = DateTime(date.year, date.month, date.day, 19);
     session.endTime = DateTime(date.year, date.month, date.day, 20, 30);
     session.durationMinutes = 90;
     
     return session;
   }
   
-  static List<Map<String, dynamic>> _createDemoCoaches() {
-    return [
+  static List<Map<String, dynamic>> _createDemoCoaches() => [
       {
         'id': _uuid.v4(),
         'name': 'Johan de Vries',
@@ -312,15 +305,13 @@ class DemoDataService {
         'licenseLevel': 'TC3',
       },
     ];
-  }
   
   static List<Map<String, dynamic>> _createDemoAssessments() {
     // Technical assessments data
     return [];
   }
   
-  static Map<String, dynamic> _createDemoPlayerStats([String? playerId]) {
-    return {
+  static Map<String, dynamic> _createDemoPlayerStats([String? playerId]) => {
       'goals': 8,
       'assists': 12,
       'yellowCards': 2,
@@ -331,20 +322,19 @@ class DemoDataService {
       'matchesTotal': 15,
       'averageRating': 7.5,
     };
-  }
   
   static String _generateDutchName() {
     final firstNames = [
       'Jan', 'Piet', 'Klaas', 'Henk', 'Willem', 'Jeroen', 'Mark', 'Dennis',
       'Robin', 'Thomas', 'Lars', 'Niels', 'Bram', 'Tim', 'Sven', 'Daan',
-      'Luuk', 'Jesse', 'Ruben', 'Tom', 'Max', 'Finn', 'Sem', 'Lucas'
+      'Luuk', 'Jesse', 'Ruben', 'Tom', 'Max', 'Finn', 'Sem', 'Lucas',
     ];
     
     final lastNames = [
       'de Jong', 'Jansen', 'de Vries', 'van den Berg', 'van Dijk', 'Bakker',
       'Visser', 'Smit', 'Meijer', 'de Boer', 'Mulder', 'de Groot', 'Bos',
       'Vos', 'Peters', 'Hendriks', 'van der Meer', 'van der Linden', 'Dekker',
-      'Brouwer', 'de Wit', 'Dijkstra', 'van Leeuwen', 'de Bruijn', 'van der Heijden'
+      'Brouwer', 'de Wit', 'Dijkstra', 'van Leeuwen', 'de Bruijn', 'van der Heijden',
     ];
     
     final firstName = firstNames[DateTime.now().millisecond % firstNames.length];

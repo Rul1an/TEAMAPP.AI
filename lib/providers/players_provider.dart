@@ -4,22 +4,20 @@ import '../services/database_service.dart';
 
 final playersProvider = FutureProvider<List<Player>>((ref) async {
   final db = DatabaseService();
-  return await db.getAllPlayers();
+  return db.getAllPlayers();
 });
 
 final playerByIdProvider = FutureProvider.family<Player?, String>((ref, id) async {
   final db = DatabaseService();
-  return await db.getPlayer(id);
+  return db.getPlayer(id);
 });
 
 final playersByPositionProvider = FutureProvider.family<List<Player>, Position>((ref, position) async {
   final db = DatabaseService();
-  return await db.getPlayersByPosition(position);
+  return db.getPlayersByPosition(position);
 });
 
-final playersNotifierProvider = StateNotifierProvider<PlayersNotifier, AsyncValue<List<Player>>>((ref) {
-  return PlayersNotifier();
-});
+final playersNotifierProvider = StateNotifierProvider<PlayersNotifier, AsyncValue<List<Player>>>((ref) => PlayersNotifier());
 
 class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
   PlayersNotifier() : super(const AsyncValue.loading()) {

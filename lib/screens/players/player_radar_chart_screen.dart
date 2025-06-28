@@ -4,14 +4,14 @@ import '../../models/assessment.dart';
 import '../../models/player.dart';
 
 class PlayerRadarChartScreen extends StatelessWidget {
-  final Player player;
-  final PlayerAssessment assessment;
 
   const PlayerRadarChartScreen({
     super.key,
     required this.player,
     required this.assessment,
   });
+  final Player player;
+  final PlayerAssessment assessment;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,13 @@ class PlayerRadarChartScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -71,8 +71,8 @@ class PlayerRadarChartScreen extends StatelessWidget {
                           },
                           tickCount: 5,
                           ticksTextStyle: const TextStyle(color: Colors.transparent, fontSize: 10),
-                          tickBorderData: const BorderSide(color: Colors.grey, width: 1),
-                          gridBorderData: const BorderSide(color: Colors.grey, width: 1),
+                          tickBorderData: const BorderSide(color: Colors.grey),
+                          gridBorderData: const BorderSide(color: Colors.grey),
                         ),
                       ),
                     ),

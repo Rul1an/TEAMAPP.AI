@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../organization/organization_badge.dart';
-import '../../providers/demo_mode_provider.dart';
+import 'package:go_router/go_router.dart';
+
 import '../../providers/auth_provider.dart';
+import '../../providers/demo_mode_provider.dart';
+import '../organization/organization_badge.dart';
 
 class MainScaffold extends ConsumerWidget {
-  final Widget child;
 
   const MainScaffold({
     super.key,
     required this.child,
   });
+  final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +31,7 @@ class MainScaffold extends ConsumerWidget {
               onDestinationSelected: (index) => _onItemTapped(context, index),
               labelType: NavigationRailLabelType.all,
               leading: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
                     Icon(
@@ -87,7 +88,7 @@ class MainScaffold extends ConsumerWidget {
                 ),
               ),
               trailing: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

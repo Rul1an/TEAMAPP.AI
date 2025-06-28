@@ -78,7 +78,13 @@ enum MatchStatus {
 }
 
 class Match {
-  String id = "";
+
+  Match() {
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+    status = MatchStatus.scheduled;
+  }
+  String id = '';
 
   late DateTime date;
   late String opponent;
@@ -131,11 +137,5 @@ class Match {
     if (teamScore! > opponentScore!) return MatchResult.win;
     if (teamScore! < opponentScore!) return MatchResult.loss;
     return MatchResult.draw;
-  }
-
-  Match() {
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-    status = MatchStatus.scheduled;
   }
 }

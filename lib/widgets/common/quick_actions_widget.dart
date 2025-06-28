@@ -81,7 +81,7 @@ class QuickActionsWidget extends ConsumerWidget {
     bool isTrainingDay,
     bool isMatchDay,
   ) {
-    List<_QuickAction> actions = [];
+    final List<_QuickAction> actions = [];
 
     // Priority actions based on context
     if (isMatchDay) {
@@ -171,7 +171,7 @@ class QuickActionsWidget extends ConsumerWidget {
         label: 'Dashboard',
         color: Colors.grey,
         onTap: () => context.go('/dashboard'),
-      ));
+      ),);
     }
 
     return actions.take(4).map((action) => _QuickActionTile(action: action)).toList();
@@ -283,10 +283,6 @@ class QuickActionsWidget extends ConsumerWidget {
 enum TimeOfDay { morning, afternoon, evening }
 
 class _QuickAction {
-  final IconData icon;
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
 
   _QuickAction({
     required this.icon,
@@ -294,22 +290,25 @@ class _QuickAction {
     required this.color,
     required this.onTap,
   });
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
 }
 
 class _QuickActionTile extends StatelessWidget {
-  final _QuickAction action;
 
   const _QuickActionTile({required this.action});
+  final _QuickAction action;
 
   @override
-  Widget build(BuildContext context) {
-    return Material(
+  Widget build(BuildContext context) => Material(
       elevation: 1,
       borderRadius: BorderRadius.circular(8),
       child: InkWell(
         onTap: action.onTap,
         borderRadius: BorderRadius.circular(8),
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             gradient: LinearGradient(
@@ -351,5 +350,4 @@ class _QuickActionTile extends StatelessWidget {
         ),
       ),
     );
-  }
 }

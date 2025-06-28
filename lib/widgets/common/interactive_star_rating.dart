@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class InteractiveStarRating extends StatefulWidget {
-  final int rating;
-  final Function(int) onRatingChanged;
-  final int maxRating;
-  final double size;
-  final Color color;
 
   const InteractiveStarRating({
     super.key,
@@ -15,6 +10,11 @@ class InteractiveStarRating extends StatefulWidget {
     this.size = 24,
     this.color = Colors.amber,
   });
+  final int rating;
+  final Function(int) onRatingChanged;
+  final int maxRating;
+  final double size;
+  final Color color;
 
   @override
   State<InteractiveStarRating> createState() => _InteractiveStarRatingState();
@@ -38,11 +38,9 @@ class _InteractiveStarRatingState extends State<InteractiveStarRating> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
+  Widget build(BuildContext context) => Row(
       mainAxisSize: MainAxisSize.min,
-      children: List.generate(widget.maxRating, (index) {
-        return GestureDetector(
+      children: List.generate(widget.maxRating, (index) => GestureDetector(
           onTap: () {
             setState(() {
               _currentRating = index + 1;
@@ -54,8 +52,6 @@ class _InteractiveStarRatingState extends State<InteractiveStarRating> {
             color: widget.color,
             size: widget.size,
           ),
-        );
-      }),
+        ),),
     );
-  }
 }

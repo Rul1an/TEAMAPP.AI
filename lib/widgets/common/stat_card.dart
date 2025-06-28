@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final IconData icon;
-  final Color color;
 
   const StatCard({
     super.key,
@@ -13,10 +9,13 @@ class StatCard extends StatelessWidget {
     required this.icon,
     required this.color,
   });
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color color;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
+  Widget build(BuildContext context) => Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -51,5 +50,4 @@ class StatCard extends StatelessWidget {
         ),
       ),
     );
-  }
 }

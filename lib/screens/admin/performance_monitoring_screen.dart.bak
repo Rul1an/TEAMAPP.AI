@@ -51,6 +51,7 @@ class _PerformanceMonitoringScreenState
 
   @override
   Widget build(BuildContext context) => MainScaffold(
+      currentIndex: 5, // Admin section
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) => Opacity(

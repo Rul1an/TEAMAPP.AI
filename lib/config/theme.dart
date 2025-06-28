@@ -29,8 +29,7 @@ class AppTheme {
   static const Color enterpriseTierColor = Color(0xFF9C27B0); // Purple
   static const Color adminColor = Color(0xFFD32F2F); // Red
 
-  static ThemeData get lightTheme {
-    return ThemeData(
+  static ThemeData get lightTheme => ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryColor,
@@ -132,7 +131,7 @@ class AppTheme {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: errorColor, width: 1),
+          borderSide: const BorderSide(color: errorColor),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
@@ -149,7 +148,6 @@ class AppTheme {
         ),
       ),
     );
-  }
 
   static ThemeData get darkTheme {
     // TODO: Implement dark theme
@@ -190,12 +188,10 @@ class AppTheme {
     }
   }
 
-  static BoxDecoration getTierBadgeDecoration(String tier) {
-    return BoxDecoration(
+  static BoxDecoration getTierBadgeDecoration(String tier) => BoxDecoration(
       color: getTierColor(tier),
       borderRadius: BorderRadius.circular(12),
     );
-  }
 
   static Color getAdminColor() => adminColor;
 

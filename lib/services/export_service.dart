@@ -1,18 +1,20 @@
 import 'dart:typed_data';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
+
 import 'package:excel/excel.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:intl/intl.dart';
-import '../models/player.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+
 import '../models/match.dart';
+import '../models/player.dart';
 import '../models/training.dart';
 import '../services/database_service.dart';
 
 class ExportService {
-  static final ExportService _instance = ExportService._internal();
   factory ExportService() => _instance;
   ExportService._internal();
+  static final ExportService _instance = ExportService._internal();
 
   final _dbService = DatabaseService();
 
@@ -160,7 +162,7 @@ class ExportService {
               return [
                 DateFormat('dd-MM-yyyy').format(match.date),
                 match.opponent,
-                match.location == Location.home ? 'Thuis' : 'Uit',
+                if (match.location == Location.home) 'Thuis' else 'Uit',
                 score,
                 result,
                 _getCompetitionText(match.competition),
@@ -192,7 +194,7 @@ class ExportService {
     for (final player in players) {
       headers.add('${player.jerseyNumber}. ${player.lastName}');
     }
-    sheet.appendRow(headers.map((h) => TextCellValue(h)).toList());
+    sheet.appendRow(headers.map(TextCellValue.new).toList());
 
     // Data
     for (final training in trainings) {

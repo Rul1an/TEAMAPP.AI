@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import '../../models/training.dart';
-import '../../models/player.dart';
+
 import '../../models/performance_rating.dart';
+import '../../models/player.dart';
+import '../../models/training.dart';
 import '../../providers/database_provider.dart';
 import '../../services/database_service.dart';
 import '../../widgets/common/rating_dialog.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
-  final String trainingId;
 
   const TrainingAttendanceScreen({
     super.key,
     required this.trainingId,
   });
+  final String trainingId;
 
   @override
   ConsumerState<TrainingAttendanceScreen> createState() => _TrainingAttendanceScreenState();
@@ -91,8 +92,7 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
     );
   }
 
-  Widget _buildTrainingHeader(Training training) {
-    return Container(
+  Widget _buildTrainingHeader(Training training) => Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
@@ -152,10 +152,8 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
         ],
       ),
     );
-  }
 
-  Widget _buildDesktopLayout(List<Player> players) {
-    return GridView.builder(
+  Widget _buildDesktopLayout(List<Player> players) => GridView.builder(
       padding: const EdgeInsets.all(24),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 300,
@@ -169,10 +167,8 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
         return _buildPlayerAttendanceCard(player);
       },
     );
-  }
 
-  Widget _buildMobileLayout(List<Player> players) {
-    return ListView.builder(
+  Widget _buildMobileLayout(List<Player> players) => ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: players.length,
       itemBuilder: (context, index) {
@@ -183,7 +179,6 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
         );
       },
     );
-  }
 
   Widget _buildPlayerAttendanceCard(Player player) {
     final status = _attendance[player.id.toString()] ?? AttendanceStatus.unknown;
@@ -505,7 +500,7 @@ class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScr
 
         final player = players.firstWhere(
           (p) => p.id.toString() == playerId,
-          orElse: () => Player(),
+          orElse: Player.new,
         );
 
         if (player.id != '') {

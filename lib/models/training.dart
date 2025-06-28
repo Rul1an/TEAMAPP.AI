@@ -63,7 +63,13 @@ enum TrainingStatus {
 }
 
 class Training {
-  String id = "";
+
+  Training() {
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+    status = TrainingStatus.planned;
+  }
+  String id = '';
 
   late DateTime date;
   late int duration; // in minutes
@@ -96,10 +102,4 @@ class Training {
 
   late DateTime createdAt;
   late DateTime updatedAt;
-
-  Training() {
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-    status = TrainingStatus.planned;
-  }
 }

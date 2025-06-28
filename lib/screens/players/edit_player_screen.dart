@@ -7,12 +7,12 @@ import '../../models/player.dart';
 import '../../providers/players_provider.dart';
 
 class EditPlayerScreen extends ConsumerStatefulWidget {
-  final String playerId;
 
   const EditPlayerScreen({
     super.key,
     required this.playerId,
   });
+  final String playerId;
 
   @override
   ConsumerState<EditPlayerScreen> createState() => _EditPlayerScreenState();
@@ -59,7 +59,7 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
     final players = ref.read(playersNotifierProvider).value ?? [];
     _player = players.firstWhere(
       (p) => p.id.toString() == widget.playerId,
-      orElse: () => Player(),
+      orElse: Player.new,
     );
 
     if (_player != null && _player!.id != '') {
@@ -242,12 +242,10 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                                     labelText: 'Positie',
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: Position.values.map((position) {
-                                    return DropdownMenuItem(
+                                  items: Position.values.map((position) => DropdownMenuItem(
                                       value: position,
                                       child: Text(_getPositionText(position)),
-                                    );
-                                  }).toList(),
+                                    ),).toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedPosition = value;
@@ -270,12 +268,10 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                               labelText: 'Voorkeur voet',
                               border: OutlineInputBorder(),
                             ),
-                            items: PreferredFoot.values.map((foot) {
-                              return DropdownMenuItem(
+                            items: PreferredFoot.values.map((foot) => DropdownMenuItem(
                                 value: foot,
                                 child: Text(_getFootText(foot)),
-                              );
-                            }).toList(),
+                              ),).toList(),
                             onChanged: (value) {
                               setState(() {
                                 _selectedFoot = value;

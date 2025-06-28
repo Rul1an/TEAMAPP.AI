@@ -38,7 +38,13 @@ enum SkillCategory {
 }
 
 class PlayerAssessment {
-  String id = "";
+
+  PlayerAssessment() {
+    assessmentDate = DateTime.now();
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+  String id = '';
 
   late String playerId;
   late DateTime assessmentDate;
@@ -83,12 +89,6 @@ class PlayerAssessment {
   late String assessorId; // Coach who did the assessment
   late DateTime createdAt;
   late DateTime updatedAt;
-
-  PlayerAssessment() {
-    assessmentDate = DateTime.now();
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-  }
 
   // Helper methods
   double get technicalAverage => (ballControl + passing + shooting + dribbling + defending) / 5.0;
@@ -135,7 +135,13 @@ class PlayerAssessment {
 }
 
 class DevelopmentGoal {
-  String id = "";
+
+  DevelopmentGoal() {
+    targetDate = DateTime.now().add(const Duration(days: 90)); // 3 months default
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+  String id = '';
 
   late String playerId;
   late String title;
@@ -156,12 +162,6 @@ class DevelopmentGoal {
 
   late DateTime createdAt;
   late DateTime updatedAt;
-
-  DevelopmentGoal() {
-    targetDate = DateTime.now().add(const Duration(days: 90)); // 3 months default
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-  }
 
   int get progressPercentage {
     if (targetRating <= currentRating) return 100;

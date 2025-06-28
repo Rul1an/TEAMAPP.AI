@@ -4,7 +4,136 @@ import 'content_distribution.dart';
 // part 'training_period.g.dart'; // Disabled for web compatibility
 
 class TrainingPeriod {
-  String id = "";
+
+  // Constructor
+  TrainingPeriod();
+
+  // Named constructors for common periods
+  TrainingPeriod.preparation({
+    required this.periodizationPlanId,
+    this.orderIndex = 0,
+    this.durationWeeks = 8,
+  }) {
+    name = 'Voorbereiding';
+    description = 'Opbouw van conditie, basis technieken en teamwerk';
+    type = PeriodType.preparation;
+    intensityPercentage = 65.0;
+    keyObjectives = [
+      'Conditie opbouwen',
+      'Basis technieken verbeteren',
+      'Teamwerk ontwikkelen',
+      'Blessure preventie',
+    ];
+    sessionsPerWeek = 3;
+    averageSessionMinutes = 90;
+    restDaysBetweenSessions = 1;
+    status = PeriodStatus.planned;
+    contentFocus = ContentDistribution.balanced();
+  }
+
+  TrainingPeriod.earlyCompetition({
+    required this.periodizationPlanId,
+    this.orderIndex = 1,
+    this.durationWeeks = 12,
+  }) {
+    name = 'Vroege Competitie';
+    description = 'Technische verfijning en tactische systemen';
+    type = PeriodType.competitionEarly;
+    intensityPercentage = 75.0;
+    keyObjectives = [
+      'Technische skills verfijnen',
+      'Tactische systemen inoefenen',
+      'Wedstrijdritme opbouwen',
+      'Positiespel verbeteren',
+    ];
+    sessionsPerWeek = 3;
+    averageSessionMinutes = 75;
+    restDaysBetweenSessions = 1;
+    status = PeriodStatus.planned;
+    contentFocus = ContentDistribution.tacticalFocus();
+  }
+
+  TrainingPeriod.peakCompetition({
+    required this.periodizationPlanId,
+    this.orderIndex = 2,
+    this.durationWeeks = 16,
+  }) {
+    name = 'Piek Competitie';
+    description = 'Wedstrijdspecifieke training en prestatie optimalisatie';
+    type = PeriodType.competitionPeak;
+    intensityPercentage = 85.0;
+    keyObjectives = [
+      'Prestaties optimaliseren',
+      'Wedstrijdspecifieke training',
+      'Mentale voorbereiding',
+      'Tactische flexibiliteit',
+    ];
+    sessionsPerWeek = 3;
+    averageSessionMinutes = 60;
+    restDaysBetweenSessions = 2;
+    status = PeriodStatus.planned;
+    contentFocus = ContentDistribution.matchPrep();
+  }
+
+  TrainingPeriod.transition({
+    required this.periodizationPlanId,
+    this.orderIndex = 3,
+    this.durationWeeks = 6,
+  }) {
+    name = 'Overgang';
+    description = 'Actief herstel en regeneratie';
+    type = PeriodType.transition;
+    intensityPercentage = 50.0;
+    keyObjectives = [
+      'Actief herstel',
+      'Regeneratie en preventie',
+      'Fun-based activiteiten',
+      'Individuele ontwikkeling',
+    ];
+    sessionsPerWeek = 2;
+    averageSessionMinutes = 60;
+    restDaysBetweenSessions = 2;
+    status = PeriodStatus.planned;
+    contentFocus = ContentDistribution.recovery();
+  }
+
+  factory TrainingPeriod.fromJson(Map<String, dynamic> json) {
+    final period = TrainingPeriod();
+    period.id = json['id'] ?? '';
+    period.periodizationPlanId = json['periodizationPlanId'] ?? '';
+    period.name = json['name'] ?? '';
+    period.description = json['description'] ?? '';
+    period.type = PeriodType.values.firstWhere(
+      (e) => e.name == json['type'],
+      orElse: () => PeriodType.preparation,
+    );
+    period.orderIndex = json['orderIndex'] ?? 0;
+    period.durationWeeks = json['durationWeeks'] ?? 4;
+    period.startDate = json['startDate'] != null
+        ? DateTime.parse(json['startDate'])
+        : null;
+    period.endDate = json['endDate'] != null
+        ? DateTime.parse(json['endDate'])
+        : null;
+        period.intensityPercentage = json['intensityPercentage']?.toDouble() ?? 70.0;
+    period.contentFocusJson = json['contentFocusJson'];
+    period.keyObjectives = List<String>.from(json['keyObjectives'] ?? []);
+    period.sessionsPerWeek = json['sessionsPerWeek'] ?? 3;
+    period.averageSessionMinutes = json['averageSessionMinutes'] ?? 75;
+    period.restDaysBetweenSessions = json['restDaysBetweenSessions'] ?? 1;
+    period.status = PeriodStatus.values.firstWhere(
+      (e) => e.name == json['status'],
+      orElse: () => PeriodStatus.planned,
+    );
+    period.createdAt = json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'])
+        : DateTime.now();
+    period.updatedAt = json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'])
+        : DateTime.now();
+    return period;
+  }
+  String id = '';
 
   // Relationship to periodization plan
   late String periodizationPlanId; // Links to PeriodizationPlan
@@ -41,98 +170,6 @@ class TrainingPeriod {
   // Metadata
   DateTime createdAt = DateTime.now();
   DateTime updatedAt = DateTime.now();
-
-  // Constructor
-  TrainingPeriod();
-
-  // Named constructors for common periods
-  TrainingPeriod.preparation({
-    required this.periodizationPlanId,
-    this.orderIndex = 0,
-    this.durationWeeks = 8,
-  }) {
-    name = "Voorbereiding";
-    description = "Opbouw van conditie, basis technieken en teamwerk";
-    type = PeriodType.preparation;
-    intensityPercentage = 65.0;
-    keyObjectives = [
-      "Conditie opbouwen",
-      "Basis technieken verbeteren",
-      "Teamwerk ontwikkelen",
-      "Blessure preventie"
-    ];
-    sessionsPerWeek = 3;
-    averageSessionMinutes = 90;
-    restDaysBetweenSessions = 1;
-    status = PeriodStatus.planned;
-    contentFocus = ContentDistribution.balanced();
-  }
-
-  TrainingPeriod.earlyCompetition({
-    required this.periodizationPlanId,
-    this.orderIndex = 1,
-    this.durationWeeks = 12,
-  }) {
-    name = "Vroege Competitie";
-    description = "Technische verfijning en tactische systemen";
-    type = PeriodType.competitionEarly;
-    intensityPercentage = 75.0;
-    keyObjectives = [
-      "Technische skills verfijnen",
-      "Tactische systemen inoefenen",
-      "Wedstrijdritme opbouwen",
-      "Positiespel verbeteren"
-    ];
-    sessionsPerWeek = 3;
-    averageSessionMinutes = 75;
-    restDaysBetweenSessions = 1;
-    status = PeriodStatus.planned;
-    contentFocus = ContentDistribution.tacticalFocus();
-  }
-
-  TrainingPeriod.peakCompetition({
-    required this.periodizationPlanId,
-    this.orderIndex = 2,
-    this.durationWeeks = 16,
-  }) {
-    name = "Piek Competitie";
-    description = "Wedstrijdspecifieke training en prestatie optimalisatie";
-    type = PeriodType.competitionPeak;
-    intensityPercentage = 85.0;
-    keyObjectives = [
-      "Prestaties optimaliseren",
-      "Wedstrijdspecifieke training",
-      "Mentale voorbereiding",
-      "Tactische flexibiliteit"
-    ];
-    sessionsPerWeek = 3;
-    averageSessionMinutes = 60;
-    restDaysBetweenSessions = 2;
-    status = PeriodStatus.planned;
-    contentFocus = ContentDistribution.matchPrep();
-  }
-
-  TrainingPeriod.transition({
-    required this.periodizationPlanId,
-    this.orderIndex = 3,
-    this.durationWeeks = 6,
-  }) {
-    name = "Overgang";
-    description = "Actief herstel en regeneratie";
-    type = PeriodType.transition;
-    intensityPercentage = 50.0;
-    keyObjectives = [
-      "Actief herstel",
-      "Regeneratie en preventie",
-      "Fun-based activiteiten",
-      "Individuele ontwikkeling"
-    ];
-    sessionsPerWeek = 2;
-    averageSessionMinutes = 60;
-    restDaysBetweenSessions = 2;
-    status = PeriodStatus.planned;
-    contentFocus = ContentDistribution.recovery();
-  }
 
   // Calculated properties
   DateTime? get calculatedStartDate {
@@ -186,7 +223,7 @@ class TrainingPeriod {
     final start = calculatedStartDate;
     final end = calculatedEndDate;
 
-    if (start == null || end == null) return 0.0;
+    if (start == null || end == null) return 0;
 
     final now = DateTime.now();
     final totalDuration = end.difference(start).inDays;
@@ -217,17 +254,17 @@ class TrainingPeriod {
   static double getRecommendedIntensity(PeriodType type) {
     switch (type) {
       case PeriodType.preparation:
-        return 65.0;
+        return 65;
       case PeriodType.competitionEarly:
-        return 75.0;
+        return 75;
       case PeriodType.competitionPeak:
-        return 85.0;
+        return 85;
       case PeriodType.competitionMaintenance:
-        return 70.0;
+        return 70;
       case PeriodType.transition:
-        return 50.0;
+        return 50;
       case PeriodType.tournamentPrep:
-        return 90.0;
+        return 90;
     }
   }
 
@@ -252,43 +289,6 @@ class TrainingPeriod {
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
   };
-
-  factory TrainingPeriod.fromJson(Map<String, dynamic> json) {
-    final period = TrainingPeriod();
-    period.id = json['id'] ?? "";
-    period.periodizationPlanId = json['periodizationPlanId'] ?? '';
-    period.name = json['name'] ?? '';
-    period.description = json['description'] ?? '';
-    period.type = PeriodType.values.firstWhere(
-      (e) => e.name == json['type'],
-      orElse: () => PeriodType.preparation,
-    );
-    period.orderIndex = json['orderIndex'] ?? 0;
-    period.durationWeeks = json['durationWeeks'] ?? 4;
-    period.startDate = json['startDate'] != null
-        ? DateTime.parse(json['startDate'])
-        : null;
-    period.endDate = json['endDate'] != null
-        ? DateTime.parse(json['endDate'])
-        : null;
-        period.intensityPercentage = json['intensityPercentage']?.toDouble() ?? 70.0;
-    period.contentFocusJson = json['contentFocusJson'];
-    period.keyObjectives = List<String>.from(json['keyObjectives'] ?? []);
-    period.sessionsPerWeek = json['sessionsPerWeek'] ?? 3;
-    period.averageSessionMinutes = json['averageSessionMinutes'] ?? 75;
-    period.restDaysBetweenSessions = json['restDaysBetweenSessions'] ?? 1;
-    period.status = PeriodStatus.values.firstWhere(
-      (e) => e.name == json['status'],
-      orElse: () => PeriodStatus.planned,
-    );
-    period.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now();
-    period.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
-        : DateTime.now();
-    return period;
-  }
 
   // Copy with method for updates
   TrainingPeriod copyWith({
@@ -332,11 +332,9 @@ class TrainingPeriod {
   }
 
   @override
-  String toString() {
-    return 'TrainingPeriod(id: $id, name: $name, type: ${type.name}, '
+  String toString() => 'TrainingPeriod(id: $id, name: $name, type: ${type.name}, '
            'order: $orderIndex, weeks: $durationWeeks, intensity: $intensityPercentage%, '
            'status: ${status.name})';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -350,13 +348,11 @@ class TrainingPeriod {
   }
 
   @override
-  int get hashCode {
-    return periodizationPlanId.hashCode ^
+  int get hashCode => periodizationPlanId.hashCode ^
            name.hashCode ^
            type.hashCode ^
            orderIndex.hashCode ^
            durationWeeks.hashCode;
-  }
 }
 
 // Enums for training periods

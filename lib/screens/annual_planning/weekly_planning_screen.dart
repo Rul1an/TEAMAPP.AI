@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/annual_planning_provider.dart';
-import '../../models/annual_planning/week_schedule.dart';
-import '../../models/annual_planning/periodization_plan.dart';
+
 import '../../models/annual_planning/morphocycle.dart';
-import 'training_dialog.dart';
-import 'periodization_template_dialog.dart';
+import '../../models/annual_planning/periodization_plan.dart';
+import '../../models/annual_planning/week_schedule.dart';
+import '../../providers/annual_planning_provider.dart';
 import 'load_monitoring_screen.dart';
+import 'periodization_template_dialog.dart';
+import 'training_dialog.dart';
 
 class WeeklyPlanningScreen extends ConsumerStatefulWidget {
   const WeeklyPlanningScreen({super.key});
@@ -66,9 +67,8 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
     );
   }
 
-  Widget _buildSeasonHeader(AnnualPlanningState state) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
+  Widget _buildSeasonHeader(AnnualPlanningState state) => Container(
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.green[600]!, Colors.green[700]!],
@@ -232,10 +232,8 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
         ],
       ),
     );
-  }
 
-  Widget _buildWeekSelector(AnnualPlanningState state) {
-    return Container(
+  Widget _buildWeekSelector(AnnualPlanningState state) => Container(
       height: 60,
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: ListView.builder(
@@ -294,7 +292,6 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
         },
       ),
     );
-  }
 
   Widget _buildWeeklyTable(AnnualPlanningState state) {
     final startWeek = ((state.selectedWeek - 1) ~/ 8) * 8 + 1;
@@ -313,15 +310,14 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
         child: Column(
           children: [
             _buildTableHeader(),
-            ...weeksToShow.map((week) => _buildWeekRow(week)),
+            ...weeksToShow.map(_buildWeekRow),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTableHeader() {
-    return Container(
+  Widget _buildTableHeader() => DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.green[100],
         border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
@@ -339,7 +335,6 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
         ],
       ),
     );
-  }
 
   Widget _buildWeekRow(WeekSchedule week) {
     final isVacation = week.isVacation;
@@ -350,7 +345,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
             : Colors.white;
 
     if (isVacation) {
-      return Container(
+      return DecoratedBox(
         decoration: BoxDecoration(
           color: backgroundColor,
           border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
@@ -367,7 +362,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
             _TableCell(week.notes ?? 'VAKANTIE', style: const TextStyle(
               color: Colors.orange,
               fontWeight: FontWeight.bold,
-            )),
+            ),),
           ],
         ),
       );
@@ -412,7 +407,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
       );
     } else {
       // Empty week
-      return Container(
+      return DecoratedBox(
         decoration: BoxDecoration(
           color: backgroundColor,
           border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
@@ -444,7 +439,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
     final state = ref.watch(annualPlanningProvider);
     final morphocycle = state.getMorphocycleForWeek(week.weekNumber);
 
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
@@ -518,16 +513,16 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
     if (morphocycle != null) {
       final loadDescription = _getLoadDescription(morphocycle.weeklyLoad);
       final adaptationPercent = morphocycle.expectedAdaptation.toInt();
-      return "$loadDescription | Adaptatie: $adaptationPercent% | Focus: ${morphocycle.primaryGameModelFocus}";
+      return '$loadDescription | Adaptatie: $adaptationPercent% | Focus: ${morphocycle.primaryGameModelFocus}';
     }
     return week.notes ?? '';
   }
 
   String _getLoadDescription(double weeklyLoad) {
-    if (weeklyLoad < 1000) return "Lichte Week";
-    if (weeklyLoad < 1500) return "Matige Week";
-    if (weeklyLoad < 2000) return "Intensieve Week";
-    return "Zeer Intensief";
+    if (weeklyLoad < 1000) return 'Lichte Week';
+    if (weeklyLoad < 1500) return 'Matige Week';
+    if (weeklyLoad < 2000) return 'Intensieve Week';
+    return 'Zeer Intensief';
   }
 
   Color _getWeekColor(WeekSchedule? week, bool isSelected, bool isCurrent) {
@@ -538,18 +533,14 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
     return Colors.grey[100]!;
   }
 
-  String _formatDate(DateTime date) {
-    return '${date.day}/${date.month}';
-  }
+  String _formatDate(DateTime date) => '${date.day}/${date.month}';
 
   String _formatWeekDate(DateTime weekStart) {
     final weekEnd = weekStart.add(const Duration(days: 6));
     return '${weekStart.day}/${weekStart.month}-${weekEnd.day}/${weekEnd.month}';
   }
 
-  String _formatCurrentDate() {
-    return '${DateTime.now().day}/${DateTime.now().month}';
-  }
+  String _formatCurrentDate() => '${DateTime.now().day}/${DateTime.now().month}';
 
   void _scrollToCurrentWeek() {
     final currentWeek = ref.read(annualPlanningProvider).currentWeekNumber;
@@ -585,7 +576,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
     ref.read(annualPlanningProvider.notifier).updateWeekSchedule(updatedWeek);
   }
 
-  void _showPeriodizationTemplateDialog(BuildContext context) async {
+  Future<void> _showPeriodizationTemplateDialog(BuildContext context) async {
     final currentState = ref.read(annualPlanningProvider);
     final selectedTemplate = await showDialog<PeriodizationPlan?>(
       context: context,
@@ -617,10 +608,6 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
 }
 
 class _TableCell extends StatelessWidget {
-  final String text;
-  final double? width;
-  final bool isHeader;
-  final TextStyle? style;
 
   const _TableCell(
     this.text, {
@@ -628,10 +615,13 @@ class _TableCell extends StatelessWidget {
     this.isHeader = false,
     this.style,
   });
+  final String text;
+  final double? width;
+  final bool isHeader;
+  final TextStyle? style;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       width: width,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -648,14 +638,9 @@ class _TableCell extends StatelessWidget {
         maxLines: isHeader ? 1 : 2,
       ),
     );
-  }
 }
 
 class _MorphocycleLoadCell extends StatelessWidget {
-  final Morphocycle? morphocycle;
-  final WeeklyTraining? training;
-  final bool showLoad;
-  final double width;
 
   const _MorphocycleLoadCell({
     this.morphocycle,
@@ -663,6 +648,10 @@ class _MorphocycleLoadCell extends StatelessWidget {
     required this.showLoad,
     required this.width,
   });
+  final Morphocycle? morphocycle;
+  final WeeklyTraining? training;
+  final bool showLoad;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -721,13 +710,13 @@ class _MorphocycleLoadCell extends StatelessWidget {
 }
 
 class _WeekCustomizationDialog extends StatefulWidget {
-  final WeekSchedule weekSchedule;
-  final Function(WeekSchedule) onSave;
 
   const _WeekCustomizationDialog({
     required this.weekSchedule,
     required this.onSave,
   });
+  final WeekSchedule weekSchedule;
+  final Function(WeekSchedule) onSave;
 
   @override
   State<_WeekCustomizationDialog> createState() => _WeekCustomizationDialogState();
@@ -747,8 +736,7 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
+  Widget build(BuildContext context) => AlertDialog(
       title: Text(
         'Week ${widget.weekSchedule.weekNumber} Bewerken',
         style: TextStyle(color: Colors.green[800]),
@@ -934,7 +922,6 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
         ),
       ],
     );
-  }
 
   void _addTraining() {
     showDialog(
@@ -976,8 +963,6 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
       opponent: 'Nieuwe Tegenstander',
       dateTime: widget.weekSchedule.weekStartDate.add(const Duration(days: 5)),
       location: 'Thuis',
-      isHomeMatch: true,
-      type: MatchType.regular,
     );
 
     setState(() {

@@ -1,13 +1,75 @@
-import 'package:isar/isar.dart';
 import 'dart:convert';
+
+import 'package:isar/isar.dart';
+
 import '../annual_planning/content_distribution.dart';
-import 'session_phase.dart';
 import 'player_attendance.dart';
+import 'session_phase.dart';
 
 // part 'training_session.g.dart'; // Disabled for web compatibility
 
 class TrainingSession {
-  String id = "";
+
+  // Constructor
+  TrainingSession();
+
+  // Named constructors
+  TrainingSession.create({
+    required this.teamId,
+    required this.date,
+    required this.trainingNumber,
+    this.type = TrainingType.regularTraining,
+  }) {
+    createdAt = DateTime.now();
+    updatedAt = DateTime.now();
+  }
+
+  factory TrainingSession.fromJson(Map<String, dynamic> json) {
+    final session = TrainingSession();
+    session.id = json['id'] ?? '';
+    session.teamId = json['teamId'] ?? '';
+    session.date = json['date'] != null
+        ? DateTime.parse(json['date'])
+        : DateTime.now();
+    session.trainingNumber = json['trainingNumber'] ?? 1;
+    session.type = TrainingType.values.firstWhere(
+      (e) => e.name == json['type'],
+      orElse: () => TrainingType.regularTraining,
+    );
+    session.sessionObjective = json['sessionObjective'];
+    session.teamFunction = json['teamFunction'];
+    session.coachingAccent = json['coachingAccent'];
+    session.technicalTacticalGoal = json['technicalTacticalGoal'];
+    session.phasesJson = json['phasesJson'];
+    session.warmupActivitiesJson = json['warmupActivitiesJson'];
+    session.playerAttendanceJson = json['playerAttendanceJson'];
+    session.expectedPlayers = json['expectedPlayers'] ?? 16;
+    session.actualPlayers = json['actualPlayers'] ?? 0;
+    session.notes = json['notes'];
+    session.postSessionEvaluation = json['postSessionEvaluation'];
+    session.periodizationPhaseId = json['periodizationPhaseId'];
+    session.contentFocusJson = json['contentFocusJson'];
+    session.targetIntensity = json['targetIntensity']?.toDouble();
+    session.startTime = json['startTime'] != null
+        ? DateTime.parse(json['startTime'])
+        : null;
+    session.endTime = json['endTime'] != null
+        ? DateTime.parse(json['endTime'])
+        : null;
+    session.durationMinutes = json['durationMinutes'];
+    session.status = SessionStatus.values.firstWhere(
+      (e) => e.name == json['status'],
+      orElse: () => SessionStatus.planned,
+    );
+    session.createdAt = json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'])
+        : DateTime.now();
+    session.updatedAt = json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'])
+        : DateTime.now();
+    return session;
+  }
+  String id = '';
 
   // Basic session info
   late String teamId;
@@ -84,7 +146,7 @@ class TrainingSession {
     try {
       final Map<String, dynamic> json = jsonDecode(playerAttendanceJson!);
       return json.map((key, value) =>
-        MapEntry(key, PlayerAttendance.fromJson(value)));
+        MapEntry(key, PlayerAttendance.fromJson(value)),);
     } catch (e) {
       return {};
     }
@@ -92,7 +154,7 @@ class TrainingSession {
 
   set playerAttendance(Map<String, PlayerAttendance> attendance) {
     final json = attendance.map((key, value) =>
-      MapEntry(key, value.toJson()));
+      MapEntry(key, value.toJson()),);
     playerAttendanceJson = jsonEncode(json);
   }
 
@@ -123,48 +185,26 @@ class TrainingSession {
   }
 
   @Ignore()
-  List<PlayerAttendance> get presentPlayers {
-    return playerAttendance.values
+  List<PlayerAttendance> get presentPlayers => playerAttendance.values
         .where((p) => p.status == AttendanceStatus.present)
         .toList();
-  }
 
   @Ignore()
-  List<PlayerAttendance> get absentPlayers {
-    return playerAttendance.values
+  List<PlayerAttendance> get absentPlayers => playerAttendance.values
         .where((p) => p.status == AttendanceStatus.absent)
         .toList();
-  }
 
   @Ignore()
   double get attendancePercentage {
-    if (playerAttendance.isEmpty) return 0.0;
+    if (playerAttendance.isEmpty) return 0;
     return (presentPlayers.length / playerAttendance.length) * 100;
   }
 
   @Ignore()
-  bool get isInProgress {
-    return status == SessionStatus.inProgress;
-  }
+  bool get isInProgress => status == SessionStatus.inProgress;
 
   @Ignore()
-  bool get isCompleted {
-    return status == SessionStatus.completed;
-  }
-
-  // Constructor
-  TrainingSession();
-
-  // Named constructors
-  TrainingSession.create({
-    required this.teamId,
-    required this.date,
-    required this.trainingNumber,
-    this.type = TrainingType.regularTraining,
-  }) {
-    createdAt = DateTime.now();
-    updatedAt = DateTime.now();
-  }
+  bool get isCompleted => status == SessionStatus.completed;
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
@@ -194,52 +234,6 @@ class TrainingSession {
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
   };
-
-  factory TrainingSession.fromJson(Map<String, dynamic> json) {
-    final session = TrainingSession();
-    session.id = json['id'] ?? "";
-    session.teamId = json['teamId'] ?? '';
-    session.date = json['date'] != null
-        ? DateTime.parse(json['date'])
-        : DateTime.now();
-    session.trainingNumber = json['trainingNumber'] ?? 1;
-    session.type = TrainingType.values.firstWhere(
-      (e) => e.name == json['type'],
-      orElse: () => TrainingType.regularTraining,
-    );
-    session.sessionObjective = json['sessionObjective'];
-    session.teamFunction = json['teamFunction'];
-    session.coachingAccent = json['coachingAccent'];
-    session.technicalTacticalGoal = json['technicalTacticalGoal'];
-    session.phasesJson = json['phasesJson'];
-    session.warmupActivitiesJson = json['warmupActivitiesJson'];
-    session.playerAttendanceJson = json['playerAttendanceJson'];
-    session.expectedPlayers = json['expectedPlayers'] ?? 16;
-    session.actualPlayers = json['actualPlayers'] ?? 0;
-    session.notes = json['notes'];
-    session.postSessionEvaluation = json['postSessionEvaluation'];
-    session.periodizationPhaseId = json['periodizationPhaseId'];
-    session.contentFocusJson = json['contentFocusJson'];
-    session.targetIntensity = json['targetIntensity']?.toDouble();
-    session.startTime = json['startTime'] != null
-        ? DateTime.parse(json['startTime'])
-        : null;
-    session.endTime = json['endTime'] != null
-        ? DateTime.parse(json['endTime'])
-        : null;
-    session.durationMinutes = json['durationMinutes'];
-    session.status = SessionStatus.values.firstWhere(
-      (e) => e.name == json['status'],
-      orElse: () => SessionStatus.planned,
-    );
-    session.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now();
-    session.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
-        : DateTime.now();
-    return session;
-  }
 
   // Copy with method
   TrainingSession copyWith({
@@ -300,10 +294,8 @@ class TrainingSession {
   }
 
   @override
-  String toString() {
-    return 'TrainingSession(id: $id, date: $date, type: $type, '
+  String toString() => 'TrainingSession(id: $id, date: $date, type: $type, '
            'objective: $sessionObjective, players: $actualPlayers/$expectedPlayers)';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -316,12 +308,10 @@ class TrainingSession {
   }
 
   @override
-  int get hashCode {
-    return id.hashCode ^
+  int get hashCode => id.hashCode ^
            teamId.hashCode ^
            date.hashCode ^
            trainingNumber.hashCode;
-  }
 }
 
 enum TrainingType {

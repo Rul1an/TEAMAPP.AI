@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../models/training_session/training_exercise.dart';
+
 import '../../models/annual_planning/morphocycle.dart';
+import '../../models/training_session/training_exercise.dart';
 import '../../providers/annual_planning_provider.dart';
 import '../../providers/exercise_designer_provider.dart';
 
 class EnhancedExerciseLibraryScreen extends ConsumerStatefulWidget {
-  final TrainingIntensity? filterIntensity;
-  final int weekNumber;
 
   const EnhancedExerciseLibraryScreen({
     super.key,
     this.filterIntensity,
     this.weekNumber = 1,
   });
+  final TrainingIntensity? filterIntensity;
+  final int weekNumber;
 
   @override
   ConsumerState<EnhancedExerciseLibraryScreen> createState() => _EnhancedExerciseLibraryScreenState();
@@ -158,8 +159,7 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
     );
   }
 
-  Widget _buildSearchBar() {
-    return Container(
+  Widget _buildSearchBar() => Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: TextField(
         decoration: InputDecoration(
@@ -178,7 +178,6 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
         onChanged: (value) => setState(() => _searchQuery = value),
       ),
     );
-  }
 
   Widget _buildRecommendedTab(List<TrainingExercise> exercises, Morphocycle? morphocycle) {
     if (morphocycle == null) {
@@ -240,8 +239,7 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
     );
   }
 
-  Widget _buildRecommendationSection(String title, String description, List<TrainingExercise> exercises, Color color, IconData icon) {
-    return Container(
+  Widget _buildRecommendationSection(String title, String description, List<TrainingExercise> exercises, Color color, IconData icon) => Container(
       margin: const EdgeInsets.only(bottom: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,7 +330,6 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
         ],
       ),
     );
-  }
 
   Widget _buildIntensityTab(List<TrainingExercise> exercises) {
     final intensityGroups = {
@@ -344,9 +341,7 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
 
     return ListView(
       padding: const EdgeInsets.all(16),
-      children: intensityGroups.entries.map((entry) {
-        return _buildIntensitySection(entry.key, _applyFilters(entry.value));
-      }).toList(),
+      children: intensityGroups.entries.map((entry) => _buildIntensitySection(entry.key, _applyFilters(entry.value))).toList(),
     );
   }
 
@@ -428,9 +423,7 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
 
     return ListView(
       padding: const EdgeInsets.all(16),
-      children: focusGroups.entries.map((entry) {
-        return _buildFocusSection(entry.key, _applyFilters(entry.value));
-      }).toList(),
+      children: focusGroups.entries.map((entry) => _buildFocusSection(entry.key, _applyFilters(entry.value))).toList(),
     );
   }
 
@@ -552,8 +545,7 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
     );
   }
 
-  Widget _buildExerciseCard(TrainingExercise exercise) {
-    return Card(
+  Widget _buildExerciseCard(TrainingExercise exercise) => Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
@@ -651,10 +643,8 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
         ),
       ),
     );
-  }
 
-  List<TrainingExercise> _applyFilters(List<TrainingExercise> exercises) {
-    return exercises.where((exercise) {
+  List<TrainingExercise> _applyFilters(List<TrainingExercise> exercises) => exercises.where((exercise) {
       if (_searchQuery.isNotEmpty) {
         final searchLower = _searchQuery.toLowerCase();
         if (!exercise.name.toLowerCase().contains(searchLower) &&
@@ -673,11 +663,8 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
 
       return true;
     }).toList();
-  }
 
-  int _calculateTotalDuration(List<TrainingExercise> exercises) {
-    return exercises.fold(0, (sum, exercise) => sum + exercise.durationMinutes.round());
-  }
+  int _calculateTotalDuration(List<TrainingExercise> exercises) => exercises.fold(0, (sum, exercise) => sum + exercise.durationMinutes.round());
 
   void _showFilterDialog() {
     showDialog(
@@ -778,8 +765,7 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
-    return Padding(
+  Widget _buildDetailRow(String label, String value) => Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -795,7 +781,6 @@ class _EnhancedExerciseLibraryScreenState extends ConsumerState<EnhancedExercise
         ],
       ),
     );
-  }
 
   Color _getIntensityColorFromLevel(double level) {
     if (level <= 3.0) return Colors.green;

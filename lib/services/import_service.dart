@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
-import 'package:excel/excel.dart';
+
 import 'package:csv/csv.dart';
-import 'package:intl/intl.dart';
+import 'package:excel/excel.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:file_saver/file_saver.dart';
+import 'package:intl/intl.dart';
+
 import '../models/player.dart';
 import '../services/database_service.dart';
 
 class ImportService {
-  static final ImportService _instance = ImportService._internal();
   factory ImportService() => _instance;
   ImportService._internal();
+  static final ImportService _instance = ImportService._internal();
 
   final _dbService = DatabaseService();
 
@@ -95,9 +97,7 @@ class ImportService {
       }
 
       // Convert to list and skip header
-      final dataRows = rows.skip(1).map((row) {
-        return row.map((cell) => cell?.value).toList();
-      }).toList();
+      final dataRows = rows.skip(1).map((row) => row.map((cell) => cell?.value).toList()).toList();
 
       return await _processPlayerRows(dataRows);
     } catch (e) {
@@ -266,11 +266,6 @@ class ImportService {
 }
 
 class ImportResult {
-  final bool success;
-  final String message;
-  final int imported;
-  final int skipped;
-  final List<String> errors;
 
   ImportResult({
     required this.success,
@@ -279,4 +274,9 @@ class ImportResult {
     this.skipped = 0,
     this.errors = const [],
   });
+  final bool success;
+  final String message;
+  final int imported;
+  final int skipped;
+  final List<String> errors;
 }

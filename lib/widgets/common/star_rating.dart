@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 
 class StarRating extends StatelessWidget {
-  final int rating;
-  final int maxRating;
-  final double size;
-  final Color? color;
-  final Color? emptyColor;
-  final bool showNumber;
-  final void Function(int)? onRatingChanged;
 
   const StarRating({
     super.key,
@@ -19,6 +12,13 @@ class StarRating extends StatelessWidget {
     this.showNumber = false,
     this.onRatingChanged,
   });
+  final int rating;
+  final int maxRating;
+  final double size;
+  final Color? color;
+  final Color? emptyColor;
+  final bool showNumber;
+  final void Function(int)? onRatingChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +61,6 @@ class StarRating extends StatelessWidget {
 }
 
 class InteractiveStarRating extends StatefulWidget {
-  final int initialRating;
-  final int maxRating;
-  final double size;
-  final String? label;
-  final void Function(int) onRatingChanged;
 
   const InteractiveStarRating({
     super.key,
@@ -75,6 +70,11 @@ class InteractiveStarRating extends StatefulWidget {
     this.size = 32,
     this.label,
   });
+  final int initialRating;
+  final int maxRating;
+  final double size;
+  final String? label;
+  final void Function(int) onRatingChanged;
 
   @override
   State<InteractiveStarRating> createState() => _InteractiveStarRatingState();

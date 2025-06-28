@@ -7,13 +7,6 @@ import 'package:flutter/foundation.dart';
 enum EnvironmentType { development, test, production }
 
 class EnvConfig {
-  final String supabaseUrl;
-  final String supabaseAnonKey;
-  final String appName;
-  final bool enableDebugFeatures;
-  final bool enableAnalytics;
-  final String sentryDsn;
-  final String stripePublishableKey;
 
   const EnvConfig({
     required this.supabaseUrl,
@@ -24,16 +17,16 @@ class EnvConfig {
     required this.sentryDsn,
     required this.stripePublishableKey,
   });
-}
-
-class Environment {
-  final String name;
   final String supabaseUrl;
   final String supabaseAnonKey;
   final String appName;
   final bool enableDebugFeatures;
-  final bool enablePerformanceLogging;
-  final String logLevel;
+  final bool enableAnalytics;
+  final String sentryDsn;
+  final String stripePublishableKey;
+}
+
+class Environment {
 
   const Environment._({
     required this.name,
@@ -44,6 +37,13 @@ class Environment {
     required this.enablePerformanceLogging,
     required this.logLevel,
   });
+  final String name;
+  final String supabaseUrl;
+  final String supabaseAnonKey;
+  final String appName;
+  final bool enableDebugFeatures;
+  final bool enablePerformanceLogging;
+  final String logLevel;
 
   /// Development Environment
   static const Environment development = Environment._(

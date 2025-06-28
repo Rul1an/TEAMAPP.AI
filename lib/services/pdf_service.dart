@@ -1,12 +1,14 @@
 import 'dart:typed_data';
+
+import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:intl/intl.dart';
-import '../models/player.dart';
+
 import '../models/assessment.dart';
-import '../models/training_session/training_session.dart';
-import '../models/training_session/session_phase.dart';
+import '../models/player.dart';
 import '../models/training_session/player_attendance.dart';
+import '../models/training_session/session_phase.dart';
+import '../models/training_session/training_session.dart';
 
 class PDFService {
 
@@ -26,8 +28,7 @@ class PDFService {
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(20),
-        build: (pw.Context context) {
-          return [
+        build: (pw.Context context) => [
             _buildTrainingHeader(session, primaryColor),
             pw.SizedBox(height: 20),
             _buildTrainingInfoSection(session, primaryColor, backgroundColor),
@@ -39,16 +40,14 @@ class PDFService {
             _buildTrainingPhasesSection(session, primaryColor, backgroundColor),
             pw.Spacer(),
             _buildTrainingFooter(session, greyColor),
-          ];
-        },
+          ],
       ),
     );
 
     return pdf.save();
   }
 
-  static pw.Widget _buildTrainingHeader(TrainingSession session, PdfColor primaryColor) {
-    return pw.Container(
+  static pw.Widget _buildTrainingHeader(TrainingSession session, PdfColor primaryColor) => pw.Container(
       padding: const pw.EdgeInsets.all(20),
       decoration: pw.BoxDecoration(
         color: primaryColor,
@@ -109,15 +108,13 @@ class PDFService {
         ],
       ),
     );
-  }
 
-  static pw.Widget _buildTrainingInfoSection(TrainingSession session, PdfColor primaryColor, PdfColor backgroundColor) {
-    return pw.Container(
+  static pw.Widget _buildTrainingInfoSection(TrainingSession session, PdfColor primaryColor, PdfColor backgroundColor) => pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
         color: backgroundColor,
         borderRadius: pw.BorderRadius.circular(8),
-        border: pw.Border.all(color: primaryColor, width: 1),
+        border: pw.Border.all(color: primaryColor),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -168,7 +165,6 @@ class PDFService {
         ],
       ),
     );
-  }
 
   static pw.Widget _buildPlayersSection(TrainingSession session, List<Player> allPlayers, PdfColor primaryColor, PdfColor backgroundColor) {
     final presentPlayers = allPlayers.where((p) => session.playerAttendance.values.any((a) => a.playerId == p.id.toString() && a.status == AttendanceStatus.present)).toList();
@@ -179,7 +175,7 @@ class PDFService {
       decoration: pw.BoxDecoration(
         color: backgroundColor,
         borderRadius: pw.BorderRadius.circular(8),
-        border: pw.Border.all(color: primaryColor, width: 1),
+        border: pw.Border.all(color: primaryColor),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -228,7 +224,7 @@ class PDFService {
                         '${player.jerseyNumber}. ${player.firstName} ${player.lastName} (${_getPositionAbbreviation(player.position)})',
                         style: const pw.TextStyle(fontSize: 10),
                       ),
-                    )),
+                    ),),
                   ],
                 ),
               ),
@@ -259,7 +255,7 @@ class PDFService {
                         '${player.jerseyNumber}. ${player.firstName} ${player.lastName}',
                         style: const pw.TextStyle(fontSize: 10),
                       ),
-                    )),
+                    ),),
                   ],
                 ),
               ),
@@ -270,13 +266,12 @@ class PDFService {
     );
   }
 
-  static pw.Widget _buildObjectivesSection(TrainingSession session, PdfColor primaryColor, PdfColor backgroundColor) {
-    return pw.Container(
+  static pw.Widget _buildObjectivesSection(TrainingSession session, PdfColor primaryColor, PdfColor backgroundColor) => pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
         color: backgroundColor,
         borderRadius: pw.BorderRadius.circular(8),
-        border: pw.Border.all(color: primaryColor, width: 1),
+        border: pw.Border.all(color: primaryColor),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -304,15 +299,13 @@ class PDFService {
         ],
       ),
     );
-  }
 
-  static pw.Widget _buildTrainingPhasesSection(TrainingSession session, PdfColor primaryColor, PdfColor backgroundColor) {
-    return pw.Container(
+  static pw.Widget _buildTrainingPhasesSection(TrainingSession session, PdfColor primaryColor, PdfColor backgroundColor) => pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
         color: backgroundColor,
         borderRadius: pw.BorderRadius.circular(8),
-        border: pw.Border.all(color: primaryColor, width: 1),
+        border: pw.Border.all(color: primaryColor),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -340,7 +333,7 @@ class PDFService {
               margin: const pw.EdgeInsets.only(bottom: 8),
               padding: const pw.EdgeInsets.all(12),
               decoration: pw.BoxDecoration(
-                border: pw.Border.all(color: _getPhaseColor(phase.type), width: 1),
+                border: pw.Border.all(color: _getPhaseColor(phase.type)),
                 borderRadius: pw.BorderRadius.circular(6),
               ),
               child: pw.Row(
@@ -397,11 +390,9 @@ class PDFService {
         ],
       ),
     );
-  }
 
 
-  static pw.Widget _buildTrainingFooter(TrainingSession session, PdfColor greyColor) {
-    return pw.Container(
+  static pw.Widget _buildTrainingFooter(TrainingSession session, PdfColor greyColor) => pw.Container(
       padding: const pw.EdgeInsets.all(12),
       decoration: pw.BoxDecoration(
         border: pw.Border(top: pw.BorderSide(color: greyColor)),
@@ -433,11 +424,9 @@ class PDFService {
         ],
       ),
     );
-  }
 
   // Helper methods for training sessions
-  static pw.Widget _buildInfoRow(String label, String value) {
-    return pw.Row(
+  static pw.Widget _buildInfoRow(String label, String value) => pw.Row(
       children: [
         pw.SizedBox(
           width: 60,
@@ -454,10 +443,8 @@ class PDFService {
         ),
       ],
     );
-  }
 
-  static pw.Widget _buildObjectiveItem(String label, String content) {
-    return pw.Column(
+  static pw.Widget _buildObjectiveItem(String label, String content) => pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         pw.Text(
@@ -474,7 +461,6 @@ class PDFService {
         ),
       ],
     );
-  }
 
   static String _getTrainingTypeText(TrainingType type) {
     switch (type) {
@@ -544,8 +530,7 @@ class PDFService {
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(24),
-        build: (pw.Context context) {
-          return [
+        build: (pw.Context context) => [
             _buildHeader(player, assessment, primaryColor),
             pw.SizedBox(height: 24),
             _buildPlayerInfoCard(player, primaryColor, backgroundColor),
@@ -557,16 +542,14 @@ class PDFService {
             _buildTextFeedbackCard(assessment, primaryColor, backgroundColor),
             pw.Spacer(),
             _buildFooter(assessment, greyColor),
-          ];
-        },
+          ],
       ),
     );
 
     return pdf.save();
   }
 
-  static pw.Widget _buildHeader(Player player, PlayerAssessment assessment, PdfColor primaryColor) {
-    return pw.Container(
+  static pw.Widget _buildHeader(Player player, PlayerAssessment assessment, PdfColor primaryColor) => pw.Container(
       padding: const pw.EdgeInsets.all(20),
       decoration: pw.BoxDecoration(
         color: primaryColor,
@@ -628,15 +611,13 @@ class PDFService {
         ],
       ),
     );
-  }
 
-  static pw.Widget _buildPlayerInfoCard(Player player, PdfColor primaryColor, PdfColor backgroundColor) {
-    return pw.Container(
+  static pw.Widget _buildPlayerInfoCard(Player player, PdfColor primaryColor, PdfColor backgroundColor) => pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
         color: backgroundColor,
         borderRadius: pw.BorderRadius.circular(8),
-        border: pw.Border.all(color: primaryColor, width: 1),
+        border: pw.Border.all(color: primaryColor),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -690,10 +671,8 @@ class PDFService {
         ],
       ),
     );
-  }
 
-  static pw.Widget _buildInfoItem(String label, String value) {
-    return pw.Row(
+  static pw.Widget _buildInfoItem(String label, String value) => pw.Row(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         pw.SizedBox(
@@ -716,15 +695,13 @@ class PDFService {
         ),
       ],
     );
-  }
 
-  static pw.Widget _buildAssessmentOverviewCard(PlayerAssessment assessment, PdfColor primaryColor, PdfColor backgroundColor) {
-    return pw.Container(
+  static pw.Widget _buildAssessmentOverviewCard(PlayerAssessment assessment, PdfColor primaryColor, PdfColor backgroundColor) => pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
         color: backgroundColor,
         borderRadius: pw.BorderRadius.circular(8),
-        border: pw.Border.all(color: primaryColor, width: 1),
+        border: pw.Border.all(color: primaryColor),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -782,7 +759,6 @@ class PDFService {
         ],
       ),
     );
-  }
 
   static pw.Widget _buildOverallRatingBox(double rating) {
     final color = rating >= 4.0 ? const PdfColor.fromInt(0xFF4CAF50) :
@@ -818,8 +794,7 @@ class PDFService {
     );
   }
 
-  static pw.Widget _buildCategoryRating(String category, double rating, PdfColor color) {
-    return pw.Row(
+  static pw.Widget _buildCategoryRating(String category, double rating, PdfColor color) => pw.Row(
       children: [
         pw.Container(
           width: 12,
@@ -845,15 +820,13 @@ class PDFService {
         ),
       ],
     );
-  }
 
-  static pw.Widget _buildSkillsBreakdownCard(PlayerAssessment assessment, PdfColor primaryColor, PdfColor backgroundColor) {
-    return pw.Container(
+  static pw.Widget _buildSkillsBreakdownCard(PlayerAssessment assessment, PdfColor primaryColor, PdfColor backgroundColor) => pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
         color: backgroundColor,
         borderRadius: pw.BorderRadius.circular(8),
-        border: pw.Border.all(color: primaryColor, width: 1),
+        border: pw.Border.all(color: primaryColor),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -904,10 +877,8 @@ class PDFService {
         ],
       ),
     );
-  }
 
-  static pw.Widget _buildSkillCategory(String categoryName, Map<String, int> skills, PdfColor color) {
-    return pw.Column(
+  static pw.Widget _buildSkillCategory(String categoryName, Map<String, int> skills, PdfColor color) => pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         pw.Container(
@@ -926,8 +897,7 @@ class PDFService {
           ),
         ),
         pw.SizedBox(height: 8),
-        ...skills.entries.map((entry) {
-          return pw.Padding(
+        ...skills.entries.map((entry) => pw.Padding(
             padding: const pw.EdgeInsets.only(bottom: 4),
             child: pw.Row(
               children: [
@@ -949,17 +919,13 @@ class PDFService {
                 ),
               ],
             ),
-          );
-        }),
+          ),),
       ],
     );
-  }
 
-  static pw.Widget _buildStarRating(int rating) {
-    return pw.Row(
+  static pw.Widget _buildStarRating(int rating) => pw.Row(
       mainAxisSize: pw.MainAxisSize.min,
-      children: List.generate(5, (index) {
-        return pw.Container(
+      children: List.generate(5, (index) => pw.Container(
           width: 8,
           height: 8,
           margin: const pw.EdgeInsets.only(right: 1),
@@ -967,10 +933,8 @@ class PDFService {
             color: index < rating ? const PdfColor.fromInt(0xFFFFD700) : const PdfColor.fromInt(0xFFE0E0E0),
             shape: pw.BoxShape.circle,
           ),
-        );
-      }),
+        ),),
     );
-  }
 
   static pw.Widget _buildTextFeedbackCard(PlayerAssessment assessment, PdfColor primaryColor, PdfColor backgroundColor) {
     final hasTextContent = (assessment.strengths?.isNotEmpty ?? false) ||
@@ -987,7 +951,7 @@ class PDFService {
       decoration: pw.BoxDecoration(
         color: backgroundColor,
         borderRadius: pw.BorderRadius.circular(8),
-        border: pw.Border.all(color: primaryColor, width: 1),
+        border: pw.Border.all(color: primaryColor),
       ),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -1030,8 +994,7 @@ class PDFService {
     );
   }
 
-  static pw.Widget _buildTextSection(String title, String content, PdfColor color) {
-    return pw.Column(
+  static pw.Widget _buildTextSection(String title, String content, PdfColor color) => pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
         pw.Container(
@@ -1053,7 +1016,7 @@ class PDFService {
         pw.Container(
           padding: const pw.EdgeInsets.all(8),
           decoration: pw.BoxDecoration(
-            border: pw.Border.all(color: color, width: 1),
+            border: pw.Border.all(color: color),
             borderRadius: pw.BorderRadius.circular(4),
           ),
           child: pw.Text(
@@ -1063,10 +1026,8 @@ class PDFService {
         ),
       ],
     );
-  }
 
-  static pw.Widget _buildFooter(PlayerAssessment assessment, PdfColor greyColor) {
-    return pw.Container(
+  static pw.Widget _buildFooter(PlayerAssessment assessment, PdfColor greyColor) => pw.Container(
       padding: const pw.EdgeInsets.all(12),
       decoration: pw.BoxDecoration(
         border: pw.Border(top: pw.BorderSide(color: greyColor)),
@@ -1098,7 +1059,6 @@ class PDFService {
         ],
       ),
     );
-  }
 
   // Helper methods
 

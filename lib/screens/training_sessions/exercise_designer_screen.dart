@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../models/training_session/training_exercise.dart';
+
 import '../../models/training_session/field_diagram.dart';
+import '../../models/training_session/training_exercise.dart';
 import '../../providers/exercise_designer_provider.dart';
 import '../../providers/field_diagram_provider.dart';
-import '../../widgets/field_diagram/field_diagram_toolbar.dart';
-import '../../widgets/field_diagram/field_canvas.dart';
-import 'exercise_library_screen.dart';
 import '../../services/database_service.dart';
+import '../../widgets/field_diagram/field_canvas.dart';
+import '../../widgets/field_diagram/field_diagram_toolbar.dart';
+import 'exercise_library_screen.dart';
 
 class ExerciseDesignerScreen extends ConsumerStatefulWidget {
-  final String? sessionId;
-  final ExerciseType? initialType;
 
   const ExerciseDesignerScreen({
     super.key,
     this.sessionId,
     this.initialType,
   });
+  final String? sessionId;
+  final ExerciseType? initialType;
 
   @override
   ConsumerState<ExerciseDesignerScreen> createState() => _ExerciseDesignerScreenState();
@@ -62,9 +63,8 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
     );
   }
 
-  Widget _buildProgressIndicator(ExerciseDesignerState state) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
+  Widget _buildProgressIndicator(ExerciseDesignerState state) => Container(
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.green[50],
         border: Border(bottom: BorderSide(color: Colors.green[200]!)),
@@ -100,11 +100,9 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
-  Widget _buildStepHeader(ExerciseDesignerState state) {
-    return Container(
-      padding: const EdgeInsets.all(20.0),
+  Widget _buildStepHeader(ExerciseDesignerState state) => Container(
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -155,7 +153,6 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
   Widget _buildStepContent(ExerciseDesignerState state) {
     switch (state.currentStepIndex) {
@@ -174,18 +171,17 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
     }
   }
 
-  Widget _buildBasicInfoStep(ExerciseDesignerState state) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20.0),
+  Widget _buildBasicInfoStep(ExerciseDesignerState state) => SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Optie om bestaande oefening te selecteren
           Card(
-            margin: const EdgeInsets.only(bottom: 20.0),
+            margin: const EdgeInsets.only(bottom: 20),
             color: Colors.green[50],
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -261,12 +257,10 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
                   labelText: 'Type Oefening *',
                   border: OutlineInputBorder(),
                 ),
-                items: ExerciseType.values.map((type) {
-                  return DropdownMenuItem(
+                items: ExerciseType.values.map((type) => DropdownMenuItem(
                     value: type,
                     child: Text(_getExerciseTypeDisplayName(type)),
-                  );
-                }).toList(),
+                  ),).toList(),
                 onChanged: (value) {
                   if (value != null) {
                     ref.read(exerciseDesignerProvider.notifier).updateFormData('type', value);
@@ -292,7 +286,6 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
   Widget _buildFieldDiagramStep(ExerciseDesignerState state) {
     final diagramState = ref.watch(fieldDiagramProvider);
@@ -301,7 +294,7 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Text(
             'Oefening Visualisatie',
             style: Theme.of(context).textTheme.headlineSmall,
@@ -313,7 +306,7 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: FieldCanvas(
               diagram: diagramState.diagram,
               currentTool: diagramState.currentTool,
@@ -334,9 +327,8 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
     );
   }
 
-  Widget _buildDetailsStep(ExerciseDesignerState state) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20.0),
+  Widget _buildDetailsStep(ExerciseDesignerState state) => SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -372,11 +364,9 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
-  Widget _buildObjectivesStep(ExerciseDesignerState state) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20.0),
+  Widget _buildObjectivesStep(ExerciseDesignerState state) => SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -414,11 +404,9 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
-  Widget _buildReviewStep(ExerciseDesignerState state) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20.0),
+  Widget _buildReviewStep(ExerciseDesignerState state) => SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -437,11 +425,9 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
-  Widget _buildReviewItem(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+  Widget _buildReviewItem(String label, String value) => Padding(
+      padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -458,7 +444,6 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
   Widget _buildPlaceholderStep(ExerciseDesignerState state) {
     // All steps should be implemented - redirect to completion
@@ -469,9 +454,8 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
     required String title,
     required IconData icon,
     required List<Widget> children,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(20.0),
+  }) => Container(
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -504,12 +488,10 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
 
-  Widget _buildNavigationBar(ExerciseDesignerState state) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
+  Widget _buildNavigationBar(ExerciseDesignerState state) => Container(
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -554,7 +536,6 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         ],
       ),
     );
-  }
 
   IconData _getStepIcon(int stepIndex) {
     switch (stepIndex) {
@@ -610,10 +591,10 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
 
       // Ensure sessionId is set if provided via widget
       if (widget.sessionId != null) {
-        exerciseData.trainingSessionId = widget.sessionId!;
+        exerciseData.trainingSessionId = widget.sessionId;
       } else {
         // Als geen sessionId, dan is dit een bibliotheek oefening
-        exerciseData.trainingSessionId = "library";
+        exerciseData.trainingSessionId = 'library';
       }
 
       // Save to database
@@ -645,7 +626,7 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
     }
   }
 
-  void _selectExistingExercise(BuildContext context) async {
+  Future<void> _selectExistingExercise(BuildContext context) async {
     // Navigeer naar de oefeningen bibliotheek in selectie modus
     final selectedExercise = await Navigator.push<TrainingExercise>(
       context,
@@ -680,7 +661,7 @@ class _ExerciseDesignerScreenState extends ConsumerState<ExerciseDesignerScreen>
         // Update het field diagram in de provider
         if (selectedExercise.fieldDiagram is Map<String, dynamic>) {
           ref.read(fieldDiagramProvider.notifier).loadFromData(
-            selectedExercise.fieldDiagram as Map<String, dynamic>
+            selectedExercise.fieldDiagram! as Map<String, dynamic>,
           );
         }
       }

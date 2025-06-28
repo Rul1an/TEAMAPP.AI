@@ -1,19 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/annual_planning/week_schedule.dart';
+
+import '../models/annual_planning/morphocycle.dart';
 import '../models/annual_planning/periodization_plan.dart';
 import '../models/annual_planning/training_period.dart';
-import '../models/annual_planning/morphocycle.dart';
+import '../models/annual_planning/week_schedule.dart';
 
 class AnnualPlanningState {
-  final List<WeekSchedule> weekSchedules;
-  final int selectedWeek;
-  final DateTime seasonStartDate;
-  final DateTime seasonEndDate;
-  final bool isLoading;
-  final String? error;
-  final PeriodizationPlan? selectedPeriodizationPlan;
-  final List<TrainingPeriod> trainingPeriods;
-  final List<Morphocycle> morphocycles;
 
   AnnualPlanningState({
     this.weekSchedules = const [],
@@ -26,6 +18,15 @@ class AnnualPlanningState {
     this.trainingPeriods = const [],
     this.morphocycles = const [],
   });
+  final List<WeekSchedule> weekSchedules;
+  final int selectedWeek;
+  final DateTime seasonStartDate;
+  final DateTime seasonEndDate;
+  final bool isLoading;
+  final String? error;
+  final PeriodizationPlan? selectedPeriodizationPlan;
+  final List<TrainingPeriod> trainingPeriods;
+  final List<Morphocycle> morphocycles;
 
   AnnualPlanningState copyWith({
     List<WeekSchedule>? weekSchedules,
@@ -37,8 +38,7 @@ class AnnualPlanningState {
     PeriodizationPlan? selectedPeriodizationPlan,
     List<TrainingPeriod>? trainingPeriods,
     List<Morphocycle>? morphocycles,
-  }) {
-    return AnnualPlanningState(
+  }) => AnnualPlanningState(
       weekSchedules: weekSchedules ?? this.weekSchedules,
       selectedWeek: selectedWeek ?? this.selectedWeek,
       seasonStartDate: seasonStartDate ?? this.seasonStartDate,
@@ -49,7 +49,6 @@ class AnnualPlanningState {
       trainingPeriods: trainingPeriods ?? this.trainingPeriods,
       morphocycles: morphocycles ?? this.morphocycles,
     );
-  }
 
   int get currentWeekNumber {
     final now = DateTime.now();
@@ -105,9 +104,7 @@ class AnnualPlanningState {
     return currentPeriod?.name ?? 'Geen periode';
   }
 
-  String get periodizationPlanName {
-    return selectedPeriodizationPlan?.name ?? 'Geen template geselecteerd';
-  }
+  String get periodizationPlanName => selectedPeriodizationPlan?.name ?? 'Geen template geselecteerd';
 
   // Get morphocycle for specific week
   Morphocycle? getMorphocycleForWeek(int weekNumber) {
@@ -244,56 +241,56 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     switch (modelType) {
       case PeriodizationModel.knvbYouth:
         if (index == 0) {
-          period.name = "Technische Ontwikkeling";
-          period.description = "Focus op individuele technische vaardigheden";
+          period.name = 'Technische Ontwikkeling';
+          period.description = 'Focus op individuele technische vaardigheden';
           period.type = PeriodType.preparation;
-          period.keyObjectives = ["Bal controle", "Passing precisie", "1v1 situaties"];
+          period.keyObjectives = ['Bal controle', 'Passing precisie', '1v1 situaties'];
         } else if (index == 1) {
-          period.name = "Tactisch Begrip";
-          period.description = "Ontwikkeling van tactisch inzicht en positiespel";
+          period.name = 'Tactisch Begrip';
+          period.description = 'Ontwikkeling van tactisch inzicht en positiespel';
           period.type = PeriodType.competitionEarly;
-          period.keyObjectives = ["Positiespel", "Teamwork", "Verdedigende organisatie"];
+          period.keyObjectives = ['Positiespel', 'Teamwork', 'Verdedigende organisatie'];
         } else if (index == 2) {
-          period.name = "Wedstrijdervaring";
-          period.description = "Competitie en wedstrijdspecifieke training";
+          period.name = 'Wedstrijdervaring';
+          period.description = 'Competitie en wedstrijdspecifieke training';
           period.type = PeriodType.competitionPeak;
-          period.keyObjectives = ["Match fitness", "Pressure situations", "Team cohesion"];
+          period.keyObjectives = ['Match fitness', 'Pressure situations', 'Team cohesion'];
         } else {
-          period.name = "Evaluatie & Herstel";
-          period.description = "Seizoen evaluatie en actief herstel";
+          period.name = 'Evaluatie & Herstel';
+          period.description = 'Seizoen evaluatie en actief herstel';
           period.type = PeriodType.transition;
-          period.keyObjectives = ["Recovery", "Individual development", "Fun activities"];
+          period.keyObjectives = ['Recovery', 'Individual development', 'Fun activities'];
         }
         break;
 
       case PeriodizationModel.linear:
-        final periodNames = ["Voorbereiding", "Opbouw", "Competitie", "Herstel"];
+        final periodNames = ['Voorbereiding', 'Opbouw', 'Competitie', 'Herstel'];
         period.name = periodNames[index % periodNames.length];
         period.type = PeriodType.values[index % PeriodType.values.length];
         break;
 
       case PeriodizationModel.block:
-        final blockNames = ["Techniek Blok", "Conditie Blok", "Tactiek Blok", "Wedstrijd Blok"];
+        final blockNames = ['Techniek Blok', 'Conditie Blok', 'Tactiek Blok', 'Wedstrijd Blok'];
         period.name = blockNames[index % blockNames.length];
         period.type = PeriodType.values[index % PeriodType.values.length];
         break;
 
       case PeriodizationModel.conjugate:
-        period.name = "Week ${index + 1}";
-        period.description = "Gelijktijdige ontwikkeling van alle aspecten";
+        period.name = 'Week ${index + 1}';
+        period.description = 'Gelijktijdige ontwikkeling van alle aspecten';
         period.type = PeriodType.competitionEarly;
         break;
 
       case PeriodizationModel.custom:
-        period.name = "Custom Periode ${index + 1}";
-        period.description = "Aangepaste periodisering";
+        period.name = 'Custom Periode ${index + 1}';
+        period.description = 'Aangepaste periodisering';
         period.type = PeriodType.values[index % PeriodType.values.length];
         break;
     }
 
     // Set focus areas
     if (focusAreas.isNotEmpty && index < focusAreas.length) {
-      period.description = "${period.description} - Focus: ${focusAreas[index]}";
+      period.description = '${period.description} - Focus: ${focusAreas[index]}';
     }
   }
 
@@ -357,7 +354,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
         dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
         location: _getTrainingLocation(weekNumber),
         notes: _getTrainingNotesWithPeriod(weekNumber, period),
-      ));
+      ),);
 
       // Thursday training
       final thursday = weekStart.add(const Duration(days: 3));
@@ -365,7 +362,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
         name: trainingTypes.length > 1 ? trainingTypes[1] : 'Algemene Training',
         dateTime: DateTime(thursday.year, thursday.month, thursday.day, 19, 30),
         location: _getTrainingLocation(weekNumber),
-      ));
+      ),);
     }
 
     // Create matches
@@ -379,7 +376,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
         location: weekNumber % 2 == 0 ? 'Thuis' : _getAwayLocation(weekNumber),
         isHomeMatch: weekNumber % 2 == 0,
         type: _getMatchType(weekNumber),
-      ));
+      ),);
     }
 
     return WeekSchedule(
@@ -416,13 +413,13 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       final sunday = weekStart;
       sessions.add(WeeklyTraining(
         name: 'Recovery Session - ${morphocycle.primaryGameModelFocus}',
-        dateTime: DateTime(sunday.year, sunday.month, sunday.day, 10, 0),
+        dateTime: DateTime(sunday.year, sunday.month, sunday.day, 10),
         location: 'Indoor',
         notes: 'Active recovery - ${morphocycle.tacticalFocusAreas.join(", ")}',
         intensity: TrainingIntensity.recovery,
         durationMinutes: 60,
         rpe: 4,
-      ));
+      ),);
     }
 
     // Day +2 (Tuesday) - High-Intensity Acquisition
@@ -435,7 +432,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       intensity: TrainingIntensity.acquisition,
       durationMinutes: 75,
       rpe: 9,
-    ));
+    ),);
 
     // Day +3 (Thursday) - Medium-Intensity Development
     final thursday = weekStart.add(const Duration(days: 4));
@@ -447,19 +444,19 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       intensity: TrainingIntensity.development,
       durationMinutes: 75,
       rpe: 7,
-    ));
+    ),);
 
     // Day +4 (Friday) - Low-Intensity Activation
     final friday = weekStart.add(const Duration(days: 5));
     sessions.add(WeeklyTraining(
       name: 'Activation Training - Set Pieces',
-      dateTime: DateTime(friday.year, friday.month, friday.day, 18, 0),
+      dateTime: DateTime(friday.year, friday.month, friday.day, 18),
       location: _getTrainingLocation(morphocycle.weekNumber),
       notes: 'Match preparation and activation - ${morphocycle.currentInjuryRisk.name} risk',
       intensity: TrainingIntensity.activation,
       durationMinutes: 60,
       rpe: 5,
-    ));
+    ),);
 
     return sessions;
   }
@@ -468,14 +465,14 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     if (morphocycle != null) {
       final loadStatus = morphocycle.weekDescription;
       final adaptation = morphocycle.expectedAdaptation.toInt();
-      return "$loadStatus - Week $weekNumber | Expected Adaptation: $adaptation% | Focus: ${morphocycle.primaryGameModelFocus}";
+      return '$loadStatus - Week $weekNumber | Expected Adaptation: $adaptation% | Focus: ${morphocycle.primaryGameModelFocus}';
     }
     return _getWeekNotes(weekNumber) ?? '';
   }
 
   String _getTrainingNotesWithPeriod(int weekNumber, TrainingPeriod? period) {
     if (period != null) {
-      return "${period.name} - Week $weekNumber";
+      return '${period.name} - Week $weekNumber';
     }
     return _getWeekNotes(weekNumber) ?? '';
   }
@@ -547,14 +544,14 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
       location: _getTrainingLocation(weekNumber),
       notes: _getTrainingNotes(weekNumber),
-    ));
+    ),);
 
     final thursday = weekStart.add(const Duration(days: 3));
     trainingSessions.add(WeeklyTraining(
       name: 'Verdedigende Organisatie ${weekNumber % 2 == 0 ? '3' : '1'}',
       dateTime: DateTime(thursday.year, thursday.month, thursday.day, 19, 30),
       location: _getTrainingLocation(weekNumber),
-    ));
+    ),);
 
     final matches = <WeeklyMatch>[];
     final saturday = weekStart.add(const Duration(days: 5));
@@ -566,7 +563,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
         location: weekNumber % 2 == 0 ? 'Thuis' : _getAwayLocation(weekNumber),
         isHomeMatch: weekNumber % 2 == 0,
         type: _getMatchType(weekNumber),
-      ));
+      ),);
     }
 
     return WeekSchedule(

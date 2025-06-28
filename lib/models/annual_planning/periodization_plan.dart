@@ -1,9 +1,93 @@
-import 'content_distribution.dart';
 
 // part 'periodization_plan.g.dart'; // Disabled for web compatibility
 
 class PeriodizationPlan {
-  String id = "";
+
+  // Constructor
+  PeriodizationPlan();
+
+  // Named constructors for system templates
+  PeriodizationPlan.knvbYouthU17() {
+    name = 'KNVB Youth Development Model U17';
+    description = 'Nederlandse voetbalbond standaard periodisering voor JO17 teams. '
+                 'Focus op technische ontwikkeling, tactisch begrip en competitieve prestaties.';
+    modelType = PeriodizationModel.knvbYouth;
+    targetAgeGroup = AgeGroup.u17;
+    totalDurationWeeks = 42; // Full season
+    numberOfPeriods = 4;
+    isTemplate = true;
+    isDefault = true;
+    createdBy = 'KNVB Standards';
+  }
+
+  PeriodizationPlan.traditionalLinear() {
+    name = 'Traditional Linear Periodization';
+    description = 'Klassieke 3-fase periodisering: voorbereiding → competitie → overgang. '
+                 'Geschikt voor teams met duidelijke seizoenstructuur.';
+    modelType = PeriodizationModel.linear;
+    targetAgeGroup = AgeGroup.u17;
+    totalDurationWeeks = 36;
+    numberOfPeriods = 3;
+    isTemplate = true;
+    isDefault = true;
+    createdBy = 'System';
+  }
+
+  PeriodizationPlan.blockPeriodization() {
+    name = 'Block Periodization Model';
+    description = 'Moderne blok periodisering met 4-weken cycli. '
+                 'Intense focus op specifieke vaardigheden per blok.';
+    modelType = PeriodizationModel.block;
+    targetAgeGroup = AgeGroup.u17;
+    totalDurationWeeks = 32;
+    numberOfPeriods = 8; // 8 blocks of 4 weeks
+    isTemplate = true;
+    isDefault = true;
+    createdBy = 'System';
+  }
+
+  PeriodizationPlan.conjugateMethod() {
+    name = 'Conjugate Method';
+    description = 'Gelijktijdige ontwikkeling van alle aspecten met variërende accenten. '
+                 'Flexibele aanpak voor ervaren teams.';
+    modelType = PeriodizationModel.conjugate;
+    targetAgeGroup = AgeGroup.u17;
+    totalDurationWeeks = 40;
+    numberOfPeriods = 6;
+    isTemplate = true;
+    isDefault = true;
+    createdBy = 'System';
+  }
+
+  factory PeriodizationPlan.fromJson(Map<String, dynamic> json) {
+    final plan = PeriodizationPlan();
+    plan.id = json['id'] ?? '';
+    plan.name = json['name'] ?? '';
+    plan.description = json['description'] ?? '';
+    plan.modelType = PeriodizationModel.values.firstWhere(
+      (e) => e.name == json['modelType'],
+      orElse: () => PeriodizationModel.custom,
+    );
+    plan.targetAgeGroup = AgeGroup.values.firstWhere(
+      (e) => e.name == json['targetAgeGroup'],
+      orElse: () => AgeGroup.u17,
+    );
+    plan.totalDurationWeeks = json['totalDurationWeeks'] ?? 36;
+    plan.numberOfPeriods = json['numberOfPeriods'] ?? 4;
+    plan.defaultIntensityTargets = json['defaultIntensityTargets'];
+    plan.defaultContentDistribution = json['defaultContentDistribution'];
+    plan.isTemplate = json['isTemplate'] ?? false;
+    plan.isDefault = json['isDefault'] ?? false;
+    plan.createdBy = json['createdBy'];
+    plan.createdAt = json['createdAt'] != null
+        ? DateTime.parse(json['createdAt'])
+        : DateTime.now();
+    plan.updatedAt = json['updatedAt'] != null
+        ? DateTime.parse(json['updatedAt'])
+        : DateTime.now();
+    return plan;
+  }
+  String id = '';
 
   // Basic information
   late String name; // "KNVB Youth Development Model", "Traditional Linear"
@@ -29,62 +113,6 @@ class PeriodizationPlan {
   // Metadata
   DateTime createdAt = DateTime.now();
   DateTime updatedAt = DateTime.now();
-
-  // Constructor
-  PeriodizationPlan();
-
-  // Named constructors for system templates
-  PeriodizationPlan.knvbYouthU17() {
-    name = "KNVB Youth Development Model U17";
-    description = "Nederlandse voetbalbond standaard periodisering voor JO17 teams. "
-                 "Focus op technische ontwikkeling, tactisch begrip en competitieve prestaties.";
-    modelType = PeriodizationModel.knvbYouth;
-    targetAgeGroup = AgeGroup.u17;
-    totalDurationWeeks = 42; // Full season
-    numberOfPeriods = 4;
-    isTemplate = true;
-    isDefault = true;
-    createdBy = "KNVB Standards";
-  }
-
-  PeriodizationPlan.traditionalLinear() {
-    name = "Traditional Linear Periodization";
-    description = "Klassieke 3-fase periodisering: voorbereiding → competitie → overgang. "
-                 "Geschikt voor teams met duidelijke seizoenstructuur.";
-    modelType = PeriodizationModel.linear;
-    targetAgeGroup = AgeGroup.u17;
-    totalDurationWeeks = 36;
-    numberOfPeriods = 3;
-    isTemplate = true;
-    isDefault = true;
-    createdBy = "System";
-  }
-
-  PeriodizationPlan.blockPeriodization() {
-    name = "Block Periodization Model";
-    description = "Moderne blok periodisering met 4-weken cycli. "
-                 "Intense focus op specifieke vaardigheden per blok.";
-    modelType = PeriodizationModel.block;
-    targetAgeGroup = AgeGroup.u17;
-    totalDurationWeeks = 32;
-    numberOfPeriods = 8; // 8 blocks of 4 weeks
-    isTemplate = true;
-    isDefault = true;
-    createdBy = "System";
-  }
-
-  PeriodizationPlan.conjugateMethod() {
-    name = "Conjugate Method";
-    description = "Gelijktijdige ontwikkeling van alle aspecten met variërende accenten. "
-                 "Flexibele aanpak voor ervaren teams.";
-    modelType = PeriodizationModel.conjugate;
-    targetAgeGroup = AgeGroup.u17;
-    totalDurationWeeks = 40;
-    numberOfPeriods = 6;
-    isTemplate = true;
-    isDefault = true;
-    createdBy = "System";
-  }
 
   // Helper methods for intensity targets
   Map<String, double> getIntensityTargets() {
@@ -175,35 +203,6 @@ class PeriodizationPlan {
     'updatedAt': updatedAt.toIso8601String(),
   };
 
-  factory PeriodizationPlan.fromJson(Map<String, dynamic> json) {
-    final plan = PeriodizationPlan();
-    plan.id = json['id'] ?? "";
-    plan.name = json['name'] ?? '';
-    plan.description = json['description'] ?? '';
-    plan.modelType = PeriodizationModel.values.firstWhere(
-      (e) => e.name == json['modelType'],
-      orElse: () => PeriodizationModel.custom,
-    );
-    plan.targetAgeGroup = AgeGroup.values.firstWhere(
-      (e) => e.name == json['targetAgeGroup'],
-      orElse: () => AgeGroup.u17,
-    );
-    plan.totalDurationWeeks = json['totalDurationWeeks'] ?? 36;
-    plan.numberOfPeriods = json['numberOfPeriods'] ?? 4;
-    plan.defaultIntensityTargets = json['defaultIntensityTargets'];
-    plan.defaultContentDistribution = json['defaultContentDistribution'];
-    plan.isTemplate = json['isTemplate'] ?? false;
-    plan.isDefault = json['isDefault'] ?? false;
-    plan.createdBy = json['createdBy'];
-    plan.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : DateTime.now();
-    plan.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
-        : DateTime.now();
-    return plan;
-  }
-
   // Copy with method for updates
   PeriodizationPlan copyWith({
     String? name,
@@ -237,11 +236,9 @@ class PeriodizationPlan {
   }
 
   @override
-  String toString() {
-    return 'PeriodizationPlan(id: $id, name: $name, model: ${modelType.name}, '
+  String toString() => 'PeriodizationPlan(id: $id, name: $name, model: ${modelType.name}, '
            'ageGroup: ${targetAgeGroup.name}, weeks: $totalDurationWeeks, '
            'periods: $numberOfPeriods, template: $isTemplate)';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -255,13 +252,11 @@ class PeriodizationPlan {
   }
 
   @override
-  int get hashCode {
-    return name.hashCode ^
+  int get hashCode => name.hashCode ^
            modelType.hashCode ^
            targetAgeGroup.hashCode ^
            totalDurationWeeks.hashCode ^
            numberOfPeriods.hashCode;
-  }
 }
 
 // Enums for periodization
