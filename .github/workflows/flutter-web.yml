@@ -84,10 +84,10 @@ jobs:
     - name: Build web
       run: |
         if [ -f "pubspec.yaml" ]; then
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release
         else
           cd jo17_tactical_manager
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release
         fi
 
     - name: Upload artifacts
