@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:go_router/go_router.dart';
 import '../../widgets/common/quick_actions_widget.dart';
 import 'package:intl/intl.dart';
+import '../../widgets/rbac_demo_widget.dart';
 import '../../providers/statistics_provider.dart';
 import '../../providers/matches_provider.dart';
 import '../../providers/demo_mode_provider.dart';
@@ -58,7 +59,7 @@ class DashboardScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(_getDashboardTitle(userRole)),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: _buildAppBarActions(context, userRole, organization?.tier?.name),
+        actions: _buildAppBarActions(context, userRole, organization?.tier.name),
       ),
       body: statisticsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -68,6 +69,9 @@ class DashboardScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // RBAC Demo Widget (only in demo mode)
+              const RBACDemoWidget(),
+              
               // Role-specific welcome section
               seasonAsync.when(
                 data: (season) => _buildWelcomeSection(context, season, userRole),
@@ -77,7 +81,7 @@ class DashboardScreen extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Role-specific content
-              ..._buildRoleSpecificContent(context, ref, userRole, organization?.tier?.name, statistics, upcomingMatchesAsync, trainingSessionsAsync),
+              ..._buildRoleSpecificContent(context, ref, userRole, organization?.tier.name, statistics, upcomingMatchesAsync, trainingSessionsAsync),
             ],
           ),
         ),

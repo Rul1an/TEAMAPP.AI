@@ -20,7 +20,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _startDemoMode(DemoRole role) {
-    ref.read(demoModeProvider.notifier).startDemo(role);
+    ref.read(demoModeProvider.notifier).startDemo(
+      role: role,
+      organizationId: "demo-org-1",
+      userId: "demo-user-${role.name}",
+      userName: "Demo User",
+      durationMinutes: 30,
+    );
     context.go('/dashboard');
   }
 

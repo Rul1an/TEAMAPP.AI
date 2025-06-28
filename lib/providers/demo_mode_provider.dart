@@ -45,78 +45,83 @@ class DemoModeState {
     );
   }
 
-  bool get isExpired =>
-    expiresAt != null && DateTime.now().isAfter(expiresAt!);
-
-  Duration? get remainingTime =>
-    expiresAt?.difference(DateTime.now());
-
-  String get roleDisplayName {
-    switch (role) {
-      case DemoRole.clubAdmin:
-        return 'Club Administrator';
-      case DemoRole.boardMember:
-        return 'Bestuurder';
-      case DemoRole.technicalCommittee:
-        return 'Technische Commissie';
-      case DemoRole.coach:
-        return 'Hoofdtrainer';
-      case DemoRole.assistantCoach:
-        return 'Assistent Trainer';
-      case DemoRole.player:
-        return 'Speler';
-      default:
-        return '';
-    }
-  }
+  bool get isDemo => isActive;
+  bool get isAdmin => role == DemoRole.boardMember || role == DemoRole.clubAdmin;
+  bool get isExpired => expiresAt != null && DateTime.now().isAfter(expiresAt!);
 }
 
 class DemoModeNotifier extends StateNotifier<DemoModeState> {
-  Timer? _sessionTimer;
-  Timer? _warningTimer;
+  Timer? _expirationTimer;
 
   DemoModeNotifier() : super(DemoModeState());
 
-  void startDemo(DemoRole role) {
-    // Cancel existing timers
-    _sessionTimer?.cancel();
-    _warningTimer?.cancel();
-
-    // Generate demo data
-    final now = DateTime.now();
-    final expiresAt = now.add(const Duration(minutes: 30));
-
-    // Set demo state
+  void startDemo({
+    required DemoRole role,
+    String? organizationId,
+    String? userId,
+    String? userName,
+    int durationMinutes = 30,
+  }) {
+    final expiresAt = DateTime.now().add(Duration(minutes: durationMinutes));
+    
     state = DemoModeState(
       isActive: true,
       role: role,
-      organizationId: 'demo-org-voab',
-      userId: 'demo-user-${role.name}-${now.millisecondsSinceEpoch}',
-      userName: _getDemoUserName(role),
+      organizationId: organizationId ?? 'demo-org-1',
+      userId: userId ?? 'demo-user-\${role.name}',
+      userName: userName ?? _getDefaultUserName(role),
       expiresAt: expiresAt,
     );
 
-    // Start warning timer (5 minutes before expiry)
-    _warningTimer = Timer(const Duration(minutes: 25), () {
-      // Could trigger a notification here
-    });
-
-    // Start session timer
-    _sessionTimer = Timer(const Duration(minutes: 30), () {
-      endDemo();
-    });
+    _startExpirationTimer(durationMinutes);
   }
 
-  void extendDemo() {
-    if (state.isActive && state.role != null) {
-      startDemo(state.role!);
+  void setRole(String roleName) {
+    final demoRole = _stringToRole(roleName);
+    if (demoRole != null) {
+      state = state.copyWith(
+        role: demoRole,
+        userId: 'demo-user-\${demoRole.name}',
+        userName: _getDefaultUserName(demoRole),
+      );
+    }
+  }
+
+  void setDemoMode({
+    required bool isDemo,
+    required bool isAdmin,
+    required String tier,
+  }) {
+    if (isDemo) {
+      final role = isAdmin ? DemoRole.boardMember : DemoRole.coach;
+      startDemo(
+        role: role,
+        organizationId: 'demo-org-\$tier',
+        durationMinutes: 30,
+      );
+    } else {
+      endDemo();
+    }
+  }
+
+  void extendDemo(int additionalMinutes) {
+    if (state.isActive && state.expiresAt != null) {
+      final newExpiresAt = state.expiresAt!.add(Duration(minutes: additionalMinutes));
+      state = state.copyWith(expiresAt: newExpiresAt);
+      
+      _expirationTimer?.cancel();
+      final remainingMinutes = newExpiresAt.difference(DateTime.now()).inMinutes;
+      _startExpirationTimer(remainingMinutes);
     }
   }
 
   void endDemo() {
-    _sessionTimer?.cancel();
-    _warningTimer?.cancel();
+    _expirationTimer?.cancel();
     state = DemoModeState();
+  }
+
+  void logout() {
+    endDemo();
   }
 
   /// Get the current demo role as string
@@ -139,44 +144,76 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
     }
   }
 
-  String _getDemoUserName(DemoRole role) {
+  void _startExpirationTimer(int minutes) {
+    _expirationTimer?.cancel();
+    _expirationTimer = Timer(Duration(minutes: minutes), () {
+      endDemo();
+    });
+  }
+
+  String _getDefaultUserName(DemoRole role) {
     switch (role) {
-      case DemoRole.clubAdmin:
-        return 'Jan van der Admin';
       case DemoRole.boardMember:
-        return 'Piet Bestuurder';
-      case DemoRole.technicalCommittee:
-        return 'Klaas Technisch';
+        return 'Demo Bestuurder';
       case DemoRole.coach:
-        return 'Johan Trainer';
+        return 'Demo Hoofdcoach';
       case DemoRole.assistantCoach:
-        return 'Henk Assistent';
+        return 'Demo Assistent';
       case DemoRole.player:
-        return 'Robin Speler';
+        return 'Demo Speler';
+      case DemoRole.clubAdmin:
+        return 'Demo Admin';
+      case DemoRole.technicalCommittee:
+        return 'Demo Technisch';
+    }
+  }
+
+  DemoRole? _stringToRole(String roleName) {
+    switch (roleName) {
+      case 'bestuurder':
+        return DemoRole.boardMember;
+      case 'hoofdcoach':
+        return DemoRole.coach;
+      case 'assistent':
+        return DemoRole.assistantCoach;
+      case 'speler':
+        return DemoRole.player;
+      case 'ouder':
+        return DemoRole.player; // Map parent to player for demo
+      case 'admin':
+        return DemoRole.clubAdmin;
+      case 'technisch':
+        return DemoRole.technicalCommittee;
+      default:
+        return null;
     }
   }
 
   @override
   void dispose() {
-    _sessionTimer?.cancel();
-    _warningTimer?.cancel();
+    _expirationTimer?.cancel();
     super.dispose();
   }
 }
 
-final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>(
-  (ref) => DemoModeNotifier(),
-);
+// Provider
+final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>((ref) {
+  return DemoModeNotifier();
+});
 
 // Helper providers
 final isDemoModeProvider = Provider<bool>((ref) {
-  return ref.watch(demoModeProvider).isActive;
+  return ref.watch(demoModeProvider).isDemo;
 });
 
-final demoRoleProvider = Provider<DemoRole?>((ref) {
-  return ref.watch(demoModeProvider).role;
+final currentDemoRoleProvider = Provider<String?>((ref) {
+  return ref.watch(demoModeProvider.notifier).getDemoRole();
 });
 
-final demoUserNameProvider = Provider<String?>((ref) {
-  return ref.watch(demoModeProvider).userName;
+final demoTimeRemainingProvider = Provider<Duration?>((ref) {
+  final state = ref.watch(demoModeProvider);
+  if (!state.isActive || state.expiresAt == null) return null;
+  
+  final remaining = state.expiresAt!.difference(DateTime.now());
+  return remaining.isNegative ? Duration.zero : remaining;
 });
