@@ -189,7 +189,7 @@ class CoachDashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildQuickActions(
-          BuildContext context, club, FeatureService featureService,) =>
+          BuildContext context, dynamic club, FeatureService featureService,) =>
       Row(
         children: [
           Expanded(
@@ -231,7 +231,7 @@ class CoachDashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildTeamManagement(
-          BuildContext context, club, FeatureService featureService,) =>
+          BuildContext context, dynamic club, FeatureService featureService,) =>
       GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -276,7 +276,7 @@ class CoachDashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildPlanningAnalysis(
-          BuildContext context, club, FeatureService featureService,) =>
+          BuildContext context, dynamic club, FeatureService featureService,) =>
       GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),

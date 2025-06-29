@@ -1428,7 +1428,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     // Navigeer direct naar exercise library met deze fase
     final result = await Navigator.push<TrainingExercise>(
       context,
-      MaterialPageRoute<void>(
+      MaterialPageRoute<TrainingExercise>(
         builder: (context) => ExerciseLibraryScreen(
           isSelectMode: true,
           onExerciseSelected: (exercise) {
