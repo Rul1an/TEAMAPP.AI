@@ -105,54 +105,54 @@ class SeasonPlan {
   }
 
   factory SeasonPlan.fromJson(Map<String, dynamic> json) {
-    final plan = SeasonPlan()
-    ..id = json['id'] as String? ?? '';
-      ..name = json['name'] as String? ?? '';
-      ..description = json['description'] as String? ?? '';
-      ..season = json['season'] as String? ?? '';
-      ..ageGroup = AgeGroup.values.firstWhere(
+    final plan = SeasonPlan();
+    plan.id = json['id'] as String? ?? '';
+    plan.name = json['name'] as String? ?? '';
+    plan.description = json['description'] as String? ?? '';
+    plan.season = json['season'] as String? ?? '';
+    plan.ageGroup = AgeGroup.values.firstWhere(
       (e) => e.name == json['ageGroup'],
       orElse: () => AgeGroup.u17,
     );
-      ..teamName = json['teamName'] as String? ?? '';
-      ..seasonStartDate = json['seasonStartDate'] != null
+    plan.teamName = json['teamName'] as String? ?? '';
+    plan.seasonStartDate = json['seasonStartDate'] != null
         ? DateTime.parse(json['seasonStartDate'] as String)
         : DateTime.now();
-      ..seasonEndDate = json['seasonEndDate'] != null
+    plan.seasonEndDate = json['seasonEndDate'] != null
         ? DateTime.parse(json['seasonEndDate'] as String)
         : DateTime.now().add(const Duration(days: 300));
-      ..holidayPeriods = List<String>.from(json['holidayPeriods'] as List<dynamic>? ?? []);
-      ..periodizationPlanId = json['periodizationPlanId'] as String? ?? '';
-      ..totalWeeks = json['totalWeeks'] as int? ?? 40;
-      ..trainingWeeks = json['trainingWeeks'] as int? ?? 36;
-      ..competitionWeeks = json['competitionWeeks'] as int? ?? 32;
-      ..primaryCompetition = json['primaryCompetition'] as String? ?? '';
-      ..additionalCompetitions =
+    plan.holidayPeriods = List<String>.from(json['holidayPeriods'] as List<dynamic>? ?? []);
+    plan.periodizationPlanId = json['periodizationPlanId'] as String? ?? '';
+    plan.totalWeeks = json['totalWeeks'] as int? ?? 40;
+    plan.trainingWeeks = json['trainingWeeks'] as int? ?? 36;
+    plan.competitionWeeks = json['competitionWeeks'] as int? ?? 32;
+    plan.primaryCompetition = json['primaryCompetition'] as String? ?? '';
+    plan.additionalCompetitions =
         List<String>.from(json['additionalCompetitions'] as List<dynamic>? ?? []);
-      ..firstMatchDate = json['firstMatchDate'] != null
+    plan.firstMatchDate = json['firstMatchDate'] != null
         ? DateTime.parse(json['firstMatchDate'] as String)
         : null;
-      ..lastMatchDate = json['lastMatchDate'] != null
+    plan.lastMatchDate = json['lastMatchDate'] != null
         ? DateTime.parse(json['lastMatchDate'] as String)
         : null;
-      ..midSeasonBreakStart = json['midSeasonBreakStart'] != null
+    plan.midSeasonBreakStart = json['midSeasonBreakStart'] != null
         ? DateTime.parse(json['midSeasonBreakStart'] as String)
         : null;
-      ..midSeasonBreakEnd = json['midSeasonBreakEnd'] != null
+    plan.midSeasonBreakEnd = json['midSeasonBreakEnd'] != null
         ? DateTime.parse(json['midSeasonBreakEnd'] as String)
         : null;
-      ..seasonObjectives = List<String>.from(json['seasonObjectives'] as List<dynamic>? ?? []);
-      ..keyPerformanceIndicators =
+    plan.seasonObjectives = List<String>.from(json['seasonObjectives'] as List<dynamic>? ?? []);
+    plan.keyPerformanceIndicators =
         List<String>.from(json['keyPerformanceIndicators'] as List<dynamic>? ?? []);
-      ..isTemplate = json['isTemplate'] as bool? ?? false;
-      ..status = SeasonStatus.values.firstWhere(
+    plan.isTemplate = json['isTemplate'] as bool? ?? false;
+    plan.status = SeasonStatus.values.firstWhere(
       (e) => e.name == (json['status'] as String?),
       orElse: () => SeasonStatus.draft,
     );
-      ..currentWeek = json['currentWeek'] as int? ?? 1;
-      ..progressPercentage = (json['progressPercentage'] as num?)?.toDouble() ?? 0.0;
-      ..createdBy = json['createdBy'] as String?;
-      ..createdAt = json['createdAt'] != null
+    plan.currentWeek = json['currentWeek'] as int? ?? 1;
+    plan.progressPercentage = (json['progressPercentage'] as num?)?.toDouble() ?? 0.0;
+    plan.createdBy = json['createdBy'] as String?;
+    plan.createdAt = json['createdAt'] != null
         ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     plan.updatedAt = json['updatedAt'] != null
