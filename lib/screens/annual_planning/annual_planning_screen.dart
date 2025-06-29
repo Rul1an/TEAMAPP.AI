@@ -42,7 +42,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.calendar_view_week),
             onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
+              MaterialPageRoute<void>(
                 builder: (context) => const WeeklyPlanningScreen(),
               ),
             ),
@@ -51,7 +51,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.analytics),
             onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
+              MaterialPageRoute<void>(
                 builder: (context) => const LoadMonitoringScreen(),
               ),
             ),
@@ -104,7 +104,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
               elevation: 4,
               child: InkWell(
                 onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
+                  MaterialPageRoute<void>(
                     builder: (context) => const WeeklyPlanningScreen(),
                   ),
                 ),
@@ -184,7 +184,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                     elevation: 4,
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
+                        MaterialPageRoute<void>(
                           builder: (context) => const LoadMonitoringScreen(),
                         ),
                       ),

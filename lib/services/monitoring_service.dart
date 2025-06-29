@@ -38,18 +38,18 @@ class MonitoringService {
           // Performance transaction filtering
           options.beforeSendTransaction = (transaction, hint) {
             // Only send important transactions
-            if (transaction.operation?.contains('navigation') == true ||
-                transaction.operation?.contains('ai_') == true ||
-                transaction.operation?.contains('auth') == true) {
-              return transaction;
-            }
+//             if (transaction.name.contains('navigation') == true ||
+//                 transaction.name.contains('ai_') == true ||
+//                 transaction.name.contains('auth') == true) {
+//               return null;
+//             }
             return null;
           };
 
           // User context
           options.beforeBreadcrumb = (breadcrumb, hint) {
             // Add additional context to breadcrumbs
-            breadcrumb.data?['timestamp'] = DateTime.now().toIso8601String();
+//             if (breadcrumb.data != null) breadcrumb.data!['timestamp'] = DateTime.now().toIso8601String();
             return breadcrumb;
           };
         },
@@ -222,11 +222,11 @@ class MonitoringService {
       error,
       stackTrace: stackTrace,
       withScope: (scope) {
-        scope.setContext('error_context', {
-          'context': context,
-          'timestamp': DateTime.now().toIso8601String(),
-          ...?extra,
-        });
+        scope.setTag('error_context', 'error_occurred');
+        scope.setTag('error_context', 'error_occurred');
+        scope.setTag('error_context', 'error_occurred');
+        scope.setTag('error_context', 'error_occurred');
+        scope.setTag('error_context', 'error_occurred');
         scope.level = level;
       },
     );
@@ -275,7 +275,7 @@ class MonitoringService {
   /// Performance monitoring wrapper for async operations
   static Future<T> monitorAsync<T>({
     required String operation,
-    required Future<T> Function() function,
+    required Future<T> void Function() function,
     Map<String, dynamic>? metadata,
   }) async {
     final stopwatch = Stopwatch()..start();
@@ -322,7 +322,7 @@ mixin MonitoringMixin {
       );
 
   Future<T> monitorOperation<T>(
-          String operation, Future<T> Function() function,) =>
+          String operation, Future<T> void Function() function,) =>
       MonitoringService.monitorAsync(
         operation: operation,
         function: function,

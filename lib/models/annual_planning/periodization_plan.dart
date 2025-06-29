@@ -63,27 +63,27 @@ class PeriodizationPlan {
   }
 
   factory PeriodizationPlan.fromJson(Map<String, dynamic> json) {
-    final plan = PeriodizationPlan()
-    ..id = json['id'] as String? ?? '';
-      ..name = json['name'] as String? ?? '';
-      ..description = json['description'] as String? ?? '';
-      ..modelType = PeriodizationModel.values.firstWhere(
+    final plan = PeriodizationPlan();
+    plan.id = json['id'] as String? ?? '';
+    plan.name = json['name'] as String? ?? '';
+    plan.description = json['description'] as String? ?? '';
+    plan.modelType = PeriodizationModel.values.firstWhere(
       (e) => e.name == (json['modelType'] as String?),
       orElse: () => PeriodizationModel.custom,
     );
-      ..targetAgeGroup = AgeGroup.values.firstWhere(
+    plan.targetAgeGroup = AgeGroup.values.firstWhere(
       (e) => e.name == (json['targetAgeGroup'] as String?),
       orElse: () => AgeGroup.u17,
     );
-      ..totalDurationWeeks = json['totalDurationWeeks'] as int? ?? 36;
-      ..numberOfPeriods = json['numberOfPeriods'] as int? ?? 4;
-      ..defaultIntensityTargets = json['defaultIntensityTargets'] as String?;
-      ..defaultContentDistribution =
+    plan.totalDurationWeeks = json['totalDurationWeeks'] as int? ?? 36;
+    plan.numberOfPeriods = json['numberOfPeriods'] as int? ?? 4;
+    plan.defaultIntensityTargets = json['defaultIntensityTargets'] as String?;
+    plan.defaultContentDistribution =
         json['defaultContentDistribution'] as String?;
-      ..isTemplate = json['isTemplate'] as bool? ?? false;
-      ..isDefault = json['isDefault'] as bool? ?? false;
-      ..createdBy = json['createdBy'] as String?;
-      ..createdAt = json['createdAt'] != null
+    plan.isTemplate = json['isTemplate'] as bool? ?? false;
+    plan.isDefault = json['isDefault'] as bool? ?? false;
+    plan.createdBy = json['createdBy'] as String?;
+    plan.createdAt = json['createdAt'] != null
         ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     plan.updatedAt = json['updatedAt'] != null
@@ -232,18 +232,18 @@ class PeriodizationPlan {
     final copy = PeriodizationPlan();
     copy.id = id;
     copy.name = name ?? this.name;
-      ..description = description ?? this.description;
-      ..modelType = modelType ?? this.modelType;
-      ..targetAgeGroup = targetAgeGroup ?? this.targetAgeGroup;
-      ..totalDurationWeeks = totalDurationWeeks ?? this.totalDurationWeeks;
-      ..numberOfPeriods = numberOfPeriods ?? this.numberOfPeriods;
-      ..defaultIntensityTargets =
+    copy.description = description ?? this.description;
+    copy.modelType = modelType ?? this.modelType;
+    copy.targetAgeGroup = targetAgeGroup ?? this.targetAgeGroup;
+    copy.totalDurationWeeks = totalDurationWeeks ?? this.totalDurationWeeks;
+    copy.numberOfPeriods = numberOfPeriods ?? this.numberOfPeriods;
+    copy.defaultIntensityTargets =
         defaultIntensityTargets ?? this.defaultIntensityTargets;
-      ..defaultContentDistribution =
+    copy.defaultContentDistribution =
         defaultContentDistribution ?? this.defaultContentDistribution;
-      ..isTemplate = isTemplate ?? this.isTemplate;
-      ..isDefault = isDefault ?? this.isDefault;
-      ..createdBy = createdBy ?? this.createdBy;
+    copy.isTemplate = isTemplate ?? this.isTemplate;
+    copy.isDefault = isDefault ?? this.isDefault;
+    copy.createdBy = createdBy ?? this.createdBy;
     copy.createdAt = createdAt;
     copy.updatedAt = DateTime.now();
     return copy;

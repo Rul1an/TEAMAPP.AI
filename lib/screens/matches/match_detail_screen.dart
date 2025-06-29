@@ -405,7 +405,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
           !otherPlayers.contains(playerId);
     }).toList();
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(isStartingLineup
@@ -607,7 +607,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   }
 
   void _showRatingOptions(Match match, List<Player> players) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (context) => DraggableScrollableSheet(
@@ -697,7 +697,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       text: match.opponentScore?.toString() ?? '',
     );
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Score Invoeren'),

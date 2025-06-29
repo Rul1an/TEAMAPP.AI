@@ -144,7 +144,7 @@ class _WeeklyCalendarWidgetState extends State<WeeklyCalendarWidget> {
   }
 
   void _showDayDetails(DateTime date) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       builder: (context) => _DayDetailsSheet(date: date),
     );

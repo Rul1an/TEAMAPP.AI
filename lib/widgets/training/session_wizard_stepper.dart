@@ -9,7 +9,7 @@ class SessionWizardStepper extends StatelessWidget {
   });
   final int currentStep;
   final List<String> steps;
-  final Function(int)? onStepTapped;
+  final void Function(int)? onStepTapped;
 
   @override
   Widget build(BuildContext context) => Container(

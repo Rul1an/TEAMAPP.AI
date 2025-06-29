@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -182,8 +183,8 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
       orElse: () => players.first, // Fallback, though should not happen
     );
 
-    Navigator.of(context).push(
-      MaterialPageRoute(
+    unawaited(Navigator.of(context).push(
+      MaterialPageRoute<void>(
         builder: (context) => AssessmentDetailScreen(
           assessment: latestAssessment,
           player: player,
@@ -380,7 +381,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     final playersAsync = ref.read(playersProvider);
     final assessmentsAsync = ref.read(assessmentsProvider);
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Row(
@@ -513,7 +514,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
   void _showTrainingEffectiveness(BuildContext context, WidgetRef ref) {
     final playersAsync = ref.read(playersProvider);
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Row(
@@ -668,7 +669,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
   void _showTeamOverview(BuildContext context, WidgetRef ref) {
     final playersAsync = ref.read(playersProvider);
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Row(

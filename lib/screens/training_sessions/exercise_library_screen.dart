@@ -26,7 +26,7 @@ class ExerciseLibraryScreen extends ConsumerStatefulWidget {
   final TacticalFocus? filterTacticalFocus;
   final int weekNumber;
   final bool isSelectMode;
-  final Function(TrainingExercise)? onExerciseSelected;
+  final void Function(TrainingExercise)? onExerciseSelected;
 
   @override
   ConsumerState<ExerciseLibraryScreen> createState() =>
@@ -131,7 +131,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<void>(
             builder: (context) => const ExerciseDesignerScreen(),
           ),
         ),
@@ -775,7 +775,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
           .toList();
 
   void _showFilterDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Filter Exercises'),
@@ -878,7 +878,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   }
 
   void _showExerciseDetails(TrainingExercise exercise) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(exercise.name),
@@ -997,7 +997,7 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
   void _openFieldDiagramViewer(TrainingExercise exercise) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => FieldDiagramEditorScreen(
           exerciseId: exercise.id.toString(),
           initialDiagram: exercise.fieldDiagram,

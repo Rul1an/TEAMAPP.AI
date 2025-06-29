@@ -375,7 +375,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
     });
 
     // Simulate AI processing
-    await Future.delayed(const Duration(seconds: 2));
+    await Future<void>.delayed(const Duration(seconds: 2));
 
     final prompt = _promptController.text.toLowerCase();
     String response;
@@ -410,7 +410,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
 
 🥅 Keeper: Actief in opbouw
 🛡️ Verdediging: Hoge linie, pressing
-⚙️ Middenveld: Driehoeksvorming, balcontrole  
+⚙️ Middenveld: Driehoeksvorming, balcontrole
 ⚡ Aanval: Breedte en diepte
 
 🎯 Sterke punten:
@@ -434,7 +434,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
 
 💪 Sterke punten:
 • Technische vaardigheden: 8.5/10
-• Fysieke conditie: 7.8/10  
+• Fysieke conditie: 7.8/10
 • Tactisch inzicht: 8.2/10
 
 🔧 Verbeterpunten:
@@ -455,7 +455,7 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
 Bedankt voor je vraag! In de volledige versie kan ik helpen met:
 
 • Trainingen genereren op basis van je specifieke behoeften
-• Tactische analyses en formatie-adviezen  
+• Tactische analyses en formatie-adviezen
 • Speler prestatie evaluaties
 • Wedstrijd voorbereiding
 • Voice commands verwerken
@@ -477,7 +477,7 @@ De volledige AI implementatie komt beschikbaar in Q3 2025!''';
   }
 
   void _showInfoDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('AI Assistant Info'),

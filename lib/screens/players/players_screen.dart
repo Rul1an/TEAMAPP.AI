@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -39,7 +40,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
 
       // Show errors if any
       if (result.errors.isNotEmpty) {
-        showDialog(
+        unawaited(showDialog<void>(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Import waarschuwingen'),

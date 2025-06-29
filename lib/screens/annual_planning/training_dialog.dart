@@ -10,7 +10,7 @@ class TrainingDialog extends StatefulWidget {
   });
   final WeeklyTraining? existingTraining;
   final DateTime weekStartDate;
-  final Function(WeeklyTraining) onSave;
+  final void Function(WeeklyTraining) onSave;
 
   @override
   State<TrainingDialog> createState() => _TrainingDialogState();

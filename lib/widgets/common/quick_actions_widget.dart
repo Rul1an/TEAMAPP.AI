@@ -269,7 +269,7 @@ class QuickActionsWidget extends ConsumerWidget {
   }
 
   void _showNotesDialog(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Trainer Notities'),

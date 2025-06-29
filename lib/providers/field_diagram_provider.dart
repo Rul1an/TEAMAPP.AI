@@ -418,13 +418,13 @@ class FieldDiagramEditorNotifier
       String exerciseId, FieldDiagram diagram,) async {
     // TODO(author): Implement save to exercise
     // This would integrate with the exercise library service
-    await Future.delayed(
+    await Future<void>.delayed(
         const Duration(milliseconds: 500),); // Simulate API call
   }
 
   Future<void> saveDiagramTemplate(FieldDiagram diagram, String name) async {
     // TODO(author): Implement save as template
-    await Future.delayed(
+    await Future<void>.delayed(
         const Duration(milliseconds: 500),); // Simulate API call
   }
 

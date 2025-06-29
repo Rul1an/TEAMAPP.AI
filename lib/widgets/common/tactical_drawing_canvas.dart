@@ -30,7 +30,7 @@ class TacticalDrawingCanvas extends StatefulWidget {
   });
   final Widget child;
   final List<DrawingElement> drawings;
-  final Function(List<DrawingElement>) onDrawingsChanged;
+  final void Function(List<DrawingElement>) onDrawingsChanged;
   final bool isDrawingMode;
   final DrawingTool selectedTool;
   final Color selectedColor;
@@ -146,7 +146,7 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
   }
 
   void _showTextDialog(Offset position) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Tekst Toevoegen'),

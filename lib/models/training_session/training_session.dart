@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:isar/isar.dart';
 
-import '../annual_planning/content_distribution.dart';
+import '../annual_planning/training_period.dart';
 import 'player_attendance.dart';
 import 'session_phase.dart';
 
@@ -25,34 +25,34 @@ class TrainingSession {
 
   factory TrainingSession.fromJson(Map<String, dynamic> json) {
     final session = TrainingSession();
-    session.id = json['id'] ?? '';
-    session.teamId = json['teamId'] ?? '';
+    session.id = json['id'] as String? ?? '';
+    session.teamId = json['teamId'] as String? ?? '';
     session.date =
         json['date'] != null ? DateTime.parse(json['date'] as String) : DateTime.now();
-    session.trainingNumber = json['trainingNumber'] ?? 1;
+    session.trainingNumber = json['trainingNumber'] as int? ?? 1;
     session.type = TrainingType.values.firstWhere(
       (e) => e.name == json['type'],
       orElse: () => TrainingType.regularTraining,
     );
-    session.sessionObjective = json['sessionObjective'];
-    session.teamFunction = json['teamFunction'];
-    session.coachingAccent = json['coachingAccent'];
-    session.technicalTacticalGoal = json['technicalTacticalGoal'];
-    session.phasesJson = json['phasesJson'];
-    session.warmupActivitiesJson = json['warmupActivitiesJson'];
-    session.playerAttendanceJson = json['playerAttendanceJson'];
-    session.expectedPlayers = json['expectedPlayers'] ?? 16;
-    session.actualPlayers = json['actualPlayers'] ?? 0;
-    session.notes = json['notes'];
-    session.postSessionEvaluation = json['postSessionEvaluation'];
-    session.periodizationPhaseId = json['periodizationPhaseId'];
-    session.contentFocusJson = json['contentFocusJson'];
-    session.targetIntensity = json['targetIntensity']?.toDouble();
+    session.sessionObjective = json['sessionObjective'] as String?;
+    session.teamFunction = json['teamFunction'] as String?;
+    session.coachingAccent = json['coachingAccent'] as String?;
+    session.technicalTacticalGoal = json['technicalTacticalGoal'] as String?;
+    session.phasesJson = json['phasesJson'] as String?;
+    session.warmupActivitiesJson = json['warmupActivitiesJson'] as String?;
+    session.playerAttendanceJson = json['playerAttendanceJson'] as String?;
+    session.expectedPlayers = json['expectedPlayers'] as int? ?? 16;
+    session.actualPlayers = json['actualPlayers'] as int? ?? 0;
+    session.notes = json['notes'] as String?;
+    session.postSessionEvaluation = json['postSessionEvaluation'] as String?;
+    session.periodizationPhaseId = json['periodizationPhaseId'] as String?;
+    session.contentFocusJson = json['contentFocusJson'] as String?;
+    session.targetIntensity = (json['targetIntensity'] as num?)?.toDouble();
     session.startTime =
         json['startTime'] != null ? DateTime.parse(json['startTime'] as String) : null;
     session.endTime =
         json['endTime'] != null ? DateTime.parse(json['endTime'] as String) : null;
-    session.durationMinutes = json['durationMinutes'];
+    session.durationMinutes = json['durationMinutes'] as int?;
     session.status = SessionStatus.values.firstWhere(
       (e) => e.name == json['status'],
       orElse: () => SessionStatus.planned,
@@ -113,7 +113,7 @@ class TrainingSession {
   List<SessionPhase> get phases {
     if (phasesJson == null) return [];
     try {
-      final List<dynamic> list = jsonDecode(phasesJson!);
+      final List<dynamic> list = jsonDecode(phasesJson!) as List<dynamic>;
       return list.map((json) => SessionPhase.fromJson(json as Map<String, dynamic>)).toList();
     } catch (e) {
       return [];
@@ -140,7 +140,7 @@ class TrainingSession {
   Map<String, PlayerAttendance> get playerAttendance {
     if (playerAttendanceJson == null) return {};
     try {
-      final Map<String, dynamic> json = jsonDecode(playerAttendanceJson!);
+      final Map<String, dynamic> json = jsonDecode(playerAttendanceJson!) as Map<String, dynamic>;
       return json.map(
         (key, value) => MapEntry(key, PlayerAttendance.fromJson(value as Map<String, dynamic>)),
       );

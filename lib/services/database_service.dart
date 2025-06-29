@@ -368,7 +368,7 @@ class DatabaseService {
   Future<List<Player>> getAllPlayers() async {
     if (isDemoMode) {
       final demoData = _getDemoData();
-      return demoData['players'] ?? [];
+      return List<Player>.from(demoData['players'] as List<dynamic>? ?? <dynamic>[]);
     }
 
     if (kIsWeb) {
@@ -421,7 +421,7 @@ class DatabaseService {
   Future<List<Training>> getAllTrainings() async {
     if (isDemoMode) {
       final demoData = _getDemoData();
-      return demoData['trainings'] ?? [];
+      return List<Training>.from(demoData['trainings'] as List<dynamic>? ?? <dynamic>[]);
     }
 
     if (kIsWeb) {
@@ -503,7 +503,7 @@ class DatabaseService {
   Future<List<Match>> getAllMatches() async {
     if (isDemoMode) {
       final demoData = _getDemoData();
-      return demoData['matches'] ?? [];
+      return List<Match>.from(demoData['matches'] as List<dynamic>? ?? <dynamic>[]);
     }
 
     if (kIsWeb) {
@@ -546,7 +546,7 @@ class DatabaseService {
   }
 
   Future<void> updateMatch(Match match) async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     final index = _matches.indexWhere((m) => m.id == match.id);
     if (index != -1) {
       _matches[index] = match;

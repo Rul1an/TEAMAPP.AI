@@ -261,7 +261,7 @@ class _FieldDiagramEditorScreenState
   }
 
   void _showFieldTypeSelector() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Veld Type Selecteren'),

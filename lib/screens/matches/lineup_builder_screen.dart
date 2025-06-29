@@ -949,7 +949,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
     final nameController = TextEditingController();
     final descriptionController = TextEditingController();
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Template Opslaan'),
@@ -1022,7 +1022,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
   }
 
   void _showManageTemplatesDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => Dialog(
         child: Container(

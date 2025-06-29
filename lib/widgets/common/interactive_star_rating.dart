@@ -10,7 +10,7 @@ class InteractiveStarRating extends StatefulWidget {
     this.color = Colors.amber,
   });
   final int rating;
-  final Function(int) onRatingChanged;
+  final void Function(int) onRatingChanged;
   final int maxRating;
   final double size;
   final Color color;

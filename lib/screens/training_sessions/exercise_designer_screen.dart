@@ -682,7 +682,7 @@ class _ExerciseDesignerScreenState
     // Navigeer naar de oefeningen bibliotheek in selectie modus
     final selectedExercise = await Navigator.push<TrainingExercise>(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => ExerciseLibraryScreen(
           isSelectMode: true,
           onExerciseSelected: (exercise) {

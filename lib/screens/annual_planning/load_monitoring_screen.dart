@@ -153,10 +153,10 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
 
     final currentLoad =
         morphocycles.isNotEmpty ? morphocycles.last.weeklyLoad : 0.0;
-    final averageLoad = morphocycles.fold(0, (sum, m) => sum + m.weeklyLoad) /
+    final averageLoad = morphocycles.fold(0.0, (sum, m) => sum + m.weeklyLoad) /
         morphocycles.length;
     final maxLoad = morphocycles.fold(
-        0, (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max,);
+        0.0, (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max,);
     final currentAcr =
         morphocycles.isNotEmpty ? morphocycles.last.acuteChronicRatio : 1.0;
 
@@ -601,7 +601,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     }
 
     final currentMorphocycle = morphocycles.last;
-    final avgAcr = morphocycles.fold(0, (sum, m) => sum + m.acuteChronicRatio) /
+    final avgAcr = morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) /
         morphocycles.length;
     final highRiskWeeks = morphocycles
         .where((m) =>

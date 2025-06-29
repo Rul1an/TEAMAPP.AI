@@ -495,7 +495,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
   }
 
   void _showDeleteDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Training verwijderen'),

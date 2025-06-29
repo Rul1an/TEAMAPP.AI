@@ -28,10 +28,10 @@ class FieldCanvas extends ConsumerStatefulWidget {
   final LineType selectedLineType;
   final List<Position> currentLinePoints;
   final bool isDrawingLine;
-  final Function(String?) onElementSelected;
-  final Function(String, Position) onElementMoved;
-  final Function(dynamic) onElementAdded;
-  final Function(String) onElementRemoved;
+  final void Function(String?) onElementSelected;
+  final void Function(String, Position) onElementMoved;
+  final void Function(dynamic) onElementAdded;
+  final void Function(String) onElementRemoved;
 
   @override
   ConsumerState<FieldCanvas> createState() => _FieldCanvasState();
@@ -429,10 +429,10 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     );
   }
 
-  void _showTextInputDialog(Function(String) onTextEntered) {
+  void _showTextInputDialog(void Function(String) onTextEntered) {
     String inputText = '';
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Tekst Toevoegen'),

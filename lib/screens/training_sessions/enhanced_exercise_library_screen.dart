@@ -712,7 +712,7 @@ class _EnhancedExerciseLibraryScreenState
       .fold(0, (sum, exercise) => sum + exercise.durationMinutes.round());
 
   void _showFilterDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Filter Exercises'),
@@ -770,7 +770,7 @@ class _EnhancedExerciseLibraryScreenState
   }
 
   void _showExerciseDetails(TrainingExercise exercise) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(exercise.name),

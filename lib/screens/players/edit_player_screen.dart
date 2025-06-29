@@ -474,7 +474,7 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
   }
 
   void _showDeleteDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Speler verwijderen'),

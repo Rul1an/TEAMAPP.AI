@@ -163,7 +163,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                       GestureDetector(
                         onTap: () => Navigator.push(
                           context,
-                          MaterialPageRoute(
+                          MaterialPageRoute<void>(
                               builder: (context) =>
                                   const LoadMonitoringScreen(),),
                         ),
@@ -592,7 +592,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
     final currentWeek = ref.read(annualPlanningProvider).selectedWeekSchedule;
     if (currentWeek == null) return;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => _WeekCustomizationDialog(
         weekSchedule: currentWeek,
@@ -749,7 +749,7 @@ class _WeekCustomizationDialog extends StatefulWidget {
     required this.onSave,
   });
   final WeekSchedule weekSchedule;
-  final Function(WeekSchedule) onSave;
+  final void Function(WeekSchedule) onSave;
 
   @override
   State<_WeekCustomizationDialog> createState() =>
@@ -964,7 +964,7 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
       );
 
   void _addTraining() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => TrainingDialog(
         weekStartDate: widget.weekSchedule.weekStartDate,
@@ -978,7 +978,7 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
   }
 
   void _editTraining(int index) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => TrainingDialog(
         existingTraining: _trainingSessions[index],
@@ -1012,7 +1012,7 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
 
   void _editMatch(int index) {
     // For now, just show a simple dialog
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Wedstrijd Bewerken'),

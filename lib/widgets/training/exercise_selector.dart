@@ -13,8 +13,8 @@ class ExerciseSelector extends StatefulWidget {
   });
   final List<TrainingExercise> availableExercises;
   final List<TrainingExercise> selectedExercises;
-  final Function(TrainingExercise) onExerciseSelected;
-  final Function(TrainingExercise) onExerciseRemoved;
+  final void Function(TrainingExercise) onExerciseSelected;
+  final void Function(TrainingExercise) onExerciseRemoved;
 
   @override
   State<ExerciseSelector> createState() => _ExerciseSelectorState();
@@ -283,7 +283,7 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
   }
 
   void _showExercisePreview(TrainingExercise exercise) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(exercise.name),
@@ -364,7 +364,7 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
 
   void _openExerciseLibrary() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => ExerciseLibraryScreen(
           isSelectMode: true,
           onExerciseSelected: (exercise) {

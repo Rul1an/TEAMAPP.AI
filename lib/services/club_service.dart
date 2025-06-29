@@ -17,7 +17,7 @@ class ClubService {
 
   // Club Operations
   Future<Club> getClub(String clubId) async {
-    await Future.delayed(
+    await Future<void>.delayed(
         const Duration(milliseconds: 500),); // Simulate API delay
     if (!_clubs.containsKey(clubId)) {
       throw Exception('Club not found');
@@ -26,7 +26,7 @@ class ClubService {
   }
 
   Future<Club> createClub(Club club) async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     _clubs[club.id] = club;
     _clubTeams[club.id] = [];
     _clubStaff[club.id] = [];
@@ -36,7 +36,7 @@ class ClubService {
   }
 
   Future<Club> updateClub(Club club) async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     if (!_clubs.containsKey(club.id)) {
       throw Exception('Club not found');
     }
@@ -45,7 +45,7 @@ class ClubService {
   }
 
   Future<void> deleteClub(String clubId) async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     _clubs.remove(clubId);
     _clubTeams.remove(clubId);
     _clubStaff.remove(clubId);
@@ -54,7 +54,7 @@ class ClubService {
   }
 
   Future<List<Club>> getAllClubs() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     return _clubs.values.toList();
   }
 

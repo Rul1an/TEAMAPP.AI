@@ -542,7 +542,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
   }
 
   void _showDeleteDialog() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Wedstrijd verwijderen'),

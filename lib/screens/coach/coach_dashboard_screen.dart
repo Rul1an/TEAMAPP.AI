@@ -499,7 +499,7 @@ class CoachDashboardScreen extends ConsumerWidget {
   }
 
   void _showUpgradeDialog(BuildContext context, String feature) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Upgrade Vereist'),
@@ -522,7 +522,7 @@ class CoachDashboardScreen extends ConsumerWidget {
   }
 
   void _showQuickPlanDialog(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Snel Plannen'),

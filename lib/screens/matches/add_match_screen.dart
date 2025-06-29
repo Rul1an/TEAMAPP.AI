@@ -229,12 +229,12 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
         );
 
         final match = Match()
-          ..opponent = values['opponent']
+          ..opponent = values['opponent'] as String
           ..date = matchDateTime
-          ..location = values['location']
-          ..competition = values['competition']
-          ..venue = values['venue']
-          ..referee = values['referee']
+          ..location = values['location'] as Location
+          ..competition = values['competition'] as Competition
+          ..venue = values['venue'] as String?
+          ..referee = values['referee'] as String?
           ..status = MatchStatus.scheduled;
 
         await ref.read(matchesNotifierProvider.notifier).addMatch(match);

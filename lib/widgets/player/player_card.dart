@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/theme.dart';
 import '../../models/player.dart';
 import '../../services/database_service.dart';
-import '../common/performance_badge.dart';
+import '../../models/performance_rating.dart';import '../common/performance_badge.dart';
 
 class PlayerCard extends ConsumerWidget {
   const PlayerCard({

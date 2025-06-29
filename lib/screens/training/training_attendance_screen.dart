@@ -418,7 +418,7 @@ class _TrainingAttendanceScreenState
         return;
       }
 
-      showModalBottomSheet(
+      showModalBottomSheet<void>(
         context: context,
         isScrollControlled: true,
         builder: (context) => DraggableScrollableSheet(

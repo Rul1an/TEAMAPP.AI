@@ -6,7 +6,7 @@ class FormationTemplateSelector extends StatefulWidget {
     super.key,
     required this.onFormationSelected,
   });
-  final Function(List<PlayerMarker>) onFormationSelected;
+  final void Function(List<PlayerMarker>) onFormationSelected;
 
   @override
   State<FormationTemplateSelector> createState() =>

@@ -10,7 +10,7 @@ class MatchDialog extends StatefulWidget {
   });
   final WeeklyMatch? existingMatch;
   final DateTime weekStartDate;
-  final Function(WeeklyMatch) onSave;
+  final void Function(WeeklyMatch) onSave;
 
   @override
   State<MatchDialog> createState() => _MatchDialogState();

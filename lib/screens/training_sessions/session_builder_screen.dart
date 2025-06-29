@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io' as io;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -744,7 +745,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   }
 
   void _deletePhase(int index) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Fase Verwijderen'),
@@ -996,7 +997,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   }
 
   void _selectTrainingType() {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       builder: (context) => Container(
         padding: const EdgeInsets.all(16),
@@ -1035,7 +1036,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         TextEditingController(text: phase.durationMinutes.toString());
     PhaseType selectedType = phase.type;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
@@ -1142,7 +1143,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     final durationController = TextEditingController(text: '15');
     PhaseType selectedType = PhaseType.technical;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
@@ -1411,7 +1412,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   Future<void> _addExerciseToPhaseQuick(SessionPhase phase) async {
     // Controleer of de sessie al is opgeslagen
     if (session!.id == '0') {
-      _saveSession();
+      unawaited(_saveSession());
       if (mounted && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -1427,7 +1428,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     // Navigeer direct naar exercise library met deze fase
     final result = await Navigator.push<TrainingExercise>(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => ExerciseLibraryScreen(
           isSelectMode: true,
           onExerciseSelected: (exercise) {
@@ -1444,7 +1445,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
 
   // ignore: unused_element
   void _showPhaseExercises(SessionPhase phase) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Oefeningen - ${phase.name}'),

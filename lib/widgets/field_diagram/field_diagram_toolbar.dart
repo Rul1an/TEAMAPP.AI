@@ -11,7 +11,7 @@ class FieldDiagramToolbar extends ConsumerStatefulWidget {
     required this.onToolSelected,
   });
   final DiagramTool selectedTool;
-  final Function(DiagramTool) onToolSelected;
+  final void Function(DiagramTool) onToolSelected;
 
   @override
   ConsumerState<FieldDiagramToolbar> createState() =>

@@ -280,7 +280,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
     Map<String, int> skills,
     IconData icon,
     Color color,
-    Function(String, int) onRatingChanged,
+    void Function(String, int) onRatingChanged,
   ) =>
       Card(
         child: Padding(

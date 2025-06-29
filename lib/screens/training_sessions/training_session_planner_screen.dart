@@ -20,7 +20,7 @@ class _TrainingSessionPlannerScreenState
               icon: const Icon(Icons.library_books),
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<void>(
                   builder: (context) => EnhancedExerciseLibraryScreen(
                     weekNumber: _getCurrentWeekNumber(),
                   ),

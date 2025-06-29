@@ -9,7 +9,7 @@ class PhaseDesigner extends StatefulWidget {
     this.onPhaseDeleted,
   });
   final SessionPhase phase;
-  final Function(SessionPhase) onPhaseUpdated;
+  final void Function(SessionPhase) onPhaseUpdated;
   final VoidCallback? onPhaseDeleted;
 
   @override
