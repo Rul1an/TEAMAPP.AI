@@ -82,10 +82,7 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
                   onPanStart: _handlePanStart,
                   onPanUpdate: _handlePanUpdate,
                   onPanEnd: _handlePanEnd,
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: CustomPaint(
+                  child: SizedBox.expand(                    child: CustomPaint(
                       painter: FieldPainter(
                         diagram: widget.diagram,
                         selectedElementId: widget.selectedElementId,

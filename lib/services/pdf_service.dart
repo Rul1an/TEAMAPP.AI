@@ -400,7 +400,7 @@ class PDFService {
                               fontWeight: pw.FontWeight.bold,
                             ),
                           ),
-                          if (phase.description?.isNotEmpty == true) ...[
+                          if (phase.description?.isNotEmpty ?? false) ...[
                             pw.SizedBox(height: 3),
                             pw.Text(
                               phase.description!,

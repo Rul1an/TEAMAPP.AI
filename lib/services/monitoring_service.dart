@@ -27,9 +27,7 @@ class MonitoringService {
             if (kDebugMode) return null;
 
             // Filter out known non-critical errors
-            if (event.throwable?.toString().contains('SocketException') ==
-                true) {
-              return null; // Network errors are handled gracefully
+            if (event.throwable?.toString().contains('SocketException') ?? false) {              return null; // Network errors are handled gracefully
             }
 
             return event;

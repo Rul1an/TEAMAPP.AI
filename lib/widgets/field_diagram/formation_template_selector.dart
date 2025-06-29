@@ -85,7 +85,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
                     ),
                     child: CustomPaint(
                       painter: FormationPreviewPainter(formation.positions),
-                      size: const Size(double.infinity, double.infinity),
+                      size: Size.infinite,
                     ),
                   ),
                 ),

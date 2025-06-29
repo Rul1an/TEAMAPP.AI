@@ -239,12 +239,12 @@ class DemoDataService {
         ..id = _uuid.v4()
         ..date = date
         ..opponent = opponents[i % opponents.length]
-        ..location = i % 2 == 0 ? Location.home : Location.away
+        ..location = i .isEven ? Location.home : Location.away
         ..competition = Competition.league
         ..status = MatchStatus.completed
-        ..venue = i % 2 == 0 ? 'Sportpark Overvecht' : 'Uitstadion'
-        ..teamScore = i % 2 == 0 ? 2 : 1
-        ..opponentScore = i % 2 == 0 ? 1 : 2;
+        ..venue = i .isEven ? 'Sportpark Overvecht' : 'Uitstadion'
+        ..teamScore = i .isEven ? 2 : 1
+        ..opponentScore = i .isEven ? 1 : 2;
 
       matches.add(match);
     }
@@ -256,10 +256,10 @@ class DemoDataService {
         ..id = _uuid.v4()
         ..date = date
         ..opponent = opponents[(i + 3) % opponents.length]
-        ..location = i % 2 == 0 ? Location.away : Location.home
+        ..location = i .isEven ? Location.away : Location.home
         ..competition = Competition.league
         ..status = MatchStatus.scheduled
-        ..venue = i % 2 == 0 ? 'Uitstadion' : 'Sportpark Overvecht';
+        ..venue = i .isEven ? 'Uitstadion' : 'Sportpark Overvecht';
 
       matches.add(match);
     }

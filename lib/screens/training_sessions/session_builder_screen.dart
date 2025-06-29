@@ -525,7 +525,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                                 ),
                               ],
                             ),
-                          if (phase.description?.isNotEmpty == true)
+                          if (phase.description?.isNotEmpty ?? false)
                             Text(
                               phase.description!,
                               style: TextStyle(
@@ -718,11 +718,9 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
 
   void _reorderPhases(int oldIndex, int newIndex) {
     setState(() {
-      if (newIndex > oldIndex) {
-        newIndex -= 1;
-      }
+      final adjustedNewIndex = newIndex > oldIndex ? newIndex - 1 : newIndex;
       final item = sessionPhases.removeAt(oldIndex);
-      sessionPhases.insert(newIndex, item);
+      sessionPhases.insert(adjustedNewIndex, item);      sessionPhases.insert(newIndex, item);
 
       // Update order indices and recalculate times
       for (int i = 0; i < sessionPhases.length; i++) {

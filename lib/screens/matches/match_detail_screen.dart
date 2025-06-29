@@ -668,7 +668,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                           ),
                         );
 
-                        if (result == true && mounted && context.mounted) {
+                        if ((result ?? false) && mounted && context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(

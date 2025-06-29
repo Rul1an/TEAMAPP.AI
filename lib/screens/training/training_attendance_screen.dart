@@ -473,7 +473,7 @@ class _TrainingAttendanceScreenState
                           ),
                         );
 
-                        if (result == true && mounted && context.mounted) {
+                        if ((result ?? false) && mounted && context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(

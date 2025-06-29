@@ -48,11 +48,10 @@ class DatabaseService {
   final List<TrainingSession> _trainingSessions = [];
   final List<TrainingExercise> _trainingExercises = [];
 
-  // Set the ref for accessing providers
-  void setRef(Ref ref) {
-    _ref = ref;
+  // Setter for accessing providers
+  set ref(Ref value) {
+    _ref = value;
   }
-
   // Check if in demo mode
   bool get isDemoMode {
     if (_ref == null) return false;
@@ -226,10 +225,10 @@ class DatabaseService {
         ..id = (i + 1).toString() // Changed to String
         ..date = DateTime.now().add(Duration(days: i * 7))
         ..opponent = opponents[i]
-        ..location = i % 2 == 0 ? Location.home : Location.away
+        ..location = i .isEven ? Location.home : Location.away
         ..competition = Competition.league
         ..status = i < 2 ? MatchStatus.completed : MatchStatus.scheduled
-        ..venue = i % 2 == 0 ? 'Sportpark De Toekomst' : 'Uitstadion'
+        ..venue = i .isEven ? 'Sportpark De Toekomst' : 'Uitstadion'
         ..teamScore = i < 2 ? 2 + i : null
         ..opponentScore = i < 2 ? 1 : null;
 

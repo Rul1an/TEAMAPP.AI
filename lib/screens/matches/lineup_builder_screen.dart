@@ -1116,7 +1116,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
       ),
     );
 
-    if (confirmed == true) {
+    if (confirmed ?? false) {
       await DatabaseService().deleteFormationTemplate(template.id);
       await _loadTemplates(); // Refresh template list
 
