@@ -118,7 +118,7 @@ class _MatchDialogState extends State<MatchDialog> {
                     prefixIcon: Icon(Icons.edit),
                   ),
                   validator: (value) =>
-                      value?.isEmpty == true ? 'Voer tegenstander in' : null,
+                      value?.isEmpty ?? false ? 'Voer tegenstander in' : null,
                 ),
                 const SizedBox(height: 16),
 
@@ -193,7 +193,7 @@ class _MatchDialogState extends State<MatchDialog> {
                     prefixIcon: Icon(Icons.location_on),
                   ),
                   validator: (value) =>
-                      value?.isEmpty == true ? 'Voer locatie in' : null,
+                      value?.isEmpty ?? false ? 'Voer locatie in' : null,
                 ),
                 const SizedBox(height: 16),
 

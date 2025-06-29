@@ -293,13 +293,13 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                           color: isSelected ? Colors.white : Colors.black87,
                         ),
                       ),
-                      if (weekSchedule?.isVacation == true)
+                      if (weekSchedule?.isVacation ?? false)
                         const Icon(
                           Icons.beach_access,
                           size: 12,
                           color: Colors.orange,
                         )
-                      else if (weekSchedule?.hasActivities == true)
+                      else if (weekSchedule?.hasActivities ?? false)
                         const Icon(
                           Icons.sports_soccer,
                           size: 12,
@@ -559,9 +559,9 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
 
   Color _getWeekColor(WeekSchedule? week, bool isSelected, bool isCurrent) {
     if (isSelected) return Colors.green[600]!;
-    if (week?.isVacation == true) return Colors.orange[200]!;
+    if (week?.isVacation ?? false) return Colors.orange[200]!;
     if (isCurrent) return Colors.green[100]!;
-    if (week?.hasActivities == true) return Colors.blue[50]!;
+    if (week?.hasActivities ?? false) return Colors.blue[50]!;
     return Colors.grey[100]!;
   }
 

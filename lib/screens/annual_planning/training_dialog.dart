@@ -118,7 +118,7 @@ class _TrainingDialogState extends State<TrainingDialog> {
                       _nameController.text = value;
                     }
                   },
-                  validator: (value) => value?.isEmpty == true
+                  validator: (value) => value?.isEmpty ?? false
                       ? 'Selecteer een training type'
                       : null,
                 ),
@@ -133,7 +133,7 @@ class _TrainingDialogState extends State<TrainingDialog> {
                     prefixIcon: Icon(Icons.edit),
                   ),
                   validator: (value) =>
-                      value?.isEmpty == true ? 'Voer een naam in' : null,
+                      value?.isEmpty ?? false ? 'Voer een naam in' : null,
                 ),
                 const SizedBox(height: 16),
 
@@ -157,7 +157,7 @@ class _TrainingDialogState extends State<TrainingDialog> {
                     }
                   },
                   validator: (value) =>
-                      value?.isEmpty == true ? 'Selecteer een locatie' : null,
+                      value?.isEmpty ?? false ? 'Selecteer een locatie' : null,
                 ),
                 const SizedBox(height: 16),
 
