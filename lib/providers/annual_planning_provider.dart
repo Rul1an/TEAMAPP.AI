@@ -425,8 +425,8 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           dateTime:
               DateTime(saturday.year, saturday.month, saturday.day, 14, 30),
           location:
-              weekNumber % 2 == 0 ? 'Thuis' : _getAwayLocation(weekNumber),
-          isHomeMatch: weekNumber % 2 == 0,
+              weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
+          isHomeMatch: weekNumber.isEven,
           type: _getMatchType(weekNumber),
         ),
       );
@@ -609,7 +609,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     final tuesday = weekStart.add(const Duration(days: 1));
     trainingSessions.add(
       WeeklyTraining(
-        name: 'Verdedigende Organisatie ${weekNumber % 2 == 0 ? '1' : '2'}',
+        name: 'Verdedigende Organisatie ${weekNumber.isEven ? '1' : '2'}',
         dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
         location: _getTrainingLocation(weekNumber),
         notes: _getTrainingNotes(weekNumber),
@@ -619,7 +619,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     final thursday = weekStart.add(const Duration(days: 3));
     trainingSessions.add(
       WeeklyTraining(
-        name: 'Verdedigende Organisatie ${weekNumber % 2 == 0 ? '3' : '1'}',
+        name: 'Verdedigende Organisatie ${weekNumber.isEven ? '3' : '1'}',
         dateTime: DateTime(thursday.year, thursday.month, thursday.day, 19, 30),
         location: _getTrainingLocation(weekNumber),
       ),
@@ -635,8 +635,8 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           dateTime:
               DateTime(saturday.year, saturday.month, saturday.day, 14, 30),
           location:
-              weekNumber % 2 == 0 ? 'Thuis' : _getAwayLocation(weekNumber),
-          isHomeMatch: weekNumber % 2 == 0,
+              weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
+          isHomeMatch: weekNumber.isEven,
           type: _getMatchType(weekNumber),
         ),
       );
