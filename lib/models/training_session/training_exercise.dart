@@ -91,25 +91,25 @@ class TrainingExercise {
       name: json['name'] as String,
       description: json['description'] as String,
       durationMinutes: (json['durationMinutes'] as num).toDouble(),
-      playerCount: json['playerCount'],
-      equipment: json['equipment'] ?? '',
+      playerCount: json['playerCount'] as int,
+      equipment: json['equipment'] as String? ?? '',
       intensityLevel: (json['intensityLevel'] as num?)?.toDouble() ?? 5.0,
       type: ExerciseType.values.firstWhere(
         (e) => e.name == json['type'],
         orElse: () => ExerciseType.technical,
       ),
       coachingPoints: json['coachingPoints'] != null
-          ? List<String>.from(json['coachingPoints'])
+          ? List<String>.from(json['coachingPoints'] as List<dynamic>)
           : [],
-      trainingSessionId: json['trainingSessionId'],
-      sessionPhaseId: json['sessionPhaseId'],
-      orderIndex: json['orderIndex'] ?? 0,
-      keyFocus: json['keyFocus'],
+      trainingSessionId: json['trainingSessionId'] as String?,
+      sessionPhaseId: json['sessionPhaseId'] as String?,
+      orderIndex: json['orderIndex'] as int? ?? 0,
+      keyFocus: json['keyFocus'] as String?,
       objectives: json['objectives'] != null
-          ? List<String>.from(json['objectives'])
+          ? List<String>.from(json['objectives'] as List<dynamic>)
           : [],
-      minPlayers: json['minPlayers'] ?? 1,
-      maxPlayers: json['maxPlayers'] ?? 22,
+      minPlayers: json['minPlayers'] as int? ?? 1,
+      maxPlayers: json['maxPlayers'] as int? ?? 22,
       category: json['category'] != null
           ? ExerciseCategory.values.firstWhere(
               (e) => e.name == json['category'],
@@ -122,7 +122,7 @@ class TrainingExercise {
               orElse: () => ExerciseComplexity.basic,
             )
           : ExerciseComplexity.basic,
-      spaceRequired: json['spaceRequired'] ?? 'Half field',
+      spaceRequired: json['spaceRequired'] as String? ?? 'Half field',
       estimatedRPE: (json['estimatedRPE'] as num?)?.toDouble() ?? 5.0,
       averageRating: (json['averageRating'] as num?)?.toDouble() ?? 0.0,
       tacticalFocus: json['tacticalFocus'] != null
@@ -135,10 +135,10 @@ class TrainingExercise {
     );
     exercise.id = json['id'] ?? 0;
     exercise.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
+        ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     exercise.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
+        ? DateTime.parse(json['updatedAt'] as String)
         : DateTime.now();
     return exercise;
   }

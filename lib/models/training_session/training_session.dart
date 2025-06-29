@@ -28,7 +28,7 @@ class TrainingSession {
     session.id = json['id'] ?? '';
     session.teamId = json['teamId'] ?? '';
     session.date =
-        json['date'] != null ? DateTime.parse(json['date']) : DateTime.now();
+        json['date'] != null ? DateTime.parse(json['date'] as String) : DateTime.now();
     session.trainingNumber = json['trainingNumber'] ?? 1;
     session.type = TrainingType.values.firstWhere(
       (e) => e.name == json['type'],
@@ -49,19 +49,19 @@ class TrainingSession {
     session.contentFocusJson = json['contentFocusJson'];
     session.targetIntensity = json['targetIntensity']?.toDouble();
     session.startTime =
-        json['startTime'] != null ? DateTime.parse(json['startTime']) : null;
+        json['startTime'] != null ? DateTime.parse(json['startTime'] as String) : null;
     session.endTime =
-        json['endTime'] != null ? DateTime.parse(json['endTime']) : null;
+        json['endTime'] != null ? DateTime.parse(json['endTime'] as String) : null;
     session.durationMinutes = json['durationMinutes'];
     session.status = SessionStatus.values.firstWhere(
       (e) => e.name == json['status'],
       orElse: () => SessionStatus.planned,
     );
     session.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
+        ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     session.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
+        ? DateTime.parse(json['updatedAt'] as String)
         : DateTime.now();
     return session;
   }
