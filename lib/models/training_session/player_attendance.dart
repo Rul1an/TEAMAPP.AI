@@ -72,13 +72,13 @@ class PlayerAttendance {
     );
     attendance.notes = json['notes'];
     attendance.arrivalTime = json['arrivalTime'] != null
-        ? DateTime.parse(json['arrivalTime'])
+        ? DateTime.parse(json['arrivalTime'] as String)
         : null;
     attendance.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
+        ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     attendance.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
+        ? DateTime.parse(json['updatedAt'] as String)
         : DateTime.now();
     return attendance;
   }

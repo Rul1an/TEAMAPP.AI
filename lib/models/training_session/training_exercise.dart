@@ -88,8 +88,8 @@ class TrainingExercise {
 
   factory TrainingExercise.fromJson(Map<String, dynamic> json) {
     final exercise = TrainingExercise.create(
-      name: json['name'],
-      description: json['description'],
+      name: json['name'] as String,
+      description: json['description'] as String,
       durationMinutes: (json['durationMinutes'] as num).toDouble(),
       playerCount: json['playerCount'],
       equipment: json['equipment'] ?? '',

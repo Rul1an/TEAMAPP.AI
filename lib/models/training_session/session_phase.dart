@@ -77,10 +77,10 @@ class SessionPhase {
     phase.id = json['id'] ?? '';
     phase.name = json['name'] ?? '';
     phase.startTime = json['startTime'] != null
-        ? DateTime.parse(json['startTime'])
+        ? DateTime.parse(json['startTime'] as String)
         : DateTime.now();
     phase.endTime = json['endTime'] != null
-        ? DateTime.parse(json['endTime'])
+        ? DateTime.parse(json['endTime'] as String)
         : DateTime.now();
     phase.description = json['description'];
     phase.orderIndex = json['orderIndex'] ?? 0;
@@ -89,13 +89,13 @@ class SessionPhase {
       orElse: () => PhaseType.main,
     );
     phase.exerciseIds = json['exerciseIds'] != null
-        ? List<String>.from(json['exerciseIds'])
+        ? List<String>.from(json['exerciseIds'] as List<dynamic>)
         : [];
     phase.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
+        ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     phase.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'])
+        ? DateTime.parse(json['updatedAt'] as String)
         : DateTime.now();
     return phase;
   }
