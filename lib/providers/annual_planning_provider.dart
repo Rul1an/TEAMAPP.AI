@@ -667,8 +667,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   String? _getTrainingNotes(int weekNumber) {
-    if (weekNumber == 36)
+    if (weekNumber == 36) {
       return 'Bart nog op vakantie t/m 9 aug. Roel waarschijnlijk t/m 17 aug.';
+    }
     if (weekNumber == 35) return 'Schoolvakanties M t/m 25 en N t/m 1 sep.';
     return null;
   }

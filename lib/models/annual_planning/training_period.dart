@@ -96,33 +96,33 @@ class TrainingPeriod {
   }
 
   factory TrainingPeriod.fromJson(Map<String, dynamic> json) {
-    final period = TrainingPeriod();
-    period.id = json['id'] as String? ?? '';
-    period.periodizationPlanId = json['periodizationPlanId'] as String? ?? '';
-    period.name = json['name'] as String? ?? '';
-    period.description = json['description'] as String? ?? '';
-    period.type = PeriodType.values.firstWhere(
+    final period = TrainingPeriod()
+    ..id = json['id'] as String? ?? '';
+      ..periodizationPlanId = json['periodizationPlanId'] as String? ?? '';
+      ..name = json['name'] as String? ?? '';
+      ..description = json['description'] as String? ?? '';
+      ..type = PeriodType.values.firstWhere(
       (e) => e.name == json['type'],
       orElse: () => PeriodType.preparation,
     );
-    period.orderIndex = json['orderIndex'] as int? ?? 0;
-    period.durationWeeks = json['durationWeeks'] as int? ?? 4;
-    period.startDate =
+      ..orderIndex = json['orderIndex'] as int? ?? 0;
+      ..durationWeeks = json['durationWeeks'] as int? ?? 4;
+      ..startDate =
         json['startDate'] != null ? DateTime.parse(json['startDate'] as String) : null;
-    period.endDate =
+      ..endDate =
         json['endDate'] != null ? DateTime.parse(json['endDate'] as String) : null;
-    period.intensityPercentage =
+      ..intensityPercentage =
         (json['intensityPercentage'] as num?)?.toDouble() ?? 70.0;
-    period.contentFocusJson = json['contentFocusJson'] as String?;
-    period.keyObjectives = List<String>.from(json['keyObjectives'] as List<dynamic>? ?? <dynamic>[]);
-    period.sessionsPerWeek = json['sessionsPerWeek'] as int? ?? 3;
-    period.averageSessionMinutes = json['averageSessionMinutes'] as int? ?? 75;
-    period.restDaysBetweenSessions = json['restDaysBetweenSessions'] as int? ?? 1;
-    period.status = PeriodStatus.values.firstWhere(
+      ..contentFocusJson = json['contentFocusJson'] as String?;
+      ..keyObjectives = List<String>.from(json['keyObjectives'] as List<dynamic>? ?? <dynamic>[]);
+      ..sessionsPerWeek = json['sessionsPerWeek'] as int? ?? 3;
+      ..averageSessionMinutes = json['averageSessionMinutes'] as int? ?? 75;
+      ..restDaysBetweenSessions = json['restDaysBetweenSessions'] as int? ?? 1;
+      ..status = PeriodStatus.values.firstWhere(
       (e) => e.name == json['status'] as String,
       orElse: () => PeriodStatus.planned,
     );
-    period.createdAt = json['createdAt'] != null
+      ..createdAt = json['createdAt'] != null
         ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
     period.updatedAt = json['updatedAt'] != null
@@ -461,31 +461,31 @@ class ContentDistribution {
     );
 
   factory ContentDistribution.balanced() => ContentDistribution(
-      technical: 25.0,
-      tactical: 25.0,
-      physical: 25.0,
-      mental: 25.0,
+      technical: 25,
+      tactical: 25,
+      physical: 25,
+      mental: 25,
     );
 
   factory ContentDistribution.tacticalFocus() => ContentDistribution(
-      technical: 20.0,
-      tactical: 40.0,
-      physical: 25.0,
-      mental: 15.0,
+      technical: 20,
+      tactical: 40,
+      physical: 25,
+      mental: 15,
     );
 
   factory ContentDistribution.matchPrep() => ContentDistribution(
-      technical: 15.0,
-      tactical: 50.0,
-      physical: 20.0,
-      mental: 15.0,
+      technical: 15,
+      tactical: 50,
+      physical: 20,
+      mental: 15,
     );
 
   factory ContentDistribution.recovery() => ContentDistribution(
-      technical: 30.0,
-      tactical: 10.0,
-      physical: 40.0,
-      mental: 20.0,
+      technical: 30,
+      tactical: 10,
+      physical: 40,
+      mental: 20,
     );
 
   final double technical;
