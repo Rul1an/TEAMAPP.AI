@@ -241,7 +241,7 @@ class SupabaseConfig {
 
   /// Realtime subscription for organization data
   static RealtimeChannel subscribeToOrganization(String organizationId,
-          void void Function(PostgresChangePayload) callback,) =>
+          void Function(PostgresChangePayload) callback,) =>
       _client
           .channel('organization_$organizationId')
           .onPostgresChanges(

@@ -17,7 +17,7 @@ class StarRating extends StatelessWidget {
   final Color? color;
   final Color? emptyColor;
   final bool showNumber;
-  final void void Function(int)? onRatingChanged;
+  final void Function(int)? onRatingChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class InteractiveStarRating extends StatefulWidget {
   final int maxRating;
   final double size;
   final String? label;
-  final void void Function(int) onRatingChanged;
+  final void Function(int) onRatingChanged;
 
   @override
   State<InteractiveStarRating> createState() => _InteractiveStarRatingState();

@@ -275,7 +275,7 @@ class MonitoringService {
   /// Performance monitoring wrapper for async operations
   static Future<T> monitorAsync<T>({
     required String operation,
-    required Future<T> void Function() function,
+    required Future<T> Function() function,
     Map<String, dynamic>? metadata,
   }) async {
     final stopwatch = Stopwatch()..start();
@@ -322,7 +322,7 @@ mixin MonitoringMixin {
       );
 
   Future<T> monitorOperation<T>(
-          String operation, Future<T> void Function() function,) =>
+          String operation, Future<T> Function() function,) =>
       MonitoringService.monitorAsync(
         operation: operation,
         function: function,
