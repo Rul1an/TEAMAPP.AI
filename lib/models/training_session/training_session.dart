@@ -159,7 +159,7 @@ class TrainingSession {
   ContentDistribution? get contentFocus {
     if (contentFocusJson == null) return null;
     try {
-      return ContentDistribution.fromJson(jsonDecode(contentFocusJson!));
+      return ContentDistribution.fromJson(jsonDecode(contentFocusJson!) as Map<String, dynamic>);
     } catch (e) {
       return null;
     }

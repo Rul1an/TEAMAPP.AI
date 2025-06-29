@@ -154,14 +154,14 @@ class PlayerMarker {
   });
 
   factory PlayerMarker.fromJson(Map<String, dynamic> json) => PlayerMarker(
-        id: json['id'] ?? '',
-        position: Position.fromJson(json['position']),
+        id: json['id'] as String? ?? '',
+        position: Position.fromJson(json['position'] as Map<String, dynamic>),
         type: PlayerType.values.firstWhere(
           (e) => e.name == json['type'],
           orElse: () => PlayerType.neutral,
         ),
-        label: json['label'],
-        color: json['color'] ?? '#2196F3',
+        label: json['label'] as String?,
+        color: json['color'] as String? ?? '#2196F3',
       );
   final String id;
   final Position position;
@@ -192,14 +192,14 @@ class EquipmentMarker {
 
   factory EquipmentMarker.fromJson(Map<String, dynamic> json) =>
       EquipmentMarker(
-        id: json['id'] ?? '',
-        position: Position.fromJson(json['position']),
+        id: json['id'] as String? ?? '',
+        position: Position.fromJson(json['position'] as Map<String, dynamic>),
         type: EquipmentType.values.firstWhere(
           (e) => e.name == json['type'],
           orElse: () => EquipmentType.cone,
         ),
-        color: json['color'] ?? '#FF9800',
-        size: json['size']?.toDouble(),
+        color: json['color'] as String? ?? '#FF9800',
+        size: (json['size'] as num?)?.toDouble(),
       );
   final String id;
   final Position position;
@@ -247,35 +247,35 @@ class MovementLine {
     // Handle legacy format with start/end
     if (json.containsKey('start') && json.containsKey('end')) {
       return MovementLine(
-        id: json['id'] ?? '',
+        id: json['id'] as String? ?? '',
         points: [
-          Position.fromJson(json['start']),
-          Position.fromJson(json['end']),
+          Position.fromJson(json['start'] as Map<String, dynamic>),
+          Position.fromJson(json['end'] as Map<String, dynamic>),
         ],
         type: LineType.values.firstWhere(
           (e) => e.name == json['type'],
           orElse: () => LineType.pass,
         ),
-        color: json['color'] ?? '#4CAF50',
-        label: json['label'],
+        color: json['color'] as String? ?? '#4CAF50',
+        label: json['label'] as String?,
       );
     }
 
     // New format with points array
     return MovementLine(
-      id: json['id'] ?? '',
+      id: json['id'] as String? ?? '',
       points: (json['points'] as List<dynamic>?)
-              ?.map((p) => Position.fromJson(p))
+              ?.map((p) => Position.fromJson(p as Map<String, dynamic>))
               .toList() ??
           [],
       type: LineType.values.firstWhere(
         (e) => e.name == json['type'],
         orElse: () => LineType.pass,
       ),
-      color: json['color'] ?? '#4CAF50',
-      strokeWidth: json['strokeWidth']?.toDouble() ?? 2.0,
-      hasArrowHead: json['hasArrowHead'] ?? true,
-      label: json['label'],
+      color: json['color'] as String? ?? '#4CAF50',
+      strokeWidth: (json['strokeWidth'] as num?)?.toDouble() ?? 2.0,
+      hasArrowHead: json['hasArrowHead'] as bool? ?? true,
+      label: json['label'] as String?,
     );
   }
   final String id;
@@ -308,12 +308,12 @@ class AreaMarker {
   });
 
   factory AreaMarker.fromJson(Map<String, dynamic> json) => AreaMarker(
-        id: json['id'] ?? '',
-        topLeft: Position.fromJson(json['topLeft']),
-        bottomRight: Position.fromJson(json['bottomRight']),
-        color: json['color'] ?? '#FFC107',
-        opacity: json['opacity']?.toDouble() ?? 0.3,
-        label: json['label'],
+        id: json['id'] as String? ?? '',
+        topLeft: Position.fromJson(json['topLeft'] as Map<String, dynamic>),
+        bottomRight: Position.fromJson(json['bottomRight'] as Map<String, dynamic>),
+        color: json['color'] as String? ?? '#FFC107',
+        opacity: (json['opacity'] as num?)?.toDouble() ?? 0.3,
+        label: json['label'] as String?,
       );
   final String id;
   final Position topLeft;
@@ -342,11 +342,11 @@ class TextLabel {
   });
 
   factory TextLabel.fromJson(Map<String, dynamic> json) => TextLabel(
-        id: json['id'] ?? '',
-        position: Position.fromJson(json['position']),
-        text: json['text'] ?? '',
-        color: json['color'] ?? '#000000',
-        fontSize: json['fontSize']?.toDouble() ?? 14.0,
+        id: json['id'] as String? ?? '',
+        position: Position.fromJson(json['position'] as Map<String, dynamic>),
+        text: json['text'] as String? ?? '',
+        color: json['color'] as String? ?? '#000000',
+        fontSize: (json['fontSize'] as num?)?.toDouble() ?? 14.0,
       );
   final String id;
   final Position position;
@@ -367,8 +367,8 @@ class Position {
   const Position(this.x, this.y);
 
   factory Position.fromJson(Map<String, dynamic> json) => Position(
-        json['x']?.toDouble() ?? 0.0,
-        json['y']?.toDouble() ?? 0.0,
+        (json['x'] as num?)?.toDouble() ?? 0.0,
+        (json['y'] as num?)?.toDouble() ?? 0.0,
       );
   final double x;
   final double y;
@@ -392,8 +392,8 @@ class Dimensions {
   const Dimensions(this.width, this.height);
 
   factory Dimensions.fromJson(Map<String, dynamic> json) => Dimensions(
-        json['width']?.toDouble() ?? 0.0,
-        json['height']?.toDouble() ?? 0.0,
+        (json['width'] as num?)?.toDouble() ?? 0.0,
+        (json['height'] as num?)?.toDouble() ?? 0.0,
       );
   final double width;
   final double height;
