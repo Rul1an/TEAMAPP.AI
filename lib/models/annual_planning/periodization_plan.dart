@@ -245,7 +245,7 @@ class PeriodizationPlan {
       ..isDefault = isDefault ?? this.isDefault;
       ..createdBy = createdBy ?? this.createdBy;
     copy.createdAt = createdAt;
-    copy.updatedAt = DateTime.now();
+    ..updatedAt = DateTime.now();
     return copy;
   }
 

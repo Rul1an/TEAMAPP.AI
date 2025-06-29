@@ -974,8 +974,9 @@ class FieldPainter extends CustomPainter {
       final length = math.sqrt(dx * dx + dy * dy);
 
       // Skip if length is invalid or too small
-      if (length.isNaN || length <= 0 || length < (dashLength + dashSpace))
+      if (length.isNaN || length <= 0 || length < (dashLength + dashSpace)) {
         continue;
+      }
 
       final steps = length / (dashLength + dashSpace);
       if (steps.isNaN || steps <= 0) continue;

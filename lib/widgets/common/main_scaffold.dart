@@ -207,14 +207,22 @@ class MainScaffold extends ConsumerWidget {
   int _getSelectedIndex(String currentRoute) {
     if (currentRoute.startsWith('/dashboard')) return 0;
     if (currentRoute.startsWith('/season') ||
-        currentRoute.startsWith('/annual-planning')) return 1;
+        currentRoute.startsWith('/annual-planning')) {
+      return 1;
+    }
     if (currentRoute.startsWith('/training') ||
-        currentRoute.startsWith('/exercise')) return 2;
+        currentRoute.startsWith('/exercise')) {
+      return 2;
+    }
     if (currentRoute.startsWith('/matches') ||
-        currentRoute.startsWith('/lineup')) return 3;
+        currentRoute.startsWith('/lineup')) {
+      return 3;
+    }
     if (currentRoute.startsWith('/players')) return 4;
     if (currentRoute.startsWith('/analytics') ||
-        currentRoute.startsWith('/svs')) return 5;
+        currentRoute.startsWith('/svs')) {
+      return 5;
+    }
     return 0;
   }
 
