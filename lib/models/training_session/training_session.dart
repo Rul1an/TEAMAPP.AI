@@ -114,7 +114,7 @@ class TrainingSession {
     if (phasesJson == null) return [];
     try {
       final List<dynamic> list = jsonDecode(phasesJson!);
-      return list.map((json) => SessionPhase.fromJson(json)).toList();
+      return list.map((json) => SessionPhase.fromJson(json as Map<String, dynamic>)).toList();
     } catch (e) {
       return [];
     }
@@ -127,7 +127,7 @@ class TrainingSession {
   List<String> get warmupActivities {
     if (warmupActivitiesJson == null) return [];
     try {
-      return List<String>.from(jsonDecode(warmupActivitiesJson!));
+      return List<String>.from(jsonDecode(warmupActivitiesJson!) as List<dynamic>);
     } catch (e) {
       return [];
     }
@@ -142,7 +142,7 @@ class TrainingSession {
     try {
       final Map<String, dynamic> json = jsonDecode(playerAttendanceJson!);
       return json.map(
-        (key, value) => MapEntry(key, PlayerAttendance.fromJson(value)),
+        (key, value) => MapEntry(key, PlayerAttendance.fromJson(value as Map<String, dynamic>)),
       );
     } catch (e) {
       return {};

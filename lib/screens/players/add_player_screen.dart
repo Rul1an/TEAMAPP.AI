@@ -280,14 +280,14 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
         final values = _formKey.currentState!.value;
 
         final player = Player()
-          ..firstName = values['firstName']
-          ..lastName = values['lastName']
-          ..jerseyNumber = int.parse(values['jerseyNumber'])
-          ..birthDate = values['birthDate']
-          ..position = values['position']
-          ..preferredFoot = values['preferredFoot']
-          ..height = double.parse(values['height'])
-          ..weight = double.parse(values['weight'])
+          ..firstName = values['firstName'] as String
+          ..lastName = values['lastName'] as String
+          ..jerseyNumber = int.parse(values['jerseyNumber'] as String)
+          ..birthDate = values['birthDate'] as String
+          ..position = values['position'] as String
+          ..preferredFoot = values['preferredFoot'] as String
+          ..height = double.parse(values['height'] as String)
+          ..weight = double.parse(values['weight'] as String)
           ..matchesPlayed = 0
           ..goals = 0
           ..assists = 0

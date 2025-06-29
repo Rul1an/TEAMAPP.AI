@@ -58,10 +58,10 @@ class PlayerAttendance {
 
   factory PlayerAttendance.fromJson(Map<String, dynamic> json) {
     final attendance = PlayerAttendance();
-    attendance.id = json['id'] ?? '';
-    attendance.playerId = json['playerId'] ?? '';
-    attendance.playerName = json['playerName'] ?? '';
-    attendance.playerNumber = json['playerNumber'] ?? 0;
+    attendance.id = json['id'] as String? ?? '';
+    attendance.playerId = json['playerId'] as String? ?? '';
+    attendance.playerName = json['playerName'] as String? ?? '';
+    attendance.playerNumber = json['playerNumber'] as int? ?? 0;
     attendance.position = PlayerPosition.values.firstWhere(
       (e) => e.name == json['position'],
       orElse: () => PlayerPosition.V,
@@ -70,7 +70,7 @@ class PlayerAttendance {
       (e) => e.name == json['status'],
       orElse: () => AttendanceStatus.unknown,
     );
-    attendance.notes = json['notes'];
+    attendance.notes = json['notes'] as String?;
     attendance.arrivalTime = json['arrivalTime'] != null
         ? DateTime.parse(json['arrivalTime'] as String)
         : null;

@@ -177,7 +177,7 @@ class DashboardScreen extends ConsumerWidget {
         const SizedBox(height: 24),
         const QuickActionsWidget(),
         const SizedBox(height: 24),
-        _buildStatisticsCards(context, statistics),
+        _buildStatisticsCards(context, statistics as Map<String, dynamic>),
         const SizedBox(height: 24),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -82,8 +82,8 @@ class PlayerCard extends ConsumerWidget {
                                   if (snapshot.hasData) {
                                     final data = snapshot.data!;
                                     return PerformanceBadge(
-                                      averageRating: data['averageRating'],
-                                      trend: data['trend'],
+                                      averageRating: data['averageRating'] as double?,
+                                      trend: data['trend'] as PerformanceTrend?,
                                       compact: true,
                                     );
                                   }

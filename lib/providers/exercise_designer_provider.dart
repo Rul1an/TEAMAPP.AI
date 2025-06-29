@@ -79,14 +79,14 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
   TrainingExercise buildExerciseFromFormData() {
     // Convert the form data to a TrainingExercise object
     final exercise = TrainingExercise.create(
-      name: state.formData['name'] ?? '',
-      description: state.formData['description'] ?? '',
+      name: state.formData['name'] as String? ?? '',
+      description: state.formData['description'] as String? ?? '',
       durationMinutes: (state.formData['duration'] as num?)?.toDouble() ?? 15.0,
       playerCount: (state.formData['playerCount'] as int?) ?? 18,
-      equipment: state.formData['equipment'] ?? '',
+      equipment: state.formData['equipment'] as String? ?? '',
       intensityLevel:
           (state.formData['intensityLevel'] as num?)?.toDouble() ?? 5.0,
-      type: state.formData['type'] ?? ExerciseType.technical,
+      type: state.formData['type'] as ExerciseType? ?? ExerciseType.technical,
       coachingPoints: [],
     );
 
@@ -99,7 +99,7 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
             .toList();
       } else if (state.formData['coachingPoints'] is List) {
         exercise.coachingPoints =
-            List<String>.from(state.formData['coachingPoints']);
+            List<String>.from(state.formData['coachingPoints'] as List<dynamic>);
       }
     }
 
@@ -115,7 +115,7 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
       if (state.formData['objectives'] is String) {
         exercise.objectives = [(state.formData['objectives'] as String)];
       } else if (state.formData['objectives'] is List) {
-        exercise.objectives = List<String>.from(state.formData['objectives']);
+        exercise.objectives = List<String>.from(state.formData['objectives'] as List<dynamic>);
       }
     }
 

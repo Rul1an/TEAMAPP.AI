@@ -133,7 +133,7 @@ class TrainingExercise {
           : null,
       primaryIntensity: (json['primaryIntensity'] as num?)?.toDouble() ?? 5.0,
     );
-    exercise.id = json['id'] ?? 0;
+    exercise.id = json['id'] as int? ?? 0;
     exercise.createdAt = json['createdAt'] != null
         ? DateTime.parse(json['createdAt'] as String)
         : DateTime.now();
