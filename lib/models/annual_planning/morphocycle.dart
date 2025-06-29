@@ -149,25 +149,25 @@ class Morphocycle {
   }
 
   factory Morphocycle.fromJson(Map<String, dynamic> json) {
-    final morphocycle = Morphocycle();
-    morphocycle.id = json['id'] as String? ?? '';
-    morphocycle.weekNumber = json['weekNumber'] as int? ?? 1;
-    morphocycle.periodId = json['periodId'] as String? ?? '';
-    morphocycle.seasonPlanId = json['seasonPlanId'] as String? ?? '';
-    morphocycle.weeklyLoad = (json['weeklyLoad'] as num?)?.toDouble() ?? 0.0;
-    morphocycle.intensityDistribution = Map<String, double>.from(json['intensityDistribution'] as Map<String, dynamic>? ?? <String, dynamic>{});
-    morphocycle.acuteChronicRatio = (json['acuteChronicRatio'] as num?)?.toDouble() ?? 1.0;
-    morphocycle.tacticalFocusAreas = List<String>.from(json['tacticalFocusAreas'] as List<dynamic>? ?? <dynamic>[]);
-    morphocycle.primaryGameModelFocus = json['primaryGameModelFocus'] as String? ?? '';
-    morphocycle.secondaryGameModelFocus = json['secondaryGameModelFocus'] as String? ?? '';
-    morphocycle.expectedAdaptation = (json['expectedAdaptation'] as num?)?.toDouble() ?? 60.0;
-    morphocycle.keyPerformanceIndicators = List<String>.from(json['keyPerformanceIndicators'] as List<dynamic>? ?? <dynamic>[]);
-    morphocycle.trainingObjectives = List<String>.from(json['trainingObjectives'] as List<dynamic>? ?? <dynamic>[]);
-    morphocycle.totalTrainingMinutes = json['totalTrainingMinutes'] as int? ?? 240;
-    morphocycle.averageRPE = (json['averageRPE'] as num?)?.toDouble() ?? 6.0;
-    morphocycle.numberOfSessions = json['numberOfSessions'] as int? ?? 3;
-    morphocycle.createdAt = DateTime.tryParse(json['createdAt'] as String? ?? '') ?? DateTime.now();
-    morphocycle.updatedAt = DateTime.tryParse(json['updatedAt'] as String? ?? '') ?? DateTime.now();
+    final morphocycle = Morphocycle()
+      ..id = json['id'] as String? ?? ''
+      ..weekNumber = json['weekNumber'] as int? ?? 1
+      ..periodId = json['periodId'] as String? ?? ''
+      ..seasonPlanId = json['seasonPlanId'] as String? ?? ''
+      ..weeklyLoad = (json['weeklyLoad'] as num?)?.toDouble() ?? 0.0
+      ..intensityDistribution = Map<String, double>.from(json['intensityDistribution'] as Map<String, dynamic>? ?? <String, dynamic>{})
+      ..acuteChronicRatio = (json['acuteChronicRatio'] as num?)?.toDouble() ?? 1.0
+      ..tacticalFocusAreas = List<String>.from(json['tacticalFocusAreas'] as List<dynamic>? ?? <dynamic>[])
+      ..primaryGameModelFocus = json['primaryGameModelFocus'] as String? ?? ''
+      ..secondaryGameModelFocus = json['secondaryGameModelFocus'] as String? ?? ''
+      ..expectedAdaptation = (json['expectedAdaptation'] as num?)?.toDouble() ?? 60.0
+      ..keyPerformanceIndicators = List<String>.from(json['keyPerformanceIndicators'] as List<dynamic>? ?? <dynamic>[])
+      ..trainingObjectives = List<String>.from(json['trainingObjectives'] as List<dynamic>? ?? <dynamic>[])
+      ..totalTrainingMinutes = json['totalTrainingMinutes'] as int? ?? 240
+      ..averageRPE = (json['averageRPE'] as num?)?.toDouble() ?? 6.0
+      ..numberOfSessions = json['numberOfSessions'] as int? ?? 3
+      ..createdAt = DateTime.tryParse(json['createdAt'] as String? ?? '') ?? DateTime.now()
+      ..updatedAt = DateTime.tryParse(json['updatedAt'] as String? ?? '') ?? DateTime.now();
     return morphocycle;
   }
   String id = '';
