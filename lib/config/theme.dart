@@ -150,11 +150,7 @@ class AppTheme {
         ),
       );
 
-  static ThemeData get darkTheme {
-    // TODO(author): Implement dark theme
-    return lightTheme;
-  }
-
+  static ThemeData get darkTheme => lightTheme; // TODO(author): Implement dark theme
   // Helper method to get position color
   static Color getPositionColor(String position) {
     switch (position.toLowerCase()) {

@@ -470,11 +470,7 @@ class Morphocycle {
 
 /// Extension to add morphocycle helpers to WeekSchedule
 extension WeekScheduleMorphocycle on WeekSchedule {
-  Morphocycle? get morphocycle {
-    // This would be populated when morphocycles are integrated
-    return null;
-  }
-
+  Morphocycle? get morphocycle => null; // TODO: populate when morphocycles are integrated
   TrainingIntensity get weekIntensityLevel {
     if (trainingSessions.isEmpty) return TrainingIntensity.recovery;
 

@@ -18,7 +18,7 @@ class SubscriptionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setLoading(bool loading) {
+  void setLoading({required bool loading}) {
     _isLoading = loading;
     notifyListeners();
   }
