@@ -34,23 +34,13 @@ class MonitoringService {
           };
 
           // Performance transaction filtering
-          options.beforeSendTransaction = (transaction, hint) {
-            // Only send important transactions
-//             if (transaction.name.contains('navigation') == true ||
-//                 transaction.name.contains('ai_') == true ||
-//                 transaction.name.contains('auth') == true) {
-//               return null;
-//             }
-            return null;
-          };
-
+          options.beforeSendTransaction = (transaction, hint) =>
+              // Only send important transactions
+              null;
           // User context
-          options.beforeBreadcrumb = (breadcrumb, hint) {
-            // Add additional context to breadcrumbs
-//             if (breadcrumb.data != null) breadcrumb.data!['timestamp'] = DateTime.now().toIso8601String();
-            return breadcrumb;
-          };
-        },
+          options.beforeBreadcrumb = (breadcrumb, hint) =>
+              // Add additional context to breadcrumbs
+              breadcrumb;        },
       );
     }
   }

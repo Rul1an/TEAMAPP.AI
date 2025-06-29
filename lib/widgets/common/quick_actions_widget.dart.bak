@@ -255,8 +255,10 @@ class QuickActionsWidget extends ConsumerWidget {
       date.weekday == DateTime.tuesday || date.weekday == DateTime.thursday;
 
   bool _isMatchDay(DateTime date) =>
-      // Assume Saturday is match day
-      date.weekday == DateTime.saturday;
+    // Assume Saturday is match day
+    return date.weekday == DateTime.saturday;
+  }
+
   TimeOfDay _getTimeOfDay(DateTime date) {
     final hour = date.hour;
     if (hour < 12) return TimeOfDay.morning;

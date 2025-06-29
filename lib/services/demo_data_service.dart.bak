@@ -330,9 +330,11 @@ class DemoDataService {
         },
       ];
 
-  static List<Map<String, dynamic>> _createDemoAssessments() =>
-      // Technical assessments data
-      [];
+  static List<Map<String, dynamic>> _createDemoAssessments() {
+    // Technical assessments data
+    return [];
+  }
+
   static Map<String, dynamic> _createDemoPlayerStats([String? playerId]) => {
         'goals': 8,
         'assists': 12,

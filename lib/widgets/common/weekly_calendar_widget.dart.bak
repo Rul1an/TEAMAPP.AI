@@ -135,9 +135,11 @@ class _WeeklyCalendarWidgetState extends State<WeeklyCalendarWidget> {
   bool _hasTraining(DateTime date) =>
       // Mock data: Tuesday and Thursday have training
       date.weekday == DateTime.tuesday || date.weekday == DateTime.thursday;
-  bool _hasMatch(DateTime date) =>
-      // Mock data: Saturday has matches
-      date.weekday == DateTime.saturday;
+  bool _hasMatch(DateTime date) {
+    // Mock data: Saturday has matches
+    return date.weekday == DateTime.saturday;
+  }
+
   void _showDayDetails(DateTime date) {
     showModalBottomSheet<void>(
       context: context,
