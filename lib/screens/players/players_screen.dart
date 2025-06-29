@@ -59,7 +59,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
               ),
             ],
           ),
-        ));
+        ),);
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

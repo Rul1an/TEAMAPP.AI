@@ -447,45 +447,45 @@ extension PeriodStatusExtension on PeriodStatus {
 // ContentDistribution class for training content focus
 class ContentDistribution {
   ContentDistribution({
-    this.technical = 25.0,
-    this.tactical = 25.0,
-    this.physical = 25.0,
-    this.mental = 25.0,
+    this.technical = 25,
+    this.tactical = 25,
+    this.physical = 25,
+    this.mental = 25,
   });
 
   factory ContentDistribution.fromJson(Map<String, dynamic> json) => ContentDistribution(
-      technical: (json['technical'] as num?)?.toDouble() ?? 25.0,
-      tactical: (json['tactical'] as num?)?.toDouble() ?? 25.0,
-      physical: (json['physical'] as num?)?.toDouble() ?? 25.0,
-      mental: (json['mental'] as num?)?.toDouble() ?? 25.0,
+      technical: (json['technical'] as num?)?.toDouble() ?? 25,
+      tactical: (json['tactical'] as num?)?.toDouble() ?? 25,
+      physical: (json['physical'] as num?)?.toDouble() ?? 25,
+      mental: (json['mental'] as num?)?.toDouble() ?? 25,
     );
 
   factory ContentDistribution.balanced() => ContentDistribution(
-      technical: 25.0,
-      tactical: 25.0,
-      physical: 25.0,
-      mental: 25.0,
+      technical: 25,
+      tactical: 25,
+      physical: 25,
+      mental: 25,
     );
 
   factory ContentDistribution.tacticalFocus() => ContentDistribution(
-      technical: 20.0,
-      tactical: 40.0,
-      physical: 25.0,
-      mental: 15.0,
+      technical: 20,
+      tactical: 40,
+      physical: 25,
+      mental: 15,
     );
 
   factory ContentDistribution.matchPrep() => ContentDistribution(
-      technical: 15.0,
-      tactical: 50.0,
-      physical: 20.0,
-      mental: 15.0,
+      technical: 15,
+      tactical: 50,
+      physical: 20,
+      mental: 15,
     );
 
   factory ContentDistribution.recovery() => ContentDistribution(
-      technical: 30.0,
-      tactical: 10.0,
-      physical: 40.0,
-      mental: 20.0,
+      technical: 30,
+      tactical: 10,
+      physical: 40,
+      mental: 20,
     );
 
   final double technical;

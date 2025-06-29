@@ -596,10 +596,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
       context: context,
       builder: (context) => _WeekCustomizationDialog(
         weekSchedule: currentWeek,
-        onSave: (updatedWeek) {
-          // Update the week in the provider
-          _updateWeekSchedule(updatedWeek);
-        },
+        onSave: _updateWeekSchedule,
       ),
     );
   }

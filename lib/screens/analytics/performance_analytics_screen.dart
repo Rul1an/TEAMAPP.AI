@@ -190,7 +190,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
           player: player,
         ),
       ),
-    ));
+    ),);
   }
 
   Widget _buildQuickStats(
