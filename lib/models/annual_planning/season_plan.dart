@@ -257,17 +257,13 @@ class SeasonPlan {
   }
 
   // Holiday checking
-  bool isCurrentlyInHoliday() {
-    // In a real implementation, this would check against specific holiday dates
-    // For now, return false as a placeholder
-    return false;
-  }
+  // In a real implementation, this would check against specific holiday dates
+  // For now, return false as a placeholder
+  bool isCurrentlyInHoliday() => false;
 
-  List<String> getHolidaysInPeriod(DateTime start, DateTime end) {
-    // In a real implementation, this would return holidays within the date range
-    // For now, return empty list as a placeholder
-    return [];
-  }
+  // In a real implementation, this would return holidays within the date range
+  // For now, return empty list as a placeholder
+  List<String> getHolidaysInPeriod(DateTime start, DateTime end) => [];  }
 
   // Season statistics
   Map<String, dynamic> getSeasonStatistics() => {
