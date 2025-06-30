@@ -286,23 +286,15 @@ class DemoDataService {
           now.add(Duration(days: (4 - now.weekday + 7 * week) % 7 + 7 * week));
       if (thursday.isAfter(now)) {
         sessions.add(
-            _createTrainingSession(teamId, thursday, 'Tactiek & Positiespel'),);
+            _createTrainingSession(teamId, thursday, 'Tactiek & Positiespel'));
       }
     }
 
     return sessions;
   }
 
-  /// 🔧 CASCADE OPERATOR DOCUMENTATION - DEMO DATA SERVICE OBJECT CREATION
-  ///
-  /// This method demonstrates object initialization patterns in demo data services
-  /// where cascade notation (..) could improve readability and maintainability.
-  ///
-  /// **TRANSFORMATION EXAMPLE**:
-  /// ```dart
-  /// // With cascade: session..id = value..sessionObjective = value..etc
-  /// ```  static TrainingSession _createTrainingSession(
-      String teamId, DateTime date, String focus,) {
+  static TrainingSession _createTrainingSession(
+      String teamId, DateTime date, String focus) {
     final session = TrainingSession.create(
       teamId: teamId,
       date: date,
