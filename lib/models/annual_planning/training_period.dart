@@ -102,7 +102,7 @@ class TrainingPeriod {
     period.name = json['name'] as String? ?? '';
     period.description = json['description'] as String? ?? '';
     period.type = PeriodType.values.firstWhere(
-      (e) => e.name == json['type'],
+      (e) => e.name == json['type'] as String?,
       orElse: () => PeriodType.preparation,
     );
     period.orderIndex = json['orderIndex'] as int? ?? 0;
@@ -119,7 +119,7 @@ class TrainingPeriod {
     period.averageSessionMinutes = json['averageSessionMinutes'] as int? ?? 75;
     period.restDaysBetweenSessions = json['restDaysBetweenSessions'] as int? ?? 1;
     period.status = PeriodStatus.values.firstWhere(
-      (e) => e.name == json['status'] as String,
+      (e) => e.name == json['status'] as String?,
       orElse: () => PeriodStatus.planned,
     );
     period.createdAt = json['createdAt'] != null

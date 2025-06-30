@@ -24,46 +24,32 @@ class TrainingSession {
   }
 
   factory TrainingSession.fromJson(Map<String, dynamic> json) {
-    final session = TrainingSession();
-    session.id = json['id'] as String? ?? '';
-    session.teamId = json['teamId'] as String? ?? '';
-    session.date =
-        json['date'] != null ? DateTime.parse(json['date'] as String) : DateTime.now();
-    session.trainingNumber = json['trainingNumber'] as int? ?? 1;
-    session.type = TrainingType.values.firstWhere(
-      (e) => e.name == json['type'],
-      orElse: () => TrainingType.regularTraining,
-    );
-    session.sessionObjective = json['sessionObjective'] as String?;
-    session.teamFunction = json['teamFunction'] as String?;
-    session.coachingAccent = json['coachingAccent'] as String?;
-    session.technicalTacticalGoal = json['technicalTacticalGoal'] as String?;
-    session.phasesJson = json['phasesJson'] as String?;
-    session.warmupActivitiesJson = json['warmupActivitiesJson'] as String?;
-    session.playerAttendanceJson = json['playerAttendanceJson'] as String?;
-    session.expectedPlayers = json['expectedPlayers'] as int? ?? 16;
-    session.actualPlayers = json['actualPlayers'] as int? ?? 0;
-    session.notes = json['notes'] as String?;
-    session.postSessionEvaluation = json['postSessionEvaluation'] as String?;
-    session.periodizationPhaseId = json['periodizationPhaseId'] as String?;
-    session.contentFocusJson = json['contentFocusJson'] as String?;
-    session.targetIntensity = (json['targetIntensity'] as num?)?.toDouble();
-    session.startTime =
-        json['startTime'] != null ? DateTime.parse(json['startTime'] as String) : null;
-    session.endTime =
-        json['endTime'] != null ? DateTime.parse(json['endTime'] as String) : null;
-    session.durationMinutes = json['durationMinutes'] as int?;
-    session.status = SessionStatus.values.firstWhere(
-      (e) => e.name == json['status'],
-      orElse: () => SessionStatus.planned,
-    );
-    session.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'] as String)
-        : DateTime.now();
-    session.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'] as String)
-        : DateTime.now();
-    return session;
+    return TrainingSession()
+      ..id = json['id'] as String? ?? ''
+      ..teamId = json['teamId'] as String? ?? ''
+      ..date = _parseDateTimeOrNow(json['date'] as String?)
+      ..trainingNumber = json['trainingNumber'] as int? ?? 1
+      ..type = _parseTrainingType(json['type'] as String?)
+      ..sessionObjective = json['sessionObjective'] as String?
+      ..teamFunction = json['teamFunction'] as String?
+      ..coachingAccent = json['coachingAccent'] as String?
+      ..technicalTacticalGoal = json['technicalTacticalGoal'] as String?
+      ..phasesJson = json['phasesJson'] as String?
+      ..warmupActivitiesJson = json['warmupActivitiesJson'] as String?
+      ..playerAttendanceJson = json['playerAttendanceJson'] as String?
+      ..expectedPlayers = json['expectedPlayers'] as int? ?? 16
+      ..actualPlayers = json['actualPlayers'] as int? ?? 0
+      ..notes = json['notes'] as String?
+      ..postSessionEvaluation = json['postSessionEvaluation'] as String?
+      ..periodizationPhaseId = json['periodizationPhaseId'] as String?
+      ..contentFocusJson = json['contentFocusJson'] as String?
+      ..targetIntensity = (json['targetIntensity'] as num?)?.toDouble()
+      ..startTime = _parseDateTime(json['startTime'] as String?)
+      ..endTime = _parseDateTime(json['endTime'] as String?)
+      ..durationMinutes = json['durationMinutes'] as int?
+      ..status = _parseSessionStatus(json['status'] as String?)
+      ..createdAt = _parseDateTimeOrNow(json['createdAt'] as String?)
+      ..updatedAt = _parseDateTimeOrNow(json['updatedAt'] as String?);
   }
   String id = '';
 
@@ -203,6 +189,29 @@ class TrainingSession {
 
   @Ignore()
   bool get isCompleted => status == SessionStatus.completed;
+
+  // Helper methods for JSON parsing
+  static TrainingType _parseTrainingType(String? typeString) {
+    return TrainingType.values.firstWhere(
+      (e) => e.name == typeString,
+      orElse: () => TrainingType.regularTraining,
+    );
+  }
+
+  static SessionStatus _parseSessionStatus(String? statusString) {
+    return SessionStatus.values.firstWhere(
+      (e) => e.name == statusString,
+      orElse: () => SessionStatus.planned,
+    );
+  }
+
+  static DateTime? _parseDateTime(String? dateString) {
+    return dateString != null ? DateTime.parse(dateString) : null;
+  }
+
+  static DateTime _parseDateTimeOrNow(String? dateString) {
+    return dateString != null ? DateTime.parse(dateString) : DateTime.now();
+  }
 
   // JSON serialization
   Map<String, dynamic> toJson() => {

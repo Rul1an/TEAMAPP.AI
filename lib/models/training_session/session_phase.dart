@@ -73,31 +73,30 @@ class SessionPhase {
   }
 
   factory SessionPhase.fromJson(Map<String, dynamic> json) {
-    final phase = SessionPhase();
-    phase.id = json['id'] as String? ?? '';
-    phase.name = json['name'] as String? ?? '';
-    phase.startTime = json['startTime'] != null
-        ? DateTime.parse(json['startTime'] as String)
-        : DateTime.now();
-    phase.endTime = json['endTime'] != null
-        ? DateTime.parse(json['endTime'] as String)
-        : DateTime.now();
-    phase.description = json['description'] as String?;
-    phase.orderIndex = json['orderIndex'] as int? ?? 0;
-    phase.type = PhaseType.values.firstWhere(
-      (e) => e.name == json['type'],
-      orElse: () => PhaseType.main,
-    );
-    phase.exerciseIds = json['exerciseIds'] != null
-        ? List<String>.from(json['exerciseIds'] as List<dynamic>)
-        : [];
-    phase.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'] as String)
-        : DateTime.now();
-    phase.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'] as String)
-        : DateTime.now();
-    return phase;
+    return SessionPhase()
+      ..id = json['id'] as String? ?? ''
+      ..name = json['name'] as String? ?? ''
+      ..startTime = json['startTime'] != null
+          ? DateTime.parse(json['startTime'] as String)
+          : DateTime.now()
+      ..endTime = json['endTime'] != null
+          ? DateTime.parse(json['endTime'] as String)
+          : DateTime.now()
+      ..description = json['description'] as String?
+      ..orderIndex = json['orderIndex'] as int? ?? 0
+      ..type = PhaseType.values.firstWhere(
+        (e) => e.name == json['type'],
+        orElse: () => PhaseType.main,
+      )
+      ..exerciseIds = json['exerciseIds'] != null
+          ? List<String>.from(json['exerciseIds'] as List<dynamic>)
+          : []
+      ..createdAt = json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : DateTime.now()
+      ..updatedAt = json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'] as String)
+          : DateTime.now();
   }
   String id = '';
 
@@ -181,18 +180,17 @@ class SessionPhase {
     PhaseType? type,
     List<String>? exerciseIds,
   }) {
-    final copy = SessionPhase();
-    copy.id = id;
-    copy.name = name ?? this.name;
-    copy.startTime = startTime ?? this.startTime;
-    copy.endTime = endTime ?? this.endTime;
-    copy.description = description ?? this.description;
-    copy.orderIndex = orderIndex ?? this.orderIndex;
-    copy.type = type ?? this.type;
-    copy.exerciseIds = exerciseIds ?? List.from(this.exerciseIds);
-    copy.createdAt = createdAt;
-    copy.updatedAt = DateTime.now();
-    return copy;
+    return SessionPhase()
+      ..id = id
+      ..name = name ?? this.name
+      ..startTime = startTime ?? this.startTime
+      ..endTime = endTime ?? this.endTime
+      ..description = description ?? this.description
+      ..orderIndex = orderIndex ?? this.orderIndex
+      ..type = type ?? this.type
+      ..exerciseIds = exerciseIds ?? List.from(this.exerciseIds)
+      ..createdAt = createdAt
+      ..updatedAt = DateTime.now();
   }
 
   @override
