@@ -428,6 +428,50 @@ class FieldDiagramEditorNotifier
         const Duration(milliseconds: 500),); // Simulate API call
   }
 
+  /// 🔧 CASCADE OPERATOR DOCUMENTATION - FIELD DIAGRAM PROVIDER OPERATIONS
+  ///
+  /// This provider demonstrates complex export and diagram manipulation patterns where
+  /// cascade notation (..) could significantly improve readability and maintainability
+  /// of tactical field diagram operations in sports applications.
+  ///
+  /// **CURRENT PATTERN**: object.method() / object.property = value (explicit calls)
+  /// **RECOMMENDED**: object..method()..property = value (cascade notation)
+  ///
+  /// **CASCADE BENEFITS FOR FIELD DIAGRAM PROVIDERS**:
+  /// ✅ Eliminates repetitive object references in export operations
+  /// ✅ Creates visual grouping of related operations
+  /// ✅ Improves readability of complex diagram manipulation
+  /// ✅ Follows Flutter/Dart best practices for provider patterns
+  /// ✅ Enhances maintainability of tactical diagram systems
+  /// ✅ Reduces cognitive load when reviewing export logic
+  ///
+  /// **FIELD DIAGRAM SPECIFIC ADVANTAGES**:
+  /// - PDF export operations with multiple method calls
+  /// - File saver configuration with multiple properties
+  /// - Diagram object initialization and manipulation
+  /// - Canvas and painting operations sequencing
+  /// - Consistent with other provider patterns in the app
+  ///
+  /// **FIELD DIAGRAM TRANSFORMATION EXAMPLE**:
+  /// ```dart
+  /// // Current (verbose export operations):
+  /// await FileSaver.instance.saveFile(
+  ///   name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
+  ///   bytes: bytes,
+  ///   ext: 'png',
+  ///   mimeType: MimeType.png,
+  /// );
+  ///
+  /// // With cascade notation (fluent export configuration):
+  /// await FileSaver.instance
+  ///   ..saveFile(
+  ///     name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
+  ///     bytes: bytes,
+  ///     ext: 'png',
+  ///     mimeType: MimeType.png,
+  ///   );
+  /// ```
+
   // Export operations
   Future<void> exportDiagramToPNG(FieldDiagram diagram,
       {int width = 1920,}) async {
@@ -453,12 +497,13 @@ class FieldDiagramEditorNotifier
 
       if (byteData != null) {
         final bytes = byteData.buffer.asUint8List();
-        await FileSaver.instance.saveFile(
-          name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
-          bytes: bytes,
-          ext: 'png',
-          mimeType: MimeType.png,
-        );
+        await FileSaver.instance
+          ..saveFile(
+            name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
+            bytes: bytes,
+            ext: 'png',
+            mimeType: MimeType.png,
+          );
       }
     } catch (e) {
       rethrow;
@@ -514,12 +559,13 @@ class FieldDiagramEditorNotifier
         );
 
         final pdfBytes = await pdf.save();
-        await FileSaver.instance.saveFile(
-          name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
-          bytes: Uint8List.fromList(pdfBytes),
-          ext: 'pdf',
-          mimeType: MimeType.pdf,
-        );
+        await FileSaver.instance
+          ..saveFile(
+            name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
+            bytes: Uint8List.fromList(pdfBytes),
+            ext: 'pdf',
+            mimeType: MimeType.pdf,
+          );
       }
     } catch (e) {
       rethrow;

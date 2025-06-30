@@ -103,6 +103,15 @@ class PlayerDevelopmentTrends {
     required this.recommendedFocus,
   });
 
+  /// 🔧 CASCADE OPERATOR DOCUMENTATION - PLAYER TRACKING FACTORY
+  ///
+  /// This factory constructor demonstrates a pattern where cascade notation (..)
+  /// could improve readability for complex object initialization in player tracking.
+  ///
+  /// **TRANSFORMATION EXAMPLE**:
+  /// ```dart
+  /// // With cascade: PlayerDevelopmentTrends()..physicalTrend = value..etc
+  /// ```
   factory PlayerDevelopmentTrends.empty() => PlayerDevelopmentTrends(
         physicalTrend: TrendDirection.stable,
         technicalTrend: TrendDirection.stable,

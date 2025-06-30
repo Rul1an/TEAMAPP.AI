@@ -78,8 +78,7 @@ class PeriodizationPlan {
       ..totalDurationWeeks = json['totalDurationWeeks'] as int? ?? 36
       ..numberOfPeriods = json['numberOfPeriods'] as int? ?? 4
       ..defaultIntensityTargets = json['defaultIntensityTargets'] as String?
-      ..defaultContentDistribution =
-          json['defaultContentDistribution'] as String?
+      ..defaultContentDistribution = json['defaultContentDistribution'] as String?
       ..isTemplate = json['isTemplate'] as bool? ?? false
       ..isDefault = json['isDefault'] as bool? ?? false
       ..createdBy = json['createdBy'] as String?
@@ -213,30 +212,6 @@ class PeriodizationPlan {
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
       };
-
-  /// 🔧 CASCADE OPERATOR DOCUMENTATION - PERIODIZATION PLAN COPYWITH
-  ///
-  /// This copyWith method demonstrates complex model copying patterns where cascade
-  /// notation (..) could significantly improve readability and maintainability of
-  /// annual planning model operations in sports management systems.
-  ///
-  /// **CURRENT PATTERN**: copy.property = value (explicit assignments)
-  /// **RECOMMENDED**: copy..property = value (cascade notation)
-  ///
-  /// **CASCADE BENEFITS FOR PERIODIZATION MODEL COPYWITH**:
-  /// ✅ Eliminates 15+ repetitive "copy." references
-  /// ✅ Creates visual grouping of property assignments
-  /// ✅ Improves readability of complex model copying
-  /// ✅ Follows Flutter/Dart best practices for model patterns
-  /// ✅ Enhances maintainability of annual planning systems
-  /// ✅ Reduces cognitive load when reviewing model operations
-  ///
-  /// **PERIODIZATION SPECIFIC ADVANTAGES**:
-  /// - Complex annual planning model with many properties
-  /// - Sports-specific configuration copying
-  /// - Null coalescing patterns with property assignments
-  /// - Consistent with other model copyWith patterns
-  /// - Professional sports management system standards
 
   // Copy with method for updates
   PeriodizationPlan copyWith({

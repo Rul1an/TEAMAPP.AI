@@ -167,6 +167,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     final players = await ref.read(playersProvider.future);
 
     if (!context.mounted) return;
+
     if (assessments.isEmpty || players.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Geen assessments gevonden.')),
@@ -183,6 +184,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
       (p) => p.id.toString() == latestAssessment.playerId,
       orElse: () => players.first, // Fallback, though should not happen
     );
+
     if (!context.mounted) return;
 
     unawaited(Navigator.of(context).push(

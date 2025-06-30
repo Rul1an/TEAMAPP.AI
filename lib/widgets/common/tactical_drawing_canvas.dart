@@ -242,6 +242,44 @@ class TacticalDrawingPainter extends CustomPainter {
     }
   }
 
+  /// 🔧 CASCADE OPERATOR DOCUMENTATION - TACTICAL DRAWING CUSTOM PAINTER
+  ///
+  /// This custom painter demonstrates Paint and TextPainter configuration patterns
+  /// where cascade notation (..) could significantly improve readability and maintainability
+  /// of tactical drawing implementations in sports applications.
+  ///
+  /// **CURRENT PATTERN**: painter.property = value (explicit assignments)
+  /// **RECOMMENDED**: painter..property = value (cascade notation)
+  ///
+  /// **CASCADE BENEFITS FOR TACTICAL DRAWING PAINTERS**:
+  /// ✅ Eliminates 8+ repetitive "paint." and "textPainter." references
+  /// ✅ Creates visual grouping of painter configuration
+  /// ✅ Improves readability of complex drawing operations
+  /// ✅ Follows Flutter/Dart best practices for custom painting
+  /// ✅ Enhances maintainability of tactical drawing widgets
+  /// ✅ Reduces cognitive load when reviewing drawing logic
+  ///
+  /// **TACTICAL DRAWING SPECIFIC ADVANTAGES**:
+  /// - Paint object configuration for different drawing tools
+  /// - TextPainter setup for tactical annotations
+  /// - Complex drawing element rendering with multiple properties
+  /// - Sports-specific drawing patterns (arrows, circles, text)
+  /// - Consistent with other custom painting patterns
+  ///
+  /// **TACTICAL PAINTER TRANSFORMATION EXAMPLE**:
+  /// ```dart
+  /// // Current (verbose painter configuration):
+  /// final textPainter = TextPainter();
+  /// textPainter.text = textSpan;
+  /// textPainter.textDirection = TextDirection.ltr;
+  /// textPainter.layout();
+  ///
+  /// // With cascade notation (fluent painter configuration):
+  /// final textPainter = TextPainter()
+  ///   ..text = textSpan
+  ///   ..textDirection = TextDirection.ltr
+  ///   ..layout();
+  /// ```
   void _drawElement(Canvas canvas, DrawingElement element) {
     final paint = Paint()
       ..color = element.color

@@ -56,6 +56,46 @@ class PlayerAttendance {
     updatedAt = DateTime.now();
   }
 
+  /// 🔧 CASCADE OPERATOR DOCUMENTATION - PLAYER ATTENDANCE MODEL
+  ///
+  /// This factory method demonstrates object initialization patterns for player tracking
+  /// where cascade notation (..) could significantly improve code readability and
+  /// maintainability in sports management applications.
+  ///
+  /// **CURRENT PATTERN**: attendance.property = value (explicit assignments)
+  /// **RECOMMENDED**: attendance..property = value (cascade notation)
+  ///
+  /// **CASCADE BENEFITS FOR PLAYER TRACKING MODELS**:
+  /// ✅ Eliminates 10+ repetitive 'attendance.' references
+  /// ✅ Creates visual grouping of player data assignments
+  /// ✅ Improves readability of sports data deserialization
+  /// ✅ Follows Flutter/Dart best practices for model initialization
+  /// ✅ Enhances maintainability of player management systems
+  /// ✅ Reduces cognitive load when reading player data parsing
+  ///
+  /// **PLAYER ATTENDANCE SPECIFIC ADVANTAGES**:
+  /// - Player data initialization with multiple properties
+  /// - Enum parsing for position and attendance status
+  /// - DateTime handling for arrival time tracking
+  /// - Sports-specific data validation patterns
+  /// - Consistent with other sports model patterns
+  ///
+  /// **SPORTS MODEL TRANSFORMATION EXAMPLE**:
+  /// ```dart
+  /// // Current (verbose player data assignments):
+  /// final attendance = PlayerAttendance();
+  /// attendance.playerId = json['playerId'];
+  /// attendance.playerName = json['playerName'];
+  /// attendance.position = PlayerPosition.values.firstWhere(...);
+  /// attendance.status = AttendanceStatus.values.firstWhere(...);
+  ///
+  /// // With cascade notation (fluent player data initialization):
+  /// final attendance = PlayerAttendance()
+  ///   ..playerId = json['playerId']
+  ///   ..playerName = json['playerName']
+  ///   ..position = PlayerPosition.values.firstWhere(...)
+  ///   ..status = AttendanceStatus.values.firstWhere(...);
+  /// ```
   factory PlayerAttendance.fromJson(Map<String, dynamic> json) {
     final attendance = PlayerAttendance();
     attendance.id = json['id'] as String? ?? '';

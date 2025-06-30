@@ -170,46 +170,6 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     final weeksPerPeriod =
         template.totalDurationWeeks ~/ template.numberOfPeriods;
 
-    /// 🔧 CASCADE OPERATOR DOCUMENTATION - PROVIDER OBJECT INITIALIZATION
-    ///
-    /// This provider method demonstrates object initialization patterns in state management
-    /// where cascade notation (..) could significantly improve readability and maintainability
-    /// of complex business logic implementations.
-    ///
-    /// **CURRENT PATTERN**: object.property = value (explicit assignments)
-    /// **RECOMMENDED**: object..property = value (cascade notation)
-    ///
-    /// **CASCADE BENEFITS FOR PROVIDER OBJECT INITIALIZATION**:
-    /// ✅ Eliminates 15+ repetitive "period." references
-    /// ✅ Creates visual grouping of object property assignments
-    /// ✅ Improves readability of complex state management logic
-    /// ✅ Follows Flutter/Dart best practices for provider patterns
-    /// ✅ Enhances maintainability of business logic providers
-    /// ✅ Reduces cognitive load when reviewing object initialization
-    ///
-    /// **PROVIDER SPECIFIC ADVANTAGES**:
-    /// - Training period object initialization with multiple properties
-    /// - Complex business logic with object configuration
-    /// - State management patterns with object creation
-    /// - Annual planning domain-specific object setup
-    /// - Consistent with other provider patterns in the app
-    ///
-    /// **PROVIDER OBJECT TRANSFORMATION EXAMPLE**:
-    /// ```dart
-    /// // Current (verbose object property assignments):
-    /// final period = TrainingPeriod();
-    /// period.periodizationPlanId = template.id.toString();
-    /// period.orderIndex = i;
-    /// period.startDate = currentDate;
-    /// period.durationWeeks = weeksPerPeriod;
-    ///
-    /// // With cascade notation (fluent object initialization):
-    /// final period = TrainingPeriod()
-    ///   ..periodizationPlanId = template.id.toString()
-    ///   ..orderIndex = i
-    ///   ..startDate = currentDate
-    ///   ..durationWeeks = weeksPerPeriod;
-    /// ```
     for (int i = 0; i < template.numberOfPeriods; i++) {
       final period = TrainingPeriod();
       period.periodizationPlanId = template.id.toString();

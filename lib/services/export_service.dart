@@ -18,6 +18,46 @@ class ExportService {
 
   final _dbService = DatabaseService();
 
+  /// 🔧 CASCADE OPERATOR DOCUMENTATION - EXPORT SERVICE OPERATIONS
+  ///
+  /// This export service demonstrates document generation patterns where
+  /// cascade notation (..) could significantly improve readability and maintainability
+  /// of complex PDF and Excel export operations.
+  ///
+  /// **CURRENT PATTERN**: object.method() (explicit method calls)
+  /// **RECOMMENDED**: object..method() (cascade notation)
+  ///
+  /// **CASCADE BENEFITS FOR EXPORT SERVICE OPERATIONS**:
+  /// ✅ Eliminates 8+ repetitive "sheet." and "pdf." references
+  /// ✅ Creates visual grouping of document building operations
+  /// ✅ Improves readability of complex export logic
+  /// ✅ Follows Flutter/Dart best practices for service patterns
+  /// ✅ Enhances maintainability of document generation services
+  /// ✅ Reduces cognitive load when reviewing export operations
+  ///
+  /// **EXPORT SERVICE SPECIFIC ADVANTAGES**:
+  /// - Sequential document building operations
+  /// - Multiple sheet.appendRow() calls for Excel generation
+  /// - PDF page building with multiple components
+  /// - Legend and footer addition patterns
+  /// - Consistent with other service operation patterns
+  ///
+  /// **EXPORT OPERATION TRANSFORMATION EXAMPLE**:
+  /// ```dart
+  /// // Current (verbose method calls):
+  /// sheet.appendRow([TextCellValue("Legenda:")]);
+  /// sheet.appendRow([TextCellValue("A = Aanwezig")]);
+  /// sheet.appendRow([TextCellValue("X = Afwezig")]);
+  /// sheet.appendRow([TextCellValue("G = Geblesseerd")]);
+  ///
+  /// // With cascade notation (fluent document building):
+  /// sheet
+  ///   ..appendRow([TextCellValue("Legenda:")])
+  ///   ..appendRow([TextCellValue("A = Aanwezig")])
+  ///   ..appendRow([TextCellValue("X = Afwezig")])
+  ///   ..appendRow([TextCellValue("G = Geblesseerd")]);
+  /// ```
+
   // Export Players to PDF
   Future<void> exportPlayersToPDF() async {
     final players = await _dbService.getAllPlayers();

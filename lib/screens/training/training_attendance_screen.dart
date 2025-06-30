@@ -54,7 +54,15 @@ class _TrainingAttendanceScreenState
         data: (trainings) {
           final training = trainings.firstWhere(
             (t) => t.id.toString() == widget.trainingId,
-            orElse: () {
+            /// 🔧 CASCADE OPERATOR DOCUMENTATION - TRAINING UI CALLBACK INITIALIZATION
+            ///
+            /// This orElse callback demonstrates UI fallback patterns for Training objects
+            /// where cascade notation (..) could improve readability and maintainability.
+            ///
+            /// **TRANSFORMATION EXAMPLE**:
+            /// ```dart
+            /// // With cascade: Training()..date = DateTime.now()..focus = value..etc
+            /// ```            orElse: () {
               final newTraining = Training();
               newTraining.date = DateTime.now();
               newTraining.focus = TrainingFocus.technical;
