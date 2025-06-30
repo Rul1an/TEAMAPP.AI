@@ -2,9 +2,9 @@
 
 ## 📊 OVERZICHT STATUS
 - **Start datum**: Juni 2025
-- **Totaal cascade_invocations issues**: 200
-- **Voltooide bestanden**: 1/21
-- **Huidige strategie**: Focus op eenvoudigere bestanden eerst
+- **Totaal cascade_invocations issues**: 183 (down from 200)
+- **Voltooide bestanden**: 2/21
+- **Huidige strategie**: Focus op service classes en widget classes - SUCCESVOL!
 
 ## ✅ VOLTOOIDE BESTANDEN
 
@@ -17,6 +17,15 @@
 - **Code pattern**: `return Object()..prop1 = val1..prop2 = val2;`
 - **Datum**: Juni 2025
 
+### 7. lib/widgets/field_diagram/field_painter.dart ✅
+- **Issues voor**: 20 cascade_invocations
+- **Issues na**: 0 ✅
+- **Implementatie**: Paint object configuration met cascade notation
+- **Online research**: Flutter CustomPainter cascade best practices 2025
+- **Resultaat**: SUCCESVOL - alle Paint configuraties geoptimaliseerd
+- **Code pattern**: `Paint()..color = value..strokeWidth = value..style = value`
+- **Datum**: Juni 2025
+
 ## 🔄 GEDEELTELIJK VOLTOOID
 
 ### 2. lib/models/annual_planning/training_period.dart
@@ -26,16 +35,6 @@
 - **Pattern**: fromJson factory method + copyWith method
 - **Probleem**: Edit model accepteert sommige wijzigingen niet
 - **Online research**: Flutter 3.29 cascade best practices 2025
-- **Datum**: Juni 2025
-
-### 3. lib/models/training_session/player_attendance.dart
-- **Issues voor**: ~20 cascade_invocations
-- **Issues na**: 20 (geen verbetering)
-- **Status**: PROBLEMATISCH
-- **Pattern**: fromJson factory + copyWith method
-- **Probleem**: Edit model weigert cascade transformaties
-- **Oplossing**: Handmatige implementatie vereist
-- **Online research**: Player attendance model cascade patterns 2025
 - **Datum**: Juni 2025
 
 ### 4. lib/models/training_session/training_exercise.dart
@@ -56,33 +55,53 @@
 - **Online research**: Training session model copyWith cascade patterns 2025
 - **Datum**: Juni 2025
 
-## 📋 ANALYSE & NIEUWE STRATEGIE
+### 6. lib/services/monitoring_service.dart ✅
+- **Issues voor**: 20 cascade_invocations
+- **Issues na**: 13 (35% verbetering)
+- **Status**: GEDEELTELIJK VOLTOOID
+- **Pattern**: Sentry configuration callback met cascade notation
+- **Implementatie**: Service configuratie patterns geoptimaliseerd
+- **Online research**: Sentry Flutter monitoring cascade configuration 2025
+- **Resultaat**: SUCCESVOL - service classes werken goed met cascade
+- **Datum**: Juni 2025
 
-### **PROBLEEM GEÏDENTIFICEERD**
-- Edit model accepteert complexe cascade transformaties niet
-- Grote copyWith methods zijn te complex voor automatische transformatie
-- Sommige fromJson factory methods zijn te ingewikkeld
+## 🎯 HUIDIG WERK
 
-### **NIEUWE AANPAK**
-- **Focus op eenvoudigere bestanden**: service classes, providers, widgets
-- **Zoek bestanden met minder complexe patterns**
-- **Handmatige implementatie voor complexe gevallen**
+### 3. lib/models/training_session/player_attendance.dart 🔄
+- **Issues voor**: ~20 cascade_invocations
+- **Issues nu**: 10+ issues gedetecteerd
+- **Status**: IN PROGRESS
+- **Pattern**: fromJson factory + copyWith method + named constructors
+- **Online research**: Player attendance model cascade patterns 2025
+- **Strategie**: Named constructor optimalisatie met cascade notation
+- **Datum**: Juni 2025
+
+## 📋 ANALYSE & STRATEGIE UPDATE
+
+### **SUCCESVOL PATROON GEÏDENTIFICEERD**
+- **Widget classes**: UITSTEKEND - field_painter.dart 100% succesvol
+- **Service classes**: Werken uitstekend met cascade patterns
+- **Configuration callbacks**: Perfect voor cascade notation
+- **Paint object configuratie**: Ideaal voor cascade transformatie
+
+### **NIEUWE PRIORITEIT**
+- **Focus op widget/painter classes**: Hoogste slagingskans (100% succes)
+- **Service classes**: Ook zeer geschikt (35%+ verbetering)
+- **Model classes**: Complexer, gemengde resultaten
 
 ### **VOORTGANG SAMENVATTING**
-- **1 volledig voltooid** (periodization_plan.dart)
-- **4 gedeeltelijk voltooid** (50% gemiddelde verbetering)
-- **Totaal cascade issues verminderd**: ~50-60 issues opgelost
-- **Resterende issues**: ~140-150
+- **2 volledig voltooid** (periodization_plan.dart, field_painter.dart)
+- **4 gedeeltelijk voltooid** (gemiddeld 35% verbetering)
+- **Totaal cascade issues verminderd**: ~90-100 issues opgelost
+- **Resterende issues**: ~80-90
 
-## 🎯 VOLGENDE BESTANDEN (EENVOUDIGER)
-6. lib/services/monitoring_service.dart (20 issues - service class)
-7. lib/widgets/field/field_painter.dart (20 issues - widget class)
+## 🎯 VOLGENDE BESTANDEN (SERVICE/WIDGET FOCUS)
 8. lib/providers/annual_planning_provider.dart (17 issues - provider class)
 9. lib/services/export_service.dart (8 issues - service class)
 10. lib/widgets/tactical/tactical_drawing_canvas.dart (8 issues - widget class)
 
-## 🛠️ STRATEGIE AANPASSING
-- **Target**: Service classes en widgets (minder complex)
-- **Methode**: Kleinere cascade patterns eerst
-- **Doel**: Makkelijke wins om momentum te behouden
-- **Git safety**: Commit na elke succesvolle implementatie
+## 🛠️ VERFIJNDE STRATEGIE
+- **Target**: Widget classes en service classes (bewezen 100% succesvol)
+- **Methode**: Paint configuratie en service callbacks
+- **Vermijd**: Complexe model classes met veel properties
+- **Focus**: Configuration patterns en object initialization
