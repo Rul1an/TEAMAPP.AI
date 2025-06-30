@@ -726,14 +726,12 @@ class DatabaseService {
   }
 
   Future<Map<String, dynamic>> applyFormationTemplate(
-      FormationTemplate template, List<Player> availablePlayers,) async {
-    // Simple implementation - return formation data
-    return {
-      'formation': template.formation,
-      'players': availablePlayers.take(11).toList(),
-    };
-  }
-
+      FormationTemplate template, List<Player> availablePlayers,) async =>
+      // Simple implementation - return formation data
+      {
+        'formation': template.formation,
+        'players': availablePlayers.take(11).toList(),
+      };
   // Annual Planning operations
   Future<List<SeasonPlan>> getAllSeasonPlans() async {
     if (kIsWeb) {
