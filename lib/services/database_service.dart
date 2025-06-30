@@ -24,7 +24,7 @@ class DatabaseService {
 
   Isar? _isar;
   bool _isInitialized = false;
-  Ref? _ref;
+  Ref? ref;
 
   // Demo data cache
   Map<String, dynamic>? _demoData;
@@ -48,30 +48,24 @@ class DatabaseService {
   final List<TrainingSession> _trainingSessions = [];
   final List<TrainingExercise> _trainingExercises = [];
 
-  // Setter for accessing providers
-  // Getter for accessing providers
-  Ref? get ref => _ref;
-  set ref(Ref? value) {
-    _ref = value;
-  }
   // Check if in demo mode
   bool get isDemoMode {
-    if (_ref == null) return false;
-    final demoState = _ref!.read(demoModeProvider);
+    if (ref == null) return false;
+    final demoState = ref!.read(demoModeProvider);
     return demoState.isActive;
   }
 
   // Get current organization ID
   String? get currentOrganizationId {
-    if (_ref == null) return null;
-    return _ref!.read(currentOrganizationIdProvider);
+    if (ref == null) return null;
+    return ref!.read(currentOrganizationIdProvider);
   }
 
   // Get demo data based on role
   Map<String, dynamic> _getDemoData() {
-    if (_ref == null) return {};
+    if (ref == null) return {};
 
-    final demoState = _ref!.read(demoModeProvider);
+    final demoState = ref!.read(demoModeProvider);
     if (!demoState.isActive || demoState.role == null) return {};
 
     // Cache demo data per role
