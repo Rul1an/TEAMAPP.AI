@@ -204,46 +204,49 @@ class PlayerAttendance {
     String? notes,
     DateTime? arrivalTime,
   }) {
-    final copy = PlayerAttendance();
-    copy.id = id;
-    copy.playerId = playerId ?? this.playerId;
-    copy.playerName = playerName ?? this.playerName;
-    copy.playerNumber = playerNumber ?? this.playerNumber;
-    copy.position = position ?? this.position;
-    copy.status = status ?? this.status;
-    copy.notes = notes ?? this.notes;
-    copy.arrivalTime = arrivalTime ?? this.arrivalTime;
-    copy.createdAt = createdAt;
-    copy.updatedAt = DateTime.now();
-    return copy;
+    return PlayerAttendance()
+      ..id = id
+      ..playerId = playerId ?? this.playerId
+      ..playerName = playerName ?? this.playerName
+      ..playerNumber = playerNumber ?? this.playerNumber
+      ..position = position ?? this.position
+      ..status = status ?? this.status
+      ..notes = notes ?? this.notes
+      ..arrivalTime = arrivalTime ?? this.arrivalTime
+      ..createdAt = createdAt
+      ..updatedAt = DateTime.now();
   }
 
   // Mark attendance methods
   void markPresent({DateTime? arrival}) {
-    status = AttendanceStatus.present;
-    arrivalTime = arrival ?? DateTime.now();
-    updatedAt = DateTime.now();
+    this
+      ..status = AttendanceStatus.present
+      ..arrivalTime = arrival ?? DateTime.now()
+      ..updatedAt = DateTime.now();
   }
 
   void markAbsent({String? reason}) {
-    status = AttendanceStatus.absent;
-    notes = reason;
-    arrivalTime = null;
-    updatedAt = DateTime.now();
+    this
+      ..status = AttendanceStatus.absent
+      ..notes = reason
+      ..arrivalTime = null
+      ..updatedAt = DateTime.now();
   }
 
   void markLate({required DateTime arrival, String? reason}) {
-    status = AttendanceStatus.late;
-    arrivalTime = arrival;
-    notes = reason;
-    updatedAt = DateTime.now();
+    this
+      ..status = AttendanceStatus.late
+      ..arrivalTime = arrival
+      ..notes = reason
+      ..updatedAt = DateTime.now();
   }
 
   void markInjured({String? injuryDetails}) {
-    status = AttendanceStatus.injured;
-    notes = injuryDetails;
-    arrivalTime = null;
-    updatedAt = DateTime.now();
+    this
+      ..status = AttendanceStatus.injured
+      ..notes = injuryDetails
+      ..arrivalTime = null
+      ..updatedAt = DateTime.now();
   }
 
   @override
