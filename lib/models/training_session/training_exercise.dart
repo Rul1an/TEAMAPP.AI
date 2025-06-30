@@ -159,14 +159,14 @@ class TrainingExercise {
           : null,
       primaryIntensity: (json['primaryIntensity'] as num?)?.toDouble() ?? 5.0,
     );
-    exercise.id = json['id'] as int? ?? 0;
-    exercise.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'] as String)
-        : DateTime.now();
-    exercise.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'] as String)
-        : DateTime.now();
-    return exercise;
+    return exercise
+      ..id = json['id'] as int? ?? 0
+      ..createdAt = json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : DateTime.now()
+      ..updatedAt = json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'] as String)
+          : DateTime.now();
   }
   // String id = ""; // Disabled for web compatibility
   int id = 0;
@@ -304,7 +304,7 @@ class TrainingExercise {
     TacticalFocus? tacticalFocus,
     double? primaryIntensity,
   }) {
-    final copy = TrainingExercise.create(
+    return TrainingExercise.create(
       name: name ?? this.name,
       description: description ?? this.description,
       durationMinutes: durationMinutes ?? this.durationMinutes,
@@ -328,11 +328,10 @@ class TrainingExercise {
       averageRating: averageRating ?? this.averageRating,
       tacticalFocus: tacticalFocus ?? this.tacticalFocus,
       primaryIntensity: primaryIntensity ?? this.primaryIntensity,
-    );
-    copy.id = id ?? this.id;
-    copy.createdAt = createdAt;
-    copy.updatedAt = DateTime.now();
-    return copy;
+    )
+      ..id = id ?? this.id
+      ..createdAt = createdAt
+      ..updatedAt = DateTime.now();
   }
 
   @override
