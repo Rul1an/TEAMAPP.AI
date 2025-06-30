@@ -340,29 +340,26 @@ class TrainingPeriod {
     int? restDaysBetweenSessions,
     PeriodStatus? status,
   }) {
-    final copy = TrainingPeriod();
-    copy.id = id;
-    copy.periodizationPlanId = periodizationPlanId ?? this.periodizationPlanId;
-    copy.name = name ?? this.name;
-    copy.description = description ?? this.description;
-    copy.type = type ?? this.type;
-    copy.orderIndex = orderIndex ?? this.orderIndex;
-    copy.durationWeeks = durationWeeks ?? this.durationWeeks;
-    copy.startDate = startDate ?? this.startDate;
-    copy.endDate = endDate ?? this.endDate;
-    copy.intensityPercentage = intensityPercentage ?? this.intensityPercentage;
-    copy.contentFocusJson = contentFocusJson;
-    if (contentFocus != null) copy.contentFocus = contentFocus;
-    copy.keyObjectives = keyObjectives ?? List.from(this.keyObjectives);
-    copy.sessionsPerWeek = sessionsPerWeek ?? this.sessionsPerWeek;
-    copy.averageSessionMinutes =
-        averageSessionMinutes ?? this.averageSessionMinutes;
-    copy.restDaysBetweenSessions =
-        restDaysBetweenSessions ?? this.restDaysBetweenSessions;
-    copy.status = status ?? this.status;
-    copy.createdAt = createdAt;
-    copy.updatedAt = DateTime.now();
-    return copy;
+    return TrainingPeriod()
+      ..id = id
+      ..periodizationPlanId = periodizationPlanId ?? this.periodizationPlanId
+      ..name = name ?? this.name
+      ..description = description ?? this.description
+      ..type = type ?? this.type
+      ..orderIndex = orderIndex ?? this.orderIndex
+      ..durationWeeks = durationWeeks ?? this.durationWeeks
+      ..startDate = startDate ?? this.startDate
+      ..endDate = endDate ?? this.endDate
+      ..intensityPercentage = intensityPercentage ?? this.intensityPercentage
+      ..contentFocusJson = contentFocusJson
+      ..contentFocus = contentFocus ?? this.contentFocus
+      ..keyObjectives = keyObjectives ?? List.from(this.keyObjectives)
+      ..sessionsPerWeek = sessionsPerWeek ?? this.sessionsPerWeek
+      ..averageSessionMinutes = averageSessionMinutes ?? this.averageSessionMinutes
+      ..restDaysBetweenSessions = restDaysBetweenSessions ?? this.restDaysBetweenSessions
+      ..status = status ?? this.status
+      ..createdAt = createdAt
+      ..updatedAt = DateTime.now();
   }
 
   @override

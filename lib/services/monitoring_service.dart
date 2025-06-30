@@ -50,35 +50,29 @@ class MonitoringService {
   static Future<void> initialize() async {
     if (_sentryDsn.isNotEmpty && !kDebugMode) {
       await SentryFlutter.init(
-        (options) {
-          options.dsn = _sentryDsn;
-          options.environment = kReleaseMode ? 'production' : 'staging';
-          options.release = 'jo17-tactical-manager@1.0.0';
-
-          // Performance monitoring
-          options.tracesSampleRate = 0.1; // 10% of transactions
-          options.profilesSampleRate = 0.1; // 10% for profiling
-
-          // Error filtering
-          options.beforeSend = (event, hint) {
+        (options) => options
+          ..dsn = _sentryDsn
+          ..environment = kReleaseMode ? 'production' : 'staging'
+          ..release = 'jo17-tactical-manager@1.0.0'
+          ..tracesSampleRate = 0.1 // 10% of transactions
+          ..profilesSampleRate = 0.1 // 10% for profiling
+          ..beforeSend = (event, hint) {
             // Filter out development errors
             if (kDebugMode) return null;
 
             // Filter out known non-critical errors
-            if (event.throwable?.toString().contains('SocketException') ?? false) {              return null; // Network errors are handled gracefully
+            if (event.throwable?.toString().contains('SocketException') ?? false) {
+              return null; // Network errors are handled gracefully
             }
 
             return event;
-          };
-
-          // Performance transaction filtering
-          options.beforeSendTransaction = (transaction, hint) =>
+          }
+          ..beforeSendTransaction = (transaction, hint) =>
               // Only send important transactions
-              null;
-          // User context
-          options.beforeBreadcrumb = (breadcrumb, hint) =>
+              null
+          ..beforeBreadcrumb = (breadcrumb, hint) =>
               // Add additional context to breadcrumbs
-              breadcrumb;        },
+              breadcrumb,
       );
     }
   }

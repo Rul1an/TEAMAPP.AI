@@ -252,24 +252,21 @@ class PeriodizationPlan {
     bool? isDefault,
     String? createdBy,
   }) {
-    final copy = PeriodizationPlan();
-    copy.id = id;
-    copy.name = name ?? this.name;
-    copy.description = description ?? this.description;
-    copy.modelType = modelType ?? this.modelType;
-    copy.targetAgeGroup = targetAgeGroup ?? this.targetAgeGroup;
-    copy.totalDurationWeeks = totalDurationWeeks ?? this.totalDurationWeeks;
-    copy.numberOfPeriods = numberOfPeriods ?? this.numberOfPeriods;
-    copy.defaultIntensityTargets =
-        defaultIntensityTargets ?? this.defaultIntensityTargets;
-    copy.defaultContentDistribution =
-        defaultContentDistribution ?? this.defaultContentDistribution;
-    copy.isTemplate = isTemplate ?? this.isTemplate;
-    copy.isDefault = isDefault ?? this.isDefault;
-    copy.createdBy = createdBy ?? this.createdBy;
-    copy.createdAt = createdAt;
-    copy.updatedAt = DateTime.now();
-    return copy;
+    return PeriodizationPlan()
+      ..id = id
+      ..name = name ?? this.name
+      ..description = description ?? this.description
+      ..modelType = modelType ?? this.modelType
+      ..targetAgeGroup = targetAgeGroup ?? this.targetAgeGroup
+      ..totalDurationWeeks = totalDurationWeeks ?? this.totalDurationWeeks
+      ..numberOfPeriods = numberOfPeriods ?? this.numberOfPeriods
+      ..defaultIntensityTargets = defaultIntensityTargets ?? this.defaultIntensityTargets
+      ..defaultContentDistribution = defaultContentDistribution ?? this.defaultContentDistribution
+      ..isTemplate = isTemplate ?? this.isTemplate
+      ..isDefault = isDefault ?? this.isDefault
+      ..createdBy = createdBy ?? this.createdBy
+      ..createdAt = createdAt
+      ..updatedAt = DateTime.now();
   }
 
   @override

@@ -235,15 +235,17 @@ class TrainingExercise {
     ExerciseType? type,
     List<String>? coachingPoints,
   }) {
-    if (name != null) this.name = name;
-    if (description != null) this.description = description;
-    if (durationMinutes != null) this.durationMinutes = durationMinutes;
-    if (playerCount != null) this.playerCount = playerCount;
-    if (equipment != null) this.equipment = equipment;
-    if (intensityLevel != null) this.intensityLevel = intensityLevel;
-    if (type != null) this.type = type;
-    if (coachingPoints != null) this.coachingPoints = coachingPoints;
-    updatedAt = DateTime.now();
+    // Use cascade notation for multiple property updates
+    this
+      ..name = name ?? this.name
+      ..description = description ?? this.description
+      ..durationMinutes = durationMinutes ?? this.durationMinutes
+      ..playerCount = playerCount ?? this.playerCount
+      ..equipment = equipment ?? this.equipment
+      ..intensityLevel = intensityLevel ?? this.intensityLevel
+      ..type = type ?? this.type
+      ..coachingPoints = coachingPoints ?? this.coachingPoints
+      ..updatedAt = DateTime.now();
   }
 
   // JSON serialization
