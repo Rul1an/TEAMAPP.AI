@@ -129,39 +129,35 @@ class TrainingPeriod {
   ///   ..name = json['name'];
   /// ```
   factory TrainingPeriod.fromJson(Map<String, dynamic> json) {
-    final period = TrainingPeriod();
-    period.id = json['id'] as String? ?? '';
-    period.periodizationPlanId = json['periodizationPlanId'] as String? ?? '';
-    period.name = json['name'] as String? ?? '';
-    period.description = json['description'] as String? ?? '';
-    period.type = PeriodType.values.firstWhere(
-      (e) => e.name == json['type'] as String?,
-      orElse: () => PeriodType.preparation,
-    );
-    period.orderIndex = json['orderIndex'] as int? ?? 0;
-    period.durationWeeks = json['durationWeeks'] as int? ?? 4;
-    period.startDate =
-        json['startDate'] != null ? DateTime.parse(json['startDate'] as String) : null;
-    period.endDate =
-        json['endDate'] != null ? DateTime.parse(json['endDate'] as String) : null;
-    period.intensityPercentage =
-        (json['intensityPercentage'] as num?)?.toDouble() ?? 70.0;
-    period.contentFocusJson = json['contentFocusJson'] as String?;
-    period.keyObjectives = List<String>.from(json['keyObjectives'] as List<dynamic>? ?? <dynamic>[]);
-    period.sessionsPerWeek = json['sessionsPerWeek'] as int? ?? 3;
-    period.averageSessionMinutes = json['averageSessionMinutes'] as int? ?? 75;
-    period.restDaysBetweenSessions = json['restDaysBetweenSessions'] as int? ?? 1;
-    period.status = PeriodStatus.values.firstWhere(
-      (e) => e.name == json['status'] as String?,
-      orElse: () => PeriodStatus.planned,
-    );
-    period.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'] as String)
-        : DateTime.now();
-    period.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'] as String)
-        : DateTime.now();
-    return period;
+    return TrainingPeriod()
+      ..id = json['id'] as String? ?? ''
+      ..periodizationPlanId = json['periodizationPlanId'] as String? ?? ''
+      ..name = json['name'] as String? ?? ''
+      ..description = json['description'] as String? ?? ''
+      ..type = PeriodType.values.firstWhere(
+        (e) => e.name == json['type'] as String?,
+        orElse: () => PeriodType.preparation,
+      )
+      ..orderIndex = json['orderIndex'] as int? ?? 0
+      ..durationWeeks = json['durationWeeks'] as int? ?? 4
+      ..startDate = json['startDate'] != null ? DateTime.parse(json['startDate'] as String) : null
+      ..endDate = json['endDate'] != null ? DateTime.parse(json['endDate'] as String) : null
+      ..intensityPercentage = (json['intensityPercentage'] as num?)?.toDouble() ?? 70.0
+      ..contentFocusJson = json['contentFocusJson'] as String?
+      ..keyObjectives = List<String>.from(json['keyObjectives'] as List<dynamic>? ?? <dynamic>[])
+      ..sessionsPerWeek = json['sessionsPerWeek'] as int? ?? 3
+      ..averageSessionMinutes = json['averageSessionMinutes'] as int? ?? 75
+      ..restDaysBetweenSessions = json['restDaysBetweenSessions'] as int? ?? 1
+      ..status = PeriodStatus.values.firstWhere(
+        (e) => e.name == json['status'] as String?,
+        orElse: () => PeriodStatus.planned,
+      )
+      ..createdAt = json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : DateTime.now()
+      ..updatedAt = json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'] as String)
+          : DateTime.now();
   }
   String id = '';
 
