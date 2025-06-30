@@ -78,9 +78,9 @@ PlayerDevelopmentTrends _calculateDevelopmentTrends(
     recommendedFocus: [],
   );
 TeamPerformanceOverview _calculateTeamOverview(
-    Map<String, PlayerPerformanceData> data,) =>
+    Map<String, PlayerPerformanceData> data,) {
   // TODO(author): Implement team overview calculation
-  TeamPerformanceOverview(
+  return TeamPerformanceOverview(
     averagePhysicalScore: 0,
     averageTechnicalScore: 0,
     averageTacticalScore: 0,
@@ -90,6 +90,8 @@ TeamPerformanceOverview _calculateTeamOverview(
     topPerformers: [],
     needsAttention: [],
   );
+}
+
 // Data models for trends and analysis
 class PlayerDevelopmentTrends {
   PlayerDevelopmentTrends({

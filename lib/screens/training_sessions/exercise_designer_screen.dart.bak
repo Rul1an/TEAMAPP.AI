@@ -494,9 +494,11 @@ class _ExerciseDesignerScreenState
         ),
       );
 
-  Widget _buildPlaceholderStep(ExerciseDesignerState state) =>
-      // All steps should be implemented - redirect to completion
-      _buildReviewStep(state);
+  Widget _buildPlaceholderStep(ExerciseDesignerState state) {
+    // All steps should be implemented - redirect to completion
+    return _buildReviewStep(state);
+  }
+
   Widget _buildFormSection({
     required String title,
     required IconData icon,
