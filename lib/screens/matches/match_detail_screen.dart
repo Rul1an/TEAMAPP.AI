@@ -71,7 +71,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         data: (matches) {
           final match = matches.firstWhere(
             (m) => m.id.toString() == widget.matchId,
-            orElse: () {
+            // �� CASCADE PATTERN: UI Callback Object Initialization
+            // This orElse callback could use cascade notation for cleaner object initialization:
+            // orElse: () => Match()..date = DateTime.now()..opponent = ""..location = Location.home            orElse: () {
               final newMatch = Match();
               newMatch.date = DateTime.now();
               newMatch.opponent = '';
@@ -298,7 +300,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                   children: _selectedStartingLineup.map((playerId) {
                     final player = players.firstWhere(
                       (p) => p.id.toString() == playerId,
-                      orElse: () {
+            // �� CASCADE PATTERN: UI Callback Object Initialization
+            // This orElse callback could use cascade notation for cleaner object initialization:
+            // orElse: () => Match()..date = DateTime.now()..opponent = ""..location = Location.home                      orElse: () {
                         final newPlayer = Player();
                         newPlayer.firstName = 'Onbekend';
                         newPlayer.lastName = '';
@@ -362,7 +366,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                   children: _selectedSubstitutes.map((playerId) {
                     final player = players.firstWhere(
                       (p) => p.id.toString() == playerId,
-                      orElse: () {
+            // �� CASCADE PATTERN: UI Callback Object Initialization
+            // This orElse callback could use cascade notation for cleaner object initialization:
+            // orElse: () => Match()..date = DateTime.now()..opponent = ""..location = Location.home                      orElse: () {
                         final newPlayer = Player();
                         newPlayer.firstName = 'Onbekend';
                         newPlayer.lastName = '';

@@ -63,33 +63,32 @@ class PeriodizationPlan {
   }
 
   factory PeriodizationPlan.fromJson(Map<String, dynamic> json) {
-    final plan = PeriodizationPlan();
-    plan.id = json['id'] as String? ?? '';
-    plan.name = json['name'] as String? ?? '';
-    plan.description = json['description'] as String? ?? '';
-    plan.modelType = PeriodizationModel.values.firstWhere(
-      (e) => e.name == (json['modelType'] as String?),
-      orElse: () => PeriodizationModel.custom,
-    );
-    plan.targetAgeGroup = AgeGroup.values.firstWhere(
-      (e) => e.name == (json['targetAgeGroup'] as String?),
-      orElse: () => AgeGroup.u17,
-    );
-    plan.totalDurationWeeks = json['totalDurationWeeks'] as int? ?? 36;
-    plan.numberOfPeriods = json['numberOfPeriods'] as int? ?? 4;
-    plan.defaultIntensityTargets = json['defaultIntensityTargets'] as String?;
-    plan.defaultContentDistribution =
-        json['defaultContentDistribution'] as String?;
-    plan.isTemplate = json['isTemplate'] as bool? ?? false;
-    plan.isDefault = json['isDefault'] as bool? ?? false;
-    plan.createdBy = json['createdBy'] as String?;
-    plan.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'] as String)
-        : DateTime.now();
-    plan.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'] as String)
-        : DateTime.now();
-    return plan;
+    return PeriodizationPlan()
+      ..id = json['id'] as String? ?? ''
+      ..name = json['name'] as String? ?? ''
+      ..description = json['description'] as String? ?? ''
+      ..modelType = PeriodizationModel.values.firstWhere(
+        (e) => e.name == (json['modelType'] as String?),
+        orElse: () => PeriodizationModel.custom,
+      )
+      ..targetAgeGroup = AgeGroup.values.firstWhere(
+        (e) => e.name == (json['targetAgeGroup'] as String?),
+        orElse: () => AgeGroup.u17,
+      )
+      ..totalDurationWeeks = json['totalDurationWeeks'] as int? ?? 36
+      ..numberOfPeriods = json['numberOfPeriods'] as int? ?? 4
+      ..defaultIntensityTargets = json['defaultIntensityTargets'] as String?
+      ..defaultContentDistribution =
+          json['defaultContentDistribution'] as String?
+      ..isTemplate = json['isTemplate'] as bool? ?? false
+      ..isDefault = json['isDefault'] as bool? ?? false
+      ..createdBy = json['createdBy'] as String?
+      ..createdAt = json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : DateTime.now()
+      ..updatedAt = json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'] as String)
+          : DateTime.now();
   }
   String id = '';
 

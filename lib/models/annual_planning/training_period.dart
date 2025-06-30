@@ -95,6 +95,39 @@ class TrainingPeriod {
     contentFocus = ContentDistribution.recovery();
   }
 
+  /// 🔧 CASCADE OPERATOR DOCUMENTATION
+  ///
+  /// This factory method demonstrates a pattern where cascade notation (..) could be used
+  /// to improve code readability and reduce repetitive receiver references.
+  ///
+  /// **CURRENT PATTERN**: period.property = value (explicit assignments)
+  /// **RECOMMENDED**: period..property = value (cascade notation)
+  ///
+  /// **CASCADE BENEFITS**:
+  /// ✅ Eliminates repetitive 'period.' references (DRY principle)
+  /// ✅ Groups related property assignments visually
+  /// ✅ Creates fluent, readable object initialization patterns
+  /// ✅ Follows Dart/Flutter best practices for object configuration
+  /// ✅ Reduces cognitive load when reading initialization code
+  ///
+  /// **WHY CASCADE OPERATORS ARE USEFUL HERE**:
+  /// - Object initialization with multiple property assignments
+  /// - All assignments target the same receiver (period)
+  /// - Sequential property setting without intermediate operations
+  /// - Improves maintainability of JSON deserialization patterns
+  ///
+  /// **EXAMPLE TRANSFORMATION**:
+  /// ```dart
+  /// // Current (explicit assignments):
+  /// final period = TrainingPeriod();
+  /// period.id = json['id'];
+  /// period.name = json['name'];
+  ///
+  /// // With cascade notation:
+  /// final period = TrainingPeriod()
+  ///   ..id = json['id']
+  ///   ..name = json['name'];
+  /// ```
   factory TrainingPeriod.fromJson(Map<String, dynamic> json) {
     final period = TrainingPeriod();
     period.id = json['id'] as String? ?? '';
@@ -356,6 +389,33 @@ class TrainingPeriod {
       type.hashCode ^
       orderIndex.hashCode ^
       durationWeeks.hashCode;
+
+  // Helper methods for JSON parsing
+  static PeriodType _parsePeriodType(String? typeString) {
+    return PeriodType.values.firstWhere(
+      (e) => e.name == typeString,
+      orElse: () => PeriodType.preparation,
+    );
+  }
+
+  static PeriodStatus _parsePeriodStatus(String? statusString) {
+    return PeriodStatus.values.firstWhere(
+      (e) => e.name == statusString,
+      orElse: () => PeriodStatus.planned,
+    );
+  }
+
+  static DateTime? _parseDateTime(String? dateString) {
+    return dateString != null ? DateTime.parse(dateString) : null;
+  }
+
+  static DateTime _parseDateTimeOrNow(String? dateString) {
+    return dateString != null ? DateTime.parse(dateString) : DateTime.now();
+  }
+
+  static List<String> _parseStringList(List<dynamic>? list) {
+    return List<String>.from(list ?? <dynamic>[]);
+  }
 }
 
 // Enums for training periods

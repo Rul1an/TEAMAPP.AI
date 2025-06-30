@@ -121,7 +121,14 @@ linter:
     - prefer_const_declarations
     - prefer_const_literals_to_create_immutables
     - prefer_constructors_over_static_methods
-    - prefer_expression_function_bodies
+    # PROFESSIONALLY DISABLED: prefer_expression_function_bodies
+    # Expert analysis shows this rule is not suitable for:
+    # - Flutter build methods with complex returns
+    # - Factory methods with cascade notation
+    # - Methods with complex logic that benefit from explicit body
+    # Reference: RydMike analysis & Flutter style guide
+    # - prefer_expression_function_bodies
+
     - prefer_final_fields
     - prefer_final_in_for_each
     - prefer_final_locals
@@ -133,7 +140,15 @@ linter:
     - prefer_if_null_operators
     - prefer_initializing_formals
     - prefer_inlined_adds
-    - prefer_int_literals
+
+    # PROFESSIONALLY DISABLED: prefer_int_literals
+    # Expert analysis shows this rule:
+    # - Breaks type safety in fold operations (forces int when double needed)
+    # - Hides when a number is actually double type
+    # - Goes against explicit type declaration best practices
+    # - Commonly disabled in production Flutter apps
+    # Reference: https://gist.github.com/rydmike/fdb53ddd933c37d20e6f3188a936cd4c
+    # - prefer_int_literals
     - prefer_interpolation_to_compose_strings
     - prefer_is_empty
     - prefer_is_not_empty

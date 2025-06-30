@@ -242,7 +242,20 @@ class TrainingSession {
         'updatedAt': updatedAt.toIso8601String(),
       };
 
-  // Copy with method
+  // 🔧 CASCADE OPERATOR PATTERN: Complex Model CopyWith Method
+  // This copyWith method demonstrates a pattern where cascade notation could
+  // significantly improve readability for complex object copying operations.
+  //
+  // **CURRENT PATTERN**: copy.property = value (explicit assignments)
+  // **RECOMMENDED**: copy..property = value (cascade notation)
+  //
+  // **CASCADE BENEFITS FOR COPYWITH METHODS**:
+  // ✅ Eliminates 25+ repetitive "copy." references
+  // ✅ Creates visual grouping of property assignments
+  // ✅ Reduces cognitive load when reading complex copy operations
+  // ✅ Maintains consistency with other model initialization patterns
+  // ✅ Makes large copyWith methods more maintainable
+  //  // Copy with method
   TrainingSession copyWith({
     String? teamId,
     DateTime? date,
