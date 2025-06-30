@@ -179,20 +179,6 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     assessments.sort((a, b) => b.assessmentDate.compareTo(a.assessmentDate));
     final latestAssessment = assessments.first;
 
-    // 🔧 CASCADE OPERATOR DOCUMENTATION: UI Callback Pattern with orElse
-    // This firstWhere with orElse pattern demonstrates a common UI pattern where
-    // cascade notation could improve readability for fallback object operations.
-    //
-    // **CURRENT PATTERN**: object.method().orElse(() => fallback) (explicit method calls)
-    // **RECOMMENDED**: object..method()..orElse(() => fallback) (cascade notation)
-    //
-    // **CASCADE BENEFITS FOR UI CALLBACKS**:
-    // ✅ Creates visual flow for fallback operations
-    // ✅ Reduces cognitive load when reading nested operations
-    // ✅ Maintains consistency with other UI initialization patterns
-    // ✅ Improves readability in error-handling scenarios
-    // ✅ Makes UI callback chains more maintainable
-    //
     // Find the player for that assessment
     final player = players.firstWhere(
       (p) => p.id.toString() == latestAssessment.playerId,

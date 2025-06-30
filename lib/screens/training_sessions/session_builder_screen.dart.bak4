@@ -79,19 +79,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       final loadedSession =
           await _db.getTrainingSession(widget.sessionId!.toString());
       if (loadedSession != null) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
         setState(() {
           session = loadedSession;
           selectedDate = session!.date;
@@ -226,19 +213,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                 ],
                 onStepTapped: (step) {
                   if (step <= currentStep) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
                     setState(() {
                       currentStep = step;
                     });
@@ -257,19 +231,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
               child: PageView(
                 controller: _pageController,
                 onPageChanged: (page) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
                   setState(() {
                     currentStep = page;
                   });
@@ -290,19 +251,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
 
   void _nextStep() {
     if (currentStep < _stepCount - 1) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
       setState(() {
         currentStep++;
       });
@@ -315,19 +263,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
 
   void _previousStep() {
     if (currentStep > 0) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
       setState(() {
         currentStep--;
       });
@@ -782,19 +717,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   }
 
   void _reorderPhases(int oldIndex, int newIndex) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
     setState(() {
       final adjustedNewIndex = newIndex > oldIndex ? newIndex - 1 : newIndex;
       final item = sessionPhases.removeAt(oldIndex);
@@ -834,19 +756,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
           ),
           TextButton(
             onPressed: () {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
               setState(() {
                 sessionPhases.removeAt(index);
                 _recalculatePhaseTimes();
@@ -871,19 +780,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       ..endTime = baseTime.add(Duration(minutes: duration))
       ..description = _getDefaultPhaseDescription(type);
 
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
     setState(() {
       sessionPhases.add(newPhase);
       _recalculatePhaseTimes();
@@ -1091,19 +987,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       lastDate: DateTime.now().add(const Duration(days: 365)),
     );
     if (date != null) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
       setState(() {
         selectedDate = date;
         session!.date = date;
@@ -1124,19 +1007,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                   title: Text(_getTrainingTypeDisplayName(type)),
                   selected: type == selectedType,
                   onTap: () {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
                     setState(() {
                       selectedType = type;
                       session!.type = type;
@@ -1251,19 +1121,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                 updatedPhase.endTime =
                     updatedPhase.startTime.add(Duration(minutes: duration));
 
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
                 setState(() {
                   sessionPhases[index] = updatedPhase;
                   _recalculatePhaseTimes();
@@ -1382,19 +1239,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                   ..endTime = baseTime.add(Duration(minutes: duration))
                   ..description = descriptionController.text.trim();
 
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
                 setState(() {
                   sessionPhases.add(newPhase);
                   _recalculatePhaseTimes();
@@ -1631,19 +1475,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                       trailing: IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
                           setState(() {
                             phase.removeExercise(exerciseId);
                           });
@@ -1672,19 +1503,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
   }
 
   void _addExerciseToPhase(SessionPhase phase, String exerciseId) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
     setState(() {
       if (!phase.exerciseIds.contains(exerciseId)) {
         phase.addExercise(exerciseId);

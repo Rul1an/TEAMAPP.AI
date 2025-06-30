@@ -143,19 +143,6 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
     );
   }
 
-  // 🔧 CASCADE OPERATOR DOCUMENTATION: Widget Builder Pattern
-  // This PopupMenuButton with nested Container pattern demonstrates where
-  // cascade notation could improve readability for complex widget building.
-  //
-  // **CURRENT PATTERN**: PopupMenuButton(properties) (single constructor)
-  // **RECOMMENDED**: PopupMenuButton()..property = value (cascade notation)
-  //
-  // **CASCADE BENEFITS FOR WIDGET BUILDERS**:
-  // ✅ Separates widget creation from property assignment
-  // ✅ Easier to conditionally set properties
-  // ✅ Better readability for complex widget configurations
-  // ✅ Maintains Flutter widget building patterns
-  //
   Widget _buildPlayerTypeSelector() {
     final state = ref.watch(fieldDiagramProvider);
     final selectedPlayerType = state.selectedPlayerType;

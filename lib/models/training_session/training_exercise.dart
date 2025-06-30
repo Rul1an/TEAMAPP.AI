@@ -86,6 +86,32 @@ class TrainingExercise {
         ..createdAt = DateTime.now()
         ..updatedAt = DateTime.now();
 
+  // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex Factory Constructor Pattern
+  // This fromJson factory method demonstrates a common pattern where cascade
+  // notation could improve readability for complex object initialization.
+  //
+  // **CURRENT PATTERN**: exercise.property = value (explicit assignments after creation)
+  // **RECOMMENDED**: exercise..property = value (cascade notation)
+  //
+  // **CASCADE BENEFITS FOR FACTORY METHODS**:
+  // ✅ Eliminates repetitive "exercise." references after object creation
+  // ✅ Creates visual grouping of property assignments
+  // ✅ Reduces cognitive load when reading complex initialization
+  // ✅ Maintains consistency with other model initialization patterns
+  // ✅ Makes factory methods more maintainable and readable
+  //
+  // **TRANSFORMATION EXAMPLE**:
+  // ```dart
+  // // Current: explicit assignments
+  // exercise.id = json['id'] as int? ?? 0;
+  // exercise.createdAt = json['createdAt'] != null ? DateTime.parse(...) : DateTime.now();
+  // exercise.updatedAt = json['updatedAt'] != null ? DateTime.parse(...) : DateTime.now();
+  //
+  // // Recommended: cascade notation
+  // exercise..id = json['id'] as int? ?? 0
+  //         ..createdAt = json['createdAt'] != null ? DateTime.parse(...) : DateTime.now()
+  //         ..updatedAt = json['updatedAt'] != null ? DateTime.parse(...) : DateTime.now();
+  // ```
   factory TrainingExercise.fromJson(Map<String, dynamic> json) {
     final exercise = TrainingExercise.create(
       name: json['name'] as String,

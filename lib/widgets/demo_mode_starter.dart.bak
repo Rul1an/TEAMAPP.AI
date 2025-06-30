@@ -19,19 +19,6 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
   void initState() {
     super.initState();
 
-    // 🔧 CASCADE OPERATOR DOCUMENTATION: Widget Callback Pattern
-    // This WidgetsBinding.instance.addPostFrameCallback pattern demonstrates
-    // a common Flutter pattern where cascade notation could improve readability.
-    //
-    // **CURRENT PATTERN**: method(callback) (single method call)
-    // **RECOMMENDED**: object..method(callback) (cascade notation)
-    //
-    // **CASCADE BENEFITS FOR WIDGET CALLBACKS**:
-    // ✅ Creates visual flow for post-frame operations
-    // ✅ Easier to chain multiple post-frame callbacks
-    // ✅ Better readability in initialization sequences
-    // ✅ Maintains Flutter widget lifecycle patterns
-    //
     // Start demo mode automatically for testing RBAC
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _startDemoMode();

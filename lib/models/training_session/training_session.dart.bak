@@ -242,7 +242,7 @@ class TrainingSession {
         'updatedAt': updatedAt.toIso8601String(),
       };
 
-  // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex Model CopyWith Method
+  // 🔧 CASCADE OPERATOR PATTERN: Complex Model CopyWith Method
   // This copyWith method demonstrates a pattern where cascade notation could
   // significantly improve readability for complex object copying operations.
   //

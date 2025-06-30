@@ -106,19 +106,6 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         ),
       );
 
-  // 🔧 CASCADE OPERATOR DOCUMENTATION: List Building Pattern
-  // This for loop with list.add() pattern demonstrates where cascade
-  // notation could improve readability for list building operations.
-  //
-  // **CURRENT PATTERN**: list.add(item) (explicit method calls)
-  // **RECOMMENDED**: list..add(item1)..add(item2) (cascade notation)
-  //
-  // **CASCADE BENEFITS FOR LIST BUILDING**:
-  // ✅ Eliminates repetitive list variable references
-  // ✅ Creates visual flow for sequential additions
-  // ✅ Better readability for list construction
-  // ✅ Maintains Dart collection patterns
-  //
   void _selectFormation(FormationData formation) {
     final players = <PlayerMarker>[];
 
