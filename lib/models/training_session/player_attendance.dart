@@ -97,30 +97,29 @@ class PlayerAttendance {
   ///   ..status = AttendanceStatus.values.firstWhere(...);
   /// ```
   factory PlayerAttendance.fromJson(Map<String, dynamic> json) {
-    final attendance = PlayerAttendance();
-    attendance.id = json['id'] as String? ?? '';
-    attendance.playerId = json['playerId'] as String? ?? '';
-    attendance.playerName = json['playerName'] as String? ?? '';
-    attendance.playerNumber = json['playerNumber'] as int? ?? 0;
-    attendance.position = PlayerPosition.values.firstWhere(
-      (e) => e.name == json['position'],
-      orElse: () => PlayerPosition.V,
-    );
-    attendance.status = AttendanceStatus.values.firstWhere(
-      (e) => e.name == json['status'],
-      orElse: () => AttendanceStatus.unknown,
-    );
-    attendance.notes = json['notes'] as String?;
-    attendance.arrivalTime = json['arrivalTime'] != null
-        ? DateTime.parse(json['arrivalTime'] as String)
-        : null;
-    attendance.createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'] as String)
-        : DateTime.now();
-    attendance.updatedAt = json['updatedAt'] != null
-        ? DateTime.parse(json['updatedAt'] as String)
-        : DateTime.now();
-    return attendance;
+    return PlayerAttendance()
+      ..id = json['id'] as String? ?? ''
+      ..playerId = json['playerId'] as String? ?? ''
+      ..playerName = json['playerName'] as String? ?? ''
+      ..playerNumber = json['playerNumber'] as int? ?? 0
+      ..position = PlayerPosition.values.firstWhere(
+        (e) => e.name == json['position'],
+        orElse: () => PlayerPosition.V,
+      )
+      ..status = AttendanceStatus.values.firstWhere(
+        (e) => e.name == json['status'],
+        orElse: () => AttendanceStatus.unknown,
+      )
+      ..notes = json['notes'] as String?
+      ..arrivalTime = json['arrivalTime'] != null
+          ? DateTime.parse(json['arrivalTime'] as String)
+          : null
+      ..createdAt = json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : DateTime.now()
+      ..updatedAt = json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'] as String)
+          : DateTime.now();
   }
   String id = '';
 
