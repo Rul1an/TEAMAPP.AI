@@ -51,7 +51,7 @@ class DatabaseService {
   // Setter for accessing providers
   // Getter for accessing providers
   Ref? get ref => _ref;
-  set ref(Ref value) {
+  set ref(Ref? value) {
     _ref = value;
   }
   // Check if in demo mode

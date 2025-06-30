@@ -196,39 +196,39 @@ class RBACDemoWidget extends ConsumerWidget {
   }
 
   List<PermissionInfo> _getPermissionsForRole(String? role) => [
-        const PermissionInfo('Dashboard bekijken', true), // Everyone
-        const PermissionInfo('Spelers bekijken', true), // Everyone
-        const PermissionInfo('Training bekijken', true), // Everyone
-        const PermissionInfo('Wedstrijden bekijken', true), // Everyone
-        const PermissionInfo('---MANAGEMENT---', false), // Separator
+        const PermissionInfo('Dashboard bekijken', hasAccess: true), // Everyone
+        const PermissionInfo('Spelers bekijken', hasAccess: true), // Everyone
+        const PermissionInfo('Training bekijken', hasAccess: true), // Everyone
+        const PermissionInfo('Wedstrijden bekijken', hasAccess: true), // Everyone
+        const PermissionInfo('---MANAGEMENT---', hasAccess: false), // Separator
         PermissionInfo(
-            'Spelers beheren', PermissionService.canManagePlayers(role),),
+            'Spelers beheren', hasAccess: PermissionService.canManagePlayers(role),),
         PermissionInfo(
-            'Spelers bewerken', PermissionService.canEditPlayers(role),),
+            'Spelers bewerken', hasAccess: PermissionService.canEditPlayers(role),),
         PermissionInfo(
-            'Training beheren', PermissionService.canManageTraining(role),),
+            'Training beheren', hasAccess: PermissionService.canManageTraining(role),),
         PermissionInfo(
-            'Training aanmaken', PermissionService.canCreateTraining(role),),
+            'Training aanmaken', hasAccess: PermissionService.canCreateTraining(role),),
         PermissionInfo(
-            'Wedstrijden beheren', PermissionService.canManageMatches(role),),
+            'Wedstrijden beheren', hasAccess: PermissionService.canManageMatches(role),),
         PermissionInfo('Exercise Library',
-            PermissionService.canManageExerciseLibrary(role),),
+            hasAccess: PermissionService.canManageExerciseLibrary(role),),
         PermissionInfo('Field Diagram Editor',
-            PermissionService.canAccessFieldDiagramEditor(role),),
+            hasAccess: PermissionService.canAccessFieldDiagramEditor(role),),
         PermissionInfo('Exercise Designer',
-            PermissionService.canAccessExerciseDesigner(role),),
-        const PermissionInfo('---ADVANCED---', false), // Separator
+            hasAccess: PermissionService.canAccessExerciseDesigner(role),),
+        const PermissionInfo('---ADVANCED---', hasAccess: false), // Separator
         PermissionInfo(
-            'Analytics bekijken', PermissionService.canViewAnalytics(role),),
+            'Analytics bekijken', hasAccess: PermissionService.canViewAnalytics(role),),
         PermissionInfo('SVS toegang',
-            PermissionService.canAccessSVS(role, OrganizationTier.pro),),
+            hasAccess: PermissionService.canAccessSVS(role, OrganizationTier.pro),),
         PermissionInfo(
-            'Jaarplanning', PermissionService.canAccessAnnualPlanning(role),),
+            'Jaarplanning', hasAccess: PermissionService.canAccessAnnualPlanning(role),),
         PermissionInfo(
-            'Admin functies', PermissionService.canAccessAdmin(role),),
-        const PermissionInfo('---STATUS---', false), // Separator
+            'Admin functies', hasAccess: PermissionService.canAccessAdmin(role),),
+        const PermissionInfo('---STATUS---', hasAccess: false), // Separator
         PermissionInfo(
-            '🔒 Alleen bekijken', PermissionService.isViewOnlyUser(role),),
+            '🔒 Alleen bekijken', hasAccess: PermissionService.isViewOnlyUser(role),),
       ];
 
   List<QuickActionInfo> _getQuickActionsForRole(
@@ -237,44 +237,44 @@ class RBACDemoWidget extends ConsumerWidget {
         QuickActionInfo(
           'Dashboard',
           Icons.dashboard,
-          true,
-          () => context.go('/dashboard'),
+          isEnabled: true,
+          onPressed: () => context.go('/dashboard'),
         ),
         QuickActionInfo(
           'Spelers',
           Icons.people,
-          true,
-          () => context.go('/players'),
+          isEnabled: true,
+          onPressed: () => context.go('/players'),
         ),
         QuickActionInfo(
           'Training',
           Icons.fitness_center,
-          true,
-          () => context.go('/training'),
+          isEnabled: true,
+          onPressed: () => context.go('/training'),
         ),
         QuickActionInfo(
           'Wedstrijden',
           Icons.sports_soccer,
-          true,
-          () => context.go('/matches'),
+          isEnabled: true,
+          onPressed: () => context.go('/matches'),
         ),
         QuickActionInfo(
           'Analytics',
           Icons.analytics,
-          PermissionService.canViewAnalytics(role),
-          () => context.go('/analytics'),
+          isEnabled: PermissionService.canViewAnalytics(role),
+          onPressed: () => context.go('/analytics'),
         ),
         QuickActionInfo(
           'SVS Dashboard',
           Icons.track_changes,
-          PermissionService.canAccessSVS(role, OrganizationTier.pro),
-          () => context.go('/svs'),
+          isEnabled: PermissionService.canAccessSVS(role, OrganizationTier.pro),
+          onPressed: () => context.go('/svs'),
         ),
         QuickActionInfo(
           'Admin Panel',
           Icons.admin_panel_settings,
-          PermissionService.canAccessAdmin(role),
-          () => context.go('/admin'),
+          isEnabled: PermissionService.canAccessAdmin(role),
+          onPressed: () => context.go('/admin'),
         ),
       ];
 
@@ -318,13 +318,13 @@ class RBACDemoWidget extends ConsumerWidget {
 }
 
 class PermissionInfo {
-  const PermissionInfo(this.description, this.hasAccess);
+  const PermissionInfo(this.description, {required this.hasAccess});
   final String description;
   final bool hasAccess;
 }
 
 class QuickActionInfo {
-  const QuickActionInfo(this.label, this.icon, this.isEnabled, this.onPressed);
+  const QuickActionInfo(this.label, this.icon, {required this.isEnabled, required this.onPressed});
   final String label;
   final IconData icon;
   final bool isEnabled;

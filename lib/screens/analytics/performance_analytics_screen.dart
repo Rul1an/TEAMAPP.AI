@@ -831,75 +831,6 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     );
   }
 
-  List<Map<String, dynamic>> _generateInsights(
-      List<Player> players, List<PlayerAssessment> assessments,) {
-    final insights = <Map<String, dynamic>>[];
-
-    if (players.isEmpty) {
-      insights.add({
-        'icon': Icons.info,
-        'color': Colors.blue,
-        'title': 'Geen Data',
-        'description': 'Voeg spelers toe om inzichten te genereren',
-      });
-      return insights;
-    }
-
-    // Top performer
-    final topScorer = players.reduce((a, b) => a.goals > b.goals ? a : b);
-    if (topScorer.goals > 0) {
-      insights.add({
-        'icon': Icons.star,
-        'color': Colors.amber,
-        'title': 'Top Scorer',
-        'description':
-            '${topScorer.name} heeft ${topScorer.goals} goals gemaakt',
-      });
-    }
-
-    // Best attendance
-    final bestAttendance = players.reduce(
-      (a, b) => a.attendancePercentage > b.attendancePercentage ? a : b,
-    );
-    insights.add({
-      'icon': Icons.emoji_events,
-      'color': Colors.green,
-      'title': 'Beste Opkomst',
-      'description':
-          '${bestAttendance.name} - ${bestAttendance.attendancePercentage.toStringAsFixed(0)}% aanwezigheid',
-    });
-
-    // Team balance
-    final avgAge =
-        players.map((p) => p.age).fold(0, (a, b) => a + b) / players.length;
-    insights.add({
-      'icon': Icons.balance,
-      'color': Colors.blue,
-      'title': 'Team Balans',
-      'description':
-          'Gemiddelde leeftijd ${avgAge.toStringAsFixed(1)} jaar - goede mix',
-    });
-
-    // Assessment insights
-    if (assessments.isNotEmpty) {
-      insights.add({
-        'icon': Icons.analytics,
-        'color': Colors.purple,
-        'title': 'Assessment Data',
-        'description':
-            '${assessments.length} beoordelingen beschikbaar voor analyse',
-      });
-    } else {
-      insights.add({
-        'icon': Icons.assignment,
-        'color': Colors.orange,
-        'title': 'Assessment Tip',
-        'description': 'Voeg speler beoordelingen toe voor betere inzichten',
-      });
-    }
-
-    return insights;
-  }
 
   Color _getAttendanceColor(double percentage) {
     if (percentage >= 85) return Colors.green;
@@ -907,18 +838,6 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     return Colors.red;
   }
 
-  IconData _getPositionIcon(Position position) {
-    switch (position) {
-      case Position.goalkeeper:
-        return Icons.sports_handball;
-      case Position.defender:
-        return Icons.shield;
-      case Position.midfielder:
-        return Icons.group_work;
-      case Position.forward:
-        return Icons.sports_soccer;
-    }
-  }
 
   Color _getPositionColor(Position position) {
     switch (position) {
