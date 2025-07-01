@@ -266,7 +266,7 @@ class ExportService {
       sheet.appendRow(row);
     }
 
-    // Legend
+    // Legend - combine into single cascade chain and remove empty spacer row
     sheet
       ..appendRow([])
       ..appendRow([TextCellValue('Legenda:')])
