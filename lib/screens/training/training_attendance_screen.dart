@@ -397,7 +397,6 @@ class _TrainingAttendanceScreenState
     final playersAsync = ref.read(playersProvider);
 
     playersAsync.whenData((players) {
-      // Filter players who are present or late
       final presentPlayers = players.where((player) {
         final status = _attendance[player.id.toString()];
         return status == AttendanceStatus.present ||
@@ -405,13 +404,13 @@ class _TrainingAttendanceScreenState
       }).toList();
 
       if (presentPlayers.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-                'Markeer eerst aanwezige spelers om beoordelingen te geven',),
-            backgroundColor: Colors.orange,
-          ),
-        );
+        ScaffoldMessenger.of(context)
+          ..showSnackBar(
+            const SnackBar(
+              content: Text('Markeer eerst aanwezige spelers om beoordelingen te geven'),
+              backgroundColor: Colors.orange,
+            ),
+          );
         return;
       }
 
@@ -430,14 +429,8 @@ class _TrainingAttendanceScreenState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Beoordeel Aanwezige Spelers',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.close),
-                    ),
+                    Text('Beoordeel Aanwezige Spelers', style: Theme.of(context).textTheme.titleLarge),
+                    IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(Icons.close)),
                   ],
                 ),
               ),
@@ -451,10 +444,7 @@ class _TrainingAttendanceScreenState
                     return ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        child: Text(
-                          player.jerseyNumber.toString(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
+                        child: Text(player.jerseyNumber.toString(), style: const TextStyle(color: Colors.white)),
                       ),
                       title: Text(player.name),
                       subtitle: Text(_getPositionText(player.position)),
@@ -470,14 +460,14 @@ class _TrainingAttendanceScreenState
                           ),
                         );
 
-                        if ((result ?? false) && mounted && context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                  'Beoordeling opgeslagen voor ${player.name}',),
-                              backgroundColor: Colors.green,
-                            ),
-                          );
+                        if ((result ?? false) && mounted) {
+                          ScaffoldMessenger.of(context)
+                            ..showSnackBar(
+                              SnackBar(
+                                content: Text('Beoordeling opgeslagen voor ${player.name}'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
                         }
                       },
                     );
@@ -524,22 +514,24 @@ class _TrainingAttendanceScreenState
       }
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Aanwezigheid opgeslagen'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        ScaffoldMessenger.of(context)
+          ..showSnackBar(
+            const SnackBar(
+              content: Text('Aanwezigheid opgeslagen'),
+              backgroundColor: Colors.green,
+            ),
+          );
         context.pop();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Fout bij opslaan: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        ScaffoldMessenger.of(context)
+          ..showSnackBar(
+            SnackBar(
+              content: Text('Fout bij opslaan: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
       }
     } finally {
       if (mounted) {
