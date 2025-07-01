@@ -269,12 +269,13 @@ class ExportService {
     }
 
     // Legend
-    sheet.appendRow([]);
-    sheet.appendRow([TextCellValue('Legenda:')]);
-    sheet.appendRow([TextCellValue('A = Aanwezig')]);
-    sheet.appendRow([TextCellValue('X = Afwezig')]);
-    sheet.appendRow([TextCellValue('G = Geblesseerd')]);
-    sheet.appendRow([TextCellValue('L = Te laat')]);
+    sheet
+      ..appendRow([])
+      ..appendRow([TextCellValue('Legenda:')])
+      ..appendRow([TextCellValue('A = Aanwezig')])
+      ..appendRow([TextCellValue('X = Afwezig')])
+      ..appendRow([TextCellValue('G = Geblesseerd')])
+      ..appendRow([TextCellValue('L = Te laat')]);
 
     await _saveExcel(excel, 'training_aanwezigheid');
   }

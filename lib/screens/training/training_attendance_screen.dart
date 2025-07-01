@@ -54,14 +54,11 @@ class _TrainingAttendanceScreenState
         data: (trainings) {
           final training = trainings.firstWhere(
             (t) => t.id.toString() == widget.trainingId,
-            orElse: () {
-              final newTraining = Training();
-              newTraining.date = DateTime.now();
-              newTraining.focus = TrainingFocus.technical;
-              newTraining.intensity = TrainingIntensity.medium;
-              newTraining.status = TrainingStatus.planned;
-              return newTraining;
-            },
+            orElse: () => Training()
+              ..date = DateTime.now()
+              ..focus = TrainingFocus.technical
+              ..intensity = TrainingIntensity.medium
+              ..status = TrainingStatus.planned,
           );
 
           if (training.id == '') {

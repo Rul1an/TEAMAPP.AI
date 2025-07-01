@@ -26,22 +26,21 @@
 - **Code pattern**: `Paint()..color = Colors.blue..strokeWidth = 2.0`
 - **Datum**: Juni 2025
 
-### 8. lib/models/training_session/training_session.dart ✅
-- **Issues voor**: 25+ cascade_invocations
+### 8. lib/providers/field_diagram_provider.dart ✅
+- **Issues voor**: 6 cascade_invocations ( + 2 avoid_single_cascade )
 - **Issues na**: 0 ✅
-- **Implementatie**: Complex copyWith method met cascade notation
-- **Online research**: Flutter training session model cascade patterns 2025
-- **Resultaat**: SUCCESVOL - 25+ repetitive assignments geëlimineerd
-- **Code pattern**: `return TrainingSession()..id = id..teamId = teamId..date = date`
+- **Implementatie**:
+  1. `_addToHistory` → `..add()` cascade
+  2. PNG/PDF export `FileSaver` calls: cascade vervangen door directe `saveFile`-aanroep
+- **Resultaat**: Alle warnings verdwenen (analyze clean)
 - **Datum**: Juni 2025
 
 ## 🔄 GEDEELTELIJK VOLTOOIDE BESTANDEN
 
-### 2. lib/models/annual_planning/training_period.dart
-- **Issues voor**: ~35 cascade_invocations
-- **Issues na**: ~18 (50% verbetering)
-- **Implementatie**: fromJson factory method + copyWith method
-- **Status**: GEDEELTELIJK - edit model accepteerde sommige transformaties
+### 2. lib/models/annual_planning/training_period.dart ✅
+- **Issues voor**: ~35
+- **Issues na**: 0 ✅
+- **Implementatie**: factory fromJson volledig cascade + eerdere copyWith behouden
 - **Datum**: Juni 2025
 
 ### 3. lib/models/training_session/player_attendance.dart
@@ -51,8 +50,11 @@
 - **Status**: GEDEELTELIJK - complexe model classes blijven uitdagend
 - **Datum**: Juni 2025
 
-### 4. lib/models/training_session/training_exercise.dart
+### 4. lib/models/training_session/training_exercise.dart ✅
 - **Issues voor**: ~12 cascade_invocations
+- **Issues na**: 0 ✅
+- **Implementatie**: factory `fromJson` en `copyWith` volledig omgezet naar cascade
+- **Resultaat**: 6 extra issues opgelost
 - **Issues na**: ~6 (50% verbetering)
 - **Implementatie**: updateExercise method cascade pattern
 - **Status**: GEDEELTELIJK - enkele patterns succesvol geïmplementeerd
@@ -102,7 +104,7 @@ Files die nog niet zijn aangepakt maar cascade issues hebben.
 
 ## 📊 STATISTIEKEN
 
-- **Totale vooruitgang**: 200 → 131 issues (69 issues opgelost, 34.5% verbetering)
+- **Totale vooruitgang**: 200 → 97 issues (103 issues opgelost, 51.5% verbetering)
 - **Voltooide files**: 3 bestanden (100% success rate)
 - **Gedeeltelijk voltooide files**: 4 bestanden (gemiddeld 45% verbetering)
 - **Gemiddelde verbetering per bestand**: ~65%

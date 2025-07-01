@@ -50,29 +50,32 @@ class MonitoringService {
   static Future<void> initialize() async {
     if (_sentryDsn.isNotEmpty && !kDebugMode) {
       await SentryFlutter.init(
-        (options) => options
-          ..dsn = _sentryDsn
-          ..environment = kReleaseMode ? 'production' : 'staging'
-          ..release = 'jo17-tactical-manager@1.0.0'
-          ..tracesSampleRate = 0.1 // 10% of transactions
-          ..profilesSampleRate = 0.1 // 10% for profiling
-          ..beforeSend = (event, hint) {
-            // Filter out development errors
-            if (kDebugMode) return null;
+        (options) {
+          options
+            ..dsn = _sentryDsn
+            ..environment = kReleaseMode ? 'production' : 'staging'
+            ..release = 'jo17-tactical-manager@1.0.0'
+            ..tracesSampleRate = 0.1 // 10% of transactions
+            ..profilesSampleRate = 0.1 // 10% for profiling
+            ..beforeSend = (event, hint) {
+              // Filter out development errors
+              if (kDebugMode) return null;
 
-            // Filter out known non-critical errors
-            if (event.throwable?.toString().contains('SocketException') ?? false) {
-              return null; // Network errors are handled gracefully
+              // Filter out known non-critical errors
+              final rawError = event.throwable;
+              if (rawError != null) {
+                final rawErrorStr = rawError.toString();
+                if (rawErrorStr.contains('SocketException')) {
+                  // Network errors are handled gracefully
+                  return null;
+                }
+              }
+
+              return event;
             }
-
-            return event;
-          }
-          ..beforeSendTransaction = (transaction, hint) =>
-              // Only send important transactions
-              null
-          ..beforeBreadcrumb = (breadcrumb, hint) =>
-              // Add additional context to breadcrumbs
-              breadcrumb,
+            ..beforeSendTransaction = (transaction, hint) => null
+            ..beforeBreadcrumb = (Breadcrumb? breadcrumb, Hint? hint) => breadcrumb;
+        },
       );
     }
   }
@@ -114,10 +117,11 @@ class MonitoringService {
       description: 'AI feature usage tracking',
     );
 
-    transaction.setData('feature', feature);
-    transaction.setData('action', action);
-    transaction.setData('user_id', userId);
-    transaction.setData('metadata', metadata);
+    transaction
+      ..setData('feature', feature)
+      ..setData('action', action)
+      ..setData('user_id', userId)
+      ..setData('metadata', metadata);
 
     await transaction.finish();
 
@@ -166,10 +170,11 @@ class MonitoringService {
       description: 'Performance tracking',
     );
 
-    transaction.setData('duration_ms', duration.inMilliseconds);
-    transaction.setData('success', success);
-    transaction.setData('error_message', errorMessage);
-    transaction.setData('metadata', metadata);
+    transaction
+      ..setData('duration_ms', duration.inMilliseconds)
+      ..setData('success', success)
+      ..setData('error_message', errorMessage)
+      ..setData('metadata', metadata);
 
     await transaction.finish(
         status:
@@ -242,11 +247,7 @@ class MonitoringService {
       error,
       stackTrace: stackTrace,
       withScope: (scope) {
-        scope.setTag('error_context', 'error_occurred');
-        scope.setTag('error_context', 'error_occurred');
-        scope.setTag('error_context', 'error_occurred');
-        scope.setTag('error_context', 'error_occurred');
-        scope.setTag('error_context', 'error_occurred');
+        scope.setTag('error_context', context ?? 'error_occurred');
         scope.level = level;
       },
     );

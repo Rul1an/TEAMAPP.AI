@@ -301,12 +301,13 @@ class DemoDataService {
       trainingNumber: 1,
     );
 
-    session.id = _uuid.v4();
-    session.sessionObjective = focus;
-    session.technicalTacticalGoal = focus;
-    session.startTime = DateTime(date.year, date.month, date.day, 19);
-    session.endTime = DateTime(date.year, date.month, date.day, 20, 30);
-    session.durationMinutes = 90;
+    session
+      ..id = _uuid.v4()
+      ..sessionObjective = focus
+      ..technicalTacticalGoal = focus
+      ..startTime = DateTime(date.year, date.month, date.day, 19)
+      ..endTime = DateTime(date.year, date.month, date.day, 20, 30)
+      ..durationMinutes = 90;
 
     return session;
   }
