@@ -249,8 +249,9 @@ class MonitoringService {
       error,
       stackTrace: stackTrace,
       withScope: (scope) {
-        scope.setTag('error_context', context ?? 'error_occurred');
-        scope.level = level;
+        scope
+          ..setTag('error_context', context ?? 'error_occurred')
+          ..level = level;
       },
     );
   }
