@@ -61,62 +61,61 @@ class ExportService {
   // Export Players to PDF
   Future<void> exportPlayersToPDF() async {
     final players = await _dbService.getAllPlayers();
-    final pdf = pw.Document();
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        build: (context) => [
-          pw.Header(
-            level: 0,
-            child: pw.Text(
-              'JO17 Spelers Overzicht',
-              style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+    final pdfDoc = pw.Document()
+      ..addPage(
+        pw.MultiPage(
+          pageFormat: PdfPageFormat.a4,
+          build: (context) => [
+            pw.Header(
+              level: 0,
+              child: pw.Text(
+                'JO17 Spelers Overzicht',
+                style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+              ),
             ),
-          ),
-          pw.SizedBox(height: 20),
-          pw.TableHelper.fromTextArray(
-            headers: [
-              'Nr',
-              'Naam',
-              'Positie',
-              'Leeftijd',
-              'Wedstrijden',
-              'Goals',
-              'Assists',
-              'Speelminuten %',
-            ],
-            data: players.map((player) {
-              final age =
-                  DateTime.now().difference(player.birthDate).inDays ~/ 365;
-              final speelminutenPercentage = player.matchesInSelection > 0
-                  ? ((player.minutesPlayed / (player.matchesInSelection * 80)) *
-                          100)
-                      .toStringAsFixed(1)
-                  : '0.0';
+            pw.SizedBox(height: 20),
+            pw.TableHelper.fromTextArray(
+              headers: [
+                'Nr',
+                'Naam',
+                'Positie',
+                'Leeftijd',
+                'Wedstrijden',
+                'Goals',
+                'Assists',
+                'Speelminuten %',
+              ],
+              data: players.map((player) {
+                final age =
+                    DateTime.now().difference(player.birthDate).inDays ~/ 365;
+                final speelminutenPercentage = player.matchesInSelection > 0
+                    ? ((player.minutesPlayed / (player.matchesInSelection * 80)) *
+                            100)
+                        .toStringAsFixed(1)
+                    : '0.0';
 
-              return [
-                player.jerseyNumber.toString(),
-                '${player.firstName} ${player.lastName}',
-                _getPositionText(player.position),
-                age.toString(),
-                player.matchesPlayed.toString(),
-                player.goals.toString(),
-                player.assists.toString(),
-                '$speelminutenPercentage%',
-              ];
-            }).toList(),
-          ),
-          pw.SizedBox(height: 20),
-          pw.Text(
-            'Gegenereerd op: ${DateFormat('dd-MM-yyyy HH:mm').format(DateTime.now())}',
-            style: const pw.TextStyle(fontSize: 10),
-          ),
-        ],
-      ),
-    );
+                return [
+                  player.jerseyNumber.toString(),
+                  '${player.firstName} ${player.lastName}',
+                  _getPositionText(player.position),
+                  age.toString(),
+                  player.matchesPlayed.toString(),
+                  player.goals.toString(),
+                  player.assists.toString(),
+                  '$speelminutenPercentage%',
+                ];
+              }).toList(),
+            ),
+            pw.SizedBox(height: 20),
+            pw.Text(
+              'Gegenereerd op: ${DateFormat('dd-MM-yyyy HH:mm').format(DateTime.now())}',
+              style: const pw.TextStyle(fontSize: 10),
+            ),
+          ],
+        ),
+      );
 
-    await _savePDF(pdf, 'spelers_overzicht');
+    await _savePDF(pdfDoc, 'spelers_overzicht');
   }
 
   // Export Players to Excel
@@ -172,59 +171,58 @@ class ExportService {
   // Export Matches to PDF
   Future<void> exportMatchesToPDF() async {
     final matches = await _dbService.getAllMatches();
-    final pdf = pw.Document();
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        build: (context) => [
-          pw.Header(
-            level: 0,
-            child: pw.Text(
-              'JO17 Wedstrijden Overzicht',
-              style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+    final pdfDoc = pw.Document()
+      ..addPage(
+        pw.MultiPage(
+          pageFormat: PdfPageFormat.a4,
+          build: (context) => [
+            pw.Header(
+              level: 0,
+              child: pw.Text(
+                'JO17 Wedstrijden Overzicht',
+                style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+              ),
             ),
-          ),
-          pw.SizedBox(height: 20),
-          pw.TableHelper.fromTextArray(
-            headers: [
-              'Datum',
-              'Tegenstander',
-              'Thuis/Uit',
-              'Score',
-              'Resultaat',
-              'Competitie',
-              'Status',
-            ],
-            data: matches.map((match) {
-              final score =
-                  match.teamScore != null && match.opponentScore != null
-                      ? '${match.teamScore} - ${match.opponentScore}'
-                      : '-';
-              final result =
-                  match.result != null ? _getResultText(match.result!) : '-';
+            pw.SizedBox(height: 20),
+            pw.TableHelper.fromTextArray(
+              headers: [
+                'Datum',
+                'Tegenstander',
+                'Thuis/Uit',
+                'Score',
+                'Resultaat',
+                'Competitie',
+                'Status',
+              ],
+              data: matches.map((match) {
+                final score =
+                    match.teamScore != null && match.opponentScore != null
+                        ? '${match.teamScore} - ${match.opponentScore}'
+                        : '-';
+                final result =
+                    match.result != null ? _getResultText(match.result!) : '-';
 
-              return [
-                DateFormat('dd-MM-yyyy').format(match.date),
-                match.opponent,
-                if (match.location == Location.home) 'Thuis' else 'Uit',
-                score,
-                result,
-                _getCompetitionText(match.competition),
-                _getStatusText(match.status),
-              ];
-            }).toList(),
-          ),
-          pw.SizedBox(height: 20),
-          pw.Text(
-            'Gegenereerd op: ${DateFormat('dd-MM-yyyy HH:mm').format(DateTime.now())}',
-            style: const pw.TextStyle(fontSize: 10),
-          ),
-        ],
-      ),
-    );
+                return [
+                  DateFormat('dd-MM-yyyy').format(match.date),
+                  match.opponent,
+                  if (match.location == Location.home) 'Thuis' else 'Uit',
+                  score,
+                  result,
+                  _getCompetitionText(match.competition),
+                  _getStatusText(match.status),
+                ];
+              }).toList(),
+            ),
+            pw.SizedBox(height: 20),
+            pw.Text(
+              'Gegenereerd op: ${DateFormat('dd-MM-yyyy HH:mm').format(DateTime.now())}',
+              style: const pw.TextStyle(fontSize: 10),
+            ),
+          ],
+        ),
+      );
 
-    await _savePDF(pdf, 'wedstrijden_overzicht');
+    await _savePDF(pdfDoc, 'wedstrijden_overzicht');
   }
 
   // Export Training Attendance to Excel
