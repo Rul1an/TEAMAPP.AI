@@ -215,28 +215,24 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawFullField(Canvas canvas, Rect fieldRect, Paint linePaint) {
-    // Outer boundary
-    canvas.drawRect(fieldRect, linePaint);
-
-    // Center line
+    // Outer boundary, center line, circle en spot in één cascadeketen
     final centerX = fieldRect.left + fieldRect.width / 2;
-    canvas.drawLine(
-      Offset(centerX, fieldRect.top),
-      Offset(centerX, fieldRect.bottom),
-      linePaint,
-    );
-
-    // Center circle
     final centerY = fieldRect.top + fieldRect.height / 2;
-    final circleRadius =
-        fieldRect.height * 0.135; // Proportional to field height
-    canvas.drawCircle(Offset(centerX, centerY), circleRadius, linePaint);
+    final circleRadius = fieldRect.height * 0.135; // Proportional to height
 
-    // Center spot
     final spotPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(Offset(centerX, centerY), 3, spotPaint);
+
+    canvas
+      ..drawRect(fieldRect, linePaint)
+      ..drawLine(
+        Offset(centerX, fieldRect.top),
+        Offset(centerX, fieldRect.bottom),
+        linePaint,
+      )
+      ..drawCircle(Offset(centerX, centerY), circleRadius, linePaint)
+      ..drawCircle(Offset(centerX, centerY), 3, spotPaint);
 
     // Penalty areas
     _drawPenaltyAreas(canvas, fieldRect, linePaint);
@@ -248,27 +244,26 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawHalfField(Canvas canvas, Rect fieldRect, Paint linePaint) {
-    // Outer boundary
-    canvas.drawRect(fieldRect, linePaint);
-
-    // Middenlijn is nu aan de bovenkant van het veld
-    canvas.drawLine(
-      Offset(fieldRect.left, fieldRect.top),
-      Offset(fieldRect.right, fieldRect.top),
-      linePaint,
-    );
+    // Outer boundary and top middle line combined with cascade to reduce receiver duplication
+    canvas
+      ..drawRect(fieldRect, linePaint)
+      ..drawLine(
+        Offset(fieldRect.left, fieldRect.top),
+        Offset(fieldRect.right, fieldRect.top),
+        linePaint,
+      );
 
     // Halve middencirkel bij de middenlijn
     final centerX = fieldRect.left + fieldRect.width / 2;
     final circleRadius = fieldRect.height * 0.135;
 
-    final circlePath = Path();
-    circlePath.addArc(
-      Rect.fromCircle(
-          center: Offset(centerX, fieldRect.top), radius: circleRadius,),
-      0,
-      math.pi,
-    );
+    final circlePath = Path()
+      ..addArc(
+        Rect.fromCircle(
+            center: Offset(centerX, fieldRect.top), radius: circleRadius,),
+        0,
+        math.pi,
+      );
     canvas.drawPath(circlePath, linePaint);
 
     // Middenstip op de middenlijn
@@ -283,22 +278,21 @@ class FieldPainter extends CustomPainter {
     final penaltyLeft = fieldRect.left + (fieldRect.width - penaltyWidth) / 2;
     final penaltyTop = fieldRect.bottom - penaltyHeight;
 
-    // Strafschopgebied
-    canvas.drawRect(
-      Rect.fromLTWH(penaltyLeft, penaltyTop, penaltyWidth, penaltyHeight),
-      linePaint,
-    );
-
-    // Doelgebied
+    // Strafschop- en doelgebied samengevoegd in één cascade
     final goalAreaWidth = fieldRect.width * 0.2;
     final goalAreaHeight = fieldRect.height * 0.12;
     final goalAreaLeft = fieldRect.left + (fieldRect.width - goalAreaWidth) / 2;
     final goalAreaTop = fieldRect.bottom - goalAreaHeight;
 
-    canvas.drawRect(
-      Rect.fromLTWH(goalAreaLeft, goalAreaTop, goalAreaWidth, goalAreaHeight),
-      linePaint,
-    );
+    canvas
+      ..drawRect(
+        Rect.fromLTWH(penaltyLeft, penaltyTop, penaltyWidth, penaltyHeight),
+        linePaint,
+      )
+      ..drawRect(
+        Rect.fromLTWH(goalAreaLeft, goalAreaTop, goalAreaWidth, goalAreaHeight),
+        linePaint,
+      );
 
     // Strafschopstip
     canvas.drawCircle(
@@ -311,26 +305,28 @@ class FieldPainter extends CustomPainter {
     final cornerRadius = fieldRect.height * 0.03;
 
     // Linkerhoek
-    final leftCornerPath = Path();
-    leftCornerPath.addArc(
-      Rect.fromCircle(
-          center: Offset(fieldRect.left, fieldRect.bottom),
-          radius: cornerRadius,),
-      -math.pi / 2,
-      math.pi / 2,
-    );
-    canvas.drawPath(leftCornerPath, linePaint);
-
-    // Rechterhoek
-    final rightCornerPath = Path();
-    rightCornerPath.addArc(
-      Rect.fromCircle(
-          center: Offset(fieldRect.right, fieldRect.bottom),
-          radius: cornerRadius,),
-      math.pi,
-      math.pi / 2,
-    );
-    canvas.drawPath(rightCornerPath, linePaint);
+    final leftCornerPath = Path()
+      ..addArc(
+        Rect.fromCircle(
+            center: Offset(fieldRect.left, fieldRect.bottom),
+            radius: cornerRadius,),
+        -math.pi / 2,
+        math.pi / 2,
+      );
+    canvas
+      ..drawPath(leftCornerPath, linePaint)
+      // Rechterhoek
+      ..drawPath(
+        (Path()
+              ..addArc(
+                Rect.fromCircle(
+                    center: Offset(fieldRect.right, fieldRect.bottom),
+                    radius: cornerRadius,),
+                math.pi,
+                math.pi / 2,
+              )),
+        linePaint,
+      );
 
     // Doel
     if (diagram.showGoals) {
@@ -355,15 +351,14 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawPenaltyArea(Canvas canvas, Rect fieldRect, Paint linePaint) {
-    // Teken het veld
-    canvas.drawRect(fieldRect, linePaint);
-
-    // Doellijn
-    canvas.drawLine(
-      Offset(fieldRect.left, fieldRect.bottom),
-      Offset(fieldRect.right, fieldRect.bottom),
-      linePaint,
-    );
+    // Draw field rectangle and goal line in a single cascade chain
+    canvas
+      ..drawRect(fieldRect, linePaint)
+      ..drawLine(
+        Offset(fieldRect.left, fieldRect.bottom),
+        Offset(fieldRect.right, fieldRect.bottom),
+        linePaint,
+      );
 
     // Strafschopgebied - hier gebruiken we officiele proporties
     final penaltyWidth = fieldRect.width * 0.85; // Breedte van strafschopgebied
@@ -372,6 +367,7 @@ class FieldPainter extends CustomPainter {
     final penaltyLeft = fieldRect.left + (fieldRect.width - penaltyWidth) / 2;
     final penaltyTop = fieldRect.bottom - penaltyHeight;
 
+    // Strafschopgebied
     canvas.drawRect(
       Rect.fromLTWH(penaltyLeft, penaltyTop, penaltyWidth, penaltyHeight),
       linePaint,
@@ -383,10 +379,16 @@ class FieldPainter extends CustomPainter {
     final goalAreaLeft = fieldRect.left + (fieldRect.width - goalAreaWidth) / 2;
     final goalAreaTop = fieldRect.bottom - goalAreaHeight;
 
-    canvas.drawRect(
-      Rect.fromLTWH(goalAreaLeft, goalAreaTop, goalAreaWidth, goalAreaHeight),
-      linePaint,
-    );
+    // Penalty and goal areas in a single cascade chain
+    canvas
+      ..drawRect(
+        Rect.fromLTWH(penaltyLeft, penaltyTop, penaltyWidth, penaltyHeight),
+        linePaint,
+      )
+      ..drawRect(
+        Rect.fromLTWH(goalAreaLeft, goalAreaTop, goalAreaWidth, goalAreaHeight),
+        linePaint,
+      );
 
     // Strafschopstip
     final spotPaint = Paint()
@@ -402,15 +404,15 @@ class FieldPainter extends CustomPainter {
     final arcRadius = fieldRect.width * 0.15;
     final arcCenterY = fieldRect.bottom - penaltyHeight;
 
-    final arcPath = Path();
-    arcPath.addArc(
-      Rect.fromCircle(
-        center: Offset(centerX, arcCenterY),
-        radius: arcRadius,
-      ),
-      -math.pi,
-      math.pi,
-    );
+    final arcPath = Path()
+      ..addArc(
+        Rect.fromCircle(
+          center: Offset(centerX, arcCenterY),
+          radius: arcRadius,
+        ),
+        -math.pi,
+        math.pi,
+      );
     canvas.drawPath(arcPath, linePaint);
 
     // Doel
@@ -440,39 +442,35 @@ class FieldPainter extends CustomPainter {
     final goalAreaWidth = fieldRect.width * 0.052; // 5.5m / 105m
     final goalAreaHeight = fieldRect.height * 0.269; // 18.3m / 68m
 
-    // Left penalty area
     final leftPenaltyTop =
         fieldRect.top + (fieldRect.height - penaltyHeight) / 2;
-    canvas.drawRect(
-      Rect.fromLTWH(
-          fieldRect.left, leftPenaltyTop, penaltyWidth, penaltyHeight,),
-      linePaint,
-    );
-
-    // Left goal area
     final leftGoalAreaTop =
         fieldRect.top + (fieldRect.height - goalAreaHeight) / 2;
-    canvas.drawRect(
-      Rect.fromLTWH(
-          fieldRect.left, leftGoalAreaTop, goalAreaWidth, goalAreaHeight,),
-      linePaint,
-    );
-
-    // Right penalty area
     final rightPenaltyLeft = fieldRect.right - penaltyWidth;
-    canvas.drawRect(
-      Rect.fromLTWH(
-          rightPenaltyLeft, leftPenaltyTop, penaltyWidth, penaltyHeight,),
-      linePaint,
-    );
-
-    // Right goal area
     final rightGoalAreaLeft = fieldRect.right - goalAreaWidth;
-    canvas.drawRect(
-      Rect.fromLTWH(
-          rightGoalAreaLeft, leftGoalAreaTop, goalAreaWidth, goalAreaHeight,),
-      linePaint,
-    );
+
+    // Cascade voor alle rects
+    canvas
+      ..drawRect(
+        Rect.fromLTWH(
+            fieldRect.left, leftPenaltyTop, penaltyWidth, penaltyHeight,),
+        linePaint,
+      )
+      ..drawRect(
+        Rect.fromLTWH(
+            fieldRect.left, leftGoalAreaTop, goalAreaWidth, goalAreaHeight,),
+        linePaint,
+      )
+      ..drawRect(
+        Rect.fromLTWH(
+            rightPenaltyLeft, leftPenaltyTop, penaltyWidth, penaltyHeight,),
+        linePaint,
+      )
+      ..drawRect(
+        Rect.fromLTWH(
+            rightGoalAreaLeft, leftGoalAreaTop, goalAreaWidth, goalAreaHeight,),
+        linePaint,
+      );
 
     // Penalty spots
     final spotPaint = Paint()
@@ -482,10 +480,17 @@ class FieldPainter extends CustomPainter {
     final penaltySpotDistance = fieldRect.width * 0.105; // 11m / 105m
     final centerY = fieldRect.top + fieldRect.height / 2;
 
-    canvas.drawCircle(
-        Offset(fieldRect.left + penaltySpotDistance, centerY), 3, spotPaint,);
-    canvas.drawCircle(
-        Offset(fieldRect.right - penaltySpotDistance, centerY), 3, spotPaint,);
+    canvas
+      ..drawCircle(
+        Offset(fieldRect.left + penaltySpotDistance, centerY),
+        3,
+        spotPaint,
+      )
+      ..drawCircle(
+        Offset(fieldRect.right - penaltySpotDistance, centerY),
+        3,
+        spotPaint,
+      );
   }
 
   void _drawSinglePenaltyArea(Canvas canvas, Rect fieldRect, Paint linePaint,
@@ -500,17 +505,16 @@ class FieldPainter extends CustomPainter {
     final goalAreaLeft = fieldRect.left + (fieldRect.width - goalAreaWidth) / 2;
     final goalAreaTop = fieldRect.bottom - goalAreaHeight;
 
-    // Penalty area
-    canvas.drawRect(
-      Rect.fromLTWH(penaltyLeft, penaltyTop, penaltyWidth, penaltyHeight),
-      linePaint,
-    );
-
-    // Goal area
-    canvas.drawRect(
-      Rect.fromLTWH(goalAreaLeft, goalAreaTop, goalAreaWidth, goalAreaHeight),
-      linePaint,
-    );
+    // Penalty and goal areas in a single cascade chain
+    canvas
+      ..drawRect(
+        Rect.fromLTWH(penaltyLeft, penaltyTop, penaltyWidth, penaltyHeight),
+        linePaint,
+      )
+      ..drawRect(
+        Rect.fromLTWH(goalAreaLeft, goalAreaTop, goalAreaWidth, goalAreaHeight),
+        linePaint,
+      );
 
     // Penalty spot
     final spotPaint = Paint()
@@ -570,18 +574,16 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawThirdField(Canvas canvas, Rect fieldRect, Paint linePaint) {
-    // Outer boundary
-    canvas.drawRect(fieldRect, linePaint);
-
-    // Third of the field (from one end)
+    // Outer boundary & 1/3 line in a single cascade to avoid duplicate receiver
     final oneThirdY = fieldRect.top + fieldRect.height / 3;
 
-    // Draw a line at one-third of the field
-    canvas.drawLine(
-      Offset(fieldRect.left, oneThirdY),
-      Offset(fieldRect.right, oneThirdY),
-      linePaint,
-    );
+    canvas
+      ..drawRect(fieldRect, linePaint)
+      ..drawLine(
+        Offset(fieldRect.left, oneThirdY),
+        Offset(fieldRect.right, oneThirdY),
+        linePaint,
+      );
 
     // Penalty area
     _drawSinglePenaltyArea(canvas, fieldRect, linePaint, scaleDown: 0.9);
@@ -593,37 +595,34 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawQuarterField(Canvas canvas, Rect fieldRect, Paint linePaint) {
-    // Outer boundary
-    canvas.drawRect(fieldRect, linePaint);
-
-    // Quarter of the field (corner section)
+    // Outer boundary + quarter lines combined via cascade
     final oneQuarterX = fieldRect.left + fieldRect.width / 2;
     final oneQuarterY = fieldRect.top + fieldRect.height / 2;
 
-    // Draw lines at quarter of the field
-    canvas.drawLine(
-      Offset(oneQuarterX, fieldRect.top),
-      Offset(oneQuarterX, fieldRect.bottom),
-      linePaint,
-    );
-
-    canvas.drawLine(
-      Offset(fieldRect.left, oneQuarterY),
-      Offset(fieldRect.right, oneQuarterY),
-      linePaint,
-    );
+    canvas
+      ..drawRect(fieldRect, linePaint)
+      ..drawLine(
+        Offset(oneQuarterX, fieldRect.top),
+        Offset(oneQuarterX, fieldRect.bottom),
+        linePaint,
+      )
+      ..drawLine(
+        Offset(fieldRect.left, oneQuarterY),
+        Offset(fieldRect.right, oneQuarterY),
+        linePaint,
+      );
 
     // Draw corner arc in the upper right
     final cornerRadius = fieldRect.width * 0.1;
-    final cornerPath = Path();
-    cornerPath.addArc(
-      Rect.fromCircle(
-        center: Offset(fieldRect.right, fieldRect.top),
-        radius: cornerRadius,
-      ),
-      -math.pi / 2,
-      math.pi / 2,
-    );
+    final cornerPath = Path()
+      ..addArc(
+        Rect.fromCircle(
+          center: Offset(fieldRect.right, fieldRect.top),
+          radius: cornerRadius,
+        ),
+        -math.pi / 2,
+        math.pi / 2,
+      );
     canvas.drawPath(cornerPath, linePaint);
 
     // Draw small penalty area in the corner
@@ -646,21 +645,21 @@ class FieldPainter extends CustomPainter {
       penaltyHeight,
     );
 
-    canvas.drawRect(penaltyRect, linePaint);
-
-    // Penalty spot
+    // Penalty area rect and spot in one cascade
     final spotPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
 
-    canvas.drawCircle(
-      Offset(
-        fieldRect.right - penaltyWidth * 0.5,
-        fieldRect.top + penaltyHeight * 0.7,
-      ),
-      3,
-      spotPaint,
-    );
+    canvas
+      ..drawRect(penaltyRect, linePaint)
+      ..drawCircle(
+        Offset(
+          fieldRect.right - penaltyWidth * 0.5,
+          fieldRect.top + penaltyHeight * 0.7,
+        ),
+        3,
+        spotPaint,
+      );
   }
 
   void _drawElements(Canvas canvas, Rect fieldRect) {
@@ -764,19 +763,21 @@ class FieldPainter extends CustomPainter {
 
   void _drawCone(Canvas canvas, Offset position, Paint paint, bool isSelected) {
     final size = isSelected ? 14.0 : 12.0;
-    final path = Path();
-    path.moveTo(position.dx, position.dy - size);
-    path.lineTo(position.dx - size / 2, position.dy + size / 2);
-    path.lineTo(position.dx + size / 2, position.dy + size / 2);
-    path.close();
-
-    canvas.drawPath(path, paint);
+    final path = Path()
+      ..moveTo(position.dx, position.dy - size)
+      ..lineTo(position.dx - size / 2, position.dy + size / 2)
+      ..lineTo(position.dx + size / 2, position.dy + size / 2)
+      ..close();
 
     final borderPaint = Paint()
       ..color = Colors.black
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
-    canvas.drawPath(path, borderPaint);
+
+    // Fill and border in one cascade
+    canvas
+      ..drawPath(path, paint)
+      ..drawPath(path, borderPaint);
 
     if (isSelected) {
       final selectionPaint = Paint()
@@ -789,19 +790,21 @@ class FieldPainter extends CustomPainter {
 
   void _drawBall(Canvas canvas, Offset position, Paint paint, bool isSelected) {
     final radius = isSelected ? 8.0 : 6.0;
-    canvas.drawCircle(position, radius, paint);
 
+    // Ball fill, outline, and stripe via cascade
     final patternPaint = Paint()
       ..color = Colors.black
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
-    canvas.drawCircle(position, radius, patternPaint);
-    canvas.drawLine(
-      Offset(position.dx - radius * 0.7, position.dy),
-      Offset(position.dx + radius * 0.7, position.dy),
-      patternPaint,
-    );
+    canvas
+      ..drawCircle(position, radius, paint)
+      ..drawCircle(position, radius, patternPaint)
+      ..drawLine(
+        Offset(position.dx - radius * 0.7, position.dy),
+        Offset(position.dx + radius * 0.7, position.dy),
+        patternPaint,
+      );
 
     if (isSelected) {
       final selectionPaint = Paint()
@@ -815,19 +818,26 @@ class FieldPainter extends CustomPainter {
   void _drawGenericEquipment(
       Canvas canvas, Offset position, Paint paint, bool isSelected,) {
     final size = isSelected ? 12.0 : 10.0;
-    canvas.drawRect(
-      Rect.fromCenter(center: position, width: size, height: size),
-      paint,
-    );
-
     if (isSelected) {
       final selectionPaint = Paint()
         ..color = Colors.orange
         ..strokeWidth = 2
         ..style = PaintingStyle.stroke;
+
+      canvas
+        ..drawRect(
+          Rect.fromCenter(center: position, width: size, height: size),
+          paint,
+        )
+        ..drawRect(
+          Rect.fromCenter(center: position, width: size + 4, height: size + 4),
+          selectionPaint,
+        );
+    } else {
+      // Only the equipment rectangle when not selected
       canvas.drawRect(
-        Rect.fromCenter(center: position, width: size + 4, height: size + 4),
-        selectionPaint,
+        Rect.fromCenter(center: position, width: size, height: size),
+        paint,
       );
     }
   }
@@ -876,12 +886,12 @@ class FieldPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     // Apply line style based on type
-    final Path path = Path();
+    final path = Path();
     final firstPoint = _fieldToCanvasPosition(line.points.first, fieldRect);
 
     // Validate first point
     if (!_isValidOffset(firstPoint)) return;
-    path.moveTo(firstPoint.dx, firstPoint.dy);
+    path..moveTo(firstPoint.dx, firstPoint.dy);
 
     switch (line.type) {
       case LineType.pass:
@@ -955,8 +965,8 @@ class FieldPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
 
-      final selectionPath = Path();
-      selectionPath.moveTo(firstPoint.dx, firstPoint.dy);
+      final selectionPath = Path()
+        ..moveTo(firstPoint.dx, firstPoint.dy);
       for (int i = 1; i < line.points.length; i++) {
         final point = _fieldToCanvasPosition(line.points[i], fieldRect);
         if (_isValidOffset(point)) {
@@ -977,12 +987,11 @@ class FieldPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     final path = Path();
-    final firstPoint =
-        _fieldToCanvasPosition(currentLinePoints.first, fieldRect);
+    final firstPoint = _fieldToCanvasPosition(currentLinePoints.first, fieldRect);
 
     // Validate first point
     if (!_isValidOffset(firstPoint)) return;
-    path.moveTo(firstPoint.dx, firstPoint.dy);
+    path..moveTo(firstPoint.dx, firstPoint.dy);
 
     for (int i = 1; i < currentLinePoints.length; i++) {
       final point = _fieldToCanvasPosition(currentLinePoints[i], fieldRect);
@@ -1091,7 +1100,7 @@ class FieldPainter extends CustomPainter {
 
     // Validate first point
     if (!_isValidOffset(firstPoint)) return;
-    path.moveTo(firstPoint.dx, firstPoint.dy);
+    path..moveTo(firstPoint.dx, firstPoint.dy);
 
     for (int i = 0; i < points.length - 1; i++) {
       final start = _fieldToCanvasPosition(points[i], fieldRect);
