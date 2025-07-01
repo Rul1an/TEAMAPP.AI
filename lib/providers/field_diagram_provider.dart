@@ -397,8 +397,10 @@ class FieldDiagramEditorNotifier
   }
 
   void _addToHistory(FieldDiagram diagram) {
-    final newHistory = state.history.take(state.historyIndex + 1).toList();
-    newHistory.add(diagram);
+    final newHistory = state.history
+        .take(state.historyIndex + 1)
+        .toList()
+      ..add(diagram);
 
     // Limit history to 50 items
     if (newHistory.length > 50) {
@@ -482,14 +484,13 @@ class FieldDiagramEditorNotifier
       final size =
           Size(width.toDouble(), (width * 0.75).toDouble()); // 4:3 aspect ratio
 
-      // Create a field painter and paint to the canvas
-      final painter = FieldPainter(
+      // Create a field painter and paint to the canvas in one cascaded expression
+      FieldPainter(
         diagram: diagram,
         showGrid: false, // No grid in exports
         gridSize: 10,
-      );
-
-      painter.paint(canvas, size);
+      )
+        ..paint(canvas, size);
 
       final picture = recorder.endRecording();
       final image = await picture.toImage(width, (width * 0.75).round());
@@ -497,13 +498,12 @@ class FieldDiagramEditorNotifier
 
       if (byteData != null) {
         final bytes = byteData.buffer.asUint8List();
-        await FileSaver.instance
-          ..saveFile(
-            name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
-            bytes: bytes,
-            ext: 'png',
-            mimeType: MimeType.png,
-          );
+        await FileSaver.instance.saveFile(
+          name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
+          bytes: bytes,
+          ext: 'png',
+          mimeType: MimeType.png,
+        );
       }
     } catch (e) {
       rethrow;
@@ -519,13 +519,12 @@ class FieldDiagramEditorNotifier
       final canvas = Canvas(recorder);
       const size = Size(800, 600);
 
-      final painter = FieldPainter(
+      FieldPainter(
         diagram: diagram,
         showGrid: false,
         gridSize: 10,
-      );
-
-      painter.paint(canvas, size);
+      )
+        ..paint(canvas, size);
 
       final picture = recorder.endRecording();
       final image = await picture.toImage(800, 600);
@@ -559,13 +558,12 @@ class FieldDiagramEditorNotifier
         );
 
         final pdfBytes = await pdf.save();
-        await FileSaver.instance
-          ..saveFile(
-            name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
-            bytes: Uint8List.fromList(pdfBytes),
-            ext: 'pdf',
-            mimeType: MimeType.pdf,
-          );
+        await FileSaver.instance.saveFile(
+          name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
+          bytes: Uint8List.fromList(pdfBytes),
+          ext: 'pdf',
+          mimeType: MimeType.pdf,
+        );
       }
     } catch (e) {
       rethrow;
