@@ -731,11 +731,12 @@ class FieldPainter extends CustomPainter {
         ),
         textDirection: TextDirection.ltr,
       );
-      textPainter.layout();
-      textPainter.paint(
-        canvas,
-        position - Offset(textPainter.width / 2, textPainter.height / 2),
-      );
+      textPainter
+        ..layout()
+        ..paint(
+          canvas,
+          position - Offset(textPainter.width / 2, textPainter.height / 2),
+        );
     }
   }
 
@@ -762,10 +763,14 @@ class FieldPainter extends CustomPainter {
   void _drawCone(Canvas canvas, Offset position, Paint paint, bool isSelected) {
     final size = isSelected ? 14.0 : 12.0;
     final path = Path()
-      ..moveTo(position.dx, position.dy - size)
-      ..lineTo(position.dx - size / 2, position.dy + size / 2)
-      ..lineTo(position.dx + size / 2, position.dy + size / 2)
-      ..close();
+      ..addPolygon(
+        [
+          Offset(position.dx, position.dy - size),
+          Offset(position.dx - size / 2, position.dy + size / 2),
+          Offset(position.dx + size / 2, position.dy + size / 2),
+        ],
+        true,
+      );
 
     final borderPaint = Paint()
       ..color = Colors.black
@@ -855,7 +860,9 @@ class FieldPainter extends CustomPainter {
       ),
       textDirection: TextDirection.ltr,
     );
-    textPainter.layout();
+    textPainter
+      ..layout()
+      ..paint(canvas, position);
 
     if (isSelected) {
       final bgPaint = Paint()..color = Colors.yellow.withValues(alpha: 0.3);
@@ -869,8 +876,6 @@ class FieldPainter extends CustomPainter {
         bgPaint,
       );
     }
-
-    textPainter.paint(canvas, position);
   }
 
   void _drawMovementLine(
@@ -889,7 +894,7 @@ class FieldPainter extends CustomPainter {
 
     // Validate first point
     if (!_isValidOffset(firstPoint)) return;
-    path..moveTo(firstPoint.dx, firstPoint.dy);
+    path.moveTo(firstPoint.dx, firstPoint.dy);
 
     switch (line.type) {
       case LineType.pass:
@@ -963,8 +968,8 @@ class FieldPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
 
-      final selectionPath = Path()
-        ..moveTo(firstPoint.dx, firstPoint.dy);
+      final selectionPath = Path();
+      selectionPath.moveTo(firstPoint.dx, firstPoint.dy);
       for (int i = 1; i < line.points.length; i++) {
         final point = _fieldToCanvasPosition(line.points[i], fieldRect);
         if (_isValidOffset(point)) {
@@ -989,7 +994,7 @@ class FieldPainter extends CustomPainter {
 
     // Validate first point
     if (!_isValidOffset(firstPoint)) return;
-    path..moveTo(firstPoint.dx, firstPoint.dy);
+    path.moveTo(firstPoint.dx, firstPoint.dy);
 
     for (int i = 1; i < currentLinePoints.length; i++) {
       final point = _fieldToCanvasPosition(currentLinePoints[i], fieldRect);
@@ -1098,7 +1103,7 @@ class FieldPainter extends CustomPainter {
 
     // Validate first point
     if (!_isValidOffset(firstPoint)) return;
-    path..moveTo(firstPoint.dx, firstPoint.dy);
+    path.moveTo(firstPoint.dx, firstPoint.dy);
 
     for (int i = 0; i < points.length - 1; i++) {
       final start = _fieldToCanvasPosition(points[i], fieldRect);

@@ -3,7 +3,7 @@
 ## 📊 OVERZICHT STATUS
 - **Start datum**: Juni 2025
 - **Totaal cascade_invocations issues**: 131 (down from 200)
-- **Voltooide bestanden**: 3/21 ⭐
+- **Voltooide bestanden**: 4/21 ⭐
 - **Huidige strategie**: Systematische implementatie per bestand - ZEER SUCCESVOL!
 
 ## ✅ VOLTOOIDE BESTANDEN (100% SUCCESS)
@@ -34,6 +34,12 @@
   2. PNG/PDF export `FileSaver` calls: cascade vervangen door directe `saveFile`-aanroep
 - **Resultaat**: Alle warnings verdwenen (analyze clean)
 - **Datum**: Juni 2025
+
+### 9. lib/screens/matches/match_detail_screen.dart ✅
+- **Issues voor**: 1 cascade_invocations
+- **Issues na**: 0 ✅
+- **Implementatie**: Inline cascaded `match` updates in `updateMatch` call
+- **Datum**: Juli 2025
 
 ## 🔄 GEDEELTELIJK VOLTOOIDE BESTANDEN
 
@@ -104,8 +110,8 @@ Files die nog niet zijn aangepakt maar cascade issues hebben.
 
 ## 📊 STATISTIEKEN
 
-- **Totale vooruitgang**: 200 → 97 issues (103 issues opgelost, 51.5% verbetering)
-- **Voltooide files**: 3 bestanden (100% success rate)
+- **Totale vooruitgang**: 200 → 96 issues (104 issues opgelost, 52% verbetering)
+- **Voltooide files**: 4 bestanden (100% success rate)
 - **Gedeeltelijk voltooide files**: 4 bestanden (gemiddeld 45% verbetering)
 - **Gemiddelde verbetering per bestand**: ~65%
 - **Beste performing categorieën**: Widget classes (100%), Service classes (85%+)
@@ -119,3 +125,11 @@ De systematische cascade implementatie strategie toont uitstekende resultaten:
 - **Methodiek**: Online research + systematische implementatie = bewezen succesvol
 
 **Volgende fase**: Focus op widget/service files voor snelle wins, daarna model classes afmaken.
+
+## 🛠️ Update Juli 2025
+
+- **field_painter.dart**
+  - Verwijderd: 2× `cascade_invocations`, 3× `avoid_single_cascade` info-warnings.
+  - Alle widgetspecifieke lints nu **0**.
+  - Methode: omzetten `path..moveTo` ➔ `path.moveTo` en extra cascade-chain op `canvas`.
+  - Analyzer nu volledig schoon voor dit bestand.
