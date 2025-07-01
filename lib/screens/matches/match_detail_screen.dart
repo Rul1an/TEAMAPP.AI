@@ -545,13 +545,14 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       if (matchIndex == -1) return;
 
       final match = matches[matchIndex];
-      match
+
+      await DatabaseService().updateMatch(
+        match
           ..teamScore = int.tryParse(_teamScoreController.text)
           ..opponentScore = int.tryParse(_opponentScoreController.text)
           ..startingLineupIds = _selectedStartingLineup
-          ..substituteIds = _selectedSubstitutes;
-
-        await DatabaseService().updateMatch(match);
+          ..substituteIds = _selectedSubstitutes,
+      );
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
