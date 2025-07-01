@@ -73,7 +73,9 @@ class MonitoringService {
 
               return event;
             }
-            ..beforeSendTransaction = (transaction, hint) => transaction
+            ..beforeSendTransaction = (transaction, hint) {
+              return transaction;
+            }
             ..beforeBreadcrumb = (Breadcrumb? breadcrumb, Hint? hint) => breadcrumb;
         },
       );
