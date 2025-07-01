@@ -278,15 +278,8 @@ class DemoDataService {
           now.add(Duration(days: (2 - now.weekday + 7 * week) % 7 + 7 * week));
       if (tuesday.isAfter(now)) {
         sessions
-            .add(_createTrainingSession(teamId, tuesday, 'Techniek & Passing'));
-      }
-
-      // Thursday training
-      final thursday =
-          now.add(Duration(days: (4 - now.weekday + 7 * week) % 7 + 7 * week));
-      if (thursday.isAfter(now)) {
-        sessions.add(
-            _createTrainingSession(teamId, thursday, 'Tactiek & Positiespel'));
+          ..add(_createTrainingSession(teamId, tuesday, 'Techniek & Passing'))
+          ..add(_createTrainingSession(teamId, tuesday.add(const Duration(days: 7)), 'Tactiek & Positiespel'));
       }
     }
 
@@ -294,7 +287,7 @@ class DemoDataService {
   }
 
   static TrainingSession _createTrainingSession(
-      String teamId, DateTime date, String focus) {
+      String teamId, DateTime date, String focus,) {
     final session = TrainingSession.create(
       teamId: teamId,
       date: date,

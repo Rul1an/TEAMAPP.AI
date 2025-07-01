@@ -308,13 +308,7 @@ class TacticalDrawingPainter extends CustomPainter {
   void _drawLine(Canvas canvas, List<Offset> points, Paint paint) {
     if (points.length < 2) return;
 
-    final path = Path();
-    path.moveTo(points.first.dx, points.first.dy);
-
-    for (int i = 1; i < points.length; i++) {
-      path.lineTo(points[i].dx, points[i].dy);
-    }
-
+    final path = Path()..addPolygon(points, false);
     canvas.drawPath(path, paint);
   }
 
@@ -324,10 +318,7 @@ class TacticalDrawingPainter extends CustomPainter {
     final start = points.first;
     final end = points.last;
 
-    // Draw line
-    canvas.drawLine(start, end, paint);
-
-    // Draw arrowhead
+    // Draw line and arrowhead using cascade to avoid duplicate canvas receiver
     const arrowLength = 20.0;
     const arrowAngle = 0.5;
 
@@ -344,26 +335,22 @@ class TacticalDrawingPainter extends CustomPainter {
     final arrowRight =
         arrowBase - perpVector * arrowLength * math.sin(arrowAngle);
 
-    final arrowPath = Path();
-    arrowPath.moveTo(end.dx, end.dy);
-    arrowPath.lineTo(arrowLeft.dx, arrowLeft.dy);
-    arrowPath.lineTo(arrowRight.dx, arrowRight.dy);
-    arrowPath.close();
+    final arrowPath = Path()
+      ..moveTo(end.dx, end.dy)
+      ..lineTo(arrowLeft.dx, arrowLeft.dy)
+      ..lineTo(arrowRight.dx, arrowRight.dy)
+      ..close();
 
     paint.style = PaintingStyle.fill;
-    canvas.drawPath(arrowPath, paint);
+    canvas
+      ..drawLine(start, end, paint)
+      ..drawPath(arrowPath, paint);
   }
 
   void _drawCircle(Canvas canvas, List<Offset> points, Paint paint) {
     if (points.isEmpty) return;
 
-    final path = Path();
-    path.moveTo(points.first.dx, points.first.dy);
-
-    for (int i = 1; i < points.length; i++) {
-      path.lineTo(points[i].dx, points[i].dy);
-    }
-
+    final path = Path()..addPolygon(points, false);
     canvas.drawPath(path, paint);
   }
 
@@ -381,13 +368,12 @@ class TacticalDrawingPainter extends CustomPainter {
       style: textStyle,
     );
 
-    final textPainter = TextPainter(
+    TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
-    );
-
-    textPainter.layout();
-    textPainter.paint(canvas, element.points.first);
+    )
+      ..layout()
+      ..paint(canvas, element.points.first);
   }
 
   @override

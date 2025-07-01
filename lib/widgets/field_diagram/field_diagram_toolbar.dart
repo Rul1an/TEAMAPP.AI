@@ -592,8 +592,7 @@ class WavyLinePainter extends CustomPainter {
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
-    final path = Path();
-    path.moveTo(0, size.height / 2);
+    final path = Path()..moveTo(0, size.height / 2);
 
     for (double x = 0; x < size.width; x += 5) {
       final y = size.height / 2 + 3 * (x.remainder(10) < 5 ? 1 : -1);
