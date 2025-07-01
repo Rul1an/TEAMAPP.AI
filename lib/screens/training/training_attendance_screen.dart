@@ -404,13 +404,12 @@ class _TrainingAttendanceScreenState
       }).toList();
 
       if (presentPlayers.isEmpty) {
-        ScaffoldMessenger.of(context)
-          ..showSnackBar(
-            const SnackBar(
-              content: Text('Markeer eerst aanwezige spelers om beoordelingen te geven'),
-              backgroundColor: Colors.orange,
-            ),
-          );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Markeer eerst aanwezige spelers om beoordelingen te geven'),
+            backgroundColor: Colors.orange,
+          ),
+        );
         return;
       }
 
@@ -461,13 +460,12 @@ class _TrainingAttendanceScreenState
                         );
 
                         if ((result ?? false) && mounted) {
-                          ScaffoldMessenger.of(context)
-                            ..showSnackBar(
-                              SnackBar(
-                                content: Text('Beoordeling opgeslagen voor ${player.name}'),
-                                backgroundColor: Colors.green,
-                              ),
-                            );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Beoordeling opgeslagen voor ${player.name}'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
                         }
                       },
                     );
@@ -514,24 +512,22 @@ class _TrainingAttendanceScreenState
       }
 
       if (mounted) {
-        ScaffoldMessenger.of(context)
-          ..showSnackBar(
-            const SnackBar(
-              content: Text('Aanwezigheid opgeslagen'),
-              backgroundColor: Colors.green,
-            ),
-          );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Aanwezigheid opgeslagen'),
+            backgroundColor: Colors.green,
+          ),
+        );
         context.pop();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context)
-          ..showSnackBar(
-            SnackBar(
-              content: Text('Fout bij opslaan: $e'),
-              backgroundColor: Colors.red,
-            ),
-          );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Fout bij opslaan: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     } finally {
       if (mounted) {
