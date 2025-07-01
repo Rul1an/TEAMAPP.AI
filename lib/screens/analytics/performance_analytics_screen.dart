@@ -46,9 +46,10 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              ref.invalidate(playersProvider);
-              ref.invalidate(assessmentsProvider);
-              ref.invalidate(trainingSessionsProvider);
+              ref
+                ..invalidate(playersProvider)
+                ..invalidate(assessmentsProvider)
+                ..invalidate(trainingSessionsProvider);
             },
             tooltip: 'Ververs Data',
           ),
@@ -193,6 +194,20 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     // ✅ Improves readability in error-handling scenarios
     // ✅ Makes UI callback chains more maintainable
     //
+    // **TRANSFORMATION EXAMPLE**:
+    // ```dart
+    // // Current: explicit method chain
+    // final player = players.firstWhere(
+    //   (p) => p.id.toString() == latestAssessment.playerId,
+    //   orElse: () => players.first,
+    // );
+    //
+    // // Recommended: cascade notation for complex callback patterns
+    // final player = players..firstWhere(
+    //   (p) => p.id.toString() == latestAssessment.playerId,
+    //   orElse: () => players.first,
+    // );
+    // ```
     // Find the player for that assessment
     final player = players.firstWhere(
       (p) => p.id.toString() == latestAssessment.playerId,
@@ -443,8 +458,10 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                     .toList();
 
                 // Sort by score and take top 5
-                scoredPlayers.sort((a, b) => b.value.compareTo(a.value));
-                final topPlayers = scoredPlayers.take(5).toList();
+                final topPlayers = (scoredPlayers
+                      ..sort((a, b) => b.value.compareTo(a.value)))
+                    .take(5)
+                    .toList();
 
                 return Column(
                   children: [
