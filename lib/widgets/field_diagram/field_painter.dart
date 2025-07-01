@@ -292,14 +292,12 @@ class FieldPainter extends CustomPainter {
       ..drawRect(
         Rect.fromLTWH(goalAreaLeft, goalAreaTop, goalAreaWidth, goalAreaHeight),
         linePaint,
+      )
+      ..drawCircle(
+        Offset(centerX, fieldRect.bottom - penaltyHeight * 0.7),
+        3,
+        spotPaint,
       );
-
-    // Strafschopstip
-    canvas.drawCircle(
-      Offset(centerX, fieldRect.bottom - penaltyHeight * 0.5),
-      3,
-      spotPaint,
-    );
 
     // Hoekbogen
     final cornerRadius = fieldRect.height * 0.03;
@@ -380,6 +378,12 @@ class FieldPainter extends CustomPainter {
     final goalAreaTop = fieldRect.bottom - goalAreaHeight;
 
     // Penalty and goal areas in a single cascade chain
+    final spotPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    final centerX = fieldRect.left + fieldRect.width / 2;
+
     canvas
       ..drawRect(
         Rect.fromLTWH(penaltyLeft, penaltyTop, penaltyWidth, penaltyHeight),
@@ -388,17 +392,12 @@ class FieldPainter extends CustomPainter {
       ..drawRect(
         Rect.fromLTWH(goalAreaLeft, goalAreaTop, goalAreaWidth, goalAreaHeight),
         linePaint,
+      )
+      ..drawCircle(
+        Offset(centerX, fieldRect.bottom - penaltyHeight * 0.7),
+        3,
+        spotPaint,
       );
-
-    // Strafschopstip
-    final spotPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
-
-    final centerX = fieldRect.left + fieldRect.width / 2;
-    final spotY = fieldRect.bottom - penaltyHeight * 0.7;
-
-    canvas.drawCircle(Offset(centerX, spotY), 3, spotPaint);
 
     // Strafschopgebiedboog
     final arcRadius = fieldRect.width * 0.15;
@@ -522,9 +521,8 @@ class FieldPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final centerX = fieldRect.left + fieldRect.width / 2;
-    final spotY = fieldRect.bottom - penaltyHeight * 0.67;
 
-    canvas.drawCircle(Offset(centerX, spotY), 3, spotPaint);
+    canvas.drawCircle(Offset(centerX, fieldRect.bottom - penaltyHeight * 0.67), 3, spotPaint);
   }
 
   void _drawGoals(Canvas canvas, Rect fieldRect, Paint linePaint) {
