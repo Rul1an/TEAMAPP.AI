@@ -166,11 +166,11 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
               const SizedBox(height: 16),
               _buildInfoRow('Tegenstander', match.opponent),
               _buildInfoRow(
-                  'Datum', DateFormat('dd-MM-yyyy HH:mm').format(match.date)),
+                  'Datum', DateFormat('dd-MM-yyyy HH:mm').format(match.date),),
               _buildInfoRow(
-                  'Locatie', match.location == Location.home ? 'Thuis' : 'Uit'),
+                  'Locatie', match.location == Location.home ? 'Thuis' : 'Uit',),
               _buildInfoRow(
-                  'Competitie', _getCompetitionName(match.competition)),
+                  'Competitie', _getCompetitionName(match.competition),),
               _buildInfoRow('Status', _getStatusName(match.status)),
             ],
           ),
@@ -383,7 +383,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   ElevatedButton.icon(
-                    onPressed: () => _showRatingOptions(),
+                    onPressed: _showRatingOptions,
                     icon: const Icon(Icons.star),
                     label: const Text('Beoordeel'),
                   ),
@@ -404,7 +404,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
     String title,
     int maxSelection,
   ) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
@@ -463,7 +463,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   }
 
   void _showScoreDialog(BuildContext context, Match match) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Score Invoeren'),
@@ -519,7 +519,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   }
 
   void _showRatingOptions() {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Speler Beoordelingen'),
