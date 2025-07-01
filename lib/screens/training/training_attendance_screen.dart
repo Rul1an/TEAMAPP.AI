@@ -499,12 +499,14 @@ class _TrainingAttendanceScreenState
         );
 
         if (player.id != '') {
-          // Update player training statistics
-          player.trainingsTotal++;
-          if (status == AttendanceStatus.present ||
-              status == AttendanceStatus.late) {
-            player.trainingsAttended++;
-          }
+          // Update player training statistics using cascade
+          final wasPresent =
+              status == AttendanceStatus.present || status == AttendanceStatus.late;
+
+          player
+            ..trainingsTotal = player.trainingsTotal + 1
+            ..trainingsAttended =
+                player.trainingsAttended + (wasPresent ? 1 : 0);
 
           // Save to database
           await DatabaseService().updatePlayer(player);

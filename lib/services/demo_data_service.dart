@@ -288,21 +288,17 @@ class DemoDataService {
 
   static TrainingSession _createTrainingSession(
       String teamId, DateTime date, String focus,) {
-    final session = TrainingSession.create(
+    return TrainingSession.create(
       teamId: teamId,
       date: date,
       trainingNumber: 1,
-    );
-
-    session
+    )
       ..id = _uuid.v4()
       ..sessionObjective = focus
       ..technicalTacticalGoal = focus
       ..startTime = DateTime(date.year, date.month, date.day, 19)
       ..endTime = DateTime(date.year, date.month, date.day, 20, 30)
       ..durationMinutes = 90;
-
-    return session;
   }
 
   static List<Map<String, dynamic>> _createDemoCoaches() => [

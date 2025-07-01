@@ -121,24 +121,22 @@ class ExportService {
   // Export Players to Excel
   Future<void> exportPlayersToExcel(List<Player> players) async {
     final excel = Excel.createExcel();
-    final sheet = excel['Spelers'];
-
-    // Headers
-    sheet.appendRow([
-      TextCellValue('Nr'),
-      TextCellValue('Voornaam'),
-      TextCellValue('Achternaam'),
-      TextCellValue('Positie'),
-      TextCellValue('Geboortedatum'),
-      TextCellValue('Lengte (cm)'),
-      TextCellValue('Gewicht (kg)'),
-      TextCellValue('Voorkeursbeen'),
-      TextCellValue('Wedstrijden'),
-      TextCellValue('Goals'),
-      TextCellValue('Assists'),
-      TextCellValue('Trainingen'),
-      TextCellValue('Speelminuten %'),
-    ]);
+    final sheet = excel['Spelers']
+      ..appendRow([
+        TextCellValue('Nr'),
+        TextCellValue('Voornaam'),
+        TextCellValue('Achternaam'),
+        TextCellValue('Positie'),
+        TextCellValue('Geboortedatum'),
+        TextCellValue('Lengte (cm)'),
+        TextCellValue('Gewicht (kg)'),
+        TextCellValue('Voorkeursbeen'),
+        TextCellValue('Wedstrijden'),
+        TextCellValue('Goals'),
+        TextCellValue('Assists'),
+        TextCellValue('Trainingen'),
+        TextCellValue('Speelminuten %'),
+      ]);
 
     // Data
     for (final player in players) {
