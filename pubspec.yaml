@@ -68,7 +68,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   test_utils:
-    path: ../packages/test_utils
+    path: packages/test_utils
   mocktail: ^1.0.1
   coverage: ^1.7.2
   flutter_lints: ^3.0.0
