@@ -1,6 +1,6 @@
 name: voab_team_app_workspace
 packages:
-  - jo17_tactical_manager
+  - .
   - packages/**
 
 scripts:
