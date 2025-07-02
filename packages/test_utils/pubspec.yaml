@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.5.0
+  supabase_flutter: ^2.5.6
+  jo17_tactical_manager:
+    path: ../..
 
 dev_dependencies:
   flutter_test:

@@ -11,6 +11,7 @@ analyzer:
     - "**/generated_plugin_registrant.dart"
     - "build/**"
     - "test/**/*.mocks.dart"
+    - "packages/test_utils/**"
 
   language:
     strict-casts: true
