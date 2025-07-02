@@ -18,6 +18,7 @@ class SupabaseConfig {
       ),
     );
 
+    // ignore: use_setters_to_change_properties
     _client = Supabase.instance.client;
 
     // Setup auth state listener
