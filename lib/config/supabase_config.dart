@@ -1,5 +1,8 @@
+// ignore_for_file: use_setters_to_change_properties
+
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../utils/app_logger.dart';
 import 'environment.dart';
 
 /// 🚀 Supabase Configuration & Client Setup
@@ -18,7 +21,6 @@ class SupabaseConfig {
       ),
     );
 
-    // ignore: use_setters_to_change_properties
     _client = Supabase.instance.client;
 
     // Setup auth state listener
@@ -29,7 +31,6 @@ class SupabaseConfig {
   static SupabaseClient get client => _client!;
 
   /// Testing hook – allows injecting a fake client without running full initialization.
-  // ignore: use_setters_to_change_properties
   @visibleForTesting
   static void setClientForTest(SupabaseClient client) {
     _client = client;
@@ -52,22 +53,22 @@ class SupabaseConfig {
 
       switch (event) {
         case AuthChangeEvent.signedIn:
-          debugPrint('✅ User signed in: ${session?.user.email}');
+          AppLogger.i('✅ User signed in: ${session?.user.email}');
           break;
         case AuthChangeEvent.signedOut:
-          debugPrint('👋 User signed out');
+          AppLogger.i('👋 User signed out');
           break;
         case AuthChangeEvent.tokenRefreshed:
-          debugPrint('🔄 Token refreshed');
+          AppLogger.i('🔄 Token refreshed');
           break;
         case AuthChangeEvent.userUpdated:
-          debugPrint('👤 User updated');
+          AppLogger.i('👤 User updated');
           break;
         case AuthChangeEvent.passwordRecovery:
-          debugPrint('🔐 Password recovery initiated');
+          AppLogger.i('🔐 Password recovery initiated');
           break;
         default:
-          debugPrint('🔄 Auth state changed: $event');
+          AppLogger.i('🔄 Auth state changed: $event');
       }
     });
   }
@@ -281,5 +282,7 @@ extension SupabaseExtension on SupabaseClient {
         },
       ),
     );
+    // Force token refresh so that updated metadata propagates and RLS picks up
+    await auth.refreshSession();
   }
 }

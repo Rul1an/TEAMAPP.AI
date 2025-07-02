@@ -1,5 +1,8 @@
 # jo17_tactical_manager
 
+[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<OWNER>/<REPO>/gh-pages/coverage-badge.json)](https://raw.githubusercontent.com/<OWNER>/<REPO>/gh-pages/coverage-badge.json)
+[![Performance](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<OWNER>/<REPO>/gh-pages/performance-badge.json)](https://raw.githubusercontent.com/<OWNER>/<REPO>/gh-pages/performance-badge.json)
+
 A new Flutter project.
 
 ## Getting Started

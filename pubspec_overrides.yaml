@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: test_utils
+dependency_overrides:
+  test_utils:
+    path: ../packages/test_utils

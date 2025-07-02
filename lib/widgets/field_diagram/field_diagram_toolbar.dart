@@ -519,9 +519,13 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
   }
 
   Widget _buildFormationButton(BuildContext context) {
-    // Implementation of _buildFormationButton method
-    // This method should return a Widget
-    throw UnimplementedError();
+    // TODO(team): implement proper formation selector. For now this placeholder avoids runtime errors in tests.
+    return _buildToolButton(
+      icon: Icons.grid_view,
+      tool: DiagramTool.select,
+      tooltip: 'Formatie (coming soon)',
+      context: context,
+    );
   }
 }
 

@@ -1,10 +1,26 @@
 // TODO(author): Uncomment when implementing real Supabase queries
 // import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/organization.dart';
 
 class OrganizationService {
-  // TODO(author): Add SupabaseClient when implementing real queries
-  // final SupabaseClient _supabase = Supabase.instance.client;
+  OrganizationService({SupabaseClient? client})
+      : _supabase = client ?? _tryGetSupabaseInstance();
+
+  // ignore: unused_field
+  final SupabaseClient _supabase;
+
+  // Returns Supabase.instance.client when Supabase.initialize was called, or
+  // falls back to a dummy client for unit-test contexts where full
+  // initialization is undesirable.
+  static SupabaseClient _tryGetSupabaseInstance() {
+    try {
+      return Supabase.instance.client;
+    } catch (_) {
+      // Safe fallback; will never be used for real network calls in tests.
+      return SupabaseClient('http://localhost', 'public-anon-key');
+    }
+  }
 
   // For MVP: Simple organization creation
   Future<Organization> createOrganization({

@@ -1,7 +1,10 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
-  final SupabaseClient _supabase = Supabase.instance.client;
+  /// Allow dependency injection for testing by passing a custom [SupabaseClient].
+  AuthService({SupabaseClient? client}) : _supabase = client ?? Supabase.instance.client;
+
+  final SupabaseClient _supabase;
 
   // Get current user
   User? get currentUser => _supabase.auth.currentUser;

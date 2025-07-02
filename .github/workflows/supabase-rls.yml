@@ -1,0 +1,62 @@
+name: "🔐 Supabase RLS Migration"
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rls-migration-test:
+    name: "Apply RLS migrations & smoke-test"
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⏳ Wait for Postgres
+        run: |
+          for i in {1..10}; do
+            pg_isready -h localhost -U postgres && break
+            echo "Postgres not ready yet..."
+            sleep 3
+          done
+
+      - name: 🛠 Install psql client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: 📜 Apply migration scripts
+        env:
+          PGPASSWORD: postgres
+        run: |
+          set -e
+          for file in $(ls supabase/migrations/*.sql | sort); do
+            echo "Applying $file"
+            psql -h localhost -U postgres -d postgres -f "$file"
+          done
+
+      - name: ✅ Verify RLS policies created
+        env:
+          PGPASSWORD: postgres
+        run: |
+          COUNT=$(psql -h localhost -U postgres -d postgres -Atc "select count(*) from pg_policy where polname like '%_isolated';")
+          echo "Policies found: $COUNT"
+          if [ "$COUNT" -lt 6 ]; then
+            echo "❌ Expected RLS policies not found" && exit 1
+          fi
+
+      - name: 🎉 Success message
+        run: echo "RLS migration applied and verified successfully."

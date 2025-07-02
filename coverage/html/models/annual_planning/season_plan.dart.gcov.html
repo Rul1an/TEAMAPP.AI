@@ -1,0 +1,581 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - lcov.info - models/annual_planning/season_plan.dart</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory models/annual_planning">models/annual_planning</a> - season_plan.dart</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">lcov.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">36.0&nbsp;%</td>
+            <td class="headerCovTableEntry">242</td>
+            <td class="headerCovTableEntry">87</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2025-07-02 13:48:47</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+                  <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : import 'periodization_plan.dart';</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : // part 'season_plan.g.dart'; // Disabled for web compatibility</span>
+<span id="L4"><span class="lineNum">       4</span>              : </span>
+<span id="L5"><span class="lineNum">       5</span>              : class SeasonPlan {</span>
+<span id="L6"><span class="lineNum">       6</span>              :   // Constructor</span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">           1 :   SeasonPlan();</span></span>
+<span id="L8"><span class="lineNum">       8</span>              : </span>
+<span id="L9"><span class="lineNum">       9</span>              :   // Named constructor for JO17 Dutch season</span>
+<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">           1 :   SeasonPlan.jo17DutchSeason({</span></span>
+<span id="L11"><span class="lineNum">      11</span>              :     required this.teamName,</span>
+<span id="L12"><span class="lineNum">      12</span>              :     required this.season,</span>
+<span id="L13"><span class="lineNum">      13</span>              :     DateTime? startDate,</span>
+<span id="L14"><span class="lineNum">      14</span>              :     DateTime? endDate,</span>
+<span id="L15"><span class="lineNum">      15</span>              :   }) {</span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">           4 :     name = '$teamName Seizoen $season';</span></span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC">           1 :     description =</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">           2 :         'Nederlands voetbalseizoen planning voor $teamName volgens KNVB richtlijnen';</span></span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">           1 :     ageGroup = AgeGroup.u17;</span></span>
+<span id="L20"><span class="lineNum">      20</span>              : </span>
+<span id="L21"><span class="lineNum">      21</span>              :     // Default Dutch season dates (August to June)</span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">           4 :     seasonStartDate = startDate ?? DateTime(DateTime.now().year, 8, 15);</span></span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">           5 :     seasonEndDate = endDate ?? DateTime(DateTime.now().year + 1, 6, 15);</span></span>
+<span id="L24"><span class="lineNum">      24</span>              : </span>
+<span id="L25"><span class="lineNum">      25</span>              :     // Calculate weeks</span>
+<span id="L26"><span class="lineNum">      26</span> <span class="tlaGNC">           6 :     totalWeeks = seasonEndDate.difference(seasonStartDate).inDays ~/ 7;</span></span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaGNC">           3 :     trainingWeeks = totalWeeks - 12; // Subtract holiday weeks</span></span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaGNC">           1 :     competitionWeeks = 32; // Standard Dutch season</span></span>
+<span id="L29"><span class="lineNum">      29</span>              : </span>
+<span id="L30"><span class="lineNum">      30</span>              :     // Default Dutch holiday periods</span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaGNC">           2 :     holidayPeriods = [</span></span>
+<span id="L32"><span class="lineNum">      32</span>              :       'Herfstvakantie (Week 43)',</span>
+<span id="L33"><span class="lineNum">      33</span>              :       'Kerstvakantie (Week 52-2)',</span>
+<span id="L34"><span class="lineNum">      34</span>              :       'Voorjaarsvakantie (Week 8)',</span>
+<span id="L35"><span class="lineNum">      35</span>              :       'Meivakantie (Week 18)',</span>
+<span id="L36"><span class="lineNum">      36</span>              :       'Zomervakantie (Week 27-34)',</span>
+<span id="L37"><span class="lineNum">      37</span>              :     ];</span>
+<span id="L38"><span class="lineNum">      38</span>              : </span>
+<span id="L39"><span class="lineNum">      39</span> <span class="tlaGNC">           1 :     primaryCompetition = 'Jeugdcompetitie';</span></span>
+<span id="L40"><span class="lineNum">      40</span> <span class="tlaGNC">           2 :     additionalCompetitions = ['Beker', 'Toernooien', 'Oefenwedstrijden'];</span></span>
+<span id="L41"><span class="lineNum">      41</span>              : </span>
+<span id="L42"><span class="lineNum">      42</span>              :     // Season objectives</span>
+<span id="L43"><span class="lineNum">      43</span> <span class="tlaGNC">           2 :     seasonObjectives = [</span></span>
+<span id="L44"><span class="lineNum">      44</span>              :       'Technische ontwikkeling spelers',</span>
+<span id="L45"><span class="lineNum">      45</span>              :       'Tactisch begrip verbeteren',</span>
+<span id="L46"><span class="lineNum">      46</span>              :       'Wedstrijdervaring opdoen',</span>
+<span id="L47"><span class="lineNum">      47</span>              :       'Teamsamenhang versteken',</span>
+<span id="L48"><span class="lineNum">      48</span>              :     ];</span>
+<span id="L49"><span class="lineNum">      49</span>              : </span>
+<span id="L50"><span class="lineNum">      50</span> <span class="tlaGNC">           2 :     keyPerformanceIndicators = [</span></span>
+<span id="L51"><span class="lineNum">      51</span>              :       'Individuele spelerontwikkeling',</span>
+<span id="L52"><span class="lineNum">      52</span>              :       'Team prestaties',</span>
+<span id="L53"><span class="lineNum">      53</span>              :       'Blessure preventie',</span>
+<span id="L54"><span class="lineNum">      54</span>              :       'Speeltijd verdeling',</span>
+<span id="L55"><span class="lineNum">      55</span>              :     ];</span>
+<span id="L56"><span class="lineNum">      56</span>              : </span>
+<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC">           1 :     isTemplate = false;</span></span>
+<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC">           1 :     status = SeasonStatus.draft;</span></span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaGNC">           1 :     currentWeek = 1;</span></span>
+<span id="L60"><span class="lineNum">      60</span> <span class="tlaGNC">           1 :     progressPercentage = 0.0;</span></span>
+<span id="L61"><span class="lineNum">      61</span>              :   }</span>
+<span id="L62"><span class="lineNum">      62</span>              : </span>
+<span id="L63"><span class="lineNum">      63</span>              :   // Standard template constructor</span>
+<span id="L64"><span class="lineNum">      64</span> <span class="tlaUNC">           0 :   SeasonPlan.standardTemplate({</span></span>
+<span id="L65"><span class="lineNum">      65</span>              :     required this.ageGroup,</span>
+<span id="L66"><span class="lineNum">      66</span>              :     required this.name,</span>
+<span id="L67"><span class="lineNum">      67</span>              :   }) {</span>
+<span id="L68"><span class="lineNum">      68</span> <span class="tlaUNC">           0 :     description = 'Standard seizoen template voor \\${ageGroup.dutchName}';</span></span>
+<span id="L69"><span class="lineNum">      69</span> <span class="tlaUNC">           0 :     season = 'Template';</span></span>
+<span id="L70"><span class="lineNum">      70</span> <span class="tlaUNC">           0 :     teamName = '${ageGroup.dutchName} Template';</span></span>
+<span id="L71"><span class="lineNum">      71</span>              : </span>
+<span id="L72"><span class="lineNum">      72</span>              :     // Template defaults</span>
+<span id="L73"><span class="lineNum">      73</span> <span class="tlaUNC">           0 :     seasonStartDate = DateTime(2024, 8, 15);</span></span>
+<span id="L74"><span class="lineNum">      74</span> <span class="tlaUNC">           0 :     seasonEndDate = DateTime(2025, 6, 15);</span></span>
+<span id="L75"><span class="lineNum">      75</span> <span class="tlaUNC">           0 :     totalWeeks = 43;</span></span>
+<span id="L76"><span class="lineNum">      76</span> <span class="tlaUNC">           0 :     trainingWeeks = 36;</span></span>
+<span id="L77"><span class="lineNum">      77</span> <span class="tlaUNC">           0 :     competitionWeeks = 32;</span></span>
+<span id="L78"><span class="lineNum">      78</span>              : </span>
+<span id="L79"><span class="lineNum">      79</span> <span class="tlaUNC">           0 :     holidayPeriods = [</span></span>
+<span id="L80"><span class="lineNum">      80</span>              :       'Herfstvakantie',</span>
+<span id="L81"><span class="lineNum">      81</span>              :       'Kerstvakantie',</span>
+<span id="L82"><span class="lineNum">      82</span>              :       'Voorjaarsvakantie',</span>
+<span id="L83"><span class="lineNum">      83</span>              :       'Meivakantie',</span>
+<span id="L84"><span class="lineNum">      84</span>              :     ];</span>
+<span id="L85"><span class="lineNum">      85</span>              : </span>
+<span id="L86"><span class="lineNum">      86</span> <span class="tlaUNC">           0 :     primaryCompetition = 'Hoofdcompetitie';</span></span>
+<span id="L87"><span class="lineNum">      87</span> <span class="tlaUNC">           0 :     additionalCompetitions = ['Beker', 'Toernooien'];</span></span>
+<span id="L88"><span class="lineNum">      88</span>              : </span>
+<span id="L89"><span class="lineNum">      89</span> <span class="tlaUNC">           0 :     seasonObjectives = [</span></span>
+<span id="L90"><span class="lineNum">      90</span>              :       'Spelerontwikkeling',</span>
+<span id="L91"><span class="lineNum">      91</span>              :       'Team prestaties',</span>
+<span id="L92"><span class="lineNum">      92</span>              :       'Positief voetbal',</span>
+<span id="L93"><span class="lineNum">      93</span>              :     ];</span>
+<span id="L94"><span class="lineNum">      94</span>              : </span>
+<span id="L95"><span class="lineNum">      95</span> <span class="tlaUNC">           0 :     keyPerformanceIndicators = [</span></span>
+<span id="L96"><span class="lineNum">      96</span>              :       'Technische vooruitgang',</span>
+<span id="L97"><span class="lineNum">      97</span>              :       'Tactisch begrip',</span>
+<span id="L98"><span class="lineNum">      98</span>              :       'Plezier in het spel',</span>
+<span id="L99"><span class="lineNum">      99</span>              :     ];</span>
+<span id="L100"><span class="lineNum">     100</span>              : </span>
+<span id="L101"><span class="lineNum">     101</span> <span class="tlaUNC">           0 :     isTemplate = true;</span></span>
+<span id="L102"><span class="lineNum">     102</span> <span class="tlaUNC">           0 :     status = SeasonStatus.draft;</span></span>
+<span id="L103"><span class="lineNum">     103</span> <span class="tlaUNC">           0 :     currentWeek = 1;</span></span>
+<span id="L104"><span class="lineNum">     104</span> <span class="tlaUNC">           0 :     progressPercentage = 0.0;</span></span>
+<span id="L105"><span class="lineNum">     105</span>              :   }</span>
+<span id="L106"><span class="lineNum">     106</span>              : </span>
+<span id="L107"><span class="lineNum">     107</span> <span class="tlaGNC">           1 :   factory SeasonPlan.fromJson(Map&lt;String, dynamic&gt; json) {</span></span>
+<span id="L108"><span class="lineNum">     108</span> <span class="tlaGNC">           1 :     final plan = SeasonPlan()</span></span>
+<span id="L109"><span class="lineNum">     109</span> <span class="tlaGNC">           2 :       ..id = json['id'] as String? ?? ''</span></span>
+<span id="L110"><span class="lineNum">     110</span> <span class="tlaGNC">           2 :       ..name = json['name'] as String? ?? ''</span></span>
+<span id="L111"><span class="lineNum">     111</span> <span class="tlaGNC">           2 :       ..description = json['description'] as String? ?? ''</span></span>
+<span id="L112"><span class="lineNum">     112</span> <span class="tlaGNC">           2 :       ..season = json['season'] as String? ?? ''</span></span>
+<span id="L113"><span class="lineNum">     113</span> <span class="tlaGNC">           2 :       ..ageGroup = AgeGroup.values.firstWhere(</span></span>
+<span id="L114"><span class="lineNum">     114</span> <span class="tlaGNC">           4 :         (e) =&gt; e.name == json['ageGroup'],</span></span>
+<span id="L115"><span class="lineNum">     115</span> <span class="tlaUNC">           0 :         orElse: () =&gt; AgeGroup.u17,</span></span>
+<span id="L116"><span class="lineNum">     116</span>              :       )</span>
+<span id="L117"><span class="lineNum">     117</span> <span class="tlaGNC">           2 :       ..teamName = json['teamName'] as String? ?? ''</span></span>
+<span id="L118"><span class="lineNum">     118</span> <span class="tlaGNC">           2 :       ..seasonStartDate = json['seasonStartDate'] != null</span></span>
+<span id="L119"><span class="lineNum">     119</span> <span class="tlaGNC">           2 :           ? DateTime.parse(json['seasonStartDate'] as String)</span></span>
+<span id="L120"><span class="lineNum">     120</span> <span class="tlaUNC">           0 :           : DateTime.now()</span></span>
+<span id="L121"><span class="lineNum">     121</span> <span class="tlaGNC">           2 :       ..seasonEndDate = json['seasonEndDate'] != null</span></span>
+<span id="L122"><span class="lineNum">     122</span> <span class="tlaGNC">           2 :           ? DateTime.parse(json['seasonEndDate'] as String)</span></span>
+<span id="L123"><span class="lineNum">     123</span> <span class="tlaUNC">           0 :           : DateTime.now().add(const Duration(days: 300))</span></span>
+<span id="L124"><span class="lineNum">     124</span> <span class="tlaGNC">           3 :       ..holidayPeriods = List&lt;String&gt;.from(json['holidayPeriods'] as List&lt;dynamic&gt;? ?? [])</span></span>
+<span id="L125"><span class="lineNum">     125</span> <span class="tlaGNC">           2 :       ..periodizationPlanId = json['periodizationPlanId'] as String? ?? ''</span></span>
+<span id="L126"><span class="lineNum">     126</span> <span class="tlaGNC">           2 :       ..totalWeeks = json['totalWeeks'] as int? ?? 40</span></span>
+<span id="L127"><span class="lineNum">     127</span> <span class="tlaGNC">           2 :       ..trainingWeeks = json['trainingWeeks'] as int? ?? 36</span></span>
+<span id="L128"><span class="lineNum">     128</span> <span class="tlaGNC">           2 :       ..competitionWeeks = json['competitionWeeks'] as int? ?? 32</span></span>
+<span id="L129"><span class="lineNum">     129</span> <span class="tlaGNC">           2 :       ..primaryCompetition = json['primaryCompetition'] as String? ?? ''</span></span>
+<span id="L130"><span class="lineNum">     130</span> <span class="tlaGNC">           1 :       ..additionalCompetitions =</span></span>
+<span id="L131"><span class="lineNum">     131</span> <span class="tlaGNC">           2 :           List&lt;String&gt;.from(json['additionalCompetitions'] as List&lt;dynamic&gt;? ?? [])</span></span>
+<span id="L132"><span class="lineNum">     132</span> <span class="tlaGNC">           2 :       ..firstMatchDate = json['firstMatchDate'] != null</span></span>
+<span id="L133"><span class="lineNum">     133</span> <span class="tlaUNC">           0 :           ? DateTime.parse(json['firstMatchDate'] as String)</span></span>
+<span id="L134"><span class="lineNum">     134</span>              :           : null</span>
+<span id="L135"><span class="lineNum">     135</span> <span class="tlaGNC">           2 :       ..lastMatchDate = json['lastMatchDate'] != null</span></span>
+<span id="L136"><span class="lineNum">     136</span> <span class="tlaUNC">           0 :           ? DateTime.parse(json['lastMatchDate'] as String)</span></span>
+<span id="L137"><span class="lineNum">     137</span>              :           : null</span>
+<span id="L138"><span class="lineNum">     138</span> <span class="tlaGNC">           2 :       ..midSeasonBreakStart = json['midSeasonBreakStart'] != null</span></span>
+<span id="L139"><span class="lineNum">     139</span> <span class="tlaUNC">           0 :           ? DateTime.parse(json['midSeasonBreakStart'] as String)</span></span>
+<span id="L140"><span class="lineNum">     140</span>              :           : null</span>
+<span id="L141"><span class="lineNum">     141</span> <span class="tlaGNC">           2 :       ..midSeasonBreakEnd = json['midSeasonBreakEnd'] != null</span></span>
+<span id="L142"><span class="lineNum">     142</span> <span class="tlaUNC">           0 :           ? DateTime.parse(json['midSeasonBreakEnd'] as String)</span></span>
+<span id="L143"><span class="lineNum">     143</span>              :           : null</span>
+<span id="L144"><span class="lineNum">     144</span> <span class="tlaGNC">           3 :       ..seasonObjectives = List&lt;String&gt;.from(json['seasonObjectives'] as List&lt;dynamic&gt;? ?? [])</span></span>
+<span id="L145"><span class="lineNum">     145</span> <span class="tlaGNC">           1 :       ..keyPerformanceIndicators =</span></span>
+<span id="L146"><span class="lineNum">     146</span> <span class="tlaGNC">           2 :           List&lt;String&gt;.from(json['keyPerformanceIndicators'] as List&lt;dynamic&gt;? ?? [])</span></span>
+<span id="L147"><span class="lineNum">     147</span> <span class="tlaGNC">           2 :       ..isTemplate = json['isTemplate'] as bool? ?? false</span></span>
+<span id="L148"><span class="lineNum">     148</span> <span class="tlaGNC">           2 :       ..status = SeasonStatus.values.firstWhere(</span></span>
+<span id="L149"><span class="lineNum">     149</span> <span class="tlaGNC">           4 :         (e) =&gt; e.name == (json['status'] as String?),</span></span>
+<span id="L150"><span class="lineNum">     150</span> <span class="tlaUNC">           0 :         orElse: () =&gt; SeasonStatus.draft,</span></span>
+<span id="L151"><span class="lineNum">     151</span>              :       )</span>
+<span id="L152"><span class="lineNum">     152</span> <span class="tlaGNC">           2 :       ..currentWeek = json['currentWeek'] as int? ?? 1</span></span>
+<span id="L153"><span class="lineNum">     153</span> <span class="tlaGNC">           3 :       ..progressPercentage = (json['progressPercentage'] as num?)?.toDouble() ?? 0.0</span></span>
+<span id="L154"><span class="lineNum">     154</span> <span class="tlaGNC">           2 :       ..createdBy = json['createdBy'] as String?</span></span>
+<span id="L155"><span class="lineNum">     155</span> <span class="tlaGNC">           2 :       ..createdAt = json['createdAt'] != null</span></span>
+<span id="L156"><span class="lineNum">     156</span> <span class="tlaGNC">           2 :           ? DateTime.parse(json['createdAt'] as String)</span></span>
+<span id="L157"><span class="lineNum">     157</span> <span class="tlaUNC">           0 :           : DateTime.now()</span></span>
+<span id="L158"><span class="lineNum">     158</span> <span class="tlaGNC">           2 :       ..updatedAt = json['updatedAt'] != null</span></span>
+<span id="L159"><span class="lineNum">     159</span> <span class="tlaGNC">           2 :           ? DateTime.parse(json['updatedAt'] as String)</span></span>
+<span id="L160"><span class="lineNum">     160</span> <span class="tlaUNC">           0 :           : DateTime.now();</span></span>
+<span id="L161"><span class="lineNum">     161</span>              :     return plan;</span>
+<span id="L162"><span class="lineNum">     162</span>              :   }</span>
+<span id="L163"><span class="lineNum">     163</span>              :   String id = '';</span>
+<span id="L164"><span class="lineNum">     164</span>              : </span>
+<span id="L165"><span class="lineNum">     165</span>              :   // Basic season information</span>
+<span id="L166"><span class="lineNum">     166</span>              :   late String name; // &quot;JO17-1 Seizoen 2024-2025&quot;</span>
+<span id="L167"><span class="lineNum">     167</span>              :   late String description;</span>
+<span id="L168"><span class="lineNum">     168</span>              :   late String season; // &quot;2024-2025&quot;</span>
+<span id="L169"><span class="lineNum">     169</span>              : </span>
+<span id="L170"><span class="lineNum">     170</span>              :   late AgeGroup ageGroup; // U17, U16, etc.</span>
+<span id="L171"><span class="lineNum">     171</span>              : </span>
+<span id="L172"><span class="lineNum">     172</span>              :   late String teamName; // &quot;JO17-1&quot;, &quot;JO16-2&quot;</span>
+<span id="L173"><span class="lineNum">     173</span>              : </span>
+<span id="L174"><span class="lineNum">     174</span>              :   // Season timing</span>
+<span id="L175"><span class="lineNum">     175</span>              :   late DateTime seasonStartDate; // Start of season (e.g., August 15)</span>
+<span id="L176"><span class="lineNum">     176</span>              :   late DateTime seasonEndDate; // End of season (e.g., June 15)</span>
+<span id="L177"><span class="lineNum">     177</span>              : </span>
+<span id="L178"><span class="lineNum">     178</span>              :   // Holiday/break periods</span>
+<span id="L179"><span class="lineNum">     179</span>              :   late List&lt;String&gt; holidayPeriods; // JSON string list of holiday periods</span>
+<span id="L180"><span class="lineNum">     180</span>              : </span>
+<span id="L181"><span class="lineNum">     181</span>              :   // Linked periodization plan</span>
+<span id="L182"><span class="lineNum">     182</span>              :   late String periodizationPlanId; // Reference to PeriodizationPlan</span>
+<span id="L183"><span class="lineNum">     183</span>              : </span>
+<span id="L184"><span class="lineNum">     184</span>              :   // Season structure</span>
+<span id="L185"><span class="lineNum">     185</span>              :   late int totalWeeks; // Total weeks in season</span>
+<span id="L186"><span class="lineNum">     186</span>              :   late int trainingWeeks; // Actual training weeks (excluding holidays)</span>
+<span id="L187"><span class="lineNum">     187</span>              :   late int competitionWeeks; // Weeks with matches</span>
+<span id="L188"><span class="lineNum">     188</span>              : </span>
+<span id="L189"><span class="lineNum">     189</span>              :   // Competition information</span>
+<span id="L190"><span class="lineNum">     190</span>              :   late String primaryCompetition; // &quot;Hoofdklasse B&quot;, &quot;1e Klasse A&quot;</span>
+<span id="L191"><span class="lineNum">     191</span>              :   late List&lt;String&gt; additionalCompetitions; // Cup tournaments, friendlies</span>
+<span id="L192"><span class="lineNum">     192</span>              : </span>
+<span id="L193"><span class="lineNum">     193</span>              :   // Key season dates</span>
+<span id="L194"><span class="lineNum">     194</span>              :   DateTime? firstMatchDate;</span>
+<span id="L195"><span class="lineNum">     195</span>              :   DateTime? lastMatchDate;</span>
+<span id="L196"><span class="lineNum">     196</span>              :   DateTime? midSeasonBreakStart;</span>
+<span id="L197"><span class="lineNum">     197</span>              :   DateTime? midSeasonBreakEnd;</span>
+<span id="L198"><span class="lineNum">     198</span>              : </span>
+<span id="L199"><span class="lineNum">     199</span>              :   // Season goals and objectives</span>
+<span id="L200"><span class="lineNum">     200</span>              :   late List&lt;String&gt;</span>
+<span id="L201"><span class="lineNum">     201</span>              :       seasonObjectives; // [&quot;Top 3 finish&quot;, &quot;Youth development&quot;, &quot;Style of play&quot;]</span>
+<span id="L202"><span class="lineNum">     202</span>              :   late List&lt;String&gt;</span>
+<span id="L203"><span class="lineNum">     203</span>              :       keyPerformanceIndicators; // [&quot;Goals scored&quot;, &quot;Clean sheets&quot;, &quot;Pass accuracy&quot;]</span>
+<span id="L204"><span class="lineNum">     204</span>              : </span>
+<span id="L205"><span class="lineNum">     205</span>              :   // Template and tracking</span>
+<span id="L206"><span class="lineNum">     206</span>              :   late bool isTemplate; // true for reusable season templates</span>
+<span id="L207"><span class="lineNum">     207</span>              : </span>
+<span id="L208"><span class="lineNum">     208</span>              :   late SeasonStatus status; // draft, active, completed, archived</span>
+<span id="L209"><span class="lineNum">     209</span>              : </span>
+<span id="L210"><span class="lineNum">     210</span>              :   // Progress tracking</span>
+<span id="L211"><span class="lineNum">     211</span>              :   late int currentWeek; // Current week number in season (1-based)</span>
+<span id="L212"><span class="lineNum">     212</span>              :   late double progressPercentage; // 0-100% season completion</span>
+<span id="L213"><span class="lineNum">     213</span>              : </span>
+<span id="L214"><span class="lineNum">     214</span>              :   // Metadata</span>
+<span id="L215"><span class="lineNum">     215</span>              :   String? createdBy; // User who created this plan</span>
+<span id="L216"><span class="lineNum">     216</span>              :   DateTime createdAt = DateTime.now();</span>
+<span id="L217"><span class="lineNum">     217</span>              :   DateTime updatedAt = DateTime.now();</span>
+<span id="L218"><span class="lineNum">     218</span>              : </span>
+<span id="L219"><span class="lineNum">     219</span>              :   // Calculated properties</span>
+<span id="L220"><span class="lineNum">     220</span> <span class="tlaUNC">           0 :   DateTime get currentDate =&gt;</span></span>
+<span id="L221"><span class="lineNum">     221</span> <span class="tlaUNC">           0 :       seasonStartDate.add(Duration(days: (currentWeek - 1) * 7));</span></span>
+<span id="L222"><span class="lineNum">     222</span>              : </span>
+<span id="L223"><span class="lineNum">     223</span> <span class="tlaUNC">           0 :   bool get isActive {</span></span>
+<span id="L224"><span class="lineNum">     224</span> <span class="tlaUNC">           0 :     final now = DateTime.now();</span></span>
+<span id="L225"><span class="lineNum">     225</span> <span class="tlaUNC">           0 :     return now.isAfter(seasonStartDate) &amp;&amp; now.isBefore(seasonEndDate);</span></span>
+<span id="L226"><span class="lineNum">     226</span>              :   }</span>
+<span id="L227"><span class="lineNum">     227</span>              : </span>
+<span id="L228"><span class="lineNum">     228</span> <span class="tlaUNC">           0 :   bool get isCompleted =&gt;</span></span>
+<span id="L229"><span class="lineNum">     229</span> <span class="tlaUNC">           0 :       status == SeasonStatus.completed || DateTime.now().isAfter(seasonEndDate);</span></span>
+<span id="L230"><span class="lineNum">     230</span>              : </span>
+<span id="L231"><span class="lineNum">     231</span> <span class="tlaUNC">           0 :   int get remainingWeeks {</span></span>
+<span id="L232"><span class="lineNum">     232</span> <span class="tlaUNC">           0 :     final now = DateTime.now();</span></span>
+<span id="L233"><span class="lineNum">     233</span> <span class="tlaUNC">           0 :     if (now.isAfter(seasonEndDate)) return 0;</span></span>
+<span id="L234"><span class="lineNum">     234</span> <span class="tlaUNC">           0 :     return seasonEndDate.difference(now).inDays ~/ 7;</span></span>
+<span id="L235"><span class="lineNum">     235</span>              :   }</span>
+<span id="L236"><span class="lineNum">     236</span>              : </span>
+<span id="L237"><span class="lineNum">     237</span> <span class="tlaUNC">           0 :   double get seasonProgressByDate {</span></span>
+<span id="L238"><span class="lineNum">     238</span> <span class="tlaUNC">           0 :     final now = DateTime.now();</span></span>
+<span id="L239"><span class="lineNum">     239</span> <span class="tlaUNC">           0 :     if (now.isBefore(seasonStartDate)) return 0;</span></span>
+<span id="L240"><span class="lineNum">     240</span> <span class="tlaUNC">           0 :     if (now.isAfter(seasonEndDate)) return 100;</span></span>
+<span id="L241"><span class="lineNum">     241</span>              : </span>
+<span id="L242"><span class="lineNum">     242</span> <span class="tlaUNC">           0 :     final totalDays = seasonEndDate.difference(seasonStartDate).inDays;</span></span>
+<span id="L243"><span class="lineNum">     243</span> <span class="tlaUNC">           0 :     final elapsedDays = now.difference(seasonStartDate).inDays;</span></span>
+<span id="L244"><span class="lineNum">     244</span>              : </span>
+<span id="L245"><span class="lineNum">     245</span> <span class="tlaUNC">           0 :     return (elapsedDays / totalDays * 100).clamp(0.0, 100.0);</span></span>
+<span id="L246"><span class="lineNum">     246</span>              :   }</span>
+<span id="L247"><span class="lineNum">     247</span>              : </span>
+<span id="L248"><span class="lineNum">     248</span>              :   // Season phase detection</span>
+<span id="L249"><span class="lineNum">     249</span> <span class="tlaUNC">           0 :   SeasonPhase getCurrentPhase() {</span></span>
+<span id="L250"><span class="lineNum">     250</span> <span class="tlaUNC">           0 :     final progress = seasonProgressByDate;</span></span>
+<span id="L251"><span class="lineNum">     251</span>              : </span>
+<span id="L252"><span class="lineNum">     252</span> <span class="tlaUNC">           0 :     if (progress &lt; 20) return SeasonPhase.preseason;</span></span>
+<span id="L253"><span class="lineNum">     253</span> <span class="tlaUNC">           0 :     if (progress &lt; 40) return SeasonPhase.earlySeason;</span></span>
+<span id="L254"><span class="lineNum">     254</span> <span class="tlaUNC">           0 :     if (progress &lt; 70) return SeasonPhase.midSeason;</span></span>
+<span id="L255"><span class="lineNum">     255</span> <span class="tlaUNC">           0 :     if (progress &lt; 90) return SeasonPhase.lateSeason;</span></span>
+<span id="L256"><span class="lineNum">     256</span>              :     return SeasonPhase.postSeason;</span>
+<span id="L257"><span class="lineNum">     257</span>              :   }</span>
+<span id="L258"><span class="lineNum">     258</span>              : </span>
+<span id="L259"><span class="lineNum">     259</span>              :   // Holiday checking</span>
+<span id="L260"><span class="lineNum">     260</span> <span class="tlaUNC">           0 :   bool isCurrentlyInHoliday() =&gt;</span></span>
+<span id="L261"><span class="lineNum">     261</span>              :       // In a real implementation, this would check against specific holiday dates</span>
+<span id="L262"><span class="lineNum">     262</span>              :       // For now, return false as a placeholder</span>
+<span id="L263"><span class="lineNum">     263</span>              :       false;</span>
+<span id="L264"><span class="lineNum">     264</span> <span class="tlaUNC">           0 :   List&lt;String&gt; getHolidaysInPeriod(DateTime start, DateTime end) =&gt;</span></span>
+<span id="L265"><span class="lineNum">     265</span>              :       // In a real implementation, this would return holidays within the date range</span>
+<span id="L266"><span class="lineNum">     266</span>              :       // For now, return empty list as a placeholder</span>
+<span id="L267"><span class="lineNum">     267</span> <span class="tlaUNC">           0 :       [];</span></span>
+<span id="L268"><span class="lineNum">     268</span>              :   // Season statistics</span>
+<span id="L269"><span class="lineNum">     269</span> <span class="tlaUNC">           0 :   Map&lt;String, dynamic&gt; getSeasonStatistics() =&gt; {</span></span>
+<span id="L270"><span class="lineNum">     270</span> <span class="tlaUNC">           0 :         'totalWeeks': totalWeeks,</span></span>
+<span id="L271"><span class="lineNum">     271</span> <span class="tlaUNC">           0 :         'completedWeeks': currentWeek - 1,</span></span>
+<span id="L272"><span class="lineNum">     272</span> <span class="tlaUNC">           0 :         'remainingWeeks': remainingWeeks,</span></span>
+<span id="L273"><span class="lineNum">     273</span> <span class="tlaUNC">           0 :         'progressPercentage': progressPercentage,</span></span>
+<span id="L274"><span class="lineNum">     274</span> <span class="tlaUNC">           0 :         'currentPhase': getCurrentPhase().displayName,</span></span>
+<span id="L275"><span class="lineNum">     275</span> <span class="tlaUNC">           0 :         'isActive': isActive,</span></span>
+<span id="L276"><span class="lineNum">     276</span> <span class="tlaUNC">           0 :         'isCompleted': isCompleted,</span></span>
+<span id="L277"><span class="lineNum">     277</span>              :       };</span>
+<span id="L278"><span class="lineNum">     278</span>              : </span>
+<span id="L279"><span class="lineNum">     279</span>              :   // Update progress</span>
+<span id="L280"><span class="lineNum">     280</span> <span class="tlaUNC">           0 :   void updateProgress() {</span></span>
+<span id="L281"><span class="lineNum">     281</span> <span class="tlaUNC">           0 :     progressPercentage = seasonProgressByDate;</span></span>
+<span id="L282"><span class="lineNum">     282</span>              : </span>
+<span id="L283"><span class="lineNum">     283</span>              :     // Update current week based on date</span>
+<span id="L284"><span class="lineNum">     284</span> <span class="tlaUNC">           0 :     final now = DateTime.now();</span></span>
+<span id="L285"><span class="lineNum">     285</span> <span class="tlaUNC">           0 :     if (now.isAfter(seasonStartDate) &amp;&amp; now.isBefore(seasonEndDate)) {</span></span>
+<span id="L286"><span class="lineNum">     286</span> <span class="tlaUNC">           0 :       currentWeek = (now.difference(seasonStartDate).inDays ~/ 7) + 1;</span></span>
+<span id="L287"><span class="lineNum">     287</span>              :     }</span>
+<span id="L288"><span class="lineNum">     288</span>              : </span>
+<span id="L289"><span class="lineNum">     289</span>              :     // Auto-update status</span>
+<span id="L290"><span class="lineNum">     290</span> <span class="tlaUNC">           0 :     if (isCompleted &amp;&amp; status != SeasonStatus.completed) {</span></span>
+<span id="L291"><span class="lineNum">     291</span> <span class="tlaUNC">           0 :       status = SeasonStatus.completed;</span></span>
+<span id="L292"><span class="lineNum">     292</span> <span class="tlaUNC">           0 :     } else if (isActive &amp;&amp; status == SeasonStatus.draft) {</span></span>
+<span id="L293"><span class="lineNum">     293</span> <span class="tlaUNC">           0 :       status = SeasonStatus.active;</span></span>
+<span id="L294"><span class="lineNum">     294</span>              :     }</span>
+<span id="L295"><span class="lineNum">     295</span>              : </span>
+<span id="L296"><span class="lineNum">     296</span> <span class="tlaUNC">           0 :     updatedAt = DateTime.now();</span></span>
+<span id="L297"><span class="lineNum">     297</span>              :   }</span>
+<span id="L298"><span class="lineNum">     298</span>              : </span>
+<span id="L299"><span class="lineNum">     299</span>              :   // Validation</span>
+<span id="L300"><span class="lineNum">     300</span> <span class="tlaUNC">           0 :   bool isValid() =&gt;</span></span>
+<span id="L301"><span class="lineNum">     301</span> <span class="tlaUNC">           0 :       name.isNotEmpty &amp;&amp;</span></span>
+<span id="L302"><span class="lineNum">     302</span> <span class="tlaUNC">           0 :       season.isNotEmpty &amp;&amp;</span></span>
+<span id="L303"><span class="lineNum">     303</span> <span class="tlaUNC">           0 :       teamName.isNotEmpty &amp;&amp;</span></span>
+<span id="L304"><span class="lineNum">     304</span> <span class="tlaUNC">           0 :       seasonStartDate.isBefore(seasonEndDate) &amp;&amp;</span></span>
+<span id="L305"><span class="lineNum">     305</span> <span class="tlaUNC">           0 :       totalWeeks &gt; 0 &amp;&amp;</span></span>
+<span id="L306"><span class="lineNum">     306</span> <span class="tlaUNC">           0 :       currentWeek &gt;= 1 &amp;&amp;</span></span>
+<span id="L307"><span class="lineNum">     307</span> <span class="tlaUNC">           0 :       progressPercentage &gt;= 0.0 &amp;&amp;</span></span>
+<span id="L308"><span class="lineNum">     308</span> <span class="tlaUNC">           0 :       progressPercentage &lt;= 100.0;</span></span>
+<span id="L309"><span class="lineNum">     309</span>              : </span>
+<span id="L310"><span class="lineNum">     310</span> <span class="tlaUNC">           0 :   List&lt;String&gt; getValidationErrors() {</span></span>
+<span id="L311"><span class="lineNum">     311</span> <span class="tlaUNC">           0 :     final List&lt;String&gt; errors = [];</span></span>
+<span id="L312"><span class="lineNum">     312</span>              : </span>
+<span id="L313"><span class="lineNum">     313</span> <span class="tlaUNC">           0 :     if (name.isEmpty) errors.add('Season name is required');</span></span>
+<span id="L314"><span class="lineNum">     314</span> <span class="tlaUNC">           0 :     if (season.isEmpty) errors.add('Season year is required');</span></span>
+<span id="L315"><span class="lineNum">     315</span> <span class="tlaUNC">           0 :     if (teamName.isEmpty) errors.add('Team name is required');</span></span>
+<span id="L316"><span class="lineNum">     316</span> <span class="tlaUNC">           0 :     if (!seasonStartDate.isBefore(seasonEndDate)) {</span></span>
+<span id="L317"><span class="lineNum">     317</span> <span class="tlaUNC">           0 :       errors.add('Start date must be before end date');</span></span>
+<span id="L318"><span class="lineNum">     318</span>              :     }</span>
+<span id="L319"><span class="lineNum">     319</span> <span class="tlaUNC">           0 :     if (totalWeeks &lt;= 0) errors.add('Total weeks must be positive');</span></span>
+<span id="L320"><span class="lineNum">     320</span> <span class="tlaUNC">           0 :     if (currentWeek &lt; 1) errors.add('Current week must be at least 1');</span></span>
+<span id="L321"><span class="lineNum">     321</span> <span class="tlaUNC">           0 :     if (progressPercentage &lt; 0.0 || progressPercentage &gt; 100.0) {</span></span>
+<span id="L322"><span class="lineNum">     322</span> <span class="tlaUNC">           0 :       errors.add('Progress percentage must be between 0 and 100');</span></span>
+<span id="L323"><span class="lineNum">     323</span>              :     }</span>
+<span id="L324"><span class="lineNum">     324</span>              : </span>
+<span id="L325"><span class="lineNum">     325</span>              :     return errors;</span>
+<span id="L326"><span class="lineNum">     326</span>              :   }</span>
+<span id="L327"><span class="lineNum">     327</span>              : </span>
+<span id="L328"><span class="lineNum">     328</span>              :   // JSON serialization</span>
+<span id="L329"><span class="lineNum">     329</span> <span class="tlaGNC">           2 :   Map&lt;String, dynamic&gt; toJson() =&gt; {</span></span>
+<span id="L330"><span class="lineNum">     330</span> <span class="tlaGNC">           1 :         'id': id,</span></span>
+<span id="L331"><span class="lineNum">     331</span> <span class="tlaGNC">           1 :         'name': name,</span></span>
+<span id="L332"><span class="lineNum">     332</span> <span class="tlaGNC">           1 :         'description': description,</span></span>
+<span id="L333"><span class="lineNum">     333</span> <span class="tlaGNC">           1 :         'season': season,</span></span>
+<span id="L334"><span class="lineNum">     334</span> <span class="tlaGNC">           2 :         'ageGroup': ageGroup.name,</span></span>
+<span id="L335"><span class="lineNum">     335</span> <span class="tlaGNC">           1 :         'teamName': teamName,</span></span>
+<span id="L336"><span class="lineNum">     336</span> <span class="tlaGNC">           2 :         'seasonStartDate': seasonStartDate.toIso8601String(),</span></span>
+<span id="L337"><span class="lineNum">     337</span> <span class="tlaGNC">           2 :         'seasonEndDate': seasonEndDate.toIso8601String(),</span></span>
+<span id="L338"><span class="lineNum">     338</span> <span class="tlaGNC">           1 :         'holidayPeriods': holidayPeriods,</span></span>
+<span id="L339"><span class="lineNum">     339</span> <span class="tlaGNC">           1 :         'periodizationPlanId': periodizationPlanId,</span></span>
+<span id="L340"><span class="lineNum">     340</span> <span class="tlaGNC">           1 :         'totalWeeks': totalWeeks,</span></span>
+<span id="L341"><span class="lineNum">     341</span> <span class="tlaGNC">           1 :         'trainingWeeks': trainingWeeks,</span></span>
+<span id="L342"><span class="lineNum">     342</span> <span class="tlaGNC">           1 :         'competitionWeeks': competitionWeeks,</span></span>
+<span id="L343"><span class="lineNum">     343</span> <span class="tlaGNC">           1 :         'primaryCompetition': primaryCompetition,</span></span>
+<span id="L344"><span class="lineNum">     344</span> <span class="tlaGNC">           1 :         'additionalCompetitions': additionalCompetitions,</span></span>
+<span id="L345"><span class="lineNum">     345</span> <span class="tlaGNC">           1 :         'firstMatchDate': firstMatchDate?.toIso8601String(),</span></span>
+<span id="L346"><span class="lineNum">     346</span> <span class="tlaGNC">           1 :         'lastMatchDate': lastMatchDate?.toIso8601String(),</span></span>
+<span id="L347"><span class="lineNum">     347</span> <span class="tlaGNC">           1 :         'midSeasonBreakStart': midSeasonBreakStart?.toIso8601String(),</span></span>
+<span id="L348"><span class="lineNum">     348</span> <span class="tlaGNC">           1 :         'midSeasonBreakEnd': midSeasonBreakEnd?.toIso8601String(),</span></span>
+<span id="L349"><span class="lineNum">     349</span> <span class="tlaGNC">           1 :         'seasonObjectives': seasonObjectives,</span></span>
+<span id="L350"><span class="lineNum">     350</span> <span class="tlaGNC">           1 :         'keyPerformanceIndicators': keyPerformanceIndicators,</span></span>
+<span id="L351"><span class="lineNum">     351</span> <span class="tlaGNC">           1 :         'isTemplate': isTemplate,</span></span>
+<span id="L352"><span class="lineNum">     352</span> <span class="tlaGNC">           2 :         'status': status.name,</span></span>
+<span id="L353"><span class="lineNum">     353</span> <span class="tlaGNC">           1 :         'currentWeek': currentWeek,</span></span>
+<span id="L354"><span class="lineNum">     354</span> <span class="tlaGNC">           1 :         'progressPercentage': progressPercentage,</span></span>
+<span id="L355"><span class="lineNum">     355</span> <span class="tlaGNC">           1 :         'createdBy': createdBy,</span></span>
+<span id="L356"><span class="lineNum">     356</span> <span class="tlaGNC">           2 :         'createdAt': createdAt.toIso8601String(),</span></span>
+<span id="L357"><span class="lineNum">     357</span> <span class="tlaGNC">           2 :         'updatedAt': updatedAt.toIso8601String(),</span></span>
+<span id="L358"><span class="lineNum">     358</span>              :       };</span>
+<span id="L359"><span class="lineNum">     359</span>              : </span>
+<span id="L360"><span class="lineNum">     360</span>              :   // Copy with method for updates</span>
+<span id="L361"><span class="lineNum">     361</span> <span class="tlaUNC">           0 :   SeasonPlan copyWith({</span></span>
+<span id="L362"><span class="lineNum">     362</span>              :     String? name,</span>
+<span id="L363"><span class="lineNum">     363</span>              :     String? description,</span>
+<span id="L364"><span class="lineNum">     364</span>              :     String? season,</span>
+<span id="L365"><span class="lineNum">     365</span>              :     AgeGroup? ageGroup,</span>
+<span id="L366"><span class="lineNum">     366</span>              :     String? teamName,</span>
+<span id="L367"><span class="lineNum">     367</span>              :     DateTime? seasonStartDate,</span>
+<span id="L368"><span class="lineNum">     368</span>              :     DateTime? seasonEndDate,</span>
+<span id="L369"><span class="lineNum">     369</span>              :     List&lt;String&gt;? holidayPeriods,</span>
+<span id="L370"><span class="lineNum">     370</span>              :     String? periodizationPlanId,</span>
+<span id="L371"><span class="lineNum">     371</span>              :     int? totalWeeks,</span>
+<span id="L372"><span class="lineNum">     372</span>              :     int? trainingWeeks,</span>
+<span id="L373"><span class="lineNum">     373</span>              :     int? competitionWeeks,</span>
+<span id="L374"><span class="lineNum">     374</span>              :     String? primaryCompetition,</span>
+<span id="L375"><span class="lineNum">     375</span>              :     List&lt;String&gt;? additionalCompetitions,</span>
+<span id="L376"><span class="lineNum">     376</span>              :     DateTime? firstMatchDate,</span>
+<span id="L377"><span class="lineNum">     377</span>              :     DateTime? lastMatchDate,</span>
+<span id="L378"><span class="lineNum">     378</span>              :     DateTime? midSeasonBreakStart,</span>
+<span id="L379"><span class="lineNum">     379</span>              :     DateTime? midSeasonBreakEnd,</span>
+<span id="L380"><span class="lineNum">     380</span>              :     List&lt;String&gt;? seasonObjectives,</span>
+<span id="L381"><span class="lineNum">     381</span>              :     List&lt;String&gt;? keyPerformanceIndicators,</span>
+<span id="L382"><span class="lineNum">     382</span>              :     bool? isTemplate,</span>
+<span id="L383"><span class="lineNum">     383</span>              :     SeasonStatus? status,</span>
+<span id="L384"><span class="lineNum">     384</span>              :     int? currentWeek,</span>
+<span id="L385"><span class="lineNum">     385</span>              :     double? progressPercentage,</span>
+<span id="L386"><span class="lineNum">     386</span>              :     String? createdBy,</span>
+<span id="L387"><span class="lineNum">     387</span>              :   }) {</span>
+<span id="L388"><span class="lineNum">     388</span> <span class="tlaUNC">           0 :     final copy = SeasonPlan()</span></span>
+<span id="L389"><span class="lineNum">     389</span> <span class="tlaUNC">           0 :       ..id = id</span></span>
+<span id="L390"><span class="lineNum">     390</span> <span class="tlaUNC">           0 :       ..name = name ?? this.name</span></span>
+<span id="L391"><span class="lineNum">     391</span> <span class="tlaUNC">           0 :       ..description = description ?? this.description</span></span>
+<span id="L392"><span class="lineNum">     392</span> <span class="tlaUNC">           0 :       ..season = season ?? this.season</span></span>
+<span id="L393"><span class="lineNum">     393</span> <span class="tlaUNC">           0 :       ..ageGroup = ageGroup ?? this.ageGroup</span></span>
+<span id="L394"><span class="lineNum">     394</span> <span class="tlaUNC">           0 :       ..teamName = teamName ?? this.teamName</span></span>
+<span id="L395"><span class="lineNum">     395</span> <span class="tlaUNC">           0 :       ..seasonStartDate = seasonStartDate ?? this.seasonStartDate</span></span>
+<span id="L396"><span class="lineNum">     396</span> <span class="tlaUNC">           0 :       ..seasonEndDate = seasonEndDate ?? this.seasonEndDate</span></span>
+<span id="L397"><span class="lineNum">     397</span> <span class="tlaUNC">           0 :       ..holidayPeriods = holidayPeriods ?? List.from(this.holidayPeriods)</span></span>
+<span id="L398"><span class="lineNum">     398</span> <span class="tlaUNC">           0 :       ..periodizationPlanId = periodizationPlanId ?? this.periodizationPlanId</span></span>
+<span id="L399"><span class="lineNum">     399</span> <span class="tlaUNC">           0 :       ..totalWeeks = totalWeeks ?? this.totalWeeks</span></span>
+<span id="L400"><span class="lineNum">     400</span> <span class="tlaUNC">           0 :       ..trainingWeeks = trainingWeeks ?? this.trainingWeeks</span></span>
+<span id="L401"><span class="lineNum">     401</span> <span class="tlaUNC">           0 :       ..competitionWeeks = competitionWeeks ?? this.competitionWeeks</span></span>
+<span id="L402"><span class="lineNum">     402</span> <span class="tlaUNC">           0 :       ..primaryCompetition = primaryCompetition ?? this.primaryCompetition</span></span>
+<span id="L403"><span class="lineNum">     403</span> <span class="tlaUNC">           0 :       ..additionalCompetitions =</span></span>
+<span id="L404"><span class="lineNum">     404</span> <span class="tlaUNC">           0 :           additionalCompetitions ?? List.from(this.additionalCompetitions)</span></span>
+<span id="L405"><span class="lineNum">     405</span> <span class="tlaUNC">           0 :       ..firstMatchDate = firstMatchDate ?? this.firstMatchDate</span></span>
+<span id="L406"><span class="lineNum">     406</span> <span class="tlaUNC">           0 :       ..lastMatchDate = lastMatchDate ?? this.lastMatchDate</span></span>
+<span id="L407"><span class="lineNum">     407</span> <span class="tlaUNC">           0 :       ..midSeasonBreakStart = midSeasonBreakStart ?? this.midSeasonBreakStart</span></span>
+<span id="L408"><span class="lineNum">     408</span> <span class="tlaUNC">           0 :       ..midSeasonBreakEnd = midSeasonBreakEnd ?? this.midSeasonBreakEnd</span></span>
+<span id="L409"><span class="lineNum">     409</span> <span class="tlaUNC">           0 :       ..seasonObjectives =</span></span>
+<span id="L410"><span class="lineNum">     410</span> <span class="tlaUNC">           0 :           seasonObjectives ?? List.from(this.seasonObjectives)</span></span>
+<span id="L411"><span class="lineNum">     411</span> <span class="tlaUNC">           0 :       ..keyPerformanceIndicators =</span></span>
+<span id="L412"><span class="lineNum">     412</span> <span class="tlaUNC">           0 :           keyPerformanceIndicators ?? List.from(this.keyPerformanceIndicators)</span></span>
+<span id="L413"><span class="lineNum">     413</span> <span class="tlaUNC">           0 :       ..isTemplate = isTemplate ?? this.isTemplate</span></span>
+<span id="L414"><span class="lineNum">     414</span> <span class="tlaUNC">           0 :       ..status = status ?? this.status</span></span>
+<span id="L415"><span class="lineNum">     415</span> <span class="tlaUNC">           0 :       ..currentWeek = currentWeek ?? this.currentWeek</span></span>
+<span id="L416"><span class="lineNum">     416</span> <span class="tlaUNC">           0 :       ..progressPercentage = progressPercentage ?? this.progressPercentage</span></span>
+<span id="L417"><span class="lineNum">     417</span> <span class="tlaUNC">           0 :       ..createdBy = createdBy ?? this.createdBy</span></span>
+<span id="L418"><span class="lineNum">     418</span> <span class="tlaUNC">           0 :       ..createdAt = createdAt</span></span>
+<span id="L419"><span class="lineNum">     419</span> <span class="tlaUNC">           0 :       ..updatedAt = DateTime.now();</span></span>
+<span id="L420"><span class="lineNum">     420</span>              :     return copy;</span>
+<span id="L421"><span class="lineNum">     421</span>              :   }</span>
+<span id="L422"><span class="lineNum">     422</span>              : </span>
+<span id="L423"><span class="lineNum">     423</span> <span class="tlaUNC">           0 :   @override</span></span>
+<span id="L424"><span class="lineNum">     424</span> <span class="tlaUNC">           0 :   String toString() =&gt; 'SeasonPlan(id: $id, name: $name, season: $season, '</span></span>
+<span id="L425"><span class="lineNum">     425</span> <span class="tlaUNC">           0 :       'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '</span></span>
+<span id="L426"><span class="lineNum">     426</span> <span class="tlaUNC">           0 :       'progress: ${progressPercentage.toStringAsFixed(1)}%)';</span></span>
+<span id="L427"><span class="lineNum">     427</span>              : </span>
+<span id="L428"><span class="lineNum">     428</span> <span class="tlaUNC">           0 :   @override</span></span>
+<span id="L429"><span class="lineNum">     429</span>              :   bool operator ==(Object other) {</span>
+<span id="L430"><span class="lineNum">     430</span>              :     if (identical(this, other)) return true;</span>
+<span id="L431"><span class="lineNum">     431</span> <span class="tlaUNC">           0 :     return other is SeasonPlan &amp;&amp;</span></span>
+<span id="L432"><span class="lineNum">     432</span> <span class="tlaUNC">           0 :         other.name == name &amp;&amp;</span></span>
+<span id="L433"><span class="lineNum">     433</span> <span class="tlaUNC">           0 :         other.season == season &amp;&amp;</span></span>
+<span id="L434"><span class="lineNum">     434</span> <span class="tlaUNC">           0 :         other.teamName == teamName &amp;&amp;</span></span>
+<span id="L435"><span class="lineNum">     435</span> <span class="tlaUNC">           0 :         other.ageGroup == ageGroup;</span></span>
+<span id="L436"><span class="lineNum">     436</span>              :   }</span>
+<span id="L437"><span class="lineNum">     437</span>              : </span>
+<span id="L438"><span class="lineNum">     438</span> <span class="tlaUNC">           0 :   @override</span></span>
+<span id="L439"><span class="lineNum">     439</span>              :   int get hashCode =&gt;</span>
+<span id="L440"><span class="lineNum">     440</span> <span class="tlaUNC">           0 :       name.hashCode ^ season.hashCode ^ teamName.hashCode ^ ageGroup.hashCode;</span></span>
+<span id="L441"><span class="lineNum">     441</span>              : }</span>
+<span id="L442"><span class="lineNum">     442</span>              : </span>
+<span id="L443"><span class="lineNum">     443</span>              : // Enums for season management</span>
+<span id="L444"><span class="lineNum">     444</span>              : enum SeasonStatus {</span>
+<span id="L445"><span class="lineNum">     445</span>              :   draft,</span>
+<span id="L446"><span class="lineNum">     446</span>              :   active,</span>
+<span id="L447"><span class="lineNum">     447</span>              :   completed,</span>
+<span id="L448"><span class="lineNum">     448</span>              :   archived,</span>
+<span id="L449"><span class="lineNum">     449</span>              : }</span>
+<span id="L450"><span class="lineNum">     450</span>              : </span>
+<span id="L451"><span class="lineNum">     451</span>              : enum SeasonPhase {</span>
+<span id="L452"><span class="lineNum">     452</span>              :   preseason,</span>
+<span id="L453"><span class="lineNum">     453</span>              :   earlySeason,</span>
+<span id="L454"><span class="lineNum">     454</span>              :   midSeason,</span>
+<span id="L455"><span class="lineNum">     455</span>              :   lateSeason,</span>
+<span id="L456"><span class="lineNum">     456</span>              :   postSeason,</span>
+<span id="L457"><span class="lineNum">     457</span>              : }</span>
+<span id="L458"><span class="lineNum">     458</span>              : </span>
+<span id="L459"><span class="lineNum">     459</span>              : // Extensions for better display names</span>
+<span id="L460"><span class="lineNum">     460</span>              : extension SeasonStatusExtension on SeasonStatus {</span>
+<span id="L461"><span class="lineNum">     461</span> <span class="tlaUNC">           0 :   String get displayName {</span></span>
+<span id="L462"><span class="lineNum">     462</span>              :     switch (this) {</span>
+<span id="L463"><span class="lineNum">     463</span> <span class="tlaUNC">           0 :       case SeasonStatus.draft:</span></span>
+<span id="L464"><span class="lineNum">     464</span>              :         return 'Concept';</span>
+<span id="L465"><span class="lineNum">     465</span> <span class="tlaUNC">           0 :       case SeasonStatus.active:</span></span>
+<span id="L466"><span class="lineNum">     466</span>              :         return 'Actief';</span>
+<span id="L467"><span class="lineNum">     467</span> <span class="tlaUNC">           0 :       case SeasonStatus.completed:</span></span>
+<span id="L468"><span class="lineNum">     468</span>              :         return 'Voltooid';</span>
+<span id="L469"><span class="lineNum">     469</span> <span class="tlaUNC">           0 :       case SeasonStatus.archived:</span></span>
+<span id="L470"><span class="lineNum">     470</span>              :         return 'Gearchiveerd';</span>
+<span id="L471"><span class="lineNum">     471</span>              :     }</span>
+<span id="L472"><span class="lineNum">     472</span>              :   }</span>
+<span id="L473"><span class="lineNum">     473</span>              : }</span>
+<span id="L474"><span class="lineNum">     474</span>              : </span>
+<span id="L475"><span class="lineNum">     475</span>              : extension SeasonPhaseExtension on SeasonPhase {</span>
+<span id="L476"><span class="lineNum">     476</span> <span class="tlaUNC">           0 :   String get displayName {</span></span>
+<span id="L477"><span class="lineNum">     477</span>              :     switch (this) {</span>
+<span id="L478"><span class="lineNum">     478</span> <span class="tlaUNC">           0 :       case SeasonPhase.preseason:</span></span>
+<span id="L479"><span class="lineNum">     479</span>              :         return 'Voorbereiding';</span>
+<span id="L480"><span class="lineNum">     480</span> <span class="tlaUNC">           0 :       case SeasonPhase.earlySeason:</span></span>
+<span id="L481"><span class="lineNum">     481</span>              :         return 'Vroeg Seizoen';</span>
+<span id="L482"><span class="lineNum">     482</span> <span class="tlaUNC">           0 :       case SeasonPhase.midSeason:</span></span>
+<span id="L483"><span class="lineNum">     483</span>              :         return 'Midden Seizoen';</span>
+<span id="L484"><span class="lineNum">     484</span> <span class="tlaUNC">           0 :       case SeasonPhase.lateSeason:</span></span>
+<span id="L485"><span class="lineNum">     485</span>              :         return 'Laat Seizoen';</span>
+<span id="L486"><span class="lineNum">     486</span> <span class="tlaUNC">           0 :       case SeasonPhase.postSeason:</span></span>
+<span id="L487"><span class="lineNum">     487</span>              :         return 'Na Seizoen';</span>
+<span id="L488"><span class="lineNum">     488</span>              :     }</span>
+<span id="L489"><span class="lineNum">     489</span>              :   }</span>
+<span id="L490"><span class="lineNum">     490</span>              : </span>
+<span id="L491"><span class="lineNum">     491</span> <span class="tlaUNC">           0 :   String get description {</span></span>
+<span id="L492"><span class="lineNum">     492</span>              :     switch (this) {</span>
+<span id="L493"><span class="lineNum">     493</span> <span class="tlaUNC">           0 :       case SeasonPhase.preseason:</span></span>
+<span id="L494"><span class="lineNum">     494</span>              :         return 'Voorbereiding en conditie opbouw';</span>
+<span id="L495"><span class="lineNum">     495</span> <span class="tlaUNC">           0 :       case SeasonPhase.earlySeason:</span></span>
+<span id="L496"><span class="lineNum">     496</span>              :         return 'Begin competitie, systemen inslijen';</span>
+<span id="L497"><span class="lineNum">     497</span> <span class="tlaUNC">           0 :       case SeasonPhase.midSeason:</span></span>
+<span id="L498"><span class="lineNum">     498</span>              :         return 'Hoogtepunt seizoen, wedstrijdritme';</span>
+<span id="L499"><span class="lineNum">     499</span> <span class="tlaUNC">           0 :       case SeasonPhase.lateSeason:</span></span>
+<span id="L500"><span class="lineNum">     500</span>              :         return 'Eindspurt, prestaties leveren';</span>
+<span id="L501"><span class="lineNum">     501</span> <span class="tlaUNC">           0 :       case SeasonPhase.postSeason:</span></span>
+<span id="L502"><span class="lineNum">     502</span>              :         return 'Evaluatie en herstel';</span>
+<span id="L503"><span class="lineNum">     503</span>              :     }</span>
+<span id="L504"><span class="lineNum">     504</span>              :   }</span>
+<span id="L505"><span class="lineNum">     505</span>              : }</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3.1-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

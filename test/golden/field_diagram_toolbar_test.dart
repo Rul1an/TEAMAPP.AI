@@ -1,0 +1,72 @@
+// ignore_for_file: deprecated_member_use, flutter_style_todos
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:jo17_tactical_manager/providers/field_diagram_provider.dart';
+import 'package:jo17_tactical_manager/widgets/field_diagram/field_diagram_toolbar.dart';
+import 'package:test_utils/surface_utils.dart';
+
+// Golden tests for FieldDiagramToolbar.
+// To (re)generate the baseline images run:
+// flutter test --update-goldens test/golden/field_diagram_toolbar_test.dart
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  group('FieldDiagramToolbar golden tests', () {
+    const testSize = Size(800, 80);
+
+    setUp(() {
+      final binding = TestWidgetsFlutterBinding.ensureInitialized();
+      setScreenSizeBinding(binding, testSize);
+    });
+
+    tearDown(() {
+      final binding = TestWidgetsFlutterBinding.ensureInitialized();
+      resetScreenSizeBinding(binding);
+    });
+
+    testWidgets('default (select) tool', (tester) async {
+      await tester.pumpWidget(
+        const ProviderScope(
+          child: MaterialApp(
+            home: Material(
+              child: FieldDiagramToolbar(
+                selectedTool: DiagramTool.select,
+                onToolSelected: _noop,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await expectLater(
+        find.byType(FieldDiagramToolbar),
+        matchesGoldenFile('goldens/field_diagram_toolbar_select.png'),
+      );
+    });
+
+    testWidgets('line tool expanded', (tester) async {
+      await tester.pumpWidget(
+        const ProviderScope(
+          child: MaterialApp(
+            home: Material(
+              child: FieldDiagramToolbar(
+                selectedTool: DiagramTool.line,
+                onToolSelected: _noop,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await expectLater(
+        find.byType(FieldDiagramToolbar),
+        matchesGoldenFile('goldens/field_diagram_toolbar_line.png'),
+      );
+    });
+  });
+}
+
+void _noop(DiagramTool _) {}

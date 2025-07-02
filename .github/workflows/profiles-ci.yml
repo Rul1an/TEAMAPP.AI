@@ -1,0 +1,73 @@
+name: "👤 Profiles Migration & Tests"
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  profiles-ci:
+    name: "Apply migrations & run profile tests"
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⏳ Wait for Postgres
+        run: |
+          for i in {1..10}; do
+            pg_isready -h localhost -U postgres && break
+            echo "Postgres not ready yet..."
+            sleep 3
+          done
+
+      - name: 🛠 Install psql client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: 📜 Apply all Supabase migration scripts
+        env:
+          PGPASSWORD: postgres
+        run: |
+          set -e
+          for file in $(ls supabase/migrations/*.sql | sort); do
+            echo "Applying $file"
+            psql -h localhost -U postgres -d postgres -f "$file"
+          done
+
+      - name: ✅ Verify profiles table exists
+        env:
+          PGPASSWORD: postgres
+        run: |
+          COUNT=$(psql -h localhost -U postgres -d postgres -Atc "select count(*) from information_schema.tables where table_name='profiles';")
+          if [ "$COUNT" -ne 1 ]; then
+            echo "❌ profiles table missing after migrations" && exit 1
+          fi
+
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.1"
+          channel: stable
+
+      - name: 📦 Install dependencies
+        working-directory: jo17_tactical_manager
+        run: flutter pub get
+
+      - name: 🧪 Run integration tests (profiles)
+        working-directory: jo17_tactical_manager
+        run: flutter test test/integration/profile_service_test.dart
+
+      - name: 🎉 Success message
+        run: echo "Profiles migration verified and tests passed successfully."

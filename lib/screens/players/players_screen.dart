@@ -203,8 +203,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                 ),
                 if (isTablet) ...[
                   const SizedBox(width: 16),
-                  SizedBox(
-                    width: 200,
+                  Flexible(
                     child: DropdownButtonFormField<Position?>(
                       value: _selectedPosition,
                       decoration: InputDecoration(
