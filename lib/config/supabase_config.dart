@@ -27,6 +27,12 @@ class SupabaseConfig {
   /// Get the Supabase client instance
   static SupabaseClient get client => _client;
 
+  /// Testing hook – allows injecting a fake client without running full initialization.
+  @visibleForTesting
+  static void setClientForTest(SupabaseClient client) {
+    _client = client;
+  }
+
   /// Get current user
   static User? get currentUser => _client.auth.currentUser;
 
