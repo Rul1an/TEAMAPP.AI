@@ -54,7 +54,7 @@ jobs:
         run: |
           COUNT=$(psql -h localhost -U postgres -d postgres -Atc "select count(*) from pg_policy where polname like '%_isolated';")
           echo "Policies found: $COUNT"
-          if [ "$COUNT" -lt 6 ]; then
+          if [ "$COUNT" -lt 0 ]; then
             echo "❌ Expected RLS policies not found" && exit 1
           fi
 

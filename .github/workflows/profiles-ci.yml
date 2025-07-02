@@ -41,7 +41,7 @@ jobs:
           PGPASSWORD: postgres
         run: |
           set -e
-          for file in $(ls supabase/migrations/*.sql | sort); do
+          for file in $(ls ../supabase/migrations/*.sql | sort); do
             echo "Applying $file"
             psql -h localhost -U postgres -d postgres -f "$file"
           done
@@ -58,15 +58,15 @@ jobs:
       - name: 🎯 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.32.1"
+          flutter-version: "3.32.2"
           channel: stable
 
       - name: 📦 Install dependencies
-        working-directory: jo17_tactical_manager
+        working-directory: .
         run: flutter pub get
 
       - name: 🧪 Run integration tests (profiles)
-        working-directory: jo17_tactical_manager
+        working-directory: .
         run: flutter test test/integration/profile_service_test.dart
 
       - name: 🎉 Success message
