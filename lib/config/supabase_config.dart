@@ -5,7 +5,7 @@ import 'environment.dart';
 /// 🚀 Supabase Configuration & Client Setup
 /// Voor multi-tenant SaaS architectuur
 class SupabaseConfig {
-  static late final SupabaseClient _client;
+  static SupabaseClient? _client;
 
   /// Initialize Supabase with environment-specific settings
   static Future<void> initialize() async {
@@ -25,7 +25,7 @@ class SupabaseConfig {
   }
 
   /// Get the Supabase client instance
-  static SupabaseClient get client => _client;
+  static SupabaseClient get client => _client!;
 
   /// Testing hook – allows injecting a fake client without running full initialization.
   @visibleForTesting
@@ -34,7 +34,7 @@ class SupabaseConfig {
   }
 
   /// Get current user
-  static User? get currentUser => _client.auth.currentUser;
+  static User? get currentUser => _client?.auth.currentUser;
 
   /// Get current user ID
   static String? get currentUserId => currentUser?.id;
@@ -44,7 +44,7 @@ class SupabaseConfig {
 
   /// Setup authentication state listener
   static void _setupAuthListener() {
-    _client.auth.onAuthStateChange.listen((data) {
+    _client?.auth.onAuthStateChange.listen((data) {
       final AuthChangeEvent event = data.event;
       final Session? session = data.session;
 
@@ -76,7 +76,7 @@ class SupabaseConfig {
     required String password,
     Map<String, dynamic>? data,
   }) async =>
-      _client.auth.signUp(
+      _client!.auth.signUp(
         email: email,
         password: password,
         data: data,
@@ -87,26 +87,26 @@ class SupabaseConfig {
     required String email,
     required String password,
   }) async =>
-      _client.auth.signInWithPassword(
+      _client!.auth.signInWithPassword(
         email: email,
         password: password,
       );
 
   /// Sign out user
   static Future<void> signOut() async {
-    await _client.auth.signOut();
+    await _client?.auth.signOut();
   }
 
   /// Reset password
   static Future<void> resetPassword(String email) async {
-    await _client.auth.resetPasswordForEmail(email);
+    await _client?.auth.resetPasswordForEmail(email);
   }
 
   /// Get user's organizations
   static Future<List<Map<String, dynamic>>> getUserOrganizations() async {
     if (!isAuthenticated) return [];
 
-    final response = await _client.from('organization_members').select('''
+    final response = await _client!.from('organization_members').select('''
           organization_id,
           role,
           organizations (
@@ -146,7 +146,7 @@ class SupabaseConfig {
     }
 
     // Create organization
-    final orgResponse = await _client
+    final orgResponse = await _client!
         .from('organizations')
         .insert({
           'name': name,
@@ -158,7 +158,7 @@ class SupabaseConfig {
         .single();
 
     // Add user as owner
-    await _client.from('organization_members').insert({
+    await _client!.from('organization_members').insert({
       'organization_id': orgResponse['id'],
       'user_id': currentUserId,
       'role': 'owner',
@@ -170,7 +170,7 @@ class SupabaseConfig {
   /// Get organization subscription info
   static Future<Map<String, dynamic>?> getSubscriptionInfo(
       String organizationId,) async {
-    final response = await _client
+    final response = await _client!
         .from('organizations')
         .select(
             'subscription_tier, subscription_status, trial_ends_at, max_players, max_teams, max_coaches',)
@@ -187,7 +187,7 @@ class SupabaseConfig {
     required String status,
     DateTime? trialEndsAt,
   }) async {
-    await _client.from('organizations').update({
+    await _client!.from('organizations').update({
       'subscription_tier': tier,
       'subscription_status': status,
       'trial_ends_at': trialEndsAt?.toIso8601String(),
@@ -243,12 +243,12 @@ class SupabaseConfig {
   /// Execute RPC (Remote Procedure Call) functions
   static Future<dynamic> rpc(String functionName,
           [Map<String, dynamic>? params,]) async =>
-      await _client.rpc(functionName, params: params);
+      await _client!.rpc(functionName, params: params);
 
   /// Realtime subscription for organization data
   static RealtimeChannel subscribeToOrganization(String organizationId,
           void Function(PostgresChangePayload) callback,) =>
-      _client
+      _client!
           .channel('organization_$organizationId')
           .onPostgresChanges(
             event: PostgresChangeEvent.all,
