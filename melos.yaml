@@ -1,0 +1,20 @@
+name: voab_team_app_workspace
+packages:
+  - jo17_tactical_manager
+  - packages/**
+
+scripts:
+  analyze:
+    description: Analyze all packages in the workspace
+    run: melos exec -c 1 -- "flutter analyze"
+  test:
+    description: Run tests with coverage for all packages
+    run: melos exec -c 1 -- "flutter test --coverage"
+  fix:
+    description: Apply Dart fixes & format across the workspace
+    run: |
+      melos exec -c 1 -- "dart fix --apply"
+      melos exec -c 1 -- "dart format ."
+  analyze_strict:
+    description: Analyze with --fatal-infos to enforce clean code
+    run: melos exec -c 1 -- "flutter analyze --fatal-infos"
