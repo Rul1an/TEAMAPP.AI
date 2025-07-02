@@ -430,7 +430,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                         value: isSelected,
                         onChanged: canSelect ? (bool? value) {
                           setState(() {
-                            if (value == true) {
+                            if (value ?? false) {
                               selectedPlayers.add(player.id.toString());
                             } else {
                               selectedPlayers.remove(player.id.toString());

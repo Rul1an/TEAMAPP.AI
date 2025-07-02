@@ -106,33 +106,16 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         ),
       );
 
-  // 🔧 CASCADE OPERATOR DOCUMENTATION: List Building Pattern
-  // This for loop with list.add() pattern demonstrates where cascade
-  // notation could improve readability for list building operations.
-  //
-  // **CURRENT PATTERN**: list.add(item) (explicit method calls)
-  // **RECOMMENDED**: list..add(item1)..add(item2) (cascade notation)
-  //
-  // **CASCADE BENEFITS FOR LIST BUILDING**:
-  // ✅ Eliminates repetitive list variable references
-  // ✅ Creates visual flow for sequential additions
-  // ✅ Better readability for list construction
-  // ✅ Maintains Dart collection patterns
-  //
   void _selectFormation(FormationData formation) {
-    final players = <PlayerMarker>[];
-
-    for (int i = 0; i < formation.positions.length; i++) {
-      final position = formation.positions[i];
-      players.add(
+    final players = [
+      for (int i = 0; i < formation.positions.length; i++)
         PlayerMarker(
           id: 'player_${i + 1}',
-          position: position,
+          position: formation.positions[i],
           type: PlayerType.attacking,
           label: '${i + 1}',
         ),
-      );
-    }
+    ];
 
     widget.onFormationSelected(players);
     Navigator.pop(context);
@@ -209,7 +192,8 @@ class FormationPreviewPainter extends CustomPainter {
       ..color = Colors.green[100]!
       ..style = PaintingStyle.fill;
 
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), fieldPaint);
+    final fieldRect = Rect.fromLTWH(0, 0, size.width, size.height);
+    canvas.drawRect(fieldRect, fieldPaint);
 
     // Draw field lines
     final linePaint = Paint()
@@ -217,14 +201,13 @@ class FormationPreviewPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), linePaint);
-
-    // Draw center line
-    canvas.drawLine(
-      Offset(0, size.height / 2),
-      Offset(size.width, size.height / 2),
-      linePaint,
-    );
+    canvas
+      ..drawRect(fieldRect, linePaint)
+      ..drawLine(
+        Offset(0, size.height / 2),
+        Offset(size.width, size.height / 2),
+        linePaint,
+      );
 
     // Draw players
     final playerPaint = Paint()

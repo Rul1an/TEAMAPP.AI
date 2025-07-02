@@ -394,9 +394,7 @@ class _TrainingAttendanceScreenState
   }
 
   void _showRatingOptions() {
-    final playersAsync = ref.read(playersProvider);
-
-    playersAsync.whenData((players) {
+    ref.read(playersProvider).whenData((players) {
       final presentPlayers = players.where((player) {
         final status = _attendance[player.id.toString()];
         return status == AttendanceStatus.present ||
@@ -459,7 +457,9 @@ class _TrainingAttendanceScreenState
                           ),
                         );
 
-                        if ((result ?? false) && mounted) {
+                        if (!mounted) return;
+
+                        if (result ?? false) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Beoordeling opgeslagen voor ${player.name}'),

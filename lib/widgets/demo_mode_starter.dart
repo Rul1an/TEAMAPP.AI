@@ -33,16 +33,12 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
     // ✅ Maintains Flutter widget lifecycle patterns
     //
     // Start demo mode automatically for testing RBAC
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _startDemoMode();
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startDemoMode());
   }
 
   void _startDemoMode() {
-    final demoNotifier = ref.read(demoModeProvider.notifier);
-
     // Start demo mode with hoofdcoach role
-    demoNotifier.startDemo(
+    ref.read(demoModeProvider.notifier).startDemo(
       role: DemoRole.coach, // hoofdcoach
       organizationId: 'demo-voab-jo17',
       userId: 'demo-user-coach',

@@ -731,12 +731,27 @@ class FieldPainter extends CustomPainter {
         ),
         textDirection: TextDirection.ltr,
       );
-      textPainter
-        ..layout()
-        ..paint(
-          canvas,
-          position - Offset(textPainter.width / 2, textPainter.height / 2),
-        );
+      textPainter.layout();
+      textPainter.paint(
+        canvas,
+        position - Offset(textPainter.width / 2, textPainter.height / 2),
+      );
+    }
+
+    if (isSelected) {
+      final bgPaint = Paint()..color = Colors.yellow.withOpacity(0.3);
+
+      final labelWidth = textPainter.width;
+      final labelHeight = textPainter.height;
+
+      final highlightRect = Rect.fromLTWH(
+        position.dx - 2,
+        position.dy - 2,
+        labelWidth + 4,
+        labelHeight + 4,
+      );
+
+      canvas.drawRect(highlightRect, bgPaint);
     }
   }
 
@@ -860,21 +875,23 @@ class FieldPainter extends CustomPainter {
       ),
       textDirection: TextDirection.ltr,
     );
-    textPainter
-      ..layout()
-      ..paint(canvas, position);
+    textPainter.layout();
+    textPainter.paint(canvas, position);
 
     if (isSelected) {
-      final bgPaint = Paint()..color = Colors.yellow.withValues(alpha: 0.3);
-      canvas.drawRect(
-        Rect.fromLTWH(
-          position.dx - 2,
-          position.dy - 2,
-          textPainter.width + 4,
-          textPainter.height + 4,
-        ),
-        bgPaint,
+      final bgPaint = Paint()..color = Colors.yellow.withOpacity(0.3);
+
+      final labelWidth = textPainter.width;
+      final labelHeight = textPainter.height;
+
+      final highlightRect = Rect.fromLTWH(
+        position.dx - 2,
+        position.dy - 2,
+        labelWidth + 4,
+        labelHeight + 4,
       );
+
+      canvas.drawRect(highlightRect, bgPaint);
     }
   }
 
@@ -969,14 +986,17 @@ class FieldPainter extends CustomPainter {
         ..strokeCap = StrokeCap.round;
 
       final selectionPath = Path();
-      selectionPath.moveTo(firstPoint.dx, firstPoint.dy);
-      for (int i = 1; i < line.points.length; i++) {
-        final point = _fieldToCanvasPosition(line.points[i], fieldRect);
-        if (_isValidOffset(point)) {
-          selectionPath.lineTo(point.dx, point.dy);
-        }
+
+      // Collect all valid points for the selection polygon
+      final selectionPoints = [
+        for (final p in line.points)
+          _fieldToCanvasPosition(p, fieldRect),
+      ].where(_isValidOffset).toList();
+
+      if (selectionPoints.length >= 2) {
+        selectionPath.addPolygon(selectionPoints, false);
+        canvas.drawPath(selectionPath, selectionPaint);
       }
-      canvas.drawPath(selectionPath, selectionPaint);
     }
   }
 
