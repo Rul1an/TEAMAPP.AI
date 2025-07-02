@@ -28,6 +28,7 @@ class SupabaseConfig {
   static SupabaseClient get client => _client!;
 
   /// Testing hook – allows injecting a fake client without running full initialization.
+  // ignore: use_setters_to_change_properties
   @visibleForTesting
   static void setClientForTest(SupabaseClient client) {
     _client = client;
