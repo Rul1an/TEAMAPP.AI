@@ -798,13 +798,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     setState(() {
       final adjustedNewIndex = newIndex > oldIndex ? newIndex - 1 : newIndex;
       final item = sessionPhases.removeAt(oldIndex);
-      sessionPhases.insert(adjustedNewIndex, item);      sessionPhases.insert(newIndex, item);
-
-      // Update order indices and recalculate times
-      for (int i = 0; i < sessionPhases.length; i++) {
-        sessionPhases[i].orderIndex = i;
-      }
-      _recalculatePhaseTimes();
+      sessionPhases.insert(adjustedNewIndex, item);
     });
   }
 

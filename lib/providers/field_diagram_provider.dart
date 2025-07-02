@@ -490,7 +490,7 @@ class FieldDiagramEditorNotifier
         showGrid: false, // No grid in exports
         gridSize: 10,
       )
-        ..paint(canvas, size);
+        .paint(canvas, size);
 
       final picture = recorder.endRecording();
       final image = await picture.toImage(width, (width * 0.75).round());
@@ -524,7 +524,7 @@ class FieldDiagramEditorNotifier
         showGrid: false,
         gridSize: 10,
       )
-        ..paint(canvas, size);
+        .paint(canvas, size);
 
       final picture = recorder.endRecording();
       final image = await picture.toImage(800, 600);

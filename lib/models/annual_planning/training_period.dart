@@ -382,33 +382,6 @@ class TrainingPeriod {
       type.hashCode ^
       orderIndex.hashCode ^
       durationWeeks.hashCode;
-
-  // Helper methods for JSON parsing
-  static PeriodType _parsePeriodType(String? typeString) {
-    return PeriodType.values.firstWhere(
-      (e) => e.name == typeString,
-      orElse: () => PeriodType.preparation,
-    );
-  }
-
-  static PeriodStatus _parsePeriodStatus(String? statusString) {
-    return PeriodStatus.values.firstWhere(
-      (e) => e.name == statusString,
-      orElse: () => PeriodStatus.planned,
-    );
-  }
-
-  static DateTime? _parseDateTime(String? dateString) {
-    return dateString != null ? DateTime.parse(dateString) : null;
-  }
-
-  static DateTime _parseDateTimeOrNow(String? dateString) {
-    return dateString != null ? DateTime.parse(dateString) : DateTime.now();
-  }
-
-  static List<String> _parseStringList(List<dynamic>? list) {
-    return List<String>.from(list ?? <dynamic>[]);
-  }
 }
 
 // Enums for training periods

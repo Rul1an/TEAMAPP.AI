@@ -192,9 +192,9 @@ class PlayerTrackingNotifier extends StateNotifier<AsyncValue<void>> {
     state = const AsyncValue.loading();
     try {
       // TODO(author): Implement database save
-      // Invalidate related providers
-      ref.invalidate(playerPerformanceProvider(data.playerId));
-      ref.invalidate(allPlayersLatestPerformanceProvider);
+      ref
+        ..invalidate(playerPerformanceProvider(data.playerId))
+        ..invalidate(allPlayersLatestPerformanceProvider);
       state = const AsyncValue.data(null);
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);

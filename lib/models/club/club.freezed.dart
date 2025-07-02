@@ -52,7 +52,7 @@ mixin _$Club {
 
 /// @nodoc
 abstract class $ClubCopyWith<$Res> {
-  factory $ClubCopyWith(Club value, $Res void Function(Club) then) =
+  factory $ClubCopyWith(Club value, $Res Function(Club) then) =
       _$ClubCopyWithImpl<$Res, Club>;
   @useResult
   $Res call(
@@ -92,7 +92,7 @@ class _$ClubCopyWithImpl<$Res, $Val extends Club>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -234,7 +234,7 @@ class _$ClubCopyWithImpl<$Res, $Val extends Club>
 /// @nodoc
 abstract class _$$ClubImplCopyWith<$Res> implements $ClubCopyWith<$Res> {
   factory _$$ClubImplCopyWith(
-          _$ClubImpl value, $Res void Function(_$ClubImpl) then) =
+          _$ClubImpl value, $Res Function(_$ClubImpl) then) =
       __$$ClubImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -272,7 +272,7 @@ abstract class _$$ClubImplCopyWith<$Res> implements $ClubCopyWith<$Res> {
 class __$$ClubImplCopyWithImpl<$Res>
     extends _$ClubCopyWithImpl<$Res, _$ClubImpl>
     implements _$$ClubImplCopyWith<$Res> {
-  __$$ClubImplCopyWithImpl(_$ClubImpl _value, $Res void Function(_$ClubImpl) _then)
+  __$$ClubImplCopyWithImpl(_$ClubImpl _value, $Res Function(_$ClubImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -718,7 +718,7 @@ mixin _$ClubSettings {
 /// @nodoc
 abstract class $ClubSettingsCopyWith<$Res> {
   factory $ClubSettingsCopyWith(
-          ClubSettings value, $Res void Function(ClubSettings) then) =
+          ClubSettings value, $Res Function(ClubSettings) then) =
       _$ClubSettingsCopyWithImpl<$Res, ClubSettings>;
   @useResult
   $Res call(
@@ -748,7 +748,7 @@ class _$ClubSettingsCopyWithImpl<$Res, $Val extends ClubSettings>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -843,7 +843,7 @@ class _$ClubSettingsCopyWithImpl<$Res, $Val extends ClubSettings>
 abstract class _$$ClubSettingsImplCopyWith<$Res>
     implements $ClubSettingsCopyWith<$Res> {
   factory _$$ClubSettingsImplCopyWith(
-          _$ClubSettingsImpl value, $Res void Function(_$ClubSettingsImpl) then) =
+          _$ClubSettingsImpl value, $Res Function(_$ClubSettingsImpl) then) =
       __$$ClubSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -871,7 +871,7 @@ class __$$ClubSettingsImplCopyWithImpl<$Res>
     extends _$ClubSettingsCopyWithImpl<$Res, _$ClubSettingsImpl>
     implements _$$ClubSettingsImplCopyWith<$Res> {
   __$$ClubSettingsImplCopyWithImpl(
-      _$ClubSettingsImpl _value, $Res void Function(_$ClubSettingsImpl) _then)
+      _$ClubSettingsImpl _value, $Res Function(_$ClubSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')

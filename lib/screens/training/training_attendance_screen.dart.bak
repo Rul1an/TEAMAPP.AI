@@ -2,28 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-
-import '../../models/performance_rating.dart';
-import '../../models/player.dart';
 import '../../models/training.dart';
+import '../../models/player.dart';
+import '../../models/performance_rating.dart';
 import '../../providers/database_provider.dart';
 import '../../services/database_service.dart';
 import '../../widgets/common/rating_dialog.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
+  final String trainingId;
+
   const TrainingAttendanceScreen({
     super.key,
     required this.trainingId,
   });
-  final String trainingId;
 
   @override
-  ConsumerState<TrainingAttendanceScreen> createState() =>
-      _TrainingAttendanceScreenState();
+  ConsumerState<TrainingAttendanceScreen> createState() => _TrainingAttendanceScreenState();
 }
 
-class _TrainingAttendanceScreenState
-    extends ConsumerState<TrainingAttendanceScreen> {
+class _TrainingAttendanceScreenState extends ConsumerState<TrainingAttendanceScreen> {
   final Map<String, AttendanceStatus> _attendance = {};
   bool _isLoading = false;
 
@@ -54,14 +52,17 @@ class _TrainingAttendanceScreenState
         data: (trainings) {
           final training = trainings.firstWhere(
             (t) => t.id.toString() == widget.trainingId,
-            orElse: () => Training()
-              ..date = DateTime.now()
-              ..focus = TrainingFocus.technical
-              ..intensity = TrainingIntensity.medium
-              ..status = TrainingStatus.planned,
+            orElse: () {
+              final newTraining = Training();
+              newTraining.date = DateTime.now();
+              newTraining.focus = TrainingFocus.technical;
+              newTraining.intensity = TrainingIntensity.medium;
+              newTraining.status = TrainingStatus.planned;
+              return newTraining;
+            },
           );
 
-          if (training.id == '') {
+          if (training.id == 0) {
             return const Center(child: Text('Training niet gevonden'));
           }
 
@@ -70,14 +71,12 @@ class _TrainingAttendanceScreenState
               _buildTrainingHeader(training),
               Expanded(
                 child: playersAsync.when(
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                  loading: () => const Center(child: CircularProgressIndicator()),
                   error: (error, stack) => Center(child: Text('Fout: $error')),
                   data: (players) {
                     // Sort players by jersey number
                     final sortedPlayers = List<Player>.from(players)
-                      ..sort(
-                          (a, b) => a.jerseyNumber.compareTo(b.jerseyNumber),);
+                      ..sort((a, b) => a.jerseyNumber.compareTo(b.jerseyNumber));
 
                     return isDesktop
                         ? _buildDesktopLayout(sortedPlayers)
@@ -92,100 +91,102 @@ class _TrainingAttendanceScreenState
     );
   }
 
-  Widget _buildTrainingHeader(Training training) => Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Icon(
-              Icons.fitness_center,
-              size: 32,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    DateFormat('EEEE d MMMM yyyy', 'nl_NL')
-                        .format(training.date),
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Chip(
-                        label: Text(_getFocusText(training.focus)),
-                        backgroundColor: _getFocusColor(training.focus)
-                            .withValues(alpha: 0.2),
-                      ),
-                      const SizedBox(width: 8),
-                      Chip(
-                        label: Text(_getIntensityText(training.intensity)),
-                        backgroundColor: _getIntensityColor(training.intensity)
-                            .withValues(alpha: 0.2),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Column(
+  Widget _buildTrainingHeader(Training training) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.fitness_center,
+            size: 32,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${_attendance.values.where((s) => s == AttendanceStatus.present).length}',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(training.date),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                const Text('Aanwezig'),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Chip(
+                      label: Text(_getFocusText(training.focus)),
+                      backgroundColor: _getFocusColor(training.focus).withOpacity(0.2),
+                    ),
+                    const SizedBox(width: 8),
+                    Chip(
+                      label: Text(_getIntensityText(training.intensity)),
+                      backgroundColor: _getIntensityColor(training.intensity).withOpacity(0.2),
+                    ),
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
-      );
+          ),
+          Column(
+            children: [
+              Text(
+                '${_attendance.values.where((s) => s == AttendanceStatus.present).length}',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const Text('Aanwezig'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
-  Widget _buildDesktopLayout(List<Player> players) => GridView.builder(
-        padding: const EdgeInsets.all(24),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 300,
-          childAspectRatio: 3,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-        ),
-        itemCount: players.length,
-        itemBuilder: (context, index) {
-          final player = players[index];
-          return _buildPlayerAttendanceCard(player);
-        },
-      );
+  Widget _buildDesktopLayout(List<Player> players) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(24),
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 300,
+        childAspectRatio: 3,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+      ),
+      itemCount: players.length,
+      itemBuilder: (context, index) {
+        final player = players[index];
+        return _buildPlayerAttendanceCard(player);
+      },
+    );
+  }
 
-  Widget _buildMobileLayout(List<Player> players) => ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: players.length,
-        itemBuilder: (context, index) {
-          final player = players[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: _buildPlayerAttendanceCard(player),
-          );
-        },
-      );
+  Widget _buildMobileLayout(List<Player> players) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: players.length,
+      itemBuilder: (context, index) {
+        final player = players[index];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: _buildPlayerAttendanceCard(player),
+        );
+      },
+    );
+  }
 
   Widget _buildPlayerAttendanceCard(Player player) {
-    final status =
-        _attendance[player.id.toString()] ?? AttendanceStatus.unknown;
+    final status = _attendance[player.id.toString()] ?? AttendanceStatus.unknown;
 
     return Card(
       child: InkWell(
@@ -243,7 +244,7 @@ class _TrainingAttendanceScreenState
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.2),
+        color: color.withOpacity(0.2),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color, width: 2),
       ),
@@ -394,11 +395,13 @@ class _TrainingAttendanceScreenState
   }
 
   void _showRatingOptions() {
-    ref.read(playersProvider).whenData((players) {
+    final playersAsync = ref.read(playersProvider);
+
+    playersAsync.whenData((players) {
+      // Filter players who are present or late
       final presentPlayers = players.where((player) {
         final status = _attendance[player.id.toString()];
-        return status == AttendanceStatus.present ||
-            status == AttendanceStatus.late;
+        return status == AttendanceStatus.present || status == AttendanceStatus.late;
       }).toList();
 
       if (presentPlayers.isEmpty) {
@@ -411,7 +414,7 @@ class _TrainingAttendanceScreenState
         return;
       }
 
-      showModalBottomSheet<void>(
+      showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (context) => DraggableScrollableSheet(
@@ -426,8 +429,14 @@ class _TrainingAttendanceScreenState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Beoordeel Aanwezige Spelers', style: Theme.of(context).textTheme.titleLarge),
-                    IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(Icons.close)),
+                    Text(
+                      'Beoordeel Aanwezige Spelers',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(Icons.close),
+                    ),
                   ],
                 ),
               ),
@@ -441,17 +450,16 @@ class _TrainingAttendanceScreenState
                     return ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        child: Text(player.jerseyNumber.toString(), style: const TextStyle(color: Colors.white)),
+                        child: Text(
+                          player.jerseyNumber.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                       title: Text(player.name),
                       subtitle: Text(_getPositionText(player.position)),
                       trailing: const Icon(Icons.star_outline),
                       onTap: () async {
-                        final navigator = Navigator.of(context);
-                        final messenger = ScaffoldMessenger.of(context);
-
-                        navigator.pop();
-
+                        Navigator.of(context).pop();
                         final result = await showDialog<bool>(
                           context: context,
                           builder: (context) => RatingDialog(
@@ -461,10 +469,8 @@ class _TrainingAttendanceScreenState
                           ),
                         );
 
-                        if (!mounted) return;
-
-                        if (result ?? false) {
-                          messenger.showSnackBar(
+                        if (result == true && mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Beoordeling opgeslagen voor ${player.name}'),
                               backgroundColor: Colors.green,
@@ -489,7 +495,7 @@ class _TrainingAttendanceScreenState
     });
 
     try {
-      // TODO(author): Save attendance to database
+      // TODO: Save attendance to database
       // For now, just update player statistics
       final players = ref.read(playersProvider).value ?? [];
 
@@ -499,18 +505,15 @@ class _TrainingAttendanceScreenState
 
         final player = players.firstWhere(
           (p) => p.id.toString() == playerId,
-          orElse: Player.new,
+          orElse: () => Player(),
         );
 
-        if (player.id != '') {
-          // Update player training statistics using cascade
-          final wasPresent =
-              status == AttendanceStatus.present || status == AttendanceStatus.late;
-
-          player
-            ..trainingsTotal = player.trainingsTotal + 1
-            ..trainingsAttended =
-                player.trainingsAttended + (wasPresent ? 1 : 0);
+        if (player.id != 0) {
+          // Update player training statistics
+          player.trainingsTotal++;
+          if (status == AttendanceStatus.present || status == AttendanceStatus.late) {
+            player.trainingsAttended++;
+          }
 
           // Save to database
           await DatabaseService().updatePlayer(player);

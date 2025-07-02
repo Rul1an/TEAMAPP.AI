@@ -58,7 +58,7 @@ mixin _$PlayerPerformanceData {
 /// @nodoc
 abstract class $PlayerPerformanceDataCopyWith<$Res> {
   factory $PlayerPerformanceDataCopyWith(PlayerPerformanceData value,
-          $Res void Function(PlayerPerformanceData) then) =
+          $Res Function(PlayerPerformanceData) then) =
       _$PlayerPerformanceDataCopyWithImpl<$Res, PlayerPerformanceData>;
   @useResult
   $Res call(
@@ -98,7 +98,7 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -290,7 +290,7 @@ abstract class _$$PlayerPerformanceDataImplCopyWith<$Res>
     implements $PlayerPerformanceDataCopyWith<$Res> {
   factory _$$PlayerPerformanceDataImplCopyWith(
           _$PlayerPerformanceDataImpl value,
-          $Res void Function(_$PlayerPerformanceDataImpl) then) =
+          $Res Function(_$PlayerPerformanceDataImpl) then) =
       __$$PlayerPerformanceDataImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -336,7 +336,7 @@ class __$$PlayerPerformanceDataImplCopyWithImpl<$Res>
         _$PlayerPerformanceDataImpl>
     implements _$$PlayerPerformanceDataImplCopyWith<$Res> {
   __$$PlayerPerformanceDataImplCopyWithImpl(_$PlayerPerformanceDataImpl _value,
-      $Res void Function(_$PlayerPerformanceDataImpl) _then)
+      $Res Function(_$PlayerPerformanceDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -696,7 +696,7 @@ mixin _$PhysicalMetrics {
 /// @nodoc
 abstract class $PhysicalMetricsCopyWith<$Res> {
   factory $PhysicalMetricsCopyWith(
-          PhysicalMetrics value, $Res void Function(PhysicalMetrics) then) =
+          PhysicalMetrics value, $Res Function(PhysicalMetrics) then) =
       _$PhysicalMetricsCopyWithImpl<$Res, PhysicalMetrics>;
   @useResult
   $Res call(
@@ -734,7 +734,7 @@ class _$PhysicalMetricsCopyWithImpl<$Res, $Val extends PhysicalMetrics>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -869,7 +869,7 @@ class _$PhysicalMetricsCopyWithImpl<$Res, $Val extends PhysicalMetrics>
 abstract class _$$PhysicalMetricsImplCopyWith<$Res>
     implements $PhysicalMetricsCopyWith<$Res> {
   factory _$$PhysicalMetricsImplCopyWith(_$PhysicalMetricsImpl value,
-          $Res void Function(_$PhysicalMetricsImpl) then) =
+          $Res Function(_$PhysicalMetricsImpl) then) =
       __$$PhysicalMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -905,7 +905,7 @@ class __$$PhysicalMetricsImplCopyWithImpl<$Res>
     extends _$PhysicalMetricsCopyWithImpl<$Res, _$PhysicalMetricsImpl>
     implements _$$PhysicalMetricsImplCopyWith<$Res> {
   __$$PhysicalMetricsImplCopyWithImpl(
-      _$PhysicalMetricsImpl _value, $Res void Function(_$PhysicalMetricsImpl) _then)
+      _$PhysicalMetricsImpl _value, $Res Function(_$PhysicalMetricsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1389,7 +1389,7 @@ mixin _$TechnicalMetrics {
 /// @nodoc
 abstract class $TechnicalMetricsCopyWith<$Res> {
   factory $TechnicalMetricsCopyWith(
-          TechnicalMetrics value, $Res void Function(TechnicalMetrics) then) =
+          TechnicalMetrics value, $Res Function(TechnicalMetrics) then) =
       _$TechnicalMetricsCopyWithImpl<$Res, TechnicalMetrics>;
   @useResult
   $Res call(
@@ -1429,7 +1429,7 @@ class _$TechnicalMetricsCopyWithImpl<$Res, $Val extends TechnicalMetrics>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -1574,7 +1574,7 @@ class _$TechnicalMetricsCopyWithImpl<$Res, $Val extends TechnicalMetrics>
 abstract class _$$TechnicalMetricsImplCopyWith<$Res>
     implements $TechnicalMetricsCopyWith<$Res> {
   factory _$$TechnicalMetricsImplCopyWith(_$TechnicalMetricsImpl value,
-          $Res void Function(_$TechnicalMetricsImpl) then) =
+          $Res Function(_$TechnicalMetricsImpl) then) =
       __$$TechnicalMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -1612,7 +1612,7 @@ class __$$TechnicalMetricsImplCopyWithImpl<$Res>
     extends _$TechnicalMetricsCopyWithImpl<$Res, _$TechnicalMetricsImpl>
     implements _$$TechnicalMetricsImplCopyWith<$Res> {
   __$$TechnicalMetricsImplCopyWithImpl(_$TechnicalMetricsImpl _value,
-      $Res void Function(_$TechnicalMetricsImpl) _then)
+      $Res Function(_$TechnicalMetricsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2089,7 +2089,7 @@ mixin _$TacticalMetrics {
 /// @nodoc
 abstract class $TacticalMetricsCopyWith<$Res> {
   factory $TacticalMetricsCopyWith(
-          TacticalMetrics value, $Res void Function(TacticalMetrics) then) =
+          TacticalMetrics value, $Res Function(TacticalMetrics) then) =
       _$TacticalMetricsCopyWithImpl<$Res, TacticalMetrics>;
   @useResult
   $Res call(
@@ -2118,7 +2118,7 @@ class _$TacticalMetricsCopyWithImpl<$Res, $Val extends TacticalMetrics>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -2208,7 +2208,7 @@ class _$TacticalMetricsCopyWithImpl<$Res, $Val extends TacticalMetrics>
 abstract class _$$TacticalMetricsImplCopyWith<$Res>
     implements $TacticalMetricsCopyWith<$Res> {
   factory _$$TacticalMetricsImplCopyWith(_$TacticalMetricsImpl value,
-          $Res void Function(_$TacticalMetricsImpl) then) =
+          $Res Function(_$TacticalMetricsImpl) then) =
       __$$TacticalMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -2235,7 +2235,7 @@ class __$$TacticalMetricsImplCopyWithImpl<$Res>
     extends _$TacticalMetricsCopyWithImpl<$Res, _$TacticalMetricsImpl>
     implements _$$TacticalMetricsImplCopyWith<$Res> {
   __$$TacticalMetricsImplCopyWithImpl(
-      _$TacticalMetricsImpl _value, $Res void Function(_$TacticalMetricsImpl) _then)
+      _$TacticalMetricsImpl _value, $Res Function(_$TacticalMetricsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2558,7 +2558,7 @@ mixin _$MentalMetrics {
 /// @nodoc
 abstract class $MentalMetricsCopyWith<$Res> {
   factory $MentalMetricsCopyWith(
-          MentalMetrics value, $Res void Function(MentalMetrics) then) =
+          MentalMetrics value, $Res Function(MentalMetrics) then) =
       _$MentalMetricsCopyWithImpl<$Res, MentalMetrics>;
   @useResult
   $Res call(
@@ -2585,7 +2585,7 @@ class _$MentalMetricsCopyWithImpl<$Res, $Val extends MentalMetrics>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -2665,7 +2665,7 @@ class _$MentalMetricsCopyWithImpl<$Res, $Val extends MentalMetrics>
 abstract class _$$MentalMetricsImplCopyWith<$Res>
     implements $MentalMetricsCopyWith<$Res> {
   factory _$$MentalMetricsImplCopyWith(
-          _$MentalMetricsImpl value, $Res void Function(_$MentalMetricsImpl) then) =
+          _$MentalMetricsImpl value, $Res Function(_$MentalMetricsImpl) then) =
       __$$MentalMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -2690,7 +2690,7 @@ class __$$MentalMetricsImplCopyWithImpl<$Res>
     extends _$MentalMetricsCopyWithImpl<$Res, _$MentalMetricsImpl>
     implements _$$MentalMetricsImplCopyWith<$Res> {
   __$$MentalMetricsImplCopyWithImpl(
-      _$MentalMetricsImpl _value, $Res void Function(_$MentalMetricsImpl) _then)
+      _$MentalMetricsImpl _value, $Res Function(_$MentalMetricsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2982,7 +2982,7 @@ mixin _$MatchMetrics {
 /// @nodoc
 abstract class $MatchMetricsCopyWith<$Res> {
   factory $MatchMetricsCopyWith(
-          MatchMetrics value, $Res void Function(MatchMetrics) then) =
+          MatchMetrics value, $Res Function(MatchMetrics) then) =
       _$MatchMetricsCopyWithImpl<$Res, MatchMetrics>;
   @useResult
   $Res call(
@@ -3008,7 +3008,7 @@ class _$MatchMetricsCopyWithImpl<$Res, $Val extends MatchMetrics>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -3083,7 +3083,7 @@ class _$MatchMetricsCopyWithImpl<$Res, $Val extends MatchMetrics>
 abstract class _$$MatchMetricsImplCopyWith<$Res>
     implements $MatchMetricsCopyWith<$Res> {
   factory _$$MatchMetricsImplCopyWith(
-          _$MatchMetricsImpl value, $Res void Function(_$MatchMetricsImpl) then) =
+          _$MatchMetricsImpl value, $Res Function(_$MatchMetricsImpl) then) =
       __$$MatchMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -3107,7 +3107,7 @@ class __$$MatchMetricsImplCopyWithImpl<$Res>
     extends _$MatchMetricsCopyWithImpl<$Res, _$MatchMetricsImpl>
     implements _$$MatchMetricsImplCopyWith<$Res> {
   __$$MatchMetricsImplCopyWithImpl(
-      _$MatchMetricsImpl _value, $Res void Function(_$MatchMetricsImpl) _then)
+      _$MatchMetricsImpl _value, $Res Function(_$MatchMetricsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -3374,7 +3374,7 @@ mixin _$TrainingLoadMetrics {
 /// @nodoc
 abstract class $TrainingLoadMetricsCopyWith<$Res> {
   factory $TrainingLoadMetricsCopyWith(
-          TrainingLoadMetrics value, $Res void Function(TrainingLoadMetrics) then) =
+          TrainingLoadMetrics value, $Res Function(TrainingLoadMetrics) then) =
       _$TrainingLoadMetricsCopyWithImpl<$Res, TrainingLoadMetrics>;
   @useResult
   $Res call(
@@ -3399,7 +3399,7 @@ class _$TrainingLoadMetricsCopyWithImpl<$Res, $Val extends TrainingLoadMetrics>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -3469,7 +3469,7 @@ class _$TrainingLoadMetricsCopyWithImpl<$Res, $Val extends TrainingLoadMetrics>
 abstract class _$$TrainingLoadMetricsImplCopyWith<$Res>
     implements $TrainingLoadMetricsCopyWith<$Res> {
   factory _$$TrainingLoadMetricsImplCopyWith(_$TrainingLoadMetricsImpl value,
-          $Res void Function(_$TrainingLoadMetricsImpl) then) =
+          $Res Function(_$TrainingLoadMetricsImpl) then) =
       __$$TrainingLoadMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -3492,7 +3492,7 @@ class __$$TrainingLoadMetricsImplCopyWithImpl<$Res>
     extends _$TrainingLoadMetricsCopyWithImpl<$Res, _$TrainingLoadMetricsImpl>
     implements _$$TrainingLoadMetricsImplCopyWith<$Res> {
   __$$TrainingLoadMetricsImplCopyWithImpl(_$TrainingLoadMetricsImpl _value,
-      $Res void Function(_$TrainingLoadMetricsImpl) _then)
+      $Res Function(_$TrainingLoadMetricsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -3766,7 +3766,7 @@ mixin _$WellnessMetrics {
 /// @nodoc
 abstract class $WellnessMetricsCopyWith<$Res> {
   factory $WellnessMetricsCopyWith(
-          WellnessMetrics value, $Res void Function(WellnessMetrics) then) =
+          WellnessMetrics value, $Res Function(WellnessMetrics) then) =
       _$WellnessMetricsCopyWithImpl<$Res, WellnessMetrics>;
   @useResult
   $Res call(
@@ -3794,7 +3794,7 @@ class _$WellnessMetricsCopyWithImpl<$Res, $Val extends WellnessMetrics>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -3879,7 +3879,7 @@ class _$WellnessMetricsCopyWithImpl<$Res, $Val extends WellnessMetrics>
 abstract class _$$WellnessMetricsImplCopyWith<$Res>
     implements $WellnessMetricsCopyWith<$Res> {
   factory _$$WellnessMetricsImplCopyWith(_$WellnessMetricsImpl value,
-          $Res void Function(_$WellnessMetricsImpl) then) =
+          $Res Function(_$WellnessMetricsImpl) then) =
       __$$WellnessMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -3905,7 +3905,7 @@ class __$$WellnessMetricsImplCopyWithImpl<$Res>
     extends _$WellnessMetricsCopyWithImpl<$Res, _$WellnessMetricsImpl>
     implements _$$WellnessMetricsImplCopyWith<$Res> {
   __$$WellnessMetricsImplCopyWithImpl(
-      _$WellnessMetricsImpl _value, $Res void Function(_$WellnessMetricsImpl) _then)
+      _$WellnessMetricsImpl _value, $Res Function(_$WellnessMetricsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -4210,7 +4210,7 @@ mixin _$CoachEvaluation {
 /// @nodoc
 abstract class $CoachEvaluationCopyWith<$Res> {
   factory $CoachEvaluationCopyWith(
-          CoachEvaluation value, $Res void Function(CoachEvaluation) then) =
+          CoachEvaluation value, $Res Function(CoachEvaluation) then) =
       _$CoachEvaluationCopyWithImpl<$Res, CoachEvaluation>;
   @useResult
   $Res call(
@@ -4236,7 +4236,7 @@ class _$CoachEvaluationCopyWithImpl<$Res, $Val extends CoachEvaluation>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -4311,7 +4311,7 @@ class _$CoachEvaluationCopyWithImpl<$Res, $Val extends CoachEvaluation>
 abstract class _$$CoachEvaluationImplCopyWith<$Res>
     implements $CoachEvaluationCopyWith<$Res> {
   factory _$$CoachEvaluationImplCopyWith(_$CoachEvaluationImpl value,
-          $Res void Function(_$CoachEvaluationImpl) then) =
+          $Res Function(_$CoachEvaluationImpl) then) =
       __$$CoachEvaluationImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -4335,7 +4335,7 @@ class __$$CoachEvaluationImplCopyWithImpl<$Res>
     extends _$CoachEvaluationCopyWithImpl<$Res, _$CoachEvaluationImpl>
     implements _$$CoachEvaluationImplCopyWith<$Res> {
   __$$CoachEvaluationImplCopyWithImpl(
-      _$CoachEvaluationImpl _value, $Res void Function(_$CoachEvaluationImpl) _then)
+      _$CoachEvaluationImpl _value, $Res Function(_$CoachEvaluationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -4636,7 +4636,7 @@ mixin _$PerformanceInsight {
 /// @nodoc
 abstract class $PerformanceInsightCopyWith<$Res> {
   factory $PerformanceInsightCopyWith(
-          PerformanceInsight value, $Res void Function(PerformanceInsight) then) =
+          PerformanceInsight value, $Res Function(PerformanceInsight) then) =
       _$PerformanceInsightCopyWithImpl<$Res, PerformanceInsight>;
   @useResult
   $Res call(
@@ -4660,7 +4660,7 @@ class _$PerformanceInsightCopyWithImpl<$Res, $Val extends PerformanceInsight>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -4725,7 +4725,7 @@ class _$PerformanceInsightCopyWithImpl<$Res, $Val extends PerformanceInsight>
 abstract class _$$PerformanceInsightImplCopyWith<$Res>
     implements $PerformanceInsightCopyWith<$Res> {
   factory _$$PerformanceInsightImplCopyWith(_$PerformanceInsightImpl value,
-          $Res void Function(_$PerformanceInsightImpl) then) =
+          $Res Function(_$PerformanceInsightImpl) then) =
       __$$PerformanceInsightImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -4747,7 +4747,7 @@ class __$$PerformanceInsightImplCopyWithImpl<$Res>
     extends _$PerformanceInsightCopyWithImpl<$Res, _$PerformanceInsightImpl>
     implements _$$PerformanceInsightImplCopyWith<$Res> {
   __$$PerformanceInsightImplCopyWithImpl(_$PerformanceInsightImpl _value,
-      $Res void Function(_$PerformanceInsightImpl) _then)
+      $Res Function(_$PerformanceInsightImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')

@@ -149,7 +149,7 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
             // // Current: arrow function
             // onChanged: (value) => setState(() => _showGrid = value ?? true),
             //
-            // // Recommended: cascade-friendly block
+            // // Recommended: cascade-friendly block 
             // onChanged: (value) => setState(() {
             //   _showGrid = value ?? true;
             // }),
@@ -482,15 +482,13 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _zoomIn() {
-    final Matrix4 matrix = _transformController.value.clone();
-    matrix.scale(1.2);
-    _transformController.value = matrix;
+    _transformController.value =
+        _transformController.value.clone()..scale(1.2);
   }
 
   void _zoomOut() {
-    final Matrix4 matrix = _transformController.value.clone();
-    matrix.scale(0.8);
-    _transformController.value = matrix;
+    _transformController.value =
+        _transformController.value.clone()..scale(0.8);
   }
 
   void _resetZoom() {

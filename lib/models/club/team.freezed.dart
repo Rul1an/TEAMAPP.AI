@@ -55,7 +55,7 @@ mixin _$Team {
 
 /// @nodoc
 abstract class $TeamCopyWith<$Res> {
-  factory $TeamCopyWith(Team value, $Res void Function(Team) then) =
+  factory $TeamCopyWith(Team value, $Res Function(Team) then) =
       _$TeamCopyWithImpl<$Res, Team>;
   @useResult
   $Res call(
@@ -96,7 +96,7 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -243,7 +243,7 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
 /// @nodoc
 abstract class _$$TeamImplCopyWith<$Res> implements $TeamCopyWith<$Res> {
   factory _$$TeamImplCopyWith(
-          _$TeamImpl value, $Res void Function(_$TeamImpl) then) =
+          _$TeamImpl value, $Res Function(_$TeamImpl) then) =
       __$$TeamImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -282,7 +282,7 @@ abstract class _$$TeamImplCopyWith<$Res> implements $TeamCopyWith<$Res> {
 class __$$TeamImplCopyWithImpl<$Res>
     extends _$TeamCopyWithImpl<$Res, _$TeamImpl>
     implements _$$TeamImplCopyWith<$Res> {
-  __$$TeamImplCopyWithImpl(_$TeamImpl _value, $Res void Function(_$TeamImpl) _then)
+  __$$TeamImplCopyWithImpl(_$TeamImpl _value, $Res Function(_$TeamImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -754,7 +754,7 @@ mixin _$TeamSettings {
 /// @nodoc
 abstract class $TeamSettingsCopyWith<$Res> {
   factory $TeamSettingsCopyWith(
-          TeamSettings value, $Res void Function(TeamSettings) then) =
+          TeamSettings value, $Res Function(TeamSettings) then) =
       _$TeamSettingsCopyWithImpl<$Res, TeamSettings>;
   @useResult
   $Res call(
@@ -782,7 +782,7 @@ class _$TeamSettingsCopyWithImpl<$Res, $Val extends TeamSettings>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -867,7 +867,7 @@ class _$TeamSettingsCopyWithImpl<$Res, $Val extends TeamSettings>
 abstract class _$$TeamSettingsImplCopyWith<$Res>
     implements $TeamSettingsCopyWith<$Res> {
   factory _$$TeamSettingsImplCopyWith(
-          _$TeamSettingsImpl value, $Res void Function(_$TeamSettingsImpl) then) =
+          _$TeamSettingsImpl value, $Res Function(_$TeamSettingsImpl) then) =
       __$$TeamSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -893,7 +893,7 @@ class __$$TeamSettingsImplCopyWithImpl<$Res>
     extends _$TeamSettingsCopyWithImpl<$Res, _$TeamSettingsImpl>
     implements _$$TeamSettingsImplCopyWith<$Res> {
   __$$TeamSettingsImplCopyWithImpl(
-      _$TeamSettingsImpl _value, $Res void Function(_$TeamSettingsImpl) _then)
+      _$TeamSettingsImpl _value, $Res Function(_$TeamSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')

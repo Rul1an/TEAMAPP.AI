@@ -119,13 +119,12 @@ class MonitoringService {
       description: 'AI feature usage tracking',
     );
 
-    transaction
-      ..setData('feature', feature)
-      ..setData('action', action)
-      ..setData('user_id', userId)
-      ..setData('metadata', metadata);
-
-    await transaction.finish();
+    await (transaction
+          ..setData('feature', feature)
+          ..setData('action', action)
+          ..setData('user_id', userId)
+          ..setData('metadata', metadata))
+        .finish();
 
     await trackEvent(
       name: 'ai_feature_used',
@@ -172,15 +171,15 @@ class MonitoringService {
       description: 'Performance tracking',
     );
 
-    transaction
-      ..setData('duration_ms', duration.inMilliseconds)
-      ..setData('success', success)
-      ..setData('error_message', errorMessage)
-      ..setData('metadata', metadata);
-
-    await transaction.finish(
-        status:
-            success ? const SpanStatus.ok() : const SpanStatus.internalError(),);
+    await (transaction
+          ..setData('duration_ms', duration.inMilliseconds)
+          ..setData('success', success)
+          ..setData('error_message', errorMessage)
+          ..setData('metadata', metadata))
+        .finish(
+      status:
+          success ? const SpanStatus.ok() : const SpanStatus.internalError(),
+    );
   }
 
   /// Track business metrics

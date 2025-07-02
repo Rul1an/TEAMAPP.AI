@@ -211,13 +211,13 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     ///   ..durationWeeks = weeksPerPeriod;
     /// ```
     for (int i = 0; i < template.numberOfPeriods; i++) {
-      final period = TrainingPeriod();
-      period.periodizationPlanId = template.id.toString();
-      period.orderIndex = i;
-      period.startDate = currentDate;
-      period.durationWeeks = weeksPerPeriod;
-      period.intensityPercentage =
-          intensityProgression[i % intensityProgression.length].toDouble();
+      final period = TrainingPeriod()
+        ..periodizationPlanId = template.id.toString()
+        ..orderIndex = i
+        ..startDate = currentDate
+        ..durationWeeks = weeksPerPeriod
+        ..intensityPercentage =
+            intensityProgression[i % intensityProgression.length].toDouble();
 
       // Assign period type and details based on index and template
       _assignPeriodDetails(period, i, template.modelType, focusAreas);
@@ -290,42 +290,46 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     switch (modelType) {
       case PeriodizationModel.knvbYouth:
         if (index == 0) {
-          period.name = 'Technische Ontwikkeling';
-          period.description = 'Focus op individuele technische vaardigheden';
-          period.type = PeriodType.preparation;
-          period.keyObjectives = [
-            'Bal controle',
-            'Passing precisie',
-            '1v1 situaties',
-          ];
+          period
+            ..name = 'Technische Ontwikkeling'
+            ..description = 'Focus op individuele technische vaardigheden'
+            ..type = PeriodType.preparation
+            ..keyObjectives = [
+              'Bal controle',
+              'Passing precisie',
+              '1v1 situaties',
+            ];
         } else if (index == 1) {
-          period.name = 'Tactisch Begrip';
-          period.description =
-              'Ontwikkeling van tactisch inzicht en positiespel';
-          period.type = PeriodType.competitionEarly;
-          period.keyObjectives = [
-            'Positiespel',
-            'Teamwork',
-            'Verdedigende organisatie',
-          ];
+          period
+            ..name = 'Tactisch Begrip'
+            ..description =
+                'Ontwikkeling van tactisch inzicht en positiespel'
+            ..type = PeriodType.competitionEarly
+            ..keyObjectives = [
+              'Positiespel',
+              'Teamwork',
+              'Verdedigende organisatie',
+            ];
         } else if (index == 2) {
-          period.name = 'Wedstrijdervaring';
-          period.description = 'Competitie en wedstrijdspecifieke training';
-          period.type = PeriodType.competitionPeak;
-          period.keyObjectives = [
-            'Match fitness',
-            'Pressure situations',
-            'Team cohesion',
-          ];
+          period
+            ..name = 'Wedstrijdervaring'
+            ..description = 'Competitie en wedstrijdspecifieke training'
+            ..type = PeriodType.competitionPeak
+            ..keyObjectives = [
+              'Match fitness',
+              'Pressure situations',
+              'Team cohesion',
+            ];
         } else {
-          period.name = 'Evaluatie & Herstel';
-          period.description = 'Seizoen evaluatie en actief herstel';
-          period.type = PeriodType.transition;
-          period.keyObjectives = [
-            'Recovery',
-            'Individual development',
-            'Fun activities',
-          ];
+          period
+            ..name = 'Evaluatie & Herstel'
+            ..description = 'Seizoen evaluatie en actief herstel'
+            ..type = PeriodType.transition
+            ..keyObjectives = [
+              'Recovery',
+              'Individual development',
+              'Fun activities',
+            ];
         }
         break;
 
@@ -336,8 +340,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           'Competitie',
           'Herstel',
         ];
-        period.name = periodNames[index % periodNames.length];
-        period.type = PeriodType.values[index % PeriodType.values.length];
+        period
+          ..name = periodNames[index % periodNames.length]
+          ..type = PeriodType.values[index % PeriodType.values.length];
         break;
 
       case PeriodizationModel.block:
@@ -347,20 +352,23 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           'Tactiek Blok',
           'Wedstrijd Blok',
         ];
-        period.name = blockNames[index % blockNames.length];
-        period.type = PeriodType.values[index % PeriodType.values.length];
+        period
+          ..name = blockNames[index % blockNames.length]
+          ..type = PeriodType.values[index % PeriodType.values.length];
         break;
 
       case PeriodizationModel.conjugate:
-        period.name = 'Week ${index + 1}';
-        period.description = 'Gelijktijdige ontwikkeling van alle aspecten';
-        period.type = PeriodType.competitionEarly;
+        period
+          ..name = 'Week ${index + 1}'
+          ..description = 'Gelijktijdige ontwikkeling van alle aspecten'
+          ..type = PeriodType.competitionEarly;
         break;
 
       case PeriodizationModel.custom:
-        period.name = 'Custom Periode ${index + 1}';
-        period.description = 'Aangepaste periodisering';
-        period.type = PeriodType.values[index % PeriodType.values.length];
+        period
+          ..name = 'Custom Periode ${index + 1}'
+          ..description = 'Aangepaste periodisering'
+          ..type = PeriodType.values[index % PeriodType.values.length];
         break;
     }
 

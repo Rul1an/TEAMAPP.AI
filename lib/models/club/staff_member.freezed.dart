@@ -72,7 +72,7 @@ mixin _$StaffMember {
 /// @nodoc
 abstract class $StaffMemberCopyWith<$Res> {
   factory $StaffMemberCopyWith(
-          StaffMember value, $Res void Function(StaffMember) then) =
+          StaffMember value, $Res Function(StaffMember) then) =
       _$StaffMemberCopyWithImpl<$Res, StaffMember>;
   @useResult
   $Res call(
@@ -124,7 +124,7 @@ class _$StaffMemberCopyWithImpl<$Res, $Val extends StaffMember>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -330,7 +330,7 @@ class _$StaffMemberCopyWithImpl<$Res, $Val extends StaffMember>
 abstract class _$$StaffMemberImplCopyWith<$Res>
     implements $StaffMemberCopyWith<$Res> {
   factory _$$StaffMemberImplCopyWith(
-          _$StaffMemberImpl value, $Res void Function(_$StaffMemberImpl) then) =
+          _$StaffMemberImpl value, $Res Function(_$StaffMemberImpl) then) =
       __$$StaffMemberImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -382,7 +382,7 @@ class __$$StaffMemberImplCopyWithImpl<$Res>
     extends _$StaffMemberCopyWithImpl<$Res, _$StaffMemberImpl>
     implements _$$StaffMemberImplCopyWith<$Res> {
   __$$StaffMemberImplCopyWithImpl(
-      _$StaffMemberImpl _value, $Res void Function(_$StaffMemberImpl) _then)
+      _$StaffMemberImpl _value, $Res Function(_$StaffMemberImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1021,7 +1021,7 @@ mixin _$StaffPermissions {
 /// @nodoc
 abstract class $StaffPermissionsCopyWith<$Res> {
   factory $StaffPermissionsCopyWith(
-          StaffPermissions value, $Res void Function(StaffPermissions) then) =
+          StaffPermissions value, $Res Function(StaffPermissions) then) =
       _$StaffPermissionsCopyWithImpl<$Res, StaffPermissions>;
   @useResult
   $Res call(
@@ -1056,7 +1056,7 @@ class _$StaffPermissionsCopyWithImpl<$Res, $Val extends StaffPermissions>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -1176,7 +1176,7 @@ class _$StaffPermissionsCopyWithImpl<$Res, $Val extends StaffPermissions>
 abstract class _$$StaffPermissionsImplCopyWith<$Res>
     implements $StaffPermissionsCopyWith<$Res> {
   factory _$$StaffPermissionsImplCopyWith(_$StaffPermissionsImpl value,
-          $Res void Function(_$StaffPermissionsImpl) then) =
+          $Res Function(_$StaffPermissionsImpl) then) =
       __$$StaffPermissionsImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -1209,7 +1209,7 @@ class __$$StaffPermissionsImplCopyWithImpl<$Res>
     extends _$StaffPermissionsCopyWithImpl<$Res, _$StaffPermissionsImpl>
     implements _$$StaffPermissionsImplCopyWith<$Res> {
   __$$StaffPermissionsImplCopyWithImpl(_$StaffPermissionsImpl _value,
-      $Res void Function(_$StaffPermissionsImpl) _then)
+      $Res Function(_$StaffPermissionsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1619,7 +1619,7 @@ mixin _$StaffAvailability {
 /// @nodoc
 abstract class $StaffAvailabilityCopyWith<$Res> {
   factory $StaffAvailabilityCopyWith(
-          StaffAvailability value, $Res void Function(StaffAvailability) then) =
+          StaffAvailability value, $Res Function(StaffAvailability) then) =
       _$StaffAvailabilityCopyWithImpl<$Res, StaffAvailability>;
   @useResult
   $Res call(
@@ -1640,7 +1640,7 @@ class _$StaffAvailabilityCopyWithImpl<$Res, $Val extends StaffAvailability>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -1690,7 +1690,7 @@ class _$StaffAvailabilityCopyWithImpl<$Res, $Val extends StaffAvailability>
 abstract class _$$StaffAvailabilityImplCopyWith<$Res>
     implements $StaffAvailabilityCopyWith<$Res> {
   factory _$$StaffAvailabilityImplCopyWith(_$StaffAvailabilityImpl value,
-          $Res void Function(_$StaffAvailabilityImpl) then) =
+          $Res Function(_$StaffAvailabilityImpl) then) =
       __$$StaffAvailabilityImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -1709,7 +1709,7 @@ class __$$StaffAvailabilityImplCopyWithImpl<$Res>
     extends _$StaffAvailabilityCopyWithImpl<$Res, _$StaffAvailabilityImpl>
     implements _$$StaffAvailabilityImplCopyWith<$Res> {
   __$$StaffAvailabilityImplCopyWithImpl(_$StaffAvailabilityImpl _value,
-      $Res void Function(_$StaffAvailabilityImpl) _then)
+      $Res Function(_$StaffAvailabilityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1914,7 +1914,7 @@ mixin _$Qualification {
 /// @nodoc
 abstract class $QualificationCopyWith<$Res> {
   factory $QualificationCopyWith(
-          Qualification value, $Res void Function(Qualification) then) =
+          Qualification value, $Res Function(Qualification) then) =
       _$QualificationCopyWithImpl<$Res, Qualification>;
   @useResult
   $Res call(
@@ -1937,7 +1937,7 @@ class _$QualificationCopyWithImpl<$Res, $Val extends Qualification>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -1997,7 +1997,7 @@ class _$QualificationCopyWithImpl<$Res, $Val extends Qualification>
 abstract class _$$QualificationImplCopyWith<$Res>
     implements $QualificationCopyWith<$Res> {
   factory _$$QualificationImplCopyWith(
-          _$QualificationImpl value, $Res void Function(_$QualificationImpl) then) =
+          _$QualificationImpl value, $Res Function(_$QualificationImpl) then) =
       __$$QualificationImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -2018,7 +2018,7 @@ class __$$QualificationImplCopyWithImpl<$Res>
     extends _$QualificationCopyWithImpl<$Res, _$QualificationImpl>
     implements _$$QualificationImplCopyWith<$Res> {
   __$$QualificationImplCopyWithImpl(
-      _$QualificationImpl _value, $Res void Function(_$QualificationImpl) _then)
+      _$QualificationImpl _value, $Res Function(_$QualificationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2218,7 +2218,7 @@ mixin _$Certificate {
 /// @nodoc
 abstract class $CertificateCopyWith<$Res> {
   factory $CertificateCopyWith(
-          Certificate value, $Res void Function(Certificate) then) =
+          Certificate value, $Res Function(Certificate) then) =
       _$CertificateCopyWithImpl<$Res, Certificate>;
   @useResult
   $Res call(
@@ -2240,7 +2240,7 @@ class _$CertificateCopyWithImpl<$Res, $Val extends Certificate>
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
-  final $Res void Function($Val) _then;
+  final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
@@ -2295,7 +2295,7 @@ class _$CertificateCopyWithImpl<$Res, $Val extends Certificate>
 abstract class _$$CertificateImplCopyWith<$Res>
     implements $CertificateCopyWith<$Res> {
   factory _$$CertificateImplCopyWith(
-          _$CertificateImpl value, $Res void Function(_$CertificateImpl) then) =
+          _$CertificateImpl value, $Res Function(_$CertificateImpl) then) =
       __$$CertificateImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -2315,7 +2315,7 @@ class __$$CertificateImplCopyWithImpl<$Res>
     extends _$CertificateCopyWithImpl<$Res, _$CertificateImpl>
     implements _$$CertificateImplCopyWith<$Res> {
   __$$CertificateImplCopyWithImpl(
-      _$CertificateImpl _value, $Res void Function(_$CertificateImpl) _then)
+      _$CertificateImpl _value, $Res Function(_$CertificateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
