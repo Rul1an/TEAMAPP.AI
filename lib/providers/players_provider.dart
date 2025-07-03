@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/player.dart';
-import '../repositories/local_player_repository.dart';
+import '../repositories/supabase_player_repository.dart';
 import '../repositories/player_repository.dart';
 
 final playerRepositoryProvider = Provider<PlayerRepository>((ref) {
-  return LocalPlayerRepository();
+  return SupabasePlayerRepository();
 });
 
 final playersProvider = FutureProvider<List<Player>>((ref) async {
