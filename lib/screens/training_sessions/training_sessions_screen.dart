@@ -3,20 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../models/training_session/training_session.dart';
-import '../../services/database_service.dart';
-
-final trainingSessionsProvider =
-    FutureProvider<List<TrainingSession>>((ref) async {
-  final db = DatabaseService();
-  return db.getAllTrainingSessions();
-});
+import '../../providers/training_sessions_repo_provider.dart' as ts_repo;
 
 class TrainingSessionsScreen extends ConsumerWidget {
   const TrainingSessionsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trainingSessionsAsync = ref.watch(trainingSessionsProvider);
+    final trainingSessionsAsync = ref.watch(ts_repo.allTrainingSessionsProvider);
 
     return Scaffold(
       appBar: AppBar(
