@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import '../services/telemetry_service.dart';
 
 /// Enhanced monitoring service for production-ready SaaS application
 /// Implements comprehensive error tracking, performance monitoring, and analytics
@@ -91,6 +92,13 @@ class MonitoringService {
     String? userRole,
     String? organizationId,
   }) async {
+    TelemetryService().trackEvent(name, attributes: {
+      ...?parameters,
+      'user_id': userId,
+      'user_role': userRole,
+      'organization_id': organizationId,
+    });
+
     await Sentry.addBreadcrumb(
       Breadcrumb(
         message: name,
@@ -166,6 +174,13 @@ class MonitoringService {
     String? errorMessage,
     Map<String, dynamic>? metadata,
   }) async {
+    TelemetryService().trackEvent('performance', attributes: {
+      'operation': operation,
+      'duration_ms': duration.inMilliseconds,
+      'success': success,
+      'error_message': errorMessage,
+    });
+
     final transaction = Sentry.startTransaction(
       'performance',
       operation,
