@@ -33,6 +33,10 @@ jobs:
         working-directory: .
         run: flutter pub get
 
+      - name: 🔄 Run Code Generation
+        working-directory: .
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
       - name: 🔍 Static Analysis
         working-directory: .
         run: |
@@ -114,6 +118,10 @@ jobs:
       - name: 📦 Install Dependencies
         working-directory: .
         run: flutter pub get
+
+      - name: 🔄 Run Code Generation
+        working-directory: .
+        run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: 🏗️ Build ${{ matrix.platform }}
         run: |

@@ -13,7 +13,9 @@
 sealed class Result<T> {
   const Result();
 
-  R when<R>({required R Function(T data) success, required R Function(AppFailure error) failure}) {
+  R when<R>(
+      {required R Function(T data) success,
+      required R Function(AppFailure error) failure}) {
     if (this is Success<T>) {
       return success((this as Success<T>).data);
     } else {
@@ -23,7 +25,8 @@ sealed class Result<T> {
 
   bool get isSuccess => this is Success<T>;
   T? get dataOrNull => this is Success<T> ? (this as Success<T>).data : null;
-  AppFailure? get errorOrNull => this is Failure<T> ? (this as Failure<T>).error : null;
+  AppFailure? get errorOrNull =>
+      this is Failure<T> ? (this as Failure<T>).error : null;
 }
 
 class Success<T> extends Result<T> {

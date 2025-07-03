@@ -6,10 +6,11 @@ import '../services/profile_service.dart';
 import 'profile_repository.dart';
 
 class SupabaseProfileRepository implements ProfileRepository {
-  SupabaseProfileRepository({ProfileService? service})
+  SupabaseProfileRepository({ProfileService? service, this.cache})
       : _service = service ?? ProfileService();
 
   final ProfileService _service;
+  final dynamic cache; // HiveProfileCache? but to avoid import cycles
 
   @override
   Future<Result<Profile?>> getCurrent() async {
