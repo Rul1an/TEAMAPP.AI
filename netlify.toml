@@ -8,6 +8,12 @@
   to = "/index.html"
   status = 200
 
+[[redirects]]
+  from = "/api/web-vitals"
+  to = "https://<YOUR_SUPABASE_PROJECT>.supabase.co/functions/v1/web_vitals"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]

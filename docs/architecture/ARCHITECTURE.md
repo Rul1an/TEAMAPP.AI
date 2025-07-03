@@ -574,3 +574,61 @@ The migration will proceed incrementally:
 3. Generic `RepositoryProvider<T>` + caching adapters.
 
 See `docs/plans/architecture/REPOSITORY_LAYER_REFRACTOR_Q3_2025.md` for the detailed execution plan.
+
+## 🖥️ Web Renderer Strategy (2025 Update)
+
+With Flutter 3.29+ the legacy `--web-renderer` flag was removed. We now follow a **dual-renderer approach**:
+
+* **Primary**: Skwasm (WebAssembly) build using `flutter build web --wasm`. This reduces JavaScript payload ~40-50 % and unlocks hardware-accelerated Impeller rendering on compatible browsers.
+* **Fallback**: Traditional CanvasKit (JS) build produced in CI as `build-web-canvaskit`. Netlify automatically serves it when an outdated browser (no WasmGC) is detected.
+
+Deployment matrix:
+
+| Artifact | Path | Served to |
+|----------|------|-----------|
+| `build-web` | `build/web` | Modern browsers (WasmGC) |
+| `build-web-canvaskit` | `build/web-canvaskit` | Legacy / iOS 15 Safari, older Edge |
+
+The selection happens through a 3-line JavaScript snippet in `404.html`. See `netlify.toml` for redirect logic.
+
+### CI Flow
+1. Compile CanvasKit build and move to `build/web-canvaskit` (fallback).
+2. Compile Wasm build (becomes `build/web`).
+3. Inject real-user-metrics (RUM) snippet **before** closing `</head>`.
+4. Upload both artifacts. Subsequent stages use the Wasm variant.
+
+Diagram:
+```mermaid
+graph LR
+    A[Flutter build --release] --> B{{CanvasKit}}
+    B -->|mv| C[build/web-canvaskit]
+    A2[Flutter build --wasm] --> D{{Skwasm}}
+    D --> E[build/web]
+    E --> F[Inject RUM JS]
+    F --> G[Upload artifact]
+```
+
+## 📈 Real-User Metrics (RUM) Flow
+
+We leverage [web-vitals v3](https://github.com/GoogleChrome/web-vitals) to capture **LCP, CLS, FID & INP**:
+
+1. `web-vitals-inline.js` is generated in CI.
+2. Metrics are sent via `navigator.sendBeacon('/api/web-vitals', …)` on `visibilitychange` and `pagehide`.
+3. Netlify proxy rule forwards `/api/web-vitals` to Supabase Edge Function `web_vitals`.
+4. Edge Function inserts rows into `web_vitals` table (`metric`, `value`, `url`, `captured_at`).
+5. Grafana dashboard visualises p75 targets with alerts (Slack webhook) when thresholds are breached.
+
+```mermaid
+graph TD
+  UI[Flutter Web App] -- sendBeacon --> FN[Edge Function web_vitals]
+  FN --> DB[(Supabase\nweb_vitals)]
+  DB --> GRAF[Grafana Panel]
+  GRAF --> Slack[Slack Alert]
+```
+
+Thresholds (p75):
+* LCP < 2.5 s
+* CLS < 0.1
+* INP < 200 ms
+
+> Note: Lighthouse performance category remains **disabled** in CI until an SSR landing page is introduced (Phase 2 of the performance roadmap).

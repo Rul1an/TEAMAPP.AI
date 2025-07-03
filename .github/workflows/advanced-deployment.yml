@@ -119,10 +119,52 @@ jobs:
         run: |
           case "${{ matrix.platform }}" in
             web)
+              echo "🔧 Building CanvasKit (fallback)"
               flutter build web --release --dart-define=ENVIRONMENT=production
-              echo "✅ Web build completed"
+              mv build/web build/web-canvaskit
+
+              echo "🔧 Building WASM (primary)"
+              flutter build web --wasm --release --dart-define=ENVIRONMENT=production
+
+              # Inject web-vitals RUM snippet into WASM build
+              cat <<'INLINE_JS' > build/web/web-vitals-inline.js
+              import{onCLS,onFID,onLCP,onINP}from 'https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module';
+              function send(metric){
+                try{navigator.sendBeacon('/api/web-vitals',JSON.stringify({
+                  name:metric.name,
+                  value:metric.value,
+                  id:metric.id,
+                  url:location.href,
+                  ts:Date.now()
+                }));}catch(e){console.error('web-vitals send error',e);}
+              }
+              onCLS(send);onFID(send);onLCP(send);onINP(send);
+              INLINE_JS
+
+              # Add script tags before closing </head>
+              sed -i "s#</head>#<script type=\"module\" src=\"web-vitals-inline.js\"></script></head>#" build/web/index.html
+
+              echo "✅ Web builds (CanvasKit & WASM) completed with RUM injection"
               ;;
           esac
+
+      # Upload CanvasKit build artefact (optional fallback)
+      - name: 📤 Upload CanvasKit Build Artifacts
+        if: ${{ matrix.platform == 'web' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-web-canvaskit
+          path: build/web-canvaskit
+          retention-days: 30
+
+      # Upload WASM build artefact (primary)
+      - name: 📤 Upload WASM Build Artifacts
+        if: ${{ matrix.platform == 'web' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-web
+          path: build/web
+          retention-days: 30
 
       - name: ✅ Ensure Web Build Exists Before Upload
         run: |
@@ -131,13 +173,6 @@ jobs:
             exit 1
           fi
           ls -l build/web
-
-      - name: 📤 Upload Web Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-web
-          path: build/web
-          retention-days: 30
 
   # Performance Testing
   performance-test:
