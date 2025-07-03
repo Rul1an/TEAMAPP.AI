@@ -303,7 +303,7 @@ jobs:
             }'
 
       - name: 🎉 Notify Success (Slack)
-        if: success() && secrets.SLACK_WEBHOOK != ''
+        if: ${{ success() && secrets.SLACK_WEBHOOK != '' }}
         uses: 8398a7/action-slack@v3
         with:
           status: success
