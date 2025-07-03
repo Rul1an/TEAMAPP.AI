@@ -6,7 +6,7 @@ import '../../models/training_session/field_diagram.dart';
 import '../../models/training_session/training_exercise.dart';
 import '../../providers/exercise_designer_provider.dart';
 import '../../providers/field_diagram_provider.dart';
-import '../../services/database_service.dart';
+import '../../providers/training_exercise_provider.dart';
 import '../../widgets/field_diagram/field_canvas.dart';
 import '../../widgets/field_diagram/field_diagram_toolbar.dart';
 import 'exercise_library_screen.dart';
@@ -654,9 +654,9 @@ class _ExerciseDesignerScreenState
         exerciseData.trainingSessionId = 'library';
       }
 
-      // Save to database
-      final db = DatabaseService();
-      await db.saveTrainingExercise(exerciseData);
+      // Save via repository
+      final exerciseRepo = ref.read(trainingExerciseRepositoryProvider);
+      await exerciseRepo.save(exerciseData);
 
       // Refresh the exercise library provider to show the new exercise
       ref.invalidate(exerciseLibraryProvider);
