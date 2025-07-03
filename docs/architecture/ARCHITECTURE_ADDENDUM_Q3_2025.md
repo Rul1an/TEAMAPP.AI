@@ -27,7 +27,7 @@ Widgets → Riverpod Provider → Repository → Data-source (Supabase / Hive / 
 |-------|-------------|--------|-----|
 | 1 | _Repo Analysis_ – catalogue every `supabase` call inside `services/`, group by domain | **✅ Completed** 2025-06-07 | — |
 | 2 | `abstract class ProfileRepository` + `SupabaseProfileRepository` | **�� In progress** – PR #163 drafts interface & mapper | 15 Jun |
-| 3 | Migrate `profileService` & providers to repository | Pending | 20 Jun |
+| 3 | Migrate `profileService` & providers to repository | ✅ Completed (0c83060) | 25 Jun |
 | 4 | Implement & wire `HiveProfileCache` (read-through) | Pending | 01 Jul |
 | 5 | Repeat pattern for Players, Matches, Trainings | Planned | 20 Jul |
 | 6 | Remove obsolete service classes, update docs/tests | Planned | 31 Jul |
@@ -43,3 +43,5 @@ Widgets → Riverpod Provider → Repository → Data-source (Supabase / Hive / 
 * VGV Flutter Architecture 2025 Guide – https://verygood.ventures/blog/flutter-architecture-guide-2025
 * Flutter Clean Architecture Sample (2025 edition) – https://github.com/brianegan/flutter_arch_sample_clean
 * Supabase Offline-First Patterns – https://supabase.com/docs/guides/solutions/offline-first
+
+**Status (25 Jun 2025):** Migration finished. `ProfileService` deleted, providers wired to `ProfileRepositoryImpl` (Supabase + Hive). All tests pass. Commit `0c83060`.

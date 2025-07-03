@@ -3,7 +3,10 @@
 _Last updated: 2025-07-XX_
 
 ## 🎯 Objective
-Migrate profile-related state management from `ProfileService`/direct Supabase calls naar een repository-gedreven, testbare Riverpod-opzet.
+✅ Migration completed (Jun 25 2025 – commit `ce49df0`).
+
+The app now uses `ProfileRepositoryImpl` (remote `SupabaseProfileDataSource` + `HiveProfileCache`) exposed via `profileRepositoryProvider`.
+`ProfileScreen` and `currentProfileProvider` consume the repository. Legacy `ProfileService` & `SupabaseProfileRepository` removed.
 
 ## 1. Design Principles
 1. Providers praten alleen met **ProfileRepository** – niet met services/APIs.
