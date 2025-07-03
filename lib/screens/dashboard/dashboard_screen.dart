@@ -12,21 +12,24 @@ import '../../providers/demo_mode_provider.dart';
 import '../../providers/matches_provider.dart';
 import '../../providers/organization_provider.dart';
 import '../../providers/statistics_provider.dart';
+import '../../repositories/local_season_repository.dart';
+import '../../repositories/season_repository.dart';
 import '../../services/database_service.dart';
 import '../../services/permission_service.dart';
 import '../../widgets/common/quick_actions_widget.dart';
 import '../../widgets/rbac_demo_widget.dart';
 
-final dashboardSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
-  final db = DatabaseService();
-  final seasons = await db.getAllSeasonPlans();
-  if (seasons.isEmpty) return null;
-  try {
-    return seasons.firstWhere((s) => s.status == SeasonStatus.active);
-  } catch (e) {
-    return seasons.first;
-  }
+final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
+  return LocalSeasonRepository();
 });
+
+final dashboardSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
+  final repo = ref.read(seasonRepositoryProvider);
+  final res = await repo.getActive();
+  return res.dataOrNull;
+});
+
+// trainingRepositoryProvider removed – replaced by direct Service call until repository migration completed
 
 final dashboardTrainingSessionsProvider =
     FutureProvider<List<TrainingSession>>((ref) async {
