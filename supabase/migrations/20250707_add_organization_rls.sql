@@ -90,16 +90,10 @@ begin
   end if;
 
   -- Utility function to fetch org claim (if not already created)
-  execute 'create or replace function current_org_id() returns uuid as $$
-    select current_setting(''request.jwt.claim.org_id'', true)::uuid;
-  $$ language sql stable;';
+  execute 'create or replace function current_org_id() returns uuid as $func$ select current_setting(''request.jwt.claim.org_id'', true)::uuid; $func$ language sql stable';
 
   -- Policy helper macro (creates isolated policy for any table)
-  execute 'create or replace function create_rls_policy(table_name text) returns void language plpgsql as $$
-  begin
-    execute format(''create policy "%I_isolated" on %I for all using (organization_id = current_org_id()) with check (organization_id = current_org_id());'', table_name, table_name);
-  end;
-  $$;';
+  execute 'create or replace function create_rls_policy(table_name text) returns void language plpgsql as $pl$ begin execute format(''create policy "%I_isolated" on %I for all using (organization_id = current_org_id()) with check (organization_id = current_org_id());'', table_name, table_name); end; $pl$';
 
   if exists (select 1 from information_schema.tables where table_name = 'players') then
     perform create_rls_policy('players');
