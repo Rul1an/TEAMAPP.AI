@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'package:jo17_tactical_manager/config/supabase_config.dart';
 import 'package:jo17_tactical_manager/services/supabase_extensions.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../utils/stub_http_client.dart';
 

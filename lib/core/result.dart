@@ -46,7 +46,7 @@ sealed class AppFailure {
   final String message;
 
   @override
-  String toString() => '$runtimeType: $message';
+  String toString() => 'AppFailure($message)';
 }
 
 class NetworkFailure extends AppFailure {

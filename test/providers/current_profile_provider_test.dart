@@ -1,3 +1,4 @@
+// ignore_for_file: cascade_invocations
 import 'dart:async';
 import 'dart:io';
 
@@ -11,6 +12,8 @@ import 'package:jo17_tactical_manager/repositories/profile_repository.dart';
 class _FakeRepo implements ProfileRepository {
   Profile? _profile;
   final _controller = StreamController<Profile>.broadcast();
+
+  Profile? get profile => _profile;
 
   set profile(Profile? p) {
     _profile = p;

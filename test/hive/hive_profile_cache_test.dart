@@ -12,7 +12,9 @@ void main() {
   const MethodChannel secureStorageChannel =
       MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
 
-  secureStorageChannel.setMockMethodCallHandler((MethodCall methodCall) async {
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(secureStorageChannel,
+          (MethodCall methodCall) async {
     // We simply ignore all calls and return dummy values so that the plugin
     // never tries to hit the platform layer during unit tests.
     switch (methodCall.method) {
@@ -33,7 +35,9 @@ void main() {
   const MethodChannel pathProviderChannel =
       MethodChannel('plugins.flutter.io/path_provider');
 
-  pathProviderChannel.setMockMethodCallHandler((MethodCall methodCall) async {
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(pathProviderChannel,
+          (MethodCall methodCall) async {
     // Return a valid temporary directory path for any directory request
     final tmpPath = Directory.systemTemp.path;
     return tmpPath;

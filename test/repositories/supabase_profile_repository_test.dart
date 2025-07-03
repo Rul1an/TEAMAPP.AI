@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_getters_setters
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -9,6 +10,8 @@ import 'package:jo17_tactical_manager/services/profile_service.dart';
 class _FakeProfileService extends ProfileService {
   Profile? _profile;
   bool throwUnauthorized = false;
+
+  Profile? get profile => _profile;
 
   set profile(Profile? p) => _profile = p;
 
