@@ -30,23 +30,23 @@ jobs:
           cache: true
 
       - name: 📦 Install Dependencies
-        working-directory: jo17_tactical_manager
+        working-directory: .
         run: flutter pub get
 
       - name: 🔍 Static Analysis
-        working-directory: jo17_tactical_manager
+        working-directory: .
         run: |
           flutter analyze --no-fatal-infos
           echo "✅ Static analysis passed"
 
       - name: 🎨 Format Check
-        working-directory: jo17_tactical_manager
+        working-directory: .
         run: |
           dart format --set-exit-if-changed .
           echo "✅ Code formatting is correct"
 
       - name: 🧪 Unit Tests
-        working-directory: jo17_tactical_manager
+        working-directory: .
         run: |
           flutter test --coverage
           echo "✅ Unit tests passed"
@@ -54,7 +54,7 @@ jobs:
       - name: 📊 Upload Coverage
         uses: codecov/codecov-action@v3
         with:
-          files: jo17_tactical_manager/coverage/lcov.info
+          files: coverage/lcov.info
           fail_ci_if_error: false
 
   # Security Scan
@@ -72,7 +72,7 @@ jobs:
           cache: true
 
       - name: 🔍 Dependency Security Scan
-        working-directory: jo17_tactical_manager
+        working-directory: .
         run: |
           flutter pub deps
           echo "✅ Dependency security scan completed"
@@ -113,7 +113,7 @@ jobs:
           cache: true
 
       - name: 📦 Install Dependencies
-        working-directory: jo17_tactical_manager
+        working-directory: .
         run: flutter pub get
 
       - name: 🏗️ Build ${{ matrix.platform }}
