@@ -3,10 +3,9 @@ import 'dart:io' as io;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:jo17_tactical_manager/services/profile_service.dart';
 import 'package:path/path.dart' as p;
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'package:jo17_tactical_manager/services/profile_service.dart';
 
 import '../utils/stub_http_client.dart';
 
@@ -76,9 +75,11 @@ void main() {
           );
         },
         // Storage upload – match any object path and return minimal JSON
-        RegExp(r'/storage/v1/object'): (_) => http.Response(
-            '{"Key":"avatars/user123/12345.png"}', 200,
-            headers: {'content-type': 'application/json'}),
+        RegExp('/storage/v1/object'): (_) => http.Response(
+              '{"Key":"avatars/user123/12345.png"}',
+              200,
+              headers: {'content-type': 'application/json'},
+            ),
       };
 
       client = SupabaseClient(

@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_getters_setters
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -10,6 +11,8 @@ class _FakeProfileService extends ProfileService {
   Profile? _profile;
   bool throwUnauthorized = false;
 
+  Profile? get profile => _profile;
+
   set profile(Profile? p) => _profile = p;
 
   @override
@@ -18,8 +21,11 @@ class _FakeProfileService extends ProfileService {
   }
 
   @override
-  Future<Profile> updateProfile(
-      {String? username, String? avatarUrl, String? website}) async {
+  Future<Profile> updateProfile({
+    String? username,
+    String? avatarUrl,
+    String? website,
+  }) async {
     if (throwUnauthorized) {
       throw StateError('no user');
     }

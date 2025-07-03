@@ -32,7 +32,9 @@ void main() {
         FlutterError.presentError(details);
       };
       await Supabase.initialize(
-          url: 'https://dummy.supabase.co', anonKey: 'dummy-key');
+        url: 'https://dummy.supabase.co',
+        anonKey: 'dummy-key',
+      );
     });
 
     testWidgets('navigates through core flow without auth', (tester) async {

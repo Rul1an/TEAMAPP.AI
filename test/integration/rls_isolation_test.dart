@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'package:jo17_tactical_manager/config/supabase_config.dart';
 import 'package:jo17_tactical_manager/services/supabase_extensions.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../utils/stub_http_client.dart';
 
@@ -92,8 +91,7 @@ void main() {
       await client.setCurrentOrganizationId('org1');
       currentOrgId = 'org1';
       // Ensure stub user metadata contains the organization_id claim
-      (client.auth.currentUser?.userMetadata
-          as Map<String, dynamic>)['organization_id'] = 'org1';
+      client.auth.currentUser!.userMetadata!['organization_id'] = 'org1';
 
       final data = await client.fromOrg('teams');
 
@@ -104,8 +102,7 @@ void main() {
     test('Switching organization returns isolated dataset', () async {
       await client.setCurrentOrganizationId('org2');
       currentOrgId = 'org2';
-      (client.auth.currentUser?.userMetadata
-          as Map<String, dynamic>)['organization_id'] = 'org2';
+      client.auth.currentUser!.userMetadata!['organization_id'] = 'org2';
 
       final data = await client.fromOrg('teams');
 

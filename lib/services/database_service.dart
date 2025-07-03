@@ -369,7 +369,8 @@ class DatabaseService {
     if (isDemoMode) {
       final demoData = _getDemoData();
       return List<Player>.from(
-          demoData['players'] as List<dynamic>? ?? <dynamic>[]);
+        demoData['players'] as List<dynamic>? ?? <dynamic>[],
+      );
     }
 
     if (kIsWeb) {
@@ -423,7 +424,8 @@ class DatabaseService {
     if (isDemoMode) {
       final demoData = _getDemoData();
       return List<Training>.from(
-          demoData['trainings'] as List<dynamic>? ?? <dynamic>[]);
+        demoData['trainings'] as List<dynamic>? ?? <dynamic>[],
+      );
     }
 
     if (kIsWeb) {
@@ -509,7 +511,8 @@ class DatabaseService {
     if (isDemoMode) {
       final demoData = _getDemoData();
       return List<Match>.from(
-          demoData['matches'] as List<dynamic>? ?? <dynamic>[]);
+        demoData['matches'] as List<dynamic>? ?? <dynamic>[],
+      );
     }
 
     if (kIsWeb) {

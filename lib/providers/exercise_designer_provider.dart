@@ -99,7 +99,8 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
             .toList();
       } else if (state.formData['coachingPoints'] is List) {
         exercise.coachingPoints = List<String>.from(
-            state.formData['coachingPoints'] as List<dynamic>);
+          state.formData['coachingPoints'] as List<dynamic>,
+        );
       }
     }
 

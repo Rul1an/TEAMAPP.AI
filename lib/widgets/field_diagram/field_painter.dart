@@ -547,7 +547,10 @@ class FieldPainter extends CustomPainter {
     final centerX = fieldRect.left + fieldRect.width / 2;
 
     canvas.drawCircle(
-        Offset(centerX, fieldRect.bottom - penaltyHeight * 0.67), 3, spotPaint);
+      Offset(centerX, fieldRect.bottom - penaltyHeight * 0.67),
+      3,
+      spotPaint,
+    );
   }
 
   void _drawGoals(Canvas canvas, Rect fieldRect, Paint linePaint) {

@@ -64,7 +64,8 @@ class FieldDiagram {
             [],
         equipment: (json['equipment'] as List<dynamic>?)
                 ?.map(
-                    (e) => EquipmentMarker.fromJson(e as Map<String, dynamic>))
+                  (e) => EquipmentMarker.fromJson(e as Map<String, dynamic>),
+                )
                 .toList() ??
             [],
         movements: (json['movements'] as List<dynamic>?)

@@ -286,11 +286,13 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
           ..jerseyNumber = int.parse(values['jerseyNumber'] as String)
           ..birthDate = DateTime.parse(values['birthDate'] as String)
           ..position = Position.values.firstWhere(
-              (e) => e.name == values['position'] as String,
-              orElse: () => Position.midfielder)
+            (e) => e.name == values['position'] as String,
+            orElse: () => Position.midfielder,
+          )
           ..preferredFoot = PreferredFoot.values.firstWhere(
-              (e) => e.name == values['preferredFoot'] as String,
-              orElse: () => PreferredFoot.right)
+            (e) => e.name == values['preferredFoot'] as String,
+            orElse: () => PreferredFoot.right,
+          )
           ..height = double.parse(values['height'] as String)
           ..weight = double.parse(values['weight'] as String)
           ..matchesPlayed = 0

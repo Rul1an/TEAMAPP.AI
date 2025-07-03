@@ -51,7 +51,9 @@ class LocalTrainingRepository implements TrainingRepository {
 
   @override
   Future<Result<List<Training>>> getByDateRange(
-      DateTime start, DateTime end) async {
+    DateTime start,
+    DateTime end,
+  ) async {
     try {
       final trainings = await _service.getTrainingsForDateRange(start, end);
       return Success(trainings);

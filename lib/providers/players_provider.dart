@@ -29,7 +29,7 @@ final playersByPositionProvider =
 
 final playersNotifierProvider =
     StateNotifierProvider<PlayersNotifier, AsyncValue<List<Player>>>(
-  (ref) => PlayersNotifier(ref),
+  PlayersNotifier.new,
 );
 
 class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
@@ -45,7 +45,7 @@ class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
     state = const AsyncValue.loading();
     final res = await _repo.getAll();
     state = res.when(
-      success: (data) => AsyncValue.data(data),
+      success: AsyncValue.data,
       failure: (err) => AsyncValue.error(err, StackTrace.current),
     );
   }

@@ -116,7 +116,8 @@ class TrainingSession {
     if (warmupActivitiesJson == null) return [];
     try {
       return List<String>.from(
-          jsonDecode(warmupActivitiesJson!) as List<dynamic>);
+        jsonDecode(warmupActivitiesJson!) as List<dynamic>,
+      );
     } catch (e) {
       return [];
     }
@@ -133,7 +134,9 @@ class TrainingSession {
           jsonDecode(playerAttendanceJson!) as Map<String, dynamic>;
       return json.map(
         (key, value) => MapEntry(
-            key, PlayerAttendance.fromJson(value as Map<String, dynamic>)),
+          key,
+          PlayerAttendance.fromJson(value as Map<String, dynamic>),
+        ),
       );
     } catch (e) {
       return {};
@@ -151,7 +154,8 @@ class TrainingSession {
     if (contentFocusJson == null) return null;
     try {
       return ContentDistribution.fromJson(
-          jsonDecode(contentFocusJson!) as Map<String, dynamic>);
+        jsonDecode(contentFocusJson!) as Map<String, dynamic>,
+      );
     } catch (e) {
       return null;
     }

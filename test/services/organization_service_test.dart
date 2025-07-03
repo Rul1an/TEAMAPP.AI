@@ -11,7 +11,9 @@ void main() {
     test('createOrganization returns Organization with provided values',
         () async {
       final org = await service.createOrganization(
-          name: 'Test Club', slug: 'test-club');
+        name: 'Test Club',
+        slug: 'test-club',
+      );
       expect(org.name, 'Test Club');
       expect(org.slug, 'test-club');
       expect(org.tier, OrganizationTier.basic);
@@ -29,7 +31,9 @@ void main() {
 
     test('updateOrganization updates updatedAt field', () async {
       final org = await service.createOrganization(
-          name: 'Update Me', slug: 'update-me');
+        name: 'Update Me',
+        slug: 'update-me',
+      );
       final updated = await service.updateOrganization(org);
       expect(updated.updatedAt.isAfter(org.updatedAt), isTrue);
     });

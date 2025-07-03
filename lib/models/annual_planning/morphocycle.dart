@@ -156,21 +156,25 @@ class Morphocycle {
       ..seasonPlanId = json['seasonPlanId'] as String? ?? ''
       ..weeklyLoad = (json['weeklyLoad'] as num?)?.toDouble() ?? 0.0
       ..intensityDistribution = Map<String, double>.from(
-          json['intensityDistribution'] as Map<String, dynamic>? ??
-              <String, dynamic>{})
+        json['intensityDistribution'] as Map<String, dynamic>? ??
+            <String, dynamic>{},
+      )
       ..acuteChronicRatio =
           (json['acuteChronicRatio'] as num?)?.toDouble() ?? 1.0
       ..tacticalFocusAreas = List<String>.from(
-          json['tacticalFocusAreas'] as List<dynamic>? ?? <dynamic>[])
+        json['tacticalFocusAreas'] as List<dynamic>? ?? <dynamic>[],
+      )
       ..primaryGameModelFocus = json['primaryGameModelFocus'] as String? ?? ''
       ..secondaryGameModelFocus =
           json['secondaryGameModelFocus'] as String? ?? ''
       ..expectedAdaptation =
           (json['expectedAdaptation'] as num?)?.toDouble() ?? 60.0
       ..keyPerformanceIndicators = List<String>.from(
-          json['keyPerformanceIndicators'] as List<dynamic>? ?? <dynamic>[])
+        json['keyPerformanceIndicators'] as List<dynamic>? ?? <dynamic>[],
+      )
       ..trainingObjectives = List<String>.from(
-          json['trainingObjectives'] as List<dynamic>? ?? <dynamic>[])
+        json['trainingObjectives'] as List<dynamic>? ?? <dynamic>[],
+      )
       ..totalTrainingMinutes = json['totalTrainingMinutes'] as int? ?? 240
       ..averageRPE = (json['averageRPE'] as num?)?.toDouble() ?? 6.0
       ..numberOfSessions = json['numberOfSessions'] as int? ?? 3
@@ -254,7 +258,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Ball Control',
           'Passing Accuracy',
-          'Physical Conditioning'
+          'Physical Conditioning',
         ];
         primaryGameModelFocus = 'Ball Possession';
         secondaryGameModelFocus = 'Individual Skills';
@@ -263,7 +267,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Positional Play',
           'Defensive Shape',
-          'Team Coordination'
+          'Team Coordination',
         ];
         primaryGameModelFocus = 'Defensive Organization';
         secondaryGameModelFocus = 'Pressing Triggers';
@@ -272,7 +276,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Match Preparation',
           'Set Pieces',
-          'Game Management'
+          'Game Management',
         ];
         primaryGameModelFocus = 'Match Preparation';
         secondaryGameModelFocus = 'Performance Optimization';
@@ -281,7 +285,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Consistency',
           'Rotation Management',
-          'Tactical Variations'
+          'Tactical Variations',
         ];
         primaryGameModelFocus = 'Performance Maintenance';
         secondaryGameModelFocus = 'Squad Development';
@@ -290,7 +294,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Creativity',
           'Individual Expression',
-          'New Concepts'
+          'New Concepts',
         ];
         primaryGameModelFocus = 'Creative Play';
         secondaryGameModelFocus = 'Skill Development';
@@ -299,7 +303,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Tournament Tactics',
           'Mental Preparation',
-          'Squad Unity'
+          'Squad Unity',
         ];
         primaryGameModelFocus = 'Tournament Tactics';
         secondaryGameModelFocus = 'Mental Readiness';
@@ -315,7 +319,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Ball Retention',
           'Positional Play',
-          'Build-up Play'
+          'Build-up Play',
         ];
         secondaryGameModelFocus = 'Creating Numerical Superiority';
         break;
@@ -327,7 +331,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Quick Transitions',
           'Direct Play',
-          'Vertical Runs'
+          'Vertical Runs',
         ];
         secondaryGameModelFocus = 'Defensive Stability';
         break;
@@ -335,7 +339,7 @@ class Morphocycle {
         tacticalFocusAreas = [
           'Space Occupation',
           'Player Movement',
-          'Passing Networks'
+          'Passing Networks',
         ];
         secondaryGameModelFocus = 'Creating Overloads';
         break;
@@ -373,13 +377,13 @@ class Morphocycle {
         return [
           'Fitness Test Improvements',
           'Technical Skill Assessments',
-          'Team Chemistry'
+          'Team Chemistry',
         ];
       case PeriodType.competitionEarly:
         return [
           'Match Performance',
           'Tactical Understanding Tests',
-          'Injury Prevention'
+          'Injury Prevention',
         ];
       case PeriodType.competitionPeak:
         return ['Win Rate', 'Goal Difference', 'Individual Player Ratings'];
@@ -387,19 +391,19 @@ class Morphocycle {
         return [
           'Consistency Metrics',
           'Squad Rotation Success',
-          'Performance Stability'
+          'Performance Stability',
         ];
       case PeriodType.transition:
         return [
           'Skill Development Progress',
           'Creativity Measures',
-          'Player Satisfaction'
+          'Player Satisfaction',
         ];
       case PeriodType.tournamentPrep:
         return [
           'Tournament Readiness',
           'Mental Preparation Scores',
-          'Squad Cohesion'
+          'Squad Cohesion',
         ];
     }
   }

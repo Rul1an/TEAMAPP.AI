@@ -406,7 +406,8 @@ class _TrainingAttendanceScreenState
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-                'Markeer eerst aanwezige spelers om beoordelingen te geven'),
+              'Markeer eerst aanwezige spelers om beoordelingen te geven',
+            ),
             backgroundColor: Colors.orange,
           ),
         );
@@ -428,11 +429,14 @@ class _TrainingAttendanceScreenState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Beoordeel Aanwezige Spelers',
-                        style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      'Beoordeel Aanwezige Spelers',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                     IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(Icons.close)),
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(Icons.close),
+                    ),
                   ],
                 ),
               ),
@@ -446,8 +450,10 @@ class _TrainingAttendanceScreenState
                     return ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        child: Text(player.jerseyNumber.toString(),
-                            style: const TextStyle(color: Colors.white)),
+                        child: Text(
+                          player.jerseyNumber.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                       title: Text(player.name),
                       subtitle: Text(_getPositionText(player.position)),
@@ -473,7 +479,8 @@ class _TrainingAttendanceScreenState
                           messenger.showSnackBar(
                             SnackBar(
                               content: Text(
-                                  'Beoordeling opgeslagen voor ${player.name}'),
+                                'Beoordeling opgeslagen voor ${player.name}',
+                              ),
                               backgroundColor: Colors.green,
                             ),
                           );
