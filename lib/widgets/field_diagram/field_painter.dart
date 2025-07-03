@@ -260,7 +260,9 @@ class FieldPainter extends CustomPainter {
     final circlePath = Path()
       ..addArc(
         Rect.fromCircle(
-            center: Offset(centerX, fieldRect.top), radius: circleRadius,),
+          center: Offset(centerX, fieldRect.top),
+          radius: circleRadius,
+        ),
         0,
         math.pi,
       );
@@ -306,8 +308,9 @@ class FieldPainter extends CustomPainter {
     final leftCornerPath = Path()
       ..addArc(
         Rect.fromCircle(
-            center: Offset(fieldRect.left, fieldRect.bottom),
-            radius: cornerRadius,),
+          center: Offset(fieldRect.left, fieldRect.bottom),
+          radius: cornerRadius,
+        ),
         -math.pi / 2,
         math.pi / 2,
       );
@@ -316,13 +319,14 @@ class FieldPainter extends CustomPainter {
       // Rechterhoek
       ..drawPath(
         (Path()
-              ..addArc(
-                Rect.fromCircle(
-                    center: Offset(fieldRect.right, fieldRect.bottom),
-                    radius: cornerRadius,),
-                math.pi,
-                math.pi / 2,
-              )),
+          ..addArc(
+            Rect.fromCircle(
+              center: Offset(fieldRect.right, fieldRect.bottom),
+              radius: cornerRadius,
+            ),
+            math.pi,
+            math.pi / 2,
+          )),
         linePaint,
       );
 
@@ -452,22 +456,38 @@ class FieldPainter extends CustomPainter {
     canvas
       ..drawRect(
         Rect.fromLTWH(
-            fieldRect.left, leftPenaltyTop, penaltyWidth, penaltyHeight,),
+          fieldRect.left,
+          leftPenaltyTop,
+          penaltyWidth,
+          penaltyHeight,
+        ),
         linePaint,
       )
       ..drawRect(
         Rect.fromLTWH(
-            fieldRect.left, leftGoalAreaTop, goalAreaWidth, goalAreaHeight,),
+          fieldRect.left,
+          leftGoalAreaTop,
+          goalAreaWidth,
+          goalAreaHeight,
+        ),
         linePaint,
       )
       ..drawRect(
         Rect.fromLTWH(
-            rightPenaltyLeft, leftPenaltyTop, penaltyWidth, penaltyHeight,),
+          rightPenaltyLeft,
+          leftPenaltyTop,
+          penaltyWidth,
+          penaltyHeight,
+        ),
         linePaint,
       )
       ..drawRect(
         Rect.fromLTWH(
-            rightGoalAreaLeft, leftGoalAreaTop, goalAreaWidth, goalAreaHeight,),
+          rightGoalAreaLeft,
+          leftGoalAreaTop,
+          goalAreaWidth,
+          goalAreaHeight,
+        ),
         linePaint,
       );
 
@@ -492,8 +512,12 @@ class FieldPainter extends CustomPainter {
       );
   }
 
-  void _drawSinglePenaltyArea(Canvas canvas, Rect fieldRect, Paint linePaint,
-      {double scaleDown = 1.0,}) {
+  void _drawSinglePenaltyArea(
+    Canvas canvas,
+    Rect fieldRect,
+    Paint linePaint, {
+    double scaleDown = 1.0,
+  }) {
     final penaltyWidth = fieldRect.width * 0.4 * scaleDown;
     final penaltyHeight = fieldRect.height * 0.6 * scaleDown;
     final goalAreaWidth = fieldRect.width * 0.27 * scaleDown;
@@ -522,7 +546,8 @@ class FieldPainter extends CustomPainter {
 
     final centerX = fieldRect.left + fieldRect.width / 2;
 
-    canvas.drawCircle(Offset(centerX, fieldRect.bottom - penaltyHeight * 0.67), 3, spotPaint);
+    canvas.drawCircle(
+        Offset(centerX, fieldRect.bottom - penaltyHeight * 0.67), 3, spotPaint);
   }
 
   void _drawGoals(Canvas canvas, Rect fieldRect, Paint linePaint) {
@@ -530,8 +555,13 @@ class FieldPainter extends CustomPainter {
     _drawSingleGoal(canvas, fieldRect, linePaint, isLeft: false);
   }
 
-  void _drawSingleGoal(Canvas canvas, Rect fieldRect, Paint linePaint,
-      {bool isLeft = true, bool isTop = false,}) {
+  void _drawSingleGoal(
+    Canvas canvas,
+    Rect fieldRect,
+    Paint linePaint, {
+    bool isLeft = true,
+    bool isTop = false,
+  }) {
     final goalWidth = fieldRect.width * 0.15;
     final goalHeight = fieldRect.height * 0.05;
 
@@ -664,7 +694,11 @@ class FieldPainter extends CustomPainter {
     // Draw movement lines first (so they appear under other elements)
     for (final movement in diagram.movements) {
       _drawMovementLine(
-          canvas, fieldRect, movement, movement.id == selectedElementId,);
+        canvas,
+        fieldRect,
+        movement,
+        movement.id == selectedElementId,
+      );
     }
 
     // Draw current line being drawn
@@ -680,7 +714,11 @@ class FieldPainter extends CustomPainter {
     // Draw equipment
     for (final equipment in diagram.equipment) {
       _drawEquipment(
-          canvas, fieldRect, equipment, equipment.id == selectedElementId,);
+        canvas,
+        fieldRect,
+        equipment,
+        equipment.id == selectedElementId,
+      );
     }
 
     // Draw text labels
@@ -690,7 +728,11 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawPlayer(
-      Canvas canvas, Rect fieldRect, PlayerMarker player, bool isSelected,) {
+    Canvas canvas,
+    Rect fieldRect,
+    PlayerMarker player,
+    bool isSelected,
+  ) {
     final position = _fieldToCanvasPosition(player.position, fieldRect);
     final radius = isSelected ? 18.0 : 15.0;
 
@@ -742,8 +784,12 @@ class FieldPainter extends CustomPainter {
     // Highlight for selected player circle is already handled by outer ring.
   }
 
-  void _drawEquipment(Canvas canvas, Rect fieldRect, EquipmentMarker equipment,
-      bool isSelected,) {
+  void _drawEquipment(
+    Canvas canvas,
+    Rect fieldRect,
+    EquipmentMarker equipment,
+    bool isSelected,
+  ) {
     final position = _fieldToCanvasPosition(equipment.position, fieldRect);
     final paint = Paint()
       ..color = _parseColor(equipment.color)
@@ -821,7 +867,11 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawGenericEquipment(
-      Canvas canvas, Offset position, Paint paint, bool isSelected,) {
+    Canvas canvas,
+    Offset position,
+    Paint paint,
+    bool isSelected,
+  ) {
     final size = isSelected ? 12.0 : 10.0;
     if (isSelected) {
       final selectionPaint = Paint()
@@ -848,7 +898,11 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawTextLabel(
-      Canvas canvas, Rect fieldRect, TextLabel label, bool isSelected,) {
+    Canvas canvas,
+    Rect fieldRect,
+    TextLabel label,
+    bool isSelected,
+  ) {
     final position = _fieldToCanvasPosition(label.position, fieldRect);
 
     final textPainter = TextPainter(
@@ -871,7 +925,11 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawMovementLine(
-      Canvas canvas, Rect fieldRect, MovementLine line, bool isSelected,) {
+    Canvas canvas,
+    Rect fieldRect,
+    MovementLine line,
+    bool isSelected,
+  ) {
     if (line.points.length < 2) return;
 
     final paint = Paint()
@@ -944,7 +1002,9 @@ class FieldPainter extends CustomPainter {
     if (line.hasArrowHead && line.points.length >= 2) {
       final lastPoint = _fieldToCanvasPosition(line.points.last, fieldRect);
       final secondLastPoint = _fieldToCanvasPosition(
-          line.points[line.points.length - 2], fieldRect,);
+        line.points[line.points.length - 2],
+        fieldRect,
+      );
 
       // Validate arrow head points
       if (_isValidOffset(lastPoint) && _isValidOffset(secondLastPoint)) {
@@ -964,8 +1024,7 @@ class FieldPainter extends CustomPainter {
 
       // Collect all valid points for the selection polygon
       final selectionPoints = [
-        for (final p in line.points)
-          _fieldToCanvasPosition(p, fieldRect),
+        for (final p in line.points) _fieldToCanvasPosition(p, fieldRect),
       ].where(_isValidOffset).toList();
 
       if (selectionPoints.length >= 2) {
@@ -985,7 +1044,8 @@ class FieldPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     final path = Path();
-    final firstPoint = _fieldToCanvasPosition(currentLinePoints.first, fieldRect);
+    final firstPoint =
+        _fieldToCanvasPosition(currentLinePoints.first, fieldRect);
 
     // Validate first point
     if (!_isValidOffset(firstPoint)) return;
@@ -1002,7 +1062,11 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawDashedPath(
-      Canvas canvas, List<Position> points, Rect fieldRect, Paint paint,) {
+    Canvas canvas,
+    List<Position> points,
+    Rect fieldRect,
+    Paint paint,
+  ) {
     const dashLength = 10.0;
     const dashSpace = 5.0;
     double distance = 0;
@@ -1051,7 +1115,11 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawDottedPath(
-      Canvas canvas, List<Position> points, Rect fieldRect, Paint paint,) {
+    Canvas canvas,
+    List<Position> points,
+    Rect fieldRect,
+    Paint paint,
+  ) {
     const dotSpacing = 8.0;
 
     for (int i = 0; i < points.length - 1; i++) {
@@ -1087,7 +1155,11 @@ class FieldPainter extends CustomPainter {
   }
 
   void _drawWavyPath(
-      Canvas canvas, List<Position> points, Rect fieldRect, Paint paint,) {
+    Canvas canvas,
+    List<Position> points,
+    Rect fieldRect,
+    Paint paint,
+  ) {
     if (points.length < 2) return;
 
     const waveAmplitude = 5.0;

@@ -76,7 +76,9 @@ void main() {
           );
         },
         // Storage upload – match any object path and return minimal JSON
-        RegExp(r'/storage/v1/object'): (_) => http.Response('{"Key":"avatars/user123/12345.png"}', 200, headers: {'content-type': 'application/json'}),
+        RegExp(r'/storage/v1/object'): (_) => http.Response(
+            '{"Key":"avatars/user123/12345.png"}', 200,
+            headers: {'content-type': 'application/json'}),
       };
 
       client = SupabaseClient(

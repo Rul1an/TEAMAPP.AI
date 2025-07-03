@@ -64,8 +64,8 @@ void main() {
               headers: {'content-type': 'application/json'},
             ),
         // Any unfiltered access should be denied → simulate RLS error.
-        RegExp(r'/rest/v1/teams(\?|\b)(?!.*organization_id=eq\.).*'):
-            (_) => http.Response('Row level security violation', 403),
+        RegExp(r'/rest/v1/teams(\?|\b)(?!.*organization_id=eq\.).*'): (_) =>
+            http.Response('Row level security violation', 403),
       };
 
       client = SupabaseClient(
@@ -92,7 +92,8 @@ void main() {
       await client.setCurrentOrganizationId('org1');
       currentOrgId = 'org1';
       // Ensure stub user metadata contains the organization_id claim
-      (client.auth.currentUser?.userMetadata as Map<String, dynamic>)['organization_id'] = 'org1';
+      (client.auth.currentUser?.userMetadata
+          as Map<String, dynamic>)['organization_id'] = 'org1';
 
       final data = await client.fromOrg('teams');
 
@@ -103,7 +104,8 @@ void main() {
     test('Switching organization returns isolated dataset', () async {
       await client.setCurrentOrganizationId('org2');
       currentOrgId = 'org2';
-      (client.auth.currentUser?.userMetadata as Map<String, dynamic>)['organization_id'] = 'org2';
+      (client.auth.currentUser?.userMetadata
+          as Map<String, dynamic>)['organization_id'] = 'org2';
 
       final data = await client.fromOrg('teams');
 

@@ -100,7 +100,9 @@ class TrainingSession {
     if (phasesJson == null) return [];
     try {
       final List<dynamic> list = jsonDecode(phasesJson!) as List<dynamic>;
-      return list.map((json) => SessionPhase.fromJson(json as Map<String, dynamic>)).toList();
+      return list
+          .map((json) => SessionPhase.fromJson(json as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       return [];
     }
@@ -113,7 +115,8 @@ class TrainingSession {
   List<String> get warmupActivities {
     if (warmupActivitiesJson == null) return [];
     try {
-      return List<String>.from(jsonDecode(warmupActivitiesJson!) as List<dynamic>);
+      return List<String>.from(
+          jsonDecode(warmupActivitiesJson!) as List<dynamic>);
     } catch (e) {
       return [];
     }
@@ -126,9 +129,11 @@ class TrainingSession {
   Map<String, PlayerAttendance> get playerAttendance {
     if (playerAttendanceJson == null) return {};
     try {
-      final Map<String, dynamic> json = jsonDecode(playerAttendanceJson!) as Map<String, dynamic>;
+      final Map<String, dynamic> json =
+          jsonDecode(playerAttendanceJson!) as Map<String, dynamic>;
       return json.map(
-        (key, value) => MapEntry(key, PlayerAttendance.fromJson(value as Map<String, dynamic>)),
+        (key, value) => MapEntry(
+            key, PlayerAttendance.fromJson(value as Map<String, dynamic>)),
       );
     } catch (e) {
       return {};
@@ -145,7 +150,8 @@ class TrainingSession {
   ContentDistribution? get contentFocus {
     if (contentFocusJson == null) return null;
     try {
-      return ContentDistribution.fromJson(jsonDecode(contentFocusJson!) as Map<String, dynamic>);
+      return ContentDistribution.fromJson(
+          jsonDecode(contentFocusJson!) as Map<String, dynamic>);
     } catch (e) {
       return null;
     }
@@ -289,14 +295,16 @@ class TrainingSession {
       ..sessionObjective = sessionObjective ?? this.sessionObjective
       ..teamFunction = teamFunction ?? this.teamFunction
       ..coachingAccent = coachingAccent ?? this.coachingAccent
-      ..technicalTacticalGoal = technicalTacticalGoal ?? this.technicalTacticalGoal
+      ..technicalTacticalGoal =
+          technicalTacticalGoal ?? this.technicalTacticalGoal
       ..phasesJson = phasesJson
       ..warmupActivitiesJson = warmupActivitiesJson
       ..playerAttendanceJson = playerAttendanceJson
       ..expectedPlayers = expectedPlayers ?? this.expectedPlayers
       ..actualPlayers = actualPlayers ?? this.actualPlayers
       ..notes = notes ?? this.notes
-      ..postSessionEvaluation = postSessionEvaluation ?? this.postSessionEvaluation
+      ..postSessionEvaluation =
+          postSessionEvaluation ?? this.postSessionEvaluation
       ..periodizationPhaseId = periodizationPhaseId ?? this.periodizationPhaseId
       ..contentFocusJson = contentFocusJson
       ..targetIntensity = targetIntensity ?? this.targetIntensity

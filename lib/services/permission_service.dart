@@ -92,7 +92,9 @@ class PermissionService {
 
   /// Get accessible routes for a role with strict permissions
   static List<String> getAccessibleRoutes(
-      String? userRole, OrganizationTier? tier,) {
+    String? userRole,
+    OrganizationTier? tier,
+  ) {
     final routes = <String>['/dashboard']; // Everyone can see dashboard
 
     if (userRole == null) return routes;
@@ -165,7 +167,10 @@ class PermissionService {
 
   /// Check if user can perform a specific action with enhanced granularity
   static bool canPerformAction(
-      String action, String? userRole, OrganizationTier? tier,) {
+    String action,
+    String? userRole,
+    OrganizationTier? tier,
+  ) {
     // View-only users (players/parents) can ONLY view
     if (isViewOnlyUser(userRole)) {
       switch (action) {
@@ -234,7 +239,9 @@ class PermissionService {
 
   /// Get user capabilities summary for UI display
   static Map<String, bool> getUserCapabilities(
-          String? userRole, OrganizationTier? tier,) =>
+    String? userRole,
+    OrganizationTier? tier,
+  ) =>
       {
         'can_view_dashboard': true,
         'can_view_players': true,

@@ -33,25 +33,33 @@ void main() {
 
   group('SVS access per tier', () {
     test('Basic tier never grants SVS', () {
-      expect(PermissionService.canAccessSVS('bestuurder', OrganizationTier.basic), isFalse);
+      expect(
+          PermissionService.canAccessSVS('bestuurder', OrganizationTier.basic),
+          isFalse);
     });
 
     test('Pro tier grants SVS for coach/admin roles', () {
-      expect(PermissionService.canAccessSVS('hoofdcoach', OrganizationTier.pro), isTrue);
-      expect(PermissionService.canAccessSVS('bestuurder', OrganizationTier.pro), isTrue);
-      expect(PermissionService.canAccessSVS('speler', OrganizationTier.pro), isFalse);
+      expect(PermissionService.canAccessSVS('hoofdcoach', OrganizationTier.pro),
+          isTrue);
+      expect(PermissionService.canAccessSVS('bestuurder', OrganizationTier.pro),
+          isTrue);
+      expect(PermissionService.canAccessSVS('speler', OrganizationTier.pro),
+          isFalse);
     });
   });
 
   group('Accessible routes', () {
     test('Player gets only view routes', () {
-      final routes = PermissionService.getAccessibleRoutes('speler', OrganizationTier.basic);
-      expect(routes, containsAll(['/dashboard', '/players', '/training', '/matches']));
+      final routes = PermissionService.getAccessibleRoutes(
+          'speler', OrganizationTier.basic);
+      expect(routes,
+          containsAll(['/dashboard', '/players', '/training', '/matches']));
       expect(routes, isNot(contains('/admin')));
     });
 
     test('Admin gets admin route', () {
-      final routes = PermissionService.getAccessibleRoutes('bestuurder', OrganizationTier.basic);
+      final routes = PermissionService.getAccessibleRoutes(
+          'bestuurder', OrganizationTier.basic);
       expect(routes, contains('/admin'));
     });
   });

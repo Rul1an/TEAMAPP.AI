@@ -25,8 +25,10 @@ class PerformanceRating {
     DateTime? createdAt,
   })  : id = id ?? const Uuid().v4(),
         createdAt = createdAt ?? DateTime.now(),
-        assert(overallRating >= 1 && overallRating <= 5, 'Overall rating must be between 1 and 5'),
-        assert(type == RatingType.match ? matchId != null : trainingId != null, 'Match ratings require matchId, training ratings require trainingId');
+        assert(overallRating >= 1 && overallRating <= 5,
+            'Overall rating must be between 1 and 5'),
+        assert(type == RatingType.match ? matchId != null : trainingId != null,
+            'Match ratings require matchId, training ratings require trainingId');
 
   factory PerformanceRating.fromJson(Map<String, dynamic> json) =>
       PerformanceRating(
@@ -35,7 +37,8 @@ class PerformanceRating {
         matchId: json['matchId'] as String?,
         trainingId: json['trainingId'] as String?,
         date: DateTime.parse(json['date'] as String),
-        type: RatingType.values.firstWhere((e) => e.name == json['type'] as String),
+        type: RatingType.values
+            .firstWhere((e) => e.name == json['type'] as String),
         overallRating: json['overallRating'] as int,
         attackingRating: json['attackingRating'] as int?,
         defendingRating: json['defendingRating'] as int?,

@@ -110,8 +110,10 @@ class _TrainingDialogState extends State<TrainingDialog> {
                     prefixIcon: Icon(Icons.sports_soccer),
                   ),
                   items: _commonTrainingTypes
-                      .map((type) =>
-                          DropdownMenuItem(value: type, child: Text(type)),)
+                      .map(
+                        (type) =>
+                            DropdownMenuItem(value: type, child: Text(type)),
+                      )
                       .toList(),
                   onChanged: (value) {
                     if (value != null) {
@@ -148,8 +150,12 @@ class _TrainingDialogState extends State<TrainingDialog> {
                     prefixIcon: Icon(Icons.location_on),
                   ),
                   items: _commonLocations
-                      .map((location) => DropdownMenuItem(
-                          value: location, child: Text(location),),)
+                      .map(
+                        (location) => DropdownMenuItem(
+                          value: location,
+                          child: Text(location),
+                        ),
+                      )
                       .toList(),
                   onChanged: (value) {
                     if (value != null) {
@@ -261,7 +267,8 @@ class _TrainingDialogState extends State<TrainingDialog> {
               foregroundColor: Colors.white,
             ),
             child: Text(
-                widget.existingTraining != null ? 'Bijwerken' : 'Toevoegen',),
+              widget.existingTraining != null ? 'Bijwerken' : 'Toevoegen',
+            ),
           ),
         ],
       );

@@ -88,7 +88,9 @@ class _PeriodizationTemplateDialogState
                             Text(
                               '${selectedTemplate!.totalDurationWeeks} weken • ${selectedTemplate!.numberOfPeriods} periodes',
                               style: TextStyle(
-                                  color: Colors.grey[600], fontSize: 12,),
+                                color: Colors.grey[600],
+                                fontSize: 12,
+                              ),
                             ),
                           ],
                         ),

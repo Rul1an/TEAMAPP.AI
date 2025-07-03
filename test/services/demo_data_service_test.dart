@@ -14,7 +14,8 @@ void main() {
       expect((data['players'] as List).length, greaterThan(0));
     });
 
-    test('OrganizationService.isSlugAvailable rejects reserved slugs', () async {
+    test('OrganizationService.isSlugAvailable rejects reserved slugs',
+        () async {
       const reserved = ['admin', 'api', 'APP'];
       final service = OrganizationService();
       for (final slug in reserved) {

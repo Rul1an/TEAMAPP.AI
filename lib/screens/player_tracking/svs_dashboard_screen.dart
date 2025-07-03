@@ -17,14 +17,20 @@ class SVSDashboardScreen extends ConsumerWidget {
             children: [
               Icon(Icons.track_changes, size: 64, color: Colors.green),
               SizedBox(height: 16),
-              Text('Speler Volg Systeem',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+              Text(
+                'Speler Volg Systeem',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 8),
-              Text('Advanced player tracking and analytics',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),),
+              Text(
+                'Advanced player tracking and analytics',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
               SizedBox(height: 32),
-              Text('Coming Soon...',
-                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),),
+              Text(
+                'Coming Soon...',
+                style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+              ),
             ],
           ),
         ),

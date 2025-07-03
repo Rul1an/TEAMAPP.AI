@@ -39,12 +39,12 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
   void _startDemoMode() {
     // Start demo mode with hoofdcoach role
     ref.read(demoModeProvider.notifier).startDemo(
-      role: DemoRole.coach, // hoofdcoach
-      organizationId: 'demo-voab-jo17',
-      userId: 'demo-user-coach',
-      userName: 'Demo Hoofdcoach',
-      durationMinutes: 60, // 1 hour demo session
-    );
+          role: DemoRole.coach, // hoofdcoach
+          organizationId: 'demo-voab-jo17',
+          userId: 'demo-user-coach',
+          userName: 'Demo Hoofdcoach',
+          durationMinutes: 60, // 1 hour demo session
+        );
 
     // Show welcome message
     if (mounted) {

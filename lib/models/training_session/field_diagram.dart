@@ -50,18 +50,21 @@ class FieldDiagram {
         );
 
   factory FieldDiagram.fromJson(Map<String, dynamic> json) => FieldDiagram(
-        id: json['id'] as String? ?? DateTime.now().millisecondsSinceEpoch.toString(),
+        id: json['id'] as String? ??
+            DateTime.now().millisecondsSinceEpoch.toString(),
         fieldType: FieldType.values.firstWhere(
           (e) => e.name == json['fieldType'] as String,
           orElse: () => FieldType.halfField,
         ),
-        fieldSize: Dimensions.fromJson(json['fieldSize'] as Map<String, dynamic>),
+        fieldSize:
+            Dimensions.fromJson(json['fieldSize'] as Map<String, dynamic>),
         players: (json['players'] as List<dynamic>?)
                 ?.map((p) => PlayerMarker.fromJson(p as Map<String, dynamic>))
                 .toList() ??
             [],
         equipment: (json['equipment'] as List<dynamic>?)
-                ?.map((e) => EquipmentMarker.fromJson(e as Map<String, dynamic>))
+                ?.map(
+                    (e) => EquipmentMarker.fromJson(e as Map<String, dynamic>))
                 .toList() ??
             [],
         movements: (json['movements'] as List<dynamic>?)
@@ -310,7 +313,8 @@ class AreaMarker {
   factory AreaMarker.fromJson(Map<String, dynamic> json) => AreaMarker(
         id: json['id'] as String? ?? '',
         topLeft: Position.fromJson(json['topLeft'] as Map<String, dynamic>),
-        bottomRight: Position.fromJson(json['bottomRight'] as Map<String, dynamic>),
+        bottomRight:
+            Position.fromJson(json['bottomRight'] as Map<String, dynamic>),
         color: json['color'] as String? ?? '#FFC107',
         opacity: (json['opacity'] as num?)?.toDouble() ?? 0.3,
         label: json['label'] as String?,

@@ -151,7 +151,9 @@ class PeriodizationPlan {
 
   // Get recommended parameters based on model type
   static Map<String, dynamic> getRecommendedParameters(
-      PeriodizationModel model, AgeGroup ageGroup,) {
+    PeriodizationModel model,
+    AgeGroup ageGroup,
+  ) {
     switch (model) {
       case PeriodizationModel.knvbYouth:
         return {
@@ -260,8 +262,10 @@ class PeriodizationPlan {
       ..targetAgeGroup = targetAgeGroup ?? this.targetAgeGroup
       ..totalDurationWeeks = totalDurationWeeks ?? this.totalDurationWeeks
       ..numberOfPeriods = numberOfPeriods ?? this.numberOfPeriods
-      ..defaultIntensityTargets = defaultIntensityTargets ?? this.defaultIntensityTargets
-      ..defaultContentDistribution = defaultContentDistribution ?? this.defaultContentDistribution
+      ..defaultIntensityTargets =
+          defaultIntensityTargets ?? this.defaultIntensityTargets
+      ..defaultContentDistribution =
+          defaultContentDistribution ?? this.defaultContentDistribution
       ..isTemplate = isTemplate ?? this.isTemplate
       ..isDefault = isDefault ?? this.isDefault
       ..createdBy = createdBy ?? this.createdBy

@@ -140,11 +140,17 @@ class TrainingPeriod {
       )
       ..orderIndex = json['orderIndex'] as int? ?? 0
       ..durationWeeks = json['durationWeeks'] as int? ?? 4
-      ..startDate = json['startDate'] != null ? DateTime.parse(json['startDate'] as String) : null
-      ..endDate = json['endDate'] != null ? DateTime.parse(json['endDate'] as String) : null
-      ..intensityPercentage = (json['intensityPercentage'] as num?)?.toDouble() ?? 70.0
+      ..startDate = json['startDate'] != null
+          ? DateTime.parse(json['startDate'] as String)
+          : null
+      ..endDate = json['endDate'] != null
+          ? DateTime.parse(json['endDate'] as String)
+          : null
+      ..intensityPercentage =
+          (json['intensityPercentage'] as num?)?.toDouble() ?? 70.0
       ..contentFocusJson = json['contentFocusJson'] as String?
-      ..keyObjectives = List<String>.from(json['keyObjectives'] as List<dynamic>? ?? <dynamic>[])
+      ..keyObjectives = List<String>.from(
+          json['keyObjectives'] as List<dynamic>? ?? <dynamic>[])
       ..sessionsPerWeek = json['sessionsPerWeek'] as int? ?? 3
       ..averageSessionMinutes = json['averageSessionMinutes'] as int? ?? 75
       ..restDaysBetweenSessions = json['restDaysBetweenSessions'] as int? ?? 1
@@ -232,7 +238,8 @@ class TrainingPeriod {
   ContentDistribution? get contentFocus {
     if (contentFocusJson == null) return null;
     try {
-      return ContentDistribution.fromJson(jsonDecode(contentFocusJson!) as Map<String, dynamic>);
+      return ContentDistribution.fromJson(
+          jsonDecode(contentFocusJson!) as Map<String, dynamic>);
     } catch (e) {
       return null;
     }
@@ -351,8 +358,10 @@ class TrainingPeriod {
       ..contentFocus = contentFocus ?? this.contentFocus
       ..keyObjectives = keyObjectives ?? List.from(this.keyObjectives)
       ..sessionsPerWeek = sessionsPerWeek ?? this.sessionsPerWeek
-      ..averageSessionMinutes = averageSessionMinutes ?? this.averageSessionMinutes
-      ..restDaysBetweenSessions = restDaysBetweenSessions ?? this.restDaysBetweenSessions
+      ..averageSessionMinutes =
+          averageSessionMinutes ?? this.averageSessionMinutes
+      ..restDaysBetweenSessions =
+          restDaysBetweenSessions ?? this.restDaysBetweenSessions
       ..status = status ?? this.status
       ..createdAt = createdAt
       ..updatedAt = DateTime.now();
@@ -479,40 +488,41 @@ class ContentDistribution {
     this.mental = 25,
   });
 
-  factory ContentDistribution.fromJson(Map<String, dynamic> json) => ContentDistribution(
-      technical: (json['technical'] as num?)?.toDouble() ?? 25,
-      tactical: (json['tactical'] as num?)?.toDouble() ?? 25,
-      physical: (json['physical'] as num?)?.toDouble() ?? 25,
-      mental: (json['mental'] as num?)?.toDouble() ?? 25,
-    );
+  factory ContentDistribution.fromJson(Map<String, dynamic> json) =>
+      ContentDistribution(
+        technical: (json['technical'] as num?)?.toDouble() ?? 25,
+        tactical: (json['tactical'] as num?)?.toDouble() ?? 25,
+        physical: (json['physical'] as num?)?.toDouble() ?? 25,
+        mental: (json['mental'] as num?)?.toDouble() ?? 25,
+      );
 
   factory ContentDistribution.balanced() => ContentDistribution(
-      technical: 25,
-      tactical: 25,
-      physical: 25,
-      mental: 25,
-    );
+        technical: 25,
+        tactical: 25,
+        physical: 25,
+        mental: 25,
+      );
 
   factory ContentDistribution.tacticalFocus() => ContentDistribution(
-      technical: 20,
-      tactical: 40,
-      physical: 25,
-      mental: 15,
-    );
+        technical: 20,
+        tactical: 40,
+        physical: 25,
+        mental: 15,
+      );
 
   factory ContentDistribution.matchPrep() => ContentDistribution(
-      technical: 15,
-      tactical: 50,
-      physical: 20,
-      mental: 15,
-    );
+        technical: 15,
+        tactical: 50,
+        physical: 20,
+        mental: 15,
+      );
 
   factory ContentDistribution.recovery() => ContentDistribution(
-      technical: 30,
-      tactical: 10,
-      physical: 40,
-      mental: 20,
-    );
+        technical: 30,
+        tactical: 10,
+        physical: 40,
+        mental: 20,
+      );
 
   final double technical;
   final double tactical;
@@ -520,12 +530,13 @@ class ContentDistribution {
   final double mental;
 
   Map<String, dynamic> toJson() => {
-      'technical': technical,
-      'tactical': tactical,
-      'physical': physical,
-      'mental': mental,
-    };
+        'technical': technical,
+        'tactical': tactical,
+        'physical': physical,
+        'mental': mental,
+      };
 
   @override
-  String toString() => 'ContentDistribution(technical: $technical%, tactical: $tactical%, physical: $physical%, mental: $mental%)';
+  String toString() =>
+      'ContentDistribution(technical: $technical%, tactical: $tactical%, physical: $physical%, mental: $mental%)';
 }

@@ -6,7 +6,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:jo17_tactical_manager/services/auth_service.dart';
 
 class MockSupabaseClient extends Mock implements SupabaseClient {}
+
 class MockGoTrueClient extends Mock implements GoTrueClient {}
+
 class MockUser extends Mock implements User {}
 
 void main() {

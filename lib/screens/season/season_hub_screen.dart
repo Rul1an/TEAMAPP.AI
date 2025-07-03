@@ -98,7 +98,10 @@ class SeasonHubScreen extends ConsumerWidget {
                       const SizedBox(height: 8),
                       recentSessionsAsync.when(
                         data: (sessions) => _buildTrainingSessionsList(
-                            context, sessions, false,),
+                          context,
+                          sessions,
+                          false,
+                        ),
                         loading: () => const CircularProgressIndicator(),
                         error: (error, stack) =>
                             const Text('Geen recente trainingen'),
@@ -291,7 +294,11 @@ class SeasonHubScreen extends ConsumerWidget {
       );
 
   Widget _buildStatItem(
-          BuildContext context, String label, String value, IconData icon,) =>
+    BuildContext context,
+    String label,
+    String value,
+    IconData icon,
+  ) =>
       Column(
         children: [
           Icon(icon, color: Theme.of(context).primaryColor, size: 20),

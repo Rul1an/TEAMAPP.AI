@@ -46,7 +46,8 @@ class PlayerCard extends ConsumerWidget {
                       height: 48,
                       decoration: BoxDecoration(
                         color: AppTheme.getPositionColor(
-                            player.position.displayName,),
+                          player.position.displayName,
+                        ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Center(
@@ -83,7 +84,8 @@ class PlayerCard extends ConsumerWidget {
                                   if (snapshot.hasData) {
                                     final data = snapshot.data!;
                                     return PerformanceBadge(
-                                      averageRating: data['averageRating'] as double?,
+                                      averageRating:
+                                          data['averageRating'] as double?,
                                       trend: data['trend'] as PerformanceTrend?,
                                       compact: true,
                                     );

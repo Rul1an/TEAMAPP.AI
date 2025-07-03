@@ -14,7 +14,8 @@ void main() {
 
     test('Block periodization template parameters', () {
       final plan = PeriodizationPlan.blockPeriodization();
-      final params = PeriodizationPlan.getRecommendedParameters(plan.modelType, plan.targetAgeGroup);
+      final params = PeriodizationPlan.getRecommendedParameters(
+          plan.modelType, plan.targetAgeGroup);
       expect(params['periods'], 8);
       expect((params['focusAreas'] as List).length, greaterThanOrEqualTo(3));
     });

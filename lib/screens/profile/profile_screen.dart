@@ -63,9 +63,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       setState(() => _isSaving = true);
       try {
         final file = io.File(picked.path);
-        final updated = await ref
-            .read(profileServiceProvider)
-            .uploadAvatar(file);
+        final updated =
+            await ref.read(profileServiceProvider).uploadAvatar(file);
         setState(() => _profile = updated);
       } finally {
         if (mounted) setState(() => _isSaving = false);
@@ -112,7 +111,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           backgroundImage: _profile!.avatarUrl != null
                               ? NetworkImage(_profile!.avatarUrl!)
                                   as ImageProvider
-                              : const AssetImage('assets/images/avatar_placeholder.png'),
+                              : const AssetImage(
+                                  'assets/images/avatar_placeholder.png'),
                         ),
                         IconButton(
                           icon: const Icon(Icons.camera_alt),

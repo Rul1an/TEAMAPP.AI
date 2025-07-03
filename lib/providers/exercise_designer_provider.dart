@@ -98,8 +98,8 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
             .where((line) => line.trim().isNotEmpty)
             .toList();
       } else if (state.formData['coachingPoints'] is List) {
-        exercise.coachingPoints =
-            List<String>.from(state.formData['coachingPoints'] as List<dynamic>);
+        exercise.coachingPoints = List<String>.from(
+            state.formData['coachingPoints'] as List<dynamic>);
       }
     }
 
@@ -115,7 +115,8 @@ class ExerciseDesignerNotifier extends StateNotifier<ExerciseDesignerState> {
       if (state.formData['objectives'] is String) {
         exercise.objectives = [(state.formData['objectives'] as String)];
       } else if (state.formData['objectives'] is List) {
-        exercise.objectives = List<String>.from(state.formData['objectives'] as List<dynamic>);
+        exercise.objectives =
+            List<String>.from(state.formData['objectives'] as List<dynamic>);
       }
     }
 
@@ -218,7 +219,8 @@ final equipmentSuggestions = {
 
 // Exercise Library Provider for the Enhanced Exercise Library Screen
 final exerciseLibraryProvider = FutureProvider<List<TrainingExercise>>(
-    (ref) async => _getSampleExercises(),);
+  (ref) async => _getSampleExercises(),
+);
 
 List<TrainingExercise> _getSampleExercises() => [
       TrainingExercise.create(

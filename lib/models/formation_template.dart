@@ -54,7 +54,8 @@ class FormationTemplate {
 
   // Helper method to get position preferences for a formation
   static Map<String, String> getDefaultPositionPreferences(
-      Formation formation,) {
+    Formation formation,
+  ) {
     switch (formation) {
       case Formation.fourThreeThree:
         return {

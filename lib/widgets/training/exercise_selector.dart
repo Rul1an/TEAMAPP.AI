@@ -130,8 +130,10 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
                   ),
                   trailing: isSelected
                       ? IconButton(
-                          icon: const Icon(Icons.remove_circle,
-                              color: Colors.red,),
+                          icon: const Icon(
+                            Icons.remove_circle,
+                            color: Colors.red,
+                          ),
                           onPressed: () => widget.onExerciseRemoved(exercise),
                         )
                       : IconButton(

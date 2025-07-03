@@ -82,7 +82,8 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
                   onPanStart: _handlePanStart,
                   onPanUpdate: _handlePanUpdate,
                   onPanEnd: _handlePanEnd,
-                  child: SizedBox.expand(                    child: CustomPaint(
+                  child: SizedBox.expand(
+                    child: CustomPaint(
                       painter: FieldPainter(
                         diagram: widget.diagram,
                         selectedElementId: widget.selectedElementId,
@@ -149,7 +150,7 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
             // // Current: arrow function
             // onChanged: (value) => setState(() => _showGrid = value ?? true),
             //
-            // // Recommended: cascade-friendly block 
+            // // Recommended: cascade-friendly block
             // onChanged: (value) => setState(() {
             //   _showGrid = value ?? true;
             // }),
@@ -482,13 +483,11 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _zoomIn() {
-    _transformController.value =
-        _transformController.value.clone()..scale(1.2);
+    _transformController.value = _transformController.value.clone()..scale(1.2);
   }
 
   void _zoomOut() {
-    _transformController.value =
-        _transformController.value.clone()..scale(0.8);
+    _transformController.value = _transformController.value.clone()..scale(0.8);
   }
 
   void _resetZoom() {

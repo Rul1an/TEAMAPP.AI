@@ -98,8 +98,12 @@ class _MatchDialogState extends State<MatchDialog> {
                     prefixIcon: Icon(Icons.groups),
                   ),
                   items: _commonOpponents
-                      .map((opponent) => DropdownMenuItem(
-                          value: opponent, child: Text(opponent),),)
+                      .map(
+                        (opponent) => DropdownMenuItem(
+                          value: opponent,
+                          child: Text(opponent),
+                        ),
+                      )
                       .toList(),
                   onChanged: (value) {
                     if (value != null) {

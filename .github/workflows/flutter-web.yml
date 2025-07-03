@@ -39,13 +39,13 @@ jobs:
 
     - name: Install dependencies
       run: |
-        # Check if we're already in the Flutter project root
-        if [ -f "pubspec.yaml" ]; then
-          echo "Found pubspec.yaml in current directory"
-          flutter pub get
-        elif [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          echo "Found pubspec.yaml in jo17_tactical_manager"
+        # Check if jo17_tactical_manager exists and contains a pubspec; prefer it over workspace-level pubspec.yaml
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+          echo "Found pubspec.yaml in jo17_tactical_manager → using that as project root"
           cd jo17_tactical_manager
+          flutter pub get
+        elif [ -f "pubspec.yaml" ]; then
+          echo "Using pubspec.yaml in workspace root"
           flutter pub get
         else
           echo "ERROR: Could not find pubspec.yaml"
@@ -54,39 +54,51 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        if [ -f "pubspec.yaml" ]; then
-          ./coverage.sh
-        else
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
           ./coverage.sh
+        elif [ -f "pubspec.yaml" ]; then
+          ./coverage.sh
+        else
+          echo "ERROR: Could not find pubspec.yaml"
+          exit 1
         fi
 
     - name: Check code formatting
       run: |
-        if [ -f "pubspec.yaml" ]; then
-          dart format --output=none --set-exit-if-changed .
-        else
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
           dart format --output=none --set-exit-if-changed .
+        elif [ -f "pubspec.yaml" ]; then
+          dart format --output=none --set-exit-if-changed .
+        else
+          echo "ERROR: Could not find pubspec.yaml"
+          exit 1
         fi
       continue-on-error: true  # Allow formatting check to fail for now
 
     - name: Analyze code
       run: |
-        if [ -f "pubspec.yaml" ]; then
-          flutter analyze --no-fatal-warnings --no-fatal-infos
-        else
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
           flutter analyze --no-fatal-warnings --no-fatal-infos
+        elif [ -f "pubspec.yaml" ]; then
+          flutter analyze --no-fatal-warnings --no-fatal-infos
+        else
+          echo "ERROR: Could not find pubspec.yaml"
+          exit 1
         fi
 
     - name: Build web
       run: |
-        if [ -f "pubspec.yaml" ]; then
-          flutter build web --release
-        else
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
           flutter build web --release
+        elif [ -f "pubspec.yaml" ]; then
+          flutter build web --release
+        else
+          echo "ERROR: Could not find pubspec.yaml"
+          exit 1
         fi
 
     - name: Upload artifacts

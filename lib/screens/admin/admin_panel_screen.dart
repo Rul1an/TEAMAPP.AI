@@ -63,7 +63,9 @@ class _AdminPanelScreenState extends ConsumerState<AdminPanelScreen> {
                       Text(
                         '🎯 Admin Functies',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold,),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: 12),
                       Text('• Feature management'),

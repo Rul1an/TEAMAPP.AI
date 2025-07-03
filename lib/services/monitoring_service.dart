@@ -76,7 +76,8 @@ class MonitoringService {
             ..beforeSendTransaction = (transaction, hint) {
               return transaction;
             }
-            ..beforeBreadcrumb = (Breadcrumb? breadcrumb, Hint? hint) => breadcrumb;
+            ..beforeBreadcrumb =
+                (Breadcrumb? breadcrumb, Hint? hint) => breadcrumb;
         },
       );
     }
@@ -336,8 +337,11 @@ mixin MonitoringMixin {
   Future<void> trackEvent(String name, {Map<String, dynamic>? parameters}) =>
       MonitoringService.trackEvent(name: name, parameters: parameters);
 
-  Future<void> trackError(dynamic error,
-          {StackTrace? stackTrace, String? context,}) =>
+  Future<void> trackError(
+    dynamic error, {
+    StackTrace? stackTrace,
+    String? context,
+  }) =>
       MonitoringService.reportError(
         error: error,
         stackTrace: stackTrace,
@@ -345,7 +349,9 @@ mixin MonitoringMixin {
       );
 
   Future<T> monitorOperation<T>(
-          String operation, Future<T> Function() function,) =>
+    String operation,
+    Future<T> Function() function,
+  ) =>
       MonitoringService.monitorAsync(
         operation: operation,
         function: function,

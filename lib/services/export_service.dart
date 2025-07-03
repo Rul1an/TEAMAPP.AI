@@ -70,7 +70,8 @@ class ExportService {
               level: 0,
               child: pw.Text(
                 'JO17 Spelers Overzicht',
-                style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+                style:
+                    pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
               ),
             ),
             pw.SizedBox(height: 20),
@@ -89,7 +90,8 @@ class ExportService {
                 final age =
                     DateTime.now().difference(player.birthDate).inDays ~/ 365;
                 final speelminutenPercentage = player.matchesInSelection > 0
-                    ? ((player.minutesPlayed / (player.matchesInSelection * 80)) *
+                    ? ((player.minutesPlayed /
+                                (player.matchesInSelection * 80)) *
                             100)
                         .toStringAsFixed(1)
                     : '0.0';
@@ -154,7 +156,8 @@ class ExportService {
         DoubleCellValue(player.height),
         DoubleCellValue(player.weight),
         TextCellValue(
-            player.preferredFoot == PreferredFoot.left ? 'Links' : 'Rechts',),
+          player.preferredFoot == PreferredFoot.left ? 'Links' : 'Rechts',
+        ),
         IntCellValue(player.matchesPlayed),
         IntCellValue(player.goals),
         IntCellValue(player.assists),
@@ -178,7 +181,8 @@ class ExportService {
               level: 0,
               child: pw.Text(
                 'JO17 Wedstrijden Overzicht',
-                style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+                style:
+                    pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
               ),
             ),
             pw.SizedBox(height: 20),

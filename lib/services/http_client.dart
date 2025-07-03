@@ -10,8 +10,7 @@ import 'package:sentry_dio/sentry_dio.dart';
 /// ```
 class HttpClient {
   HttpClient._internal() {
-    _dio = Dio()
-      ..addSentry();
+    _dio = Dio()..addSentry();
   }
 
   static final HttpClient _singleton = HttpClient._internal();

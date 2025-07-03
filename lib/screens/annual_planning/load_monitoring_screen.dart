@@ -67,7 +67,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
           ),
           IconButton(
             icon: Icon(
-                _showProjections ? Icons.visibility : Icons.visibility_off,),
+              _showProjections ? Icons.visibility : Icons.visibility_off,
+            ),
             onPressed: () =>
                 setState(() => _showProjections = !_showProjections),
             tooltip: 'Toggle Projections',
@@ -156,7 +157,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     final averageLoad = morphocycles.fold(0.0, (sum, m) => sum + m.weeklyLoad) /
         morphocycles.length;
     final maxLoad = morphocycles.fold(
-        0.0, (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max,);
+      0.0,
+      (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max,
+    );
     final currentAcr =
         morphocycles.isNotEmpty ? morphocycles.last.acuteChronicRatio : 1.0;
 
@@ -205,8 +208,13 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     );
   }
 
-  Widget _buildSummaryCard(String title, String value, String unit, Color color,
-          IconData icon,) =>
+  Widget _buildSummaryCard(
+    String title,
+    String value,
+    String unit,
+    Color color,
+    IconData icon,
+  ) =>
       Card(
         elevation: 4,
         child: Padding(
@@ -601,12 +609,15 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     }
 
     final currentMorphocycle = morphocycles.last;
-    final avgAcr = morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) /
-        morphocycles.length;
+    final avgAcr =
+        morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) /
+            morphocycles.length;
     final highRiskWeeks = morphocycles
-        .where((m) =>
-            m.currentInjuryRisk == InjuryRisk.high ||
-            m.currentInjuryRisk == InjuryRisk.extreme,)
+        .where(
+          (m) =>
+              m.currentInjuryRisk == InjuryRisk.high ||
+              m.currentInjuryRisk == InjuryRisk.extreme,
+        )
         .length;
     final overloadWeeks = morphocycles.where((m) => m.weeklyLoad > 1400).length;
 
@@ -660,7 +671,11 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
   }
 
   Widget _buildRiskCard(
-          String title, String value, Color color, IconData icon,) =>
+    String title,
+    String value,
+    Color color,
+    IconData icon,
+  ) =>
       Card(
         elevation: 4,
         child: Container(
@@ -936,7 +951,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                         Text(
                           entry.key,
                           style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w500,),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                         Text(
                           '${entry.value} weeks (${percentage.toInt()}%)',
@@ -962,7 +979,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
   }
 
   List<Map<String, dynamic>> _generateRiskRecommendations(
-      Morphocycle current, List<Morphocycle> recent,) {
+    Morphocycle current,
+    List<Morphocycle> recent,
+  ) {
     final recommendations = <Map<String, dynamic>>[];
 
     // High ACR recommendation
@@ -1177,7 +1196,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                 Text(
                   'Week ${morphocycle.weekNumber}',
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold,),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Container(
                   padding:
@@ -1260,7 +1281,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                     .map(
                       (area) => Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4,),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.blue[100],
                           borderRadius: BorderRadius.circular(12),

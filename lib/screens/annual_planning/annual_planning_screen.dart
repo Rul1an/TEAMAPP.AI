@@ -74,8 +74,10 @@ class AnnualPlanningScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.calendar_today,
-                            color: Theme.of(context).colorScheme.primary,),
+                        Icon(
+                          Icons.calendar_today,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                         const SizedBox(width: 8),
                         Text(
                           'Seizoen Overzicht',
@@ -193,8 +195,11 @@ class AnnualPlanningScreen extends ConsumerWidget {
                         padding: EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            Icon(Icons.trending_up,
-                                size: 32, color: Colors.orange,),
+                            Icon(
+                              Icons.trending_up,
+                              size: 32,
+                              color: Colors.orange,
+                            ),
                             SizedBox(height: 8),
                             Text(
                               'Belasting Monitoring',
@@ -237,8 +242,11 @@ class AnnualPlanningScreen extends ConsumerWidget {
                         padding: EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            Icon(Icons.library_books,
-                                size: 32, color: Colors.purple,),
+                            Icon(
+                              Icons.library_books,
+                              size: 32,
+                              color: Colors.purple,
+                            ),
                             SizedBox(height: 8),
                             Text(
                               'Templates',
@@ -278,8 +286,10 @@ class AnnualPlanningScreen extends ConsumerWidget {
                     .map(
                       (season) => Card(
                         child: ListTile(
-                          leading: Icon(Icons.calendar_today,
-                              color: Theme.of(context).primaryColor,),
+                          leading: Icon(
+                            Icons.calendar_today,
+                            color: Theme.of(context).primaryColor,
+                          ),
                           title: Text(season.teamName),
                           subtitle: Text(
                             '${season.season} | ${season.seasonStartDate.day}/${season.seasonStartDate.month} - ${season.seasonEndDate.day}/${season.seasonEndDate.month}\n'
@@ -312,8 +322,10 @@ class AnnualPlanningScreen extends ConsumerWidget {
                     .map(
                       (plan) => Card(
                         child: ListTile(
-                          leading: Icon(Icons.fitness_center,
-                              color: Theme.of(context).primaryColor,),
+                          leading: Icon(
+                            Icons.fitness_center,
+                            color: Theme.of(context).primaryColor,
+                          ),
                           title: Text(plan.name),
                           subtitle: Text(
                             '${plan.modelType.name} | Leeftijd: ${plan.targetAgeGroup.name}\n'
@@ -348,8 +360,10 @@ class AnnualPlanningScreen extends ConsumerWidget {
                     .map(
                       (period) => Card(
                         child: ListTile(
-                          leading: Icon(Icons.timeline,
-                              color: Theme.of(context).primaryColor,),
+                          leading: Icon(
+                            Icons.timeline,
+                            color: Theme.of(context).primaryColor,
+                          ),
                           title: Text(period.name),
                           subtitle: Text(
                             '${period.type.name} | ${period.durationWeeks} weken\n'
@@ -390,8 +404,10 @@ class AnnualPlanningScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.lightbulb,
-                            color: Theme.of(context).colorScheme.primary,),
+                        Icon(
+                          Icons.lightbulb,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                         const SizedBox(width: 8),
                         Text(
                           'Planning Tips',

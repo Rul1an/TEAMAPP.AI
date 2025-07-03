@@ -150,10 +150,12 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.arrow,
                   child: Row(
                     children: [
-                      Icon(Icons.arrow_forward,
-                          color: _selectedDrawingTool == DrawingTool.arrow
-                              ? Colors.blue
-                              : null,),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: _selectedDrawingTool == DrawingTool.arrow
+                            ? Colors.blue
+                            : null,
+                      ),
                       const SizedBox(width: 8),
                       const Text('Pijl'),
                     ],
@@ -163,10 +165,12 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.line,
                   child: Row(
                     children: [
-                      Icon(Icons.remove,
-                          color: _selectedDrawingTool == DrawingTool.line
-                              ? Colors.blue
-                              : null,),
+                      Icon(
+                        Icons.remove,
+                        color: _selectedDrawingTool == DrawingTool.line
+                            ? Colors.blue
+                            : null,
+                      ),
                       const SizedBox(width: 8),
                       const Text('Lijn'),
                     ],
@@ -176,10 +180,12 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.circle,
                   child: Row(
                     children: [
-                      Icon(Icons.circle_outlined,
-                          color: _selectedDrawingTool == DrawingTool.circle
-                              ? Colors.blue
-                              : null,),
+                      Icon(
+                        Icons.circle_outlined,
+                        color: _selectedDrawingTool == DrawingTool.circle
+                            ? Colors.blue
+                            : null,
+                      ),
                       const SizedBox(width: 8),
                       const Text('Cirkel'),
                     ],
@@ -189,10 +195,12 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.text,
                   child: Row(
                     children: [
-                      Icon(Icons.text_fields,
-                          color: _selectedDrawingTool == DrawingTool.text
-                              ? Colors.blue
-                              : null,),
+                      Icon(
+                        Icons.text_fields,
+                        color: _selectedDrawingTool == DrawingTool.text
+                            ? Colors.blue
+                            : null,
+                      ),
                       const SizedBox(width: 8),
                       const Text('Tekst'),
                     ],
@@ -202,10 +210,12 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   value: DrawingTool.erase,
                   child: Row(
                     children: [
-                      Icon(Icons.cleaning_services,
-                          color: _selectedDrawingTool == DrawingTool.erase
-                              ? Colors.blue
-                              : null,),
+                      Icon(
+                        Icons.cleaning_services,
+                        color: _selectedDrawingTool == DrawingTool.erase
+                            ? Colors.blue
+                            : null,
+                      ),
                       const SizedBox(width: 8),
                       const Text('Wissen'),
                     ],
@@ -258,11 +268,13 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                   child: Row(
                     children: [
                       Container(
-                          width: 20,
-                          height: 20,
-                          color: Colors.white,
-                          child: Container(
-                              decoration: BoxDecoration(border: Border.all()),),),
+                        width: 20,
+                        height: 20,
+                        color: Colors.white,
+                        child: Container(
+                          decoration: BoxDecoration(border: Border.all()),
+                        ),
+                      ),
                       const SizedBox(width: 8),
                       const Text('Wit'),
                     ],
@@ -373,7 +385,8 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                                         (formation) => DropdownMenuItem(
                                           value: formation,
                                           child: Text(
-                                              _getFormationText(formation),),
+                                            _getFormationText(formation),
+                                          ),
                                         ),
                                       )
                                       .toList(),
@@ -471,7 +484,8 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                                   avatar:
                                       const Icon(Icons.arrow_forward, size: 16),
                                   label: Text(
-                                      '${_selectedDrawingTool.name} - ${_getDrawingToolName(_selectedDrawingTool)}',),
+                                    '${_selectedDrawingTool.name} - ${_getDrawingToolName(_selectedDrawingTool)}',
+                                  ),
                                   backgroundColor: _selectedDrawingColor
                                       .withValues(alpha: 0.2),
                                 ),
@@ -566,8 +580,10 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
                                 final player = _benchPlayers[index];
                                 return Draggable<Player>(
                                   data: player,
-                                  feedback: _buildPlayerChip(player,
-                                      isDragging: true,),
+                                  feedback: _buildPlayerChip(
+                                    player,
+                                    isDragging: true,
+                                  ),
                                   childWhenDragging: Opacity(
                                     opacity: 0.5,
                                     child: _buildPlayerCard(player),

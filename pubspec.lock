@@ -1296,7 +1296,7 @@ packages:
   test_utils:
     dependency: "direct dev"
     description:
-      path: "../packages/test_utils"
+      path: "packages/test_utils"
       relative: true
     source: path
     version: "0.0.1"

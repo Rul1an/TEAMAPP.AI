@@ -40,26 +40,28 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
 
       // Show errors if any
       if (result.errors.isNotEmpty) {
-        unawaited(showDialog<void>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Import waarschuwingen'),
-            content: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children:
-                    result.errors.map((error) => Text('• $error')).toList(),
+        unawaited(
+          showDialog<void>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Import waarschuwingen'),
+              content: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children:
+                      result.errors.map((error) => Text('• $error')).toList(),
+                ),
               ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
-              ),
-            ],
           ),
-        ),);
+        );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -453,16 +455,22 @@ class _PlayerCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Icon(Icons.sports_soccer,
-                              size: 16, color: Colors.grey[600],),
+                          Icon(
+                            Icons.sports_soccer,
+                            size: 16,
+                            color: Colors.grey[600],
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             '${player.matchesPlayed} wedstrijden',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                           const SizedBox(width: 16),
-                          Icon(Icons.sports_score,
-                              size: 16, color: Colors.grey[600],),
+                          Icon(
+                            Icons.sports_score,
+                            size: 16,
+                            color: Colors.grey[600],
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             '${player.goals} goals',

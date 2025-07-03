@@ -52,7 +52,8 @@ class _EnhancedExerciseLibraryScreenState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            '🏃‍♂️ Exercise Library ${widget.weekNumber > 1 ? "(Week ${widget.weekNumber})" : ""}',),
+          '🏃‍♂️ Exercise Library ${widget.weekNumber > 1 ? "(Week ${widget.weekNumber})" : ""}',
+        ),
         backgroundColor: Colors.orange[600],
         foregroundColor: Colors.white,
         bottom: TabBar(
@@ -185,7 +186,9 @@ class _EnhancedExerciseLibraryScreenState
       );
 
   Widget _buildRecommendedTab(
-      List<TrainingExercise> exercises, Morphocycle? morphocycle,) {
+    List<TrainingExercise> exercises,
+    Morphocycle? morphocycle,
+  ) {
     if (morphocycle == null) {
       return const Center(child: Text('No morphocycle data available'));
     }
@@ -247,8 +250,13 @@ class _EnhancedExerciseLibraryScreenState
     );
   }
 
-  Widget _buildRecommendationSection(String title, String description,
-          List<TrainingExercise> exercises, Color color, IconData icon,) =>
+  Widget _buildRecommendationSection(
+    String title,
+    String description,
+    List<TrainingExercise> exercises,
+    Color color,
+    IconData icon,
+  ) =>
       Container(
         margin: const EdgeInsets.only(bottom: 24),
         child: Column(
@@ -359,14 +367,18 @@ class _EnhancedExerciseLibraryScreenState
     return ListView(
       padding: const EdgeInsets.all(16),
       children: intensityGroups.entries
-          .map((entry) =>
-              _buildIntensitySection(entry.key, _applyFilters(entry.value)),)
+          .map(
+            (entry) =>
+                _buildIntensitySection(entry.key, _applyFilters(entry.value)),
+          )
           .toList(),
     );
   }
 
   Widget _buildIntensitySection(
-      String intensityName, List<TrainingExercise> exercises,) {
+    String intensityName,
+    List<TrainingExercise> exercises,
+  ) {
     final color = _getIntensityColorFromName(intensityName);
 
     return Container(
@@ -452,14 +464,18 @@ class _EnhancedExerciseLibraryScreenState
     return ListView(
       padding: const EdgeInsets.all(16),
       children: focusGroups.entries
-          .map((entry) =>
-              _buildFocusSection(entry.key, _applyFilters(entry.value)),)
+          .map(
+            (entry) =>
+                _buildFocusSection(entry.key, _applyFilters(entry.value)),
+          )
           .toList(),
     );
   }
 
   Widget _buildFocusSection(
-      String focusName, List<TrainingExercise> exercises,) {
+    String focusName,
+    List<TrainingExercise> exercises,
+  ) {
     final color = _getFocusColorFromName(focusName);
 
     return Container(
@@ -559,7 +575,8 @@ class _EnhancedExerciseLibraryScreenState
               ),
               const Spacer(),
               Text(
-                  'Total duration: ${_calculateTotalDuration(filteredExercises)} min',),
+                'Total duration: ${_calculateTotalDuration(filteredExercises)} min',
+              ),
             ],
           ),
         ),
@@ -596,10 +613,13 @@ class _EnhancedExerciseLibraryScreenState
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 2,),
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: _getIntensityColorFromLevel(
-                            exercise.intensityLevel,),
+                          exercise.intensityLevel,
+                        ),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
@@ -614,7 +634,9 @@ class _EnhancedExerciseLibraryScreenState
                     const SizedBox(width: 4),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 2,),
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: _getTypeColor(exercise.type),
                         borderRadius: BorderRadius.circular(4),
@@ -674,8 +696,10 @@ class _EnhancedExerciseLibraryScreenState
                     const Row(
                       children: [
                         Icon(Icons.star, size: 12, color: Colors.amber),
-                        Text('4.2',
-                            style: TextStyle(fontSize: 10, color: Colors.grey),),
+                        Text(
+                          '4.2',
+                          style: TextStyle(fontSize: 10, color: Colors.grey),
+                        ),
                       ],
                     ),
                   ],
@@ -733,7 +757,9 @@ class _EnhancedExerciseLibraryScreenState
               Text('Duration: $_minDuration - $_maxDuration minutes'),
               RangeSlider(
                 values: RangeValues(
-                    _minDuration.toDouble(), _maxDuration.toDouble(),),
+                  _minDuration.toDouble(),
+                  _maxDuration.toDouble(),
+                ),
                 min: 5,
                 max: 120,
                 divisions: 23,
@@ -779,12 +805,16 @@ class _EnhancedExerciseLibraryScreenState
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(exercise.description.isEmpty
-                  ? 'No description available'
-                  : exercise.description,),
+              Text(
+                exercise.description.isEmpty
+                    ? 'No description available'
+                    : exercise.description,
+              ),
               const SizedBox(height: 16),
               _buildDetailRow(
-                  'Duration', '${exercise.durationMinutes} minutes',),
+                'Duration',
+                '${exercise.durationMinutes} minutes',
+              ),
               _buildDetailRow('Players', '${exercise.playerCount}'),
               _buildDetailRow('Intensity', '${exercise.intensityLevel}/10'),
               _buildDetailRow('Type', exercise.type.name),

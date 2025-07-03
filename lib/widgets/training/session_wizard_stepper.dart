@@ -24,7 +24,8 @@ class SessionWizardStepper extends StatelessWidget {
                 value: (currentStep + 1) / steps.length,
                 backgroundColor: Colors.grey.shade300,
                 valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).primaryColor,),
+                  Theme.of(context).primaryColor,
+                ),
               ),
             ),
             const SizedBox(height: 12),

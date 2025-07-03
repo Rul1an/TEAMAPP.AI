@@ -121,14 +121,15 @@ class SeasonPlan {
       ..seasonEndDate = json['seasonEndDate'] != null
           ? DateTime.parse(json['seasonEndDate'] as String)
           : DateTime.now().add(const Duration(days: 300))
-      ..holidayPeriods = List<String>.from(json['holidayPeriods'] as List<dynamic>? ?? [])
+      ..holidayPeriods =
+          List<String>.from(json['holidayPeriods'] as List<dynamic>? ?? [])
       ..periodizationPlanId = json['periodizationPlanId'] as String? ?? ''
       ..totalWeeks = json['totalWeeks'] as int? ?? 40
       ..trainingWeeks = json['trainingWeeks'] as int? ?? 36
       ..competitionWeeks = json['competitionWeeks'] as int? ?? 32
       ..primaryCompetition = json['primaryCompetition'] as String? ?? ''
-      ..additionalCompetitions =
-          List<String>.from(json['additionalCompetitions'] as List<dynamic>? ?? [])
+      ..additionalCompetitions = List<String>.from(
+          json['additionalCompetitions'] as List<dynamic>? ?? [])
       ..firstMatchDate = json['firstMatchDate'] != null
           ? DateTime.parse(json['firstMatchDate'] as String)
           : null
@@ -141,16 +142,18 @@ class SeasonPlan {
       ..midSeasonBreakEnd = json['midSeasonBreakEnd'] != null
           ? DateTime.parse(json['midSeasonBreakEnd'] as String)
           : null
-      ..seasonObjectives = List<String>.from(json['seasonObjectives'] as List<dynamic>? ?? [])
-      ..keyPerformanceIndicators =
-          List<String>.from(json['keyPerformanceIndicators'] as List<dynamic>? ?? [])
+      ..seasonObjectives =
+          List<String>.from(json['seasonObjectives'] as List<dynamic>? ?? [])
+      ..keyPerformanceIndicators = List<String>.from(
+          json['keyPerformanceIndicators'] as List<dynamic>? ?? [])
       ..isTemplate = json['isTemplate'] as bool? ?? false
       ..status = SeasonStatus.values.firstWhere(
         (e) => e.name == (json['status'] as String?),
         orElse: () => SeasonStatus.draft,
       )
       ..currentWeek = json['currentWeek'] as int? ?? 1
-      ..progressPercentage = (json['progressPercentage'] as num?)?.toDouble() ?? 0.0
+      ..progressPercentage =
+          (json['progressPercentage'] as num?)?.toDouble() ?? 0.0
       ..createdBy = json['createdBy'] as String?
       ..createdAt = json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
@@ -406,8 +409,7 @@ class SeasonPlan {
       ..lastMatchDate = lastMatchDate ?? this.lastMatchDate
       ..midSeasonBreakStart = midSeasonBreakStart ?? this.midSeasonBreakStart
       ..midSeasonBreakEnd = midSeasonBreakEnd ?? this.midSeasonBreakEnd
-      ..seasonObjectives =
-          seasonObjectives ?? List.from(this.seasonObjectives)
+      ..seasonObjectives = seasonObjectives ?? List.from(this.seasonObjectives)
       ..keyPerformanceIndicators =
           keyPerformanceIndicators ?? List.from(this.keyPerformanceIndicators)
       ..isTemplate = isTemplate ?? this.isTemplate

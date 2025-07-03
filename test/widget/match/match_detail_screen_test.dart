@@ -4,7 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
-import 'package:jo17_tactical_manager/providers/database_provider.dart' as db_providers;
+import 'package:jo17_tactical_manager/providers/database_provider.dart'
+    as db_providers;
 import 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart';
 import 'package:test_utils/surface_utils.dart';
 

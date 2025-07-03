@@ -166,11 +166,17 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
               const SizedBox(height: 16),
               _buildInfoRow('Tegenstander', match.opponent),
               _buildInfoRow(
-                  'Datum', DateFormat('dd-MM-yyyy HH:mm').format(match.date),),
+                'Datum',
+                DateFormat('dd-MM-yyyy HH:mm').format(match.date),
+              ),
               _buildInfoRow(
-                  'Locatie', match.location == Location.home ? 'Thuis' : 'Uit',),
+                'Locatie',
+                match.location == Location.home ? 'Thuis' : 'Uit',
+              ),
               _buildInfoRow(
-                  'Competitie', _getCompetitionName(match.competition),),
+                'Competitie',
+                _getCompetitionName(match.competition),
+              ),
               _buildInfoRow('Status', _getStatusName(match.status)),
             ],
           ),
@@ -421,22 +427,28 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                     itemCount: players.length,
                     itemBuilder: (context, index) {
                       final player = players[index];
-                      final isSelected = selectedPlayers.contains(player.id.toString());
-                      final canSelect = selectedPlayers.length < maxSelection || isSelected;
+                      final isSelected =
+                          selectedPlayers.contains(player.id.toString());
+                      final canSelect =
+                          selectedPlayers.length < maxSelection || isSelected;
 
                       return CheckboxListTile(
                         title: Text(player.name),
-                        subtitle: Text('${player.jerseyNumber} - ${_getPositionText(player.position)}'),
+                        subtitle: Text(
+                            '${player.jerseyNumber} - ${_getPositionText(player.position)}'),
                         value: isSelected,
-                        onChanged: canSelect ? (bool? value) {
-                          setState(() {
-                            if (value ?? false) {
-                              selectedPlayers.add(player.id.toString());
-                            } else {
-                              selectedPlayers.remove(player.id.toString());
-                            }
-                          });
-                        } : null,
+                        onChanged: canSelect
+                            ? (bool? value) {
+                                setState(() {
+                                  if (value ?? false) {
+                                    selectedPlayers.add(player.id.toString());
+                                  } else {
+                                    selectedPlayers
+                                        .remove(player.id.toString());
+                                  }
+                                });
+                              }
+                            : null,
                       );
                     },
                   ),
@@ -541,7 +553,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       final matchesAsync = ref.read(matchesProvider);
       final matches = matchesAsync.value ?? [];
 
-      final matchIndex = matches.indexWhere((m) => m.id.toString() == widget.matchId);
+      final matchIndex =
+          matches.indexWhere((m) => m.id.toString() == widget.matchId);
       if (matchIndex == -1) return;
 
       final match = matches[matchIndex];

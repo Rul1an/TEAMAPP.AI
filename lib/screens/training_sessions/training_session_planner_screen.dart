@@ -65,7 +65,9 @@ class _TrainingSessionPlannerScreenState
                   label: const Text('Open Session Builder'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 16,),
+                      horizontal: 24,
+                      vertical: 16,
+                    ),
                     backgroundColor: Colors.blue[700],
                     foregroundColor: Colors.white,
                   ),

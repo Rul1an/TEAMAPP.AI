@@ -212,7 +212,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                         (competition) => DropdownMenuItem(
                                           value: competition,
                                           child: Text(
-                                              _getCompetitionText(competition),),
+                                            _getCompetitionText(competition),
+                                          ),
                                         ),
                                       )
                                       .toList(),
@@ -547,7 +548,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Wedstrijd verwijderen'),
         content: Text(
-            'Weet je zeker dat je de wedstrijd tegen ${_match!.opponent} wilt verwijderen?',),
+          'Weet je zeker dat je de wedstrijd tegen ${_match!.opponent} wilt verwijderen?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

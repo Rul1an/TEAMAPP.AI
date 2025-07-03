@@ -397,9 +397,7 @@ class FieldDiagramEditorNotifier
   }
 
   void _addToHistory(FieldDiagram diagram) {
-    final newHistory = state.history
-        .take(state.historyIndex + 1)
-        .toList()
+    final newHistory = state.history.take(state.historyIndex + 1).toList()
       ..add(diagram);
 
     // Limit history to 50 items
@@ -417,17 +415,21 @@ class FieldDiagramEditorNotifier
 
   // Save operations
   Future<void> saveDiagramToExercise(
-      String exerciseId, FieldDiagram diagram,) async {
+    String exerciseId,
+    FieldDiagram diagram,
+  ) async {
     // TODO(author): Implement save to exercise
     // This would integrate with the exercise library service
     await Future<void>.delayed(
-        const Duration(milliseconds: 500),); // Simulate API call
+      const Duration(milliseconds: 500),
+    ); // Simulate API call
   }
 
   Future<void> saveDiagramTemplate(FieldDiagram diagram, String name) async {
     // TODO(author): Implement save as template
     await Future<void>.delayed(
-        const Duration(milliseconds: 500),); // Simulate API call
+      const Duration(milliseconds: 500),
+    ); // Simulate API call
   }
 
   /// 🔧 CASCADE OPERATOR DOCUMENTATION - FIELD DIAGRAM PROVIDER OPERATIONS
@@ -475,8 +477,10 @@ class FieldDiagramEditorNotifier
   /// ```
 
   // Export operations
-  Future<void> exportDiagramToPNG(FieldDiagram diagram,
-      {int width = 1920,}) async {
+  Future<void> exportDiagramToPNG(
+    FieldDiagram diagram, {
+    int width = 1920,
+  }) async {
     try {
       // Use the canvas to generate a high-resolution PNG
       final recorder = ui.PictureRecorder();
@@ -489,8 +493,7 @@ class FieldDiagramEditorNotifier
         diagram: diagram,
         showGrid: false, // No grid in exports
         gridSize: 10,
-      )
-        .paint(canvas, size);
+      ).paint(canvas, size);
 
       final picture = recorder.endRecording();
       final image = await picture.toImage(width, (width * 0.75).round());
@@ -523,8 +526,7 @@ class FieldDiagramEditorNotifier
         diagram: diagram,
         showGrid: false,
         gridSize: 10,
-      )
-        .paint(canvas, size);
+      ).paint(canvas, size);
 
       final picture = recorder.endRecording();
       final image = await picture.toImage(800, 600);
@@ -542,13 +544,16 @@ class FieldDiagramEditorNotifier
                 pw.Text(
                   'Veld Diagram',
                   style: pw.TextStyle(
-                      fontSize: 24, fontWeight: pw.FontWeight.bold,),
+                    fontSize: 24,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
                 ),
                 pw.SizedBox(height: 20),
                 pw.Image(pw.MemoryImage(imageBytes)),
                 pw.SizedBox(height: 20),
                 pw.Text(
-                    'Gegenereerd op: ${DateTime.now().toString().substring(0, 16)}',),
+                  'Gegenereerd op: ${DateTime.now().toString().substring(0, 16)}',
+                ),
                 pw.Text('Spelers: ${diagram.players.length}'),
                 pw.Text('Equipment: ${diagram.equipment.length}'),
                 pw.Text('Bewegingen: ${diagram.movements.length}'),

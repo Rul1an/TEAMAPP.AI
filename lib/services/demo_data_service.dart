@@ -239,12 +239,12 @@ class DemoDataService {
         ..id = _uuid.v4()
         ..date = date
         ..opponent = opponents[i % opponents.length]
-        ..location = i .isEven ? Location.home : Location.away
+        ..location = i.isEven ? Location.home : Location.away
         ..competition = Competition.league
         ..status = MatchStatus.completed
-        ..venue = i .isEven ? 'Sportpark Overvecht' : 'Uitstadion'
-        ..teamScore = i .isEven ? 2 : 1
-        ..opponentScore = i .isEven ? 1 : 2;
+        ..venue = i.isEven ? 'Sportpark Overvecht' : 'Uitstadion'
+        ..teamScore = i.isEven ? 2 : 1
+        ..opponentScore = i.isEven ? 1 : 2;
 
       matches.add(match);
     }
@@ -256,10 +256,10 @@ class DemoDataService {
         ..id = _uuid.v4()
         ..date = date
         ..opponent = opponents[(i + 3) % opponents.length]
-        ..location = i .isEven ? Location.away : Location.home
+        ..location = i.isEven ? Location.away : Location.home
         ..competition = Competition.league
         ..status = MatchStatus.scheduled
-        ..venue = i .isEven ? 'Uitstadion' : 'Sportpark Overvecht';
+        ..venue = i.isEven ? 'Uitstadion' : 'Sportpark Overvecht';
 
       matches.add(match);
     }
@@ -279,7 +279,8 @@ class DemoDataService {
       if (tuesday.isAfter(now)) {
         sessions
           ..add(_createTrainingSession(teamId, tuesday, 'Techniek & Passing'))
-          ..add(_createTrainingSession(teamId, tuesday.add(const Duration(days: 7)), 'Tactiek & Positiespel'));
+          ..add(_createTrainingSession(teamId,
+              tuesday.add(const Duration(days: 7)), 'Tactiek & Positiespel'));
       }
     }
 
@@ -287,7 +288,10 @@ class DemoDataService {
   }
 
   static TrainingSession _createTrainingSession(
-      String teamId, DateTime date, String focus,) {
+    String teamId,
+    DateTime date,
+    String focus,
+  ) {
     return TrainingSession.create(
       teamId: teamId,
       date: date,

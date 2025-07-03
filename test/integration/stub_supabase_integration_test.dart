@@ -78,7 +78,8 @@ void main() {
       expect(orgs.first['organizations']['name'], 'Test Org');
     });
 
-    test('OrganizationService.createOrganization works with stubbed client', () async {
+    test('OrganizationService.createOrganization works with stubbed client',
+        () async {
       final service = OrganizationService(client: client);
       final org = await service.createOrganization(
         name: 'My Org',

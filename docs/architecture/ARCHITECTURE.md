@@ -539,3 +539,38 @@ Flexibele data import en export mogelijkheden:
 
 *Document laatst bijgewerkt: 7 December 2024*
 *Versie: 1.1.0*
+
+### New Data Access Layer (2025 Roadmap)
+
+To align with Clean Architecture 2025 guidelines we are introducing an explicit **Repository Layer**:
+
+```
+Widget → Provider (StateNotifier) → Repository → Data Source (Supabase API, Hive cache)
+```
+
+* Repositories expose pure Dart interfaces (no Flutter dependencies).
+* Each feature gets its own repository (e.g. `ProfileRepository`, `PlayerRepository`).
+* Data-sources are injected (Supabase, Hive, Fake).
+* Providers depend only on repository abstractions – improves testability.
+
+Implementation will start with the Profile domain during Q3 2025 refactor.
+
+## 🆕 Repository Layer Roadmap (Q3 2025)
+
+To conform with 2025 Clean-Architecture recommendations we will introduce an **explicit Repository layer** between providers and data-sources.
+
+```
+UI ➜ Riverpod Provider ➜ Repository ➜ Data-Source (Supabase / Hive / Mock)
+```
+
+Benefits:
+1. Decoupled business logic from back-end implementation.
+2. Easy unit-testing with in-memory / fake repositories.
+3. Seamless switch between online (Supabase) and offline (Hive) persistence.
+
+The migration will proceed incrementally:
+1. `ProfileRepository` as reference implementation.
+2. Players, Matches, Trainings repositories.
+3. Generic `RepositoryProvider<T>` + caching adapters.
+
+See `docs/plans/architecture/REPOSITORY_LAYER_REFRACTOR_Q3_2025.md` for the detailed execution plan.

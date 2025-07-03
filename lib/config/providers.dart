@@ -31,11 +31,13 @@ final calendarProvider =
 // Training sessions provider
 final trainingSessionsProvider =
     ChangeNotifierProvider<TrainingSessionsProvider>(
-        (ref) => TrainingSessionsProvider(),);
+  (ref) => TrainingSessionsProvider(),
+);
 
 // Player tracking provider
 final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>(
-    (ref) => PlayerTrackingProvider(),);
+  (ref) => PlayerTrackingProvider(),
+);
 
 // Calendar provider implementation
 class CalendarProvider extends ChangeNotifier {

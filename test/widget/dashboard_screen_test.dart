@@ -37,11 +37,15 @@ class FakeAuthService implements AuthService {
       throw UnimplementedError();
 
   @override
-  Future<AuthResponse> signInWithPassword({required String email, required String password}) =>
+  Future<AuthResponse> signInWithPassword(
+          {required String email, required String password}) =>
       throw UnimplementedError();
 
   @override
-  Future<AuthResponse> signUp({required String email, required String password, Map<String, dynamic>? metadata}) =>
+  Future<AuthResponse> signUp(
+          {required String email,
+          required String password,
+          Map<String, dynamic>? metadata}) =>
       throw UnimplementedError();
 
   @override
@@ -126,7 +130,8 @@ class _StatsStub extends MapBase<String, dynamic> {
 
 void main() {
   group('DashboardScreen RBAC & Demo banner', () {
-    testWidgets('Coach role shows training & lineup actions and demo banner', (tester) async {
+    testWidgets('Coach role shows training & lineup actions and demo banner',
+        (tester) async {
       final demoNotifier = DemoModeNotifier();
       demoNotifier.startDemo(role: DemoRole.coach);
 
@@ -152,7 +157,8 @@ void main() {
       expect(find.textContaining('RBAC Demo Mode'), findsOneWidget);
     });
 
-    testWidgets('Player role hides action icons but shows banner', (tester) async {
+    testWidgets('Player role hides action icons but shows banner',
+        (tester) async {
       final demoNotifier = DemoModeNotifier();
       demoNotifier.startDemo(role: DemoRole.player);
 

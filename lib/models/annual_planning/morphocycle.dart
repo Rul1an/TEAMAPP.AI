@@ -5,31 +5,31 @@ import 'week_schedule.dart';
 
 /// Training intensity levels based on Vítor Frade's Tactical Periodization
 enum TrainingIntensity {
-  recovery,     // Day +1: 30-40% intensity - Active recovery
-  acquisition,  // Day +2: 85-95% intensity - High-intensity tactical work
-  development,  // Day +3: 70-80% intensity - Medium-intensity technical-tactical
-  activation,   // Day +4: 50-60% intensity - Low-intensity activation/set pieces
-  competition   // Match Day: 100% intensity - Competition
+  recovery, // Day +1: 30-40% intensity - Active recovery
+  acquisition, // Day +2: 85-95% intensity - High-intensity tactical work
+  development, // Day +3: 70-80% intensity - Medium-intensity technical-tactical
+  activation, // Day +4: 50-60% intensity - Low-intensity activation/set pieces
+  competition // Match Day: 100% intensity - Competition
 }
 
 /// Training focus areas for morphocycle days
 enum TacticalFocus {
-  recovery,           // Recovery and regeneration
-  defensiveOrg,       // Defensive organization and pressing
-  attackingOrg,       // Attacking organization and possession
-  transitions,        // Attacking/defensive transitions
-  setPieces,          // Set pieces and activation
-  matchPreparation,   // Match-specific preparation
-  gameModel,          // Overall game model implementation
+  recovery, // Recovery and regeneration
+  defensiveOrg, // Defensive organization and pressing
+  attackingOrg, // Attacking organization and possession
+  transitions, // Attacking/defensive transitions
+  setPieces, // Set pieces and activation
+  matchPreparation, // Match-specific preparation
+  gameModel, // Overall game model implementation
   physicalConditioning, // Physical preparation when needed
   // Additional tactical focuses for enhanced filtering
-  possession,         // Ball possession exercises
-  pressing,           // Pressing and ball recovery
-  counterAttack,      // Counter-attacking situations
-  positionalPlay,     // Positional play development
-  setpieces,          // Set pieces (alternative naming)
-  defensive,          // General defensive work
-  attacking,          // General attacking work
+  possession, // Ball possession exercises
+  pressing, // Pressing and ball recovery
+  counterAttack, // Counter-attacking situations
+  positionalPlay, // Positional play development
+  setpieces, // Set pieces (alternative naming)
+  defensive, // General defensive work
+  attacking, // General attacking work
 }
 
 // Extension for TacticalFocus to provide display names
@@ -72,14 +72,13 @@ extension TacticalFocusExtension on TacticalFocus {
 
 /// Injury risk assessment based on Acute:Chronic Workload Ratio
 enum InjuryRisk {
-  underloaded,  // ACWR < 0.8 - Risk of detraining
-  optimal,      // ACWR 0.8-1.3 - Optimal training zone
-  high,         // ACWR > 1.3 - High injury risk
-  extreme       // ACWR > 1.5 - Extreme injury risk
+  underloaded, // ACWR < 0.8 - Risk of detraining
+  optimal, // ACWR 0.8-1.3 - Optimal training zone
+  high, // ACWR > 1.3 - High injury risk
+  extreme // ACWR > 1.5 - Extreme injury risk
 }
 
 class Morphocycle {
-
   // Constructor
   Morphocycle();
 
@@ -92,10 +91,10 @@ class Morphocycle {
   }) {
     // Set standard KNVB intensity distribution
     intensityDistribution = {
-      'recovery': 35.0,      // Day +1
-      'acquisition': 90.0,   // Day +2
-      'development': 75.0,   // Day +3
-      'activation': 55.0,    // Day +4
+      'recovery': 35.0, // Day +1
+      'acquisition': 90.0, // Day +2
+      'development': 75.0, // Day +3
+      'activation': 55.0, // Day +4
     };
 
     // Set tactical focus based on period
@@ -126,10 +125,10 @@ class Morphocycle {
 
     // Set Vítor Frade intensity distribution
     intensityDistribution = {
-      'recovery': 35.0,      // Day +1: Active recovery
-      'acquisition': 92.0,   // Day +2: Maximum tactical intensity
-      'development': 78.0,   // Day +3: Technical-tactical development
-      'activation': 52.0,    // Day +4: Activation and set pieces
+      'recovery': 35.0, // Day +1: Active recovery
+      'acquisition': 92.0, // Day +2: Maximum tactical intensity
+      'development': 78.0, // Day +3: Technical-tactical development
+      'activation': 52.0, // Day +4: Activation and set pieces
     };
 
     // Set tactical focus for tactical periodization
@@ -143,7 +142,8 @@ class Morphocycle {
     acuteChronicRatio = 1.0;
 
     // Set advanced performance indicators
-    expectedAdaptation = _calculateExpectedAdaptation(period) * 1.15; // Higher for tactical periodization
+    expectedAdaptation = _calculateExpectedAdaptation(period) *
+        1.15; // Higher for tactical periodization
     keyPerformanceIndicators = _getTacticalKPIs(gameModelFocus);
     trainingObjectives = _getTacticalObjectives(gameModelFocus);
   }
@@ -155,54 +155,64 @@ class Morphocycle {
       ..periodId = json['periodId'] as String? ?? ''
       ..seasonPlanId = json['seasonPlanId'] as String? ?? ''
       ..weeklyLoad = (json['weeklyLoad'] as num?)?.toDouble() ?? 0.0
-      ..intensityDistribution = Map<String, double>.from(json['intensityDistribution'] as Map<String, dynamic>? ?? <String, dynamic>{})
-      ..acuteChronicRatio = (json['acuteChronicRatio'] as num?)?.toDouble() ?? 1.0
-      ..tacticalFocusAreas = List<String>.from(json['tacticalFocusAreas'] as List<dynamic>? ?? <dynamic>[])
+      ..intensityDistribution = Map<String, double>.from(
+          json['intensityDistribution'] as Map<String, dynamic>? ??
+              <String, dynamic>{})
+      ..acuteChronicRatio =
+          (json['acuteChronicRatio'] as num?)?.toDouble() ?? 1.0
+      ..tacticalFocusAreas = List<String>.from(
+          json['tacticalFocusAreas'] as List<dynamic>? ?? <dynamic>[])
       ..primaryGameModelFocus = json['primaryGameModelFocus'] as String? ?? ''
-      ..secondaryGameModelFocus = json['secondaryGameModelFocus'] as String? ?? ''
-      ..expectedAdaptation = (json['expectedAdaptation'] as num?)?.toDouble() ?? 60.0
-      ..keyPerformanceIndicators = List<String>.from(json['keyPerformanceIndicators'] as List<dynamic>? ?? <dynamic>[])
-      ..trainingObjectives = List<String>.from(json['trainingObjectives'] as List<dynamic>? ?? <dynamic>[])
+      ..secondaryGameModelFocus =
+          json['secondaryGameModelFocus'] as String? ?? ''
+      ..expectedAdaptation =
+          (json['expectedAdaptation'] as num?)?.toDouble() ?? 60.0
+      ..keyPerformanceIndicators = List<String>.from(
+          json['keyPerformanceIndicators'] as List<dynamic>? ?? <dynamic>[])
+      ..trainingObjectives = List<String>.from(
+          json['trainingObjectives'] as List<dynamic>? ?? <dynamic>[])
       ..totalTrainingMinutes = json['totalTrainingMinutes'] as int? ?? 240
       ..averageRPE = (json['averageRPE'] as num?)?.toDouble() ?? 6.0
       ..numberOfSessions = json['numberOfSessions'] as int? ?? 3
-      ..createdAt = DateTime.tryParse(json['createdAt'] as String? ?? '') ?? DateTime.now()
-      ..updatedAt = DateTime.tryParse(json['updatedAt'] as String? ?? '') ?? DateTime.now();
+      ..createdAt = DateTime.tryParse(json['createdAt'] as String? ?? '') ??
+          DateTime.now()
+      ..updatedAt = DateTime.tryParse(json['updatedAt'] as String? ?? '') ??
+          DateTime.now();
     return morphocycle;
   }
   String id = '';
 
   // Basic identification
-  late int weekNumber;          // Week number in season (1-43)
-  late String periodId;         // Link to training period
-  late String seasonPlanId;     // Link to season plan
+  late int weekNumber; // Week number in season (1-43)
+  late String periodId; // Link to training period
+  late String seasonPlanId; // Link to season plan
 
   // Morphocycle structure following Vítor Frade methodology
-  String? recoverySessionId;     // Day +1: Recovery session
-  String? acquisitionSessionId;  // Day +2: High-intensity acquisition
-  String? developmentSessionId;  // Day +3: Medium-intensity development
-  String? activationSessionId;   // Day +4: Low-intensity activation
-  String? matchEventId;          // Competition day event
+  String? recoverySessionId; // Day +1: Recovery session
+  String? acquisitionSessionId; // Day +2: High-intensity acquisition
+  String? developmentSessionId; // Day +3: Medium-intensity development
+  String? activationSessionId; // Day +4: Low-intensity activation
+  String? matchEventId; // Competition day event
 
   // Load management
-  late double weeklyLoad;                    // Total weekly training load (RPE × minutes)
+  late double weeklyLoad; // Total weekly training load (RPE × minutes)
   late Map<String, double> intensityDistribution; // Daily intensity percentages
-  late double acuteChronicRatio;            // Injury risk indicator
+  late double acuteChronicRatio; // Injury risk indicator
 
   // Tactical focus
-  late List<String> tacticalFocusAreas;     // Main tactical themes for the week
-  late String primaryGameModelFocus;        // Main game model emphasis
-  late String secondaryGameModelFocus;      // Secondary emphasis
+  late List<String> tacticalFocusAreas; // Main tactical themes for the week
+  late String primaryGameModelFocus; // Main game model emphasis
+  late String secondaryGameModelFocus; // Secondary emphasis
 
   // Performance indicators
-  late double expectedAdaptation;           // Predicted training adaptation (0-100%)
+  late double expectedAdaptation; // Predicted training adaptation (0-100%)
   late List<String> keyPerformanceIndicators; // Measurable outcomes
-  late List<String> trainingObjectives;    // Weekly objectives
+  late List<String> trainingObjectives; // Weekly objectives
 
   // Load calculation parameters
-  late int totalTrainingMinutes;           // Total planned training time
-  late double averageRPE;                  // Average RPE for the week
-  late int numberOfSessions;               // Number of training sessions
+  late int totalTrainingMinutes; // Total planned training time
+  late double averageRPE; // Average RPE for the week
+  late int numberOfSessions; // Number of training sessions
 
   // Metadata
   DateTime createdAt = DateTime.now();
@@ -211,7 +221,8 @@ class Morphocycle {
   // Load calculation methods
   double _calculateWeeklyLoad() => averageRPE * totalTrainingMinutes;
 
-  static double calculateSessionLoad(int rpeScore, int durationMinutes) => rpeScore * durationMinutes.toDouble();
+  static double calculateSessionLoad(int rpeScore, int durationMinutes) =>
+      rpeScore * durationMinutes.toDouble();
 
   static double calculateACWR(List<double> last28DaysLoads) {
     if (last28DaysLoads.length < 28) return 1;
@@ -240,32 +251,56 @@ class Morphocycle {
 
     switch (period.type) {
       case PeriodType.preparation:
-        tacticalFocusAreas = ['Ball Control', 'Passing Accuracy', 'Physical Conditioning'];
+        tacticalFocusAreas = [
+          'Ball Control',
+          'Passing Accuracy',
+          'Physical Conditioning'
+        ];
         primaryGameModelFocus = 'Ball Possession';
         secondaryGameModelFocus = 'Individual Skills';
         break;
       case PeriodType.competitionEarly:
-        tacticalFocusAreas = ['Positional Play', 'Defensive Shape', 'Team Coordination'];
+        tacticalFocusAreas = [
+          'Positional Play',
+          'Defensive Shape',
+          'Team Coordination'
+        ];
         primaryGameModelFocus = 'Defensive Organization';
         secondaryGameModelFocus = 'Pressing Triggers';
         break;
       case PeriodType.competitionPeak:
-        tacticalFocusAreas = ['Match Preparation', 'Set Pieces', 'Game Management'];
+        tacticalFocusAreas = [
+          'Match Preparation',
+          'Set Pieces',
+          'Game Management'
+        ];
         primaryGameModelFocus = 'Match Preparation';
         secondaryGameModelFocus = 'Performance Optimization';
         break;
       case PeriodType.competitionMaintenance:
-        tacticalFocusAreas = ['Consistency', 'Rotation Management', 'Tactical Variations'];
+        tacticalFocusAreas = [
+          'Consistency',
+          'Rotation Management',
+          'Tactical Variations'
+        ];
         primaryGameModelFocus = 'Performance Maintenance';
         secondaryGameModelFocus = 'Squad Development';
         break;
       case PeriodType.transition:
-        tacticalFocusAreas = ['Creativity', 'Individual Expression', 'New Concepts'];
+        tacticalFocusAreas = [
+          'Creativity',
+          'Individual Expression',
+          'New Concepts'
+        ];
         primaryGameModelFocus = 'Creative Play';
         secondaryGameModelFocus = 'Skill Development';
         break;
       case PeriodType.tournamentPrep:
-        tacticalFocusAreas = ['Tournament Tactics', 'Mental Preparation', 'Squad Unity'];
+        tacticalFocusAreas = [
+          'Tournament Tactics',
+          'Mental Preparation',
+          'Squad Unity'
+        ];
         primaryGameModelFocus = 'Tournament Tactics';
         secondaryGameModelFocus = 'Mental Readiness';
         break;
@@ -277,7 +312,11 @@ class Morphocycle {
 
     switch (gameModel.toLowerCase()) {
       case 'possession':
-        tacticalFocusAreas = ['Ball Retention', 'Positional Play', 'Build-up Play'];
+        tacticalFocusAreas = [
+          'Ball Retention',
+          'Positional Play',
+          'Build-up Play'
+        ];
         secondaryGameModelFocus = 'Creating Numerical Superiority';
         break;
       case 'pressing':
@@ -285,11 +324,19 @@ class Morphocycle {
         secondaryGameModelFocus = 'Transition to Attack';
         break;
       case 'counter attack':
-        tacticalFocusAreas = ['Quick Transitions', 'Direct Play', 'Vertical Runs'];
+        tacticalFocusAreas = [
+          'Quick Transitions',
+          'Direct Play',
+          'Vertical Runs'
+        ];
         secondaryGameModelFocus = 'Defensive Stability';
         break;
       case 'positional play':
-        tacticalFocusAreas = ['Space Occupation', 'Player Movement', 'Passing Networks'];
+        tacticalFocusAreas = [
+          'Space Occupation',
+          'Player Movement',
+          'Passing Networks'
+        ];
         secondaryGameModelFocus = 'Creating Overloads';
         break;
       default:
@@ -306,9 +353,11 @@ class Morphocycle {
 
     // Adjust based on morphocycle structure
     if (acuteChronicRatio > 1.2) {
-      return (baseAdaptation * 1.15).clamp(0.0, 100.0); // High load = higher adaptation
+      return (baseAdaptation * 1.15)
+          .clamp(0.0, 100.0); // High load = higher adaptation
     } else if (acuteChronicRatio < 0.8) {
-      return (baseAdaptation * 0.85).clamp(0.0, 100.0); // Low load = lower adaptation
+      return (baseAdaptation * 0.85)
+          .clamp(0.0, 100.0); // Low load = lower adaptation
     }
 
     return baseAdaptation.clamp(0.0, 100.0);
@@ -321,17 +370,37 @@ class Morphocycle {
 
     switch (period.type) {
       case PeriodType.preparation:
-        return ['Fitness Test Improvements', 'Technical Skill Assessments', 'Team Chemistry'];
+        return [
+          'Fitness Test Improvements',
+          'Technical Skill Assessments',
+          'Team Chemistry'
+        ];
       case PeriodType.competitionEarly:
-        return ['Match Performance', 'Tactical Understanding Tests', 'Injury Prevention'];
+        return [
+          'Match Performance',
+          'Tactical Understanding Tests',
+          'Injury Prevention'
+        ];
       case PeriodType.competitionPeak:
         return ['Win Rate', 'Goal Difference', 'Individual Player Ratings'];
       case PeriodType.competitionMaintenance:
-        return ['Consistency Metrics', 'Squad Rotation Success', 'Performance Stability'];
+        return [
+          'Consistency Metrics',
+          'Squad Rotation Success',
+          'Performance Stability'
+        ];
       case PeriodType.transition:
-        return ['Skill Development Progress', 'Creativity Measures', 'Player Satisfaction'];
+        return [
+          'Skill Development Progress',
+          'Creativity Measures',
+          'Player Satisfaction'
+        ];
       case PeriodType.tournamentPrep:
-        return ['Tournament Readiness', 'Mental Preparation Scores', 'Squad Cohesion'];
+        return [
+          'Tournament Readiness',
+          'Mental Preparation Scores',
+          'Squad Cohesion'
+        ];
     }
   }
 
@@ -381,20 +450,20 @@ class Morphocycle {
   }
 
   List<String> _getTacticalKPIs(String gameModelFocus) => [
-      'Game Model Understanding Score',
-      'Tactical Decision Speed',
-      'Positional Discipline Rating',
-      'Collective Action Success Rate',
-      '$gameModelFocus Specific Metrics',
-    ];
+        'Game Model Understanding Score',
+        'Tactical Decision Speed',
+        'Positional Discipline Rating',
+        'Collective Action Success Rate',
+        '$gameModelFocus Specific Metrics',
+      ];
 
   List<String> _getTacticalObjectives(String gameModelFocus) => [
-      'Master $gameModelFocus principles',
-      'Improve collective understanding',
-      'Enhance decision making speed',
-      'Perfect tactical execution',
-      'Develop game intelligence',
-    ];
+        'Master $gameModelFocus principles',
+        'Improve collective understanding',
+        'Enhance decision making speed',
+        'Perfect tactical execution',
+        'Develop game intelligence',
+      ];
 
   // Utility methods
   bool get isHighLoadWeek => weeklyLoad > 1400;
@@ -447,30 +516,31 @@ class Morphocycle {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'weekNumber': weekNumber,
-    'periodId': periodId,
-    'seasonPlanId': seasonPlanId,
-    'weeklyLoad': weeklyLoad,
-    'intensityDistribution': intensityDistribution,
-    'acuteChronicRatio': acuteChronicRatio,
-    'tacticalFocusAreas': tacticalFocusAreas,
-    'primaryGameModelFocus': primaryGameModelFocus,
-    'secondaryGameModelFocus': secondaryGameModelFocus,
-    'expectedAdaptation': expectedAdaptation,
-    'keyPerformanceIndicators': keyPerformanceIndicators,
-    'trainingObjectives': trainingObjectives,
-    'totalTrainingMinutes': totalTrainingMinutes,
-    'averageRPE': averageRPE,
-    'numberOfSessions': numberOfSessions,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'weekNumber': weekNumber,
+        'periodId': periodId,
+        'seasonPlanId': seasonPlanId,
+        'weeklyLoad': weeklyLoad,
+        'intensityDistribution': intensityDistribution,
+        'acuteChronicRatio': acuteChronicRatio,
+        'tacticalFocusAreas': tacticalFocusAreas,
+        'primaryGameModelFocus': primaryGameModelFocus,
+        'secondaryGameModelFocus': secondaryGameModelFocus,
+        'expectedAdaptation': expectedAdaptation,
+        'keyPerformanceIndicators': keyPerformanceIndicators,
+        'trainingObjectives': trainingObjectives,
+        'totalTrainingMinutes': totalTrainingMinutes,
+        'averageRPE': averageRPE,
+        'numberOfSessions': numberOfSessions,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 }
 
 /// Extension to add morphocycle helpers to WeekSchedule
 extension WeekScheduleMorphocycle on WeekSchedule {
-  Morphocycle? get morphocycle => null; // TODO(team): populate when morphocycles are integrated
+  Morphocycle? get morphocycle =>
+      null; // TODO(team): populate when morphocycles are integrated
   TrainingIntensity get weekIntensityLevel {
     if (trainingSessions.isEmpty) return TrainingIntensity.recovery;
 

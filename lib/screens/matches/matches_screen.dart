@@ -108,9 +108,15 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             controller: _tabController,
             children: [
               _buildMatchList(
-                  upcomingMatches, isDesktop, 'Geen aankomende wedstrijden',),
+                upcomingMatches,
+                isDesktop,
+                'Geen aankomende wedstrijden',
+              ),
               _buildMatchList(
-                  completedMatches, isDesktop, 'Geen afgelopen wedstrijden',),
+                completedMatches,
+                isDesktop,
+                'Geen afgelopen wedstrijden',
+              ),
               _buildMatchList(allMatches, isDesktop, 'Geen wedstrijden'),
             ],
           );
@@ -126,7 +132,10 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
   }
 
   Widget _buildMatchList(
-      List<Match> matches, bool isDesktop, String emptyMessage,) {
+    List<Match> matches,
+    bool isDesktop,
+    String emptyMessage,
+  ) {
     if (matches.isEmpty) {
       return Center(
         child: Column(
@@ -245,8 +254,11 @@ class _MatchCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Icon(Icons.location_on,
-                                size: 16, color: Colors.grey[600],),
+                            Icon(
+                              Icons.location_on,
+                              size: 16,
+                              color: Colors.grey[600],
+                            ),
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
@@ -264,7 +276,9 @@ class _MatchCard extends StatelessWidget {
                   if (isCompleted && hasScore)
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8,),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: _getResultColor(match),
                         borderRadius: BorderRadius.circular(8),
@@ -294,7 +308,9 @@ class _MatchCard extends StatelessWidget {
                   else
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8,),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: Column(
                         children: [
                           Text(

@@ -65,31 +65,34 @@ final teamPerformanceOverviewProvider =
 
 // Helper functions
 PlayerDevelopmentTrends _calculateDevelopmentTrends(
-    List<PlayerPerformanceData> data,) =>
-  // TODO(author): Implement trend calculation logic
-  PlayerDevelopmentTrends(
-    physicalTrend: TrendDirection.stable,
-    technicalTrend: TrendDirection.stable,
-    tacticalTrend: TrendDirection.stable,
-    mentalTrend: TrendDirection.stable,
-    overallProgress: 0,
-    strengths: [],
-    areasForImprovement: [],
-    recommendedFocus: [],
-  );
+  List<PlayerPerformanceData> data,
+) =>
+    // TODO(author): Implement trend calculation logic
+    PlayerDevelopmentTrends(
+      physicalTrend: TrendDirection.stable,
+      technicalTrend: TrendDirection.stable,
+      tacticalTrend: TrendDirection.stable,
+      mentalTrend: TrendDirection.stable,
+      overallProgress: 0,
+      strengths: [],
+      areasForImprovement: [],
+      recommendedFocus: [],
+    );
 TeamPerformanceOverview _calculateTeamOverview(
-    Map<String, PlayerPerformanceData> data,) =>
-  // TODO(author): Implement team overview calculation
-  TeamPerformanceOverview(
-    averagePhysicalScore: 0,
-    averageTechnicalScore: 0,
-    averageTacticalScore: 0,
-    averageMentalScore: 0,
-    teamStrengths: [],
-    teamWeaknesses: [],
-    topPerformers: [],
-    needsAttention: [],
-  );
+  Map<String, PlayerPerformanceData> data,
+) =>
+    // TODO(author): Implement team overview calculation
+    TeamPerformanceOverview(
+      averagePhysicalScore: 0,
+      averageTechnicalScore: 0,
+      averageTacticalScore: 0,
+      averageMentalScore: 0,
+      teamStrengths: [],
+      teamWeaknesses: [],
+      topPerformers: [],
+      needsAttention: [],
+    );
+
 // Data models for trends and analysis
 class PlayerDevelopmentTrends {
   PlayerDevelopmentTrends({
@@ -204,4 +207,5 @@ class PlayerTrackingNotifier extends StateNotifier<AsyncValue<void>> {
 
 final playerTrackingNotifierProvider =
     StateNotifierProvider<PlayerTrackingNotifier, AsyncValue<void>>(
-        PlayerTrackingNotifier.new,);
+  PlayerTrackingNotifier.new,
+);

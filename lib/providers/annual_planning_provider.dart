@@ -162,7 +162,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   List<TrainingPeriod> _generateTrainingPeriods(PeriodizationPlan template) {
     final periods = <TrainingPeriod>[];
     final params = PeriodizationPlan.getRecommendedParameters(
-        template.modelType, template.targetAgeGroup,);
+      template.modelType,
+      template.targetAgeGroup,
+    );
     final intensityProgression = params['intensityProgression'] as List<int>;
     final focusAreas = params['focusAreas'] as List<String>;
 
@@ -230,7 +232,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   List<Morphocycle> _generateMorphocycles(
-      PeriodizationPlan template, List<TrainingPeriod> periods,) {
+    PeriodizationPlan template,
+    List<TrainingPeriod> periods,
+  ) {
     final morphocycles = <Morphocycle>[];
 
     for (int week = 1; week <= state.totalWeeks; week++) {
@@ -285,8 +289,12 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     return morphocycles;
   }
 
-  void _assignPeriodDetails(TrainingPeriod period, int index,
-      PeriodizationModel modelType, List<String> focusAreas,) {
+  void _assignPeriodDetails(
+    TrainingPeriod period,
+    int index,
+    PeriodizationModel modelType,
+    List<String> focusAreas,
+  ) {
     switch (modelType) {
       case PeriodizationModel.knvbYouth:
         if (index == 0) {
@@ -302,8 +310,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
         } else if (index == 1) {
           period
             ..name = 'Tactisch Begrip'
-            ..description =
-                'Ontwikkeling van tactisch inzicht en positiespel'
+            ..description = 'Ontwikkeling van tactisch inzicht en positiespel'
             ..type = PeriodType.competitionEarly
             ..keyObjectives = [
               'Positiespel',
@@ -411,7 +418,10 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   WeekSchedule _createWeekScheduleWithPeriod(
-      int weekNumber, DateTime weekStart, TrainingPeriod? period,) {
+    int weekNumber,
+    DateTime weekStart,
+    TrainingPeriod? period,
+  ) {
     // Check if this is a vacation week
     final vacationInfo = _getVacationInfo(weekNumber, weekStart);
 
@@ -472,8 +482,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           opponent: _getOpponent(weekNumber),
           dateTime:
               DateTime(saturday.year, saturday.month, saturday.day, 14, 30),
-          location:
-              weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
+          location: weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
           isHomeMatch: weekNumber.isEven,
           type: _getMatchType(weekNumber),
         ),
@@ -507,7 +516,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   List<WeeklyTraining> _createMorphocycleTrainingSessions(
-      DateTime weekStart, Morphocycle morphocycle,) {
+    DateTime weekStart,
+    Morphocycle morphocycle,
+  ) {
     final sessions = <WeeklyTraining>[];
 
     // Day +1 (Sunday) - Recovery Session
@@ -577,7 +588,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   }
 
   String _getWeekNotesWithMorphocycle(
-      int weekNumber, Morphocycle? morphocycle,) {
+    int weekNumber,
+    Morphocycle? morphocycle,
+  ) {
     if (morphocycle != null) {
       final loadStatus = morphocycle.weekDescription;
       final adaptation = morphocycle.expectedAdaptation.toInt();
@@ -682,8 +695,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           opponent: _getOpponent(weekNumber),
           dateTime:
               DateTime(saturday.year, saturday.month, saturday.day, 14, 30),
-          location:
-              weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
+          location: weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
           isHomeMatch: weekNumber.isEven,
           type: _getMatchType(weekNumber),
         ),
