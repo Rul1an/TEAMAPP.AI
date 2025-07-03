@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/player.dart';
-import '../../providers/database_provider.dart';
+import '../../providers/players_provider.dart';
 
 class PlayerDetailScreen extends ConsumerWidget {
   const PlayerDetailScreen({

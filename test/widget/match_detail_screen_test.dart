@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
-import 'package:jo17_tactical_manager/providers/database_provider.dart'
-    as db_providers;
+import 'package:jo17_tactical_manager/providers/matches_provider.dart'
+    as matches_providers;
+import 'package:jo17_tactical_manager/providers/players_provider.dart'
+    as players_providers;
 import 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart';
 
 void main() {
@@ -38,8 +40,10 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            db_providers.matchesProvider.overrideWith((ref) async => [match]),
-            db_providers.playersProvider.overrideWith((ref) async => players),
+            matches_providers.matchesProvider
+                .overrideWith((ref) async => [match]),
+            players_providers.playersProvider
+                .overrideWith((ref) async => players),
           ],
           child: const MaterialApp(
             home: MatchDetailScreen(matchId: 'm1'),

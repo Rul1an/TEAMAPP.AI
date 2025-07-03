@@ -4,8 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
 import 'package:jo17_tactical_manager/providers/auth_provider.dart';
-import 'package:jo17_tactical_manager/providers/database_provider.dart'
-    as db_providers;
 import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as app_players_provider;
@@ -63,8 +61,6 @@ void main() {
         ProviderScope(
           overrides: [
             demoModeProvider.overrideWith((ref) => demoNotifier),
-            db_providers.playersProvider
-                .overrideWith((ref) async => [stubPlayer]),
             app_players_provider.playersProvider
                 .overrideWith((ref) async => [stubPlayer]),
             authServiceProvider.overrideWithValue(FakeAuthService()),
