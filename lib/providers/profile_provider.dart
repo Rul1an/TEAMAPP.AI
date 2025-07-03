@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../core/result.dart';
 import '../models/profile.dart';
 import '../repositories/profile_repository.dart';
 import '../repositories/supabase_profile_repository.dart';

@@ -24,7 +24,13 @@ class _FakeRepo implements ProfileRepository {
 
   @override
   Future<Result<Profile>> update({String? username, String? avatarUrl, String? website}) async {
-    _profile = Profile(userId: 'u', username: username ?? 'x');
+    _profile = Profile(
+      userId: 'u',
+      organizationId: 'org',
+      username: username ?? 'x',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
     _controller.add(_profile!);
     return Success(_profile!);
   }
@@ -36,7 +42,13 @@ class _FakeRepo implements ProfileRepository {
 void main() {
   test('currentProfileProvider emits data', () async {
     final repo = _FakeRepo();
-    repo.profile = const Profile(userId: '1', username: 'john');
+    repo.profile = Profile(
+      userId: '1',
+      organizationId: 'org',
+      username: 'john',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
 
     final container = ProviderContainer(overrides: [
       profileRepositoryProvider.overrideWithValue(repo),

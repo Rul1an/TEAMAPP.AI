@@ -22,7 +22,13 @@ class _FakeProfileService extends ProfileService {
     if (throwUnauthorized) {
       throw StateError('no user');
     }
-    _profile = (_profile ?? const Profile(userId: 'u', username: 'x'))
+    _profile = (_profile ?? Profile(
+      userId: 'u',
+      organizationId: 'org',
+      username: 'x',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    ))
         .copyWith(username: username ?? 'x');
     return _profile!;
   }
@@ -45,7 +51,13 @@ void main() {
     });
 
     test('getCurrent returns Success when profile exists', () async {
-      fake.profile = const Profile(userId: '123', username: 'test');
+      fake.profile = Profile(
+        userId: '123',
+        organizationId: 'org',
+        username: 'test',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
       final res = await repo.getCurrent();
       expect(res.isSuccess, isTrue);
       expect(res.dataOrNull?.userId, '123');
