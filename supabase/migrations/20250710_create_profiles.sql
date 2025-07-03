@@ -21,6 +21,20 @@ create table if not exists profiles (
 -- Composite index for tenant queries
 create index if not exists profiles_org_idx on profiles(organization_id, user_id);
 
+-- 1b. Mock auth.uid() for local/CI Postgres (Supabase provides this in prod)
+do $$
+begin
+  if not exists (
+    select 1 from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where p.proname = 'uid' and n.nspname = 'auth'
+  ) then
+    execute 'create function auth.uid() returns uuid as $$ select ''00000000-0000-0000-0000-000000000000''::uuid; $$ language sql stable';
+  end if;
+exception when others then
+  -- ignore if cannot create (e.g., permissions) – CI only
+end$$;
+
 -- 2. Enable RLS
 alter table profiles enable row level security;
 
