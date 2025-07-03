@@ -302,14 +302,14 @@ jobs:
               "dateCreated": "'$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)'"
             }'
 
-      - name: 🎉 Notify Success
+      - name: 🎉 Notify Success (Slack)
+        if: success() && secrets.SLACK_WEBHOOK != ''
         uses: 8398a7/action-slack@v3
         with:
           status: success
           text: "🎉 Production deployment successful! Live at: https://teamappai.netlify.app"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        if: success()
 
   # Post-deployment Health Check
   health-check:
