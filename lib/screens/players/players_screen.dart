@@ -19,8 +19,15 @@ class PlayersScreen extends ConsumerStatefulWidget {
 class _PlayersScreenState extends ConsumerState<PlayersScreen> {
   String _searchQuery = '';
   Position? _selectedPosition;
-  final _importService = ImportService();
+
+  late final ImportService _importService;
   final _exportService = ExportService();
+
+  @override
+  void initState() {
+    super.initState();
+    _importService = ImportService(ref.read(playerRepositoryProvider));
+  }
 
   Future<void> _importPlayers() async {
     final result = await _importService.importPlayers();

@@ -8,14 +8,12 @@ import 'package:file_saver/file_saver.dart';
 import 'package:intl/intl.dart';
 
 import '../models/player.dart';
-import '../services/database_service.dart';
+import '../repositories/player_repository.dart';
 
 class ImportService {
-  factory ImportService() => _instance;
-  ImportService._internal();
-  static final ImportService _instance = ImportService._internal();
+  ImportService(this._playerRepository);
 
-  final _dbService = DatabaseService();
+  final PlayerRepository _playerRepository;
 
   // Import players from Excel or CSV
   Future<ImportResult> importPlayers() async {
@@ -148,7 +146,7 @@ class ImportService {
         }
 
         // Save player
-        await _dbService.savePlayer(player);
+        await _playerRepository.add(player);
         imported++;
       } catch (e) {
         errors.add('Rij ${i + 2}: $e');
