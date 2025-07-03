@@ -95,14 +95,10 @@ jobs:
     needs: [quality-check, security-scan]
     strategy:
       matrix:
-        platform: [web, android, ios]
+        platform: [web]
         include:
           - platform: web
             os: ubuntu-latest
-          - platform: android
-            os: ubuntu-latest
-          - platform: ios
-            os: macos-latest
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -126,14 +122,6 @@ jobs:
               flutter build web --release --dart-define=ENVIRONMENT=production
               echo "✅ Web build completed"
               ;;
-            android)
-              flutter build apk --release --dart-define=ENVIRONMENT=production
-              echo "✅ Android build completed"
-              ;;
-            ios)
-              flutter build ios --release --no-codesign --dart-define=ENVIRONMENT=production
-              echo "✅ iOS build completed"
-              ;;
           esac
 
       - name: 📤 Upload Build Artifacts
@@ -142,8 +130,6 @@ jobs:
           name: build-${{ matrix.platform }}
           path: |
             build/web/
-            build/app/outputs/flutter-apk/
-            build/ios/iphoneos/
           retention-days: 30
 
   # Performance Testing
