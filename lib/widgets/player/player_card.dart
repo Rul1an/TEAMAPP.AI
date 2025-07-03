@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/theme.dart';
 import '../../models/performance_rating.dart';
 import '../../models/player.dart';
-import '../../services/database_service.dart';
+import '../../providers/performance_ratings_provider.dart';
 import '../common/performance_badge.dart';
 
 class PlayerCard extends ConsumerWidget {
@@ -16,11 +16,13 @@ class PlayerCard extends ConsumerWidget {
   final Player player;
   final VoidCallback? onTap;
 
-  Future<Map<String, dynamic>> _getPerformanceData(String playerId) async {
-    final dbService = DatabaseService();
-    final averageRating =
-        await dbService.getPlayerAverageRating(playerId, lastNRatings: 5);
-    final trend = await dbService.getPlayerPerformanceTrend(playerId);
+  Future<Map<String, dynamic>> _getPerformanceData(Ref ref, String playerId) async {
+    final repo = ref.read(performanceRatingRepositoryProvider);
+    final avgRes = await repo.getPlayerAverageRating(playerId, lastNRatings: 5);
+    final trendRes = await repo.getPlayerPerformanceTrend(playerId);
+
+    final averageRating = avgRes.dataOrNull ?? 0.0;
+    final trend = trendRes.dataOrNull;
 
     return {
       'averageRating': averageRating > 0 ? averageRating : null,
@@ -79,7 +81,7 @@ class PlayerCard extends ConsumerWidget {
                               // Performance Badge
                               FutureBuilder<Map<String, dynamic>>(
                                 future:
-                                    _getPerformanceData(player.id.toString()),
+                                    _getPerformanceData(ref, player.id.toString()),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     final data = snapshot.data!;

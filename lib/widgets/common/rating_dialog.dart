@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/performance_rating.dart';
 import '../../models/player.dart';
-import '../../services/database_service.dart';
+import '../../providers/performance_ratings_provider.dart';
 import '../common/star_rating.dart';
 
-class RatingDialog extends StatefulWidget {
+class RatingDialog extends ConsumerStatefulWidget {
   const RatingDialog({
     super.key,
     required this.player,
@@ -19,12 +20,11 @@ class RatingDialog extends StatefulWidget {
   final RatingType type;
 
   @override
-  State<RatingDialog> createState() => _RatingDialogState();
+  ConsumerState<RatingDialog> createState() => _RatingDialogState();
 }
 
-class _RatingDialogState extends State<RatingDialog> {
+class _RatingDialogState extends ConsumerState<RatingDialog> {
   final _notesController = TextEditingController();
-  final _dbService = DatabaseService();
 
   int _overallRating = 3;
   int? _attackingRating;
@@ -69,10 +69,13 @@ class _RatingDialogState extends State<RatingDialog> {
       coachId: 'coach1', // TODO(author): Get from auth
     );
 
-    await _dbService.savePerformanceRating(rating);
+    final repo = ref.read(performanceRatingRepositoryProvider);
+    final res = await repo.save(rating);
 
-    if (mounted) {
+    if (res.isSuccess && mounted) {
       Navigator.of(context).pop(true);
+    } else if (mounted) {
+      Navigator.of(context).pop(false);
     }
   }
 
