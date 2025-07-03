@@ -18,8 +18,11 @@ class _FakeProfileService extends ProfileService {
   }
 
   @override
-  Future<Profile> updateProfile(
-      {String? username, String? avatarUrl, String? website}) async {
+  Future<Profile> updateProfile({
+    String? username,
+    String? avatarUrl,
+    String? website,
+  }) async {
     if (throwUnauthorized) {
       throw StateError('no user');
     }

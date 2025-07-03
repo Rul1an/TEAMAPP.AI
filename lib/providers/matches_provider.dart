@@ -34,7 +34,7 @@ final matchByIdProvider =
 
 final matchesNotifierProvider =
     StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>(
-  (ref) => MatchesNotifier(ref),
+  MatchesNotifier.new,
 );
 
 class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
@@ -50,7 +50,7 @@ class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
     state = const AsyncValue.loading();
     final res = await _repo.getAll();
     state = res.when(
-      success: (data) => AsyncValue.data(data),
+      success: AsyncValue.data,
       failure: (err) => AsyncValue.error(err, StackTrace.current),
     );
   }

@@ -28,7 +28,7 @@ final trainingsByDateRangeProvider =
 
 final trainingsNotifierProvider =
     StateNotifierProvider<TrainingsNotifier, AsyncValue<List<Training>>>(
-  (ref) => TrainingsNotifier(ref),
+  TrainingsNotifier.new,
 );
 
 class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
@@ -44,7 +44,7 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
     state = const AsyncValue.loading();
     final res = await _repo.getAll();
     state = res.when(
-      success: (data) => AsyncValue.data(data),
+      success: AsyncValue.data,
       failure: (err) => AsyncValue.error(err, StackTrace.current),
     );
   }

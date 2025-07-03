@@ -129,7 +129,8 @@ class SeasonPlan {
       ..competitionWeeks = json['competitionWeeks'] as int? ?? 32
       ..primaryCompetition = json['primaryCompetition'] as String? ?? ''
       ..additionalCompetitions = List<String>.from(
-          json['additionalCompetitions'] as List<dynamic>? ?? [])
+        json['additionalCompetitions'] as List<dynamic>? ?? [],
+      )
       ..firstMatchDate = json['firstMatchDate'] != null
           ? DateTime.parse(json['firstMatchDate'] as String)
           : null
@@ -145,7 +146,8 @@ class SeasonPlan {
       ..seasonObjectives =
           List<String>.from(json['seasonObjectives'] as List<dynamic>? ?? [])
       ..keyPerformanceIndicators = List<String>.from(
-          json['keyPerformanceIndicators'] as List<dynamic>? ?? [])
+        json['keyPerformanceIndicators'] as List<dynamic>? ?? [],
+      )
       ..isTemplate = json['isTemplate'] as bool? ?? false
       ..status = SeasonStatus.values.firstWhere(
         (e) => e.name == (json['status'] as String?),

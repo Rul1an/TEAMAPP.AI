@@ -229,8 +229,10 @@ class RBACDemoWidget extends ConsumerWidget {
         const PermissionInfo('Dashboard bekijken', hasAccess: true), // Everyone
         const PermissionInfo('Spelers bekijken', hasAccess: true), // Everyone
         const PermissionInfo('Training bekijken', hasAccess: true), // Everyone
-        const PermissionInfo('Wedstrijden bekijken',
-            hasAccess: true), // Everyone
+        const PermissionInfo(
+          'Wedstrijden bekijken',
+          hasAccess: true,
+        ), // Everyone
         const PermissionInfo('---MANAGEMENT---', hasAccess: false), // Separator
         PermissionInfo(
           'Spelers beheren',
@@ -383,8 +385,12 @@ class PermissionInfo {
 }
 
 class QuickActionInfo {
-  const QuickActionInfo(this.label, this.icon,
-      {required this.isEnabled, required this.onPressed});
+  const QuickActionInfo(
+    this.label,
+    this.icon, {
+    required this.isEnabled,
+    required this.onPressed,
+  });
   final String label;
   final IconData icon;
   final bool isEnabled;

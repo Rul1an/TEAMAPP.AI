@@ -316,7 +316,9 @@ class CoachDashboardScreen extends ConsumerWidget {
             Colors.indigo,
             () => context.push('/planning/annual'),
             isAvailable: featureService.isFeatureAvailable(
-                'annual_planning', club.tier as String),
+              'annual_planning',
+              club.tier as String,
+            ),
           ),
           _buildManagementCard(
             context,

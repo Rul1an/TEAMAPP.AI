@@ -112,7 +112,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               ? NetworkImage(_profile!.avatarUrl!)
                                   as ImageProvider
                               : const AssetImage(
-                                  'assets/images/avatar_placeholder.png'),
+                                  'assets/images/avatar_placeholder.png',
+                                ),
                         ),
                         IconButton(
                           icon: const Icon(Icons.camera_alt),

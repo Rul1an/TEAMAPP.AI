@@ -13,9 +13,10 @@
 sealed class Result<T> {
   const Result();
 
-  R when<R>(
-      {required R Function(T data) success,
-      required R Function(AppFailure error) failure}) {
+  R when<R>({
+    required R Function(T data) success,
+    required R Function(AppFailure error) failure,
+  }) {
     if (this is Success<T>) {
       return success((this as Success<T>).data);
     } else {
@@ -30,30 +31,30 @@ sealed class Result<T> {
 }
 
 class Success<T> extends Result<T> {
-  final T data;
   const Success(this.data);
+  final T data;
 }
 
 class Failure<T> extends Result<T> {
-  final AppFailure error;
   const Failure(this.error);
+  final AppFailure error;
 }
 
 /// Base class for all application failures.
 sealed class AppFailure {
-  final String message;
   const AppFailure(this.message);
+  final String message;
 
   @override
   String toString() => '$runtimeType: $message';
 }
 
 class NetworkFailure extends AppFailure {
-  const NetworkFailure(String message) : super(message);
+  const NetworkFailure(super.message);
 }
 
 class CacheFailure extends AppFailure {
-  const CacheFailure(String message) : super(message);
+  const CacheFailure(super.message);
 }
 
 class UnauthorizedFailure extends AppFailure {

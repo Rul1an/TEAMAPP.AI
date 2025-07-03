@@ -279,8 +279,13 @@ class DemoDataService {
       if (tuesday.isAfter(now)) {
         sessions
           ..add(_createTrainingSession(teamId, tuesday, 'Techniek & Passing'))
-          ..add(_createTrainingSession(teamId,
-              tuesday.add(const Duration(days: 7)), 'Tactiek & Positiespel'));
+          ..add(
+            _createTrainingSession(
+              teamId,
+              tuesday.add(const Duration(days: 7)),
+              'Tactiek & Positiespel',
+            ),
+          );
       }
     }
 

@@ -25,10 +25,14 @@ class PerformanceRating {
     DateTime? createdAt,
   })  : id = id ?? const Uuid().v4(),
         createdAt = createdAt ?? DateTime.now(),
-        assert(overallRating >= 1 && overallRating <= 5,
-            'Overall rating must be between 1 and 5'),
-        assert(type == RatingType.match ? matchId != null : trainingId != null,
-            'Match ratings require matchId, training ratings require trainingId');
+        assert(
+          overallRating >= 1 && overallRating <= 5,
+          'Overall rating must be between 1 and 5',
+        ),
+        assert(
+          type == RatingType.match ? matchId != null : trainingId != null,
+          'Match ratings require matchId, training ratings require trainingId',
+        );
 
   factory PerformanceRating.fromJson(Map<String, dynamic> json) =>
       PerformanceRating(

@@ -435,7 +435,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                       return CheckboxListTile(
                         title: Text(player.name),
                         subtitle: Text(
-                            '${player.jerseyNumber} - ${_getPositionText(player.position)}'),
+                          '${player.jerseyNumber} - ${_getPositionText(player.position)}',
+                        ),
                         value: isSelected,
                         onChanged: canSelect
                             ? (bool? value) {

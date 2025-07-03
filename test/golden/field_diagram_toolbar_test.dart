@@ -1,12 +1,13 @@
 // ignore_for_file: deprecated_member_use, flutter_style_todos
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jo17_tactical_manager/providers/field_diagram_provider.dart';
 import 'package:jo17_tactical_manager/widgets/field_diagram/field_diagram_toolbar.dart';
 import 'package:test_utils/surface_utils.dart';
-import 'dart:io';
 
 // Golden tests for FieldDiagramToolbar.
 // To (re)generate the baseline images run:
@@ -31,45 +32,53 @@ void main() {
       resetScreenSizeBinding(binding);
     });
 
-    testWidgets('default (select) tool', (tester) async {
-      await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
-            home: Material(
-              child: FieldDiagramToolbar(
-                selectedTool: DiagramTool.select,
-                onToolSelected: _noop,
+    testWidgets(
+      'default (select) tool',
+      (tester) async {
+        await tester.pumpWidget(
+          const ProviderScope(
+            child: MaterialApp(
+              home: Material(
+                child: FieldDiagramToolbar(
+                  selectedTool: DiagramTool.select,
+                  onToolSelected: _noop,
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
-      await expectLater(
-        find.byType(FieldDiagramToolbar),
-        matchesGoldenFile('goldens/field_diagram_toolbar_select.png'),
-      );
-    }, skip: isCi);
+        await expectLater(
+          find.byType(FieldDiagramToolbar),
+          matchesGoldenFile('goldens/field_diagram_toolbar_select.png'),
+        );
+      },
+      skip: isCi,
+    );
 
-    testWidgets('line tool expanded', (tester) async {
-      await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
-            home: Material(
-              child: FieldDiagramToolbar(
-                selectedTool: DiagramTool.line,
-                onToolSelected: _noop,
+    testWidgets(
+      'line tool expanded',
+      (tester) async {
+        await tester.pumpWidget(
+          const ProviderScope(
+            child: MaterialApp(
+              home: Material(
+                child: FieldDiagramToolbar(
+                  selectedTool: DiagramTool.line,
+                  onToolSelected: _noop,
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
-      await expectLater(
-        find.byType(FieldDiagramToolbar),
-        matchesGoldenFile('goldens/field_diagram_toolbar_line.png'),
-      );
-    }, skip: isCi);
+        await expectLater(
+          find.byType(FieldDiagramToolbar),
+          matchesGoldenFile('goldens/field_diagram_toolbar_line.png'),
+        );
+      },
+      skip: isCi,
+    );
   });
 }
 

@@ -150,7 +150,8 @@ class TrainingPeriod {
           (json['intensityPercentage'] as num?)?.toDouble() ?? 70.0
       ..contentFocusJson = json['contentFocusJson'] as String?
       ..keyObjectives = List<String>.from(
-          json['keyObjectives'] as List<dynamic>? ?? <dynamic>[])
+        json['keyObjectives'] as List<dynamic>? ?? <dynamic>[],
+      )
       ..sessionsPerWeek = json['sessionsPerWeek'] as int? ?? 3
       ..averageSessionMinutes = json['averageSessionMinutes'] as int? ?? 75
       ..restDaysBetweenSessions = json['restDaysBetweenSessions'] as int? ?? 1
@@ -239,7 +240,8 @@ class TrainingPeriod {
     if (contentFocusJson == null) return null;
     try {
       return ContentDistribution.fromJson(
-          jsonDecode(contentFocusJson!) as Map<String, dynamic>);
+        jsonDecode(contentFocusJson!) as Map<String, dynamic>,
+      );
     } catch (e) {
       return null;
     }

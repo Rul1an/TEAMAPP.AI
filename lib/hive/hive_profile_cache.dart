@@ -1,16 +1,14 @@
 import 'dart:convert';
 
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/profile.dart';
 import 'hive_key_manager.dart';
 
 class HiveProfileCache {
+  HiveProfileCache();
   static const _boxName = 'profiles_box';
   static const _key = 'current_profile_json';
-
-  HiveProfileCache();
 
   Future<Box<String>> _openBox() async {
     if (!Hive.isAdapterRegistered(0)) {
@@ -19,8 +17,10 @@ class HiveProfileCache {
     if (!Hive.isBoxOpen(_boxName)) {
       final key = await HiveKeyManager().getKey();
       await Hive.initFlutter();
-      return Hive.openBox<String>(_boxName,
-          encryptionCipher: HiveAesCipher(key));
+      return Hive.openBox<String>(
+        _boxName,
+        encryptionCipher: HiveAesCipher(key),
+      );
     }
     return Hive.box<String>(_boxName);
   }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -23,8 +24,11 @@ class _FakeRepo implements ProfileRepository {
   Stream<Profile> watch() => _controller.stream;
 
   @override
-  Future<Result<Profile>> update(
-      {String? username, String? avatarUrl, String? website}) async {
+  Future<Result<Profile>> update({
+    String? username,
+    String? avatarUrl,
+    String? website,
+  }) async {
     _profile = Profile(
       userId: 'u',
       organizationId: 'org',
@@ -37,7 +41,7 @@ class _FakeRepo implements ProfileRepository {
   }
 
   @override
-  Future<Result<Profile>> uploadAvatar(file) async => Success(_profile!);
+  Future<Result<Profile>> uploadAvatar(File file) async => Success(_profile!);
 }
 
 void main() {
@@ -51,9 +55,11 @@ void main() {
       updatedAt: DateTime.now(),
     );
 
-    final container = ProviderContainer(overrides: [
-      profileRepositoryProvider.overrideWithValue(repo),
-    ]);
+    final container = ProviderContainer(
+      overrides: [
+        profileRepositoryProvider.overrideWithValue(repo),
+      ],
+    );
 
     addTearDown(container.dispose);
 

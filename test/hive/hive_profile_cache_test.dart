@@ -9,10 +9,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   // Mock flutter_secure_storage MethodChannel
-  const MethodChannel _secureStorageChannel =
+  const MethodChannel secureStorageChannel =
       MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
 
-  _secureStorageChannel.setMockMethodCallHandler((MethodCall methodCall) async {
+  secureStorageChannel.setMockMethodCallHandler((MethodCall methodCall) async {
     // We simply ignore all calls and return dummy values so that the plugin
     // never tries to hit the platform layer during unit tests.
     switch (methodCall.method) {
@@ -30,10 +30,10 @@ void main() {
   });
 
   // Mock path_provider MethodChannel used by Hive.initFlutter
-  const MethodChannel _pathProviderChannel =
+  const MethodChannel pathProviderChannel =
       MethodChannel('plugins.flutter.io/path_provider');
 
-  _pathProviderChannel.setMockMethodCallHandler((MethodCall methodCall) async {
+  pathProviderChannel.setMockMethodCallHandler((MethodCall methodCall) async {
     // Return a valid temporary directory path for any directory request
     final tmpPath = Directory.systemTemp.path;
     return tmpPath;

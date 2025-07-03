@@ -38,7 +38,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     } catch (e) {
       // Treat "no user" / unauthorized situations specially
       if (e is StateError || e.toString().contains('no user')) {
-        return Failure(UnauthorizedFailure());
+        return const Failure(UnauthorizedFailure());
       }
       return Failure(NetworkFailure(e.toString()));
     }
@@ -51,7 +51,7 @@ class SupabaseProfileRepository implements ProfileRepository {
       return Success(profile);
     } catch (e) {
       if (e is StateError || e.toString().contains('no user')) {
-        return Failure(UnauthorizedFailure());
+        return const Failure(UnauthorizedFailure());
       }
       return Failure(NetworkFailure(e.toString()));
     }
