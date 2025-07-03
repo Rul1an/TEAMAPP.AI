@@ -1,0 +1,58 @@
+import 'dart:io';
+
+import '../core/result.dart';
+import '../models/profile.dart';
+import '../services/profile_service.dart';
+import 'profile_repository.dart';
+
+class SupabaseProfileRepository implements ProfileRepository {
+  SupabaseProfileRepository({ProfileService? service})
+      : _service = service ?? ProfileService();
+
+  final ProfileService _service;
+
+  @override
+  Future<Result<Profile?>> getCurrent() async {
+    try {
+      final profile = await _service.getCurrentProfile();
+      return Success(profile);
+    } catch (e) {
+      return Failure(NetworkFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<Profile>> update({
+    String? username,
+    String? avatarUrl,
+    String? website,
+  }) async {
+    try {
+      final profile = await _service.updateProfile(
+        username: username,
+        avatarUrl: avatarUrl,
+        website: website,
+      );
+      return Success(profile);
+    } on StateError catch (e) {
+      return Failure(UnauthorizedFailure());
+    } catch (e) {
+      return Failure(NetworkFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<Profile>> uploadAvatar(File file) async {
+    try {
+      final profile = await _service.uploadAvatar(file);
+      return Success(profile);
+    } on StateError {
+      return Failure(UnauthorizedFailure());
+    } catch (e) {
+      return Failure(NetworkFailure(e.toString()));
+    }
+  }
+
+  @override
+  Stream<Profile> watch() => _service.subscribeProfile();
+}
