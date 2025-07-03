@@ -10,7 +10,8 @@ class TrainingSessionsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trainingSessionsAsync = ref.watch(ts_repo.allTrainingSessionsProvider);
+    final trainingSessionsAsync =
+        ref.watch(ts_repo.allTrainingSessionsProvider);
 
     return Scaffold(
       appBar: AppBar(
