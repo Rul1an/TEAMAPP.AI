@@ -1,29 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/annual_planning/periodization_plan.dart';
 import '../../models/annual_planning/season_plan.dart';
-import '../../models/annual_planning/training_period.dart';
-import '../../services/database_service.dart';
+import '../../providers/annual_planning_data_provider.dart';
 import 'load_monitoring_screen.dart';
 import 'weekly_planning_screen.dart';
-
-final seasonPlansProvider = FutureProvider<List<SeasonPlan>>((ref) async {
-  final db = DatabaseService();
-  return db.getAllSeasonPlans();
-});
-
-final periodizationPlansProvider =
-    FutureProvider<List<PeriodizationPlan>>((ref) async {
-  final db = DatabaseService();
-  return db.getAllPeriodizationPlans();
-});
-
-final trainingPeriodsProvider =
-    FutureProvider<List<TrainingPeriod>>((ref) async {
-  final db = DatabaseService();
-  return db.getAllTrainingPeriods();
-});
 
 class AnnualPlanningScreen extends ConsumerWidget {
   const AnnualPlanningScreen({super.key});

@@ -4,33 +4,37 @@ import 'package:go_router/go_router.dart';
 
 import '../../models/annual_planning/season_plan.dart';
 import '../../models/training_session/training_session.dart';
-import '../../services/database_service.dart';
+import '../../providers/training_sessions_repo_provider.dart' as ts_repo;
+import '../../repositories/local_season_repository.dart';
+import '../../repositories/season_repository.dart';
 import '../../widgets/common/weekly_calendar_widget.dart';
 
+final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
+  return LocalSeasonRepository();
+});
+
 final currentSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
-  final db = DatabaseService();
-  final seasons = await db.getAllSeasonPlans();
-  if (seasons.isEmpty) return null;
+  final repo = ref.read(seasonRepositoryProvider);
+  final res = await repo.getActive();
+  final season = res.dataOrNull;
+  if (season == null) {
+    final listRes = await repo.getAll();
+    final seasons = listRes.dataOrNull ?? [];
+    if (seasons.isEmpty) return null;
 
-  // Find active season or return first
-  try {
-    return seasons.firstWhere((s) => s.status == SeasonStatus.active);
-  } catch (e) {
-    return seasons.first;
+    try {
+      return seasons.firstWhere((s) => s.status == SeasonStatus.active);
+    } catch (_) {
+      return seasons.first;
+    }
   }
+  return season;
 });
 
-final recentTrainingSessionsProvider =
-    FutureProvider<List<TrainingSession>>((ref) async {
-  final db = DatabaseService();
-  return db.getRecentTrainingSessions();
-});
+final recentTrainingSessionsProvider = ts_repo.allTrainingSessionsProvider;
 
 final upcomingTrainingSessionsProvider =
-    FutureProvider<List<TrainingSession>>((ref) async {
-  final db = DatabaseService();
-  return db.getUpcomingTrainingSessions();
-});
+    ts_repo.upcomingTrainingSessionsProvider;
 
 class SeasonHubScreen extends ConsumerWidget {
   const SeasonHubScreen({super.key});
