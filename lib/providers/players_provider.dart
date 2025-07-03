@@ -1,11 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/supabase_player_data_source.dart';
+import '../hive/hive_player_cache.dart';
 import '../models/player.dart';
 import '../repositories/player_repository.dart';
-import '../repositories/supabase_player_repository.dart';
+import '../repositories/player_repository_impl.dart';
+
+// Low-level singletons -----------------------------------------------------
+
+final playerCacheProvider = Provider<HivePlayerCache>((_) => HivePlayerCache());
+
+final playerRemoteProvider =
+    Provider<SupabasePlayerDataSource>((_) => SupabasePlayerDataSource());
+
+// Repository --------------------------------------------------------------
 
 final playerRepositoryProvider = Provider<PlayerRepository>((ref) {
-  return SupabasePlayerRepository();
+  return PlayerRepositoryImpl(
+    remote: ref.read(playerRemoteProvider),
+    cache: ref.read(playerCacheProvider),
+  );
 });
 
 final playersProvider = FutureProvider<List<Player>>((ref) async {
