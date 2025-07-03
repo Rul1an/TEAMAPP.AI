@@ -6,7 +6,7 @@ void main() {
   group('TelemetryService', () {
     setUp(() async {
       // Provide empty env so TelemetryService skips exporter setup.
-      await dotenv.testLoad(fileInput: 'OTLP_ENDPOINT=');
+      dotenv.testLoad(fileInput: 'OTLP_ENDPOINT=');
       await TelemetryService().init();
     });
 
