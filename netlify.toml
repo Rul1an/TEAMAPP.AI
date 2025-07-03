@@ -1,14 +1,6 @@
 [build]
-  command = """
-    # Download and install Flutter
-    git clone https://github.com/flutter/flutter.git --depth 1 -b stable $HOME/flutter
-    export PATH="$PATH:$HOME/flutter/bin"
-    
-    # Run Flutter doctor and build
-    flutter doctor
-    flutter pub get
-    flutter build web --release
-  """
+  # No command needed; GitHub Actions builds the site.
+  # The publish directory is kept for local `netlify dev` convenience.
   publish = "build/web"
 
 [[redirects]]
