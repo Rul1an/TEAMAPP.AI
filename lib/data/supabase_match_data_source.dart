@@ -20,8 +20,11 @@ class SupabaseMatchDataSource {
   }
 
   Future<Match?> fetchById(String id) async {
-    final data =
-        await _supabase.from(_table).select().eq('id', id).maybeSingle();
+    final data = await _supabase
+        .from(_table)
+        .select()
+        .eq('id', id)
+        .maybeSingle();
     return data == null ? null : _fromRow(data);
   }
 
@@ -39,7 +42,9 @@ class SupabaseMatchDataSource {
 
   Stream<List<Match>> subscribe() => _supabase
       .from(_table)
-      .stream(primaryKey: ['id'])
+      .stream(
+        primaryKey: ['id'],
+      )
       .map(_rowsToMatches)
       .distinct(_listEquals);
 
@@ -59,7 +64,8 @@ class SupabaseMatchDataSource {
     final m = Match()
       ..id = row['id'] as String? ?? ''
       ..date = DateTime.parse(
-          row['date'] as String? ?? DateTime.now().toIso8601String())
+        row['date'] as String? ?? DateTime.now().toIso8601String(),
+      )
       ..opponent = row['opponent'] as String? ?? ''
       ..location = Location.values.firstWhere(
         (e) => e.name == (row['location'] as String? ?? '').toLowerCase(),
@@ -76,9 +82,11 @@ class SupabaseMatchDataSource {
       ..teamScore = row['team_score'] as int?
       ..opponentScore = row['opponent_score'] as int?
       ..createdAt = DateTime.parse(
-          row['created_at'] as String? ?? DateTime.now().toIso8601String())
+        row['created_at'] as String? ?? DateTime.now().toIso8601String(),
+      )
       ..updatedAt = DateTime.parse(
-          row['updated_at'] as String? ?? DateTime.now().toIso8601String());
+        row['updated_at'] as String? ?? DateTime.now().toIso8601String(),
+      );
     return m;
   }
 

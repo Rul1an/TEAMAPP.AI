@@ -67,7 +67,7 @@ jobs:
 
       - name: 🧪 Run integration tests (profiles)
         working-directory: .
-        run: flutter test test/integration/profile_service_test.dart
+        run: flutter test
 
       - name: 🎉 Success message
         run: echo "Profiles migration verified and tests passed successfully."

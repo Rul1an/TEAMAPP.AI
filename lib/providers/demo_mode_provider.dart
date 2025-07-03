@@ -194,8 +194,9 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
   }
 }
 
-// Provider
-final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>(
+// Provider (autoDispose to ensure Timer is cancelled when no listeners)
+final demoModeProvider =
+    StateNotifierProvider.autoDispose<DemoModeNotifier, DemoModeState>(
   (ref) => DemoModeNotifier(),
 );
 
