@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          channel: 'stable'
       - name: Install snippets tool
         run: |
           dart pub global activate snippets 0.4.3
