@@ -124,18 +124,19 @@ jobs:
               ;;
           esac
 
-      - name: ✅ Check Web Build Output
+      - name: ✅ Ensure Web Build Exists Before Upload
         run: |
-          if [ ! -d build/web ]; then
-            echo "❌ build/web directory not found. Flutter web build may have failed."
+          if [ ! -f build/web/index.html ]; then
+            echo "❌ build/web/index.html not found. Web build might have failed."
             exit 1
           fi
+          ls -l build/web
 
-      - name: 📤 Upload Build Artifacts
+      - name: 📤 Upload Web Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-web
-          path: build
+          path: build/web
           retention-days: 30
 
   # Performance Testing
@@ -153,12 +154,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-web
-          path: .
+          path: build/web
 
       - name: 🔎 Ensure Web Build Directory
         run: |
-          if [ ! -d build/web ]; then
-            echo "❌ build/web directory missing after download."
+          if [ ! -f build/web/index.html ]; then
+            echo "❌ build/web/index.html missing after download."
             exit 1
           fi
 
@@ -227,7 +228,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-web
-          path: .
+          path: build/web
 
       - name: 🚀 Deploy to Netlify Staging
         uses: netlify/actions/cli@master
@@ -265,7 +266,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-web
-          path: .
+          path: build/web
 
       - name: 🌟 Deploy to Netlify Production
         uses: netlify/actions/cli@master
