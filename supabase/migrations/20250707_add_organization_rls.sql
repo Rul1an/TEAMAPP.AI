@@ -12,12 +12,16 @@ alter table if exists sessions  add column if not exists organization_id uuid;
 alter table if exists statistics add column if not exists organization_id uuid;
 
 -- Temporary back-fill so NOT NULL can be enforced later
+\set ON_ERROR_STOP off
+
 update players      set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
 update matches      set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
 update trainings    set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
 update exercises    set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
 update sessions     set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
 update statistics   set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+
+\set ON_ERROR_STOP on
 
 -- Enforce NOT NULL (can be relaxed if needed)
 alter table players      alter column organization_id set not null;
