@@ -48,7 +48,8 @@ void main() {
           overrides: [
             trainings_providers.trainingsProvider
                 .overrideWith((ref) async => [training]),
-            players_providers.playersProvider.overrideWith((ref) async => players),
+            players_providers.playersProvider
+                .overrideWith((ref) async => players),
           ],
           child: const MaterialApp(
             home: TrainingAttendanceScreen(trainingId: 't1'),
