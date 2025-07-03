@@ -21,15 +21,18 @@ Widgets → Riverpod Provider → Repository → Data-source (Supabase / Hive / 
 3. **Consistency** – Single place for mapping DTO ⇄ domain models.
 4. **Performance** – Hive cache can satisfy reads instantly and defer writes.
 
-## Migration Plan
-| Phase | Deliverable | Owner | ETA |
-|-------|-------------|-------|-----|
-| 1 | _Repo Analysis_ – catalogue every `supabase` call inside `services/`, group by domain | Core architect | Aug 5 |
-| 2 | `abstract class ProfileRepository` + `SupabaseProfileRepository` | Core architect | Aug 15 |
-| 3 | Migrate `profileService` & providers to repository | Feature dev | Aug 20 |
-| 4 | Implement & wire `HiveProfileCache` (read-through) | Feature dev | Sep 1 |
-| 5 | Repeat pattern for Players, Matches, Trainings | Team | Sep 20 |
-| 6 | Remove obsolete service classes, update docs/tests | Team | Sep 30 |
+## Migration Plan – Progress Snapshot (as of 8 June 2025)
+
+| Phase | Deliverable | Status | ETA |
+|-------|-------------|--------|-----|
+| 1 | _Repo Analysis_ – catalogue every `supabase` call inside `services/`, group by domain | **✅ Completed** 2025-06-07 | — |
+| 2 | `abstract class ProfileRepository` + `SupabaseProfileRepository` | **�� In progress** – PR #163 drafts interface & mapper | 15 Jun |
+| 3 | Migrate `profileService` & providers to repository | Pending | 20 Jun |
+| 4 | Implement & wire `HiveProfileCache` (read-through) | Pending | 01 Jul |
+| 5 | Repeat pattern for Players, Matches, Trainings | Planned | 20 Jul |
+| 6 | Remove obsolete service classes, update docs/tests | Planned | 31 Jul |
+
+> Decision 2025-06-08: based on the latest code-analysis the **Repository Layer Refactor** delivers the highest architectural leverage (testability, Supabase decoupling) now that observability & lint cleanup are done. We therefore prioritise Phase 2 (ProfileRepository implementation) as the next sprint focus.
 
 ## Open Questions
 * Granularity – per entity repository vs grouped.

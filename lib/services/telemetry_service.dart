@@ -1,19 +1,18 @@
 import 'dart:async';
 
-import 'package:opentelemetry_sdk/opentelemetry_sdk.dart';
-import 'package:opentelemetry_otlp/opentelemetry_otlp.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:opentelemetry/api.dart' as api;
+import 'package:opentelemetry/sdk.dart' as sdk;
 
 /// TelemetryService wraps OpenTelemetry tracing & metrics for the app.
 /// It exposes simple helpers similar to the legacy MonitoringService so we can
 /// refactor incrementally.
 class TelemetryService {
+  factory TelemetryService() => _instance;
   TelemetryService._internal();
   static final TelemetryService _instance = TelemetryService._internal();
-  factory TelemetryService() => _instance;
 
-  late final OpenTelemetry _otel;
-  late final Tracer _tracer;
+  late final api.Tracer _tracer;
 
   bool _initialized = false;
 
@@ -27,12 +26,19 @@ class TelemetryService {
       return;
     }
 
-    final exporter = OtlpTraceExporter(collectorEndpoint: endpoint);
-    final provider =
-        TracerProviderBase(processors: [SimpleSpanProcessor(exporter)]);
+    final exporter = sdk.CollectorExporter(Uri.parse(endpoint));
 
-    _otel = OpenTelemetry(provider, ContextManager.zone());
-    _tracer = _otel.tracerProvider.getTracer('app');
+    final resource = sdk.Resource([
+      api.Attribute.fromString('service.name', 'jo17-tactical-manager'),
+    ]);
+
+    final provider = sdk.TracerProviderBase(
+      processors: [sdk.BatchSpanProcessor(exporter)],
+      resource: resource,
+    );
+
+    api.registerGlobalTracerProvider(provider);
+    _tracer = api.globalTracerProvider.getTracer('app');
 
     _initialized = true;
   }
@@ -40,7 +46,8 @@ class TelemetryService {
   /// Records a simple event.
   void trackEvent(String name, {Map<String, Object?> attributes = const {}}) {
     if (!_initialized) return;
-    final span = _tracer.startSpan(name, attributes: attributes);
+    final span = _tracer.startSpan(name);
+    _setAttributes(span, attributes);
     span.end();
   }
 
@@ -52,59 +59,47 @@ class TelemetryService {
   }) async {
     if (!_initialized) return action();
 
-    final span = _tracer.startSpan(name, attributes: attributes);
+    final span = _tracer.startSpan(name);
+    _setAttributes(span, attributes);
     try {
       final result = await action();
       span.end();
       return result;
     } catch (e, st) {
-      span.recordException(e, stackTrace: st);
-      span.setStatus(const SpanStatus.error());
-      span.end();
+      span
+        ..recordException(e, stackTrace: st)
+        ..setStatus(api.StatusCode.error, e.toString())
+        ..end();
       rethrow;
     }
   }
 
-  /// Starts a manual span – caller must call [end] on returned span.
-  Span startSpan(String name, {Map<String, Object?> attributes = const {}}) {
-    if (!_initialized) {
-      // Return no-op span
-      return _NoopSpan();
-    }
-    return _tracer.startSpan(name, attributes: attributes);
+  /// Starts a manual span – caller must call `end()` on the returned span.
+  api.Span startSpan(
+    String name, {
+    Map<String, Object?> attributes = const {},
+  }) {
+    final span =
+        (_initialized ? _tracer : api.globalTracerProvider.getTracer('noop'))
+            .startSpan(name);
+    _setAttributes(span, attributes);
+    return span;
   }
 
   /// Records an error outside of a span context.
   void recordError(Object error, StackTrace st) {
     if (!_initialized) return;
-    final span = _tracer.startSpan('error');
-    span.recordException(error, stackTrace: st);
-    span.setStatus(const SpanStatus.error());
-    span.end();
+    _tracer.startSpan('error')
+      ..recordException(error, stackTrace: st)
+      ..setStatus(api.StatusCode.error, error.toString())
+      ..end();
   }
-}
 
-/// Very lightweight no-op span used when TelemetryService not initialized.
-class _NoopSpan implements Span {
-  @override
-  void addEvent(
-    String name, {
-    Map<String, Object?> attributes = const {},
-    DateTime? timestamp,
-  }) {}
-
-  @override
-  void end({DateTime? timestamp}) {}
-
-  @override
-  SpanContext get spanContext => SpanContext.invalid();
-
-  @override
-  void recordException(Object exception, {StackTrace? stackTrace}) {}
-
-  @override
-  void setAttribute(String key, Object value) {}
-
-  @override
-  void setStatus(SpanStatus status) {}
+  void _setAttributes(api.Span span, Map<String, Object?> attributes) {
+    for (final entry in attributes.entries) {
+      span.setAttribute(
+        api.Attribute.fromString(entry.key, entry.value.toString()),
+      );
+    }
+  }
 }

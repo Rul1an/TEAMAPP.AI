@@ -56,11 +56,7 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
   Future<Result<void>> save(TrainingSession session) async {
     try {
       final payload = session.toJson();
-      if (session.id != null) {
-        await _client.from(_table).update(payload).eq('id', session.id);
-      } else {
-        await _client.from(_table).insert(payload);
-      }
+      await _client.from(_table).update(payload).eq('id', session.id);
       return const Success(null);
     } catch (e) {
       return Failure(NetworkFailure(e.toString()));

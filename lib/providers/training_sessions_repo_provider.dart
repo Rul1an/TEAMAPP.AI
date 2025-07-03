@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/training_session/training_session.dart';
-import '../repositories/local_training_session_repository.dart';
+import '../repositories/supabase_training_session_repository.dart';
 import '../repositories/training_session_repository.dart';
 
 final trainingSessionRepositoryProvider =
     Provider<TrainingSessionRepository>((ref) {
-  return LocalTrainingSessionRepository();
+  return SupabaseTrainingSessionRepository();
 });
 
 final allTrainingSessionsProvider =

@@ -122,8 +122,7 @@ class SupabaseMatchRepository implements MatchRepository {
   Future<Result<Match?>> getById(String id) async {
     try {
       final data = await _client.from(_table).select().eq('id', id).single();
-      if (data == null) return const Success(null);
-      return Success(_fromRow(data as Map<String, dynamic>));
+      return Success(_fromRow(data));
     } catch (e) {
       return Failure(NetworkFailure(e.toString()));
     }

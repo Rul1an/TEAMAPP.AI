@@ -20,7 +20,8 @@ class SupabasePlayerRepository implements PlayerRepository {
       ..lastName = row['last_name'] as String? ?? ''
       ..jerseyNumber = (row['jersey_number'] ?? 0) as int
       ..birthDate = DateTime.parse(
-          row['birth_date'] as String? ?? DateTime.now().toIso8601String())
+        row['birth_date'] as String? ?? DateTime.now().toIso8601String(),
+      )
       ..position = Position.values.firstWhere(
         (e) => e.name == (row['position'] as String? ?? '').toLowerCase(),
         orElse: () => Position.defender,
@@ -44,9 +45,11 @@ class SupabasePlayerRepository implements PlayerRepository {
       ..trainingsAttended = row['trainings_attended'] as int? ?? 0
       ..trainingsTotal = row['trainings_total'] as int? ?? 0
       ..createdAt = DateTime.parse(
-          row['created_at'] as String? ?? DateTime.now().toIso8601String())
+        row['created_at'] as String? ?? DateTime.now().toIso8601String(),
+      )
       ..updatedAt = DateTime.parse(
-          row['updated_at'] as String? ?? DateTime.now().toIso8601String());
+        row['updated_at'] as String? ?? DateTime.now().toIso8601String(),
+      );
 
     return p;
   }
@@ -117,8 +120,7 @@ class SupabasePlayerRepository implements PlayerRepository {
   Future<Result<Player?>> getById(String id) async {
     try {
       final data = await _client.from(_table).select().eq('id', id).single();
-      if (data == null) return const Success(null);
-      return Success(_fromRow(data as Map<String, dynamic>));
+      return Success(_fromRow(data));
     } catch (e) {
       return Failure(NetworkFailure(e.toString()));
     }

@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/match.dart';
-import '../../providers/matches_provider.dart';
 import '../../providers/export_service_provider.dart';
+import '../../providers/matches_provider.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
   const MatchesScreen({super.key});

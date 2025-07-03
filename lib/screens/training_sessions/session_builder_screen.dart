@@ -11,10 +11,10 @@ import 'package:path_provider/path_provider.dart';
 import '../../models/training_session/session_phase.dart';
 import '../../models/training_session/training_exercise.dart';
 import '../../models/training_session/training_session.dart';
-import '../../providers/training_sessions_repo_provider.dart';
 import '../../providers/players_provider.dart';
-import '../../repositories/training_session_repository.dart';
+import '../../providers/training_sessions_repo_provider.dart';
 import '../../repositories/player_repository.dart';
+import '../../repositories/training_session_repository.dart';
 import '../../services/pdf_service.dart';
 import '../../widgets/training/session_wizard_stepper.dart';
 import '../training_sessions/exercise_library_screen.dart';
@@ -86,7 +86,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       final sessionsRes = await _sessionRepo.getAll();
       final loadedSession = sessionsRes.dataOrNull?.firstWhere(
         (s) => s.id == widget.sessionId!.toString(),
-        orElse: () => TrainingSession(),
+        orElse: TrainingSession.new,
       );
       if (loadedSession != null && loadedSession.id.isNotEmpty) {
         // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern

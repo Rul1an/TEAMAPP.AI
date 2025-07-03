@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../models/match.dart';
-import '../repositories/supabase_match_repository.dart';
 import '../repositories/match_repository.dart';
+import '../repositories/supabase_match_repository.dart';
 
 final matchRepositoryProvider = Provider<MatchRepository>((ref) {
   return SupabaseMatchRepository();

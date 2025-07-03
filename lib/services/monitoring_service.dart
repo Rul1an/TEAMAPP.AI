@@ -92,12 +92,15 @@ class MonitoringService {
     String? userRole,
     String? organizationId,
   }) async {
-    TelemetryService().trackEvent(name, attributes: {
-      ...?parameters,
-      'user_id': userId,
-      'user_role': userRole,
-      'organization_id': organizationId,
-    });
+    TelemetryService().trackEvent(
+      name,
+      attributes: {
+        ...?parameters,
+        'user_id': userId,
+        'user_role': userRole,
+        'organization_id': organizationId,
+      },
+    );
 
     await Sentry.addBreadcrumb(
       Breadcrumb(
@@ -174,12 +177,15 @@ class MonitoringService {
     String? errorMessage,
     Map<String, dynamic>? metadata,
   }) async {
-    TelemetryService().trackEvent('performance', attributes: {
-      'operation': operation,
-      'duration_ms': duration.inMilliseconds,
-      'success': success,
-      'error_message': errorMessage,
-    });
+    TelemetryService().trackEvent(
+      'performance',
+      attributes: {
+        'operation': operation,
+        'duration_ms': duration.inMilliseconds,
+        'success': success,
+        'error_message': errorMessage,
+      },
+    );
 
     final transaction = Sentry.startTransaction(
       'performance',

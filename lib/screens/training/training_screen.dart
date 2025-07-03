@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../models/training.dart';
-import '../../providers/trainings_provider.dart';
 import '../../providers/export_service_provider.dart';
+import '../../providers/trainings_provider.dart';
 
 class TrainingScreen extends ConsumerStatefulWidget {
   const TrainingScreen({super.key});

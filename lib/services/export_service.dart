@@ -9,8 +9,8 @@ import 'package:pdf/widgets.dart' as pw;
 import '../models/match.dart';
 import '../models/player.dart';
 import '../models/training.dart';
-import '../repositories/player_repository.dart';
 import '../repositories/match_repository.dart';
+import '../repositories/player_repository.dart';
 import '../repositories/training_repository.dart';
 
 class ExportService {

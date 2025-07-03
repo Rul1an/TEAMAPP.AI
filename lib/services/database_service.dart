@@ -844,7 +844,8 @@ class DatabaseService {
   }
 
   Future<List<TrainingExercise>> getTrainingExercisesBySession(
-      String sessionId) async {
+    String sessionId,
+  ) async {
     if (kIsWeb) {
       return _trainingExercises
           .where((e) => e.trainingSessionId == sessionId)
