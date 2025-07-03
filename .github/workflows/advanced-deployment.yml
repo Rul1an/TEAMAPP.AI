@@ -52,6 +52,7 @@ jobs:
           echo "✅ Unit tests passed"
 
       - name: 📊 Upload Coverage
+        if: ${{ hashFiles('coverage/lcov.info') != '' }}
         uses: codecov/codecov-action@v3
         with:
           files: coverage/lcov.info
@@ -85,6 +86,8 @@ jobs:
           VALIDATE_DART: true
           VALIDATE_YAML: true
           VALIDATE_JSON: true
+          FILTER_REGEX_INCLUDE: '^(lib|supabase|test)/.*'
+          FILTER_REGEX_EXCLUDE: '(\.tar\.gz$|coverage/)'
 
   # Build and Test
   build-and-test:
