@@ -271,6 +271,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment: production
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
     steps:
       - name: 📥 Checkout Code
@@ -303,13 +305,11 @@ jobs:
             }'
 
       - name: 🎉 Notify Success (Slack)
-        if: ${{ success() && secrets.SLACK_WEBHOOK != '' }}
+        if: ${{ success() && env.SLACK_WEBHOOK_URL != '' }}
         uses: 8398a7/action-slack@v3
         with:
           status: success
           text: "🎉 Production deployment successful! Live at: https://teamappai.netlify.app"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
   # Post-deployment Health Check
   health-check:
