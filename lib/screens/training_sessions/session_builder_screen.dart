@@ -11,7 +11,10 @@ import 'package:path_provider/path_provider.dart';
 import '../../models/training_session/session_phase.dart';
 import '../../models/training_session/training_exercise.dart';
 import '../../models/training_session/training_session.dart';
-import '../../services/database_service.dart';
+import '../../providers/training_sessions_repo_provider.dart';
+import '../../providers/players_provider.dart';
+import '../../repositories/training_session_repository.dart';
+import '../../repositories/player_repository.dart';
 import '../../services/pdf_service.dart';
 import '../../widgets/training/session_wizard_stepper.dart';
 import '../training_sessions/exercise_library_screen.dart';
@@ -35,7 +38,11 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
 
   // Session data being built
   TrainingSession? session;
-  final DatabaseService _db = DatabaseService();
+
+  // Repositories via Riverpod
+  TrainingSessionRepository get _sessionRepo =>
+      ref.read(trainingSessionRepositoryProvider);
+  PlayerRepository get _playerRepo => ref.read(playerRepositoryProvider);
 
   // Form controllers
   final TextEditingController _objectiveController = TextEditingController();
@@ -76,9 +83,12 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
 
   Future<void> _loadExistingSession() async {
     if (widget.sessionId != null) {
-      final loadedSession =
-          await _db.getTrainingSession(widget.sessionId!.toString());
-      if (loadedSession != null) {
+      final sessionsRes = await _sessionRepo.getAll();
+      final loadedSession = sessionsRes.dataOrNull?.firstWhere(
+        (s) => s.id == widget.sessionId!.toString(),
+        orElse: () => TrainingSession(),
+      );
+      if (loadedSession != null && loadedSession.id.isNotEmpty) {
         // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
         // This setState with multiple property assignments demonstrates where
         // cascade notation could improve readability for complex state updates.
@@ -1469,8 +1479,8 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       session!.notes = _notesController.text;
       session!.phases = sessionPhases;
 
-      // Save to database
-      await _db.saveTrainingSession(session!);
+      // Save via repository
+      await _sessionRepo.save(session!);
 
       if (mounted) {
         if (mounted && context.mounted) {
@@ -1517,7 +1527,8 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       session!.phases = sessionPhases;
 
       // Get all players for the PDF
-      final allPlayers = await _db.getAllPlayers();
+      final playersRes = await _playerRepo.getAll();
+      final allPlayers = playersRes.dataOrNull ?? [];
 
       // Generate PDF
       final pdfData =
