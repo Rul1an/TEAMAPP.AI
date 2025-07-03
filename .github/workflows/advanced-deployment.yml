@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: 🎯 Setup Flutter
         uses: subosito/flutter-action@v2
@@ -28,24 +30,29 @@ jobs:
           cache: true
 
       - name: 📦 Install Dependencies
+        working-directory: jo17_tactical_manager
         run: flutter pub get
 
       - name: 🔍 Static Analysis
+        working-directory: jo17_tactical_manager
         run: |
           flutter analyze --fatal-infos
           echo "✅ Static analysis passed"
 
       - name: 🎨 Format Check
+        working-directory: jo17_tactical_manager
         run: |
           dart format --set-exit-if-changed .
           echo "✅ Code formatting is correct"
 
       - name: 🧪 Unit Tests
+        working-directory: jo17_tactical_manager
         run: |
           flutter test --coverage
           echo "✅ Unit tests passed"
 
       - name: 📊 Upload Coverage
+        working-directory: jo17_tactical_manager
         uses: codecov/codecov-action@v3
         with:
           files: ./coverage/lcov.info
@@ -59,12 +66,19 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
       - name: 🔍 Dependency Security Scan
+        working-directory: jo17_tactical_manager
         run: |
           flutter pub deps
           echo "✅ Dependency security scan completed"
 
-      - name: ��️ SAST Scan
+      - name: 🎯 SAST Scan
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: main
@@ -88,7 +102,7 @@ jobs:
           - platform: ios
             os: macos-latest
     runs-on: ${{ matrix.os }}
-    
+
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -100,6 +114,7 @@ jobs:
           cache: true
 
       - name: 📦 Install Dependencies
+        working-directory: jo17_tactical_manager
         run: flutter pub get
 
       - name: 🏗️ Build ${{ matrix.platform }}
@@ -135,7 +150,7 @@ jobs:
     needs: [build-and-test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -185,7 +200,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     environment: staging
-    
+
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -223,7 +238,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment: production
-    
+
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -269,12 +284,12 @@ jobs:
     needs: [deploy-production]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
       - name: 🏥 Production Health Check
         run: |
           echo "Running health checks..."
-          
+
           # Check if site is accessible
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://teamappai.netlify.app)
           if [ $HTTP_STATUS -eq 200 ]; then
@@ -283,15 +298,15 @@ jobs:
             echo "❌ Site health check failed (HTTP $HTTP_STATUS)"
             exit 1
           fi
-          
+
           # Check critical endpoints
           curl -f https://teamappai.netlify.app/manifest.json || exit 1
           echo "✅ Manifest accessible"
-          
+
           # Performance check
           LOAD_TIME=$(curl -s -w "%{time_total}" -o /dev/null https://teamappai.netlify.app)
           echo "Load time: ${LOAD_TIME}s"
-          
+
           if (( $(echo "$LOAD_TIME > 3.0" | bc -l) )); then
             echo "⚠️ Load time exceeds 3 seconds"
           else
@@ -308,7 +323,7 @@ jobs:
     needs: [health-check]
     runs-on: ubuntu-latest
     if: always()
-    
+
     steps:
       - name: 🧹 Clean up artifacts
         uses: actions/github-script@v7
@@ -319,11 +334,11 @@ jobs:
               repo: context.repo.repo,
               run_id: context.runId,
             });
-            
+
             // Keep artifacts for 7 days, then clean up
             const cutoffDate = new Date();
             cutoffDate.setDate(cutoffDate.getDate() - 7);
-            
+
             for (const artifact of artifacts.artifacts) {
               const createdAt = new Date(artifact.created_at);
               if (createdAt < cutoffDate) {
