@@ -41,7 +41,7 @@ jobs:
           PGPASSWORD: postgres
         run: |
           set -e
-          for file in $(ls supabase/migrations/*.sql | sort); do
+          for file in $(ls jo17_tactical_manager/supabase/migrations/*.sql | sort); do
             echo "Applying $file"
             psql -h localhost -U postgres -d postgres -f "$file"
           done

@@ -47,38 +47,78 @@ alter table if exists sessions     alter column organization_id set not null;
 alter table if exists statistics   alter column organization_id set not null;
 
 -- 2. Indexes for performance
-create index if not exists players_org_idx      on players(organization_id, id);
-create index if not exists matches_org_idx      on matches(organization_id, id);
-create index if not exists trainings_org_idx    on trainings(organization_id, id);
-create index if not exists exercises_org_idx    on exercises(organization_id, id);
-create index if not exists sessions_org_idx     on sessions(organization_id, id);
-create index if not exists statistics_org_idx   on statistics(organization_id, id);
-
--- 3. Enable RLS & policies
-alter table players      enable row level security;
-alter table matches      enable row level security;
-alter table trainings    enable row level security;
-alter table exercises    enable row level security;
-alter table sessions     enable row level security;
-alter table statistics   enable row level security;
-
--- Utility function to fetch org claim (if not already provided by Supabase)
-create or replace function current_org_id() returns uuid as $$
-  select current_setting('request.jwt.claim.org_id', true)::uuid;
-$$ language sql stable;
-
--- Policy helper macro
-create or replace function create_rls_policy(table_name text) returns void language plpgsql as $$
+do $$
 begin
-  execute format('create policy "%I_isolated" on %I for all using (organization_id = current_org_id()) with check (organization_id = current_org_id());', table_name, table_name) ;
-end;
-$$;
+  -- 2. Indexes for performance (only if table exists)
+  if exists (select 1 from information_schema.tables where table_name = 'players') then
+    execute 'create index if not exists players_org_idx on players(organization_id, id)';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'matches') then
+    execute 'create index if not exists matches_org_idx on matches(organization_id, id)';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'trainings') then
+    execute 'create index if not exists trainings_org_idx on trainings(organization_id, id)';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'exercises') then
+    execute 'create index if not exists exercises_org_idx on exercises(organization_id, id)';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'sessions') then
+    execute 'create index if not exists sessions_org_idx on sessions(organization_id, id)';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'statistics') then
+    execute 'create index if not exists statistics_org_idx on statistics(organization_id, id)';
+  end if;
 
-select create_rls_policy('players');
-select create_rls_policy('matches');
-select create_rls_policy('trainings');
-select create_rls_policy('exercises');
-select create_rls_policy('sessions');
-select create_rls_policy('statistics');
+  -- 3. Enable RLS & create policies only if table exists
+  if exists (select 1 from information_schema.tables where table_name = 'players') then
+    execute 'alter table players enable row level security';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'matches') then
+    execute 'alter table matches enable row level security';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'trainings') then
+    execute 'alter table trainings enable row level security';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'exercises') then
+    execute 'alter table exercises enable row level security';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'sessions') then
+    execute 'alter table sessions enable row level security';
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'statistics') then
+    execute 'alter table statistics enable row level security';
+  end if;
+
+  -- Utility function to fetch org claim (if not already created)
+  execute $$create or replace function current_org_id() returns uuid as $$
+    select current_setting('request.jwt.claim.org_id', true)::uuid;
+  $$ language sql stable;$$;
+
+  -- Policy helper macro
+  execute $$create or replace function create_rls_policy(table_name text) returns void language plpgsql as $$
+  begin
+    execute format('create policy "%I_isolated" on %I for all using (organization_id = current_org_id()) with check (organization_id = current_org_id());', table_name, table_name);
+  end;
+  $$;$$;
+
+  if exists (select 1 from information_schema.tables where table_name = 'players') then
+    perform create_rls_policy('players');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'matches') then
+    perform create_rls_policy('matches');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'trainings') then
+    perform create_rls_policy('trainings');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'exercises') then
+    perform create_rls_policy('exercises');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'sessions') then
+    perform create_rls_policy('sessions');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'statistics') then
+    perform create_rls_policy('statistics');
+  end if;
+end$$;
 
 -- Done
