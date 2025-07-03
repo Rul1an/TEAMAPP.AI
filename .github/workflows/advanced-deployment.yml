@@ -128,8 +128,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-${{ matrix.platform }}
-          path: |
-            build/web/
+          path: build/web
           retention-days: 30
 
   # Performance Testing
@@ -147,7 +146,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-web
-          path: build/web/
+          path: .
 
       - name: 🎯 Setup Node.js
         uses: actions/setup-node@v4
@@ -181,6 +180,23 @@ jobs:
             echo "✅ Performance score meets requirements"
           fi
 
+      - name: 🔎 Check Web Build
+        run: |
+          if [ ! -f build/web/index.html ]; then
+            echo "❌ build/web/index.html not found. Web build might have failed."
+            exit 1
+          fi
+
+      - name: 🌐 Verify Server Content
+        run: |
+          sleep 2
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/index.html || true)
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "❌ index.html not served correctly (HTTP $HTTP_CODE)"
+            exit 1
+          fi
+          echo "✅ index.html served correctly"
+
   # Deploy to Staging
   deploy-staging:
     name: 🚀 Deploy to Staging
@@ -197,7 +213,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-web
-          path: build/web/
+          path: .
 
       - name: 🚀 Deploy to Netlify Staging
         uses: netlify/actions/cli@master
@@ -235,7 +251,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-web
-          path: build/web/
+          path: .
 
       - name: 🌟 Deploy to Netlify Production
         uses: netlify/actions/cli@master
