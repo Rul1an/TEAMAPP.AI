@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../models/player.dart';
 import '../../providers/players_provider.dart';
-import '../../services/export_service.dart';
+import '../../providers/export_service_provider.dart';
 import '../../services/import_service.dart';
 import '../../utils/colors.dart';
 
@@ -21,7 +21,6 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
   Position? _selectedPosition;
 
   late final ImportService _importService;
-  final _exportService = ExportService();
 
   @override
   void initState() {
@@ -93,7 +92,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
       return;
     }
 
-    await _exportService.exportPlayersToExcel(players);
+    await ref.read(exportServiceProvider).exportPlayersToExcel(players);
 
     if (!mounted) return;
 

@@ -9,14 +9,22 @@ import 'package:pdf/widgets.dart' as pw;
 import '../models/match.dart';
 import '../models/player.dart';
 import '../models/training.dart';
-import '../services/database_service.dart';
+import '../repositories/player_repository.dart';
+import '../repositories/match_repository.dart';
+import '../repositories/training_repository.dart';
 
 class ExportService {
-  factory ExportService() => _instance;
-  ExportService._internal();
-  static final ExportService _instance = ExportService._internal();
+  ExportService({
+    required PlayerRepository playerRepository,
+    required MatchRepository matchRepository,
+    required TrainingRepository trainingRepository,
+  })  : _playerRepo = playerRepository,
+        _matchRepo = matchRepository,
+        _trainingRepo = trainingRepository;
 
-  final _dbService = DatabaseService();
+  final PlayerRepository _playerRepo;
+  final MatchRepository _matchRepo;
+  final TrainingRepository _trainingRepo;
 
   /// 🔧 CASCADE OPERATOR DOCUMENTATION - EXPORT SERVICE OPERATIONS
   ///
@@ -60,7 +68,8 @@ class ExportService {
 
   // Export Players to PDF
   Future<void> exportPlayersToPDF() async {
-    final players = await _dbService.getAllPlayers();
+    final playersRes = await _playerRepo.getAll();
+    final players = playersRes.dataOrNull ?? [];
     final pdfDoc = pw.Document()
       ..addPage(
         pw.MultiPage(
@@ -171,7 +180,8 @@ class ExportService {
 
   // Export Matches to PDF
   Future<void> exportMatchesToPDF() async {
-    final matches = await _dbService.getAllMatches();
+    final matchesRes = await _matchRepo.getAll();
+    final matches = matchesRes.dataOrNull ?? [];
     final pdfDoc = pw.Document()
       ..addPage(
         pw.MultiPage(
@@ -229,8 +239,10 @@ class ExportService {
 
   // Export Training Attendance to Excel
   Future<void> exportTrainingAttendanceToExcel() async {
-    final trainings = await _dbService.getAllTrainings();
-    final players = await _dbService.getAllPlayers();
+    final trainingsRes = await _trainingRepo.getAll();
+    final trainings = trainingsRes.dataOrNull ?? [];
+    final playersRes = await _playerRepo.getAll();
+    final players = playersRes.dataOrNull ?? [];
     final excel = Excel.createExcel();
     final sheet = excel['Trainingen'];
 

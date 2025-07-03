@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../models/match.dart';
 import '../../providers/matches_provider.dart';
-import '../../services/export_service.dart';
+import '../../providers/export_service_provider.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
   const MatchesScreen({super.key});
@@ -48,7 +48,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             onSelected: (value) async {
               try {
                 if (value == 'pdf') {
-                  await ExportService().exportMatchesToPDF();
+                  await ref.read(exportServiceProvider).exportMatchesToPDF();
                   if (mounted && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

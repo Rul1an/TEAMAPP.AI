@@ -6,7 +6,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../models/training.dart';
 import '../../providers/trainings_provider.dart';
-import '../../services/export_service.dart';
+import '../../providers/export_service_provider.dart';
 
 class TrainingScreen extends ConsumerStatefulWidget {
   const TrainingScreen({super.key});
@@ -52,7 +52,9 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
             onSelected: (value) async {
               try {
                 if (value == 'excel') {
-                  await ExportService().exportTrainingAttendanceToExcel();
+                  await ref
+                      .read(exportServiceProvider)
+                      .exportTrainingAttendanceToExcel();
                   if (mounted && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

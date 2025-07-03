@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 
 import '../../models/assessment.dart';
 import '../../models/player.dart';
-import '../../services/database_service.dart';
+import '../../providers/assessments_provider.dart';
+import '../../providers/players_provider.dart';
 import '../../widgets/common/interactive_star_rating.dart';
 
 class AssessmentScreen extends ConsumerStatefulWidget {
@@ -49,25 +50,28 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
   }
 
   Future<void> _loadData() async {
-    final dbService = DatabaseService();
+    // Load player via repository
+    final playerRes =
+        await ref.read(playerRepositoryProvider).getById(widget.playerId);
+    final player = playerRes.dataOrNull;
 
-    // Load player
-    final player = await dbService.getPlayer(widget.playerId);
-
-    // Load or create assessment
+    // Load or create assessment via repository
     PlayerAssessment assessment;
     if (widget.assessmentId != null) {
-      // Load existing assessment
-      assessment = await dbService.getAssessment(widget.assessmentId!) ??
-          PlayerAssessment()
-        ..playerId = widget.playerId;
+      final assessRes = await ref
+          .read(assessmentRepositoryProvider)
+          .getAll(); // could add byPlayer; fallback
+      assessment = assessRes.dataOrNull?.firstWhere(
+            (a) => a.id == widget.assessmentId,
+            orElse: () => PlayerAssessment()..playerId = widget.playerId,
+          ) ??
+          (PlayerAssessment()..playerId = widget.playerId);
       _isEditing = true;
     } else {
-      // Create new assessment
       assessment = PlayerAssessment()
         ..playerId = widget.playerId
         ..type = AssessmentType.monthly
-        ..assessorId = 'coach_1'; // TODO(author): Get from auth
+        ..assessorId = 'coach_1';
     }
 
     if (mounted) {
@@ -500,12 +504,8 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
       try {
         _assessment!.updatedAt = DateTime.now();
 
-        final dbService = DatabaseService();
-        if (_isEditing) {
-          await dbService.updateAssessment(_assessment!);
-        } else {
-          await dbService.addAssessment(_assessment!);
-        }
+        final repo = ref.read(assessmentRepositoryProvider);
+        await repo.save(_assessment!);
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

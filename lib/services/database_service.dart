@@ -835,4 +835,21 @@ class DatabaseService {
       }
     }
   }
+
+  Future<List<TrainingExercise>> getAllTrainingExercises() async {
+    if (kIsWeb) {
+      return List.from(_trainingExercises);
+    }
+    return [];
+  }
+
+  Future<List<TrainingExercise>> getTrainingExercisesBySession(
+      String sessionId) async {
+    if (kIsWeb) {
+      return _trainingExercises
+          .where((e) => e.trainingSessionId == sessionId)
+          .toList();
+    }
+    return [];
+  }
 }

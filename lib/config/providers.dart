@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/club_provider.dart';
-import '../providers/training_sessions_provider.dart';
 import '../services/club_service.dart';
 import '../services/feature_service.dart';
 
@@ -27,12 +26,6 @@ final clubProvider = ChangeNotifierProvider<ClubProvider>((ref) {
 // Calendar provider
 final calendarProvider =
     ChangeNotifierProvider<CalendarProvider>((ref) => CalendarProvider());
-
-// Training sessions provider
-final trainingSessionsProvider =
-    ChangeNotifierProvider<TrainingSessionsProvider>(
-  (ref) => TrainingSessionsProvider(),
-);
 
 // Player tracking provider
 final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>(
