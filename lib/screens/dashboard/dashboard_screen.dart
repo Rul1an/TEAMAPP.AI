@@ -12,9 +12,9 @@ import '../../providers/demo_mode_provider.dart';
 import '../../providers/matches_provider.dart';
 import '../../providers/organization_provider.dart';
 import '../../providers/statistics_provider.dart';
+import '../../providers/training_sessions_repo_provider.dart' as ts_repo;
 import '../../repositories/local_season_repository.dart';
 import '../../repositories/season_repository.dart';
-import '../../services/database_service.dart';
 import '../../services/permission_service.dart';
 import '../../widgets/common/quick_actions_widget.dart';
 import '../../widgets/rbac_demo_widget.dart';
@@ -32,10 +32,7 @@ final dashboardSeasonProvider = FutureProvider<SeasonPlan?>((ref) async {
 // trainingRepositoryProvider removed – replaced by direct Service call until repository migration completed
 
 final dashboardTrainingSessionsProvider =
-    FutureProvider<List<TrainingSession>>((ref) async {
-  final db = DatabaseService();
-  return db.getUpcomingTrainingSessions();
-});
+    ts_repo.upcomingTrainingSessionsProvider;
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});

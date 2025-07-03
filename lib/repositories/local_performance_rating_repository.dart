@@ -22,7 +22,8 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
 
   @override
   Future<Result<List<PerformanceRating>>> getPlayerRatings(
-      String playerId) async {
+    String playerId,
+  ) async {
     try {
       final ratings = await _service.getPlayerRatings(playerId);
       return Success(ratings);
@@ -32,11 +33,15 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
   }
 
   @override
-  Future<Result<double>> getPlayerAverageRating(String playerId,
-      {int? lastNRatings}) async {
+  Future<Result<double>> getPlayerAverageRating(
+    String playerId, {
+    int? lastNRatings,
+  }) async {
     try {
-      final avg = await _service.getPlayerAverageRating(playerId,
-          lastNRatings: lastNRatings);
+      final avg = await _service.getPlayerAverageRating(
+        playerId,
+        lastNRatings: lastNRatings,
+      );
       return Success(avg);
     } catch (e) {
       return Failure(CacheFailure(e.toString()));
@@ -45,7 +50,8 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
 
   @override
   Future<Result<PerformanceTrend>> getPlayerPerformanceTrend(
-      String playerId) async {
+    String playerId,
+  ) async {
     try {
       final trend = await _service.getPlayerPerformanceTrend(playerId);
       return Success(trend);

@@ -17,7 +17,9 @@ class PlayerCard extends ConsumerWidget {
   final VoidCallback? onTap;
 
   Future<Map<String, dynamic>> _getPerformanceData(
-      WidgetRef ref, String playerId) async {
+    WidgetRef ref,
+    String playerId,
+  ) async {
     final repo = ref.read(performanceRatingRepositoryProvider);
     final avgRes = await repo.getPlayerAverageRating(playerId, lastNRatings: 5);
     final trendRes = await repo.getPlayerPerformanceTrend(playerId);
@@ -82,7 +84,9 @@ class PlayerCard extends ConsumerWidget {
                               // Performance Badge
                               FutureBuilder<Map<String, dynamic>>(
                                 future: _getPerformanceData(
-                                    ref, player.id.toString()),
+                                  ref,
+                                  player.id.toString(),
+                                ),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     final data = snapshot.data!;
