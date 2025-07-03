@@ -177,7 +177,7 @@ jobs:
       - name: 🌐 Start Local Server
         run: |
           npx serve -s build/web -l 8080 &
-          sleep 10
+          sleep 20
 
       - name: 🌐 Verify index.html Served
         run: |
@@ -197,7 +197,12 @@ jobs:
 
       - name: 📊 Parse Performance Results
         run: |
-          PERFORMANCE_SCORE=$(cat lighthouse-report.json | jq '.categories.performance.score * 100')
+          RAW_SCORE=$(cat lighthouse-report.json | jq '.categories.performance.score')
+          if [ "$RAW_SCORE" = "null" ]; then
+            echo "❌ Lighthouse did not return a performance score (no LCP)."
+            exit 1
+          fi
+          PERFORMANCE_SCORE=$(echo "$RAW_SCORE * 100" | bc -l)
           echo "Performance Score: $PERFORMANCE_SCORE"
           if (( $(echo "$PERFORMANCE_SCORE < 80" | bc -l) )); then
             echo "❌ Performance score below threshold (80)"
