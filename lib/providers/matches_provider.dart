@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/match.dart';
-import '../repositories/local_match_repository.dart';
+import '../repositories/supabase_match_repository.dart';
 import '../repositories/match_repository.dart';
 
 final matchRepositoryProvider = Provider<MatchRepository>((ref) {
-  return LocalMatchRepository();
+  return SupabaseMatchRepository();
 });
 
 final matchesProvider = FutureProvider<List<Match>>((ref) async {
