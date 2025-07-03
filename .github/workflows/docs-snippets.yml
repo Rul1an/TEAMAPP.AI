@@ -1,0 +1,27 @@
+name: docs-snippets
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**.md'
+      - '**/*.dart'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**.md'
+      - '**/*.dart'
+
+jobs:
+  validate-snippets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+      - name: Install snippet_builder
+        run: |
+          dart pub global activate snippet_builder
+      - name: Validate documentation snippets
+        run: |
+          dart pub global run snippet_builder --input docs --output build/snippets
