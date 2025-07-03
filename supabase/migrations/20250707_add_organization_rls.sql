@@ -14,22 +14,37 @@ alter table if exists statistics add column if not exists organization_id uuid;
 -- Temporary back-fill so NOT NULL can be enforced later
 \set ON_ERROR_STOP off
 
-update players      set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
-update matches      set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
-update trainings    set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
-update exercises    set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
-update sessions     set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
-update statistics   set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+do $$
+begin
+  if exists (select 1 from information_schema.tables where table_name = 'players') then
+    update players set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'matches') then
+    update matches set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'trainings') then
+    update trainings set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'exercises') then
+    update exercises set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'sessions') then
+    update sessions set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+  end if;
+  if exists (select 1 from information_schema.tables where table_name = 'statistics') then
+    update statistics set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+  end if;
+end$$;
 
 \set ON_ERROR_STOP on
 
 -- Enforce NOT NULL (can be relaxed if needed)
-alter table players      alter column organization_id set not null;
-alter table matches      alter column organization_id set not null;
-alter table trainings    alter column organization_id set not null;
-alter table exercises    alter column organization_id set not null;
-alter table sessions     alter column organization_id set not null;
-alter table statistics   alter column organization_id set not null;
+alter table if exists players      alter column organization_id set not null;
+alter table if exists matches      alter column organization_id set not null;
+alter table if exists trainings    alter column organization_id set not null;
+alter table if exists exercises    alter column organization_id set not null;
+alter table if exists sessions     alter column organization_id set not null;
+alter table if exists statistics   alter column organization_id set not null;
 
 -- 2. Indexes for performance
 create index if not exists players_org_idx      on players(organization_id, id);
