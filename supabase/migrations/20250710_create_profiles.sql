@@ -29,7 +29,14 @@ begin
     join pg_namespace n on n.oid = p.pronamespace
     where p.proname = 'uid' and n.nspname = 'auth'
   ) then
-    execute 'create function auth.uid() returns uuid as $$ select ''00000000-0000-0000-0000-000000000000''::uuid; $$ language sql stable';
+    execute $f$
+      create function auth.uid() returns uuid
+      language sql
+      stable
+      as $uid$
+        select '00000000-0000-0000-0000-000000000000'::uuid;
+      $uid$;
+    $f$;
   end if;
 exception when others then
   -- ignore if cannot create (e.g., permissions) – CI only
