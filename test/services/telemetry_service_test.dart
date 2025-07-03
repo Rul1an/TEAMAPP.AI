@@ -1,5 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:jo17_tactical_manager/services/telemetry_service.dart';
 
 void main() {
@@ -11,8 +12,10 @@ void main() {
     });
 
     test('trackEvent completes without error', () {
-      expect(() => TelemetryService().trackEvent('unit_test_event'),
-          returnsNormally);
+      expect(
+        () => TelemetryService().trackEvent('unit_test_event'),
+        returnsNormally,
+      );
     });
 
     test('monitorAsync returns value and completes span', () async {

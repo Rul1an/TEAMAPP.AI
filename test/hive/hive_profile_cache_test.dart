@@ -58,4 +58,28 @@ void main() {
     final fetched = await cache.read();
     expect(fetched?.userId, '1');
   });
+
+  test('read returns null when cache is expired', () async {
+    Hive.init(Directory.systemTemp.path);
+    final cache = HiveProfileCache();
+    final profile = Profile(
+      userId: '2',
+      organizationId: 'org',
+      username: 'jane',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+
+    await cache.write(profile);
+
+    // Read with reasonable ttl to ensure we get data
+    final fetched = await cache.read(ttl: const Duration(milliseconds: 100));
+
+    // Wait beyond TTL before reading again to ensure expiry.
+    await Future.delayed(const Duration(milliseconds: 120));
+
+    final expired = await cache.read(ttl: const Duration(milliseconds: 100));
+    expect(fetched, isNotNull);
+    expect(expired, isNull);
+  });
 }

@@ -7,11 +7,13 @@ import 'package:jo17_tactical_manager/providers/auth_provider.dart';
 import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as app_players_provider;
+import 'package:jo17_tactical_manager/repositories/player_repository.dart';
 import 'package:jo17_tactical_manager/screens/players/players_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:test_utils/fake_auth_service.dart';
 import 'package:test_utils/surface_utils.dart';
+import 'package:jo17_tactical_manager/core/result.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +67,10 @@ void main() {
                 .overrideWith((ref) async => [stubPlayer]),
             authServiceProvider.overrideWithValue(FakeAuthService()),
             isLoggedInProvider.overrideWithValue(true),
+            // Provide fake repository to avoid SupabaseConfig dependency
+            app_players_provider.playerRepositoryProvider.overrideWithValue(
+              _FakePlayerRepository([stubPlayer]),
+            ),
           ],
           child: const MaterialApp(
             home: PlayersScreen(),
@@ -82,4 +88,40 @@ void main() {
       demoNotifier.endDemo();
     });
   });
+}
+
+class _FakePlayerRepository implements PlayerRepository {
+  _FakePlayerRepository(this._players);
+
+  final List<Player> _players;
+
+  @override
+  Future<Result<void>> add(Player player) async {
+    _players.add(player);
+    return const Success(null);
+  }
+
+  @override
+  Future<Result<void>> delete(String id) async {
+    _players.removeWhere((p) => p.id == id);
+    return const Success(null);
+  }
+
+  @override
+  Future<Result<List<Player>>> getAll() async => Success(List.unmodifiable(_players));
+
+  @override
+  Future<Result<Player?>> getById(String id) async =>
+      Success(_players.firstWhere((p) => p.id == id));
+
+  @override
+  Future<Result<List<Player>>> getByPosition(Position position) async =>
+      Success(_players.where((p) => p.position == position).toList());
+
+  @override
+  Future<Result<void>> update(Player player) async {
+    final idx = _players.indexWhere((p) => p.id == player.id);
+    if (idx != -1) _players[idx] = player;
+    return const Success(null);
+  }
 }
