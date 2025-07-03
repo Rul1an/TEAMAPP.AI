@@ -21,6 +21,8 @@ class CurrentProfileNotifier extends AsyncNotifier<Profile?> {
   FutureOr<Profile?> build() async {
     _repo = ref.watch(profileRepositoryProvider);
 
+    _setupDispose();
+
     // Listen to live updates
     _sub = _repo.watch().listen((profile) {
       state = AsyncData(profile);
@@ -31,7 +33,7 @@ class CurrentProfileNotifier extends AsyncNotifier<Profile?> {
     return res.dataOrNull;
   }
 
-  Future<void> update({String? username, String? avatarUrl, String? website}) async {
+  Future<void> editProfile({String? username, String? avatarUrl, String? website}) async {
     state = const AsyncLoading();
     final res = await _repo.update(
       username: username,
@@ -44,10 +46,10 @@ class CurrentProfileNotifier extends AsyncNotifier<Profile?> {
     );
   }
 
-  @override
-  void dispose() {
-    _sub?.cancel();
-    super.dispose();
+  void _setupDispose() {
+    ref.onDispose(() {
+      _sub?.cancel();
+    });
   }
 }
 

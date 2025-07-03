@@ -58,5 +58,7 @@ void main() {
 
     final value = await container.read(currentProfileProvider.future);
     expect(value?.username, 'john');
+
+    await container.read(currentProfileProvider.notifier).editProfile(username: 'new');
   });
 }

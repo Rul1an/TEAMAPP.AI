@@ -34,7 +34,7 @@ class SupabaseProfileRepository implements ProfileRepository {
         website: website,
       );
       return Success(profile);
-    } on StateError catch (e) {
+    } on Exception {
       return Failure(UnauthorizedFailure());
     } catch (e) {
       return Failure(NetworkFailure(e.toString()));
@@ -46,7 +46,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     try {
       final profile = await _service.uploadAvatar(file);
       return Success(profile);
-    } on StateError {
+    } on Exception {
       return Failure(UnauthorizedFailure());
     } catch (e) {
       return Failure(NetworkFailure(e.toString()));
