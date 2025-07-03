@@ -128,19 +128,18 @@ jobs:
 
               # Inject web-vitals RUM snippet into WASM build
               cat <<'INLINE_JS' > build/web/web-vitals-inline.js
-              import{onCLS,onFID,onLCP,onINP}from 'https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module';
-              function send(metric){
-                try{navigator.sendBeacon('/api/web-vitals',JSON.stringify({
-                  name:metric.name,
-                  value:metric.value,
-                  id:metric.id,
-                  url:location.href,
-                  ts:Date.now()
-                }));}catch(e){console.error('web-vitals send error',e);}
-              }
-              onCLS(send);onFID(send);onLCP(send);onINP(send);
-              INLINE_JS
-
+import{onCLS,onFID,onLCP,onINP}from 'https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module';
+function send(metric){
+  try{navigator.sendBeacon('/api/web-vitals',JSON.stringify({
+    name:metric.name,
+    value:metric.value,
+    id:metric.id,
+    url:location.href,
+    ts:Date.now()
+  }));}catch(e){console.error('web-vitals send error',e);}
+}
+onCLS(send);onFID(send);onLCP(send);onINP(send);
+INLINE_JS
               # Add script tags before closing </head>
               sed -i "s#</head>#<script type=\"module\" src=\"web-vitals-inline.js\"></script></head>#" build/web/index.html
 
