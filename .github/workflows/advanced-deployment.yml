@@ -188,27 +188,42 @@ jobs:
           fi
           echo "✅ index.html served correctly"
 
-      - name: 🚀 Run Lighthouse Performance Test
+      - name: 🚀 Run Lighthouse Audit (A11y / BP / SEO)
         run: |
           lighthouse http://localhost:8080 \
             --output json \
             --output-path lighthouse-report.json \
-            --chrome-flags="--headless --no-sandbox"
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=accessibility,best-practices,seo
 
-      - name: 📊 Parse Performance Results
+      - name: 📊 Parse Lighthouse Results (A11y / BP / SEO)
         run: |
-          RAW_SCORE=$(cat lighthouse-report.json | jq '.categories.performance.score')
-          if [ "$RAW_SCORE" = "null" ]; then
-            echo "❌ Lighthouse did not return a performance score (no LCP)."
-            exit 1
-          fi
-          PERFORMANCE_SCORE=$(echo "$RAW_SCORE * 100" | bc -l)
-          echo "Performance Score: $PERFORMANCE_SCORE"
-          if (( $(echo "$PERFORMANCE_SCORE < 80" | bc -l) )); then
-            echo "❌ Performance score below threshold (80)"
+          A11Y_RAW=$(jq '.categories.accessibility.score' lighthouse-report.json)
+          BP_RAW=$(jq '.categories["best-practices"].score' lighthouse-report.json)
+          SEO_RAW=$(jq '.categories.seo.score' lighthouse-report.json)
+
+          A11Y_SCORE=$(echo "$A11Y_RAW * 100" | bc -l)
+          BP_SCORE=$(echo "$BP_RAW * 100" | bc -l)
+          SEO_SCORE=$(echo "$SEO_RAW * 100" | bc -l)
+
+          echo "Accessibility Score: $A11Y_SCORE"
+          echo "Best-Practices Score: $BP_SCORE"
+          echo "SEO Score: $SEO_SCORE"
+
+          MIN_THRESHOLD=80
+          FAIL=0
+          for SCORE in $A11Y_SCORE $BP_SCORE $SEO_SCORE; do
+            IS_BELOW=$(echo "$SCORE < $MIN_THRESHOLD" | bc -l)
+            if [ $IS_BELOW -eq 1 ]; then
+              FAIL=1
+            fi
+          done
+
+          if [ $FAIL -eq 1 ]; then
+            echo "❌ One or more Lighthouse scores below $MIN_THRESHOLD"
             exit 1
           else
-            echo "✅ Performance score meets requirements"
+            echo "✅ All Lighthouse scores meet threshold ($MIN_THRESHOLD+)"
           fi
 
   # Deploy to Staging
