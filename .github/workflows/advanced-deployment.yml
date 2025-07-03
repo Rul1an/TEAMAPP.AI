@@ -124,11 +124,18 @@ jobs:
               ;;
           esac
 
+      - name: ✅ Check Web Build Output
+        run: |
+          if [ ! -d build/web ]; then
+            echo "❌ build/web directory not found. Flutter web build may have failed."
+            exit 1
+          fi
+
       - name: 📤 Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-${{ matrix.platform }}
-          path: build/web
+          path: build
           retention-days: 30
 
   # Performance Testing
@@ -147,6 +154,13 @@ jobs:
         with:
           name: build-web
           path: .
+
+      - name: 🔎 Ensure Web Build Directory
+        run: |
+          if [ ! -d build/web ]; then
+            echo "❌ build/web directory missing after download."
+            exit 1
+          fi
 
       - name: 🎯 Setup Node.js
         uses: actions/setup-node@v4
