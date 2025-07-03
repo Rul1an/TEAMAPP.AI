@@ -2,13 +2,18 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/supabase_profile_data_source.dart';
+import '../hive/hive_profile_cache.dart';
 import '../models/profile.dart';
 import '../repositories/profile_repository.dart';
-import '../repositories/supabase_profile_repository.dart';
+import '../repositories/profile_repository_impl.dart';
 
 /// Exposes the concrete [ProfileRepository]. Swap implementation in tests.
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
-  return SupabaseProfileRepository();
+  return ProfileRepositoryImpl(
+    remote: SupabaseProfileDataSource(),
+    cache: HiveProfileCache(),
+  );
 });
 
 /// Holds the current user profile as [AsyncValue]. Automatically refreshes when

@@ -5,18 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../models/profile.dart';
-import '../../services/profile_service.dart';
-
-/// Provider that exposes [ProfileService].
-final profileServiceProvider = Provider<ProfileService>((ref) {
-  return ProfileService();
-});
-
-/// Future provider that loads the current user's profile.
-final profileFutureProvider = FutureProvider<Profile?>((ref) async {
-  final service = ref.read(profileServiceProvider);
-  return service.getCurrentProfile();
-});
+import '../../providers/profile_provider.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -36,9 +25,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    // Load profile once.
+    // Load profile once from repository.
     Future.microtask(() async {
-      final prof = await ref.read(profileServiceProvider).getCurrentProfile();
+      final repo = ref.read(profileRepositoryProvider);
+      final res = await repo.getCurrent();
+      final prof = res.dataOrNull;
       if (mounted && prof != null) {
         setState(() {
           _profile = prof;
@@ -63,9 +54,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       setState(() => _isSaving = true);
       try {
         final file = io.File(picked.path);
-        final updated =
-            await ref.read(profileServiceProvider).uploadAvatar(file);
-        setState(() => _profile = updated);
+        final repo = ref.read(profileRepositoryProvider);
+        final res = await repo.uploadAvatar(file);
+        final updated = res.dataOrNull;
+        if (updated != null) {
+          setState(() => _profile = updated);
+        }
       } finally {
         if (mounted) setState(() => _isSaving = false);
       }
@@ -76,16 +70,28 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isSaving = true);
     try {
-      final updated = await ref.read(profileServiceProvider).updateProfile(
-            username: _usernameCtrl.text.trim(),
-            website: _websiteCtrl.text.trim(),
-          );
-      setState(() => _profile = updated);
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Profiel bijgewerkt')),
-        );
-      }
+      final repo = ref.read(profileRepositoryProvider);
+      final res = await repo.update(
+        username: _usernameCtrl.text.trim(),
+        website: _websiteCtrl.text.trim(),
+      );
+      res.when(
+        success: (prof) {
+          setState(() => _profile = prof);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Profiel bijgewerkt')),
+            );
+          }
+        },
+        failure: (e) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Fout: ${e.message}')),
+            );
+          }
+        },
+      );
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
