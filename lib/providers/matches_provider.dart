@@ -1,65 +1,77 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/match.dart';
-import '../services/database_service.dart';
+import '../repositories/local_match_repository.dart';
+import '../repositories/match_repository.dart';
+
+final matchRepositoryProvider = Provider<MatchRepository>((ref) {
+  return LocalMatchRepository();
+});
 
 final matchesProvider = FutureProvider<List<Match>>((ref) async {
-  final db = DatabaseService();
-  return db.getAllMatches();
+  final repo = ref.read(matchRepositoryProvider);
+  final res = await repo.getAll();
+  return res.dataOrNull ?? [];
 });
 
 final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
-  final db = DatabaseService();
-  return db.getUpcomingMatches();
+  final repo = ref.read(matchRepositoryProvider);
+  final res = await repo.getUpcoming();
+  return res.dataOrNull ?? [];
 });
 
 final recentMatchesProvider = FutureProvider<List<Match>>((ref) async {
-  final db = DatabaseService();
-  return db.getRecentMatches();
+  final repo = ref.read(matchRepositoryProvider);
+  final res = await repo.getRecent();
+  return res.dataOrNull ?? [];
 });
 
 final matchByIdProvider =
     FutureProvider.family<Match?, String>((ref, id) async {
-  final db = DatabaseService();
-  return db.getMatch(id);
+  final repo = ref.read(matchRepositoryProvider);
+  final res = await repo.getById(id);
+  return res.dataOrNull;
 });
 
 final matchesNotifierProvider =
     StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>(
-  (ref) => MatchesNotifier(),
+  (ref) => MatchesNotifier(ref),
 );
 
 class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
-  MatchesNotifier() : super(const AsyncValue.loading()) {
+  MatchesNotifier(this._ref) : super(const AsyncValue.loading()) {
     loadMatches();
   }
 
-  final _db = DatabaseService();
+  final Ref _ref;
+
+  MatchRepository get _repo => _ref.read(matchRepositoryProvider);
 
   Future<void> loadMatches() async {
     state = const AsyncValue.loading();
-    try {
-      final matches = await _db.getAllMatches();
-      state = AsyncValue.data(matches);
-    } catch (e, stack) {
-      state = AsyncValue.error(e, stack);
-    }
+    final res = await _repo.getAll();
+    state = res.when(
+      success: (data) => AsyncValue.data(data),
+      failure: (err) => AsyncValue.error(err, StackTrace.current),
+    );
   }
 
   Future<void> addMatch(Match match) async {
-    try {
-      await _db.saveMatch(match);
+    state = const AsyncValue.loading();
+    final res = await _repo.add(match);
+    if (res.isSuccess) {
       await loadMatches();
-    } catch (e, stack) {
-      state = AsyncValue.error(e, stack);
+    } else {
+      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
     }
   }
 
   Future<void> updateMatch(Match match) async {
-    try {
-      await _db.saveMatch(match);
+    state = const AsyncValue.loading();
+    final res = await _repo.update(match);
+    if (res.isSuccess) {
       await loadMatches();
-    } catch (e, stack) {
-      state = AsyncValue.error(e, stack);
+    } else {
+      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
     }
   }
 }
