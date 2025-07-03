@@ -176,8 +176,7 @@ jobs:
 
       - name: 🌐 Start Local Server
         run: |
-          cd build/web
-          python3 -m http.server 8080 &
+          npx serve -s build/web -l 8080 &
           sleep 10
 
       - name: 🌐 Verify index.html Served
