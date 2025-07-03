@@ -181,7 +181,7 @@ jobs:
 
       - name: 🌐 Verify index.html Served
         run: |
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/index.html || true)
+          HTTP_CODE=$(curl -Ls -o /dev/null -w "%{http_code}" http://localhost:8080/index.html || true)
           if [ "$HTTP_CODE" != "200" ]; then
             echo "❌ index.html not served correctly (HTTP $HTTP_CODE)"
             exit 1
