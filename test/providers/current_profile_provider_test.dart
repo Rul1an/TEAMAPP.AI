@@ -23,7 +23,8 @@ class _FakeRepo implements ProfileRepository {
   Stream<Profile> watch() => _controller.stream;
 
   @override
-  Future<Result<Profile>> update({String? username, String? avatarUrl, String? website}) async {
+  Future<Result<Profile>> update(
+      {String? username, String? avatarUrl, String? website}) async {
     _profile = Profile(
       userId: 'u',
       organizationId: 'org',
@@ -59,6 +60,8 @@ void main() {
     final value = await container.read(currentProfileProvider.future);
     expect(value?.username, 'john');
 
-    await container.read(currentProfileProvider.notifier).editProfile(username: 'new');
+    await container
+        .read(currentProfileProvider.notifier)
+        .editProfile(username: 'new');
   });
 }

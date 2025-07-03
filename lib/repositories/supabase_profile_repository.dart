@@ -34,9 +34,11 @@ class SupabaseProfileRepository implements ProfileRepository {
         website: website,
       );
       return Success(profile);
-    } on Exception {
-      return Failure(UnauthorizedFailure());
     } catch (e) {
+      // Treat "no user" / unauthorized situations specially
+      if (e is StateError || e.toString().contains('no user')) {
+        return Failure(UnauthorizedFailure());
+      }
       return Failure(NetworkFailure(e.toString()));
     }
   }
@@ -46,9 +48,10 @@ class SupabaseProfileRepository implements ProfileRepository {
     try {
       final profile = await _service.uploadAvatar(file);
       return Success(profile);
-    } on Exception {
-      return Failure(UnauthorizedFailure());
     } catch (e) {
+      if (e is StateError || e.toString().contains('no user')) {
+        return Failure(UnauthorizedFailure());
+      }
       return Failure(NetworkFailure(e.toString()));
     }
   }

@@ -18,17 +18,19 @@ class _FakeProfileService extends ProfileService {
   }
 
   @override
-  Future<Profile> updateProfile({String? username, String? avatarUrl, String? website}) async {
+  Future<Profile> updateProfile(
+      {String? username, String? avatarUrl, String? website}) async {
     if (throwUnauthorized) {
       throw StateError('no user');
     }
-    _profile = (_profile ?? Profile(
-      userId: 'u',
-      organizationId: 'org',
-      username: 'x',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ))
+    _profile = (_profile ??
+            Profile(
+              userId: 'u',
+              organizationId: 'org',
+              username: 'x',
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+            ))
         .copyWith(username: username ?? 'x');
     return _profile!;
   }

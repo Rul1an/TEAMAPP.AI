@@ -33,7 +33,8 @@ class CurrentProfileNotifier extends AsyncNotifier<Profile?> {
     return res.dataOrNull;
   }
 
-  Future<void> editProfile({String? username, String? avatarUrl, String? website}) async {
+  Future<void> editProfile(
+      {String? username, String? avatarUrl, String? website}) async {
     state = const AsyncLoading();
     final res = await _repo.update(
       username: username,
@@ -54,6 +55,7 @@ class CurrentProfileNotifier extends AsyncNotifier<Profile?> {
 }
 
 /// Provider for the [CurrentProfileNotifier].
-final currentProfileProvider = AsyncNotifierProvider<CurrentProfileNotifier, Profile?>(
+final currentProfileProvider =
+    AsyncNotifierProvider<CurrentProfileNotifier, Profile?>(
   CurrentProfileNotifier.new,
 );
