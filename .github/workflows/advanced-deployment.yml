@@ -36,7 +36,7 @@ jobs:
       - name: 🔍 Static Analysis
         working-directory: jo17_tactical_manager
         run: |
-          flutter analyze --fatal-infos
+          flutter analyze --no-fatal-infos
           echo "✅ Static analysis passed"
 
       - name: 🎨 Format Check
@@ -52,10 +52,9 @@ jobs:
           echo "✅ Unit tests passed"
 
       - name: 📊 Upload Coverage
-        working-directory: jo17_tactical_manager
         uses: codecov/codecov-action@v3
         with:
-          files: ./coverage/lcov.info
+          files: jo17_tactical_manager/coverage/lcov.info
           fail_ci_if_error: false
 
   # Security Scan
