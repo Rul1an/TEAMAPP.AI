@@ -143,10 +143,10 @@ JO17 Tactical Manager is een hybride Flutter applicatie voor het beheren van jeu
 
 ### Design Patterns
 
-1. **Repository Pattern**: DatabaseService abstraheert data access
-2. **Provider Pattern**: Riverpod voor state management
-3. **Singleton Pattern**: DatabaseService instance
-4. **Factory Pattern**: Model creation met constructors
+1. **Repository Pattern**: Repositories (`PlayerRepository`, `MatchRepository`, etc.) isoleren data-access en verbergen opslagdetails (Isar, Supabase, Mock).
+2. **Result Wrapper**: Alle repository-calls retourneren een `Result<T>` (Ok / Error) voor type-veilige foutafhandeling.
+3. **Provider Pattern**: Riverpod voor dependency-injectie en reactieve state.
+4. **MVVM**: ViewModels coördineren repositories; Views tonen uitsluitend UI-state.
 
 ## 📁 Project Structuur
 
@@ -164,19 +164,18 @@ jo17_tactical_manager/
 │   │   ├── match.dart           # Wedstrijd model
 │   │   └── performance_rating.dart # Performance rating model
 │   ├── providers/
-│   │   ├── database_provider.dart # Database providers
-│   │   ├── players_provider.dart  # Speler state
-│   │   ├── matches_provider.dart  # Wedstrijd state
-│   │   └── trainings_provider.dart # Training state
+│   │   ├── player_repository_provider.dart  # Speler repository
+│   │   ├── match_repository_provider.dart   # Wedstrijd repository
+│   │   └── training_repository_provider.dart# Training repository
 │   ├── screens/
 │   │   ├── dashboard/           # Dashboard schermen
 │   │   ├── players/             # Speler schermen
 │   │   ├── training/            # Training schermen
 │   │   └── matches/             # Wedstrijd schermen
-│   ├── services/
-│   │   ├── database_service.dart # Database operations
-│   │   ├── import_service.dart  # Import functionaliteit
-│   │   └── export_service.dart  # Export functionaliteit
+│   ├── repositories/
+│   │   ├── player_repository.dart       # Speler data access
+│   │   ├── match_repository.dart        # Wedstrijd data access
+│   │   └── training_repository.dart     # Training data access
 │   └── widgets/
 │       ├── common/              # Gedeelde widgets
 │       ├── player/              # Speler-specifieke widgets
@@ -308,29 +307,36 @@ class Match {
 ### Provider Architecture
 
 ```dart
-// Database service provider (singleton)
-final databaseServiceProvider = Provider<DatabaseService>((ref) {
-  return DatabaseService();
+// Repository providers (dependency injection)
+final playerRepositoryProvider = Provider<PlayerRepository>((ref) {
+  // Switch implementation op basis van platform/build-flavour
+  return LocalPlayerRepository(); // of SupabasePlayerRepository()
 });
 
-// Data providers
-final playersProvider = FutureProvider<List<Player>>((ref) async {
-  final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getAllPlayers();
+final matchRepositoryProvider = Provider<MatchRepository>((ref) {
+  return LocalMatchRepository();
 });
 
-// Statistics provider
-final statisticsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
-  final dbService = ref.read(databaseServiceProvider);
-  return await dbService.getStatistics();
-});
+// Voorbeeld ViewModel dat repositories gebruikt
+class PlayersViewModel extends ChangeNotifier {
+  PlayersViewModel(this._read);
+  final Reader _read;
+
+  Future<List<Player>> loadPlayers() async {
+    final result = await _read(playerRepositoryProvider).getAll();
+    return switch (result) {
+      Ok(value: final players) => players,
+      Error() => [],
+    };
+  }
+}
 ```
 
 ### State Flow
-1. UI components watch providers via `ref.watch()`
-2. Providers fetch data from DatabaseService
-3. DatabaseService interacts with platform-specific storage
-4. Changes trigger automatic UI updates
+1. UI ↔︎ ViewModel observe Riverpod-providers (`ref.watch()`).
+2. ViewModel roept repositories aan om data te laden of bij te werken.
+3. Repositories verzorgen caching & I/O (Isar offline, Supabase cloud) en geven een `Result<T>` terug.
+4. ViewModel vertaalt `Result<T>` naar UI-state; widgets rebuilden automatisch.
 
 ## 🎨 UI/UX Design
 

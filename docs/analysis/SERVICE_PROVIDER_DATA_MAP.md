@@ -46,23 +46,22 @@ _Backups (`*.bak`, `*.backup`) were ignored._
 |----------|-------------------|--------|
 | `auth_provider.dart` | AuthService | Auth |
 | `organization_provider.dart` | OrganizationService | Org |
-| `club_provider.dart` | ClubService, DatabaseService | Club |
-| `players_provider.dart` | DatabaseService | Football Data |
-| `matches_provider.dart` | DatabaseService | Football Data |
-| `trainings_provider.dart` | DatabaseService | Football Data |
-| `training_sessions_provider.dart` | DatabaseService | Football Data |
-| `annual_planning_provider.dart` | DatabaseService | Planning |
-| `field_diagram_provider.dart` | DatabaseService | Training Design |
-| `player_tracking_provider.dart` | DatabaseService | Performance |
+| `club_provider.dart` | ClubRepository, TeamRepository | Club |
+| `players_provider.dart` | PlayerRepository | Football Data |
+| `matches_provider.dart` | MatchRepository | Football Data |
+| `trainings_provider.dart` | TrainingRepository | Football Data |
+| `training_sessions_provider.dart` | TrainingSessionRepository | Football Data |
+| `annual_planning_provider.dart` | PlanningRepository | Planning |
+| `field_diagram_provider.dart` | FieldDiagramRepository | Training Design |
+| `player_tracking_provider.dart` | PlayerTrackingRepository | Performance |
 | `demo_mode_provider.dart` | DemoDataService | Demo |
 | `subscription_provider.dart` | FeatureService | SaaS |
-| `database_provider.dart` | DatabaseService (singleton) | Infra |
 
 ---
 
 ## 4. Issues & Opportunities
 
-1. **Tight Coupling** – Providers depend directly on concrete service classes. We aim to introduce per-domain **Repository interfaces** (e.g. `ProfileRepository`) to decouple implementation.
+1. **Tight Coupling (Resolved)** – Providers nu afhankelijk van abstracte **Repository interfaces** (e.g. `PlayerRepository`). Implementaties kunnen lokaal (Isar) of cloud (Supabase) zijn.
 2. **Error Handling** – Mixed `throw` vs. nullable returns. Adoption of a sealed `Result<T>` wrapper recommended (see TODO `result-wrapper`).
 3. **Offline Cache** – Hive 4 encrypted boxes missing (TODO `hive-profile-cache`, `hive-encryption-key`).
 4. **Observability** – `analytics_service.dart` placeholder; needs integration of RUM (web-vitals) & Sentry performance.
