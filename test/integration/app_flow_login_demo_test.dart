@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:jo17_tactical_manager/core/result.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
 import 'package:jo17_tactical_manager/providers/auth_provider.dart';
 import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
@@ -13,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:test_utils/fake_auth_service.dart';
 import 'package:test_utils/surface_utils.dart';
-import 'package:jo17_tactical_manager/core/result.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -108,7 +108,8 @@ class _FakePlayerRepository implements PlayerRepository {
   }
 
   @override
-  Future<Result<List<Player>>> getAll() async => Success(List.unmodifiable(_players));
+  Future<Result<List<Player>>> getAll() async =>
+      Success(List.unmodifiable(_players));
 
   @override
   Future<Result<Player?>> getById(String id) async =>

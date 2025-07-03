@@ -76,7 +76,7 @@ void main() {
     final fetched = await cache.read(ttl: const Duration(milliseconds: 100));
 
     // Wait beyond TTL before reading again to ensure expiry.
-    await Future.delayed(const Duration(milliseconds: 120));
+    await Future<void>.delayed(const Duration(milliseconds: 120));
 
     final expired = await cache.read(ttl: const Duration(milliseconds: 100));
     expect(fetched, isNotNull);
