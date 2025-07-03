@@ -135,7 +135,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-web
-          path: build/web
+          path: build
           retention-days: 30
 
   # Performance Testing
