@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+
 import '../../models/training.dart';
-import '../../providers/database_provider.dart';
-import '../../services/database_service.dart';
+import '../../providers/trainings_provider.dart';
 
 class EditTrainingScreen extends ConsumerStatefulWidget {
   const EditTrainingScreen({
@@ -466,7 +466,9 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
       _training!.status = _selectedStatus!;
       _training!.updatedAt = DateTime.now();
 
-      await DatabaseService().updateTraining(_training!);
+      final repo = ref.read(trainingRepositoryProvider);
+      final res = await repo.update(_training!);
+      if (!res.isSuccess) throw Exception(res.errorOrNull);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -527,7 +529,8 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
     });
 
     try {
-      await DatabaseService().deleteTraining(_training!.id);
+      final repo = ref.read(trainingRepositoryProvider);
+      await repo.delete(_training!.id);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

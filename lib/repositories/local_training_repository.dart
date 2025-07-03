@@ -30,6 +30,16 @@ class LocalTrainingRepository implements TrainingRepository {
   }
 
   @override
+  Future<Result<void>> delete(String id) async {
+    try {
+      await _service.deleteTraining(id);
+      return const Success(null);
+    } catch (e) {
+      return Failure(CacheFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Result<List<Training>>> getAll() async {
     try {
       final trainings = await _service.getAllTrainings();

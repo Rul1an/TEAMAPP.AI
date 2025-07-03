@@ -6,8 +6,9 @@ import '../../models/formation_template.dart';
 import '../../models/match.dart';
 import '../../models/player.dart';
 import '../../models/team.dart';
-import '../../providers/database_provider.dart';
-import '../../services/database_service.dart';
+import '../../providers/formation_templates_provider.dart';
+import '../../providers/matches_provider.dart';
+import '../../providers/players_provider.dart';
 import '../../widgets/common/tactical_drawing_canvas.dart';
 
 class LineupBuilderScreen extends ConsumerStatefulWidget {
@@ -50,16 +51,19 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
   }
 
   Future<void> _loadTemplates() async {
-    final templates = await DatabaseService().getAllFormationTemplates();
+    final repo = ref.read(formationTemplateRepositoryProvider);
+    final res = await repo.getAll();
     if (mounted) {
       setState(() {
-        _availableTemplates = templates;
+        _availableTemplates = res.dataOrNull ?? [];
       });
     }
   }
 
   Future<void> _loadMatch() async {
-    final match = await DatabaseService().getMatch(widget.matchId!);
+    final repo = ref.read(matchRepositoryProvider);
+    final res = await repo.getById(widget.matchId!);
+    final match = res.dataOrNull;
     if (match != null && mounted) {
       setState(() {
         _match = match;
@@ -75,7 +79,8 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
   }
 
   Future<void> _loadExistingLineup(Match match) async {
-    final players = await DatabaseService().getAllPlayers();
+    final playersRes = await ref.read(playerRepositoryProvider).getAll();
+    final players = playersRes.dataOrNull ?? [];
 
     // Load field positions
     match.fieldPositions.forEach((position, playerId) {
@@ -845,7 +850,9 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         }
       });
 
-      await DatabaseService().updateMatch(_match!);
+      final repo = ref.read(matchRepositoryProvider);
+      final res = await repo.update(_match!);
+      if (!res.isSuccess) throw Exception(res.errorOrNull);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -938,9 +945,9 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
   Future<void> _applyTemplate() async {
     if (_selectedTemplate == null) return;
 
-    final allPlayers = await DatabaseService().getAllPlayers();
-    final lineup = await DatabaseService()
-        .applyFormationTemplate(_selectedTemplate!, allPlayers);
+    final playersRes = await ref.read(playerRepositoryProvider).getAll();
+    final allPlayers = playersRes.dataOrNull ?? [];
+    final lineup = _generateLineupFromTemplate(_selectedTemplate!, allPlayers);
 
     setState(() {
       // Clear current positions
@@ -1024,8 +1031,9 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
       ..isCustom = true
       ..isDefault = false;
 
-    await DatabaseService().addFormationTemplate(template);
-    await _loadTemplates(); // Refresh template list
+    final repo = ref.read(formationTemplateRepositoryProvider);
+    await repo.add(template);
+    await _loadTemplates();
 
     if (mounted && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -1133,8 +1141,9 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
     );
 
     if (confirmed ?? false) {
-      await DatabaseService().deleteFormationTemplate(template.id);
-      await _loadTemplates(); // Refresh template list
+      final repo = ref.read(formationTemplateRepositoryProvider);
+      await repo.delete(template.id);
+      await _loadTemplates();
 
       if (_selectedTemplate?.id == template.id) {
         setState(() {
@@ -1151,5 +1160,28 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         );
       }
     }
+  }
+
+  // Generate lineup mapping from template preferences
+  Map<String, Player?> _generateLineupFromTemplate(
+    FormationTemplate template,
+    List<Player> players,
+  ) {
+    final Map<String, Player?> result = {};
+    final assigned = <String>{};
+
+    template.positionPreferences.forEach((posKey, pref) {
+      final player = players.firstWhere(
+        (p) => p.position.name == pref && !assigned.contains(p.id.toString()),
+        orElse: Player.new,
+      );
+      if (player.id != '') {
+        result[posKey] = player;
+        assigned.add(player.id.toString());
+      } else {
+        result[posKey] = null;
+      }
+    });
+    return result;
   }
 }

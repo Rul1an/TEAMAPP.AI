@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../models/match.dart';
-import '../../providers/database_provider.dart';
-import '../../services/database_service.dart';
+import '../../providers/matches_provider.dart';
 
 class EditMatchScreen extends ConsumerStatefulWidget {
   const EditMatchScreen({
@@ -513,7 +512,9 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
         // result will be null automatically
       }
 
-      await DatabaseService().updateMatch(_match!);
+      final repo = ref.read(matchRepositoryProvider);
+      final res = await repo.update(_match!);
+      if (!res.isSuccess) throw Exception(res.errorOrNull);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -574,7 +575,9 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
     });
 
     try {
-      await DatabaseService().deleteMatch(_match!.id);
+      final repo = ref.read(matchRepositoryProvider);
+      final res = await repo.delete(_match!.id);
+      if (!res.isSuccess) throw Exception(res.errorOrNull);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

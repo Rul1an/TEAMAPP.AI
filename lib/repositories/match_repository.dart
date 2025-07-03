@@ -8,4 +8,5 @@ abstract interface class MatchRepository {
   Future<Result<Match?>> getById(String id);
   Future<Result<void>> add(Match match);
   Future<Result<void>> update(Match match);
+  Future<Result<void>> delete(String id);
 }

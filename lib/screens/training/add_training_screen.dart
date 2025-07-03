@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/training.dart';
-import '../../services/database_service.dart';
+import '../../providers/trainings_provider.dart';
 
 class AddTrainingScreen extends ConsumerStatefulWidget {
   const AddTrainingScreen({super.key});
@@ -427,7 +427,12 @@ class _AddTrainingScreenState extends ConsumerState<AddTrainingScreen> {
         ..createdAt = DateTime.now()
         ..updatedAt = DateTime.now();
 
-      await DatabaseService().saveTraining(training);
+      final repo = ref.read(trainingRepositoryProvider);
+      final res = await repo.add(training);
+
+      if (!res.isSuccess) {
+        throw Exception(res.errorOrNull);
+      }
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import '../../models/performance_rating.dart';
 import '../../models/player.dart';
 import '../../models/training.dart';
-import '../../providers/database_provider.dart';
-import '../../services/database_service.dart';
+import '../../providers/players_provider.dart';
+import '../../providers/trainings_provider.dart';
 import '../../widgets/common/rating_dialog.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
@@ -527,7 +527,8 @@ class _TrainingAttendanceScreenState
                 player.trainingsAttended + (wasPresent ? 1 : 0);
 
           // Save to database
-          await DatabaseService().updatePlayer(player);
+          final playerRepo = ref.read(playerRepositoryProvider);
+          await playerRepo.update(player);
         }
       }
 

@@ -68,4 +68,14 @@ class LocalMatchRepository implements MatchRepository {
       return Failure(CacheFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Result<void>> delete(String id) async {
+    try {
+      await _service.deleteMatch(id);
+      return const Success(null);
+    } catch (e) {
+      return Failure(CacheFailure(e.toString()));
+    }
+  }
 }

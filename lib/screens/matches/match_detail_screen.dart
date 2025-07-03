@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 
 import '../../models/match.dart';
 import '../../models/player.dart';
-import '../../providers/database_provider.dart';
-import '../../services/database_service.dart';
+import '../../providers/matches_provider.dart';
+import '../../providers/players_provider.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({
@@ -560,13 +560,15 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
 
       final match = matches[matchIndex];
 
-      await DatabaseService().updateMatch(
-        match
-          ..teamScore = int.tryParse(_teamScoreController.text)
-          ..opponentScore = int.tryParse(_opponentScoreController.text)
-          ..startingLineupIds = _selectedStartingLineup
-          ..substituteIds = _selectedSubstitutes,
-      );
+      final repo = ref.read(matchRepositoryProvider);
+      match
+        ..teamScore = int.tryParse(_teamScoreController.text)
+        ..opponentScore = int.tryParse(_opponentScoreController.text)
+        ..startingLineupIds = _selectedStartingLineup
+        ..substituteIds = _selectedSubstitutes;
+
+      final res = await repo.update(match);
+      if (!res.isSuccess) throw Exception(res.errorOrNull);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
