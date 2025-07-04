@@ -5,13 +5,14 @@ import '../models/club/player_progress.dart';
 import '../models/club/staff_member.dart';
 import '../models/club/team.dart';
 import '../models/player.dart';
-import '../services/club_service.dart';
+import '../repositories/club_repository.dart';
 
 /// 🏆 Club Provider
 /// Manages club-level operations, teams, staff, and player progress
 class ClubProvider extends ChangeNotifier {
-  ClubProvider({required ClubService clubService}) : _clubService = clubService;
-  final ClubService _clubService;
+  ClubProvider({required ClubRepository clubRepository})
+      : _clubRepository = clubRepository;
+  final ClubRepository _clubRepository;
 
   // State
   Club? _currentClub;
@@ -70,9 +71,14 @@ class ClubProvider extends ChangeNotifier {
   Future<void> loadClub(String clubId) async {
     _setLoading(true);
     try {
-      _currentClub = await _clubService.getClub(clubId);
-      await _loadClubData();
-      _clearError();
+      final res = await _clubRepository.getById(clubId);
+      if (res.isSuccess) {
+        _currentClub = res.dataOrNull;
+        await _loadClubData();
+        _clearError();
+      } else {
+        throw res.errorOrNull!;
+      }
     } catch (e) {
       _setError('Failed to load club: $e');
     } finally {
@@ -83,8 +89,13 @@ class ClubProvider extends ChangeNotifier {
   Future<void> updateClub(Club club) async {
     _setLoading(true);
     try {
-      _currentClub = await _clubService.updateClub(club);
-      _clearError();
+      final res = await _clubRepository.update(club);
+      if (res.isSuccess) {
+        _currentClub = club;
+        _clearError();
+      } else {
+        throw res.errorOrNull!;
+      }
     } catch (e) {
       _setError('Failed to update club: $e');
     } finally {
