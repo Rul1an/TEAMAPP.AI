@@ -21,7 +21,8 @@ class PDFService {
   /// Deprecated: Use [TrainingSessionPdfGenerator] via
   /// [PDFService.trainingSessionPdf] instead.
   @Deprecated(
-      'Use TrainingSessionPdfGenerator via PDFService.trainingSessionPdf')
+    'Use TrainingSessionPdfGenerator via PDFService.trainingSessionPdf',
+  )
   static Future<Uint8List> generateTrainingSessionReport(
     TrainingSession session,
     List<Player> allPlayers,
