@@ -2,7 +2,7 @@
 # Updated for Flutter 3.32+ and Dart 3.8+ compatibility
 # Removes deprecated rules and fixes conflicts
 
-include: package:very_good_analysis/analysis_options.5.0.0.yaml
+include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
   exclude:

@@ -161,8 +161,10 @@ class _VacationRow extends StatelessWidget {
           children: [
             _TableCell('${weekSchedule.weekNumber}', width: 60),
             const _TableCell('', width: 50),
-            _TableCell(weekSchedule.vacationDescription ?? 'Vakantie',
-                width: 180),
+            _TableCell(
+              weekSchedule.vacationDescription ?? 'Vakantie',
+              width: 180,
+            ),
             const _TableCell('', width: 150),
             _TableCell(_formatWeekDate(weekSchedule.weekStartDate), width: 100),
             const _TableCell('', width: 120),
@@ -227,7 +229,9 @@ class _ActivityRow extends ConsumerWidget {
             width: 150,
             style: match != null
                 ? const TextStyle(
-                    color: Colors.green, fontWeight: FontWeight.w600)
+                    color: Colors.green,
+                    fontWeight: FontWeight.w600,
+                  )
                 : null,
           ),
           _TableCell(
@@ -265,10 +269,14 @@ class _ActivityRow extends ConsumerWidget {
           return const TextStyle(color: Colors.orange);
         case TrainingIntensity.acquisition:
           return const TextStyle(
-              color: Colors.red, fontWeight: FontWeight.w600);
+            color: Colors.red,
+            fontWeight: FontWeight.w600,
+          );
         case TrainingIntensity.competition:
           return const TextStyle(
-              color: Colors.purple, fontWeight: FontWeight.bold);
+            color: Colors.purple,
+            fontWeight: FontWeight.bold,
+          );
       }
     }
     return const TextStyle(color: Colors.blue);
