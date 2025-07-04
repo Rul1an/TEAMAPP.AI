@@ -6,6 +6,7 @@
 ///
 /// All generators return a Uint8List with the PDF bytes.
 import 'dart:typed_data';
+import 'core/font_cache.dart';
 
 // ignore_for_file: dangling_library_doc_comments
 
@@ -24,6 +25,9 @@ abstract class PdfGenerator<T> {
   /// Builds a PDF based on [data]. Implementations may throw if the provided
   /// data cannot be rendered.
   Future<Uint8List> generate(T data);
+
+  // Protected helper for subclasses
+  FontCache get fonts => FontCache.instance;
 }
 
 // Base class for PDF generators so we can add new ones independently
