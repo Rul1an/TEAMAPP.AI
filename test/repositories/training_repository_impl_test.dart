@@ -1,11 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:jo17_tactical_manager/models/training.dart';
-import 'package:jo17_tactical_manager/repositories/training_repository_impl.dart';
+
 import 'package:jo17_tactical_manager/data/supabase_training_data_source.dart';
 import 'package:jo17_tactical_manager/hive/hive_training_cache.dart';
-
-import 'package:jo17_tactical_manager/core/result.dart';
+import 'package:jo17_tactical_manager/models/training.dart';
+import 'package:jo17_tactical_manager/repositories/training_repository_impl.dart';
 
 class _MockRemote extends Mock implements SupabaseTrainingDataSource {}
 
@@ -16,7 +15,14 @@ void main() {
     late _MockRemote remote;
     late _MockCache cache;
     late TrainingRepositoryImpl repo;
-    final sample = [Training()..id = 't1'..date = DateTime.now()..duration = 90..focus = TrainingFocus.technical..intensity=TrainingIntensity.medium];
+    final sample = [
+      Training()
+        ..id = 't1'
+        ..date = DateTime.now()
+        ..duration = 90
+        ..focus = TrainingFocus.technical
+        ..intensity = TrainingIntensity.medium,
+    ];
 
     setUp(() {
       remote = _MockRemote();

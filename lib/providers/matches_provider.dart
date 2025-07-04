@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/match.dart';
 import '../data/supabase_match_data_source.dart';
 import '../hive/hive_match_cache.dart';
-import '../repositories/match_repository_impl.dart';
+import '../models/match.dart';
 import '../repositories/match_repository.dart';
+import '../repositories/match_repository_impl.dart';
 
 final matchRepositoryProvider = Provider<MatchRepository>((ref) {
   return MatchRepositoryImpl(

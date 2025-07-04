@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:jo17_tactical_manager/models/match.dart';
-import 'package:jo17_tactical_manager/providers/matches_provider.dart';
 import 'package:jo17_tactical_manager/data/supabase_match_data_source.dart';
 import 'package:jo17_tactical_manager/hive/hive_match_cache.dart';
+import 'package:jo17_tactical_manager/models/match.dart';
+import 'package:jo17_tactical_manager/providers/matches_provider.dart';
 import 'package:jo17_tactical_manager/repositories/match_repository_impl.dart';
 
 class _MockRemote extends Mock implements SupabaseMatchDataSource {}
@@ -29,7 +29,7 @@ void main() {
     Match()
       ..id = 'm1'
       ..opponent = 'Ajax'
-      ..date = DateTime.now()
+      ..date = DateTime.now(),
   ];
   registerFallbackValue(Match());
 
@@ -40,9 +40,11 @@ void main() {
       final cache = _FakeCache(sample);
 
       final repo = MatchRepositoryImpl(remote: remote, cache: cache);
-      final container = ProviderContainer(overrides: [
-        matchRepositoryProvider.overrideWith((ref) => repo),
-      ]);
+      final container = ProviderContainer(
+        overrides: [
+          matchRepositoryProvider.overrideWithValue(repo),
+        ],
+      );
 
       final list = await container.read(matchesProvider.future);
       expect(list, sample);
@@ -54,9 +56,11 @@ void main() {
       final cache = _FakeCache(null);
 
       final repo = MatchRepositoryImpl(remote: remote, cache: cache);
-      final container = ProviderContainer(overrides: [
-        matchRepositoryProvider.overrideWith((ref) => repo),
-      ]);
+      final container = ProviderContainer(
+        overrides: [
+          matchRepositoryProvider.overrideWithValue(repo),
+        ],
+      );
 
       final list = await container.read(matchesProvider.future);
       expect(list, sample);
