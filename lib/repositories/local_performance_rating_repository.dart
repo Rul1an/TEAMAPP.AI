@@ -1,19 +1,30 @@
 import '../core/result.dart';
+import '../hive/hive_performance_rating_cache.dart';
 import '../models/performance_rating.dart';
-import '../services/database_service.dart';
 import 'performance_rating_repository.dart';
 
-/// Local in-memory implementation backed by [DatabaseService].
+/// Local implementation backed by [HivePerformanceRatingCache].
 class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
-  LocalPerformanceRatingRepository({DatabaseService? service})
-      : _service = service ?? DatabaseService();
+  LocalPerformanceRatingRepository({HivePerformanceRatingCache? cache})
+      : _cache = cache ?? HivePerformanceRatingCache();
 
-  final DatabaseService _service;
+  final HivePerformanceRatingCache _cache;
+
+  Future<List<PerformanceRating>> _all() async => await _cache.read() ?? [];
+
+  Future<void> _saveAll(List<PerformanceRating> list) => _cache.write(list);
 
   @override
   Future<Result<void>> save(PerformanceRating rating) async {
     try {
-      await _service.savePerformanceRating(rating);
+      final list = await _all();
+      final idx = list.indexWhere((r) => r.id == rating.id);
+      if (idx == -1) {
+        list.add(rating);
+      } else {
+        list[idx] = rating;
+      }
+      await _saveAll(list);
       return const Success(null);
     } catch (e) {
       return Failure(CacheFailure(e.toString()));
@@ -25,8 +36,8 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
     String playerId,
   ) async {
     try {
-      final ratings = await _service.getPlayerRatings(playerId);
-      return Success(ratings);
+      final list = await _all();
+      return Success(list.where((r) => r.playerId == playerId).toList());
     } catch (e) {
       return Failure(CacheFailure(e.toString()));
     }
@@ -38,10 +49,17 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
     int? lastNRatings,
   }) async {
     try {
-      final avg = await _service.getPlayerAverageRating(
-        playerId,
-        lastNRatings: lastNRatings,
-      );
+      final ratings = (await _all())
+          .where((r) => r.playerId == playerId)
+          .toList();
+      if (ratings.isEmpty) return const Success(0);
+      ratings.sort((a, b) => b.date.compareTo(a.date));
+      final considered = lastNRatings != null && lastNRatings < ratings.length
+          ? ratings.take(lastNRatings)
+          : ratings;
+      final avg =
+          considered.map((r) => r.overallRating).reduce((a, b) => a + b) /
+              considered.length;
       return Success(avg);
     } catch (e) {
       return Failure(CacheFailure(e.toString()));
@@ -53,7 +71,15 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
     String playerId,
   ) async {
     try {
-      final trend = await _service.getPlayerPerformanceTrend(playerId);
+      final ratings = (await _all())
+          .where((r) => r.playerId == playerId)
+          .toList();
+      final trendStr = PerformanceRating.calculateTrend(ratings);
+      final trend = trendStr == '↗️'
+          ? PerformanceTrend.improving
+          : trendStr == '↘️'
+              ? PerformanceTrend.declining
+              : PerformanceTrend.stable;
       return Success(trend);
     } catch (e) {
       return Failure(CacheFailure(e.toString()));
