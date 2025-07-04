@@ -1,11 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/match.dart';
+import '../data/supabase_match_data_source.dart';
+import '../hive/hive_match_cache.dart';
+import '../repositories/match_repository_impl.dart';
 import '../repositories/match_repository.dart';
-import '../repositories/supabase_match_repository.dart';
 
 final matchRepositoryProvider = Provider<MatchRepository>((ref) {
-  return SupabaseMatchRepository();
+  return MatchRepositoryImpl(
+    remote: SupabaseMatchDataSource(),
+    cache: HiveMatchCache(),
+  );
 });
 
 final matchesProvider = FutureProvider<List<Match>>((ref) async {
