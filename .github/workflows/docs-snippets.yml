@@ -5,11 +5,13 @@ on:
     paths:
       - 'docs/**.md'
       - '**/*.dart'
+      - '.github/workflows/docs-snippets.yml'
   push:
     branches: [main]
     paths:
       - 'docs/**.md'
       - '**/*.dart'
+      - '.github/workflows/docs-snippets.yml'
 
 jobs:
   validate-snippets:
