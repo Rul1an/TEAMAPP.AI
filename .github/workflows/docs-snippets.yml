@@ -55,5 +55,7 @@ jobs:
           fi
           mkdir -p build/snippets
           set -x
-          snippets --input "$DOC_DIR" --output build/snippets
+          INPUT_PATH="$(realpath "$DOC_DIR")"
+          echo "Resolved absolute input path: $INPUT_PATH"
+          snippets --input "$INPUT_PATH" --output build/snippets
           set +x
