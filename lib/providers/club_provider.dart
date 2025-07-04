@@ -77,7 +77,7 @@ class ClubProvider extends ChangeNotifier {
         await _loadClubData();
         _clearError();
       } else {
-        throw res.errorOrNull!;
+        throw Exception(res.errorOrNull);
       }
     } catch (e) {
       _setError('Failed to load club: $e');
@@ -94,7 +94,7 @@ class ClubProvider extends ChangeNotifier {
         _currentClub = club;
         _clearError();
       } else {
-        throw res.errorOrNull!;
+        throw Exception(res.errorOrNull);
       }
     } catch (e) {
       _setError('Failed to update club: $e');

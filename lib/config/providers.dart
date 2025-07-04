@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../providers/club_provider.dart';
 import '../data/supabase_club_data_source.dart';
-import '../hive/hive_club_cache.dart';
-import '../repositories/club_repository_impl.dart';
-import '../repositories/club_repository.dart';
-import '../services/feature_service.dart';
 import '../data/supabase_organization_data_source.dart';
+import '../hive/hive_club_cache.dart';
 import '../hive/hive_organization_cache.dart';
-import '../repositories/organization_repository_impl.dart';
+import '../providers/club_provider.dart';
+import '../repositories/club_repository.dart';
+import '../repositories/club_repository_impl.dart';
 import '../repositories/organization_repository.dart';
+import '../repositories/organization_repository_impl.dart';
+import '../services/feature_service.dart';
 
 export '../providers/auth_provider.dart';
 export '../providers/demo_mode_provider.dart';
-// Export all providers for easy access
 export '../providers/organization_provider.dart';
 
 // Club repository dependencies
@@ -34,14 +33,17 @@ final featureServiceProvider =
     Provider<FeatureService>((ref) => FeatureService());
 
 // Club provider using repository
-final clubProvider = ChangeNotifierProvider<ClubProvider>((ref) {
-  final repo = ref.watch(clubRepositoryProvider);
-  return ClubProvider(clubRepository: repo);
-});
+final clubProvider = ChangeNotifierProvider<ClubProvider>(
+  (ref) {
+    final repo = ref.watch(clubRepositoryProvider);
+    return ClubProvider(clubRepository: repo);
+  },
+);
 
 // Calendar provider
-final calendarProvider =
-    ChangeNotifierProvider<CalendarProvider>((ref) => CalendarProvider());
+final calendarProvider = ChangeNotifierProvider<CalendarProvider>(
+  (ref) => CalendarProvider(),
+);
 
 // Player tracking provider
 final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>(

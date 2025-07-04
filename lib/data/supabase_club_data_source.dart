@@ -13,7 +13,7 @@ class SupabaseClubDataSource {
   Future<Club?> fetchById(String id) async {
     final data =
         await _supabase.from(_table).select().eq('id', id).maybeSingle();
-    return data == null ? null : Club.fromJson(data as Map<String, dynamic>);
+    return data == null ? null : Club.fromJson(data);
   }
 
   Future<List<Club>> fetchAll() async {

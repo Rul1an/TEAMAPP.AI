@@ -21,7 +21,7 @@ class SupabaseOrganizationDataSource {
         .select('organizations!inner(*)')
         .eq('user_id', userId);
     final rows = (data as List<dynamic>)
-        .map((e) => (e['organizations'] as Map<String, dynamic>))
+        .map((e) => e['organizations'] as Map<String, dynamic>)
         .toList();
     return rows.map(Organization.fromJson).toList();
   }
