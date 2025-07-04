@@ -27,6 +27,7 @@ dependencies:
 
   # Backend & Database
   supabase_flutter: ^2.5.6
+  supabase: ^2.8.0
 
   # Utilities
   uuid: ^4.4.0

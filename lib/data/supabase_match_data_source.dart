@@ -20,11 +20,8 @@ class SupabaseMatchDataSource {
   }
 
   Future<Match?> fetchById(String id) async {
-    final data = await _supabase
-        .from(_table)
-        .select()
-        .eq('id', id)
-        .maybeSingle();
+    final data =
+        await _supabase.from(_table).select().eq('id', id).maybeSingle();
     return data == null ? null : _fromRow(data);
   }
 
@@ -56,7 +53,11 @@ class SupabaseMatchDataSource {
     try {
       return Supabase.instance.client;
     } catch (_) {
-      return SupabaseClient('http://localhost', 'public-anon-key');
+      return SupabaseClient(
+        'http://localhost',
+        'public-anon-key',
+        authOptions: const AuthClientOptions(autoRefreshToken: false),
+      );
     }
   }
 

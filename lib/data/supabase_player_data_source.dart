@@ -65,7 +65,11 @@ class SupabasePlayerDataSource {
       return Supabase.instance.client;
     } catch (_) {
       // Allows unit tests to run without initializing SupabaseFlutter.
-      return SupabaseClient('http://localhost', 'public-anon-key');
+      return SupabaseClient(
+        'http://localhost',
+        'public-anon-key',
+        authOptions: const AuthClientOptions(autoRefreshToken: false),
+      );
     }
   }
 
