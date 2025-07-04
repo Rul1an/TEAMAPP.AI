@@ -49,9 +49,8 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
     int? lastNRatings,
   }) async {
     try {
-      final ratings = (await _all())
-          .where((r) => r.playerId == playerId)
-          .toList();
+      final ratings =
+          (await _all()).where((r) => r.playerId == playerId).toList();
       if (ratings.isEmpty) return const Success(0);
       ratings.sort((a, b) => b.date.compareTo(a.date));
       final considered = lastNRatings != null && lastNRatings < ratings.length
@@ -71,9 +70,8 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
     String playerId,
   ) async {
     try {
-      final ratings = (await _all())
-          .where((r) => r.playerId == playerId)
-          .toList();
+      final ratings =
+          (await _all()).where((r) => r.playerId == playerId).toList();
       final trendStr = PerformanceRating.calculateTrend(ratings);
       final trend = trendStr == '↗️'
           ? PerformanceTrend.improving
