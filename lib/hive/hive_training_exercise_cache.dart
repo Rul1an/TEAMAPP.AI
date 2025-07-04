@@ -15,13 +15,14 @@ class HiveTrainingExerciseCache {
 
   final BaseHiveCache<List<TrainingExercise>> _cache;
 
-  Future<List<TrainingExercise>?> read({Duration? ttl}) => _cache.read(ttl: ttl);
+  Future<List<TrainingExercise>?> read({Duration? ttl}) =>
+      _cache.read(ttl: ttl);
   Future<void> write(List<TrainingExercise> list) => _cache.write(list);
   Future<void> clear() => _cache.clear();
 
   static List<TrainingExercise> _fromJson(Map<String, dynamic> map) {
-    final raw = (map['exercises'] as List<dynamic>? ?? [])
-        .cast<Map<String, dynamic>>();
+    final raw =
+        (map['exercises'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
     return raw.map(TrainingExercise.fromJson).toList();
   }
 

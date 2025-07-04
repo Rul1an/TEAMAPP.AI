@@ -15,8 +15,7 @@ class HiveTrainingPeriodCache {
 
   final BaseHiveCache<List<TrainingPeriod>> _cache;
 
-  Future<List<TrainingPeriod>?> read({Duration? ttl}) =>
-      _cache.read(ttl: ttl);
+  Future<List<TrainingPeriod>?> read({Duration? ttl}) => _cache.read(ttl: ttl);
   Future<void> write(List<TrainingPeriod> list) => _cache.write(list);
   Future<void> clear() => _cache.clear();
 

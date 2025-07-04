@@ -8,14 +8,12 @@ class SupabasePermissionDataSource {
   static const _table = 'role_permissions'; // columns: role, action, allowed
 
   Future<Map<String, bool>> fetchPermissions(String role) async {
-    final data = await _supabase
-        .from(_table)
-        .select('action, allowed')
-        .eq('role', role);
-    final list = (data as List<dynamic>)
-        .cast<Map<String, dynamic>>();
+    final data =
+        await _supabase.from(_table).select('action, allowed').eq('role', role);
+    final list = (data as List<dynamic>).cast<Map<String, dynamic>>();
     return {
-      for (final row in list) row['action'] as String: (row['allowed'] as bool?) ?? false,
+      for (final row in list)
+        row['action'] as String: (row['allowed'] as bool?) ?? false,
     };
   }
 
