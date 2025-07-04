@@ -1,9 +1,5 @@
 name: docs-snippets
 
-defaults:
-  run:
-    working-directory: jo17_tactical_manager
-
 on:
   pull_request:
     paths:
@@ -30,4 +26,4 @@ jobs:
           dart pub global activate snippets 0.4.3
       - name: Validate documentation snippets
         run: |
-          snippets --input docs --output build/snippets
+          snippets --input jo17_tactical_manager/docs --output build/snippets
