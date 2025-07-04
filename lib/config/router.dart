@@ -30,7 +30,7 @@ import '../screens/training/training_screen.dart';
 import '../screens/training_sessions/exercise_designer_screen.dart';
 import '../screens/training_sessions/exercise_library_screen.dart';
 import '../screens/training_sessions/field_diagram_editor_screen.dart';
-import '../screens/training_sessions/session_builder_screen.dart';
+import '../screens/training_sessions/session_builder/session_builder_view.dart';
 import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
 
@@ -196,7 +196,7 @@ GoRouter createRouter(Ref ref) => GoRouter(
                   name: 'session-builder',
                   builder: (context, state) {
                     final sessionId = state.uri.queryParameters['sessionId'];
-                    return SessionBuilderScreen(
+                    return SessionBuilderView(
                       sessionId:
                           sessionId != null ? int.tryParse(sessionId) : null,
                     );
