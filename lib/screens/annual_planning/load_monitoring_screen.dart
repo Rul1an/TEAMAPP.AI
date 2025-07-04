@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import '../../models/annual_planning/morphocycle.dart';
 import '../../providers/annual_planning_provider.dart';
+import '../../services/load_monitoring_service.dart';
 
 class LoadMonitoringScreen extends ConsumerStatefulWidget {
   const LoadMonitoringScreen({super.key});
@@ -156,16 +157,10 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
       );
     }
 
-    final currentLoad =
-        morphocycles.isNotEmpty ? morphocycles.last.weeklyLoad : 0.0;
-    final averageLoad = morphocycles.fold(0.0, (sum, m) => sum + m.weeklyLoad) /
-        morphocycles.length;
-    final maxLoad = morphocycles.fold(
-      0.0,
-      (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max,
-    );
-    final currentAcr =
-        morphocycles.isNotEmpty ? morphocycles.last.acuteChronicRatio : 1.0;
+    final currentLoad = LoadMonitoringService.getCurrentLoad(morphocycles);
+    final averageLoad = LoadMonitoringService.getAverageLoad(morphocycles);
+    final maxLoad = LoadMonitoringService.getPeakLoad(morphocycles);
+    final currentAcr = LoadMonitoringService.getCurrentAcr(morphocycles);
 
     return Row(
       children: [
@@ -174,7 +169,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
             'Current Load',
             '${currentLoad.toInt()}',
             'AU',
-            _getLoadColor(currentLoad),
+            LoadMonitoringService.loadColor(currentLoad),
             Icons.fitness_center,
           ),
         ),
@@ -204,7 +199,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
             'ACR',
             currentAcr.toStringAsFixed(2),
             'Ratio',
-            _getAcrColor(currentAcr),
+            LoadMonitoringService.acrColor(currentAcr),
             Icons.warning,
           ),
         ),
@@ -353,7 +348,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                                   final load = spot.y;
                                   return FlDotCirclePainter(
                                     radius: 4,
-                                    color: _getLoadColor(load),
+                                    color:
+                                        LoadMonitoringService.loadColor(load),
                                     strokeWidth: 2,
                                     strokeColor: Colors.white,
                                   );
@@ -481,7 +477,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                                   final acr = spot.y;
                                   return FlDotCirclePainter(
                                     radius: 4,
-                                    color: _getAcrColor(acr),
+                                    color: LoadMonitoringService.acrColor(acr),
                                     strokeWidth: 2,
                                     strokeColor: Colors.white,
                                   );
@@ -527,7 +523,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                     final intensity = entry.key;
                     final percentage = entry.value;
                     return PieChartSectionData(
-                      color: _getIntensityColor(intensity),
+                      color: LoadMonitoringService.intensityColor(intensity),
                       value: percentage,
                       title: '${percentage.toInt()}%',
                       radius: 60,
@@ -554,7 +550,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                           width: 12,
                           height: 12,
                           decoration: BoxDecoration(
-                            color: _getIntensityColor(entry.key),
+                            color:
+                                LoadMonitoringService.intensityColor(entry.key),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -633,8 +630,10 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
               child: _buildRiskCard(
                 'Current Risk',
                 currentMorphocycle.currentInjuryRisk.name.toUpperCase(),
-                _getRiskColor(currentMorphocycle.currentInjuryRisk),
-                _getRiskIcon(currentMorphocycle.currentInjuryRisk),
+                LoadMonitoringService.riskColor(
+                    currentMorphocycle.currentInjuryRisk),
+                LoadMonitoringService.riskIcon(
+                    currentMorphocycle.currentInjuryRisk),
               ),
             ),
             const SizedBox(width: 12),
@@ -642,7 +641,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
               child: _buildRiskCard(
                 'Avg ACR (4 weeks)',
                 avgAcr.toStringAsFixed(2),
-                _getAcrColor(avgAcr),
+                LoadMonitoringService.acrColor(avgAcr),
                 Icons.trending_up,
               ),
             ),
@@ -802,7 +801,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                                       Morphocycle.assessInjuryRisk(acr);
                                   return FlDotCirclePainter(
                                     radius: 5,
-                                    color: _getRiskColor(risk),
+                                    color:
+                                        LoadMonitoringService.riskColor(risk),
                                     strokeWidth: 2,
                                     strokeColor: Colors.white,
                                   );
@@ -943,7 +943,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
               final percentage = morphocycles.isNotEmpty
                   ? (entry.value / morphocycles.length * 100)
                   : 0.0;
-              final color = _getLoadZoneColor(entry.key);
+              final color = LoadMonitoringService.loadZoneColor(entry.key);
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12),
@@ -1042,70 +1042,6 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     }
 
     return recommendations;
-  }
-
-  Color _getRiskColor(InjuryRisk risk) {
-    switch (risk) {
-      case InjuryRisk.underloaded:
-        return Colors.blue;
-      case InjuryRisk.optimal:
-        return Colors.green;
-      case InjuryRisk.high:
-        return Colors.red;
-      case InjuryRisk.extreme:
-        return Colors.purple;
-    }
-  }
-
-  IconData _getRiskIcon(InjuryRisk risk) {
-    switch (risk) {
-      case InjuryRisk.underloaded:
-        return Icons.trending_down;
-      case InjuryRisk.optimal:
-        return Icons.check_circle;
-      case InjuryRisk.high:
-        return Icons.warning;
-      case InjuryRisk.extreme:
-        return Icons.dangerous;
-    }
-  }
-
-  Color _getLoadZoneColor(String zone) {
-    if (zone.contains('Recovery')) return Colors.green;
-    if (zone.contains('Optimal')) return Colors.blue;
-    if (zone.contains('High Load')) return Colors.orange;
-    if (zone.contains('Danger')) return Colors.red;
-    return Colors.grey;
-  }
-
-  Color _getLoadColor(double load) {
-    if (load < 1000) return Colors.green;
-    if (load < 1500) return Colors.orange;
-    if (load < 2000) return Colors.red;
-    return Colors.purple;
-  }
-
-  Color _getAcrColor(double acr) {
-    if (acr >= 0.8 && acr <= 1.3) return Colors.green;
-    if (acr < 0.8 || acr <= 1.5) return Colors.orange;
-    return Colors.red;
-  }
-
-  Color _getIntensityColor(String intensity) {
-    switch (intensity.toLowerCase()) {
-      case 'recovery':
-        return Colors.green;
-      case 'activation':
-        return Colors.blue;
-      case 'development':
-        return Colors.orange;
-      case 'acquisition':
-        return Colors.red;
-      case 'competition':
-        return Colors.purple;
-      default:
-        return Colors.grey;
-    }
   }
 
   Widget _buildAdaptationTab(AnnualPlanningState state) => const Padding(
@@ -1208,7 +1144,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: _getLoadColor(morphocycle.weeklyLoad),
+                    color:
+                        LoadMonitoringService.loadColor(morphocycle.weeklyLoad),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
@@ -1256,16 +1193,18 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
             Row(
               children: [
                 Icon(
-                  _getACWRIcon(morphocycle.acuteChronicRatio),
+                  LoadMonitoringService.acwRIcon(morphocycle.acuteChronicRatio),
                   size: 16,
-                  color: _getACWRColor(morphocycle.acuteChronicRatio),
+                  color: LoadMonitoringService.acwrColor(
+                      morphocycle.acuteChronicRatio),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'Belasting Ratio: ${morphocycle.acuteChronicRatio.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    color: _getACWRColor(morphocycle.acuteChronicRatio),
+                    color: LoadMonitoringService.acwrColor(
+                        morphocycle.acuteChronicRatio),
                   ),
                 ),
               ],
@@ -1308,16 +1247,4 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
           ],
         ),
       );
-
-  IconData _getACWRIcon(double acwr) {
-    if (acwr > 1.3) return Icons.warning;
-    if (acwr < 0.8) return Icons.trending_down;
-    return Icons.check_circle;
-  }
-
-  Color _getACWRColor(double acwr) {
-    if (acwr > 1.3) return Colors.red;
-    if (acwr < 0.8) return Colors.orange;
-    return Colors.green;
-  }
 }
