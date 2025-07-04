@@ -118,9 +118,11 @@ class TrainingRepositoryImpl implements TrainingRepository {
     return res.when(
       success: (list) => Success(
         list
-            .where((t) =>
-                (t.date.isAtSameMomentAs(start) || t.date.isAfter(start)) &&
-                (t.date.isAtSameMomentAs(end) || t.date.isBefore(end)))
+            .where(
+              (t) =>
+                  (t.date.isAtSameMomentAs(start) || t.date.isAfter(start)) &&
+                  (t.date.isAtSameMomentAs(end) || t.date.isBefore(end)),
+            )
             .toList(),
       ),
       failure: Failure.new,
