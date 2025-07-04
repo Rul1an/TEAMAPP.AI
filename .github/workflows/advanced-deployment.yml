@@ -30,39 +30,61 @@ jobs:
           cache: true
 
       - name: 📦 Install Dependencies
-        working-directory: ./jo17_tactical_manager
-        run: flutter pub get
+        run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
+          flutter pub get
 
       - name: 🔄 Run Code Generation
-        working-directory: ./jo17_tactical_manager
-        run: flutter pub run build_runner build --delete-conflicting-outputs
+        run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
+          flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: 🔍 Static Analysis
-        working-directory: ./jo17_tactical_manager
         run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
           flutter analyze --fatal-infos
           echo "✅ Static analysis passed"
 
       - name: 🎨 Format Check
-        working-directory: ./jo17_tactical_manager
         run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
           dart format --set-exit-if-changed .
           echo "✅ Code formatting is correct"
 
-      - name: �� Unit Tests
-        working-directory: ./jo17_tactical_manager
+      - name:  Unit Tests
         run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
           flutter test --coverage
           echo "✅ Unit tests passed"
 
       - name: 🛡️ Coverage Gate (≥40%)
-        if: ${{ hashFiles('coverage/lcov.info') != '' }}
         run: |
           echo "Calculating total line coverage (excluding UI/models)..."
+          # Detect coverage path (root or jo17_tactical_manager)
+          if [ -f "coverage/lcov.info" ]; then
+            COV_PATH="coverage/lcov.info"
+          elif [ -f "jo17_tactical_manager/coverage/lcov.info" ]; then
+            COV_PATH="jo17_tactical_manager/coverage/lcov.info"
+          else
+            echo "❌ No coverage report found." && exit 1
+          fi
+
+          echo "Using coverage report at $COV_PATH"
+
           # Filter out UI & generated layers to focus coverage on business logic
           EXCLUDE_PATTERNS='lib/models/|lib/screens/|lib/widgets/|.g.dart'
           FILTERED=$(mktemp)
-          grep -Ev "$EXCLUDE_PATTERNS" coverage/lcov.info > "$FILTERED"
+          grep -Ev "$EXCLUDE_PATTERNS" "$COV_PATH" > "$FILTERED"
 
           TOTAL=$(awk -F: '/^LF:/ {sum+=$2} END {print sum}' "$FILTERED")
           COVERED=$(awk -F: '/^LH:/ {sum+=$2} END {print sum}' "$FILTERED")
@@ -79,11 +101,16 @@ jobs:
           fi
 
       - name: 📊 Upload Coverage
-        if: ${{ hashFiles('coverage/lcov.info') != '' }}
-        uses: codecov/codecov-action@v3
-        with:
-          files: coverage/lcov.info
-          fail_ci_if_error: false
+        run: |
+          if [ -f "coverage/lcov.info" ]; then
+            COV_FILE="coverage/lcov.info"
+          elif [ -f "jo17_tactical_manager/coverage/lcov.info" ]; then
+            COV_FILE="jo17_tactical_manager/coverage/lcov.info"
+          else
+            echo "❌ No coverage file to upload" && exit 1
+          fi
+          echo "Uploading coverage file $COV_FILE to Codecov"
+          bash <(curl -s https://codecov.io/bash) -f "$COV_FILE" || echo "Codecov upload failed, continuing"
 
   # Security Scan
   security-scan:
@@ -100,8 +127,10 @@ jobs:
           cache: true
 
       - name: 🔍 Dependency Security Scan
-        working-directory: ./jo17_tactical_manager
         run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
           flutter pub deps
           echo "✅ Dependency security scan completed"
 
@@ -139,12 +168,18 @@ jobs:
           cache: true
 
       - name: 📦 Install Dependencies
-        working-directory: ./jo17_tactical_manager
-        run: flutter pub get
+        run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
+          flutter pub get
 
       - name: 🔄 Run Code Generation
-        working-directory: ./jo17_tactical_manager
-        run: flutter pub run build_runner build --delete-conflicting-outputs
+        run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
+          flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: 🏗️ Build ${{ matrix.platform }}
         run: |
