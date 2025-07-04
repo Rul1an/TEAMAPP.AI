@@ -1,3 +1,5 @@
+// ignore_for_file: omit_local_variable_types
+
 import 'package:flutter/material.dart';
 
 import '../../../models/training_session/field_diagram.dart';
@@ -50,8 +52,10 @@ class PitchPainter {
     canvas.drawRect(r, p);
     // Midline
     canvas.drawLine(
-        Offset(r.center.dx, r.top), Offset(r.center.dx, r.bottom), p,
-      );
+      Offset(r.center.dx, r.top),
+      Offset(r.center.dx, r.bottom),
+      p,
+    );
     // Center circle
     canvas.drawCircle(r.center, r.width * 0.1, p);
   }

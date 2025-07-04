@@ -9,6 +9,9 @@ import '../../models/training_session/field_diagram.dart';
 import 'painters/background_painter.dart';
 import 'painters/grid_painter.dart';
 import 'painters/pitch_painter.dart';
+import 'painters/element_painter.dart';
+
+// ignore_for_file: unused_element
 
 class FieldPainter extends CustomPainter {
   FieldPainter({
@@ -127,40 +130,15 @@ class FieldPainter extends CustomPainter {
   ///   ..style = PaintingStyle.stroke;
   /// ```
   void _drawElements(Canvas canvas, Rect fieldRect) {
-    // Draw movement lines first (so they appear under other elements)
-    for (final movement in diagram.movements) {
-      _drawMovementLine(
-        canvas,
-        fieldRect,
-        movement,
-        movement.id == selectedElementId,
-      );
-    }
-
-    // Draw current line being drawn
-    if (isDrawingLine && currentLinePoints.isNotEmpty) {
-      _drawCurrentLine(canvas, fieldRect);
-    }
-
-    // Draw players
-    for (final player in diagram.players) {
-      _drawPlayer(canvas, fieldRect, player, player.id == selectedElementId);
-    }
-
-    // Draw equipment
-    for (final equipment in diagram.equipment) {
-      _drawEquipment(
-        canvas,
-        fieldRect,
-        equipment,
-        equipment.id == selectedElementId,
-      );
-    }
-
-    // Draw text labels
-    for (final label in diagram.labels) {
-      _drawTextLabel(canvas, fieldRect, label, label.id == selectedElementId);
-    }
+    ElementPainter.paint(
+      canvas,
+      fieldRect,
+      diagram,
+      selectedElementId,
+      isDrawingLine,
+      currentLinePoints,
+      selectedLineType,
+    );
   }
 
   void _drawPlayer(
