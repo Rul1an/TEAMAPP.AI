@@ -72,6 +72,16 @@ class ExerciseLibraryController extends ChangeNotifier {
 
   bool get showMorphocycleBanner => _showMorphocycleBanner;
 
+  // Expose current filter values for UI widgets
+  String get search => _search;
+  ExerciseCategory? get category => _category;
+  ExerciseComplexity? get complexity => _complexity;
+  TrainingIntensity? get intensity => _intensity;
+  TacticalFocus? get tacticalFocus => _tacticalFocus;
+  int? get minDuration => _minDuration;
+  int? get maxDuration => _maxDuration;
+  int? get playerCount => _playerCount;
+
   // --- Mutations -----------------------------------------------------------
   void setSearch(String value) {
     _search = value;

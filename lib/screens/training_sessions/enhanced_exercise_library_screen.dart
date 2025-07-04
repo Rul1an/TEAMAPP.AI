@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,12 @@ import '../../models/annual_planning/morphocycle.dart';
 import '../../models/training_session/training_exercise.dart';
 import '../../providers/annual_planning_provider.dart';
 import '../../providers/exercise_designer_provider.dart';
+
+// Extracted widgets
+import 'exercise_library/widgets/search_bar.dart';
+import 'exercise_library/widgets/filter_bar.dart';
+import 'exercise_library/widgets/morphocycle_banner.dart';
+import 'exercise_library/widgets/exercise_tab_view.dart';
 
 class EnhancedExerciseLibraryScreen extends ConsumerStatefulWidget {
   const EnhancedExerciseLibraryScreen({
@@ -84,17 +91,16 @@ class _EnhancedExerciseLibraryScreenState
         data: (exercises) => Column(
           children: [
             if (currentMorphocycle != null)
-              _buildMorphocycleInfo(currentMorphocycle),
-            _buildSearchBar(),
+              MorphocycleBanner(
+                morphocycle: currentMorphocycle,
+                weekNumber: widget.weekNumber,
+              ),
+            const ExerciseSearchBar(),
+            const ExerciseFilterBar(),
             Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  _buildRecommendedTab(exercises, currentMorphocycle),
-                  _buildIntensityTab(exercises),
-                  _buildFocusTab(exercises),
-                  _buildAllExercisesTab(exercises),
-                ],
+              child: ExerciseTabView(
+                tabController: _tabController,
+                morphocycle: currentMorphocycle,
               ),
             ),
           ],
