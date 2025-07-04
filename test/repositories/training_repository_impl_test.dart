@@ -51,7 +51,8 @@ void main() {
     repo = TrainingRepositoryImpl(remote: remote, cache: cache);
 
     tUpcoming = _makeTraining(id: 'u1', date: now.add(const Duration(days: 1)));
-    tPast = _makeTraining(id: 'p1', date: now.subtract(const Duration(days: 1)));
+    tPast =
+        _makeTraining(id: 'p1', date: now.subtract(const Duration(days: 1)));
   });
 
   group('getUpcoming', () {
