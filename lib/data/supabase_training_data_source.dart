@@ -64,8 +64,7 @@ class SupabaseTrainingDataSource {
       ..drills = (r['drills'] as List<dynamic>? ?? []).cast<String>()
       ..presentPlayerIds = (r['present'] as List<dynamic>? ?? []).cast<String>()
       ..absentPlayerIds = (r['absent'] as List<dynamic>? ?? []).cast<String>()
-      ..injuredPlayerIds =
-          (r['injured'] as List<dynamic>? ?? []).cast<String>()
+      ..injuredPlayerIds = (r['injured'] as List<dynamic>? ?? []).cast<String>()
       ..latePlayerIds = (r['late'] as List<dynamic>? ?? []).cast<String>()
       ..coachNotes = r['coach_notes'] as String?
       ..performanceNotes = r['performance_notes'] as String?
@@ -110,7 +109,8 @@ class SupabaseTrainingDataSource {
         (e) => e.name == (s ?? '').toLowerCase(),
         orElse: () => TrainingFocus.technical,
       );
-  static TrainingIntensity _intensity(String? s) => TrainingIntensity.values.firstWhere(
+  static TrainingIntensity _intensity(String? s) =>
+      TrainingIntensity.values.firstWhere(
         (e) => e.name == (s ?? '').toLowerCase(),
         orElse: () => TrainingIntensity.medium,
       );

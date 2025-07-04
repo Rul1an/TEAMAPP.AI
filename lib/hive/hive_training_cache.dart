@@ -28,8 +28,8 @@ class HiveTrainingCache {
 
   // region JSON helpers ----------------------------------------------------
   static List<Training> _fromJson(Map<String, dynamic> map) {
-    final list = (map['trainings'] as List<dynamic>? ?? [])
-        .cast<Map<String, dynamic>>();
+    final list =
+        (map['trainings'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
     return list.map(_trainingFromJson).toList();
   }
 
@@ -40,7 +40,8 @@ class HiveTrainingCache {
   static Training _trainingFromJson(Map<String, dynamic> json) {
     final t = Training()
       ..id = json['id'] as String? ?? ''
-      ..date = DateTime.tryParse(json['date'] as String? ?? '') ?? DateTime.now()
+      ..date =
+          DateTime.tryParse(json['date'] as String? ?? '') ?? DateTime.now()
       ..duration = json['duration'] as int? ?? 0
       ..focus = _focus(json['focus'] as String?)
       ..intensity = _intensity(json['intensity'] as String?)
