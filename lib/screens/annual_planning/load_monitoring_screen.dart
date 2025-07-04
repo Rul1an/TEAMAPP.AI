@@ -13,6 +13,8 @@ import '../../widgets/load_monitoring/load_summary_cards.dart';
 import '../../widgets/load_monitoring/weekly_load_chart.dart';
 import '../../widgets/load_monitoring/acute_chronic_chart.dart';
 import '../../widgets/load_monitoring/intensity_distribution_chart.dart';
+import '../../widgets/load_monitoring/risk_summary_cards.dart';
+import '../../widgets/load_monitoring/risk_factors_chart.dart';
 
 // ignore_for_file: unused_element, require_trailing_commas
 
@@ -371,9 +373,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildRiskSummaryCards(recentMorphocycles),
+          RiskSummaryCards(morphocycles: recentMorphocycles),
           const SizedBox(height: 24),
-          _buildRiskFactorsChart(recentMorphocycles),
+          RiskFactorsChart(morphocycles: recentMorphocycles),
           const SizedBox(height: 24),
           _buildRiskRecommendations(recentMorphocycles),
           const SizedBox(height: 24),
