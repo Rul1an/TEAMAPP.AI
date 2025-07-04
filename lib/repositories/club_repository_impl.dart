@@ -7,9 +7,10 @@ import '../models/club/club.dart';
 import 'club_repository.dart';
 
 class ClubRepositoryImpl implements ClubRepository {
-  ClubRepositoryImpl(
-      {required SupabaseClubDataSource remote, required HiveClubCache cache})
-      : _remote = remote,
+  ClubRepositoryImpl({
+    required SupabaseClubDataSource remote,
+    required HiveClubCache cache,
+  })  : _remote = remote,
         _cache = cache;
 
   final SupabaseClubDataSource _remote;

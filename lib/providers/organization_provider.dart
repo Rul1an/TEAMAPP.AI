@@ -1,13 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/organization.dart';
-import '../services/organization_service.dart';
 import 'auth_provider.dart';
 import 'demo_mode_provider.dart';
-
-// Organization service provider
-final organizationServiceProvider =
-    Provider<OrganizationService>((ref) => OrganizationService());
 
 // Current organization provider
 final currentOrganizationProvider = StateProvider<Organization?>((ref) {
