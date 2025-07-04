@@ -613,8 +613,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     }
 
     final currentMorphocycle = morphocycles.last;
-    final avgAcr = morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) /
-        morphocycles.length;
+    final avgAcr =
+        morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) /
+            morphocycles.length;
     final highRiskWeeks = morphocycles
         .where(
           (m) =>

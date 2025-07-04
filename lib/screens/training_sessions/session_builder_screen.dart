@@ -23,6 +23,7 @@ import '../../repositories/training_session_repository.dart';
 import '../../services/pdf_service.dart';
 import '../../widgets/training/session_wizard_stepper.dart';
 import 'exercise_library_screen.dart';
+import '../../services/training_session_builder_service.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -139,61 +140,8 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     session!.phases = sessionPhases;
   }
 
-  List<SessionPhase> _createDefaultVOABPhases() {
-    final baseTime = DateTime(2024, 1, 1, 18); // 18:00 base time
-
-    return [
-      SessionPhase()
-        ..name = 'Training uitzetten'
-        ..type = PhaseType.preparation
-        ..orderIndex = 0
-        ..startTime = baseTime
-        ..endTime = baseTime.add(const Duration(minutes: 10))
-        ..description = 'Materiaal klaarzetten, welkom spelers',
-      SessionPhase()
-        ..name = 'Warming-up'
-        ..type = PhaseType.warmup
-        ..orderIndex = 1
-        ..startTime = baseTime.add(const Duration(minutes: 10))
-        ..endTime = baseTime.add(const Duration(minutes: 25))
-        ..description = 'Algemene warming-up met bal',
-      SessionPhase()
-        ..name = 'Technisch deel'
-        ..type = PhaseType.technical
-        ..orderIndex = 2
-        ..startTime = baseTime.add(const Duration(minutes: 25))
-        ..endTime = baseTime.add(const Duration(minutes: 50))
-        ..description = 'Technische vaardigheden training',
-      SessionPhase()
-        ..name = 'Tactisch deel'
-        ..type = PhaseType.tactical
-        ..orderIndex = 3
-        ..startTime = baseTime.add(const Duration(minutes: 50))
-        ..endTime = baseTime.add(const Duration(minutes: 80))
-        ..description = 'Tactische vorm of positiespel',
-      SessionPhase()
-        ..name = 'Hoofdtraining'
-        ..type = PhaseType.main
-        ..orderIndex = 4
-        ..startTime = baseTime.add(const Duration(minutes: 80))
-        ..endTime = baseTime.add(const Duration(minutes: 115))
-        ..description = 'Partijvorm of wedstrijdsituaties',
-      SessionPhase()
-        ..name = 'Evaluatie'
-        ..type = PhaseType.evaluation
-        ..orderIndex = 5
-        ..startTime = baseTime.add(const Duration(minutes: 115))
-        ..endTime = baseTime.add(const Duration(minutes: 125))
-        ..description = 'Korte bespreking en feedback',
-      SessionPhase()
-        ..name = 'Cool-down'
-        ..type = PhaseType.cooldown
-        ..orderIndex = 6
-        ..startTime = baseTime.add(const Duration(minutes: 125))
-        ..endTime = baseTime.add(const Duration(minutes: 130))
-        ..description = 'Rustige afsluiting en materiaal opruimen',
-    ];
-  }
+  List<SessionPhase> _createDefaultVOABPhases() =>
+      TrainingSessionBuilderService.createDefaultVOABPhases();
 
   @override
   Widget build(BuildContext context) => Scaffold(
