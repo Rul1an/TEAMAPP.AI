@@ -47,6 +47,12 @@ jobs:
 
           echo "Using documentation directory: $DOC_DIR"
           ls -al "$DOC_DIR" || true
+
+          # Skip if directory contains no Markdown files
+          if ! ls "$DOC_DIR"/**/*.md 1> /dev/null 2>&1 && ! ls "$DOC_DIR"/*.md 1> /dev/null 2>&1; then
+            echo "No markdown files found in $DOC_DIR. Skipping snippet validation."
+            exit 0
+          fi
           mkdir -p build/snippets
           set -x
           snippets --input "$DOC_DIR" --output build/snippets
