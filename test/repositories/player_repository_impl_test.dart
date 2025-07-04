@@ -21,8 +21,12 @@ void main() {
   late PlayerRepositoryImpl repo;
 
   final samplePlayers = [
-    Player()..id = '1'..firstName = 'A',
-    Player()..id = '2'..firstName = 'B',
+    Player()
+      ..id = '1'
+      ..firstName = 'A',
+    Player()
+      ..id = '2'
+      ..firstName = 'B',
   ];
 
   setUp(() {
@@ -79,8 +83,7 @@ void main() {
     });
 
     test('update passes failure', () async {
-      when(() => remote.update(any()))
-          .thenThrow(const SocketException('down'));
+      when(() => remote.update(any())).thenThrow(const SocketException('down'));
       final res = await repo.update(samplePlayers.first);
       expect(res.isSuccess, false);
       verifyNever(() => cache.clear());

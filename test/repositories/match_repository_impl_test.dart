@@ -14,7 +14,9 @@ class _Cache extends Mock implements HiveMatchCache {}
 
 void main() {
   setUpAll(() {
-    registerFallbackValue(Match()..id = 'fallback'..date = DateTime.now());
+    registerFallbackValue(Match()
+      ..id = 'fallback'
+      ..date = DateTime.now());
   });
   late _Remote remote;
   late _Cache cache;
@@ -34,7 +36,8 @@ void main() {
   });
 
   test('getUpcoming filters correctly', () async {
-    when(() => remote.fetchAll()).thenAnswer((_) async => [matchPast, matchNow]);
+    when(() => remote.fetchAll())
+        .thenAnswer((_) async => [matchPast, matchNow]);
     when(() => cache.write(any())).thenAnswer((_) async {});
 
     final res = await repo.getUpcoming();
