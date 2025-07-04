@@ -2,25 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/club_provider.dart';
-import '../services/club_service.dart';
+import '../data/supabase_club_data_source.dart';
+import '../hive/hive_club_cache.dart';
+import '../repositories/club_repository_impl.dart';
+import '../repositories/club_repository.dart';
 import '../services/feature_service.dart';
+import '../data/supabase_organization_data_source.dart';
+import '../hive/hive_organization_cache.dart';
+import '../repositories/organization_repository_impl.dart';
+import '../repositories/organization_repository.dart';
 
 export '../providers/auth_provider.dart';
 export '../providers/demo_mode_provider.dart';
 // Export all providers for easy access
 export '../providers/organization_provider.dart';
 
-// Club service provider
-final clubServiceProvider = Provider<ClubService>((ref) => ClubService());
+// Club repository dependencies
+final supabaseClubDataSourceProvider =
+    Provider<SupabaseClubDataSource>((ref) => SupabaseClubDataSource());
+
+final hiveClubCacheProvider = Provider<HiveClubCache>((ref) => HiveClubCache());
+
+final clubRepositoryProvider = Provider<ClubRepository>((ref) {
+  final remote = ref.watch(supabaseClubDataSourceProvider);
+  final cache = ref.watch(hiveClubCacheProvider);
+  return ClubRepositoryImpl(remote: remote, cache: cache);
+});
 
 // Feature service provider
 final featureServiceProvider =
     Provider<FeatureService>((ref) => FeatureService());
 
-// Club provider
+// Club provider using repository
 final clubProvider = ChangeNotifierProvider<ClubProvider>((ref) {
-  final clubService = ref.watch(clubServiceProvider);
-  return ClubProvider(clubService: clubService);
+  final repo = ref.watch(clubRepositoryProvider);
+  return ClubProvider(clubRepository: repo);
 });
 
 // Calendar provider
@@ -31,6 +47,20 @@ final calendarProvider =
 final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>(
   (ref) => PlayerTrackingProvider(),
 );
+
+// Organization repository deps
+final supabaseOrganizationDataSourceProvider =
+    Provider<SupabaseOrganizationDataSource>(
+        (ref) => SupabaseOrganizationDataSource());
+
+final hiveOrganizationCacheProvider =
+    Provider<HiveOrganizationCache>((ref) => HiveOrganizationCache());
+
+final organizationRepositoryProvider = Provider<OrganizationRepository>((ref) {
+  final remote = ref.watch(supabaseOrganizationDataSourceProvider);
+  final cache = ref.watch(hiveOrganizationCacheProvider);
+  return OrganizationRepositoryImpl(remote: remote, cache: cache);
+});
 
 // Calendar provider implementation
 class CalendarProvider extends ChangeNotifier {
