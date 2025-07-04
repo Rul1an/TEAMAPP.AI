@@ -1,6 +1,6 @@
 # Code Analysis Overview – Q3 2025
 
-_Last updated: 2025-07-12_
+_Last updated: 2025-07-13_
 
 ## Current State
 
@@ -8,7 +8,7 @@ _Last updated: 2025-07-12_
 |--------|--------|
 | Analyzer errors | **0** |
 | Analyzer warnings | **0** |
-| Analyzer infos (hints) | ~10 |
+| Analyzer infos (hints) | **0** |
 | Test coverage | ≥ 40 % lines (lcov)
 | Golden tests | 4 suites passing |
 
@@ -47,6 +47,7 @@ Bring analyzer to **0 infos** and lift overall code-quality bar in line with 202
 - Code coverage ≥ 40 % remains.
 - Dev-team acknowledges new standards in retro.
 
-### Notable Updates (2025-07-12)
-- Added `SessionBuilderController` (StateNotifier) and `SessionBuilderView` – both fully covered by analyzer with 0 issues.
-- Introduced `training_session_builder_service.dart` with formatted code.
+### Notable Updates (2025-07-13)
+* **Exercise Library Modularisation** – Legacy 1 100+ LOC screen refactored into modular widgets; analyzer now 0 issues overall (`3aa66d7`).
+* Added `SessionBuilderController` (StateNotifier) and `SessionBuilderView` – both fully covered by analyzer with 0 issues.
+* Introduced `training_session_builder_service.dart` with formatted code.

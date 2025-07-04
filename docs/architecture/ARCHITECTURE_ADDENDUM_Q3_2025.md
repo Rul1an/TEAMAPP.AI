@@ -126,3 +126,44 @@ Widgets / Providers → PdfService facade → PdfGenerator<T> (one per doc-type)
 | 6 | Add unit tests (golden) for each generator | Planned | 25 Jul |
 
 > Decision 2025-07-12: The **Pdf Generator Modularisation** will unblock further domain-specific PDFs and aligns with our single-responsibility principle.  All new PDFs **must** implement the `PdfGenerator<T>` interface.
+
+## Exercise Library Modularisation (July 2025)
+
+The original **ExerciseLibraryScreen** had grown beyond **1 100+ LOC** mixing:
+
+1. Data querying & filtering logic.
+2. Complex UI (banner, search, filter dialog, tabbed lists).
+3. Presentation-layer helpers (intensity colour mapping, detail dialogs).
+
+This made maintenance and testing extremely hard.  The refactor (commits `2b7889e` → `3aa66d7`) introduces a **widget-first decomposition** that aligns with our clean-architecture goals:
+
+```
+ExerciseLibraryScreen ──┐
+                        ├─▶ ExerciseSearchBar (TextField)
+                        ├─▶ ExerciseFilterBar   (chips + bottom-sheet)
+                        ├─▶ MorphocycleBanner   (intensity overview)
+                        └─▶ ExerciseTabView     (Recommended / Intensity / Focus / All)
+```
+
+### Technical outcome
+* Legacy screen slimmed to **≈ 200 LOC** (wrapper only).  All business/UI logic lives in reusable widgets under `lib/screens/training_sessions/exercise_library/widgets/`.
+* State is centralised in **`ExerciseLibraryController`** (ChangeNotifier) providing:
+  * `filteredExercises` computed list.
+  * Mutations `setCategory`, `setIntensity`, … used by widgets.
+* Analyzer: **0 issues** after auto-fix + lint clean-up.
+* File length constraint (<300 LOC) satisfied across all new widgets.
+
+### Benefits
+1. **Reusability** – The banner, search bar and filter bar can now be embedded in the planner flow without copy-paste.
+2. **Testability** – Each widget/controller is unit-testable; widget tests planned for Q3 backlog (`refactor-exercise-library-widget-tests`).
+3. **Performance** – Filtering runs in controller; UI rebuilds only on relevant ChangeNotifier events.
+4. **Maintainability** – New features (e.g. Favourites tab) can be plugged into `ExerciseTabView` with minimal impact.
+
+### Migration checklist
+- [x] `ExerciseLibraryController` completed (state + filters).
+- [x] Widgets extracted (`search_bar.dart`, `filter_bar.dart`, `morphocycle_banner.dart`, `exercise_tab_view.dart`).
+- [x] Legacy helper methods marked **internal** and will be deleted in Phase-2 cleanup once all imports migrate.
+- [x] Analyzer clean.
+- [ ] Widget tests & docs update (tracking todos `refactor-exercise-library-widget-tests`, `refactor-exercise-library-docs-update`).
+
+> Decision 2025-07-13: All new screens must follow **widget-first modularisation** with a target file length <300 LOC.
