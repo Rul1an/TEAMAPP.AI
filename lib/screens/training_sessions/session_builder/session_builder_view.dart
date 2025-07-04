@@ -41,7 +41,7 @@ class SessionBuilderView extends ConsumerWidget {
           const SizedBox(height: 8),
           ...state.phases.map(
             (p) => ListTile(
-              title: Text(p.name ?? '—'),
+              title: Text(p.name),
               subtitle: Text(
                 _formatTimeRange(p.startTime, p.endTime),
               ),
