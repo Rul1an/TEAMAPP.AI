@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../providers/session_builder_controller.dart';
+import '../../../widgets/session_builder/phase_list.dart';
 
 class SessionBuilderView extends ConsumerWidget {
   const SessionBuilderView({super.key, this.sessionId});
@@ -39,25 +40,9 @@ class SessionBuilderView extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
-          ...state.phases.map(
-            (p) => ListTile(
-              title: Text(p.name),
-              subtitle: Text(
-                _formatTimeRange(p.startTime, p.endTime),
-              ),
-            ),
-          ),
+          PhaseList(phases: state.phases),
         ],
       ),
     );
-  }
-
-  String _formatTimeRange(DateTime? start, DateTime? end) {
-    if (start == null || end == null) return '--';
-    final h1 = start.hour.toString().padLeft(2, '0');
-    final m1 = start.minute.toString().padLeft(2, '0');
-    final h2 = end.hour.toString().padLeft(2, '0');
-    final m2 = end.minute.toString().padLeft(2, '0');
-    return '$h1:$m1 - $h2:$m2';
   }
 }
