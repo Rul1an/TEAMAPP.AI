@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element
 // Dart imports:
 import 'dart:typed_data';
 
@@ -12,46 +13,28 @@ import '../models/player.dart';
 import '../models/training_session/player_attendance.dart';
 import '../models/training_session/session_phase.dart';
 import '../models/training_session/training_session.dart';
+import '../pdf/generators/training_session_pdf_generator.dart';
 
 class PDFService {
-  // Generate VOAB-style Training Session PDF
+  /// Legacy Training Session PDF generator – kept for backward compatibility.
+  ///
+  /// Deprecated: Use [TrainingSessionPdfGenerator] via
+  /// [PDFService.trainingSessionPdf] instead.
+  @Deprecated(
+      'Use TrainingSessionPdfGenerator via PDFService.trainingSessionPdf')
   static Future<Uint8List> generateTrainingSessionReport(
     TrainingSession session,
     List<Player> allPlayers,
   ) async {
-    final pdf = pw.Document();
+    return const TrainingSessionPdfGenerator().generate((session, allPlayers));
+  }
 
-    // VOAB Color scheme
-    const primaryColor = PdfColor.fromInt(0xFF1976D2);
-    const backgroundColor = PdfColor.fromInt(0xFFF5F5F5);
-    const greyColor = PdfColor.fromInt(0xFF757575);
-
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(20),
-        build: (pw.Context context) => [
-          _buildTrainingHeader(session, primaryColor),
-          pw.SizedBox(height: 20),
-          _buildTrainingInfoSection(session, primaryColor, backgroundColor),
-          pw.SizedBox(height: 16),
-          _buildPlayersSection(
-            session,
-            allPlayers,
-            primaryColor,
-            backgroundColor,
-          ),
-          pw.SizedBox(height: 16),
-          _buildObjectivesSection(session, primaryColor, backgroundColor),
-          pw.SizedBox(height: 16),
-          _buildTrainingPhasesSection(session, primaryColor, backgroundColor),
-          pw.Spacer(),
-          _buildTrainingFooter(session, greyColor),
-        ],
-      ),
-    );
-
-    return pdf.save();
+  /// New façade API using generator class. Prefer this in new code.
+  static Future<Uint8List> trainingSessionPdf(
+    TrainingSession session,
+    List<Player> players,
+  ) {
+    return const TrainingSessionPdfGenerator().generate((session, players));
   }
 
   static pw.Widget _buildTrainingHeader(

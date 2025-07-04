@@ -1484,8 +1484,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       final allPlayers = playersRes.dataOrNull ?? [];
 
       // Generate PDF
-      final pdfData =
-          await PDFService.generateTrainingSessionReport(session!, allPlayers);
+      final pdfData = await PDFService.trainingSessionPdf(session!, allPlayers);
 
       final fileName =
           'voab_training_${session!.trainingNumber}_${DateFormat('yyyy-MM-dd').format(session!.date)}.pdf';

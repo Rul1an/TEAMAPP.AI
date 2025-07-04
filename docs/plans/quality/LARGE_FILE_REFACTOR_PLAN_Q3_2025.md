@@ -14,7 +14,7 @@ Keeping files under ±300 LOC improves comprehension, PR review time and hot-rel
 | # | File | LOC | Category | Primary Concerns |
 |---|------|----:|----------|------------------|
 | 1 | lib/screens/training_sessions/session_builder_screen.dart | 1736 | Screen | Monolithic build method, impure business logic | **In Progress** – controller & view extracted |
-| 2 | lib/screens/annual_planning/load_monitoring_screen.dart | 1322 | Screen | Multiple chart widgets + calculations inline |
+| 2 | lib/screens/annual_planning/load_monitoring_screen.dart | ~550 | Screen | Remaining helper methods to service; major widgets extracted | **Completed** |
 | 3 | lib/services/pdf_service.dart | 1288 | Service | Mixed IO, layout & aggregation logic |
 | 4 | lib/widgets/field_diagram/field_painter.dart | 1287 | Widget | 800+ LOC paint() with branching |
 | 5 | lib/screens/matches/lineup_builder_screen.dart | 1190 | Screen | Complex drag-drop & UI state combined |
@@ -57,3 +57,5 @@ Each PR must keep analyzer at 0 issues & tests green.
 ### Progress
 
 - SessionBuilderScreen: controller + initial view implemented (commit e9a0290, 66dd086)
+- LoadMonitoringScreen: charts & risk widgets extracted, service helpers created (commits 105dea6, b87ea58, 3ff7b0b, 722260a)
+- PDF service refactor kicked off (abstract PdfGenerator + TrainingSessionPdfGenerator scaffolding, commit TBD)

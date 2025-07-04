@@ -94,3 +94,35 @@ Next steps: replicate pattern for Players & Statistics, then deprecate remaining
 * Supabase Offline-First Patterns – https://supabase.com/docs/guides/solutions/offline-first
 
 **Status (25 Jun 2025):** Migration finished. `ProfileService` deleted, providers wired to `ProfileRepositoryImpl` (Supabase + Hive). All tests pass. Commit `0c83060`.
+
+## PDF Generation Modularisation (July 2025)
+
+Historically the `pdf_service.dart` file mixed **IO orchestration**, **data aggregation**, and **PDF layout code** in a single 1 200+ LOC class, making it nearly impossible to unit-test or extend.  The new approach mirrors the repository pattern:
+
+```
+Widgets / Providers → PdfService facade → PdfGenerator<T> (one per doc-type) → 3rd-party PDF lib
+```
+
+* `abstract class PdfGenerator<T>` – defines a single `Future<Uint8List> generate(T data)` method.
+* Concrete generators live in `lib/pdf/generators/` (e.g. `training_session_pdf_generator.dart`).
+* The facade `PdfService` exposes typed helpers such as `trainingSessionPdf` that simply delegate to the correct generator.
+* Each generator owns its layout code and can be **unit-tested in isolation** with fake data.
+* Generators are registered through a simple `Map<Type, PdfGenerator>` so additional documents can be added without changing existing code.
+
+### Benefits
+1. **Single-responsibility** – Business aggregation (services) and presentation/layout (generator) are separated.
+2. **Testability** – Generators can be snapshot-tested without hitting Supabase or UI.
+3. **Extensibility** – Adding an Invoice PDF or Player Report is a <100 LOC class, no edits to `PdfService` required.
+4. **Size Reduction** – `pdf_service.dart` is expected to shrink from 1 288 LOC → <120 LOC once migration completes.
+
+### Migration plan
+| Step | Deliverable | Status | ETA |
+|------|-------------|--------|-----|
+| 1 | Introduce `PdfGenerator<T>` abstract base | ✅ Completed (commit 49ab7e1) | 10 Jul |
+| 2 | Wrap legacy training PDF in `TrainingSessionPdfGenerator` | ✅ Completed (commit 5c88b14) | 10 Jul |
+| 3 | Move _all_ training session code out of `PdfService` | **In Progress** | 15 Jul |
+| 4 | Delete old `PdfService.trainingSessionPdf` static method | Pending | 16 Jul |
+| 5 | Create generators for Match Report & Player Assessment | Planned | 22 Jul |
+| 6 | Add unit tests (golden) for each generator | Planned | 25 Jul |
+
+> Decision 2025-07-12: The **Pdf Generator Modularisation** will unblock further domain-specific PDFs and aligns with our single-responsibility principle.  All new PDFs **must** implement the `PdfGenerator<T>` interface.
