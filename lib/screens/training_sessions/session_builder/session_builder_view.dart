@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../providers/session_builder_controller.dart';
 import '../../../widgets/session_builder/phase_list.dart';
+import '../../../widgets/session_builder/session_toolbar.dart';
 
 class SessionBuilderView extends ConsumerWidget {
   const SessionBuilderView({super.key, this.sessionId});
@@ -28,6 +29,12 @@ class SessionBuilderView extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          SessionToolbar(
+            session: session,
+            onDateChanged: (d) {/* TODO hook into controller */},
+            onTypeChanged: (t) {/* TODO */},
+          ),
+          const Divider(),
           Text(
             'Datum: ${session.date}',
             style: Theme.of(context).textTheme.titleMedium,
