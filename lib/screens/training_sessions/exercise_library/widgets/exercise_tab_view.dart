@@ -43,7 +43,9 @@ class ExerciseTabView extends ConsumerWidget {
   }
 
   Widget _buildRecommendedTab(
-      BuildContext context, List<TrainingExercise> exercises) {
+    BuildContext context,
+    List<TrainingExercise> exercises,
+  ) {
     if (morphocycle == null) {
       return const Center(child: Text('No morphocycle data'));
     }
@@ -65,7 +67,9 @@ class ExerciseTabView extends ConsumerWidget {
   }
 
   Widget _buildIntensityTab(
-      BuildContext context, List<TrainingExercise> exercises) {
+    BuildContext context,
+    List<TrainingExercise> exercises,
+  ) {
     final groups = <String, List<TrainingExercise>>{};
     for (final intensity in TrainingIntensity.values) {
       final label = _intensityLabel(intensity);
@@ -88,7 +92,9 @@ class ExerciseTabView extends ConsumerWidget {
   }
 
   Widget _buildFocusTab(
-      BuildContext context, List<TrainingExercise> exercises) {
+    BuildContext context,
+    List<TrainingExercise> exercises,
+  ) {
     final groups = <String, List<TrainingExercise>>{};
     for (final focus in TacticalFocus.values) {
       groups[focus.displayName] =
@@ -102,7 +108,9 @@ class ExerciseTabView extends ConsumerWidget {
   }
 
   Widget _buildGroupedList(
-      BuildContext context, Map<String, List<TrainingExercise>> groups) {
+    BuildContext context,
+    Map<String, List<TrainingExercise>> groups,
+  ) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: groups.entries.where((e) => e.value.isNotEmpty).map((entry) {
@@ -126,7 +134,9 @@ class ExerciseTabView extends ConsumerWidget {
   }
 
   Widget _buildExerciseList(
-      BuildContext context, List<TrainingExercise> exercises) {
+    BuildContext context,
+    List<TrainingExercise> exercises,
+  ) {
     if (exercises.isEmpty) {
       return const Center(child: Text('No exercises'));
     }
@@ -141,7 +151,8 @@ class ExerciseTabView extends ConsumerWidget {
         return ListTile(
           title: Text(exercise.name),
           subtitle: Text(
-              '${exercise.durationMinutes} min • ${exercise.category.displayName}'),
+            '${exercise.durationMinutes} min • ${exercise.category.displayName}',
+          ),
           onTap: isSelectMode ? () => onExerciseSelected?.call(exercise) : null,
           trailing: isSelectMode ? const Icon(Icons.check) : null,
         );

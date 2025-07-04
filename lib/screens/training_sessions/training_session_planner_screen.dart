@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'enhanced_exercise_library_screen.dart';
+import 'exercise_library_screen.dart';
 
 class TrainingSessionPlannerScreen extends StatefulWidget {
   const TrainingSessionPlannerScreen({super.key});
@@ -24,7 +24,7 @@ class _TrainingSessionPlannerScreenState
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (context) => EnhancedExerciseLibraryScreen(
+                  builder: (context) => ExerciseLibraryScreen(
                     weekNumber: _getCurrentWeekNumber(),
                   ),
                 ),
