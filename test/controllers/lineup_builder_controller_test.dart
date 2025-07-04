@@ -1,3 +1,4 @@
+// ignore_for_file: require_trailing_commas, avoid_redundant_argument_values
 // Unit tests for LineupBuilderController
 // Ensure business logic works independently of UI.
 

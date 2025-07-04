@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors, unnecessary_const, prefer_const_literals_to_create_immutables
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -54,11 +55,11 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         ],
       ),
       body: Column(
-        children: const [
-          FormationToolbar(),
-          Expanded(child: FieldCanvas()),
-          FieldPositionsWidget(),
-          const Expanded(child: BenchPlayerList()),
+        children: [
+          const FormationToolbar(),
+          const Expanded(child: FieldCanvas()),
+          const FieldPositionsWidget(),
+          Expanded(child: const BenchPlayerList()),
         ],
       ),
     );
