@@ -65,11 +65,17 @@ class WeekSelector extends ConsumerWidget {
                         ),
                       ),
                       if (weekSchedule?.isVacation ?? false)
-                        const Icon(Icons.beach_access,
-                            size: 12, color: Colors.orange)
+                        const Icon(
+                          Icons.beach_access,
+                          size: 12,
+                          color: Colors.orange,
+                        )
                       else if (weekSchedule?.hasActivities ?? false)
-                        const Icon(Icons.sports_soccer,
-                            size: 12, color: Colors.green),
+                        const Icon(
+                          Icons.sports_soccer,
+                          size: 12,
+                          color: Colors.green,
+                        ),
                     ],
                   ),
                 ),
