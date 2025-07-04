@@ -28,14 +28,25 @@ class ClubRepositoryImpl implements ClubRepository {
       if (club != null) {
         final cached = (await _cached()) ?? <Club>[];
         final idx = cached.indexWhere((c) => c.id == club.id);
-        idx == -1 ? cached.add(club) : cached[idx] = club;
+        if (idx == -1) {
+          cached.add(club);
+        } else {
+          cached[idx] = club;
+        }
         await _cache.write(cached);
       }
       return Success(club);
     } catch (e) {
       final cached = await _cached();
-      final match = cached?.firstWhere((c) => c.id == id, orElse: () => null);
-      return match != null ? Success(match) : Failure(_map(e));
+      Club? found;
+      if (cached != null) {
+        try {
+          found = cached.firstWhere((c) => c.id == id);
+        } catch (_) {
+          found = null;
+        }
+      }
+      return found != null ? Success(found) : Failure(_map(e));
     }
   }
 
