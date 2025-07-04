@@ -14,6 +14,7 @@ import 'periodization_template_dialog.dart';
 import 'training_dialog.dart';
 import 'weekly_planning/widgets/season_header.dart';
 import 'weekly_planning/widgets/week_selector.dart';
+import 'weekly_planning/widgets/weekly_table.dart';
 
 class WeeklyPlanningScreen extends ConsumerStatefulWidget {
   const WeeklyPlanningScreen({super.key});
@@ -69,9 +70,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
                   state: planningState,
                   scrollController: _scrollController,
                 ),
-                Expanded(
-                  child: _buildWeeklyTable(planningState),
-                ),
+                Expanded(child: WeeklyTable(state: planningState)),
               ],
             ),
     );
