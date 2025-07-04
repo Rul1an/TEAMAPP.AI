@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../models/training_session/field_diagram.dart';
+import 'painters/background_painter.dart';
+import 'painters/grid_painter.dart';
 
 class FieldPainter extends CustomPainter {
   FieldPainter({
@@ -29,12 +31,11 @@ class FieldPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final fieldRect = _calculateFieldRect(size);
 
-    // Draw background
-    _drawBackground(canvas, size);
+    // Draw background & grid via dedicated painters
+    BackgroundPainter.paint(canvas, size);
 
-    // Draw grid if enabled
     if (showGrid) {
-      _drawGrid(canvas, size);
+      GridPainter.paint(canvas, size, gridSize);
     }
 
     // Draw field
@@ -124,34 +125,6 @@ class FieldPainter extends CustomPainter {
   ///   ..strokeWidth = 2.0
   ///   ..style = PaintingStyle.stroke;
   /// ```
-  void _drawBackground(Canvas canvas, Size size) {
-    final bgPaint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          Colors.green[100]!,
-          Colors.green[50]!,
-        ],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
-
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), bgPaint);
-  }
-
-  void _drawGrid(Canvas canvas, Size size) {
-    final gridPaint = Paint()
-      ..color = Colors.grey[300]!.withValues(alpha: 0.5)
-      ..strokeWidth = 0.5;
-
-    for (double x = 0; x <= size.width; x += gridSize) {
-      canvas.drawLine(Offset(x, 0), Offset(x, size.height), gridPaint);
-    }
-
-    for (double y = 0; y <= size.height; y += gridSize) {
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
-    }
-  }
-
   void _drawField(Canvas canvas, Rect fieldRect) {
     // Field background with gradient texture to simulate grass
     final fieldPaint = Paint()
