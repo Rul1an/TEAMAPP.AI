@@ -1,18 +1,18 @@
 import '../core/result.dart';
+import '../hive/hive_season_cache.dart';
 import '../models/annual_planning/season_plan.dart';
-import '../services/database_service.dart';
 import 'season_repository.dart';
 
 class LocalSeasonRepository implements SeasonRepository {
-  LocalSeasonRepository({DatabaseService? service})
-      : _service = service ?? DatabaseService();
+  LocalSeasonRepository({HiveSeasonCache? cache})
+      : _cache = cache ?? HiveSeasonCache();
 
-  final DatabaseService _service;
+  final HiveSeasonCache _cache;
 
   @override
   Future<Result<List<SeasonPlan>>> getAll() async {
     try {
-      final seasons = await _service.getAllSeasonPlans();
+      final seasons = await _cache.read() ?? [];
       return Success(seasons);
     } catch (e) {
       return Failure(CacheFailure(e.toString()));
@@ -22,8 +22,9 @@ class LocalSeasonRepository implements SeasonRepository {
   @override
   Future<Result<SeasonPlan?>> getActive() async {
     try {
-      final seasons = await _service.getAllSeasonPlans();
+      final seasons = await _cache.read() ?? [];
       if (seasons.isEmpty) return const Success(null);
+
       try {
         final active =
             seasons.firstWhere((s) => s.status == SeasonStatus.active);
