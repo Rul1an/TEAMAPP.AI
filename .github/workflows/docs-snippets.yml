@@ -12,6 +12,7 @@ on:
       - 'docs/**.md'
       - '**/*.dart'
       - '.github/workflows/docs-snippets.yml'
+      - 'jo17_tactical_manager/docs/**.md'
 
 jobs:
   validate-snippets:
