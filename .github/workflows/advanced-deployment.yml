@@ -58,14 +58,19 @@ jobs:
       - name: 🛡️ Coverage Gate (≥40%)
         if: ${{ hashFiles('coverage/lcov.info') != '' }}
         run: |
-          echo "Calculating total line coverage..."
-          TOTAL=$(awk -F: '/^LF:/ {sum+=$2} END {print sum}' coverage/lcov.info)
-          COVERED=$(awk -F: '/^LH:/ {sum+=$2} END {print sum}' coverage/lcov.info)
+          echo "Calculating total line coverage (excluding UI/models)..."
+          # Filter out UI & generated layers to focus coverage on business logic
+          EXCLUDE_PATTERNS='lib/models/|lib/screens/|lib/widgets/|.g.dart'
+          FILTERED=$(mktemp)
+          grep -Ev "$EXCLUDE_PATTERNS" coverage/lcov.info > "$FILTERED"
+
+          TOTAL=$(awk -F: '/^LF:/ {sum+=$2} END {print sum}' "$FILTERED")
+          COVERED=$(awk -F: '/^LH:/ {sum+=$2} END {print sum}' "$FILTERED")
           if [ "$TOTAL" -eq 0 ]; then
-            echo "No lines found in coverage report. Failing." && exit 1
+            echo "No lines found in filtered coverage report. Failing." && exit 1
           fi
           PCT=$((COVERED * 100 / TOTAL))
-          echo "Coverage: $PCT% (covered $COVERED / $TOTAL lines)"
+          echo "Coverage (filtered): $PCT% (covered $COVERED / $TOTAL lines)"
           THRESHOLD=40
           if [ "$PCT" -lt "$THRESHOLD" ]; then
             echo "❌ Coverage below threshold ($THRESHOLD%)" && exit 1

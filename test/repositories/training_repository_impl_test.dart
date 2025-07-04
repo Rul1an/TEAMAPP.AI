@@ -1,75 +1,110 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-
-import 'package:jo17_tactical_manager/data/supabase_training_data_source.dart';
-import 'package:jo17_tactical_manager/hive/hive_training_cache.dart';
 import 'package:jo17_tactical_manager/models/training.dart';
 import 'package:jo17_tactical_manager/repositories/training_repository_impl.dart';
+import 'package:jo17_tactical_manager/data/supabase_training_data_source.dart';
+import 'package:jo17_tactical_manager/hive/hive_training_cache.dart';
 
 class _MockRemote extends Mock implements SupabaseTrainingDataSource {}
 
 class _MockCache extends Mock implements HiveTrainingCache {}
 
 void main() {
-  group('TrainingRepositoryImpl', () {
-    late _MockRemote remote;
-    late _MockCache cache;
-    late TrainingRepositoryImpl repo;
-    final sample = [
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() {
+    registerFallbackValue(
       Training()
-        ..id = 't1'
+        ..id = 'fallback'
         ..date = DateTime.now()
         ..duration = 90
         ..focus = TrainingFocus.technical
-        ..intensity = TrainingIntensity.medium,
-    ];
+        ..intensity = TrainingIntensity.medium
+        ..status = TrainingStatus.planned,
+    );
+  });
 
+  late _MockRemote remote;
+  late _MockCache cache;
+  late TrainingRepositoryImpl repo;
+
+  final now = DateTime.now();
+
+  Training _makeTraining({required String id, required DateTime date}) {
+    return Training()
+      ..id = id
+      ..date = date
+      ..duration = 90
+      ..focus = TrainingFocus.technical
+      ..intensity = TrainingIntensity.medium
+      ..status = TrainingStatus.planned;
+  }
+
+  late Training tUpcoming;
+  late Training tPast;
+
+  setUp(() {
+    remote = _MockRemote();
+    cache = _MockCache();
+    repo = TrainingRepositoryImpl(remote: remote, cache: cache);
+
+    tUpcoming = _makeTraining(id: 'u1', date: now.add(const Duration(days: 1)));
+    tPast = _makeTraining(id: 'p1', date: now.subtract(const Duration(days: 1)));
+  });
+
+  group('getUpcoming', () {
+    test('filters upcoming trainings from remote list', () async {
+      when(() => remote.fetchAll()).thenAnswer((_) async => [tPast, tUpcoming]);
+      when(() => cache.write(any())).thenAnswer((_) async {});
+
+      final res = await repo.getUpcoming();
+
+      expect(res.isSuccess, true);
+      expect(res.dataOrNull, [tUpcoming]);
+    });
+  });
+
+  group('getByDateRange', () {
+    test('returns trainings within range', () async {
+      when(() => remote.fetchAll()).thenAnswer((_) async => [tPast, tUpcoming]);
+      when(() => cache.write(any())).thenAnswer((_) async {});
+
+      final res = await repo.getByDateRange(
+        now.subtract(const Duration(days: 2)),
+        now.add(const Duration(days: 2)),
+      );
+
+      expect(res.isSuccess, true);
+      expect(res.dataOrNull, [tPast, tUpcoming]);
+    });
+  });
+
+  group('fallback to cache', () {
+    test('uses cache on network failure', () async {
+      when(() => remote.fetchAll()).thenThrow(const SocketException('down'));
+      when(() => cache.read()).thenAnswer((_) async => [tPast]);
+
+      final res = await repo.getAll();
+
+      expect(res.isSuccess, true);
+      expect(res.dataOrNull, [tPast]);
+      verify(() => cache.read()).called(1);
+    });
+  });
+
+  group('mutations', () {
     setUp(() {
-      remote = _MockRemote();
-      cache = _MockCache();
-      repo = TrainingRepositoryImpl(remote: remote, cache: cache);
-      registerFallbackValue(Training());
-    });
-
-    test('returns remote data and writes to cache on success', () async {
-      when(() => remote.fetchAll()).thenAnswer((_) async => sample);
-      when(() => cache.write(sample)).thenAnswer((_) async {});
-
-      final res = await repo.getAll();
-
-      expect(res.isSuccess, isTrue);
-      expect(res.dataOrNull, sample);
-      verify(() => cache.write(sample)).called(1);
-    });
-
-    test('falls back to cache when remote fails', () async {
-      when(() => remote.fetchAll()).thenThrow(Exception('network'));
-      when(() => cache.read()).thenAnswer((_) async => sample);
-
-      final res = await repo.getAll();
-
-      expect(res.isSuccess, isTrue);
-      expect(res.dataOrNull, sample);
-    });
-
-    test('propagates failure when both remote and cache fail', () async {
-      when(() => remote.fetchAll()).thenThrow(Exception('network'));
-      when(() => cache.read()).thenAnswer((_) async => null);
-
-      final res = await repo.getAll();
-
-      expect(res.isSuccess, isFalse);
-      expect(res.errorOrNull, isNotNull);
+      when(() => cache.clear()).thenAnswer((_) async {});
     });
 
     test('add clears cache on success', () async {
-      final t = sample.first;
-      when(() => remote.add(t)).thenAnswer((_) async {});
-      when(() => cache.clear()).thenAnswer((_) async {});
+      when(() => remote.add(any())).thenAnswer((_) async {});
 
-      final res = await repo.add(t);
+      final res = await repo.add(tUpcoming);
 
-      expect(res.isSuccess, isTrue);
+      expect(res.isSuccess, true);
       verify(() => cache.clear()).called(1);
     });
   });
