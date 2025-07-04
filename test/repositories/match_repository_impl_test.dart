@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:jo17_tactical_manager/core/result.dart';
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/repositories/match_repository_impl.dart';
 import 'package:jo17_tactical_manager/data/supabase_match_data_source.dart';
