@@ -11,6 +11,8 @@ import '../../providers/annual_planning_provider.dart';
 import '../../services/load_monitoring_service.dart';
 import '../../widgets/load_monitoring/load_summary_cards.dart';
 import '../../widgets/load_monitoring/weekly_load_chart.dart';
+import '../../widgets/load_monitoring/acute_chronic_chart.dart';
+import '../../widgets/load_monitoring/intensity_distribution_chart.dart';
 
 // ignore_for_file: unused_element, require_trailing_commas
 
@@ -119,9 +121,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
           const SizedBox(height: 24),
           WeeklyLoadChart(morphocycles: morphocycles),
           const SizedBox(height: 24),
-          _buildAcuteChronicChart(morphocycles),
+          AcuteChronicChart(morphocycles: morphocycles),
           const SizedBox(height: 24),
-          _buildIntensityDistributionChart(morphocycles),
+          IntensityDistributionChart(morphocycles: morphocycles),
           const SizedBox(height: 24),
           Card(
             child: Padding(
