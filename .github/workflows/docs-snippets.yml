@@ -29,10 +29,10 @@ jobs:
       - name: Validate documentation snippets
         shell: bash
         run: |
-          if [ -d docs ]; then
-            DOC_DIR="docs"
-          elif [ -d jo17_tactical_manager/docs ]; then
+          if [ -d jo17_tactical_manager/docs ]; then
             DOC_DIR="jo17_tactical_manager/docs"
+          elif [ -d docs ]; then
+            DOC_DIR="docs"
           else
             echo "No docs directory found, skipping snippet validation."
             exit 0
