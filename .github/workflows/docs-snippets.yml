@@ -1,9 +1,5 @@
 name: docs-snippets
 
-defaults:
-  run:
-    working-directory: jo17_tactical_manager
-
 on:
   pull_request:
     paths:
