@@ -112,6 +112,32 @@ class LineupBuilderController extends ChangeNotifier {
     _initializePositions();
     notifyListeners();
   }
+
+  // ------------------------ Player selection / swap -----------------------
+
+  void assignPlayerToPosition(Player player, String positionKey) {
+    // Remove from any previous spot or bench
+    fieldPositions
+        .updateAll((key, value) => value?.id == player.id ? null : value);
+    benchPlayers.removeWhere((p) => p.id == player.id);
+
+    fieldPositions[positionKey] = player;
+    notifyListeners();
+  }
+
+  void moveFieldPlayerToBench(String positionKey) {
+    final player = fieldPositions[positionKey];
+    if (player != null) {
+      benchPlayers.add(player);
+      fieldPositions[positionKey] = null;
+      notifyListeners();
+    }
+  }
+
+  void removeBenchPlayer(Player player) {
+    benchPlayers.removeWhere((p) => p.id == player.id);
+    notifyListeners();
+  }
 }
 
 /// Riverpod provider
