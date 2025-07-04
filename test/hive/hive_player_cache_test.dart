@@ -30,6 +30,13 @@ void main() {
         Player()
           ..id = '1'
           ..firstName = 'A'
+          ..lastName = 'B'
+          ..jerseyNumber = 10
+          ..birthDate = DateTime(2005, 1, 1)
+          ..position = Position.forward
+          ..preferredFoot = PreferredFoot.right
+          ..height = 180
+          ..weight = 70
       ];
       await cache.write(players);
       final read = await cache.read();
@@ -38,7 +45,18 @@ void main() {
 
     test('returns null after TTL expiry', () async {
       final cache = HivePlayerCache();
-      final players = [Player()..id = '2'];
+      final players = [
+        Player()
+          ..id = '2'
+          ..firstName = 'C'
+          ..lastName = 'D'
+          ..jerseyNumber = 11
+          ..birthDate = DateTime(2006, 2, 2)
+          ..position = Position.midfielder
+          ..preferredFoot = PreferredFoot.left
+          ..height = 175
+          ..weight = 68
+      ];
       await cache.write(players);
       expect(
           await cache.read(ttl: const Duration(milliseconds: 50)), isNotNull);
