@@ -1,10 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../data/supabase_training_data_source.dart';
+import '../hive/hive_training_cache.dart';
 import '../models/training.dart';
-import '../repositories/local_training_repository.dart';
 import '../repositories/training_repository.dart';
+import '../repositories/training_repository_impl.dart';
 
 final trainingRepositoryProvider = Provider<TrainingRepository>((ref) {
-  return LocalTrainingRepository();
+  return TrainingRepositoryImpl(
+    remote: SupabaseTrainingDataSource(),
+    cache: HiveTrainingCache(),
+  );
 });
 
 final trainingsProvider = FutureProvider<List<Training>>((ref) async {
