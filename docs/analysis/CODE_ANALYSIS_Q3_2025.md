@@ -8,7 +8,7 @@ _Last updated: 2025-07-12_
 |--------|--------|
 | Analyzer errors | **0** |
 | Analyzer warnings | **0** |
-| Analyzer infos (hints) | 81 |
+| Analyzer infos (hints) | ~10 |
 | Test coverage | ≥ 40 % lines (lcov)
 | Golden tests | 4 suites passing |
 
@@ -46,3 +46,7 @@ Bring analyzer to **0 infos** and lift overall code-quality bar in line with 202
 - CI fails on any new lint violation.
 - Code coverage ≥ 40 % remains.
 - Dev-team acknowledges new standards in retro.
+
+### Notable Updates (2025-07-12)
+- Added `SessionBuilderController` (StateNotifier) and `SessionBuilderView` – both fully covered by analyzer with 0 issues.
+- Introduced `training_session_builder_service.dart` with formatted code.

@@ -661,3 +661,28 @@ Impact on architecture diagram:
 ```
 
 All diagrams will be regenerated in Q4 after the code-style cleanup initiative.
+
+## Q3 2025 – Session Builder Modularisation
+
+The former 1 700-line `session_builder_screen.dart` is being decomposed into a layered structure that follows 2025 Flutter best-practice guidance (feature-first, MVU):
+
+```
+UI                ┌──────────────────────────────┐
+                 │ SessionBuilderView (Widget) │
+                 └──────────▲─────────▲─────────┘
+State/Logic       ┌─────────┴─────────┴─────────┐
+                 │ SessionBuilderController     │  (StateNotifier)
+                 └─────────▲─────────▲─────────┘
+Domain helpers    ┌────────┴─────────┘
+                 │ TrainingSessionBuilderService │  (pure helpers)
+                 └───────────────────────────────┘
+```
+
+Key advantages:
+
+* UI is now a lightweight ConsumerWidget (< 70 LOC).
+* Business rules live in a testable StateNotifier.
+* Reusable helper logic centralised in `services/`.
+* Navigation updated – route `/training-sessions/builder` resolves to `SessionBuilderView`.
+
+This lays the groundwork for further extraction of sub-widgets (toolbar, phase list) which will live under `widgets/session_builder/`.
