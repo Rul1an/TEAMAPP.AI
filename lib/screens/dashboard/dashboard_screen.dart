@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +21,10 @@ import '../../repositories/season_repository.dart';
 import '../../services/permission_service.dart';
 import '../../widgets/common/quick_actions_widget.dart';
 import '../../widgets/rbac_demo_widget.dart';
+import 'widgets/dashboard_app_bar_actions.dart';
+import 'widgets/welcome_section.dart';
+import 'widgets/dashboard_stats_cards.dart';
+import 'widgets/performance_chart.dart';
 
 final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
   return LocalSeasonRepository();
@@ -64,8 +67,9 @@ class DashboardScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(_getDashboardTitle(userRole)),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions:
-            _buildAppBarActions(context, userRole, organization?.tier.name),
+        actions: [
+          DashboardAppBarActions(userRole: userRole),
+        ],
       ),
       body: statisticsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -81,10 +85,15 @@ class DashboardScreen extends ConsumerWidget {
               // Role-specific welcome section
               seasonAsync.when(
                 data: (season) =>
-                    _buildWelcomeSection(context, season, userRole),
-                loading: () => _buildLoadingWelcome(context, userRole),
+                    WelcomeSection(season: season, userRole: userRole),
+                loading: () => const SizedBox(
+                  height: 120,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
                 error: (error, stack) =>
-                    _buildNoSeasonWelcome(context, userRole),
+                    WelcomeSection(season: null, userRole: userRole),
               ),
               const SizedBox(height: 24),
 
@@ -115,38 +124,6 @@ class DashboardScreen extends ConsumerWidget {
     } else {
       return 'Coach Dashboard';
     }
-  }
-
-  List<Widget> _buildAppBarActions(
-    BuildContext context,
-    String? userRole,
-    String? tier,
-  ) {
-    final actions = <Widget>[];
-
-    // Only coaches and admins can create training sessions
-    if (PermissionService.canManageTraining(userRole)) {
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.add_circle_outline),
-          onPressed: () => context.push('/session-builder'),
-          tooltip: 'Nieuwe Training',
-        ),
-      );
-    }
-
-    // Only coaches can create lineups
-    if (PermissionService.canManageMatches(userRole)) {
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.sports_soccer),
-          onPressed: () => context.go('/lineup'),
-          tooltip: 'Opstelling Maken',
-        ),
-      );
-    }
-
-    return actions;
   }
 
   List<Widget> _buildRoleSpecificContent(
@@ -191,7 +168,8 @@ class DashboardScreen extends ConsumerWidget {
         const SizedBox(height: 24),
         const QuickActionsWidget(),
         const SizedBox(height: 24),
-        _buildStatisticsCards(context, statistics as Map<String, dynamic>),
+        // ignore: unnecessary_cast
+        DashboardStatsCards(statistics: statistics as Map<String, dynamic>),
         const SizedBox(height: 24),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,7 +213,8 @@ class DashboardScreen extends ConsumerWidget {
           ],
         ),
         const SizedBox(height: 24),
-        _buildPerformanceChart(context, statistics),
+        // ignore: unnecessary_cast
+        PerformanceChart(statistics: statistics as Map<String, dynamic>),
       ]);
     }
 
@@ -421,142 +400,6 @@ class DashboardScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildWelcomeSection(
-    BuildContext context,
-    SeasonPlan? season,
-    String? userRole,
-  ) {
-    if (season == null) {
-      return _buildNoSeasonWelcome(context, userRole);
-    }
-
-    final currentPhase = season.getCurrentPhase();
-    final progress = season.seasonProgressByDate;
-    var welcomeMessage = 'Welkom terug!';
-
-    if (PermissionService.isPlayer(userRole)) {
-      welcomeMessage = 'Hallo speler!';
-    } else if (PermissionService.isParent(userRole)) {
-      welcomeMessage = 'Welkom ouder!';
-    } else if (PermissionService.canAccessAdmin(userRole)) {
-      welcomeMessage = 'Welkom bestuurder!';
-    } else {
-      welcomeMessage = 'Welkom terug, Coach!';
-    }
-
-    return Card(
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor.withValues(alpha: 0.1),
-              Theme.of(context).primaryColor.withValues(alpha: 0.05),
-            ],
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.waving_hand,
-                  color: Theme.of(context).primaryColor,
-                  size: 28,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        welcomeMessage,
-                        style:
-                            Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                      ),
-                      Text(
-                        '${season.teamName} - ${currentPhase.displayName}',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: Colors.grey[600],
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-                Chip(
-                  label: Text('Week ${season.currentWeek}'),
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Icon(Icons.timeline, color: Colors.grey[600], size: 16),
-                const SizedBox(width: 4),
-                Text('Seizoen: ${progress.toStringAsFixed(0)}% voltooid'),
-                const Spacer(),
-                Text('${season.remainingWeeks} weken te gaan'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            LinearProgressIndicator(
-              value: progress / 100,
-              backgroundColor: Colors.grey.shade300,
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLoadingWelcome(BuildContext context, String? userRole) => Card(
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          child: const Center(child: CircularProgressIndicator()),
-        ),
-      );
-
-  Widget _buildNoSeasonWelcome(BuildContext context, String? userRole) => Card(
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Icon(
-                Icons.sports_soccer_outlined,
-                size: 48,
-                color: Colors.grey[400],
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Welkom bij JO17 Tactical Manager',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Start door je seizoenplanning in te stellen',
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-              const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: () => context.push('/annual-planning'),
-                child: const Text('Begin Setup'),
-              ),
-            ],
-          ),
-        ),
-      );
-
   Widget _buildSmartActions(BuildContext context) => Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -720,195 +563,6 @@ class DashboardScreen extends ConsumerWidget {
     }
   }
 
-  Widget _buildStatisticsCards(
-    BuildContext context,
-    Map<String, dynamic> statistics,
-  ) =>
-      LayoutBuilder(
-        builder: (context, constraints) {
-          final crossAxisCount = constraints.maxWidth > 800 ? 4 : 2;
-          final childAspectRatio = constraints.maxWidth > 800 ? 1.5 : 1.2;
-
-          return GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: crossAxisCount,
-            childAspectRatio: childAspectRatio,
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
-            children: [
-              _buildStatCard(
-                context,
-                'Spelers',
-                statistics['totalPlayers'].toString(),
-                Icons.people,
-                Colors.blue,
-              ),
-              _buildStatCard(
-                context,
-                'Wedstrijden',
-                statistics['totalMatches'].toString(),
-                Icons.sports_soccer,
-                Colors.green,
-              ),
-              _buildStatCard(
-                context,
-                'Trainingen',
-                statistics['totalTrainings'].toString(),
-                Icons.fitness_center,
-                Colors.orange,
-              ),
-              _buildStatCard(
-                context,
-                'Win %',
-                '${statistics['winPercentage'].toStringAsFixed(1)}%',
-                Icons.emoji_events,
-                Colors.amber,
-              ),
-            ],
-          );
-        },
-      );
-
-  Widget _buildStatCard(
-    BuildContext context,
-    String title,
-    String value,
-    IconData icon,
-    Color color,
-  ) =>
-      Card(
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 32, color: color),
-              const SizedBox(height: 8),
-              Text(
-                value,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).textTheme.bodySmall?.color,
-                    ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget _buildPerformanceChart(
-    BuildContext context,
-    Map<String, dynamic> statistics,
-  ) {
-    final wins = statistics['wins'] as int;
-    final draws = statistics['draws'] as int;
-    final losses = statistics['losses'] as int;
-    final total = wins + draws + losses;
-
-    if (total == 0) {
-      return Card(
-        child: Container(
-          height: 300,
-          padding: const EdgeInsets.all(16),
-          child: const Center(
-            child: Text('Nog geen wedstrijden gespeeld'),
-          ),
-        ),
-      );
-    }
-
-    return Card(
-      child: Container(
-        height: 300,
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Wedstrijd Resultaten',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: PieChart(
-                      PieChartData(
-                        sections: [
-                          PieChartSectionData(
-                            value: wins.toDouble(),
-                            title: 'W: $wins',
-                            color: Colors.green,
-                            radius: 60,
-                          ),
-                          PieChartSectionData(
-                            value: draws.toDouble(),
-                            title: 'G: $draws',
-                            color: Colors.orange,
-                            radius: 60,
-                          ),
-                          PieChartSectionData(
-                            value: losses.toDouble(),
-                            title: 'V: $losses',
-                            color: Colors.red,
-                            radius: 60,
-                          ),
-                        ],
-                        sectionsSpace: 2,
-                        centerSpaceRadius: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 32),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildLegendItem('Gewonnen', Colors.green, wins),
-                      const SizedBox(height: 8),
-                      _buildLegendItem('Gelijk', Colors.orange, draws),
-                      const SizedBox(height: 8),
-                      _buildLegendItem('Verloren', Colors.red, losses),
-                      const Divider(height: 24),
-                      Text(
-                        'Doelpunten',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 4),
-                      Text('Voor: ${statistics['goalsFor']}'),
-                      Text('Tegen: ${statistics['goalsAgainst']}'),
-                      Text('Saldo: ${statistics['goalDifference']}'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLegendItem(String label, Color color, int value) => Row(
-        children: [
-          Container(
-            width: 16,
-            height: 16,
-            color: color,
-          ),
-          const SizedBox(width: 8),
-          Text('$label: $value'),
-        ],
-      );
-
   Widget _buildUpcomingMatches(BuildContext context, List<Match> matches) {
     if (matches.isEmpty) {
       return Card(
@@ -948,4 +602,37 @@ class DashboardScreen extends ConsumerWidget {
           .toList(),
     );
   }
+
+  Widget _buildStatCard(
+    BuildContext context,
+    String title,
+    String value,
+    IconData icon,
+    Color color,
+  ) =>
+      Card(
+        elevation: 2,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 32, color: color),
+              const SizedBox(height: 8),
+              Text(
+                value,
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).textTheme.bodySmall?.color,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      );
 }
