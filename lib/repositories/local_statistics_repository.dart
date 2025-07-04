@@ -1,17 +1,17 @@
 import '../core/result.dart';
-import '../services/database_service.dart';
+import '../hive/hive_statistics_cache.dart';
 import 'statistics_repository.dart';
 
 class LocalStatisticsRepository implements StatisticsRepository {
-  LocalStatisticsRepository({DatabaseService? service})
-      : _service = service ?? DatabaseService();
+  LocalStatisticsRepository({HiveStatisticsCache? cache})
+      : _cache = cache ?? HiveStatisticsCache();
 
-  final DatabaseService _service;
+  final HiveStatisticsCache _cache;
 
   @override
   Future<Result<Map<String, dynamic>>> getStatistics() async {
     try {
-      final stats = await _service.getStatistics();
+      final stats = await _cache.read() ?? {};
       return Success(stats);
     } catch (e) {
       return Failure(CacheFailure(e.toString()));
