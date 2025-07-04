@@ -31,8 +31,12 @@ class SessionBuilderView extends ConsumerWidget {
         children: [
           SessionToolbar(
             session: session,
-            onDateChanged: (d) {/* TODO hook into controller */},
-            onTypeChanged: (t) {/* TODO */},
+            onDateChanged: (d) => ref
+                .read(sessionBuilderControllerProvider(sessionId).notifier)
+                .setDate(d),
+            onTypeChanged: (t) => ref
+                .read(sessionBuilderControllerProvider(sessionId).notifier)
+                .setType(t),
           ),
           const Divider(),
           Text(

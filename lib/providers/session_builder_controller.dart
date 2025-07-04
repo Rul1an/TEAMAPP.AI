@@ -98,6 +98,21 @@ class SessionBuilderController extends StateNotifier<SessionBuilderState> {
       isLoading: false,
     );
   }
+
+  // UI actions
+  void setDate(DateTime date) {
+    final s = state.session;
+    if (s == null) return;
+    s.date = date;
+    state = state.copyWith(session: s);
+  }
+
+  void setType(TrainingType type) {
+    final s = state.session;
+    if (s == null) return;
+    s.type = type;
+    state = state.copyWith(session: s);
+  }
 }
 
 /// Public provider (family) to access controller + state by [sessionId].
