@@ -9,6 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/annual_planning/morphocycle.dart';
 import '../../providers/annual_planning_provider.dart';
 import '../../services/load_monitoring_service.dart';
+import '../../widgets/load_monitoring/load_summary_cards.dart';
+
+// ignore_for_file: unused_element, require_trailing_commas
 
 class LoadMonitoringScreen extends ConsumerStatefulWidget {
   const LoadMonitoringScreen({super.key});
@@ -111,7 +114,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildLoadSummaryCards(morphocycles),
+          LoadSummaryCards(morphocycles: morphocycles),
           const SizedBox(height: 24),
           _buildWeeklyLoadChart(morphocycles),
           const SizedBox(height: 24),
@@ -146,121 +149,6 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
       ),
     );
   }
-
-  Widget _buildLoadSummaryCards(List<Morphocycle> morphocycles) {
-    if (morphocycles.isEmpty) {
-      return const Card(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Text('No morphocycle data available'),
-        ),
-      );
-    }
-
-    final currentLoad = LoadMonitoringService.getCurrentLoad(morphocycles);
-    final averageLoad = LoadMonitoringService.getAverageLoad(morphocycles);
-    final maxLoad = LoadMonitoringService.getPeakLoad(morphocycles);
-    final currentAcr = LoadMonitoringService.getCurrentAcr(morphocycles);
-
-    return Row(
-      children: [
-        Expanded(
-          child: _buildSummaryCard(
-            'Current Load',
-            '${currentLoad.toInt()}',
-            'AU',
-            LoadMonitoringService.loadColor(currentLoad),
-            Icons.fitness_center,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _buildSummaryCard(
-            'Average Load',
-            '${averageLoad.toInt()}',
-            'AU',
-            Colors.blue,
-            Icons.trending_up,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _buildSummaryCard(
-            'Peak Load',
-            '$maxLoad',
-            'AU',
-            Colors.red,
-            Icons.trending_up,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _buildSummaryCard(
-            'ACR',
-            currentAcr.toStringAsFixed(2),
-            'Ratio',
-            LoadMonitoringService.acrColor(currentAcr),
-            Icons.warning,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSummaryCard(
-    String title,
-    String value,
-    String unit,
-    Color color,
-    IconData icon,
-  ) =>
-      Card(
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(icon, color: color, size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    value,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: color,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    unit,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
 
   Widget _buildWeeklyLoadChart(List<Morphocycle> morphocycles) => Card(
         elevation: 4,
@@ -631,9 +519,11 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
                 'Current Risk',
                 currentMorphocycle.currentInjuryRisk.name.toUpperCase(),
                 LoadMonitoringService.riskColor(
-                    currentMorphocycle.currentInjuryRisk),
+                  currentMorphocycle.currentInjuryRisk,
+                ),
                 LoadMonitoringService.riskIcon(
-                    currentMorphocycle.currentInjuryRisk),
+                  currentMorphocycle.currentInjuryRisk,
+                ),
               ),
             ),
             const SizedBox(width: 12),
