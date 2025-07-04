@@ -1,9 +1,14 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+// Project imports:
 import '../../models/player.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/players_provider.dart';
@@ -142,13 +147,10 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
               switch (value) {
                 case 'import':
                   await _importPlayers();
-                  break;
                 case 'export':
                   await _exportPlayers();
-                  break;
                 case 'template':
                   await _downloadTemplate();
-                  break;
               }
             },
             itemBuilder: (BuildContext context) => [

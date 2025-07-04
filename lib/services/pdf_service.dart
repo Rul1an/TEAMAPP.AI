@@ -1,9 +1,12 @@
+// Dart imports:
 import 'dart:typed_data';
 
+// Package imports:
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+// Project imports:
 import '../models/assessment.dart';
 import '../models/player.dart';
 import '../models/training_session/player_attendance.dart';
@@ -203,18 +206,14 @@ class PDFService {
     final presentPlayers = allPlayers
         .where(
           (p) => session.playerAttendance.values.any(
-            (a) =>
-                a.playerId == p.id.toString() &&
-                a.status == AttendanceStatus.present,
+            (a) => a.playerId == p.id && a.status == AttendanceStatus.present,
           ),
         )
         .toList();
     final absentPlayers = allPlayers
         .where(
           (p) => session.playerAttendance.values.any(
-            (a) =>
-                a.playerId == p.id.toString() &&
-                a.status == AttendanceStatus.absent,
+            (a) => a.playerId == p.id && a.status == AttendanceStatus.absent,
           ),
         )
         .toList();

@@ -1,3 +1,4 @@
+// Project imports:
 import 'training_period.dart';
 import 'week_schedule.dart';
 
@@ -262,7 +263,6 @@ class Morphocycle {
         ];
         primaryGameModelFocus = 'Ball Possession';
         secondaryGameModelFocus = 'Individual Skills';
-        break;
       case PeriodType.competitionEarly:
         tacticalFocusAreas = [
           'Positional Play',
@@ -271,7 +271,6 @@ class Morphocycle {
         ];
         primaryGameModelFocus = 'Defensive Organization';
         secondaryGameModelFocus = 'Pressing Triggers';
-        break;
       case PeriodType.competitionPeak:
         tacticalFocusAreas = [
           'Match Preparation',
@@ -280,7 +279,6 @@ class Morphocycle {
         ];
         primaryGameModelFocus = 'Match Preparation';
         secondaryGameModelFocus = 'Performance Optimization';
-        break;
       case PeriodType.competitionMaintenance:
         tacticalFocusAreas = [
           'Consistency',
@@ -289,7 +287,6 @@ class Morphocycle {
         ];
         primaryGameModelFocus = 'Performance Maintenance';
         secondaryGameModelFocus = 'Squad Development';
-        break;
       case PeriodType.transition:
         tacticalFocusAreas = [
           'Creativity',
@@ -298,7 +295,6 @@ class Morphocycle {
         ];
         primaryGameModelFocus = 'Creative Play';
         secondaryGameModelFocus = 'Skill Development';
-        break;
       case PeriodType.tournamentPrep:
         tacticalFocusAreas = [
           'Tournament Tactics',
@@ -307,7 +303,6 @@ class Morphocycle {
         ];
         primaryGameModelFocus = 'Tournament Tactics';
         secondaryGameModelFocus = 'Mental Readiness';
-        break;
     }
   }
 
@@ -322,11 +317,9 @@ class Morphocycle {
           'Build-up Play',
         ];
         secondaryGameModelFocus = 'Creating Numerical Superiority';
-        break;
       case 'pressing':
         tacticalFocusAreas = ['High Pressing', 'Compactness', 'Ball Recovery'];
         secondaryGameModelFocus = 'Transition to Attack';
-        break;
       case 'counter attack':
         tacticalFocusAreas = [
           'Quick Transitions',
@@ -334,7 +327,6 @@ class Morphocycle {
           'Vertical Runs',
         ];
         secondaryGameModelFocus = 'Defensive Stability';
-        break;
       case 'positional play':
         tacticalFocusAreas = [
           'Space Occupation',
@@ -342,7 +334,6 @@ class Morphocycle {
           'Passing Networks',
         ];
         secondaryGameModelFocus = 'Creating Overloads';
-        break;
       default:
         tacticalFocusAreas = ['Balanced Development', 'Game Understanding'];
         secondaryGameModelFocus = 'Technical Skills';
@@ -353,7 +344,7 @@ class Morphocycle {
   double _calculateExpectedAdaptation(TrainingPeriod? period) {
     if (period == null) return 50;
 
-    final double baseAdaptation = period.intensityPercentage;
+    final baseAdaptation = period.intensityPercentage;
 
     // Adjust based on morphocycle structure
     if (acuteChronicRatio > 1.2) {

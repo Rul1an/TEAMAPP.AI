@@ -640,3 +640,24 @@ Thresholds (p75):
 * INP < 200 ms
 
 > Note: Lighthouse performance category remains **disabled** in CI until an SSR landing page is introduced (Phase 2 of the performance roadmap).
+
+## Q3 2025 – Local Data Layer Refactor
+
+The legacy `DatabaseService` singleton has been **removed**. Local persistence is now handled via a versioned Hive cache layer that sits behind `LocalStore<T>` and the `BaseHiveCache` wrapper.
+
+Key points:
+
+- Every repository now delegates **read / write / clear** concerns to its dedicated `Hive*Cache` implementation.
+- Caches share cross-cutting concerns (TTL, schema versioning, JSON (de)serialisation) via `BaseHiveCache`.
+- Offline-first behaviour is preserved; remote failures transparently fall back to cache.
+- Tests cover all caches (write / read / TTL expiry) and repository fall-back strategies.
+
+Impact on architecture diagram:
+
+```
+[ UI ] → [ Provider ] → [ Repository ] ⇄ [ Hive Cache ] ⇄ [ Hive Box ]
+                             ⇡                     ⇣
+                        (remote data source)   (TTL / Version)
+```
+
+All diagrams will be regenerated in Q4 after the code-style cleanup initiative.

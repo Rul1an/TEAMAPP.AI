@@ -1,14 +1,18 @@
-import 'package:fl_chart/fl_chart.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:fl_chart/fl_chart.dart';
+
+// Project imports:
 import '../../models/assessment.dart';
 import '../../models/player.dart';
 
 class AssessmentDetailScreen extends StatelessWidget {
   const AssessmentDetailScreen({
-    super.key,
     required this.assessment,
     required this.player,
+    super.key,
   });
   final PlayerAssessment assessment;
   final Player player;

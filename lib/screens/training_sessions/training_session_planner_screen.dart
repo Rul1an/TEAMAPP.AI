@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'enhanced_exercise_library_screen.dart';
 
 class TrainingSessionPlannerScreen extends StatefulWidget {

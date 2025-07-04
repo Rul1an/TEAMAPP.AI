@@ -1,15 +1,18 @@
+// Dart imports:
 import 'dart:math' as math;
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../models/training_session/field_diagram.dart';
 
 class FieldPainter extends CustomPainter {
   FieldPainter({
     required this.diagram,
-    this.selectedElementId,
     required this.showGrid,
     required this.gridSize,
+    this.selectedElementId,
     this.currentLinePoints = const [],
     this.isDrawingLine = false,
     this.selectedLineType = LineType.pass,
@@ -43,26 +46,20 @@ class FieldPainter extends CustomPainter {
 
   Rect _calculateFieldRect(Size size) {
     // Calculate field aspect ratio based on type
-    double fieldAspectRatio = 1.5; // Default ratio
+    var fieldAspectRatio = 1.5; // Default ratio
     switch (diagram.fieldType) {
       case FieldType.fullField:
         fieldAspectRatio = 105.0 / 68.0; // FIFA standard ratio
-        break;
       case FieldType.halfField:
         fieldAspectRatio = 52.5 / 68.0;
-        break;
       case FieldType.penaltyArea:
         fieldAspectRatio = 16.5 / 40.3;
-        break;
       case FieldType.thirdField:
         fieldAspectRatio = 35.0 / 68.0;
-        break;
       case FieldType.quarterField:
         fieldAspectRatio = 26.0 / 34.0;
-        break;
       default:
         fieldAspectRatio = diagram.fieldSize.width / diagram.fieldSize.height;
-        break;
     }
 
     // Fit field to canvas with padding
@@ -70,7 +67,8 @@ class FieldPainter extends CustomPainter {
     final availableWidth = size.width - (padding * 2);
     final availableHeight = size.height - (padding * 2);
 
-    double fieldWidth, fieldHeight;
+    double fieldWidth;
+    double fieldHeight;
     if (availableWidth / availableHeight > fieldAspectRatio) {
       // Available space is wider than needed, constrain by height
       fieldHeight = availableHeight;
@@ -180,22 +178,16 @@ class FieldPainter extends CustomPainter {
     switch (diagram.fieldType) {
       case FieldType.fullField:
         _drawFullField(canvas, fieldRect, linePaint);
-        break;
       case FieldType.halfField:
         _drawHalfField(canvas, fieldRect, linePaint);
-        break;
       case FieldType.penaltyArea:
         _drawPenaltyArea(canvas, fieldRect, linePaint);
-        break;
       case FieldType.thirdField:
         _drawThirdField(canvas, fieldRect, linePaint);
-        break;
       case FieldType.quarterField:
         _drawQuarterField(canvas, fieldRect, linePaint);
-        break;
       default:
         canvas.drawRect(fieldRect, linePaint);
-        break;
     }
   }
 
@@ -206,7 +198,7 @@ class FieldPainter extends CustomPainter {
       ..strokeWidth = 1.0;
 
     final stripeWidth = fieldRect.width / 20;
-    for (double x = fieldRect.left; x < fieldRect.right; x += stripeWidth * 2) {
+    for (var x = fieldRect.left; x < fieldRect.right; x += stripeWidth * 2) {
       canvas.drawRect(
         Rect.fromLTWH(x, fieldRect.top, stripeWidth, fieldRect.height),
         grassPaint,
@@ -801,13 +793,10 @@ class FieldPainter extends CustomPainter {
     switch (equipment.type) {
       case EquipmentType.cone:
         _drawCone(canvas, position, paint, isSelected);
-        break;
       case EquipmentType.ball:
         _drawBall(canvas, position, paint, isSelected);
-        break;
       default:
         _drawGenericEquipment(canvas, position, paint, isSelected);
-        break;
     }
   }
 
@@ -952,53 +941,47 @@ class FieldPainter extends CustomPainter {
     switch (line.type) {
       case LineType.pass:
         // Solid line
-        for (int i = 1; i < line.points.length; i++) {
+        for (var i = 1; i < line.points.length; i++) {
           final point = _fieldToCanvasPosition(line.points[i], fieldRect);
           if (_isValidOffset(point)) {
             path.lineTo(point.dx, point.dy);
           }
         }
         canvas.drawPath(path, paint);
-        break;
 
       case LineType.run:
         // Dashed line
         _drawDashedPath(canvas, line.points, fieldRect, paint);
-        break;
 
       case LineType.dribble:
         // Wavy line
         _drawWavyPath(canvas, line.points, fieldRect, paint);
-        break;
 
       case LineType.shot:
         // Thick solid line
         paint.strokeWidth = line.strokeWidth * 1.5 * (isSelected ? 1.5 : 1.0);
-        for (int i = 1; i < line.points.length; i++) {
+        for (var i = 1; i < line.points.length; i++) {
           final point = _fieldToCanvasPosition(line.points[i], fieldRect);
           if (_isValidOffset(point)) {
             path.lineTo(point.dx, point.dy);
           }
         }
         canvas.drawPath(path, paint);
-        break;
 
       case LineType.defensive:
         // Dotted line
         _drawDottedPath(canvas, line.points, fieldRect, paint);
-        break;
 
       case LineType.ballPath:
         // Thin line
         paint.strokeWidth = line.strokeWidth * 0.7;
-        for (int i = 1; i < line.points.length; i++) {
+        for (var i = 1; i < line.points.length; i++) {
           final point = _fieldToCanvasPosition(line.points[i], fieldRect);
           if (_isValidOffset(point)) {
             path.lineTo(point.dx, point.dy);
           }
         }
         canvas.drawPath(path, paint);
-        break;
     }
 
     // Draw arrow head if needed
@@ -1054,7 +1037,7 @@ class FieldPainter extends CustomPainter {
     if (!_isValidOffset(firstPoint)) return;
     path.moveTo(firstPoint.dx, firstPoint.dy);
 
-    for (int i = 1; i < currentLinePoints.length; i++) {
+    for (var i = 1; i < currentLinePoints.length; i++) {
       final point = _fieldToCanvasPosition(currentLinePoints[i], fieldRect);
       if (_isValidOffset(point)) {
         path.lineTo(point.dx, point.dy);
@@ -1074,7 +1057,7 @@ class FieldPainter extends CustomPainter {
     const dashSpace = 5.0;
     double distance = 0;
 
-    for (int i = 0; i < points.length - 1; i++) {
+    for (var i = 0; i < points.length - 1; i++) {
       final start = _fieldToCanvasPosition(points[i], fieldRect);
       final end = _fieldToCanvasPosition(points[i + 1], fieldRect);
 
@@ -1125,7 +1108,7 @@ class FieldPainter extends CustomPainter {
   ) {
     const dotSpacing = 8.0;
 
-    for (int i = 0; i < points.length - 1; i++) {
+    for (var i = 0; i < points.length - 1; i++) {
       final start = _fieldToCanvasPosition(points[i], fieldRect);
       final end = _fieldToCanvasPosition(points[i + 1], fieldRect);
 
@@ -1142,7 +1125,7 @@ class FieldPainter extends CustomPainter {
       final dots = (length / dotSpacing).floor();
       if (dots <= 0) continue;
 
-      for (int j = 0; j <= dots; j++) {
+      for (var j = 0; j <= dots; j++) {
         final t = j / dots;
         final dotCenter = Offset(
           start.dx + dx * t,
@@ -1175,7 +1158,7 @@ class FieldPainter extends CustomPainter {
     if (!_isValidOffset(firstPoint)) return;
     path.moveTo(firstPoint.dx, firstPoint.dy);
 
-    for (int i = 0; i < points.length - 1; i++) {
+    for (var i = 0; i < points.length - 1; i++) {
       final start = _fieldToCanvasPosition(points[i], fieldRect);
       final end = _fieldToCanvasPosition(points[i + 1], fieldRect);
 
@@ -1198,7 +1181,7 @@ class FieldPainter extends CustomPainter {
 
       // Create wavy path using quadratic bezier curves
       const steps = 20;
-      for (int j = 0; j < steps; j++) {
+      for (var j = 0; j < steps; j++) {
         final t = j / steps;
         final wave =
             math.sin(t * math.pi * 2 * waveFrequency * length) * waveAmplitude;

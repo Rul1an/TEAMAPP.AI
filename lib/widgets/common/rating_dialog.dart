@@ -1,18 +1,22 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../../models/performance_rating.dart';
 import '../../models/player.dart';
 import '../../providers/performance_ratings_provider.dart';
-import '../common/star_rating.dart';
+import 'star_rating.dart';
 
 class RatingDialog extends ConsumerStatefulWidget {
   const RatingDialog({
-    super.key,
     required this.player,
+    required this.type,
+    super.key,
     this.matchId,
     this.trainingId,
-    required this.type,
   });
   final Player player;
   final String? matchId;
@@ -47,7 +51,7 @@ class _RatingDialogState extends ConsumerState<RatingDialog> {
     setState(() => _isLoading = true);
 
     final rating = PerformanceRating(
-      playerId: widget.player.id.toString(),
+      playerId: widget.player.id,
       matchId: widget.matchId,
       trainingId: widget.trainingId,
       date: DateTime.now(),

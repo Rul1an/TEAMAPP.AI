@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
@@ -27,7 +28,7 @@ class AuthService {
         emailRedirectTo: _getRedirectUrl(),
       );
     } catch (e) {
-      throw AuthException('Failed to send magic link: ${e.toString()}');
+      throw AuthException('Failed to send magic link: $e');
     }
   }
 
@@ -42,7 +43,7 @@ class AuthService {
         password: password,
       );
     } catch (e) {
-      throw AuthException('Failed to sign in: ${e.toString()}');
+      throw AuthException('Failed to sign in: $e');
     }
   }
 
@@ -59,7 +60,7 @@ class AuthService {
         data: metadata,
       );
     } catch (e) {
-      throw AuthException('Failed to sign up: ${e.toString()}');
+      throw AuthException('Failed to sign up: $e');
     }
   }
 
@@ -68,7 +69,7 @@ class AuthService {
     try {
       await _supabase.auth.signOut();
     } catch (e) {
-      throw AuthException('Failed to sign out: ${e.toString()}');
+      throw AuthException('Failed to sign out: $e');
     }
   }
 
@@ -79,7 +80,7 @@ class AuthService {
         UserAttributes(data: metadata),
       );
     } catch (e) {
-      throw AuthException('Failed to update user: ${e.toString()}');
+      throw AuthException('Failed to update user: $e');
     }
   }
 

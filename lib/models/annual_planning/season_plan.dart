@@ -1,3 +1,4 @@
+// Project imports:
 import 'periodization_plan.dart';
 
 // part 'season_plan.g.dart'; // Disabled for web compatibility
@@ -313,7 +314,7 @@ class SeasonPlan {
       progressPercentage <= 100.0;
 
   List<String> getValidationErrors() {
-    final List<String> errors = [];
+    final errors = <String>[];
 
     if (name.isEmpty) errors.add('Season name is required');
     if (season.isEmpty) errors.add('Season year is required');

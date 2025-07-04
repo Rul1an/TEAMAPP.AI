@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+// Project imports:
 import 'staff_member.dart';
 import 'team.dart';
 
@@ -37,6 +39,11 @@ class Club with _$Club {
     required String id,
     required String name,
     required String shortName,
+    // Club Details
+    required DateTime foundedDate, // Settings
+    required ClubSettings settings, // Status
+    required ClubStatus status, // Metadata
+    required DateTime createdAt,
     String? description,
     String? logoUrl,
     String? website,
@@ -47,20 +54,12 @@ class Club with _$Club {
     String? city,
     String? postalCode,
     String? country,
-    // Club Details
-    required DateTime foundedDate,
     String? colors,
     String? motto,
     // SaaS Properties
     @Default(ClubTier.basic) ClubTier tier,
     @Default([]) List<Team> teams,
     @Default([]) List<StaffMember> staff,
-    // Settings
-    required ClubSettings settings,
-    // Status
-    required ClubStatus status,
-    // Metadata
-    required DateTime createdAt,
     DateTime? updatedAt,
     String? createdBy,
     String? updatedBy,

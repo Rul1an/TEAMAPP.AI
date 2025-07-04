@@ -1,11 +1,15 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/data/supabase_profile_data_source.dart';
 import 'package:jo17_tactical_manager/hive/hive_profile_cache.dart';
 import 'package:jo17_tactical_manager/models/profile.dart';
 import 'package:jo17_tactical_manager/repositories/profile_repository_impl.dart';
-import 'package:mocktail/mocktail.dart';
 
 class _MockRemote extends Mock implements SupabaseProfileDataSource {}
 

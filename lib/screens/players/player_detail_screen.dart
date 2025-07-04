@@ -1,13 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+// Project imports:
 import '../../models/player.dart';
 import '../../providers/players_provider.dart';
 
 class PlayerDetailScreen extends ConsumerWidget {
   const PlayerDetailScreen({
-    super.key,
     required this.playerId,
+    super.key,
   });
   final String playerId;
 

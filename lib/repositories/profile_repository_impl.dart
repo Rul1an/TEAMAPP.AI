@@ -1,6 +1,8 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
 
+// Project imports:
 import '../core/result.dart';
 import '../data/supabase_profile_data_source.dart';
 import '../hive/hive_profile_cache.dart';

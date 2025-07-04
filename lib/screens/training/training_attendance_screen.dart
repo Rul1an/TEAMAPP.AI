@@ -1,8 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+// Project imports:
 import '../../models/performance_rating.dart';
 import '../../models/player.dart';
 import '../../models/training.dart';
@@ -12,8 +16,8 @@ import '../../widgets/common/rating_dialog.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
   const TrainingAttendanceScreen({
-    super.key,
     required this.trainingId,
+    super.key,
   });
   final String trainingId;
 
@@ -53,7 +57,7 @@ class _TrainingAttendanceScreenState
         error: (error, stack) => Center(child: Text('Fout: $error')),
         data: (trainings) {
           final training = trainings.firstWhere(
-            (t) => t.id.toString() == widget.trainingId,
+            (t) => t.id == widget.trainingId,
             orElse: () => Training()
               ..date = DateTime.now()
               ..focus = TrainingFocus.technical
@@ -185,14 +189,13 @@ class _TrainingAttendanceScreenState
       );
 
   Widget _buildPlayerAttendanceCard(Player player) {
-    final status =
-        _attendance[player.id.toString()] ?? AttendanceStatus.unknown;
+    final status = _attendance[player.id] ?? AttendanceStatus.unknown;
 
     return Card(
       child: InkWell(
         onTap: () {
           setState(() {
-            _attendance[player.id.toString()] = _getNextStatus(status);
+            _attendance[player.id] = _getNextStatus(status);
           });
         },
         borderRadius: BorderRadius.circular(12),
@@ -397,7 +400,7 @@ class _TrainingAttendanceScreenState
   void _showRatingOptions() {
     ref.read(playersProvider).whenData((players) {
       final presentPlayers = players.where((player) {
-        final status = _attendance[player.id.toString()];
+        final status = _attendance[player.id];
         return status == AttendanceStatus.present ||
             status == AttendanceStatus.late;
       }).toList();
@@ -512,7 +515,7 @@ class _TrainingAttendanceScreenState
         final status = entry.value;
 
         final player = players.firstWhere(
-          (p) => p.id.toString() == playerId,
+          (p) => p.id == playerId,
           orElse: Player.new,
         );
 

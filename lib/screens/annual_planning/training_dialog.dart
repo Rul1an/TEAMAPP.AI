@@ -1,12 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../models/annual_planning/week_schedule.dart';
 
 class TrainingDialog extends StatefulWidget {
   const TrainingDialog({
-    super.key,
-    this.existingTraining,
     required this.weekStartDate,
     required this.onSave,
+    super.key,
+    this.existingTraining,
   });
   final WeeklyTraining? existingTraining;
   final DateTime weekStartDate;

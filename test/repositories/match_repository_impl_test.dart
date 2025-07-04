@@ -1,11 +1,15 @@
+// Dart imports:
 import 'dart:io';
 
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:jo17_tactical_manager/models/match.dart';
-import 'package:jo17_tactical_manager/repositories/match_repository_impl.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/data/supabase_match_data_source.dart';
 import 'package:jo17_tactical_manager/hive/hive_match_cache.dart';
+import 'package:jo17_tactical_manager/models/match.dart';
+import 'package:jo17_tactical_manager/repositories/match_repository_impl.dart';
 
 class _Remote extends Mock implements SupabaseMatchDataSource {}
 
@@ -13,9 +17,11 @@ class _Cache extends Mock implements HiveMatchCache {}
 
 void main() {
   setUpAll(() {
-    registerFallbackValue(Match()
-      ..id = 'fallback'
-      ..date = DateTime.now());
+    registerFallbackValue(
+      Match()
+        ..id = 'fallback'
+        ..date = DateTime.now(),
+    );
   });
   late _Remote remote;
   late _Cache cache;

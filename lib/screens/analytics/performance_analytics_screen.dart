@@ -1,14 +1,21 @@
+// Dart imports:
 import 'dart:async';
-import 'package:fl_chart/fl_chart.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../../models/assessment.dart';
 import '../../models/player.dart';
 import '../../models/training_session/training_session.dart';
 import '../../providers/assessments_provider.dart' as assess_repo;
 import '../../providers/players_provider.dart' as player_data;
 import '../../providers/training_sessions_repo_provider.dart' as ts_repo;
+
 import '../players/assessment_detail_screen.dart'; // Import the new screen
 
 // Analytics Data Providers
@@ -205,7 +212,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     // ```
     // Find the player for that assessment
     final player = players.firstWhere(
-      (p) => p.id.toString() == latestAssessment.playerId,
+      (p) => p.id == latestAssessment.playerId,
       orElse: () => players.first, // Fallback, though should not happen
     );
 
@@ -447,8 +454,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                 // Create a list of players with their latest score
                 final scoredPlayers = players
                     .map((player) {
-                      final assessment =
-                          latestAssessments[player.id.toString()];
+                      final assessment = latestAssessments[player.id];
                       return MapEntry(
                         player,
                         assessment?.overallAverage ?? 0.0,
@@ -841,7 +847,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
   }
 
   Widget _buildPositionChart(Map<Position, List<Player>> positionGroups) {
-    const int touchedIndex = -1;
+    const touchedIndex = -1;
     final data = positionGroups.entries.map((entry) {
       final position = entry.key;
       final players = entry.value;

@@ -1,8 +1,14 @@
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/hive/hive_player_cache.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
 
@@ -17,7 +23,9 @@ void main() {
   const pathProviderChannel = MethodChannel('plugins.flutter.io/path_provider');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-          pathProviderChannel, (call) async => Directory.systemTemp.path);
+    pathProviderChannel,
+    (call) async => Directory.systemTemp.path,
+  );
 
   group('HivePlayerCache', () {
     setUp(() {
@@ -32,11 +40,11 @@ void main() {
           ..firstName = 'A'
           ..lastName = 'B'
           ..jerseyNumber = 10
-          ..birthDate = DateTime(2005, 1, 1)
+          ..birthDate = DateTime(2005)
           ..position = Position.forward
           ..preferredFoot = PreferredFoot.right
           ..height = 180
-          ..weight = 70
+          ..weight = 70,
       ];
       await cache.write(players);
       final read = await cache.read();
@@ -55,11 +63,13 @@ void main() {
           ..position = Position.midfielder
           ..preferredFoot = PreferredFoot.left
           ..height = 175
-          ..weight = 68
+          ..weight = 68,
       ];
       await cache.write(players);
       expect(
-          await cache.read(ttl: const Duration(milliseconds: 50)), isNotNull);
+        await cache.read(ttl: const Duration(milliseconds: 50)),
+        isNotNull,
+      );
       await Future<void>.delayed(const Duration(milliseconds: 60));
       expect(await cache.read(ttl: const Duration(milliseconds: 50)), isNull);
     });

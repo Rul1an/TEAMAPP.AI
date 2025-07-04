@@ -1,7 +1,9 @@
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+// Project imports:
 import 'package:jo17_tactical_manager/data/supabase_match_data_source.dart';
 import 'package:jo17_tactical_manager/hive/hive_match_cache.dart';
 import 'package:jo17_tactical_manager/models/match.dart';
@@ -36,7 +38,7 @@ void main() {
   group('Offline/online flow', () {
     test('falls back to cache when remote fails', () async {
       final remote = _MockRemote();
-      when(() => remote.fetchAll()).thenThrow(Exception('network'));
+      when(remote.fetchAll).thenThrow(Exception('network'));
       final cache = _FakeCache(sample);
 
       final repo = MatchRepositoryImpl(remote: remote, cache: cache);
@@ -52,7 +54,7 @@ void main() {
 
     test('returns remote when available and updates cache', () async {
       final remote = _MockRemote();
-      when(() => remote.fetchAll()).thenAnswer((_) async => sample);
+      when(remote.fetchAll).thenAnswer((_) async => sample);
       final cache = _FakeCache(null);
 
       final repo = MatchRepositoryImpl(remote: remote, cache: cache);
@@ -64,7 +66,7 @@ void main() {
 
       final list = await container.read(matchesProvider.future);
       expect(list, sample);
-      verify(() => remote.fetchAll()).called(1);
+      verify(remote.fetchAll).called(1);
     });
   });
 }

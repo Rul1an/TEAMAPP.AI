@@ -1,13 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
+import 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart';
+
 import 'package:jo17_tactical_manager/providers/matches_provider.dart'
     as matches_providers;
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as players_providers;
-import 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart';
 
 void main() {
   group('MatchDetailScreen', () {
@@ -17,7 +23,7 @@ void main() {
     setUp(() {
       match = Match()
         ..id = 'm1'
-        ..date = DateTime(2025, 7, 2, 19, 0)
+        ..date = DateTime(2025, 7, 2, 19)
         ..opponent = 'FC Example'
         ..location = Location.home
         ..competition = Competition.league

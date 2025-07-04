@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 
+// Project imports:
 import '../models/club/club.dart';
 import '../models/club/player_progress.dart';
 import '../models/club/staff_member.dart';
@@ -56,7 +58,7 @@ class ClubProvider extends ChangeNotifier {
   List<Player> getPlayersForTeam(String teamId) {
     final team = _teams.firstWhere((t) => t.id == teamId);
     return _allPlayers
-        .where((player) => team.playerIds.contains(player.id.toString()))
+        .where((player) => team.playerIds.contains(player.id))
         .toList();
   }
 

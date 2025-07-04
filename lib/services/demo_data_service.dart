@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:uuid/uuid.dart';
 
+// Project imports:
 import '../models/club/club.dart';
 import '../models/club/team.dart';
 import '../models/match.dart';
@@ -167,7 +169,7 @@ class DemoDataService {
     ];
     final players = <Player>[];
 
-    for (int i = 0; i < count; i++) {
+    for (var i = 0; i < count; i++) {
       final position = i == 0
           ? Position.goalkeeper
           : positions[(i - 1) % (positions.length - 1) + 1];
@@ -233,7 +235,7 @@ class DemoDataService {
     final now = DateTime.now();
 
     // Past matches
-    for (int i = 3; i >= 1; i--) {
+    for (var i = 3; i >= 1; i--) {
       final date = now.subtract(Duration(days: i * 7));
       final match = Match()
         ..id = _uuid.v4()
@@ -250,7 +252,7 @@ class DemoDataService {
     }
 
     // Upcoming matches
-    for (int i = 1; i <= 4; i++) {
+    for (var i = 1; i <= 4; i++) {
       final date = now.add(Duration(days: i * 7));
       final match = Match()
         ..id = _uuid.v4()
@@ -272,7 +274,7 @@ class DemoDataService {
     final now = DateTime.now();
 
     // Create trainings for the next 2 weeks
-    for (int week = 0; week < 2; week++) {
+    for (var week = 0; week < 2; week++) {
       // Tuesday training
       final tuesday =
           now.add(Duration(days: (2 - now.weekday + 7 * week) % 7 + 7 * week));

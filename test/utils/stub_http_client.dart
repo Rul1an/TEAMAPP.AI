@@ -1,7 +1,9 @@
 // ignore_for_file: sort_constructors_first, require_trailing_commas
 
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:http/http.dart' as http;
 
 /// Lightweight stub that short-circuits Supabase HTTP calls in tests.

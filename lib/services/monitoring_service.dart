@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:sentry_flutter/sentry_flutter.dart';
-import '../services/telemetry_service.dart';
+
+// Project imports:
+import 'telemetry_service.dart';
 
 /// Enhanced monitoring service for production-ready SaaS application
 /// Implements comprehensive error tracking, performance monitoring, and analytics
@@ -324,7 +329,7 @@ class MonitoringService {
     Map<String, dynamic>? metadata,
   }) async {
     final stopwatch = Stopwatch()..start();
-    bool success = true;
+    var success = true;
     String? errorMessage;
 
     try {

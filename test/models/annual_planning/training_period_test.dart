@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/annual_planning/training_period.dart';
 
 void main() {

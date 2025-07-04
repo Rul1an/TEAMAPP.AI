@@ -1,11 +1,14 @@
+// Dart imports:
 import 'dart:typed_data';
 
+// Package imports:
 import 'package:excel/excel.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+// Project imports:
 import '../models/match.dart';
 import '../models/player.dart';
 import '../models/training.dart';
@@ -263,8 +266,8 @@ class ExportService {
       ];
 
       for (final player in players) {
-        final playerId = player.id.toString();
-        String status = '-';
+        final playerId = player.id;
+        var status = '-';
         if (training.presentPlayerIds.contains(playerId)) {
           status = 'A';
         } else if (training.absentPlayerIds.contains(playerId)) {

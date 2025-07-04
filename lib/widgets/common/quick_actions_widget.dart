@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -94,7 +97,7 @@ class QuickActionsWidget extends ConsumerWidget {
     bool isTrainingDay,
     bool isMatchDay,
   ) {
-    final List<_QuickAction> actions = [];
+    final actions = <_QuickAction>[];
 
     // Priority actions based on context
     if (isMatchDay) {
@@ -202,8 +205,8 @@ class QuickActionsWidget extends ConsumerWidget {
     bool isTrainingDay,
     bool isMatchDay,
   ) {
-    String suggestion = '';
-    IconData suggestionIcon = Icons.lightbulb;
+    var suggestion = '';
+    var suggestionIcon = Icons.lightbulb;
     Color suggestionColor = Colors.blue;
 
     if (isMatchDay) {

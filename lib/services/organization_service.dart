@@ -1,6 +1,10 @@
 // TODO(author): Uncomment when implementing real Supabase queries
 // import 'package:supabase_flutter/supabase_flutter.dart';
+
+// Package imports:
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+// Project imports:
 import '../models/organization.dart';
 
 class OrganizationService {

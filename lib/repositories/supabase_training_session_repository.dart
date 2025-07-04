@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Project imports:
 import '../config/supabase_config.dart';
 import '../core/result.dart';
 import '../models/training_session/training_session.dart';

@@ -1,8 +1,11 @@
+// Dart imports:
 import 'dart:io' as io;
 
+// Package imports:
 import 'package:path/path.dart' as p;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Project imports:
 import '../core/result.dart';
 import '../models/profile.dart';
 

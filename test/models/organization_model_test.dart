@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/organization.dart';
 
 void main() {
@@ -15,9 +18,9 @@ void main() {
           'maxPlayers': 50,
         },
         subscriptionStatus: 'active',
-        subscriptionEndDate: DateTime.utc(2025, 1, 1),
-        createdAt: DateTime.utc(2024, 1, 1),
-        updatedAt: DateTime.utc(2024, 6, 1),
+        subscriptionEndDate: DateTime.utc(2025),
+        createdAt: DateTime.utc(2024),
+        updatedAt: DateTime.utc(2024, 6),
       );
 
       final json = original.toJson();

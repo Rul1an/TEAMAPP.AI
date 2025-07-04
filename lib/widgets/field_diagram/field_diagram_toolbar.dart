@@ -1,14 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../../models/training_session/field_diagram.dart';
 import '../../providers/field_diagram_provider.dart';
 
 class FieldDiagramToolbar extends ConsumerStatefulWidget {
   const FieldDiagramToolbar({
-    super.key,
     required this.selectedTool,
     required this.onToolSelected,
+    super.key,
   });
   final DiagramTool selectedTool;
   final void Function(DiagramTool) onToolSelected;
@@ -180,16 +184,12 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
     switch (selectedPlayerType) {
       case PlayerType.attacking:
         playerIconColor = Colors.blue;
-        break;
       case PlayerType.defending:
         playerIconColor = Colors.red;
-        break;
       case PlayerType.neutral:
         playerIconColor = Colors.yellow[700]!;
-        break;
       case PlayerType.goalkeeper:
         playerIconColor = Colors.green;
-        break;
     }
 
     return PopupMenuButton<PlayerType>(
@@ -311,35 +311,27 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
       case EquipmentType.cone:
         equipmentIcon = Icons.change_history;
         equipmentColor = Colors.orange;
-        break;
       case EquipmentType.ball:
         equipmentIcon = Icons.sports_soccer;
         equipmentColor = Colors.black;
-        break;
       case EquipmentType.smallGoal:
         equipmentIcon = Icons.sports_soccer;
         equipmentColor = Colors.blue;
-        break;
       case EquipmentType.largeGoal:
         equipmentIcon = Icons.crop_landscape;
         equipmentColor = Colors.blue;
-        break;
       case EquipmentType.ladder:
         equipmentIcon = Icons.grid_3x3;
         equipmentColor = Colors.amber;
-        break;
       case EquipmentType.hurdle:
         equipmentIcon = Icons.trending_up;
         equipmentColor = Colors.red;
-        break;
       case EquipmentType.pole:
         equipmentIcon = Icons.straight;
         equipmentColor = Colors.grey;
-        break;
       case EquipmentType.mannequin:
         equipmentIcon = Icons.person;
         equipmentColor = Colors.brown;
-        break;
     }
 
     return PopupMenuButton<EquipmentType>(

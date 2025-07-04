@@ -1,8 +1,11 @@
 // ignore_for_file: directives_ordering, avoid_implementing_value_types
 
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/services/auth_service.dart';
 
 class MockSupabaseClient extends Mock implements SupabaseClient {}

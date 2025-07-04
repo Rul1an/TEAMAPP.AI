@@ -1,8 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+// Project imports:
 import '../../models/match.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/matches_provider.dart';
@@ -362,19 +366,15 @@ class _MatchCard extends StatelessWidget {
       case Competition.league:
         text = 'COMPETITIE';
         color = Colors.purple;
-        break;
       case Competition.cup:
         text = 'BEKER';
         color = Colors.orange;
-        break;
       case Competition.friendly:
         text = 'VRIENDSCHAPPELIJK';
         color = Colors.grey;
-        break;
       case Competition.tournament:
         text = 'TOERNOOI';
         color = Colors.indigo;
-        break;
     }
 
     return Container(

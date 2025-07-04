@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../../models/training_session/field_diagram.dart';
 import '../../providers/field_diagram_provider.dart';
 import '../../widgets/field_diagram/field_canvas.dart';

@@ -1,7 +1,12 @@
 // ignore_for_file: use_setters_to_change_properties
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+// Project imports:
 import '../utils/app_logger.dart';
 import 'environment.dart';
 
@@ -48,25 +53,20 @@ class SupabaseConfig {
   /// Setup authentication state listener
   static void _setupAuthListener() {
     _client?.auth.onAuthStateChange.listen((data) {
-      final AuthChangeEvent event = data.event;
-      final Session? session = data.session;
+      final event = data.event;
+      final session = data.session;
 
       switch (event) {
         case AuthChangeEvent.signedIn:
           AppLogger.i('✅ User signed in: ${session?.user.email}');
-          break;
         case AuthChangeEvent.signedOut:
           AppLogger.i('👋 User signed out');
-          break;
         case AuthChangeEvent.tokenRefreshed:
           AppLogger.i('🔄 Token refreshed');
-          break;
         case AuthChangeEvent.userUpdated:
           AppLogger.i('👤 User updated');
-          break;
         case AuthChangeEvent.passwordRecovery:
           AppLogger.i('🔐 Password recovery initiated');
-          break;
         default:
           AppLogger.i('🔄 Auth state changed: $event');
       }

@@ -1,5 +1,8 @@
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/training_session/field_diagram.dart';
 import 'package:jo17_tactical_manager/providers/field_diagram_provider.dart';
 
@@ -31,7 +34,7 @@ void main() {
 
     test('Change field type adds to history and supports undo/redo', () {
       notifier.changeFieldType(FieldType.fullField);
-      FieldDiagramEditorState state = container.read(fieldDiagramProvider);
+      var state = container.read(fieldDiagramProvider);
       expect(state.diagram.fieldType, FieldType.fullField);
       expect(state.canUndo, isTrue);
       notifier.undo();

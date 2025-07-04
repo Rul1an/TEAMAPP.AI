@@ -1,14 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:intl/intl.dart';
 
 class UpcomingEventCard extends StatelessWidget {
   const UpcomingEventCard({
-    super.key,
     required this.title,
     required this.subtitle,
     required this.date,
     required this.icon,
     required this.color,
+    super.key,
     this.onTap,
   });
   final String title;

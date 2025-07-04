@@ -1,5 +1,6 @@
 // Environment configuration for multi-tenant SaaS deployment
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 
 /// 🌍 Environment Configuration
@@ -25,7 +26,43 @@ class EnvConfig {
   final String stripePublishableKey;
 }
 
-class Environment {
+enum Environment {
+  /// Development Environment
+  development._(
+    name: 'Development',
+    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
+    supabaseAnonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+    appName: 'JO17 Tactical Manager',
+    enableDebugFeatures: true,
+    enablePerformanceLogging: true,
+    logLevel: 'debug',
+  ),
+
+  /// Test Environment
+  test._(
+    name: 'Test',
+    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
+    supabaseAnonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+    appName: 'JO17 Tactical Manager (Test)',
+    enableDebugFeatures: true,
+    enablePerformanceLogging: false,
+    logLevel: 'info',
+  ),
+
+  /// Production Environment
+  production._(
+    name: 'Production',
+    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
+    supabaseAnonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+    appName: 'JO17 Tactical Manager',
+    enableDebugFeatures: false,
+    enablePerformanceLogging: false,
+    logLevel: 'error',
+  );
+
   const Environment._({
     required this.name,
     required this.supabaseUrl,
@@ -42,42 +79,6 @@ class Environment {
   final bool enableDebugFeatures;
   final bool enablePerformanceLogging;
   final String logLevel;
-
-  /// Development Environment
-  static const Environment development = Environment._(
-    name: 'Development',
-    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
-    supabaseAnonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
-    appName: 'JO17 Tactical Manager',
-    enableDebugFeatures: true,
-    enablePerformanceLogging: true,
-    logLevel: 'debug',
-  );
-
-  /// Test Environment
-  static const Environment test = Environment._(
-    name: 'Test',
-    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
-    supabaseAnonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
-    appName: 'JO17 Tactical Manager (Test)',
-    enableDebugFeatures: true,
-    enablePerformanceLogging: false,
-    logLevel: 'info',
-  );
-
-  /// Production Environment
-  static const Environment production = Environment._(
-    name: 'Production',
-    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
-    supabaseAnonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
-    appName: 'JO17 Tactical Manager',
-    enableDebugFeatures: false,
-    enablePerformanceLogging: false,
-    logLevel: 'error',
-  );
 
   /// Get current environment based on build mode
   static Environment get current {

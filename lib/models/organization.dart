@@ -5,6 +5,8 @@ class Organization {
     required this.id,
     required this.name,
     required this.slug,
+    required this.createdAt,
+    required this.updatedAt,
     this.tier = OrganizationTier.basic,
     this.logoUrl,
     this.primaryColor = '#1976D2',
@@ -12,8 +14,6 @@ class Organization {
     Map<String, dynamic>? settings,
     this.subscriptionStatus = 'trial',
     this.subscriptionEndDate,
-    required this.createdAt,
-    required this.updatedAt,
   }) : settings = settings ?? {};
 
   factory Organization.fromJson(Map<String, dynamic> json) => Organization(

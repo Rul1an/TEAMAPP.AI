@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../models/annual_planning/morphocycle.dart';
 import '../models/annual_planning/periodization_plan.dart';
 import '../models/annual_planning/training_period.dart';
@@ -7,10 +9,10 @@ import '../models/annual_planning/week_schedule.dart';
 
 class AnnualPlanningState {
   AnnualPlanningState({
-    this.weekSchedules = const [],
-    this.selectedWeek = 1,
     required this.seasonStartDate,
     required this.seasonEndDate,
+    this.weekSchedules = const [],
+    this.selectedWeek = 1,
     this.isLoading = false,
     this.error,
     this.selectedPeriodizationPlan,
@@ -168,7 +170,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     final intensityProgression = params['intensityProgression'] as List<int>;
     final focusAreas = params['focusAreas'] as List<String>;
 
-    DateTime currentDate = state.seasonStartDate;
+    var currentDate = state.seasonStartDate;
     final weeksPerPeriod =
         template.totalDurationWeeks ~/ template.numberOfPeriods;
 
@@ -212,9 +214,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     ///   ..startDate = currentDate
     ///   ..durationWeeks = weeksPerPeriod;
     /// ```
-    for (int i = 0; i < template.numberOfPeriods; i++) {
+    for (var i = 0; i < template.numberOfPeriods; i++) {
       final period = TrainingPeriod()
-        ..periodizationPlanId = template.id.toString()
+        ..periodizationPlanId = template.id
         ..orderIndex = i
         ..startDate = currentDate
         ..durationWeeks = weeksPerPeriod
@@ -237,48 +239,42 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
   ) {
     final morphocycles = <Morphocycle>[];
 
-    for (int week = 1; week <= state.totalWeeks; week++) {
+    for (var week = 1; week <= state.totalWeeks; week++) {
       // Find the period for this week
       final period = _findPeriodForWeek(week);
 
       if (template.modelType == PeriodizationModel.knvbYouth) {
         final morphocycle = Morphocycle.knvbStandard(
           weekNumber: week,
-          periodId: period?.id.toString() ?? '',
-          seasonPlanId: template.id.toString(),
+          periodId: period?.id ?? '',
+          seasonPlanId: template.id,
           period: period,
         );
         morphocycles.add(morphocycle);
       } else {
         // Create tactical periodization morphocycle with game model focus
-        String gameModelFocus = 'Positional Play';
+        var gameModelFocus = 'Positional Play';
         if (period != null) {
           switch (period.type) {
             case PeriodType.preparation:
               gameModelFocus = 'Ball Possession';
-              break;
             case PeriodType.competitionEarly:
               gameModelFocus = 'Defensive Organization';
-              break;
             case PeriodType.competitionPeak:
               gameModelFocus = 'Match Preparation';
-              break;
             case PeriodType.competitionMaintenance:
               gameModelFocus = 'Performance Maintenance';
-              break;
             case PeriodType.transition:
               gameModelFocus = 'Creative Play';
-              break;
             case PeriodType.tournamentPrep:
               gameModelFocus = 'Tournament Tactics';
-              break;
           }
         }
 
         final morphocycle = Morphocycle.tacticalPeriodization(
           weekNumber: week,
-          periodId: period?.id.toString() ?? '',
-          seasonPlanId: template.id.toString(),
+          periodId: period?.id ?? '',
+          seasonPlanId: template.id,
           gameModelFocus: gameModelFocus,
           period: period,
         );
@@ -338,7 +334,6 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
               'Fun activities',
             ];
         }
-        break;
 
       case PeriodizationModel.linear:
         final periodNames = [
@@ -350,7 +345,6 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
         period
           ..name = periodNames[index % periodNames.length]
           ..type = PeriodType.values[index % PeriodType.values.length];
-        break;
 
       case PeriodizationModel.block:
         final blockNames = [
@@ -362,21 +356,18 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
         period
           ..name = blockNames[index % blockNames.length]
           ..type = PeriodType.values[index % PeriodType.values.length];
-        break;
 
       case PeriodizationModel.conjugate:
         period
           ..name = 'Week ${index + 1}'
           ..description = 'Gelijktijdige ontwikkeling van alle aspecten'
           ..type = PeriodType.competitionEarly;
-        break;
 
       case PeriodizationModel.custom:
         period
           ..name = 'Custom Periode ${index + 1}'
           ..description = 'Aangepaste periodisering'
           ..type = PeriodType.values[index % PeriodType.values.length];
-        break;
     }
 
     // Set focus areas
@@ -393,7 +384,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     final startDate = state.seasonStartDate;
     final totalWeeks = state.totalWeeks;
 
-    for (int week = 1; week <= totalWeeks; week++) {
+    for (var week = 1; week <= totalWeeks; week++) {
       final weekStart = startDate.add(Duration(days: (week - 1) * 7));
       final currentPeriod = _findPeriodForWeek(week);
       schedules
@@ -642,7 +633,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     final startDate = state.seasonStartDate;
     final totalWeeks = state.totalWeeks;
 
-    for (int week = 1; week <= totalWeeks; week++) {
+    for (var week = 1; week <= totalWeeks; week++) {
       final weekStart = startDate.add(Duration(days: (week - 1) * 7));
       schedules.add(_createWeekSchedule(week, weekStart));
     }

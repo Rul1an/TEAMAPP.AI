@@ -1,8 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+// Project imports:
 import '../../models/assessment.dart';
 import '../../models/player.dart';
 import '../../providers/assessments_provider.dart';
@@ -11,8 +15,8 @@ import '../../widgets/common/interactive_star_rating.dart';
 
 class AssessmentScreen extends ConsumerStatefulWidget {
   const AssessmentScreen({
-    super.key,
     required this.playerId,
+    super.key,
     this.assessmentId,
   });
   final String playerId;
@@ -416,19 +420,14 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
       switch (skill) {
         case 'Balbeheersing':
           _assessment!.ballControl = rating;
-          break;
         case 'Passen':
           _assessment!.passing = rating;
-          break;
         case 'Schieten':
           _assessment!.shooting = rating;
-          break;
         case 'Dribbelen':
           _assessment!.dribbling = rating;
-          break;
         case 'Verdedigen':
           _assessment!.defending = rating;
-          break;
       }
     });
   }
@@ -438,19 +437,14 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
       switch (skill) {
         case 'Positiespel':
           _assessment!.positioning = rating;
-          break;
         case 'Spellezing':
           _assessment!.gameReading = rating;
-          break;
         case 'Besluitvorming':
           _assessment!.decisionMaking = rating;
-          break;
         case 'Communicatie':
           _assessment!.communication = rating;
-          break;
         case 'Teamwork':
           _assessment!.teamwork = rating;
-          break;
       }
     });
   }
@@ -460,19 +454,14 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
       switch (skill) {
         case 'Snelheid':
           _assessment!.speed = rating;
-          break;
         case 'Conditie':
           _assessment!.stamina = rating;
-          break;
         case 'Kracht':
           _assessment!.strength = rating;
-          break;
         case 'Beweeglijkheid':
           _assessment!.agility = rating;
-          break;
         case 'Coördinatie':
           _assessment!.coordination = rating;
-          break;
       }
     });
   }
@@ -482,19 +471,14 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
       switch (skill) {
         case 'Zelfvertrouwen':
           _assessment!.confidence = rating;
-          break;
         case 'Concentratie':
           _assessment!.concentration = rating;
-          break;
         case 'Leiderschap':
           _assessment!.leadership = rating;
-          break;
         case 'Coachbaarheid':
           _assessment!.coachability = rating;
-          break;
         case 'Motivatie':
           _assessment!.motivation = rating;
-          break;
       }
     });
   }

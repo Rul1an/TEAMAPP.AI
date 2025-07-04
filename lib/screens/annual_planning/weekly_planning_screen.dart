@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../../models/annual_planning/morphocycle.dart';
 import '../../models/annual_planning/periodization_plan.dart';
 import '../../models/annual_planning/week_schedule.dart';
@@ -697,10 +701,10 @@ class _TableCell extends StatelessWidget {
 
 class _MorphocycleLoadCell extends StatelessWidget {
   const _MorphocycleLoadCell({
-    this.morphocycle,
-    this.training,
     required this.showLoad,
     required this.width,
+    this.morphocycle,
+    this.training,
   });
   final Morphocycle? morphocycle;
   final WeeklyTraining? training;

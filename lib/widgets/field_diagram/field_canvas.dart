@@ -1,15 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import '../../models/training_session/field_diagram.dart';
 import '../../providers/field_diagram_provider.dart';
 import 'field_painter.dart';
 
 class FieldCanvas extends ConsumerStatefulWidget {
   const FieldCanvas({
-    super.key,
     required this.diagram,
     required this.currentTool,
-    this.selectedElementId,
     required this.selectedPlayerType,
     required this.selectedEquipmentType,
     required this.selectedLineType,
@@ -19,6 +22,8 @@ class FieldCanvas extends ConsumerStatefulWidget {
     required this.onElementMoved,
     required this.onElementAdded,
     required this.onElementRemoved,
+    super.key,
+    this.selectedElementId,
   });
   final FieldDiagram diagram;
   final DiagramTool currentTool;
@@ -198,22 +203,17 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     switch (widget.currentTool) {
       case DiagramTool.select:
         _handleSelect(fieldPosition);
-        break;
       case DiagramTool.player:
         _addPlayer(fieldPosition);
-        break;
       case DiagramTool.equipment:
         _addEquipment(fieldPosition);
-        break;
       case DiagramTool.line:
         // Line drawing starts with pan gesture
         break;
       case DiagramTool.text:
         _addText(fieldPosition);
-        break;
       case DiagramTool.delete:
         _deleteElement(fieldPosition);
-        break;
       default:
         break;
     }
@@ -276,16 +276,12 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     switch (widget.selectedPlayerType) {
       case PlayerType.attacking:
         playerColor = '#2196F3'; // Blue
-        break;
       case PlayerType.defending:
         playerColor = '#F44336'; // Red
-        break;
       case PlayerType.neutral:
         playerColor = '#FFC107'; // Yellow
-        break;
       case PlayerType.goalkeeper:
         playerColor = '#4CAF50'; // Green
-        break;
     }
 
     final newPlayer = PlayerMarker(
@@ -373,7 +369,7 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
 
   Position _screenToFieldPosition(Offset screenPosition) {
     // Get the render box to calculate the actual canvas size
-    final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
+    final renderBox = context.findRenderObject() as RenderBox?;
     if (renderBox == null) return const Position(0, 0);
 
     // Calculate field rect similar to FieldPainter
@@ -398,17 +394,13 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     switch (widget.diagram.fieldType) {
       case FieldType.fullField:
         fieldAspectRatio = 105.0 / 68.0; // FIFA standard
-        break;
       case FieldType.halfField:
         fieldAspectRatio = 52.5 / 68.0;
-        break;
       case FieldType.penaltyArea:
         fieldAspectRatio = 16.5 / 40.3;
-        break;
       default:
         fieldAspectRatio =
             widget.diagram.fieldSize.width / widget.diagram.fieldSize.height;
-        break;
     }
 
     // Fit field to canvas with padding (same as FieldPainter)
@@ -416,7 +408,8 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     final availableWidth = canvasSize.width - (padding * 2);
     final availableHeight = canvasSize.height - (padding * 2);
 
-    double fieldWidth, fieldHeight;
+    double fieldWidth;
+    double fieldHeight;
     if (availableWidth / availableHeight > fieldAspectRatio) {
       fieldHeight = availableHeight;
       fieldWidth = fieldHeight * fieldAspectRatio;
@@ -451,7 +444,7 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _showTextInputDialog(void Function(String) onTextEntered) {
-    String inputText = '';
+    var inputText = '';
 
     showDialog<void>(
       context: context,

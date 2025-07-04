@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:uuid/uuid.dart';
 
 enum RatingType { match, training }
@@ -6,13 +7,14 @@ enum PerformanceTrend { improving, stable, declining }
 
 class PerformanceRating {
   PerformanceRating({
-    String? id,
     required this.playerId,
-    this.matchId,
-    this.trainingId,
     required this.date,
     required this.type,
     required this.overallRating,
+    required this.coachId,
+    String? id,
+    this.matchId,
+    this.trainingId,
     this.attackingRating,
     this.defendingRating,
     this.tacticalRating,
@@ -21,7 +23,6 @@ class PerformanceRating {
     this.coachabilityRating,
     this.teamworkRating,
     this.notes,
-    required this.coachId,
     DateTime? createdAt,
   })  : id = id ?? const Uuid().v4(),
         createdAt = createdAt ?? DateTime.now(),

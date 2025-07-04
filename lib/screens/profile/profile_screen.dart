@@ -1,9 +1,14 @@
+// Dart imports:
 import 'dart:io' as io;
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+// Project imports:
 import '../../models/profile.dart';
 import '../../providers/profile_provider.dart';
 

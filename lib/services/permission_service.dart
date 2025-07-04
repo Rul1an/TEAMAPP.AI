@@ -1,3 +1,4 @@
+// Project imports:
 import '../models/organization.dart';
 
 /// Permission service for role-based access control

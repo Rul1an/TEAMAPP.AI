@@ -1,23 +1,27 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../data/supabase_club_data_source.dart';
-import '../data/supabase_organization_data_source.dart';
 import '../data/supabase_feature_data_source.dart';
+import '../data/supabase_organization_data_source.dart';
 import '../data/supabase_permission_data_source.dart';
 import '../hive/hive_club_cache.dart';
-import '../hive/hive_organization_cache.dart';
 import '../hive/hive_feature_cache.dart';
+import '../hive/hive_organization_cache.dart';
 import '../hive/hive_permission_cache.dart';
 import '../providers/club_provider.dart';
 import '../repositories/club_repository.dart';
 import '../repositories/club_repository_impl.dart';
+import '../repositories/feature_repository.dart';
+import '../repositories/feature_repository_impl.dart';
 import '../repositories/organization_repository.dart';
 import '../repositories/organization_repository_impl.dart';
 import '../repositories/permission_repository.dart';
 import '../repositories/permission_repository_impl.dart';
-import '../repositories/feature_repository.dart';
-import '../repositories/feature_repository_impl.dart';
 import '../services/feature_service.dart';
 
 export '../providers/auth_provider.dart';
@@ -61,7 +65,8 @@ final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>(
 // Organization repository deps
 final supabaseOrganizationDataSourceProvider =
     Provider<SupabaseOrganizationDataSource>(
-        (ref) => SupabaseOrganizationDataSource());
+  (ref) => SupabaseOrganizationDataSource(),
+);
 
 final hiveOrganizationCacheProvider =
     Provider<HiveOrganizationCache>((ref) => HiveOrganizationCache());
@@ -136,8 +141,8 @@ class CalendarEvent {
     required this.id,
     required this.title,
     required this.date,
-    this.description,
     required this.type,
+    this.description,
   });
   final String id;
   final String title;

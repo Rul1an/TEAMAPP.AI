@@ -1,22 +1,28 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:test_utils/surface_utils.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
+import 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart';
+
 import 'package:jo17_tactical_manager/providers/matches_provider.dart'
     as matches_providers;
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as players_providers;
-import 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart';
-import 'package:test_utils/surface_utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Integration – Match flow', () {
     setUpAll(() async {
-      await initializeDateFormatting('nl_NL', null);
+      await initializeDateFormatting('nl_NL');
     });
 
     testWidgets(
@@ -24,7 +30,7 @@ void main() {
         (tester) async {
       final match = Match()
         ..id = 'm77'
-        ..date = DateTime(2025, 9, 10, 20, 0)
+        ..date = DateTime(2025, 9, 10, 20)
         ..opponent = 'FC Test'
         ..location = Location.home
         ..competition = Competition.league

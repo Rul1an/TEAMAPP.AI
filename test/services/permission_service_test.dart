@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/organization.dart';
 import 'package:jo17_tactical_manager/services/permission_service.dart';
 

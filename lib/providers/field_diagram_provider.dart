@@ -1,12 +1,17 @@
+// Dart imports:
 import 'dart:ui' as ui;
 
-import 'package:file_saver/file_saver.dart';
+// Flutter imports:
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+// Project imports:
 import '../models/training_session/field_diagram.dart';
 import '../widgets/field_diagram/field_painter.dart';
 
@@ -295,7 +300,7 @@ class FieldDiagramEditorNotifier
 
   // Move element to new position
   void moveElement(String elementId, Position newPosition) {
-    FieldDiagram newDiagram = state.diagram;
+    var newDiagram = state.diagram;
 
     // Find and update the element
     final playerIndex =
@@ -350,13 +355,10 @@ class FieldDiagramEditorNotifier
     switch (fieldType) {
       case FieldType.fullField:
         newDiagram = FieldDiagram.fullField(id: state.diagram.id);
-        break;
       case FieldType.halfField:
         newDiagram = FieldDiagram.halfField(id: state.diagram.id);
-        break;
       case FieldType.penaltyArea:
         newDiagram = FieldDiagram.penaltyArea(id: state.diagram.id);
-        break;
       default:
         return;
     }
@@ -485,8 +487,7 @@ class FieldDiagramEditorNotifier
       // Use the canvas to generate a high-resolution PNG
       final recorder = ui.PictureRecorder();
       final canvas = Canvas(recorder);
-      final size =
-          Size(width.toDouble(), (width * 0.75).toDouble()); // 4:3 aspect ratio
+      final size = Size(width.toDouble(), width * 0.75); // 4:3 aspect ratio
 
       // Create a field painter and paint to the canvas in one cascaded expression
       FieldPainter(
@@ -580,10 +581,8 @@ class FieldDiagramEditorNotifier
     switch (format.toLowerCase()) {
       case 'png':
         await exportDiagramToPNG(diagram);
-        break;
       case 'pdf':
         await exportDiagramToPDF(diagram);
-        break;
       default:
         throw Exception('Unsupported export format: $format');
     }
@@ -630,7 +629,7 @@ class FieldDiagramEditorNotifier
     final players = <PlayerMarker>[];
 
     // Add players based on formation template
-    for (int i = 0; i < template.positions.length; i++) {
+    for (var i = 0; i < template.positions.length; i++) {
       final position = template.positions[i];
       players.add(
         PlayerMarker(

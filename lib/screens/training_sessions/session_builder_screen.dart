@@ -1,13 +1,18 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:io' as io;
 
+// Flutter imports:
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
+// Project imports:
 import '../../models/training_session/session_phase.dart';
 import '../../models/training_session/training_exercise.dart';
 import '../../models/training_session/training_session.dart';
@@ -17,7 +22,7 @@ import '../../repositories/player_repository.dart';
 import '../../repositories/training_session_repository.dart';
 import '../../services/pdf_service.dart';
 import '../../widgets/training/session_wizard_stepper.dart';
-import '../training_sessions/exercise_library_screen.dart';
+import 'exercise_library_screen.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -840,9 +845,9 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
 
   void _recalculatePhaseTimes() {
     final baseTime = DateTime(2024, 1, 1, 18); // 18:00 base time
-    DateTime currentTime = baseTime;
+    var currentTime = baseTime;
 
-    for (int i = 0; i < sessionPhases.length; i++) {
+    for (var i = 0; i < sessionPhases.length; i++) {
       sessionPhases[i].startTime = currentTime;
       sessionPhases[i].endTime =
           currentTime.add(Duration(minutes: sessionPhases[i].durationMinutes));
@@ -1198,7 +1203,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         TextEditingController(text: phase.description);
     final durationController =
         TextEditingController(text: phase.durationMinutes.toString());
-    PhaseType selectedType = phase.type;
+    var selectedType = phase.type;
 
     showDialog<void>(
       context: context,
@@ -1318,7 +1323,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     final nameController = TextEditingController();
     final descriptionController = TextEditingController();
     final durationController = TextEditingController(text: '15');
-    PhaseType selectedType = PhaseType.technical;
+    var selectedType = PhaseType.technical;
 
     showDialog<void>(
       context: context,

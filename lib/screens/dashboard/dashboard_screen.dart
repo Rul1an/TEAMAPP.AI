@@ -1,9 +1,13 @@
-import 'package:fl_chart/fl_chart.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+// Project imports:
 import '../../models/annual_planning/season_plan.dart';
 import '../../models/match.dart';
 import '../../models/training_session/training_session.dart';
@@ -118,7 +122,7 @@ class DashboardScreen extends ConsumerWidget {
     String? userRole,
     String? tier,
   ) {
-    final List<Widget> actions = [];
+    final actions = <Widget>[];
 
     // Only coaches and admins can create training sessions
     if (PermissionService.canManageTraining(userRole)) {
@@ -154,7 +158,7 @@ class DashboardScreen extends ConsumerWidget {
     AsyncValue<List<Match>> upcomingMatchesAsync,
     AsyncValue<List<TrainingSession>> trainingSessionsAsync,
   ) {
-    final List<Widget> content = [];
+    final content = <Widget>[];
 
     if (PermissionService.isPlayer(userRole)) {
       // Player-specific content
@@ -428,7 +432,7 @@ class DashboardScreen extends ConsumerWidget {
 
     final currentPhase = season.getCurrentPhase();
     final progress = season.seasonProgressByDate;
-    String welcomeMessage = 'Welkom terug!';
+    var welcomeMessage = 'Welkom terug!';
 
     if (PermissionService.isPlayer(userRole)) {
       welcomeMessage = 'Hallo speler!';

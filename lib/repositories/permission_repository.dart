@@ -1,3 +1,4 @@
+// Project imports:
 import '../core/result.dart';
 
 abstract interface class PermissionRepository {

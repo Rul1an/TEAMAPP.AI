@@ -1,15 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+
+// Project imports:
 import '../../models/player.dart';
 import '../../providers/players_provider.dart';
 
 class EditPlayerScreen extends ConsumerStatefulWidget {
   const EditPlayerScreen({
-    super.key,
     required this.playerId,
+    super.key,
   });
   final String playerId;
 
@@ -57,7 +62,7 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
   void _loadPlayer() {
     final players = ref.read(playersNotifierProvider).value ?? [];
     _player = players.firstWhere(
-      (p) => p.id.toString() == widget.playerId,
+      (p) => p.id == widget.playerId,
       orElse: Player.new,
     );
 
@@ -399,7 +404,7 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    final picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate ??
           DateTime.now().subtract(const Duration(days: 365 * 16)),

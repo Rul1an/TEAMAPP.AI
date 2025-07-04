@@ -1,3 +1,4 @@
+// Dart imports:
 import 'dart:convert';
 
 // part 'training_period.g.dart'; // Disabled for web compatibility
@@ -498,17 +499,11 @@ class ContentDistribution {
         mental: (json['mental'] as num?)?.toDouble() ?? 25,
       );
 
-  factory ContentDistribution.balanced() => ContentDistribution(
-        technical: 25,
-        tactical: 25,
-        physical: 25,
-        mental: 25,
-      );
+  factory ContentDistribution.balanced() => ContentDistribution();
 
   factory ContentDistribution.tacticalFocus() => ContentDistribution(
         technical: 20,
         tactical: 40,
-        physical: 25,
         mental: 15,
       );
 

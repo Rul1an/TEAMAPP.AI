@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/club/club.dart';
 
 void main() {
@@ -8,10 +11,10 @@ void main() {
         id: 'c1',
         name: 'SV Test',
         shortName: 'SVT',
-        foundedDate: DateTime.utc(1990, 1, 1),
+        foundedDate: DateTime.utc(1990),
         settings: const ClubSettings(),
         status: ClubStatus.active,
-        createdAt: DateTime.utc(2024, 1, 1),
+        createdAt: DateTime.utc(2024),
       );
 
       final json = club.toJson();

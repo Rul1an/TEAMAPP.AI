@@ -1,0 +1,22 @@
+# Dart Code Metrics configuration
+
+anti-patterns:
+  - long-method
+  - long-parameter-list
+  - excessive-conditional-complexity
+  - excessive-cyclomatic-complexity
+
+rules:
+  style:
+    - no-equal-then-else
+    - prefer-trailing-comma
+
+metrics:
+  cyclomatic-complexity: 20
+  number-of-parameters: 4
+  maximum-nesting-level: 5
+  weight-of-class: 0.33
+
+exclude-files:
+  - test/**
+  - build/**

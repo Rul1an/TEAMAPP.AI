@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../../models/annual_planning/season_plan.dart';
 import '../../providers/annual_planning_data_provider.dart';
 import 'load_monitoring_screen.dart';
@@ -407,7 +411,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                       '• Start met lange-termijn doelen voor het seizoen\n'
                       '• Plan vakantieperioden en rustmomenten\n'
                       '• Balanceer techniek, tactiek en fysieke ontwikkeling\n'
-                      '• Houd rekening met wedstrijdschema\'s en toernooien',
+                      "• Houd rekening met wedstrijdschema's en toernooien",
                     ),
                   ],
                 ),

@@ -1,4 +1,6 @@
 // This file is auto-generated as part of logger-abstraction task.
+
+// Package imports:
 import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 

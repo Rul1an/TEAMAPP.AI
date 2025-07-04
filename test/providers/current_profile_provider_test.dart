@@ -1,9 +1,14 @@
 // ignore_for_file: cascade_invocations
+
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
 
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/core/result.dart';
 import 'package:jo17_tactical_manager/models/profile.dart';
 import 'package:jo17_tactical_manager/providers/profile_provider.dart';

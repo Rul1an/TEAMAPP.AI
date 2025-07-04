@@ -1,26 +1,32 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:jo17_tactical_manager/core/result.dart';
-import 'package:jo17_tactical_manager/models/player.dart';
-import 'package:jo17_tactical_manager/providers/auth_provider.dart';
-import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
-import 'package:jo17_tactical_manager/providers/players_provider.dart'
-    as app_players_provider;
-import 'package:jo17_tactical_manager/repositories/player_repository.dart';
-import 'package:jo17_tactical_manager/screens/players/players_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:test_utils/fake_auth_service.dart';
 import 'package:test_utils/surface_utils.dart';
+
+// Project imports:
+import 'package:jo17_tactical_manager/core/result.dart';
+import 'package:jo17_tactical_manager/models/player.dart';
+import 'package:jo17_tactical_manager/providers/auth_provider.dart';
+import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
+import 'package:jo17_tactical_manager/repositories/player_repository.dart';
+import 'package:jo17_tactical_manager/screens/players/players_screen.dart';
+
+import 'package:jo17_tactical_manager/providers/players_provider.dart'
+    as app_players_provider;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Integration: Login → Dashboard → Player list (demo mode)', () {
     setUpAll(() async {
-      await initializeDateFormatting('nl_NL', null);
+      await initializeDateFormatting('nl_NL');
       SharedPreferences.setMockInitialValues({});
       // Suppress overflow errors that are not critical for integration flow
       FlutterError.onError = (details) {

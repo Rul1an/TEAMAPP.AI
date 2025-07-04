@@ -40,7 +40,7 @@ jobs:
       - name: 🔍 Static Analysis
         working-directory: .
         run: |
-          flutter analyze --no-fatal-infos
+          flutter analyze --fatal-infos
           echo "✅ Static analysis passed"
 
       - name: 🎨 Format Check

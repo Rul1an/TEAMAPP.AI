@@ -2,7 +2,7 @@
 # Updated for Flutter 3.32+ and Dart 3.8+ compatibility
 # Removes deprecated rules and fixes conflicts
 
-include: package:flutter_lints/flutter.yaml
+include: package:very_good_analysis/analysis_options.5.0.0.yaml
 
 analyzer:
   exclude:
@@ -33,8 +33,21 @@ analyzer:
     # Demote these to warnings for gradual migration
     todo: warning
     fixme: warning
-    lines_longer_than_80_chars: warning
     always_specify_types: warning
+    public_member_api_docs: ignore
+    always_use_package_imports: ignore
+    sort_pub_dependencies: ignore
+    lines_longer_than_80_chars: ignore
+    cascade_invocations: ignore
+    directives_ordering: ignore
+    avoid_dynamic_calls: ignore
+    prefer_int_literals: ignore
+    no_default_cases: ignore
+
+    avoid_final_parameters: ignore
+    comment_references: ignore
+    avoid_equals_and_hash_code_on_mutable_classes: ignore
+    one_member_abstracts: ignore
 
 linter:
   rules:
@@ -87,11 +100,8 @@ linter:
     - await_only_futures
     - camel_case_extensions
     - camel_case_types
-    - cascade_invocations
-    - cast_nullable_to_non_nullable
     - constant_identifier_names
     - curly_braces_in_flow_control_structures
-    - directives_ordering
     - empty_catches
     - empty_constructor_bodies
     - exhaustive_cases
@@ -215,3 +225,10 @@ linter:
     # - avoid_annotating_with_dynamic  # Too strict for migration
     # - avoid_catches_without_on_clauses  # Sometimes needed for broad catches
     # - lines_longer_than_80_chars  # Too strict for existing code, demoted to warning
+
+    # lines_longer_than_80_chars: ignore  # Temporarily disabled via analyzer.errors
+    # cascade_invocations: ignore
+    # directives_ordering: ignore
+    # avoid_dynamic_calls: ignore
+    # prefer_int_literals: ignore
+    # no_default_cases: ignore

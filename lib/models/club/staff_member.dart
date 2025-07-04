@@ -1,4 +1,6 @@
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'staff_member.freezed.dart';
 part 'staff_member.g.dart';
 
@@ -12,10 +14,15 @@ class StaffMember with _$StaffMember {
     // Personal Information
     required String firstName,
     required String lastName,
+    // Contact Information
+    required String email, // Professional Information
+    required StaffRole primaryRole, // Permissions
+    required StaffPermissions permissions, // Availability
+    required StaffAvailability availability, // Status
+    required StaffStatus status, // Metadata
+    required DateTime createdAt,
     String? middleName,
     String? nickname,
-    // Contact Information
-    required String email,
     String? phone,
     String? emergencyContact,
     String? emergencyPhone,
@@ -24,8 +31,6 @@ class StaffMember with _$StaffMember {
     String? city,
     String? postalCode,
     String? country,
-    // Professional Information
-    required StaffRole primaryRole,
     @Default([]) List<StaffRole> additionalRoles,
     String? employeeNumber,
     DateTime? startDate,
@@ -33,23 +38,15 @@ class StaffMember with _$StaffMember {
     // Qualifications
     @Default([]) List<Qualification> qualifications,
     @Default([]) List<Certificate> certificates,
-    // Permissions
-    required StaffPermissions permissions,
     // Teams
     @Default([]) List<String> teamIds,
     @Default([]) List<String> primaryTeamIds,
-    // Availability
-    required StaffAvailability availability,
     // Documents
     bool? hasVOG,
     DateTime? vogExpiryDate,
     bool? hasMedicalCertificate,
     DateTime? medicalCertificateExpiry,
     bool? hasInsurance,
-    // Status
-    required StaffStatus status,
-    // Metadata
-    required DateTime createdAt,
     DateTime? updatedAt,
     String? createdBy,
     String? updatedBy,

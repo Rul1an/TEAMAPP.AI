@@ -1,4 +1,6 @@
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'player_performance_data.freezed.dart';
 part 'player_performance_data.g.dart';
 
@@ -8,7 +10,8 @@ class PlayerPerformanceData with _$PlayerPerformanceData {
     required String id,
     required String playerId,
     required DateTime date,
-    required PerformanceType type, // training, match, test
+    required PerformanceType type, // Metadata
+    required DateTime createdAt, // training, match, test
     // Physical Performance Metrics
     PhysicalMetrics? physicalMetrics,
     // Technical Performance Metrics
@@ -27,8 +30,6 @@ class PlayerPerformanceData with _$PlayerPerformanceData {
     CoachEvaluation? coachEvaluation,
     // AI-Generated Insights
     List<PerformanceInsight>? insights,
-    // Metadata
-    required DateTime createdAt,
     DateTime? updatedAt,
     String? notes,
   }) = _PlayerPerformanceData;

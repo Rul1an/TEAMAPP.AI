@@ -1,4 +1,7 @@
+// Dart imports:
 import 'dart:math' as math;
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 enum DrawingTool { line, arrow, circle, text, erase }
@@ -20,13 +23,13 @@ class DrawingElement {
 
 class TacticalDrawingCanvas extends StatefulWidget {
   const TacticalDrawingCanvas({
-    super.key,
     required this.child,
     required this.drawings,
     required this.onDrawingsChanged,
     required this.isDrawingMode,
     required this.selectedTool,
     required this.selectedColor,
+    super.key,
   });
   final Widget child;
   final List<DrawingElement> drawings;
@@ -199,7 +202,7 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
     final points = <Offset>[];
     const steps = 64;
 
-    for (int i = 0; i <= steps; i++) {
+    for (var i = 0; i <= steps; i++) {
       final angle = (i / steps) * 2 * 3.14159;
       final x = center.dx + radius * math.cos(angle);
       final y = center.dy + radius * math.sin(angle);
@@ -290,16 +293,12 @@ class TacticalDrawingPainter extends CustomPainter {
     switch (element.tool) {
       case DrawingTool.line:
         _drawLine(canvas, element.points, paint);
-        break;
       case DrawingTool.arrow:
         _drawArrow(canvas, element.points, paint);
-        break;
       case DrawingTool.circle:
         _drawCircle(canvas, element.points, paint);
-        break;
       case DrawingTool.text:
         _drawText(canvas, element);
-        break;
       case DrawingTool.erase:
         break; // Erase doesn't draw anything
     }

@@ -1,9 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+// Project imports:
 import '../../models/training.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/trainings_provider.dart';
@@ -336,23 +340,18 @@ class _TrainingCard extends StatelessWidget {
       case TrainingFocus.technical:
         text = 'Techniek';
         icon = Icons.sports_soccer;
-        break;
       case TrainingFocus.tactical:
         text = 'Tactiek';
         icon = Icons.psychology;
-        break;
       case TrainingFocus.physical:
         text = 'Fysiek';
         icon = Icons.fitness_center;
-        break;
       case TrainingFocus.mental:
         text = 'Mentaal';
         icon = Icons.self_improvement;
-        break;
       case TrainingFocus.matchPrep:
         text = 'Wedstrijd';
         icon = Icons.stadium;
-        break;
     }
 
     return Chip(
@@ -388,15 +387,12 @@ class _TrainingCard extends StatelessWidget {
       case TrainingStatus.planned:
         color = Colors.blue;
         text = 'GEPLAND';
-        break;
       case TrainingStatus.completed:
         color = Colors.green;
         text = 'AFGEROND';
-        break;
       case TrainingStatus.cancelled:
         color = Colors.red;
         text = 'AFGELAST';
-        break;
     }
 
     return Container(

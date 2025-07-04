@@ -1,10 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 class SessionWizardStepper extends StatelessWidget {
   const SessionWizardStepper({
-    super.key,
     required this.currentStep,
     required this.steps,
+    super.key,
     this.onStepTapped,
   });
   final int currentStep;

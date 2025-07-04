@@ -1,8 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+// Project imports:
 import '../../models/match.dart';
 import '../../models/player.dart';
 import '../../providers/matches_provider.dart';
@@ -10,8 +14,8 @@ import '../../providers/players_provider.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({
-    super.key,
     required this.matchId,
+    super.key,
   });
   final String matchId;
 
@@ -68,7 +72,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         error: (error, stack) => Center(child: Text('Fout: $error')),
         data: (matches) {
           final match = matches.firstWhere(
-            (m) => m.id.toString() == widget.matchId,
+            (m) => m.id == widget.matchId,
             orElse: () => Match()
               ..date = DateTime.now()
               ..opponent = ''
@@ -285,7 +289,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                   runSpacing: 8,
                   children: _selectedStartingLineup.map((playerId) {
                     final player = players.firstWhere(
-                      (p) => p.id.toString() == playerId,
+                      (p) => p.id == playerId,
                       orElse: () => Player()
                         ..firstName = 'Onbekend'
                         ..lastName = ''
@@ -348,7 +352,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                   runSpacing: 8,
                   children: _selectedSubstitutes.map((playerId) {
                     final player = players.firstWhere(
-                      (p) => p.id.toString() == playerId,
+                      (p) => p.id == playerId,
                       orElse: () => Player()
                         ..firstName = 'Onbekend'
                         ..lastName = ''
@@ -427,8 +431,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                     itemCount: players.length,
                     itemBuilder: (context, index) {
                       final player = players[index];
-                      final isSelected =
-                          selectedPlayers.contains(player.id.toString());
+                      final isSelected = selectedPlayers.contains(player.id);
                       final canSelect =
                           selectedPlayers.length < maxSelection || isSelected;
 
@@ -442,10 +445,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                             ? (bool? value) {
                                 setState(() {
                                   if (value ?? false) {
-                                    selectedPlayers.add(player.id.toString());
+                                    selectedPlayers.add(player.id);
                                   } else {
-                                    selectedPlayers
-                                        .remove(player.id.toString());
+                                    selectedPlayers.remove(player.id);
                                   }
                                 });
                               }
@@ -554,8 +556,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       final matchesAsync = ref.read(matchesProvider);
       final matches = matchesAsync.value ?? [];
 
-      final matchIndex =
-          matches.indexWhere((m) => m.id.toString() == widget.matchId);
+      final matchIndex = matches.indexWhere((m) => m.id == widget.matchId);
       if (matchIndex == -1) return;
 
       final match = matches[matchIndex];

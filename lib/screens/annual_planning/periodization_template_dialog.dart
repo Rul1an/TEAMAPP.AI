@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../models/annual_planning/periodization_plan.dart';
 
 class PeriodizationTemplateDialog extends StatefulWidget {

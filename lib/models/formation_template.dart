@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:isar/isar.dart';
+
+// Project imports:
 import 'team.dart';
 
 // part 'formation_template.g.dart'; // Temporarily commented out

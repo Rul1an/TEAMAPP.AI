@@ -12,7 +12,7 @@ dependencies:
 
   # Core UI
   cupertino_icons: ^1.0.6
-  google_fonts: ^6.2.1
+  google_fonts: ^4.0.4
 
   # Code generation annotations
   freezed_annotation: ^2.4.4
@@ -30,7 +30,7 @@ dependencies:
   supabase: ^2.8.0
 
   # Utilities
-  uuid: ^4.4.0
+  uuid: ^3.0.7
   path_provider: ^2.1.3
   intl: ^0.19.0  # For date formatting
 
@@ -53,8 +53,6 @@ dependencies:
   flutter_heatmap_calendar: ^1.0.5
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
-  google_generative_ai: ^0.4.7
-  http: ^1.4.0
   dio: ^5.8.0+1
   sentry_flutter: ^9.2.0
   opentelemetry: ^0.18.10
@@ -80,7 +78,10 @@ dev_dependencies:
     path: packages/test_utils
   mocktail: ^1.0.1
   coverage: ^1.7.2
-  flutter_lints: ^3.0.0
+  # Replaced by very_good_analysis for stricter lint set
+  very_good_analysis: ^5.0.0
+  import_sorter: ^4.6.0
+  dart_code_metrics: ^5.7.3
   build_runner: ^2.4.9
   riverpod_generator: ^2.4.0
   shared_preferences: ^2.2.2

@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import '../models/player_tracking/player_performance_data.dart';
 
 /// 🎯 Player Tracking Provider (SVS - Speler Volg Systeem)
@@ -23,7 +26,7 @@ final allPlayersLatestPerformanceProvider =
     FutureProvider<Map<String, PlayerPerformanceData>>((ref) async {
   try {
     // TODO(author): Implement actual database query
-    final Map<String, PlayerPerformanceData> performanceMap = {};
+    final performanceMap = <String, PlayerPerformanceData>{};
     return performanceMap;
   } catch (e) {
     // AppLogger.error('Failed to load all players performance data', e);

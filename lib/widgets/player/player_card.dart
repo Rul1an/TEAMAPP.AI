@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../../config/theme.dart';
 import '../../models/performance_rating.dart';
 import '../../models/player.dart';
@@ -9,8 +13,8 @@ import '../common/performance_badge.dart';
 
 class PlayerCard extends ConsumerWidget {
   const PlayerCard({
-    super.key,
     required this.player,
+    super.key,
     this.onTap,
   });
   final Player player;
@@ -85,7 +89,7 @@ class PlayerCard extends ConsumerWidget {
                               FutureBuilder<Map<String, dynamic>>(
                                 future: _getPerformanceData(
                                   ref,
-                                  player.id.toString(),
+                                  player.id,
                                 ),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {

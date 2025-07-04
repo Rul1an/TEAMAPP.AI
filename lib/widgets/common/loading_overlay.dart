@@ -1,12 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 /// Loading Overlay Widget
 /// Shows a loading indicator over content
 class LoadingOverlay extends StatelessWidget {
   const LoadingOverlay({
-    super.key,
     required this.isLoading,
     required this.child,
+    super.key,
     this.message,
   });
   final bool isLoading;

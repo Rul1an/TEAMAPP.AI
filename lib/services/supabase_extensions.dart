@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+// Project imports:
 import '../config/supabase_config.dart';
 
 /// Extensions that automatically scope Supabase queries to the current

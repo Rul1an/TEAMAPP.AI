@@ -1,11 +1,14 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:jo17_tactical_manager/config/supabase_config.dart';
-import 'package:jo17_tactical_manager/services/organization_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Project imports:
+import 'package:jo17_tactical_manager/config/supabase_config.dart';
+import 'package:jo17_tactical_manager/services/organization_service.dart';
 import '../utils/stub_http_client.dart';
 
 void main() {

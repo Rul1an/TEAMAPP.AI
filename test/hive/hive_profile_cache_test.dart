@@ -1,7 +1,14 @@
+// Dart imports:
 import 'dart:io';
+
+// Flutter imports:
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/hive/hive_profile_cache.dart';
 import 'package:jo17_tactical_manager/models/profile.dart';
 
@@ -9,7 +16,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   // Mock flutter_secure_storage MethodChannel
-  const MethodChannel secureStorageChannel =
+  const secureStorageChannel =
       MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
 
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -32,8 +39,7 @@ void main() {
   });
 
   // Mock path_provider MethodChannel used by Hive.initFlutter
-  const MethodChannel pathProviderChannel =
-      MethodChannel('plugins.flutter.io/path_provider');
+  const pathProviderChannel = MethodChannel('plugins.flutter.io/path_provider');
 
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(pathProviderChannel,

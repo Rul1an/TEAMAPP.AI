@@ -1,3 +1,4 @@
+// Project imports:
 import '../annual_planning/morphocycle.dart';
 import 'field_diagram.dart';
 
@@ -6,7 +7,6 @@ import 'field_diagram.dart';
 class TrainingExercise {
   // Basic exercise data
   TrainingExercise({
-    this.id = 0,
     required this.name,
     required this.description,
     required this.durationMinutes,
@@ -15,6 +15,7 @@ class TrainingExercise {
     required this.intensityLevel,
     required this.type,
     required this.coachingPoints,
+    this.id = 0,
     this.trainingSessionId,
     this.sessionPhaseId,
     this.orderIndex = 0,
@@ -370,7 +371,7 @@ class TrainingExercise {
     int weekNumber,
   ) {
     // Organize exercises by morphocycle day based on week number
-    final Map<String, List<TrainingExercise>> recommendations = {
+    final recommendations = <String, List<TrainingExercise>>{
       'recovery': [],
       'acquisition': [],
       'development': [],

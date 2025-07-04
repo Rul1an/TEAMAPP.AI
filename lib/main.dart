@@ -1,10 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Project imports:
 import 'config/environment.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
@@ -14,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load environment variables (contains SENTRY_DSN, etc.)
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
 
   // Initialize date formatting for Dutch locale
   await initializeDateFormatting('nl');

@@ -1,4 +1,6 @@
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+
 part 'session_phase_simple.g.dart';
 
 enum PhaseType {

@@ -1,7 +1,9 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../models/performance_rating.dart';
-import '../common/star_rating.dart';
+import 'star_rating.dart';
 
 class PerformanceBadge extends StatelessWidget {
   const PerformanceBadge({
@@ -79,8 +81,8 @@ class PerformanceBadge extends StatelessWidget {
 
 class PerformanceTrendIndicator extends StatelessWidget {
   const PerformanceTrendIndicator({
-    super.key,
     required this.trend,
+    super.key,
     this.size = 24,
   });
   final PerformanceTrend trend;

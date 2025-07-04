@@ -1,12 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 class StatCard extends StatelessWidget {
   const StatCard({
-    super.key,
     required this.title,
     required this.value,
     required this.icon,
     required this.color,
+    super.key,
   });
   final String title;
   final String value;

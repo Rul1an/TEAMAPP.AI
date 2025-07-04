@@ -1,29 +1,35 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:test_utils/surface_utils.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/player.dart';
 import 'package:jo17_tactical_manager/models/training.dart';
+import 'package:jo17_tactical_manager/screens/training/training_attendance_screen.dart';
+
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as players_providers;
 import 'package:jo17_tactical_manager/providers/trainings_provider.dart'
     as trainings_providers;
-import 'package:jo17_tactical_manager/screens/training/training_attendance_screen.dart';
-import 'package:test_utils/surface_utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Integration – Training flow', () {
     setUpAll(() async {
-      await initializeDateFormatting('nl_NL', null);
+      await initializeDateFormatting('nl_NL');
     });
 
     testWidgets('create training → mark attendance', (tester) async {
       // Stub data
       final training = Training()
         ..id = 't99'
-        ..date = DateTime(2025, 8, 1)
+        ..date = DateTime(2025, 8)
         ..duration = 90
         ..focus = TrainingFocus.tactical
         ..intensity = TrainingIntensity.low

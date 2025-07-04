@@ -1,12 +1,15 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:typed_data';
 
+// Package imports:
 import 'package:csv/csv.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:intl/intl.dart';
 
+// Project imports:
 import '../models/player.dart';
 import '../repositories/player_repository.dart';
 
@@ -59,8 +62,7 @@ class ImportService {
   Future<ImportResult> _importPlayersFromCSV(Uint8List bytes) async {
     try {
       final csvString = utf8.decode(bytes);
-      final List<List<dynamic>> rows =
-          const CsvToListConverter().convert(csvString);
+      final rows = const CsvToListConverter().convert(csvString);
 
       if (rows.isEmpty) {
         return ImportResult(
@@ -111,11 +113,11 @@ class ImportService {
   }
 
   Future<ImportResult> _processPlayerRows(List<List<dynamic>> rows) async {
-    int imported = 0;
-    int skipped = 0;
+    var imported = 0;
+    var skipped = 0;
     final errors = <String>[];
 
-    for (int i = 0; i < rows.length; i++) {
+    for (var i = 0; i < rows.length; i++) {
       try {
         final row = rows[i];
 
@@ -247,7 +249,7 @@ class ImportService {
     ];
 
     // Add headers
-    for (int i = 0; i < headers.length; i++) {
+    for (var i = 0; i < headers.length; i++) {
       sheet.updateCell(
         CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0),
         TextCellValue(headers[i]),
@@ -268,7 +270,7 @@ class ImportService {
       '06-12345678',
     ];
 
-    for (int i = 0; i < example.length; i++) {
+    for (var i = 0; i < example.length; i++) {
       sheet.updateCell(
         CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 1),
         TextCellValue(example[i]),

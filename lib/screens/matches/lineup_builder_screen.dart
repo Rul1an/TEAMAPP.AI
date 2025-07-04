@@ -1,7 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+// Project imports:
 import '../../models/formation_template.dart';
 import '../../models/match.dart';
 import '../../models/player.dart';
@@ -85,7 +89,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
     // Load field positions
     match.fieldPositions.forEach((position, playerId) {
       final player = players.firstWhere(
-        (p) => p.id.toString() == playerId,
+        (p) => p.id == playerId,
         orElse: Player.new,
       );
       if (player.id != '') {
@@ -96,7 +100,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
     // Load bench players
     for (final playerId in match.substituteIds) {
       final player = players.firstWhere(
-        (p) => p.id.toString() == playerId,
+        (p) => p.id == playerId,
         orElse: Player.new,
       );
       if (player.id != '') {
@@ -837,16 +841,15 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
       _match!.selectedFormation = _selectedFormation;
       _match!.startingLineupIds = _fieldPositions.entries
           .where((e) => e.value != null)
-          .map((e) => e.value!.id.toString())
+          .map((e) => e.value!.id)
           .toList();
-      _match!.substituteIds =
-          _benchPlayers.map((p) => p.id.toString()).toList();
+      _match!.substituteIds = _benchPlayers.map((p) => p.id).toList();
 
       // Save field positions
       _match!.fieldPositions = {};
       _fieldPositions.forEach((position, player) {
         if (player != null) {
-          _match!.fieldPositions[position] = player.id.toString();
+          _match!.fieldPositions[position] = player.id;
         }
       });
 
@@ -1167,17 +1170,17 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
     FormationTemplate template,
     List<Player> players,
   ) {
-    final Map<String, Player?> result = {};
+    final result = <String, Player?>{};
     final assigned = <String>{};
 
     template.positionPreferences.forEach((posKey, pref) {
       final player = players.firstWhere(
-        (p) => p.position.name == pref && !assigned.contains(p.id.toString()),
+        (p) => p.position.name == pref && !assigned.contains(p.id),
         orElse: Player.new,
       );
       if (player.id != '') {
         result[posKey] = player;
-        assigned.add(player.id.toString());
+        assigned.add(player.id);
       } else {
         result[posKey] = null;
       }

@@ -1,8 +1,11 @@
 // ignore_for_file: directives_ordering, avoid_implementing_value_types
 
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jo17_tactical_manager/services/demo_data_service.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
+import 'package:jo17_tactical_manager/services/demo_data_service.dart';
 import 'package:jo17_tactical_manager/services/organization_service.dart';
 
 void main() {

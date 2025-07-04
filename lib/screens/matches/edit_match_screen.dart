@@ -1,15 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+
+// Project imports:
 import '../../models/match.dart';
 import '../../providers/matches_provider.dart';
 
 class EditMatchScreen extends ConsumerStatefulWidget {
   const EditMatchScreen({
-    super.key,
     required this.matchId,
+    super.key,
   });
   final String matchId;
 
@@ -50,7 +55,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
   void _loadMatch() {
     final matches = ref.read(matchesProvider).value ?? [];
     _match = matches.firstWhere(
-      (m) => m.id.toString() == widget.matchId,
+      (m) => m.id == widget.matchId,
       orElse: Match.new,
     );
 
@@ -409,7 +414,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    final picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(2020),
@@ -424,7 +429,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
+    final picked = await showTimePicker(
       context: context,
       initialTime: _selectedTime ?? TimeOfDay.now(),
     );

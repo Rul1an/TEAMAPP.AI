@@ -1,14 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/models/player.dart';
 import 'package:jo17_tactical_manager/models/training.dart';
+import 'package:jo17_tactical_manager/screens/training/training_attendance_screen.dart';
+
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as players_providers;
 import 'package:jo17_tactical_manager/providers/trainings_provider.dart'
     as trainings_providers;
-import 'package:jo17_tactical_manager/screens/training/training_attendance_screen.dart';
 
 void main() {
   group('TrainingAttendanceScreen', () {
@@ -18,7 +24,7 @@ void main() {
     setUp(() {
       training = Training()
         ..id = 't1'
-        ..date = DateTime(2025, 7, 1)
+        ..date = DateTime(2025, 7)
         ..duration = 90
         ..focus = TrainingFocus.technical
         ..intensity = TrainingIntensity.medium
@@ -29,7 +35,7 @@ void main() {
         ..firstName = 'Jan'
         ..lastName = 'Jansen'
         ..jerseyNumber = 10
-        ..birthDate = DateTime(2005, 1, 1)
+        ..birthDate = DateTime(2005)
         ..position = Position.forward
         ..preferredFoot = PreferredFoot.right
         ..height = 180
@@ -39,7 +45,7 @@ void main() {
     });
 
     setUpAll(() async {
-      await initializeDateFormatting('nl_NL', null);
+      await initializeDateFormatting('nl_NL');
     });
 
     testWidgets('renders basic UI with stubbed data', (tester) async {

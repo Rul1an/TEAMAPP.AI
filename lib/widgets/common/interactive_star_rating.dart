@@ -1,10 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 class InteractiveStarRating extends StatefulWidget {
   const InteractiveStarRating({
-    super.key,
     required this.rating,
     required this.onRatingChanged,
+    super.key,
     this.maxRating = 5,
     this.size = 24,
     this.color = Colors.amber,

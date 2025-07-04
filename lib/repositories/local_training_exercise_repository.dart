@@ -1,6 +1,7 @@
+// Project imports:
 import '../core/result.dart';
-import '../models/training_session/training_exercise.dart';
 import '../hive/hive_training_exercise_cache.dart';
+import '../models/training_session/training_exercise.dart';
 import 'training_exercise_repository.dart';
 
 class LocalTrainingExerciseRepository implements TrainingExerciseRepository {
@@ -23,7 +24,7 @@ class LocalTrainingExerciseRepository implements TrainingExerciseRepository {
   Future<Result<List<TrainingExercise>>> getBySession(String sessionId) async {
     try {
       final exercises = (await _cache.read() ?? [])
-          .where((e) => e.sessionId == sessionId)
+          .where((e) => e.trainingSessionId == sessionId)
           .toList();
       return Success(exercises);
     } catch (e) {

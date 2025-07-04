@@ -7,15 +7,15 @@ The following repositories still depend on `DatabaseService`:
 
 | Repo | Cache helper | File |
 |------|--------------|------|
-| Training Session | `HiveTrainingCache` (reuse) | `local_training_session_repository.dart` |
-| Training Exercise | **NEW** `HiveTrainingExerciseCache` | `local_training_exercise_repository.dart` |
-| Training Period   | **NEW** `HiveTrainingPeriodCache`   | `local_training_period_repository.dart` |
-| Season            | **NEW** `HiveSeasonCache`           | `local_season_repository.dart` |
-| Statistics        | **NEW** `HiveStatisticsCache`       | `local_statistics_repository.dart` |
-| Formation Template| `HiveFormationTemplateCache` (exists) | `local_formation_template_repository.dart` |
-| Performance Rating| **NEW** `HivePerformanceRatingCache` | `local_performance_rating_repository.dart` |
-| Assessment        | `HiveAssessmentCache` (exists)      | `local_assessment_repository.dart` |
-| Periodization Plan| **NEW** `HivePeriodizationCache`     | `local_periodization_plan_repository.dart` |
+| Training Session | `HiveTrainingCache` | `local_training_session_repository.dart` |
+| Training Exercise | `HiveTrainingExerciseCache` | `local_training_exercise_repository.dart` |
+| Training Period   | `HiveTrainingPeriodCache` | `local_training_period_repository.dart` |
+| Season            | `HiveSeasonCache` | `local_season_repository.dart` |
+| Statistics        | `HiveStatisticsCache` | `local_statistics_repository.dart` |
+| Formation Template| `HiveFormationTemplateCache` | `local_formation_template_repository.dart` |
+| Performance Rating| `HivePerformanceRatingCache` | `local_performance_rating_repository.dart` |
+| Assessment        | `HiveAssessmentCache` | `local_assessment_repository.dart` |
+| Periodization Plan| `HivePeriodizationCache` | `local_periodization_plan_repository.dart` |
 
 > Caches marked **NEW** will wrap `LocalStore<T>` to keep code DRY.
 
@@ -43,6 +43,24 @@ The following repositories still depend on `DatabaseService`:
 | Migrate Assessment & PeriodizationPlan repos | Day 3 |
 | Clean up `DatabaseService` if no more references | Day 3 |
 
+## Current Migration Status (2025-07-10)
+
+| Repo | Status |
+|------|--------|
+| Training Session | ✔️ Completed |
+| Training Exercise | ✔️ Completed |
+| Training Period | ✔️ Completed |
+| Season | ✔️ Completed |
+| Statistics | ✔️ Completed |
+| Formation Template | ✔️ Completed |
+| Performance Rating | ✔️ Completed |
+| Assessment | ✔️ Completed |
+| Periodization Plan | ✔️ Completed |
+
+### Status
+
+✅ **Completed** – All local repositories now use Hive caches via `BaseHiveCache`.
+
 ---
 
-Document version 0.1 (2025-07-10)
+Document version 1.0 (2025-07-12)

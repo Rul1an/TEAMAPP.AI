@@ -2,11 +2,11 @@ class Profile {
   const Profile({
     required this.userId,
     required this.organizationId,
+    required this.createdAt,
+    required this.updatedAt,
     this.username,
     this.avatarUrl,
     this.website,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(

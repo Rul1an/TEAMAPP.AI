@@ -1,10 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../models/training_session/field_diagram.dart';
 
 class FormationTemplateSelector extends StatefulWidget {
   const FormationTemplateSelector({
-    super.key,
     required this.onFormationSelected,
+    super.key,
   });
   final void Function(List<PlayerMarker>) onFormationSelected;
 

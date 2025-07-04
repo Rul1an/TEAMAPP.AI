@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:isar/isar.dart';
 
 // part 'player.g.dart'; // Temporarily commented out
@@ -85,7 +86,7 @@ class Player {
 
   int get age {
     final now = DateTime.now();
-    int age = now.year - birthDate.year;
+    var age = now.year - birthDate.year;
     if (now.month < birthDate.month ||
         (now.month == birthDate.month && now.day < birthDate.day)) {
       age--;

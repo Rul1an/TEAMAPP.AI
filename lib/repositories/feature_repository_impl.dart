@@ -1,5 +1,7 @@
+// Dart imports:
 import 'dart:io';
 
+// Project imports:
 import '../core/result.dart';
 import '../data/supabase_feature_data_source.dart';
 import '../hive/hive_feature_cache.dart';
@@ -22,7 +24,8 @@ class FeatureRepositoryImpl implements FeatureRepository {
 
   @override
   Future<Result<Map<String, bool>>> getFeaturesForTier(
-      OrganizationTier tier) async {
+    OrganizationTier tier,
+  ) async {
     try {
       final data = await _remote.fetchFeatures(tier);
       await _cache.write(data);

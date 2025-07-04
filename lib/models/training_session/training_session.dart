@@ -1,7 +1,10 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:isar/isar.dart';
 
+// Project imports:
 import '../annual_planning/training_period.dart';
 import 'player_attendance.dart';
 import 'session_phase.dart';
@@ -99,7 +102,7 @@ class TrainingSession {
   List<SessionPhase> get phases {
     if (phasesJson == null) return [];
     try {
-      final List<dynamic> list = jsonDecode(phasesJson!) as List<dynamic>;
+      final list = jsonDecode(phasesJson!) as List<dynamic>;
       return list
           .map((json) => SessionPhase.fromJson(json as Map<String, dynamic>))
           .toList();
@@ -130,8 +133,7 @@ class TrainingSession {
   Map<String, PlayerAttendance> get playerAttendance {
     if (playerAttendanceJson == null) return {};
     try {
-      final Map<String, dynamic> json =
-          jsonDecode(playerAttendanceJson!) as Map<String, dynamic>;
+      final json = jsonDecode(playerAttendanceJson!) as Map<String, dynamic>;
       return json.map(
         (key, value) => MapEntry(
           key,

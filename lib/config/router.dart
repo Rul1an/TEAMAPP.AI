@@ -1,6 +1,8 @@
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+// Project imports:
 import '../models/training_session/training_exercise.dart';
 import '../providers/auth_provider.dart';
 import '../providers/demo_mode_provider.dart';

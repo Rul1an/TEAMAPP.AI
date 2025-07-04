@@ -1,11 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../models/training_session/session_phase.dart';
 
 class PhaseDesigner extends StatefulWidget {
   const PhaseDesigner({
-    super.key,
     required this.phase,
     required this.onPhaseUpdated,
+    super.key,
     this.onPhaseDeleted,
   });
   final SessionPhase phase;

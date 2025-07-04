@@ -1,15 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+// Project imports:
 import '../../providers/auth_provider.dart';
 import '../../providers/demo_mode_provider.dart';
 import '../organization/organization_badge.dart';
 
 class MainScaffold extends ConsumerWidget {
   const MainScaffold({
-    super.key,
     required this.child,
+    super.key,
   });
   final Widget child;
 
@@ -230,22 +234,16 @@ class MainScaffold extends ConsumerWidget {
     switch (index) {
       case 0:
         context.go('/dashboard');
-        break;
       case 1:
         context.go('/season');
-        break;
       case 2:
         context.go('/training');
-        break;
       case 3:
         context.go('/matches');
-        break;
       case 4:
         context.go('/players');
-        break;
       case 5:
         context.go('/analytics');
-        break;
     }
   }
 }

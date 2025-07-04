@@ -1,4 +1,6 @@
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'player_progress.freezed.dart';
 part 'player_progress.g.dart';
 
@@ -14,31 +16,26 @@ class PlayerProgress with _$PlayerProgress {
     required String season,
     // Assessment Period
     required DateTime startDate,
-    DateTime? endDate,
     // Technical Skills (1-10 scale)
-    required TechnicalSkills technicalSkills,
-    // Physical Attributes (1-10 scale)
-    required PhysicalAttributes physicalAttributes,
-    // Tactical Understanding (1-10 scale)
-    required TacticalSkills tacticalSkills,
-    // Mental Attributes (1-10 scale)
-    required MentalAttributes mentalAttributes,
-    // Performance Metrics
-    required PerformanceMetrics performanceMetrics,
+    required TechnicalSkills
+        technicalSkills, // Physical Attributes (1-10 scale)
+    required PhysicalAttributes
+        physicalAttributes, // Tactical Understanding (1-10 scale)
+    required TacticalSkills tacticalSkills, // Mental Attributes (1-10 scale)
+    required MentalAttributes mentalAttributes, // Performance Metrics
+    required PerformanceMetrics performanceMetrics, // Overall Ratings
+    required OverallRating overallRating, // Status
+    required ProgressStatus status, // Metadata
+    required DateTime createdAt,
+    DateTime? endDate,
     // Development Goals
     @Default([]) List<DevelopmentGoal> goals,
     // Assessments
     @Default([]) List<ProgressAssessment> assessments,
-    // Overall Ratings
-    required OverallRating overallRating,
     // Notes & Recommendations
     String? coachNotes,
     String? developmentPlan,
     @Default([]) List<String> recommendations,
-    // Status
-    required ProgressStatus status,
-    // Metadata
-    required DateTime createdAt,
     DateTime? updatedAt,
     String? assessedBy,
   }) = _PlayerProgress;
@@ -167,16 +164,13 @@ class DevelopmentGoal with _$DevelopmentGoal {
     required GoalCategory category,
     required GoalPriority priority,
     required DateTime targetDate,
-    // Progress
+    required double targetValue, // Status
+    required GoalStatus status, // Metadata
+    required DateTime createdAt, // Progress
     @Default(0.0) double currentValue,
-    required double targetValue,
     String? unit,
-    // Status
-    required GoalStatus status,
     // Tracking
     @Default([]) List<GoalMilestone> milestones,
-    // Metadata
-    required DateTime createdAt,
     DateTime? completedAt,
     String? createdBy,
   }) = _DevelopmentGoal;

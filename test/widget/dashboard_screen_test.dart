@@ -1,16 +1,22 @@
 // ignore_for_file: cascade_invocations
 
+// Dart imports:
 import 'dart:collection';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/providers/auth_provider.dart';
 import 'package:jo17_tactical_manager/providers/demo_mode_provider.dart';
 import 'package:jo17_tactical_manager/providers/statistics_provider.dart';
 import 'package:jo17_tactical_manager/screens/dashboard/dashboard_screen.dart';
 import 'package:jo17_tactical_manager/services/auth_service.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FakeAuthService implements AuthService {
   @override
@@ -74,7 +80,7 @@ class _StatsStub extends MapBase<String, dynamic> {
 
   int get goalDifference => goalsFor - goalsAgainst;
   int get totalTrainings => totalTrainingAttendance;
-  double get winPercentage => 0.0;
+  double get winPercentage => 0;
 
   final Map<String, dynamic> _inner = {};
 

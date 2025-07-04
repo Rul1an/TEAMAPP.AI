@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:isar/isar.dart';
 
 // part 'session_phase.g.dart'; // Disabled for web compatibility

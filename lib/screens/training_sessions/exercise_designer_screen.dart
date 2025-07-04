@@ -1,7 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+// Project imports:
 import '../../models/training_session/field_diagram.dart';
 import '../../models/training_session/training_exercise.dart';
 import '../../providers/exercise_designer_provider.dart';
@@ -638,8 +642,7 @@ class _ExerciseDesignerScreenState
           diagramState.diagram.movements.isNotEmpty) {
         // Only save diagram if it has content
         try {
-          final Map<String, dynamic> diagramJson =
-              diagramState.diagram.toJson();
+          final diagramJson = diagramState.diagram.toJson();
           exerciseData.fieldDiagram = FieldDiagram.fromJson(diagramJson);
         } catch (e) {
           // Silent fail for field diagram save - exercise will be saved without diagram
@@ -699,7 +702,7 @@ class _ExerciseDesignerScreenState
 
     // Als een oefening is geselecteerd, vul de form data
     if (selectedExercise != null) {
-      final Map<String, dynamic> formData = {
+      final formData = <String, dynamic>{
         'name': selectedExercise.name,
         'description': selectedExercise.description,
         'type': selectedExercise.type,

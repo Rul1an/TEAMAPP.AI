@@ -1,3 +1,4 @@
+// Project imports:
 import 'training_period.dart';
 
 // part 'periodization_plan.g.dart'; // Disabled for web compatibility

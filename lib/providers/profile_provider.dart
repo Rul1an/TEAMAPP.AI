@@ -1,7 +1,10 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../data/supabase_profile_data_source.dart';
 import '../hive/hive_profile_cache.dart';
 import '../models/profile.dart';

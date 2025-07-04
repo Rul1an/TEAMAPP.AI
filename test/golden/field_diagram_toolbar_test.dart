@@ -1,13 +1,19 @@
 // ignore_for_file: deprecated_member_use, flutter_style_todos
 
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:test_utils/surface_utils.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/providers/field_diagram_provider.dart';
 import 'package:jo17_tactical_manager/widgets/field_diagram/field_diagram_toolbar.dart';
-import 'package:test_utils/surface_utils.dart';
 
 // Golden tests for FieldDiagramToolbar.
 // To (re)generate the baseline images run:
@@ -17,7 +23,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   // Skip golden assertions on CI (Linux) as font rendering causes diff.
-  final bool isCi = Platform.environment['CI'] == 'true';
+  final isCi = Platform.environment['CI'] == 'true';
 
   group('FieldDiagramToolbar golden tests', () {
     const testSize = Size(800, 80);

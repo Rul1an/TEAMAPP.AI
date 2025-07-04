@@ -1,16 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+// Project imports:
 import '../../models/training.dart';
 import '../../providers/trainings_provider.dart';
 
 class EditTrainingScreen extends ConsumerStatefulWidget {
   const EditTrainingScreen({
-    super.key,
     required this.trainingId,
+    super.key,
   });
   final String trainingId;
 
@@ -57,7 +61,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
   void _loadTraining() {
     final trainings = ref.read(trainingsProvider).value ?? [];
     _training = trainings.firstWhere(
-      (t) => t.id.toString() == widget.trainingId,
+      (t) => t.id == widget.trainingId,
       orElse: Training.new,
     );
 
@@ -387,7 +391,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    final picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(2020),
@@ -402,7 +406,7 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
+    final picked = await showTimePicker(
       context: context,
       initialTime: _selectedTime ?? TimeOfDay.now(),
     );

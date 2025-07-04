@@ -1,15 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
+
+// Project imports:
 import '../../models/training_session/training_exercise.dart';
 import '../../screens/training_sessions/exercise_library_screen.dart';
 
+// import 'package:go_router/go_router.dart';
+
 class ExerciseSelector extends StatefulWidget {
   const ExerciseSelector({
-    super.key,
     required this.availableExercises,
     required this.selectedExercises,
     required this.onExerciseSelected,
     required this.onExerciseRemoved,
+    super.key,
   });
   final List<TrainingExercise> availableExercises;
   final List<TrainingExercise> selectedExercises;

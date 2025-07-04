@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:isar/isar.dart';
 
 // part 'player_attendance.g.dart'; // Disabled for web compatibility

@@ -38,9 +38,9 @@ class FieldDiagram {
         );
 
   FieldDiagram.customGrid({
-    String? id,
     required double width,
     required double height,
+    String? id,
   }) : this(
           id: id ?? DateTime.now().millisecondsSinceEpoch.toString(),
           fieldType: FieldType.customGrid,

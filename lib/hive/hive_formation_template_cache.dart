@@ -1,4 +1,6 @@
+// Project imports:
 import '../models/formation_template.dart';
+import '../models/team.dart' show Formation;
 import 'base_hive_cache.dart';
 
 class HiveFormationTemplateCache {

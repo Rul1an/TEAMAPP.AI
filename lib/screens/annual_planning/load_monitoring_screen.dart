@@ -1,7 +1,11 @@
-import 'package:fl_chart/fl_chart.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Project imports:
 import '../../models/annual_planning/morphocycle.dart';
 import '../../providers/annual_planning_provider.dart';
 
@@ -96,7 +100,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     final endWeek = currentWeek.clamp(1, state.totalWeeks);
 
     final morphocycles = <Morphocycle>[];
-    for (int week = startWeek; week <= endWeek; week++) {
+    for (var week = startWeek; week <= endWeek; week++) {
       final morphocycle = state.getMorphocycleForWeek(week);
       if (morphocycle != null) morphocycles.add(morphocycle);
     }
@@ -188,7 +192,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         Expanded(
           child: _buildSummaryCard(
             'Peak Load',
-            '${maxLoad.toInt()}',
+            '$maxLoad',
             'AU',
             Colors.red,
             Icons.trending_up,
@@ -576,7 +580,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     final endWeek = currentWeek.clamp(1, state.totalWeeks);
 
     final recentMorphocycles = <Morphocycle>[];
-    for (int week = startWeek; week <= endWeek; week++) {
+    for (var week = startWeek; week <= endWeek; week++) {
       final morphocycle = state.getMorphocycleForWeek(week);
       if (morphocycle != null) recentMorphocycles.add(morphocycle);
     }
@@ -609,9 +613,8 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     }
 
     final currentMorphocycle = morphocycles.last;
-    final avgAcr =
-        morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) /
-            morphocycles.length;
+    final avgAcr = morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) /
+        morphocycles.length;
     final highRiskWeeks = morphocycles
         .where(
           (m) =>

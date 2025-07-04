@@ -1,12 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../models/annual_planning/week_schedule.dart';
 
 class MatchDialog extends StatefulWidget {
   const MatchDialog({
-    super.key,
-    this.existingMatch,
     required this.weekStartDate,
     required this.onSave,
+    super.key,
+    this.existingMatch,
   });
   final WeeklyMatch? existingMatch;
   final DateTime weekStartDate;

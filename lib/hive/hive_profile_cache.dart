@@ -1,7 +1,10 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:hive_flutter/hive_flutter.dart';
 
+// Project imports:
 import '../models/profile.dart';
 import 'hive_key_manager.dart';
 

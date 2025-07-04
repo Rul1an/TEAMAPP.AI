@@ -1,5 +1,9 @@
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'club.dart';
+
 part 'team.freezed.dart';
 part 'team.g.dart';
 
@@ -16,16 +20,16 @@ class Team with _$Team {
     required AgeCategory ageCategory,
     required TeamLevel level,
     required TeamGender gender,
-    // Details
+    // Season Information
+    required String currentSeason, // Settings
+    required TeamSettings settings, // Status
+    required TeamStatus status, // Metadata
+    required DateTime createdAt, // Details
     String? description,
     String? logoUrl,
     String? colors,
-    // Season Information
-    required String currentSeason,
     String? league,
     String? division,
-    // Settings
-    required TeamSettings settings,
     // Staff
     @Default([]) List<String> staffIds,
     String? headCoachId,
@@ -34,10 +38,6 @@ class Team with _$Team {
     // Players
     @Default([]) List<String> playerIds,
     @Default([]) List<String> captainIds,
-    // Status
-    required TeamStatus status,
-    // Metadata
-    required DateTime createdAt,
     DateTime? updatedAt,
     String? createdBy,
     String? updatedBy,
