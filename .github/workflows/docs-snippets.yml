@@ -29,9 +29,16 @@ jobs:
       - name: Validate documentation snippets
         shell: bash
         run: |
+          set -euo pipefail
+          echo "Working directory: $(pwd)"
+          echo "Listing root contents..."
+          ls -al
+          echo "Checking for documentation directories..."
           if [ -d jo17_tactical_manager/docs ]; then
+            echo "Found jo17_tactical_manager/docs"
             DOC_DIR="jo17_tactical_manager/docs"
           elif [ -d docs ]; then
+            echo "Found docs/ at repository root"
             DOC_DIR="docs"
           else
             echo "No docs directory found, skipping snippet validation."
@@ -39,5 +46,8 @@ jobs:
           fi
 
           echo "Using documentation directory: $DOC_DIR"
+          ls -al "$DOC_DIR" || true
           mkdir -p build/snippets
+          set -x
           snippets --input "$DOC_DIR" --output build/snippets
+          set +x
