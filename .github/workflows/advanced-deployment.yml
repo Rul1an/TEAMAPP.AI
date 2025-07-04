@@ -30,27 +30,27 @@ jobs:
           cache: true
 
       - name: 📦 Install Dependencies
-        working-directory: .
+        working-directory: ./jo17_tactical_manager
         run: flutter pub get
 
       - name: 🔄 Run Code Generation
-        working-directory: .
+        working-directory: ./jo17_tactical_manager
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: 🔍 Static Analysis
-        working-directory: .
+        working-directory: ./jo17_tactical_manager
         run: |
           flutter analyze --fatal-infos
           echo "✅ Static analysis passed"
 
       - name: 🎨 Format Check
-        working-directory: .
+        working-directory: ./jo17_tactical_manager
         run: |
           dart format --set-exit-if-changed .
           echo "✅ Code formatting is correct"
 
-      - name: 🧪 Unit Tests
-        working-directory: .
+      - name: �� Unit Tests
+        working-directory: ./jo17_tactical_manager
         run: |
           flutter test --coverage
           echo "✅ Unit tests passed"
@@ -100,7 +100,7 @@ jobs:
           cache: true
 
       - name: 🔍 Dependency Security Scan
-        working-directory: .
+        working-directory: ./jo17_tactical_manager
         run: |
           flutter pub deps
           echo "✅ Dependency security scan completed"
@@ -139,11 +139,11 @@ jobs:
           cache: true
 
       - name: 📦 Install Dependencies
-        working-directory: .
+        working-directory: ./jo17_tactical_manager
         run: flutter pub get
 
       - name: 🔄 Run Code Generation
-        working-directory: .
+        working-directory: ./jo17_tactical_manager
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: 🏗️ Build ${{ matrix.platform }}
