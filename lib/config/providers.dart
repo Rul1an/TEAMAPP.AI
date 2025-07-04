@@ -3,13 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/supabase_club_data_source.dart';
 import '../data/supabase_organization_data_source.dart';
+import '../data/supabase_feature_data_source.dart';
+import '../data/supabase_permission_data_source.dart';
 import '../hive/hive_club_cache.dart';
 import '../hive/hive_organization_cache.dart';
+import '../hive/hive_feature_cache.dart';
+import '../hive/hive_permission_cache.dart';
 import '../providers/club_provider.dart';
 import '../repositories/club_repository.dart';
 import '../repositories/club_repository_impl.dart';
 import '../repositories/organization_repository.dart';
 import '../repositories/organization_repository_impl.dart';
+import '../repositories/permission_repository.dart';
+import '../repositories/permission_repository_impl.dart';
+import '../repositories/feature_repository.dart';
+import '../repositories/feature_repository_impl.dart';
 import '../services/feature_service.dart';
 
 export '../providers/auth_provider.dart';
@@ -62,6 +70,36 @@ final organizationRepositoryProvider = Provider<OrganizationRepository>((ref) {
   final remote = ref.watch(supabaseOrganizationDataSourceProvider);
   final cache = ref.watch(hiveOrganizationCacheProvider);
   return OrganizationRepositoryImpl(remote: remote, cache: cache);
+});
+
+// Permission & Feature repository deps
+final supabasePermissionDataSourceProvider =
+    Provider<SupabasePermissionDataSource>(
+  (ref) => SupabasePermissionDataSource(),
+);
+
+final hivePermissionCacheProvider = Provider<HivePermissionCache>(
+  (ref) => HivePermissionCache(),
+);
+
+final permissionRepositoryProvider = Provider<PermissionRepository>((ref) {
+  final remote = ref.watch(supabasePermissionDataSourceProvider);
+  final cache = ref.watch(hivePermissionCacheProvider);
+  return PermissionRepositoryImpl(remote: remote, cache: cache);
+});
+
+final supabaseFeatureDataSourceProvider = Provider<SupabaseFeatureDataSource>(
+  (ref) => SupabaseFeatureDataSource(),
+);
+
+final hiveFeatureCacheProvider = Provider<HiveFeatureCache>(
+  (ref) => HiveFeatureCache(),
+);
+
+final featureRepositoryProvider = Provider<FeatureRepository>((ref) {
+  final remote = ref.watch(supabaseFeatureDataSourceProvider);
+  final cache = ref.watch(hiveFeatureCacheProvider);
+  return FeatureRepositoryImpl(remote: remote, cache: cache);
 });
 
 // Calendar provider implementation
