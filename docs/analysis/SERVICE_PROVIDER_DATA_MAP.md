@@ -1,6 +1,6 @@
 # Service & Provider Data Map (Q3 2025)
 
-_Last updated: **2025-07-XX**_
+_Last updated: **2025-07-11**_
 
 This analysis inventories every data call inside `lib/services/` and `lib/providers/` as preparation for the Repository-Layer refactor.
 
@@ -24,7 +24,7 @@ This analysis inventories every data call inside `lib/services/` and `lib/provid
 | Service | Layer | Key Methods | Primary Source(s) |
 |---------|-------|-------------|-------------------|
 | `auth_service.dart` | Auth | `signInWithEmail()`, `signOut()`, `authStateChanges` | S1 |
-| `profile_service.dart` | Profile | `getCurrentProfile()`, `updateProfile()`, `uploadAvatar()` | S1, S2 |
+| `profile_repository.dart` | Repository | `getCurrent()`, `update()`, `uploadAvatar()` | S1, S2, S6 |
 | `organization_service.dart` | Organization | `getOrganizations()`, `createOrganization()` … | S1 |
 | `club_service.dart` | Club | CRUD on `clubs` | S1 |
 | `permission_service.dart` | RBAC | `hasPermission()`, `fetchPermissions()` | S1 |
@@ -35,6 +35,9 @@ This analysis inventories every data call inside `lib/services/` and `lib/provid
 | `pdf_service.dart` | I/O | PDF generation utility | S5 |
 | `monitoring_service.dart` | Observability | RUM + Sentry hooks | S1 (future), S6 |
 | `demo_data_service.dart` | Demo | Generates seeded data for demo mode | Local |
+| `match_repository.dart` | Repository | CRUD for `matches` (Supabase + Hive) | S1, S6 |
+| `training_repository.dart` | Repository | CRUD for `trainings` (Supabase + Hive) | S1, S6 |
+| `profile_service.dart` | Profile | `getCurrentProfile()`, `updateProfile()`, `uploadAvatar()` | S1, S2 |
 
 _Backups (`*.bak`, `*.backup`) were ignored._
 
@@ -56,14 +59,15 @@ _Backups (`*.bak`, `*.backup`) were ignored._
 | `player_tracking_provider.dart` | PlayerTrackingRepository | Performance |
 | `demo_mode_provider.dart` | DemoDataService | Demo |
 | `subscription_provider.dart` | FeatureService | SaaS |
+| `profile_provider.dart` | ProfileRepository | Profile |
 
 ---
 
 ## 4. Issues & Opportunities
 
-1. **Tight Coupling (Resolved)** – Providers nu afhankelijk van abstracte **Repository interfaces** (e.g. `PlayerRepository`). Implementaties kunnen lokaal (Isar) of cloud (Supabase) zijn.
-2. **Error Handling** – Mixed `throw` vs. nullable returns. Adoption of a sealed `Result<T>` wrapper recommended (see TODO `result-wrapper`).
-3. **Offline Cache** – Hive 4 encrypted boxes missing (TODO `hive-profile-cache`, `hive-encryption-key`).
+1. **Tight Coupling (Resolved)** – Providers nu afhankelijk van abstracte **Repository interfaces** (e.g. `PlayerRepository`). Implementaties kunnen lokaal (Isar/Hive) of cloud (Supabase) zijn.
+2. **Error Handling (Resolved)** – Sealed `Result<T>` utility toegevoegd (`lib/core/result.dart`).
+3. **Offline Cache (Resolved)** – Hive 4 encrypted caches actief voor alle belangrijke domeinen.
 4. **Observability** – `analytics_service.dart` placeholder; needs integration of RUM (web-vitals) & Sentry performance.
 
 ---
@@ -73,9 +77,9 @@ _Backups (`*.bak`, `*.backup`) were ignored._
 | ID | Task | Status |
 |----|------|--------|
 | R1 | _Repo Analysis_ (this document) | ✅ Completed |
-| R2 | Design abstract repository interfaces | ⏳ Pending (design-spec) |
-| R3 | Implement `Result<T>` utility + tests | ⏳ Pending (result-wrapper) |
-| R4 | Configure `riverpod_generator` + `freezed` | ⏳ Pending (codegen-setup) |
-| R5 | Implement Hive encrypted cache | ⏳ Pending (hive-profile-cache, hive-encryption-key) |
+| R2 | Design abstract repository interfaces | ✅ Completed |
+| R3 | Implement `Result<T>` utility + tests | ✅ Completed |
+| R4 | Configure `riverpod_generator` + `freezed` | ✅ Completed |
+| R5 | Implement Hive encrypted cache | ✅ Completed |
 
 _Internal link: see `docs/plans/architecture/REPOSITORY_LAYER_REFRACTOR_Q3_2025.md` for the full roadmap._

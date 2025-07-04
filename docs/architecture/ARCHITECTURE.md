@@ -543,7 +543,7 @@ Flexibele data import en export mogelijkheden:
 
 ---
 
-*Document laatst bijgewerkt: 7 December 2024*
+*Document laatst bijgewerkt: **11 July 2025***
 *Versie: 1.1.0*
 
 ### New Data Access Layer (2025 Roadmap)
@@ -559,7 +559,9 @@ Widget → Provider (StateNotifier) → Repository → Data Source (Supabase API
 * Data-sources are injected (Supabase, Hive, Fake).
 * Providers depend only on repository abstractions – improves testability.
 
-Implementation will start with the Profile domain during Q3 2025 refactor.
+Implementation completed for Profiles, Players, Matches and Trainings (Jul 2025). All providers now depend solely on repositories.
+
+For detailed coding patterns, see `docs/guides/REPOSITORY_USAGE_GUIDE_2025.md`.
 
 ## 🆕 Repository Layer Roadmap (Q3 2025)
 

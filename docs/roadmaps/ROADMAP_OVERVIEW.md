@@ -10,7 +10,7 @@
 | Session Builder | **100 %** | Advanced phase editor, drag&drop workflow |
 | RBAC & Demo Mode | **100 %** | 5 rollen, live demo widget |
 | Supabase Cloud Integration | **30 %** | Auth live; database schema & RLS migraties gepland |
-| Offline Hive caching | **10 %** | Adapters aangemaakt maar nog niet gekoppeld |
+| Offline Hive caching | **100 %** | Adapters gekoppeld voor Players, Matches & Trainings |
 | Multi-tenant SaaS Management | **40 %** | Org-management en tier-gating live; payment & RLS enforcement missing |
 | Observability & APM | **0 %** | Sentry/Datadog nog te integreren |
 | Feature Flags (Unleash/PostHog) | **0 %** | Flag-provider gepland |

@@ -14,8 +14,8 @@ Introduce a formal **Repository Layer** to decouple Riverpod providers from Supa
 | R2 | Design Spec | Define abstract repository interfaces (`ProfileRepository`, `PlayerRepository`, …) and common error model | Architect | Aug 10 |
 | R3 | Profile Repo | Implement `ProfileRepositoryImpl` (Supabase + Hive) + unit tests | **✅ Completed** (Jun 24) | — |
 | R4 | Provider Migration | Refactor `profileService` → providers & UI depend on repository | **✅ Completed** (Jun 25, commit `ce49df0`) | — |
-| R5 | Hive Cache | Implement `HiveProfileCache`; wire behind repository with stale-while-revalidate | Feature team | Sep 01 |
-| R6 | Domain Roll-out | Repeat R3–R5 for Players, Matches, Trainings | Squad | Sep 20 |
+| R5 | Hive Cache | Implement `HiveProfileCache`; wire behind repository with stale-while-revalidate | **✅ Completed** (Jul 03) | — |
+| R6 | Domain Roll-out | Repeat R3–R5 for Players, Matches, Trainings | **✅ Completed** (Jul 05) | — |
 | R7 | Docs & Samples | Update `ARCHITECTURE.md`, write usage cookbook | Tech writer | Sep 25 |
 | R8 | Cleanup | Remove obsolete service classes, ensure 0 analyzer issues | Squad | Sep 30 |
 
