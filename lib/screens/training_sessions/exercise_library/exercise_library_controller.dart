@@ -23,6 +23,7 @@ class ExerciseLibraryController extends ChangeNotifier {
   int? _minDuration;
   int? _maxDuration;
   int? _playerCount;
+  bool _showMorphocycleBanner = true;
 
   // Public getters ---------------------------------------------------------
   List<TrainingExercise> get filteredExercises {
@@ -68,6 +69,8 @@ class ExerciseLibraryController extends ChangeNotifier {
     }
     return list;
   }
+
+  bool get showMorphocycleBanner => _showMorphocycleBanner;
 
   // --- Mutations -----------------------------------------------------------
   void setSearch(String value) {
@@ -115,6 +118,12 @@ class ExerciseLibraryController extends ChangeNotifier {
     _minDuration = null;
     _maxDuration = null;
     _playerCount = null;
+    notifyListeners();
+  }
+
+  /// Toggle morphocycle recommendation banner visibility.
+  void toggleMorphocycleBanner() {
+    _showMorphocycleBanner = !_showMorphocycleBanner;
     notifyListeners();
   }
 
