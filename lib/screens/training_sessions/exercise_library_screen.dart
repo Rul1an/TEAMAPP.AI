@@ -56,8 +56,9 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
 
   @override
   Widget build(BuildContext context) {
-    final morphocycle =
-        ref.watch(annualPlanningProvider).getMorphocycleForWeek(widget.weekNumber);
+    final morphocycle = ref
+        .watch(annualPlanningProvider)
+        .getMorphocycleForWeek(widget.weekNumber);
     final exercisesAsync = ref.watch(exerciseLibraryProvider);
 
     return Scaffold(

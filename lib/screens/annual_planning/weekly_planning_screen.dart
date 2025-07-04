@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -9,9 +10,10 @@ import '../../models/annual_planning/morphocycle.dart';
 import '../../models/annual_planning/periodization_plan.dart';
 import '../../models/annual_planning/week_schedule.dart';
 import '../../providers/annual_planning_provider.dart';
-import 'load_monitoring_screen.dart';
 import 'periodization_template_dialog.dart';
 import 'training_dialog.dart';
+import 'weekly_planning/widgets/season_header.dart';
+import 'weekly_planning/widgets/week_selector.dart';
 
 class WeeklyPlanningScreen extends ConsumerStatefulWidget {
   const WeeklyPlanningScreen({super.key});
@@ -62,8 +64,11 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                _buildSeasonHeader(planningState),
-                _buildWeekSelector(planningState),
+                SeasonHeader(state: planningState),
+                WeekSelector(
+                  state: planningState,
+                  scrollController: _scrollController,
+                ),
                 Expanded(
                   child: _buildWeeklyTable(planningState),
                 ),
@@ -71,204 +76,6 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
             ),
     );
   }
-
-  Widget _buildSeasonHeader(AnnualPlanningState state) => Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.green[600]!, Colors.green[700]!],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          border: Border(bottom: BorderSide(color: Colors.green[200]!)),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Seizoen ${state.seasonStartDate.year}/${state.seasonEndDate.year}',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          'Week ${state.selectedWeek} van ${state.totalWeeks}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Vandaag: ${_formatCurrentDate()}',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white.withValues(alpha: 0.9),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  // Periodization info
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 4,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.timeline,
-                            size: 16,
-                            color: Colors.white.withValues(alpha: 0.8),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Template: ${state.periodizationPlanName}',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white.withValues(alpha: 0.8),
-                            ),
-                          ),
-                        ],
-                      ),
-                      if (state.selectedPeriodizationPlan != null)
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.sports_soccer,
-                              size: 16,
-                              color: Colors.white.withValues(alpha: 0.8),
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              'Periode: ${state.currentPeriodName}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white.withValues(alpha: 0.8),
-                              ),
-                            ),
-                          ],
-                        ),
-                      // Load monitoring indicator
-                      GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (context) => const LoadMonitoringScreen(),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.analytics,
-                              size: 16,
-                              color: Colors.white.withValues(alpha: 0.8),
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              'Load Monitor',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white.withValues(alpha: 0.8),
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.green[100],
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                '${((state.currentWeekNumber / state.totalWeeks) * 100).toInt()}% voltooid',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.green[800],
-                ),
-              ),
-            ),
-            // Action buttons
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () => _showPeriodizationTemplateDialog(context),
-                  icon:
-                      const Icon(Icons.timeline, color: Colors.white, size: 16),
-                  label: const Text(
-                    'Template',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange[600],
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () => ref
-                      .read(annualPlanningProvider.notifier)
-                      .resetCurrentWeekToToday(),
-                  icon: const Icon(Icons.today, color: Colors.white, size: 16),
-                  label: const Text(
-                    'Huidige Week',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue[600],
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () => _showAddEventDialog(context),
-                  icon: const Icon(Icons.add, color: Colors.white, size: 16),
-                  label: const Text(
-                    'Bewerken',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[600],
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
 
   Widget _buildWeekSelector(AnnualPlanningState state) => Container(
         height: 60,
@@ -597,9 +404,6 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
     final weekEnd = weekStart.add(const Duration(days: 6));
     return '${weekStart.day}/${weekStart.month}-${weekEnd.day}/${weekEnd.month}';
   }
-
-  String _formatCurrentDate() =>
-      '${DateTime.now().day}/${DateTime.now().month}';
 
   void _scrollToCurrentWeek() {
     final currentWeek = ref.read(annualPlanningProvider).currentWeekNumber;
