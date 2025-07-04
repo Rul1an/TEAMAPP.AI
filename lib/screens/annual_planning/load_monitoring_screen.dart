@@ -10,6 +10,7 @@ import '../../models/annual_planning/morphocycle.dart';
 import '../../providers/annual_planning_provider.dart';
 import '../../services/load_monitoring_service.dart';
 import '../../widgets/load_monitoring/load_summary_cards.dart';
+import '../../widgets/load_monitoring/weekly_load_chart.dart';
 
 // ignore_for_file: unused_element, require_trailing_commas
 
@@ -116,7 +117,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
         children: [
           LoadSummaryCards(morphocycles: morphocycles),
           const SizedBox(height: 24),
-          _buildWeeklyLoadChart(morphocycles),
+          WeeklyLoadChart(morphocycles: morphocycles),
           const SizedBox(height: 24),
           _buildAcuteChronicChart(morphocycles),
           const SizedBox(height: 24),
@@ -149,113 +150,6 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
       ),
     );
   }
-
-  Widget _buildWeeklyLoadChart(List<Morphocycle> morphocycles) => Card(
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Weekly Training Load Trend',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                height: 300,
-                child: morphocycles.isEmpty
-                    ? const Center(child: Text('No data available'))
-                    : LineChart(
-                        LineChartData(
-                          gridData: const FlGridData(
-                            horizontalInterval: 200,
-                            verticalInterval: 2,
-                          ),
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 30,
-                                interval: 2,
-                                getTitlesWidget: (value, meta) {
-                                  final weekIndex = value.toInt();
-                                  if (weekIndex >= 0 &&
-                                      weekIndex < morphocycles.length) {
-                                    return Text(
-                                      'W${morphocycles[weekIndex].weekNumber}',
-                                      style: const TextStyle(fontSize: 10),
-                                    );
-                                  }
-                                  return const Text('');
-                                },
-                              ),
-                            ),
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 50,
-                                interval: 200,
-                                getTitlesWidget: (value, meta) => Text(
-                                  '${value.toInt()}',
-                                  style: const TextStyle(fontSize: 10),
-                                ),
-                              ),
-                            ),
-                            topTitles: const AxisTitles(),
-                            rightTitles: const AxisTitles(),
-                          ),
-                          borderData: FlBorderData(
-                            show: true,
-                            border: Border.all(color: Colors.grey[300]!),
-                          ),
-                          minX: 0,
-                          maxX: (morphocycles.length - 1).toDouble(),
-                          minY: 0,
-                          maxY: 2000,
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: morphocycles
-                                  .asMap()
-                                  .entries
-                                  .map(
-                                    (entry) => FlSpot(
-                                      entry.key.toDouble(),
-                                      entry.value.weeklyLoad,
-                                    ),
-                                  )
-                                  .toList(),
-                              isCurved: true,
-                              color: Colors.blue,
-                              barWidth: 3,
-                              isStrokeCapRound: true,
-                              dotData: FlDotData(
-                                getDotPainter: (spot, percent, barData, index) {
-                                  final load = spot.y;
-                                  return FlDotCirclePainter(
-                                    radius: 4,
-                                    color:
-                                        LoadMonitoringService.loadColor(load),
-                                    strokeWidth: 2,
-                                    strokeColor: Colors.white,
-                                  );
-                                },
-                              ),
-                              belowBarData: BarAreaData(
-                                show: true,
-                                color: Colors.blue.withValues(alpha: 0.1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-              ),
-            ],
-          ),
-        ),
-      );
 
   Widget _buildAcuteChronicChart(List<Morphocycle> morphocycles) => Card(
         elevation: 4,
