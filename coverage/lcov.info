@@ -4146,7 +4146,14 @@ DA:62,0
 DA:68,0
 DA:69,0
 DA:71,0
-LF:23
+DA:75,0
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:83,0
+DA:85,0
+LF:30
 LH:0
 end_of_record
 SF:lib/services/database_service.dart

@@ -71,4 +71,18 @@ class LocalTrainingRepository implements TrainingRepository {
       return Failure(CacheFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Result<Training?>> getById(String id) async {
+    try {
+      final trainings = await _service.getAllTrainings();
+      final t = trainings.firstWhere(
+        (tr) => tr.id == id,
+        orElse: () => Training()..id = id,
+      );
+      return Success(t);
+    } catch (e) {
+      return Failure(CacheFailure(e.toString()));
+    }
+  }
 }
