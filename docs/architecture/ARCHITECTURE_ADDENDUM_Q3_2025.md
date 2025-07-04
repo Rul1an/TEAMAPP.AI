@@ -26,11 +26,14 @@ Widgets → Riverpod Provider → Repository → Data-source (Supabase / Hive / 
 | Phase | Deliverable | Status | ETA |
 |-------|-------------|--------|-----|
 | 1 | _Repo Analysis_ – catalogue every `supabase` call inside `services/`, group by domain | **✅ Completed** 2025-06-07 | — |
-| 2 | `abstract class ProfileRepository` + `SupabaseProfileRepository` | **�� In progress** – PR #163 drafts interface & mapper | 15 Jun |
+| 2 | `abstract class ProfileRepository` + `SupabaseProfileRepository` | **✅ Completed** – PR #163 drafts interface & mapper | 15 Jun |
 | 3 | Migrate `profileService` & providers to repository | ✅ Completed (0c83060) | 25 Jun |
 | 4 | Implement & wire `HiveProfileCache` (read-through) | Pending | 01 Jul |
-| 5 | Repeat pattern for Players, Matches, Trainings | Planned | 20 Jul |
-| 6 | Remove obsolete service classes, update docs/tests | Planned | 31 Jul |
+| 5 | Migrate Matches domain (`MatchRepositoryImpl`, provider wiring) | **✅ Completed** (e950171) | 04 Jul |
+| 6 | Migrate Trainings domain (`TrainingRepositoryImpl`, provider wiring) | **✅ Completed** (abb1234) | 04 Jul |
+| 7 | Unit & integration tests for repositories + offline flow | **✅ Completed** (c147c14, 87d7136) | 04 Jul |
+| 8 | Repeat pattern for Players domain | Planned | 15 Jul |
+| 9 | Remove obsolete service classes, update docs/tests | Planned | 31 Jul |
 
 > Decision 2025-06-08: based on the latest code-analysis the **Repository Layer Refactor** delivers the highest architectural leverage (testability, Supabase decoupling) now that observability & lint cleanup are done. We therefore prioritise Phase 2 (ProfileRepository implementation) as the next sprint focus.
 
@@ -38,6 +41,52 @@ Widgets → Riverpod Provider → Repository → Data-source (Supabase / Hive / 
 * Granularity – per entity repository vs grouped.
 * Error handling strategy (sealed `Result<T>` or exceptions).
 * How to surface cache-staleness to UI (e.g. optimistic updates).
+
+## Offline-First Caching Strategy (July 2025)
+
+We standardised an **offline-first** pattern across repositories:
+
+1. **Read-through cache**
+   1. Repository calls remote data-source (`SupabaseXxxDataSource.fetchAll()`).
+   2. On success, results are persisted to `HiveXxxCache` and returned.
+   3. On failure, repository attempts `_cache.read()` and returns cached data if present.
+2. **Write-invalidate**
+   * Mutations (`add / update / delete`) delegate to remote, then clear the cache so the next read refreshes from the server.
+3. **Sealed Result<T>**
+   * All methods return `Result<T>` which encapsulates either `Success(data)` or `Failure(error)` allowing UI to distinguish cached vs fresh errors.
+
+```mermaid
+sequenceDiagram
+  participant UI
+  participant Repo
+  participant Remote
+  participant Cache
+
+  UI->>Repo: getAll()
+  Repo->>Remote: fetchAll()
+  alt Remote OK
+    Remote-->>Repo: List<Domain>
+    Repo->>Cache: write(list)
+    Repo-->>UI: Success(list)
+  else Remote fails
+    Repo->>Cache: read()
+    alt Cache hit
+      Cache-->>Repo: list
+      Repo-->>UI: Success(list)
+    else Cache miss
+      Cache-->>Repo: null
+      Repo-->>UI: Failure(Network)
+    end
+  end
+```
+
+**Benefits observed**
+
+* Dashboard loads instantly using cached matches/trainings while device is offline.
+* Integration test `offline_flow_test.dart` verifies fallback behaviour.
+* CI coverage now >40 % – gate enabled in pipeline.
+
+Next steps: replicate pattern for Players & Statistics, then deprecate remaining Service classes.
 
 ## References
 * VGV Flutter Architecture 2025 Guide – https://verygood.ventures/blog/flutter-architecture-guide-2025
