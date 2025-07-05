@@ -20,10 +20,10 @@ import '../../providers/players_provider.dart';
 import '../../providers/training_sessions_repo_provider.dart';
 import '../../repositories/player_repository.dart';
 import '../../repositories/training_session_repository.dart';
-import '../../services/pdf_service.dart';
 import '../../widgets/training/session_wizard_stepper.dart';
 import 'exercise_library_screen.dart';
 import '../../services/training_session_builder_service.dart';
+import '../../providers/pdf/pdf_generators_providers.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -1483,8 +1483,9 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       final playersRes = await _playerRepo.getAll();
       final allPlayers = playersRes.dataOrNull ?? [];
 
-      // Generate PDF
-      final pdfData = await PDFService.trainingSessionPdf(session!, allPlayers);
+      // Generate PDF using new generator provider
+      final generator = ref.read(trainingSessionPdfGeneratorProvider);
+      final pdfData = await generator.generate((session!, allPlayers));
 
       final fileName =
           'voab_training_${session!.trainingNumber}_${DateFormat('yyyy-MM-dd').format(session!.date)}.pdf';
