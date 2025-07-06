@@ -13,6 +13,12 @@ class HiveKeyManager {
   HiveKeyManager({FlutterSecureStorage? storage})
       : _storage = storage ?? const FlutterSecureStorage();
 
+  /// Creates an in-memory key manager for unit tests, bypassing platform
+  /// channels from `flutter_secure_storage`.
+  factory HiveKeyManager.inMemory() => HiveKeyManager(
+        storage: _InMemorySecureStorage(),
+      );
+
   static const _kKeyName = 'hive_encryption_key';
   final FlutterSecureStorage _storage;
   List<int>? _cached;
@@ -40,4 +46,38 @@ class HiveKeyManager {
     _cached = null;
     await _storage.delete(key: _kKeyName);
   }
+}
+
+/// Minimal in-memory stub for [FlutterSecureStorage] used in tests.
+class _InMemorySecureStorage implements FlutterSecureStorage {
+  final Map<String, String> _store = {};
+
+  @override
+  Future<String?> read({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async => _store[key];
+
+  @override
+  Future<void> write({required String key, required String? value, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async {
+    if (value == null) {
+      _store.remove(key);
+    } else {
+      _store[key] = value;
+    }
+  }
+
+  @override
+  Future<void> delete({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async {
+    _store.remove(key);
+  }
+
+  @override
+  Future<void> deleteAll({IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async {
+    _store.clear();
+  }
+
+  // The rest of the API methods are no-op for this stub
+  @override
+  Future<Map<String, String>> readAll({IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async => Map.of(_store);
+
+  @override
+  Future<bool> containsKey({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async => _store.containsKey(key);
 }
