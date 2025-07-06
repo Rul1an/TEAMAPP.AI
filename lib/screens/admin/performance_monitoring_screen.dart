@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import '../../services/monitoring_service.dart';
 import '../../widgets/common/main_scaffold.dart';
+import 'performance_monitoring/system_health_overview_card.dart';
 
 /// Performance Monitoring Screen for real-time system health and metrics
 class PerformanceMonitoringScreen extends ConsumerStatefulWidget {
@@ -67,7 +68,7 @@ class _PerformanceMonitoringScreenState
                   children: [
                     _buildHeader(),
                     const SizedBox(height: 24),
-                    _buildSystemHealthOverview(),
+                    const SystemHealthOverviewCard(),
                     const SizedBox(height: 24),
                     _buildRealTimeMetrics(),
                     const SizedBox(height: 24),
@@ -154,119 +155,6 @@ class _PerformanceMonitoringScreenState
               style: TextStyle(
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      );
-
-  Widget _buildSystemHealthOverview() => Card(
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'System Health Overview',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 4,
-                childAspectRatio: 1.2,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                children: [
-                  _buildHealthMetric(
-                    'Uptime',
-                    '99.98%',
-                    Icons.trending_up,
-                    Colors.green,
-                    '30 days',
-                  ),
-                  _buildHealthMetric(
-                    'Response Time',
-                    '142ms',
-                    Icons.speed,
-                    Colors.blue,
-                    'avg last hour',
-                  ),
-                  _buildHealthMetric(
-                    'Error Rate',
-                    '0.02%',
-                    Icons.error_outline,
-                    Colors.orange,
-                    'last 24h',
-                  ),
-                  _buildHealthMetric(
-                    'Active Users',
-                    '1,247',
-                    Icons.people,
-                    Colors.purple,
-                    'current',
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget _buildHealthMetric(
-    String title,
-    String value,
-    IconData icon,
-    Color color,
-    String period,
-  ) =>
-      Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.05),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withValues(alpha: 0.2)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: color, size: 24),
-                const Spacer(),
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: color,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              period,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
               ),
             ),
           ],
