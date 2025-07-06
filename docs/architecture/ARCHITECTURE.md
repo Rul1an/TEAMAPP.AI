@@ -117,14 +117,12 @@ JO17 Tactical Manager is een hybride Flutter applicatie voor het beheren van jeu
 └─────────────────────────────────────────────────────────────┘
                               │
 ┌─────────────────────────────────────────────────────────────┐
-│                      Business Logic Layer                    │
+│                      Repository Layer                       │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │              Services                                │   │
-│  │  - Database Service                                  │   │
-│  │  - Import Service                                    │   │
-│  │  - Export Service                                    │   │
-│  │  - Video Service (toekomstig)                       │   │
-│  │  - AI Coach Service (toekomstig)                    │   │
+│  │              Repositories                           │   │
+│  │  - ProfileRepository    - PlayerRepository          │   │
+│  │  - MatchRepository      - TrainingRepository        │   │
+│  │  - PdfGenerator facade (export)                     │   │
 │  └─────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                               │
