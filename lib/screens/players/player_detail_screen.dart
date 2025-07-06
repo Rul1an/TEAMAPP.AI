@@ -8,6 +8,9 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import '../../models/player.dart';
 import '../../providers/players_provider.dart';
+import '../../providers/pdf/pdf_generators_providers.dart';
+import '../../utils/share_pdf_utils.dart';
+import '../../models/assessment.dart';
 
 class PlayerDetailScreen extends ConsumerWidget {
   const PlayerDetailScreen({
@@ -24,6 +27,11 @@ class PlayerDetailScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Speler Details'),
         actions: [
+          IconButton(
+            tooltip: 'Export PDF',
+            icon: const Icon(Icons.picture_as_pdf),
+            onPressed: () => _exportPdf(ref, context),
+          ),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
@@ -115,5 +123,24 @@ class PlayerDetailScreen extends ConsumerWidget {
       case Position.forward:
         return 'Aanvaller';
     }
+  }
+
+  Future<void> _exportPdf(WidgetRef ref, BuildContext context) async {
+    final playersAsync = ref.read(playersProvider);
+    playersAsync.whenData((players) async {
+      final player = players.firstWhere((p) => p.id == playerId, orElse: () => null);
+      if (player == null) return;
+
+      // Placeholder minimal assessment for demo
+      final assessmentGenerator = ref.read(playerAssessmentPdfGeneratorProvider);
+      final assessment = PlayerAssessment()
+        ..playerId = player.id
+        ..assessorId = 'auto'
+        ..type = AssessmentType.monthly;
+
+      final bytes = await assessmentGenerator.generate(assessment);
+      final filename = 'assessment_${player.id}.pdf';
+      await SharePdfUtils.sharePdf(bytes, filename, context);
+    });
   }
 }
