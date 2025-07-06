@@ -107,6 +107,14 @@ jobs:
           exit 1
         fi
 
+    - name: Run code generation
+      run: |
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+          cd jo17_tactical_manager
+        fi
+        echo "🚀 Running build_runner to generate Freezed/JSON code"
+        flutter pub run build_runner build --delete-conflicting-outputs
+
     - name: Check code formatting
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
