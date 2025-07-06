@@ -11,6 +11,9 @@ import '../../widgets/common/main_scaffold.dart';
 import 'performance_monitoring/system_health_overview_card.dart';
 import 'performance_monitoring/real_time_metrics_card.dart';
 import 'performance_monitoring/performance_charts_row.dart';
+import 'performance_monitoring/error_tracking_card.dart';
+import 'performance_monitoring/user_activity_metrics_card.dart';
+import 'performance_monitoring/system_resources_card.dart';
 
 /// Performance Monitoring Screen for real-time system health and metrics
 class PerformanceMonitoringScreen extends ConsumerStatefulWidget {
@@ -76,11 +79,11 @@ class _PerformanceMonitoringScreenState
                     const SizedBox(height: 24),
                     const PerformanceChartsRow(),
                     const SizedBox(height: 24),
-                    _buildErrorTracking(),
+                    const ErrorTrackingCard(),
                     const SizedBox(height: 24),
-                    _buildUserActivityMetrics(),
+                    const UserActivityMetricsCard(),
                     const SizedBox(height: 24),
-                    _buildSystemResources(),
+                    const SystemResourcesCard(),
                   ],
                 ),
               ),
