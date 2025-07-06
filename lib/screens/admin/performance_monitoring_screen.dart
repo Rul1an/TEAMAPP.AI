@@ -10,6 +10,7 @@ import '../../services/monitoring_service.dart';
 import '../../widgets/common/main_scaffold.dart';
 import 'performance_monitoring/system_health_overview_card.dart';
 import 'performance_monitoring/real_time_metrics_card.dart';
+import 'performance_monitoring/performance_charts_row.dart';
 
 /// Performance Monitoring Screen for real-time system health and metrics
 class PerformanceMonitoringScreen extends ConsumerStatefulWidget {
@@ -73,7 +74,7 @@ class _PerformanceMonitoringScreenState
                     const SizedBox(height: 24),
                     const RealTimeMetricsCard(),
                     const SizedBox(height: 24),
-                    _buildPerformanceCharts(),
+                    const PerformanceChartsRow(),
                     const SizedBox(height: 24),
                     _buildErrorTracking(),
                     const SizedBox(height: 24),
@@ -160,200 +161,6 @@ class _PerformanceMonitoringScreenState
             ),
           ],
         ),
-      );
-
-  Widget _buildPerformanceCharts() => Row(
-        children: [
-          Expanded(
-            child: Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Memory Usage',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      height: 200,
-                      child: BarChart(
-                        BarChartData(
-                          alignment: BarChartAlignment.spaceAround,
-                          maxY: 100,
-                          barTouchData: BarTouchData(enabled: false),
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget:
-                                    (double value, TitleMeta meta) {
-                                  const titles = [
-                                    'Mon',
-                                    'Tue',
-                                    'Wed',
-                                    'Thu',
-                                    'Fri',
-                                    'Sat',
-                                    'Sun',
-                                  ];
-                                  if (value.toInt() >= 0 &&
-                                      value.toInt() < titles.length) {
-                                    return Text(
-                                      titles[value.toInt()],
-                                      style: const TextStyle(fontSize: 12),
-                                    );
-                                  }
-                                  return const Text('');
-                                },
-                              ),
-                            ),
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 40,
-                                getTitlesWidget:
-                                    (double value, TitleMeta meta) => Text(
-                                  '${value.toInt()}%',
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                              ),
-                            ),
-                            topTitles: const AxisTitles(),
-                            rightTitles: const AxisTitles(),
-                          ),
-                          borderData: FlBorderData(show: false),
-                          barGroups: [
-                            BarChartGroupData(
-                              x: 0,
-                              barRods: [
-                                BarChartRodData(toY: 65, color: Colors.blue),
-                              ],
-                            ),
-                            BarChartGroupData(
-                              x: 1,
-                              barRods: [
-                                BarChartRodData(toY: 72, color: Colors.blue),
-                              ],
-                            ),
-                            BarChartGroupData(
-                              x: 2,
-                              barRods: [
-                                BarChartRodData(toY: 58, color: Colors.blue),
-                              ],
-                            ),
-                            BarChartGroupData(
-                              x: 3,
-                              barRods: [
-                                BarChartRodData(toY: 81, color: Colors.orange),
-                              ],
-                            ),
-                            BarChartGroupData(
-                              x: 4,
-                              barRods: [
-                                BarChartRodData(toY: 67, color: Colors.blue),
-                              ],
-                            ),
-                            BarChartGroupData(
-                              x: 5,
-                              barRods: [
-                                BarChartRodData(toY: 45, color: Colors.green),
-                              ],
-                            ),
-                            BarChartGroupData(
-                              x: 6,
-                              barRods: [
-                                BarChartRodData(toY: 52, color: Colors.green),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Request Distribution',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      height: 200,
-                      child: PieChart(
-                        PieChartData(
-                          sections: [
-                            PieChartSectionData(
-                              value: 45,
-                              title: 'API\n45%',
-                              color: Colors.blue,
-                              radius: 60,
-                              titleStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            PieChartSectionData(
-                              value: 30,
-                              title: 'Web\n30%',
-                              color: Colors.green,
-                              radius: 60,
-                              titleStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            PieChartSectionData(
-                              value: 15,
-                              title: 'Mobile\n15%',
-                              color: Colors.orange,
-                              radius: 60,
-                              titleStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            PieChartSectionData(
-                              value: 10,
-                              title: 'Other\n10%',
-                              color: Colors.purple,
-                              radius: 60,
-                              titleStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                          sectionsSpace: 2,
-                          centerSpaceRadius: 40,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
       );
 
   Widget _buildErrorTracking() => Card(
