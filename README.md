@@ -41,14 +41,18 @@ See the detailed guide: `docs/guides/REPOSITORY_USAGE_GUIDE_2025.md`.
 # 2. Clone repo and enter module directory
 cd jo17_tactical_manager
 
-# 3. Get packages & generate code
-flutter pub get
-flutter pub run build_runner build --delete-conflicting-outputs
+# 3. Install Melos (mono-repo helper) once
+flutter pub global activate melos
+melos bootstrap
 
-# 4. Run tests (should be green)
-flutter test
+# 4. Generate all Freezed/JSON code for every package
+melos run gen
 
-# 5. Launch
+# 5. Run analyzer & tests
+melos run analyze
+melos run test
+
+# 6. Launch (web example)
 flutter run -d chrome --web-port 8081
 ```
 
