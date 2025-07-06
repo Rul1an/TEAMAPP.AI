@@ -11,6 +11,8 @@ import '../../models/match.dart';
 import '../../models/player.dart';
 import '../../providers/matches_provider.dart';
 import '../../providers/players_provider.dart';
+import '../../providers/pdf/pdf_generators_providers.dart';
+import '../../utils/share_pdf_utils.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({
@@ -59,6 +61,11 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
             onPressed: () {
               context.go('/matches/${widget.matchId}/edit');
             },
+          ),
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf),
+            tooltip: 'Exporteer PDF',
+            onPressed: _exportPdf,
           ),
           IconButton(
             icon: const Icon(Icons.save),
@@ -589,6 +596,24 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         );
       }
     }
+  }
+
+  Future<void> _exportPdf() async {
+    final matchAsync = ref.read(matchesProvider);
+    matchAsync.whenData((matches) async {
+      final match = matches.firstWhere(
+        (m) => m.id == widget.matchId,
+        orElse: () => null,
+      );
+      if (match == null) return;
+
+      final generator = ref.read(matchReportPdfGeneratorProvider);
+      final bytes = await generator.generate(match);
+      final filename = 'match_report_${match.id}.pdf';
+      if (mounted) {
+        await SharePdfUtils.sharePdf(bytes, filename, context);
+      }
+    });
   }
 
   String _getCompetitionName(Competition competition) {
