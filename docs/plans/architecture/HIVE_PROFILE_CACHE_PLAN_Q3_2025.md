@@ -25,7 +25,7 @@ Provide an encrypted offline cache for the user `Profile` entity using **Hive 4*
 | H3 | Implement `HiveProfileCache` (read/write helpers) | Dev | — |
 | H4 | Refactor `SupabaseProfileRepository` to inject optional cache & implement SW-R | Dev | — |
 | H5 | Unit tests with in-memory Hive (`Hive.initMemory()`) | QA | — |
-| H6 | Update docs (`ARCHITECTURE.md`) & diagrams | Tech writer | — |
+| H6 | Update docs (`ARCHITECTURE.md`) & diagrams | Tech writer | — | ✅ Done
 
 ## 3  API Sketch
 ```dart
