@@ -131,6 +131,8 @@ JO17 Tactical Manager is een hybride Flutter applicatie voor het beheren van jeu
 │  ┌──────────────┐  ┌──────────────┐  ┌────────────────┐   │
 │  │ Isar (Mobile)│  │ Mock (Web)   │  │ Supabase       │   │
 │  │              │  │              │  │ (Toekomstig)   │   │
+│  │ Isar (Mobile)│  │ Hive Cache   │  │ Supabase (Online)│ │
+│  │              │  │ (Offline)    │  │ (Sync)         │   │
 │  └──────────────┘  └──────────────┘  └────────────────┘   │
 │  ┌──────────────┐  ┌──────────────┐                       │
 │  │Video Storage │  │ AI/LLM APIs │                       │
@@ -544,7 +546,7 @@ Flexibele data import en export mogelijkheden:
 
 ---
 
-*Document laatst bijgewerkt: **11 July 2025***
+*Document laatst bijgewerkt: **16 July 2025***
 *Versie: 1.1.0*
 
 ### New Data Access Layer (2025 Roadmap)

@@ -54,3 +54,8 @@ A dedicated **CI Monitor** GitHub workflow is active. On every failing build i
 * **Exercise Library Modularisation** – Legacy 1 100+ LOC screen refactored into modular widgets; analyzer now 0 issues overall (`3aa66d7`).
 * Added `SessionBuilderController` (StateNotifier) and `SessionBuilderView` – both fully covered by analyzer with 0 issues.
 * Introduced `training_session_builder_service.dart` with formatted code.
+
+### Notable Updates (2025-07-16)
+* **PDF Service Modularisation** – Legacy service removed; generators & golden tests raise overall coverage, analyzer still 0 issues.
+* **Large File Refactor** – PerformanceMonitoringScreen split; all target files ≤300 LOC.
+* **Hive Profile Cache** – Encrypted cache implemented and integrated; offline launch verified, tests pass.
