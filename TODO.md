@@ -94,4 +94,4 @@
 *   [ ] refactor-performance-monitoring *(split charts & providers)*
 *   [ ] refactor-annual-planning-provider *(move helpers to services)*
 
-*Document laatst bijgewerkt: **14 July 2025***
+*Document laatst bijgewerkt: **15 July 2025***
