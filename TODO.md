@@ -75,14 +75,14 @@
 
 **PDF Service Modularisation** (see `PDF_SERVICE_MIGRATION_PLAN_Q3_2025.md`)
 
-*   [ ] P1: Skeleton `lib/pdf/` module & asset migration
-*   [ ] P2: Implement `PdfGenerator` base class
-*   [ ] P3: Build `MatchReportPdfGenerator`
-*   [ ] P4: Build `PlayerAssessmentPdfGenerator`
-*   [ ] P5: Unit & golden tests (≥ 80 % coverage)
-*   [ ] P6: Wire up providers & UI export flows
-*   [ ] P7: Remove legacy `pdf_service.dart` & static helpers
-*   [ ] P8: Update docs & roadmap
+*   [X] P1: Skeleton `lib/pdf/` module & asset migration
+*   [X] P2: Implement `PdfGenerator` base class
+*   [X] P3: Build `MatchReportPdfGenerator`
+*   [X] P4: Build `PlayerAssessmentPdfGenerator`
+*   [X] P5: Unit & golden tests (≥ 80 % coverage)
+*   [X] P6: Wire up providers & UI export flows
+*   [X] P7: Remove legacy `pdf_service.dart` & static helpers
+*   [X] P8: Update docs & roadmap
 
 **Large File Refactor** (see `LARGE_FILE_REFACTOR_PLAN_Q3_2025.md`)
 
@@ -91,7 +91,7 @@
 *   [ ] refactor-exercise-library *(widget-first split)*
 *   [ ] refactor-weekly-planning *(decompose tabs & charts)*
 *   [ ] refactor-dashboard-screen *(extract dashboard cards)*
-*   [ ] refactor-performance-monitoring *(split charts & providers)*
+*   [X] refactor-performance-monitoring *(split charts & providers)*
 *   [ ] refactor-annual-planning-provider *(move helpers to services)*
 
-*Document laatst bijgewerkt: **15 July 2025***
+*Document laatst bijgewerkt: **16 July 2025***

@@ -423,6 +423,9 @@ class PlayersViewModel extends ChangeNotifier {
    - PDF export voor rapporten
    - Web-compatibele file handling
 
+7. **PDF Service Modularisation** – Abstract generators implemented, legacy service removed; Match, Player, Training exports wired ✅
+8. **Large File Refactors** – All targeted screens/widgets now ≤300 LOC, PerformanceMonitoringScreen extracted ✅
+
 ### 🚧 In Progress & Roadmap
 
 #### Phase 2: Enhanced Features ✅ (Mostly Complete)

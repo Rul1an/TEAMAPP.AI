@@ -1,6 +1,6 @@
 # Code Analysis Overview – Q3 2025
 
-_Last updated: 2025-07-13_
+_Last updated: 2025-07-16_
 
 ## Current State
 
@@ -46,6 +46,9 @@ Bring analyzer to **0 infos** and lift overall code-quality bar in line with 202
 - CI fails on any new lint violation.
 - Code coverage ≥ 40 % remains.
 - Dev-team acknowledges new standards in retro.
+
+### CI Monitor
+A dedicated **CI Monitor** GitHub workflow is active. On every failing build it automatically opens/updates a `ci-failure` issue with logs attached. The current `main` and `develop` branches are green (build #354, 2025-07-16).
 
 ### Notable Updates (2025-07-13)
 * **Exercise Library Modularisation** – Legacy 1 100+ LOC screen refactored into modular widgets; analyzer now 0 issues overall (`3aa66d7`).
