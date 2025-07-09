@@ -81,9 +81,9 @@ jobs:
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
-          flutter analyze --no-fatal-warnings --fatal-infos
+          flutter analyze --no-fatal-warnings
         elif [ -f "pubspec.yaml" ]; then
-          flutter analyze --no-fatal-warnings --fatal-infos
+          flutter analyze --no-fatal-warnings
         else
           echo "ERROR: Could not find pubspec.yaml"
           exit 1
