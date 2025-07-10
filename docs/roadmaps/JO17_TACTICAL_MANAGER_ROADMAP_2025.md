@@ -199,6 +199,8 @@ class AITrainingService {
 - [ ] Basic voice commands
 - [ ] Image analysis prototype
 - [ ] Performance benchmarking
+- [ ] PDF Service Modularisation (Quality Guild)
+- [ ] Large File Refactor (<300 LOC policy)
 
 ### Q4 2025: Architecture Modernization
 - [ ] Microservices migration
@@ -257,6 +259,6 @@ De combinatie van Flutter 3.32's nieuwe mogelijkheden, AI-first benadering, en m
 ---
 
 *Document versie: 1.0*  
-*Laatste update: Juni 2025*  
+*Laatste update: **14 July 2025***  
 *Auteur: AI Development Team*  
 *Status: Draft - Wachtend op goedkeuring*

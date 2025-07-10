@@ -1,7 +1,7 @@
 # PDF Service Migration Plan – Q3 2025
 
 > Owner: **@core-team – Quality Guild**
-> Status: **Draft** (2025-07-14)
+> Status: **Completed** (2025-07-16)
 
 ---
 
@@ -82,10 +82,10 @@ Provider (Riverpod) ──► PdfGenerator (abstract)
 * **Week 32** – Production rollout
 
 ## 8. Acceptance Checklist
-- [ ] Unit & golden tests ≥ 80 %
-- [ ] Legacy service/helpers removed
-- [ ] CI green (analyze + tests + coverage)
-- [ ] Functional QA sign-off (Head Coach & Analyst)
+- [X] Unit & golden tests ≥ 80 %
+- [X] Legacy service/helpers removed
+- [X] CI green (analyze + tests + coverage)
+- [X] Functional QA sign-off (Head Coach & Analyst)
 
 ---
 *Generated with Cursor AI assistant.*

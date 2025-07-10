@@ -68,3 +68,30 @@
 *   [ ] Set up Firebase Analytics for user behavior tracking.
 *   [ ] Integrate Sentry for error reporting.
 *   [ ] Explore and integrate with OpenAI, Anthropic Claude, and vector databases for future AI features.
+
+---
+
+### Quality & Refactors (Q3 2025)
+
+**PDF Service Modularisation** (see `PDF_SERVICE_MIGRATION_PLAN_Q3_2025.md`)
+
+*   [X] P1: Skeleton `lib/pdf/` module & asset migration
+*   [X] P2: Implement `PdfGenerator` base class
+*   [X] P3: Build `MatchReportPdfGenerator`
+*   [X] P4: Build `PlayerAssessmentPdfGenerator`
+*   [X] P5: Unit & golden tests (≥ 80 % coverage)
+*   [X] P6: Wire up providers & UI export flows
+*   [X] P7: Remove legacy `pdf_service.dart` & static helpers
+*   [X] P8: Update docs & roadmap
+
+**Large File Refactor** (see `LARGE_FILE_REFACTOR_PLAN_Q3_2025.md`)
+
+*   [ ] refactor-session-builder *(split UI, controller, widgets)*
+*   [ ] refactor-pdf-service *(modularise PDF generation)*
+*   [ ] refactor-exercise-library *(widget-first split)*
+*   [ ] refactor-weekly-planning *(decompose tabs & charts)*
+*   [ ] refactor-dashboard-screen *(extract dashboard cards)*
+*   [X] refactor-performance-monitoring *(split charts & providers)*
+*   [ ] refactor-annual-planning-provider *(move helpers to services)*
+
+*Document laatst bijgewerkt: **16 July 2025***
