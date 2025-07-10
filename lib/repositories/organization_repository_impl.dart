@@ -12,8 +12,8 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   OrganizationRepositoryImpl({
     required SupabaseOrganizationDataSource remote,
     required HiveOrganizationCache cache,
-  })  : _remote = remote,
-        _cache = cache;
+  }) : _remote = remote,
+       _cache = cache;
 
   final SupabaseOrganizationDataSource _remote;
   final HiveOrganizationCache _cache;

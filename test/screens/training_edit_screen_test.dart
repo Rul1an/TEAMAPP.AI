@@ -27,7 +27,10 @@ class _MockTrainingRepo implements TrainingRepository {
   Future<Result<Training?>> getById(String id) async => Success(_dummy);
 
   @override
-  Future<Result<List<Training>>> getByDateRange(DateTime start, DateTime end) async => const Success([]);
+  Future<Result<List<Training>>> getByDateRange(
+    DateTime start,
+    DateTime end,
+  ) async => const Success([]);
 
   @override
   Future<Result<List<Training>>> getUpcoming() async => const Success([]);
@@ -41,25 +44,27 @@ class _MockTrainingRepo implements TrainingRepository {
   Training get saved => _saved.first;
 }
 
-final _dummy = Training(
-  id: '1',
-  date: DateTime(2025, 7, 20),
-  duration: 60,
-  focus: TrainingFocus.technical,
-  intensity: TrainingIntensity.medium,
-  status: TrainingStatus.planned,
-  presentPlayerIds: [],
-  absentPlayerIds: [],
-);
+final _dummy = () {
+  final t = Training()
+    ..id = '1'
+    ..date = DateTime(2025, 7, 20)
+    ..duration = 60
+    ..focus = TrainingFocus.technical
+    ..intensity = TrainingIntensity.medium
+    ..status = TrainingStatus.planned
+    ..presentPlayerIds = []
+    ..absentPlayerIds = [];
+  return t;
+}();
 
 Widget _wrapWithRouter(Widget child) => ProviderScope(
-      overrides: [],
-      child: MaterialApp.router(
-        routerConfig: GoRouter(routes: [
-          GoRoute(path: '/', builder: (_, __) => child),
-        ]),
-      ),
-    );
+  overrides: [],
+  child: MaterialApp.router(
+    routerConfig: GoRouter(
+      routes: [GoRoute(path: '/', builder: (_, __) => child)],
+    ),
+  ),
+);
 
 void main() {
   late _MockTrainingRepo repo;
@@ -71,12 +76,8 @@ void main() {
   testWidgets('prefills form with existing training data', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          trainingRepositoryProvider.overrideWithValue(repo),
-        ],
-        child: MaterialApp(
-          home: TrainingEditScreen(trainingId: '1'),
-        ),
+        overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
+        child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
     await tester.pumpAndSettle();

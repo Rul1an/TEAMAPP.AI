@@ -22,9 +22,9 @@ class RiskFactorsChart extends StatelessWidget {
           children: [
             Text(
               'Injury Risk Factors Over Time',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             SizedBox(

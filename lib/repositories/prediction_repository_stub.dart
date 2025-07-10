@@ -22,13 +22,16 @@ class PredictionRepositoryStub implements PredictionRepository {
     final matches = allMatches.take(3).toList();
     if (matches.isEmpty) return const Success(FormTrend.stable);
 
-    final avgPts = matches
-        .map((m) => m.result == MatchResult.win
-            ? 3
-            : m.result == MatchResult.draw
-                ? 1
-                : 0)
-        .reduce((a, b) => a + b) /
+    final avgPts =
+        matches
+            .map(
+              (m) => m.result == MatchResult.win
+                  ? 3
+                  : m.result == MatchResult.draw
+                  ? 1
+                  : 0,
+            )
+            .reduce((a, b) => a + b) /
         matches.length;
     if (avgPts >= 2.1) return const Success(FormTrend.improving);
     if (avgPts <= 0.9) return const Success(FormTrend.declining);

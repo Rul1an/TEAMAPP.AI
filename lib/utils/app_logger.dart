@@ -16,10 +16,7 @@ class AppLogger {
     // Show nice formatted output in debug; in release a different printer can
     // be plugged in if desired.
     printer: PrettyPrinter(methodCount: 0),
-    output: MultiOutput([
-      ConsoleOutput(),
-      _SentryLogOutput(),
-    ]),
+    output: MultiOutput([ConsoleOutput(), _SentryLogOutput()]),
   );
 
   /// Trace-level message.
@@ -53,11 +50,7 @@ class _SentryLogOutput extends LogOutput {
     for (final line in event.lines) {
       // Record breadcrumb for every log.
       Sentry.addBreadcrumb(
-        Breadcrumb(
-          message: line,
-          level: sentryLevel,
-          category: 'log',
-        ),
+        Breadcrumb(message: line, level: sentryLevel, category: 'log'),
       );
 
       // Capture standalone event for error & fatal levels.

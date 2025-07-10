@@ -6,7 +6,7 @@ import '../../../providers/analytics_repository_provider.dart';
 import '../../../utils/heatmap_utils.dart';
 import '../../../widgets/async_value_widget.dart';
 import '../../../widgets/analytics/heat_map_painter.dart';
-import '../../../repositories/analytics_repository.dart';
+import '../../../models/action_category.dart';
 import '../../../models/action_event.dart';
 
 class HeatMapCard extends ConsumerStatefulWidget {
@@ -31,7 +31,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
           children: [
             Row(
               children: [
-                const Icon(Icons.heat_map, color: Colors.deepOrange),
+                const Icon(Icons.thermostat, color: Colors.deepOrange),
                 const SizedBox(width: 8),
                 Text('Heatmap', style: Theme.of(context).textTheme.titleMedium),
                 const Spacer(),
@@ -43,7 +43,8 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
             const SizedBox(height: 16),
             SizedBox(
               height: 300,
-              child: AsyncValueWidget<List<ActionEvent>>( // custom util widget assumed
+              child: AsyncValueWidget<List<ActionEvent>>(
+                // custom util widget assumed
                 value: eventsAsync,
                 data: (events) {
                   final matrix = binEvents(events: events);
@@ -61,40 +62,47 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
   }
 
   Widget _buildCategoryDropdown() => DropdownButton<ActionCategory>(
-        value: _category,
-        onChanged: (v) {
-          if (v == null) return;
-          setState(() => _category = v);
-          _reload();
-        },
-        items: ActionCategory.values
-            .map((c) => DropdownMenuItem(value: c, child: Text(c.name)))
-            .toList(),
-      );
+    value: _category,
+    onChanged: (v) {
+      if (v == null) return;
+      setState(() => _category = v);
+      _reload();
+    },
+    items: ActionCategory.values
+        .map((c) => DropdownMenuItem(value: c, child: Text(c.name)))
+        .toList(),
+  );
 
   Widget _buildFrameDropdown() => DropdownButton<_TimeFrame>(
-        value: _frame,
-        onChanged: (v) {
-          if (v == null) return;
-          setState(() => _frame = v);
-          _reload();
-        },
-        items: _TimeFrame.values
-            .map((t) => DropdownMenuItem(value: t, child: Text(t.label)))
-            .toList(),
-      );
+    value: _frame,
+    onChanged: (v) {
+      if (v == null) return;
+      setState(() => _frame = v);
+      _reload();
+    },
+    items: _TimeFrame.values
+        .map((t) => DropdownMenuItem(value: t, child: Text(t.label)))
+        .toList(),
+  );
 
   void _reload() {
     final now = DateTime.now();
     final params = switch (_frame) {
       _TimeFrame.season => HeatMapParams(
-          start: DateTime(now.year, 1, 1),
-          end: now,
-          category: _category),
+        start: DateTime(now.year, 1, 1),
+        end: now,
+        category: _category,
+      ),
       _TimeFrame.lastFive => HeatMapParams(
-          start: now.subtract(const Duration(days: 30)), end: now, category: _category),
+        start: now.subtract(const Duration(days: 30)),
+        end: now,
+        category: _category,
+      ),
       _TimeFrame.match => HeatMapParams(
-          start: now.subtract(const Duration(hours: 3)), end: now, category: _category),
+        start: now.subtract(const Duration(hours: 3)),
+        end: now,
+        category: _category,
+      ),
     };
     ref.read(heatMapControllerProvider.notifier).load(params);
   }
@@ -104,8 +112,8 @@ enum _TimeFrame { season, lastFive, match }
 
 extension on _TimeFrame {
   String get label => switch (this) {
-        _TimeFrame.season => 'Seizoen',
-        _TimeFrame.lastFive => 'Laatste 5',
-        _TimeFrame.match => 'Laatste wedstrijd',
-      };
+    _TimeFrame.season => 'Seizoen',
+    _TimeFrame.lastFive => 'Laatste 5',
+    _TimeFrame.match => 'Laatste wedstrijd',
+  };
 }

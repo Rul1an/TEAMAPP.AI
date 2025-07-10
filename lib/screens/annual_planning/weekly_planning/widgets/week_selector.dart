@@ -21,75 +21,70 @@ class WeekSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          controller: scrollController,
-          itemCount: state.totalWeeks,
-          itemBuilder: (context, index) {
-            final weekNumber = index + 1;
-            final isSelected = weekNumber == state.selectedWeek;
-            final isCurrent = weekNumber == state.currentWeekNumber;
-            final weekSchedule = state.weekSchedules
-                .where((w) => w.weekNumber == weekNumber)
-                .firstOrNull;
+    height: 60,
+    padding: const EdgeInsets.symmetric(vertical: 8),
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      controller: scrollController,
+      itemCount: state.totalWeeks,
+      itemBuilder: (context, index) {
+        final weekNumber = index + 1;
+        final isSelected = weekNumber == state.selectedWeek;
+        final isCurrent = weekNumber == state.currentWeekNumber;
+        final weekSchedule = state.weekSchedules
+            .where((w) => w.weekNumber == weekNumber)
+            .firstOrNull;
 
-            final background =
-                _getWeekColor(weekSchedule, isSelected, isCurrent);
+        final background = _getWeekColor(weekSchedule, isSelected, isCurrent);
 
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 2),
-              child: InkWell(
-                onTap: () => ref
-                    .read(annualPlanningProvider.notifier)
-                    .selectWeek(weekNumber),
-                child: Container(
-                  width: 60,
-                  decoration: BoxDecoration(
-                    color: background,
-                    borderRadius: BorderRadius.circular(8),
-                    border: isCurrent
-                        ? Border.all(color: Colors.green, width: 2)
-                        : null,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'W$weekNumber',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: isSelected ? Colors.white : Colors.black87,
-                        ),
-                      ),
-                      if (weekSchedule?.isVacation ?? false)
-                        const Icon(
-                          Icons.beach_access,
-                          size: 12,
-                          color: Colors.orange,
-                        )
-                      else if (weekSchedule?.hasActivities ?? false)
-                        const Icon(
-                          Icons.sports_soccer,
-                          size: 12,
-                          color: Colors.green,
-                        ),
-                    ],
-                  ),
-                ),
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 2),
+          child: InkWell(
+            onTap: () => ref
+                .read(annualPlanningProvider.notifier)
+                .selectWeek(weekNumber),
+            child: Container(
+              width: 60,
+              decoration: BoxDecoration(
+                color: background,
+                borderRadius: BorderRadius.circular(8),
+                border: isCurrent
+                    ? Border.all(color: Colors.green, width: 2)
+                    : null,
               ),
-            );
-          },
-        ),
-      );
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'W$weekNumber',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: isSelected ? Colors.white : Colors.black87,
+                    ),
+                  ),
+                  if (weekSchedule?.isVacation ?? false)
+                    const Icon(
+                      Icons.beach_access,
+                      size: 12,
+                      color: Colors.orange,
+                    )
+                  else if (weekSchedule?.hasActivities ?? false)
+                    const Icon(
+                      Icons.sports_soccer,
+                      size: 12,
+                      color: Colors.green,
+                    ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ),
+  );
 
-  Color _getWeekColor(
-    WeekSchedule? week,
-    bool isSelected,
-    bool isCurrent,
-  ) {
+  Color _getWeekColor(WeekSchedule? week, bool isSelected, bool isCurrent) {
     if (isSelected) return Colors.green[600]!;
     if (week?.isVacation ?? false) return Colors.orange[200]!;
     if (isCurrent) return Colors.green[100]!;

@@ -8,5 +8,5 @@ import '../repositories/performance_rating_repository.dart';
 /// Provides an implementation of [PerformanceRatingRepository].
 final performanceRatingRepositoryProvider =
     Provider<PerformanceRatingRepository>((ref) {
-  return LocalPerformanceRatingRepository();
-});
+      return LocalPerformanceRatingRepository();
+    });

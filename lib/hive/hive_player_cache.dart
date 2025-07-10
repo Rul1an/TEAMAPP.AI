@@ -8,12 +8,12 @@ import 'base_hive_cache.dart';
 /// (de)serialization for the `Player` domain model.
 class HivePlayerCache {
   HivePlayerCache()
-      : _cache = BaseHiveCache<List<Player>>(
-          boxName: _boxName,
-          valueKey: _valueKey,
-          fromJson: _listFromJson,
-          toJson: _listToJson,
-        );
+    : _cache = BaseHiveCache<List<Player>>(
+        boxName: _boxName,
+        valueKey: _valueKey,
+        fromJson: _listFromJson,
+        toJson: _listToJson,
+      );
 
   // Box/value identifiers --------------------------------------------------
   static const _boxName = 'players_box';
@@ -39,8 +39,8 @@ class HivePlayerCache {
   }
 
   static Map<String, dynamic> _listToJson(List<Player> players) => {
-        'players': players.map(_playerToJson).toList(),
-      };
+    'players': players.map(_playerToJson).toList(),
+  };
 
   static Player _playerFromJson(Map<String, dynamic> json) => Player()
     ..id = json['id'] as String? ?? ''
@@ -67,39 +67,40 @@ class HivePlayerCache {
     ..trainingsTotal = json['trainings_total'] as int? ?? 0
     ..createdAt =
         DateTime.tryParse(json['created_at'] as String? ?? '') ?? DateTime.now()
-    ..updatedAt = DateTime.tryParse(json['updated_at'] as String? ?? '') ??
+    ..updatedAt =
+        DateTime.tryParse(json['updated_at'] as String? ?? '') ??
         DateTime.now();
 
   static Map<String, dynamic> _playerToJson(Player p) => <String, dynamic>{
-        'id': p.id,
-        'first_name': p.firstName,
-        'last_name': p.lastName,
-        'jersey_number': p.jerseyNumber,
-        'birth_date': p.birthDate.toIso8601String(),
-        'position': p.position.name,
-        'preferred_foot': p.preferredFoot.name,
-        'height_cm': p.height,
-        'weight_kg': p.weight,
-        'phone': p.phoneNumber,
-        'email': p.email,
-        'parent_contact': p.parentContact,
-        'matches_played': p.matchesPlayed,
-        'matches_in_selection': p.matchesInSelection,
-        'minutes_played': p.minutesPlayed,
-        'goals': p.goals,
-        'assists': p.assists,
-        'yellow_cards': p.yellowCards,
-        'red_cards': p.redCards,
-        'trainings_attended': p.trainingsAttended,
-        'trainings_total': p.trainingsTotal,
-        'created_at': p.createdAt.toIso8601String(),
-        'updated_at': p.updatedAt.toIso8601String(),
-      }..removeWhere((_, v) => v == null);
+    'id': p.id,
+    'first_name': p.firstName,
+    'last_name': p.lastName,
+    'jersey_number': p.jerseyNumber,
+    'birth_date': p.birthDate.toIso8601String(),
+    'position': p.position.name,
+    'preferred_foot': p.preferredFoot.name,
+    'height_cm': p.height,
+    'weight_kg': p.weight,
+    'phone': p.phoneNumber,
+    'email': p.email,
+    'parent_contact': p.parentContact,
+    'matches_played': p.matchesPlayed,
+    'matches_in_selection': p.matchesInSelection,
+    'minutes_played': p.minutesPlayed,
+    'goals': p.goals,
+    'assists': p.assists,
+    'yellow_cards': p.yellowCards,
+    'red_cards': p.redCards,
+    'trainings_attended': p.trainingsAttended,
+    'trainings_total': p.trainingsTotal,
+    'created_at': p.createdAt.toIso8601String(),
+    'updated_at': p.updatedAt.toIso8601String(),
+  }..removeWhere((_, v) => v == null);
 
   static Position _positionFromString(String? s) => Position.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => Position.defender,
-      );
+    (e) => e.name == (s ?? '').toLowerCase(),
+    orElse: () => Position.defender,
+  );
 
   static PreferredFoot _footFromString(String? s) =>
       PreferredFoot.values.firstWhere(

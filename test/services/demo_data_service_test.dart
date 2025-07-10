@@ -17,14 +17,16 @@ void main() {
       expect((data['players'] as List).length, greaterThan(0));
     });
 
-    test('OrganizationService.isSlugAvailable rejects reserved slugs',
-        () async {
-      const reserved = ['admin', 'api', 'APP'];
-      final service = OrganizationService();
-      for (final slug in reserved) {
-        final available = await service.isSlugAvailable(slug);
-        expect(available, isFalse);
-      }
-    });
+    test(
+      'OrganizationService.isSlugAvailable rejects reserved slugs',
+      () async {
+        const reserved = ['admin', 'api', 'APP'];
+        final service = OrganizationService();
+        for (final slug in reserved) {
+          final available = await service.isSlugAvailable(slug);
+          expect(available, isFalse);
+        }
+      },
+    );
   });
 }

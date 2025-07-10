@@ -37,12 +37,7 @@ class PlayerPerformanceData with _$PlayerPerformanceData {
       _$PlayerPerformanceDataFromJson(json);
 }
 
-enum PerformanceType {
-  training,
-  match,
-  test,
-  assessment,
-}
+enum PerformanceType { training, match, test, assessment }
 
 @freezed
 class PhysicalMetrics with _$PhysicalMetrics {
@@ -291,17 +286,6 @@ class PerformanceInsight with _$PerformanceInsight {
       _$PerformanceInsightFromJson(json);
 }
 
-enum InsightType {
-  performance,
-  health,
-  development,
-  warning,
-  achievement,
-}
+enum InsightType { performance, health, development, warning, achievement }
 
-enum InsightPriority {
-  low,
-  medium,
-  high,
-  critical,
-}
+enum InsightPriority { low, medium, high, critical }

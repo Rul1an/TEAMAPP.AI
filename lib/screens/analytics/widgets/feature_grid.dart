@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'feature_card.dart';
 
 class FeatureGrid extends StatelessWidget {
-  const FeatureGrid({
-    super.key,
-    required this.cards,
-  });
+  const FeatureGrid({super.key, required this.cards});
 
   final List<FeatureCard> cards;
 

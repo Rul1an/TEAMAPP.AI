@@ -79,8 +79,8 @@ class QuickStatsRow extends StatelessWidget {
               Text(
                 count != null ? '$count' : '...',
                 style: Theme.of(ctx).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(label),
             ],

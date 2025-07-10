@@ -4,12 +4,12 @@ import 'base_hive_cache.dart';
 
 class HivePeriodizationCache {
   HivePeriodizationCache()
-      : _cache = BaseHiveCache<List<PeriodizationPlan>>(
-          boxName: _box,
-          valueKey: _key,
-          fromJson: _fromJson,
-          toJson: _toJson,
-        );
+    : _cache = BaseHiveCache<List<PeriodizationPlan>>(
+        boxName: _box,
+        valueKey: _key,
+        fromJson: _fromJson,
+        toJson: _toJson,
+      );
 
   static const _box = 'periodization_plans_box';
   static const _key = 'periodization_plans_json';
@@ -22,30 +22,30 @@ class HivePeriodizationCache {
   Future<void> clear() => _cache.clear();
 
   static List<PeriodizationPlan> _fromJson(Map<String, dynamic> map) {
-    final raw =
-        (map['plans'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
+    final raw = (map['plans'] as List<dynamic>? ?? [])
+        .cast<Map<String, dynamic>>();
     return raw.map(_fromMap).toList();
   }
 
   static Map<String, dynamic> _toJson(List<PeriodizationPlan> list) => {
-        'plans': list.map(_toMap).toList(),
-      };
+    'plans': list.map(_toMap).toList(),
+  };
 
   // Simplified serialization (core fields only)
   static Map<String, dynamic> _toMap(PeriodizationPlan p) => {
-        'id': p.id,
-        'name': p.name,
-        'description': p.description,
-        'modelType': p.modelType.name,
-        'targetAgeGroup': p.targetAgeGroup.name,
-        'totalDurationWeeks': p.totalDurationWeeks,
-        'numberOfPeriods': p.numberOfPeriods,
-        'isTemplate': p.isTemplate,
-        'isDefault': p.isDefault,
-        'createdBy': p.createdBy,
-        'createdAt': p.createdAt.toIso8601String(),
-        'updatedAt': p.updatedAt.toIso8601String(),
-      };
+    'id': p.id,
+    'name': p.name,
+    'description': p.description,
+    'modelType': p.modelType.name,
+    'targetAgeGroup': p.targetAgeGroup.name,
+    'totalDurationWeeks': p.totalDurationWeeks,
+    'numberOfPeriods': p.numberOfPeriods,
+    'isTemplate': p.isTemplate,
+    'isDefault': p.isDefault,
+    'createdBy': p.createdBy,
+    'createdAt': p.createdAt.toIso8601String(),
+    'updatedAt': p.updatedAt.toIso8601String(),
+  };
 
   static PeriodizationPlan _fromMap(Map<String, dynamic> json) {
     final plan = PeriodizationPlan();

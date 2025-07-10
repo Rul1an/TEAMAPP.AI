@@ -19,11 +19,12 @@ final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
 
 final periodizationPlanRepositoryProvider =
     Provider<PeriodizationPlanRepository>((ref) {
-  return LocalPeriodizationPlanRepository();
-});
+      return LocalPeriodizationPlanRepository();
+    });
 
-final trainingPeriodRepositoryProvider =
-    Provider<TrainingPeriodRepository>((ref) {
+final trainingPeriodRepositoryProvider = Provider<TrainingPeriodRepository>((
+  ref,
+) {
   return LocalTrainingPeriodRepository();
 });
 
@@ -34,15 +35,17 @@ final seasonPlansProvider = FutureProvider<List<SeasonPlan>>((ref) async {
   return res.dataOrNull ?? [];
 });
 
-final periodizationPlansProvider =
-    FutureProvider<List<PeriodizationPlan>>((ref) async {
+final periodizationPlansProvider = FutureProvider<List<PeriodizationPlan>>((
+  ref,
+) async {
   final repo = ref.read(periodizationPlanRepositoryProvider);
   final res = await repo.getAll();
   return res.dataOrNull ?? [];
 });
 
-final trainingPeriodsProvider =
-    FutureProvider<List<TrainingPeriod>>((ref) async {
+final trainingPeriodsProvider = FutureProvider<List<TrainingPeriod>>((
+  ref,
+) async {
   final repo = ref.read(trainingPeriodRepositoryProvider);
   final res = await repo.getAll();
   return res.dataOrNull ?? [];

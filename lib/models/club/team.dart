@@ -72,27 +72,11 @@ class TeamSettings with _$TeamSettings {
       _$TeamSettingsFromJson(json);
 }
 
-enum TeamLevel {
-  recreational,
-  competitive,
-  elite,
-  academy,
-  reserve,
-  first,
-}
+enum TeamLevel { recreational, competitive, elite, academy, reserve, first }
 
-enum TeamGender {
-  male,
-  female,
-  mixed,
-}
+enum TeamGender { male, female, mixed }
 
-enum TeamStatus {
-  active,
-  inactive,
-  disbanded,
-  suspended,
-}
+enum TeamStatus { active, inactive, disbanded, suspended }
 
 extension TeamLevelExtension on TeamLevel {
   String get displayName {

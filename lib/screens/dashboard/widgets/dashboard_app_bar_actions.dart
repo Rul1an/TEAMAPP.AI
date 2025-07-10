@@ -9,10 +9,7 @@ import '../../../services/permission_service.dart';
 /// * Training add button – coaches & admins (manage training)
 /// * Line-up button – coaches (manage matches)
 class DashboardAppBarActions extends StatelessWidget {
-  const DashboardAppBarActions({
-    required this.userRole,
-    super.key,
-  });
+  const DashboardAppBarActions({required this.userRole, super.key});
 
   final String? userRole;
 

@@ -222,14 +222,11 @@ class FieldPainter extends CustomPainter {
   void _drawCone(Canvas canvas, Offset position, Paint paint, bool isSelected) {
     final size = isSelected ? 14.0 : 12.0;
     final path = Path()
-      ..addPolygon(
-        [
-          Offset(position.dx, position.dy - size),
-          Offset(position.dx - size / 2, position.dy + size / 2),
-          Offset(position.dx + size / 2, position.dy + size / 2),
-        ],
-        true,
-      );
+      ..addPolygon([
+        Offset(position.dx, position.dy - size),
+        Offset(position.dx - size / 2, position.dy + size / 2),
+        Offset(position.dx + size / 2, position.dy + size / 2),
+      ], true);
 
     final borderPaint = Paint()
       ..color = Colors.black
@@ -449,8 +446,10 @@ class FieldPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     final path = Path();
-    final firstPoint =
-        _fieldToCanvasPosition(currentLinePoints.first, fieldRect);
+    final firstPoint = _fieldToCanvasPosition(
+      currentLinePoints.first,
+      fieldRect,
+    );
 
     // Validate first point
     if (!_isValidOffset(firstPoint)) return;
@@ -500,10 +499,7 @@ class FieldPainter extends CustomPainter {
 
       for (double j = 0; j < steps; j++) {
         if (distance % (dashLength + dashSpace) < dashLength) {
-          final dashStart = Offset(
-            start.dx + stepX * j,
-            start.dy + stepY * j,
-          );
+          final dashStart = Offset(start.dx + stepX * j, start.dy + stepY * j);
           final dashEnd = Offset(
             start.dx + stepX * (j + dashLength / (dashLength + dashSpace)),
             start.dy + stepY * (j + dashLength / (dashLength + dashSpace)),
@@ -546,10 +542,7 @@ class FieldPainter extends CustomPainter {
 
       for (var j = 0; j <= dots; j++) {
         final t = j / dots;
-        final dotCenter = Offset(
-          start.dx + dx * t,
-          start.dy + dy * t,
-        );
+        final dotCenter = Offset(start.dx + dx * t, start.dy + dy * t);
 
         // Validate dot center before drawing
         if (_isValidOffset(dotCenter)) {
@@ -677,10 +670,7 @@ class FieldPainter extends CustomPainter {
     final y = fieldRect.top + (fieldPos.y / 100) * fieldRect.height;
 
     // Return safe values if calculation results in NaN or infinite
-    return Offset(
-      x.isFinite ? x : 0.0,
-      y.isFinite ? y : 0.0,
-    );
+    return Offset(x.isFinite ? x : 0.0, y.isFinite ? y : 0.0);
   }
 
   bool _isValidOffset(Offset offset) =>

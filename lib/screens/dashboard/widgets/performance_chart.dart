@@ -2,10 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PerformanceChart extends StatelessWidget {
-  const PerformanceChart({
-    required this.statistics,
-    super.key,
-  });
+  const PerformanceChart({required this.statistics, super.key});
 
   final Map<String, dynamic> statistics;
 
@@ -21,9 +18,7 @@ class PerformanceChart extends StatelessWidget {
         child: Container(
           height: 300,
           padding: const EdgeInsets.all(16),
-          child: const Center(
-            child: Text('Nog geen wedstrijden gespeeld'),
-          ),
+          child: const Center(child: Text('Nog geen wedstrijden gespeeld')),
         ),
       );
     }
@@ -102,10 +97,10 @@ class PerformanceChart extends StatelessWidget {
   }
 
   Widget _legendItem(String label, Color color, int value) => Row(
-        children: [
-          Container(width: 12, height: 12, color: color),
-          const SizedBox(width: 4),
-          Text('$label: $value'),
-        ],
-      );
+    children: [
+      Container(width: 12, height: 12, color: color),
+      const SizedBox(width: 4),
+      Text('$label: $value'),
+    ],
+  );
 }

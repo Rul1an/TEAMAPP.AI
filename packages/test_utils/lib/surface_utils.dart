@@ -11,8 +11,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Sets the surface size and device pixel ratio for the next frames.
 /// Always pair with [resetScreenSize].
-void setScreenSize(WidgetTester tester, ui.Size size,
-    {double pixelRatio = 1.0}) {
+void setScreenSize(
+  WidgetTester tester,
+  ui.Size size, {
+  double pixelRatio = 1.0,
+}) {
   final view = tester.view;
   view.physicalSize = size;
   view.devicePixelRatio = pixelRatio;
@@ -29,8 +32,11 @@ void resetScreenSize(WidgetTester tester) {
 }
 
 /// Use this overload in setup functions where no [WidgetTester] is available yet.
-void setScreenSizeBinding(TestWidgetsFlutterBinding binding, ui.Size size,
-    {double pixelRatio = 1.0}) {
+void setScreenSizeBinding(
+  TestWidgetsFlutterBinding binding,
+  ui.Size size, {
+  double pixelRatio = 1.0,
+}) {
   binding.window.physicalSizeTestValue = size;
   binding.window.devicePixelRatioTestValue = pixelRatio;
 }

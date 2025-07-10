@@ -12,8 +12,8 @@ class ClubRepositoryImpl implements ClubRepository {
   ClubRepositoryImpl({
     required SupabaseClubDataSource remote,
     required HiveClubCache cache,
-  })  : _remote = remote,
-        _cache = cache;
+  }) : _remote = remote,
+       _cache = cache;
 
   final SupabaseClubDataSource _remote;
   final HiveClubCache _cache;

@@ -46,16 +46,14 @@ class FakeAuthService implements AuthService {
   Future<AuthResponse> signInWithPassword({
     required String email,
     required String password,
-  }) =>
-      throw UnimplementedError();
+  }) => throw UnimplementedError();
 
   @override
   Future<AuthResponse> signUp({
     required String email,
     required String password,
     Map<String, dynamic>? metadata,
-  }) =>
-      throw UnimplementedError();
+  }) => throw UnimplementedError();
 
   @override
   Future<void> signOut() async => throw UnimplementedError();
@@ -120,18 +118,18 @@ class _StatsStub extends MapBase<String, dynamic> {
 
   @override
   Iterable<String> get keys => [
-        'totalTrainingAttendance',
-        'totalMatches',
-        'wins',
-        'draws',
-        'losses',
-        'goalsFor',
-        'goalsAgainst',
-        'goalDifference',
-        'totalTrainings',
-        'winPercentage',
-        ..._inner.keys,
-      ];
+    'totalTrainingAttendance',
+    'totalMatches',
+    'wins',
+    'draws',
+    'losses',
+    'goalsFor',
+    'goalsAgainst',
+    'goalDifference',
+    'totalTrainings',
+    'winPercentage',
+    ..._inner.keys,
+  ];
 
   @override
   dynamic remove(Object? key) => _inner.remove(key);
@@ -139,8 +137,9 @@ class _StatsStub extends MapBase<String, dynamic> {
 
 void main() {
   group('DashboardScreen RBAC & Demo banner', () {
-    testWidgets('Coach role shows training & lineup actions and demo banner',
-        (tester) async {
+    testWidgets('Coach role shows training & lineup actions and demo banner', (
+      tester,
+    ) async {
       final demoNotifier = DemoModeNotifier();
       demoNotifier.startDemo(role: DemoRole.coach);
 
@@ -151,9 +150,7 @@ void main() {
             authServiceProvider.overrideWith((ref) => FakeAuthService()),
             statisticsProvider.overrideWith((ref) async => _StatsStub(0, 0)),
           ],
-          child: const MaterialApp(
-            home: DashboardScreen(),
-          ),
+          child: const MaterialApp(home: DashboardScreen()),
         ),
       );
 
@@ -166,8 +163,9 @@ void main() {
       expect(find.textContaining('RBAC Demo Mode'), findsOneWidget);
     });
 
-    testWidgets('Player role hides action icons but shows banner',
-        (tester) async {
+    testWidgets('Player role hides action icons but shows banner', (
+      tester,
+    ) async {
       final demoNotifier = DemoModeNotifier();
       demoNotifier.startDemo(role: DemoRole.player);
 
@@ -178,9 +176,7 @@ void main() {
             authServiceProvider.overrideWith((ref) => FakeAuthService()),
             statisticsProvider.overrideWith((ref) async => _StatsStub(0, 0)),
           ],
-          child: const MaterialApp(
-            home: DashboardScreen(),
-          ),
+          child: const MaterialApp(home: DashboardScreen()),
         ),
       );
 
@@ -199,9 +195,7 @@ void main() {
             authServiceProvider.overrideWith((ref) => FakeAuthService()),
             statisticsProvider.overrideWith((ref) async => _StatsStub(0, 0)),
           ],
-          child: const MaterialApp(
-            home: DashboardScreen(),
-          ),
+          child: const MaterialApp(home: DashboardScreen()),
         ),
       );
 

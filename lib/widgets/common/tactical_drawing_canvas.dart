@@ -48,28 +48,28 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
 
   @override
   Widget build(BuildContext context) => Stack(
-        children: [
-          widget.child,
-          if (widget.isDrawingMode)
-            Positioned.fill(
-              child: GestureDetector(
-                onPanStart: _onPanStart,
-                onPanUpdate: _onPanUpdate,
-                onPanEnd: _onPanEnd,
-                onTapUp: _onTap,
-                child: CustomPaint(
-                  painter: TacticalDrawingPainter(
-                    drawings: widget.drawings,
-                    currentPoints: _currentPoints,
-                    currentTool: widget.selectedTool,
-                    currentColor: widget.selectedColor,
-                    isDrawing: _isDrawing,
-                  ),
-                ),
+    children: [
+      widget.child,
+      if (widget.isDrawingMode)
+        Positioned.fill(
+          child: GestureDetector(
+            onPanStart: _onPanStart,
+            onPanUpdate: _onPanUpdate,
+            onPanEnd: _onPanEnd,
+            onTapUp: _onTap,
+            child: CustomPaint(
+              painter: TacticalDrawingPainter(
+                drawings: widget.drawings,
+                currentPoints: _currentPoints,
+                currentTool: widget.selectedTool,
+                currentColor: widget.selectedColor,
+                isDrawing: _isDrawing,
               ),
             ),
-        ],
-      );
+          ),
+        ),
+    ],
+  );
 
   void _onPanStart(DragStartDetails details) {
     if (!widget.isDrawingMode) return;
@@ -155,9 +155,7 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
         title: const Text('Tekst Toevoegen'),
         content: TextField(
           autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'Voer tekst in...',
-          ),
+          decoration: const InputDecoration(hintText: 'Voer tekst in...'),
           onSubmitted: (text) {
             if (text.isNotEmpty) {
               final element = DrawingElement(
@@ -362,15 +360,9 @@ class TacticalDrawingPainter extends CustomPainter {
       fontWeight: FontWeight.bold,
     );
 
-    final textSpan = TextSpan(
-      text: element.text,
-      style: textStyle,
-    );
+    final textSpan = TextSpan(text: element.text, style: textStyle);
 
-    TextPainter(
-      text: textSpan,
-      textDirection: TextDirection.ltr,
-    )
+    TextPainter(text: textSpan, textDirection: TextDirection.ltr)
       ..layout()
       ..paint(canvas, element.points.first);
   }

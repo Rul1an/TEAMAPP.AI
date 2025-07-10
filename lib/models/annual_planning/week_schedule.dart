@@ -126,12 +126,7 @@ class WeeklyMatch {
   String get locationDisplay => isHomeMatch ? 'Thuis' : location;
 }
 
-enum MatchType {
-  regular,
-  cup,
-  friendly,
-  tournament,
-}
+enum MatchType { regular, cup, friendly, tournament }
 
 extension MatchTypeExtension on MatchType {
   String get displayName {

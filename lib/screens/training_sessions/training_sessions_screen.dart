@@ -14,8 +14,9 @@ class TrainingSessionsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trainingSessionsAsync =
-        ref.watch(ts_repo.allTrainingSessionsProvider);
+    final trainingSessionsAsync = ref.watch(
+      ts_repo.allTrainingSessionsProvider,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -51,9 +52,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Training Tools',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
+                          style: Theme.of(context).textTheme.titleMedium
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -137,7 +136,7 @@ class TrainingSessionsScreen extends ConsumerWidget {
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.blue[600]!, Colors.blue[400]!],
+                  colors: [Colors.blue[600], Colors.blue[400]],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -158,11 +157,11 @@ class TrainingSessionsScreen extends ConsumerWidget {
                       const SizedBox(width: 8),
                       Text(
                         'Coaching Tip',
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ),
@@ -227,9 +226,9 @@ class TrainingSessionsScreen extends ConsumerWidget {
                                 leading: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withValues(alpha: 0.1),
+                                    color: Theme.of(
+                                      context,
+                                    ).primaryColor.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
@@ -237,8 +236,9 @@ class TrainingSessionsScreen extends ConsumerWidget {
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),
-                                title:
-                                    Text('Training ${session.trainingNumber}'),
+                                title: Text(
+                                  'Training ${session.trainingNumber}',
+                                ),
                                 subtitle: Text(
                                   '${session.date.day}/${session.date.month} | ${_getTrainingTypeDisplayName(session.type)}\n'
                                   'Duur: ${_getTotalDuration(session)} min | Status: ${_getStatusDisplayName(session.status)}\n'

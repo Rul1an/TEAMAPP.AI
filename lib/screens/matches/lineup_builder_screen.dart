@@ -15,10 +15,7 @@ import 'lineup_builder/field_positions_widget.dart';
 import 'lineup_builder/bench_player_list.dart';
 
 class LineupBuilderScreen extends ConsumerStatefulWidget {
-  const LineupBuilderScreen({
-    super.key,
-    this.matchId,
-  });
+  const LineupBuilderScreen({super.key, this.matchId});
   final String? matchId;
 
   @override
@@ -30,8 +27,9 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
   @override
   void initState() {
     super.initState();
-    final ctrl =
-        ref.read(lineupBuilderControllerProvider); // create controller early
+    final ctrl = ref.read(
+      lineupBuilderControllerProvider,
+    ); // create controller early
     ctrl.loadTemplates();
     if (widget.matchId != null) {
       ctrl.loadMatch(widget.matchId!);

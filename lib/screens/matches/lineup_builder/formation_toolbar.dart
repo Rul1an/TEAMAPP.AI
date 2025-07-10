@@ -17,10 +17,8 @@ class FormationToolbar extends ConsumerWidget {
           .selectFormation(f ?? controller.selectedFormation),
       items: Formation.values
           .map(
-            (f) => DropdownMenuItem<Formation>(
-              value: f,
-              child: Text(_label(f)),
-            ),
+            (f) =>
+                DropdownMenuItem<Formation>(value: f, child: Text(_label(f))),
           )
           .toList(),
     );

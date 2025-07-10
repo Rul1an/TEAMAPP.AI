@@ -13,10 +13,7 @@ import '../../utils/share_pdf_utils.dart';
 import '../../models/assessment.dart';
 
 class PlayerDetailScreen extends ConsumerWidget {
-  const PlayerDetailScreen({
-    required this.playerId,
-    super.key,
-  });
+  const PlayerDetailScreen({required this.playerId, super.key});
   final String playerId;
 
   @override
@@ -128,11 +125,16 @@ class PlayerDetailScreen extends ConsumerWidget {
   Future<void> _exportPdf(WidgetRef ref, BuildContext context) async {
     final playersAsync = ref.read(playersProvider);
     playersAsync.whenData((players) async {
-      final player = players.firstWhere((p) => p.id == playerId, orElse: () => null);
+      final player = players.firstWhere(
+        (p) => p.id == playerId,
+        orElse: () => null,
+      );
       if (player == null) return;
 
       // Placeholder minimal assessment for demo
-      final assessmentGenerator = ref.read(playerAssessmentPdfGeneratorProvider);
+      final assessmentGenerator = ref.read(
+        playerAssessmentPdfGeneratorProvider,
+      );
       final assessment = PlayerAssessment()
         ..playerId = player.id
         ..assessorId = 'auto'

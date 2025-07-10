@@ -10,7 +10,7 @@ enum TrainingIntensity {
   acquisition, // Day +2: 85-95% intensity - High-intensity tactical work
   development, // Day +3: 70-80% intensity - Medium-intensity technical-tactical
   activation, // Day +4: 50-60% intensity - Low-intensity activation/set pieces
-  competition // Match Day: 100% intensity - Competition
+  competition, // Match Day: 100% intensity - Competition
 }
 
 /// Training focus areas for morphocycle days
@@ -76,7 +76,7 @@ enum InjuryRisk {
   underloaded, // ACWR < 0.8 - Risk of detraining
   optimal, // ACWR 0.8-1.3 - Optimal training zone
   high, // ACWR > 1.3 - High injury risk
-  extreme // ACWR > 1.5 - Extreme injury risk
+  extreme, // ACWR > 1.5 - Extreme injury risk
 }
 
 class Morphocycle {
@@ -143,7 +143,8 @@ class Morphocycle {
     acuteChronicRatio = 1.0;
 
     // Set advanced performance indicators
-    expectedAdaptation = _calculateExpectedAdaptation(period) *
+    expectedAdaptation =
+        _calculateExpectedAdaptation(period) *
         1.15; // Higher for tactical periodization
     keyPerformanceIndicators = _getTacticalKPIs(gameModelFocus);
     trainingObjectives = _getTacticalObjectives(gameModelFocus);
@@ -179,9 +180,11 @@ class Morphocycle {
       ..totalTrainingMinutes = json['totalTrainingMinutes'] as int? ?? 240
       ..averageRPE = (json['averageRPE'] as num?)?.toDouble() ?? 6.0
       ..numberOfSessions = json['numberOfSessions'] as int? ?? 3
-      ..createdAt = DateTime.tryParse(json['createdAt'] as String? ?? '') ??
+      ..createdAt =
+          DateTime.tryParse(json['createdAt'] as String? ?? '') ??
           DateTime.now()
-      ..updatedAt = DateTime.tryParse(json['updatedAt'] as String? ?? '') ??
+      ..updatedAt =
+          DateTime.tryParse(json['updatedAt'] as String? ?? '') ??
           DateTime.now();
     return morphocycle;
   }
@@ -348,11 +351,15 @@ class Morphocycle {
 
     // Adjust based on morphocycle structure
     if (acuteChronicRatio > 1.2) {
-      return (baseAdaptation * 1.15)
-          .clamp(0.0, 100.0); // High load = higher adaptation
+      return (baseAdaptation * 1.15).clamp(
+        0.0,
+        100.0,
+      ); // High load = higher adaptation
     } else if (acuteChronicRatio < 0.8) {
-      return (baseAdaptation * 0.85)
-          .clamp(0.0, 100.0); // Low load = lower adaptation
+      return (baseAdaptation * 0.85).clamp(
+        0.0,
+        100.0,
+      ); // Low load = lower adaptation
     }
 
     return baseAdaptation.clamp(0.0, 100.0);
@@ -445,20 +452,20 @@ class Morphocycle {
   }
 
   List<String> _getTacticalKPIs(String gameModelFocus) => [
-        'Game Model Understanding Score',
-        'Tactical Decision Speed',
-        'Positional Discipline Rating',
-        'Collective Action Success Rate',
-        '$gameModelFocus Specific Metrics',
-      ];
+    'Game Model Understanding Score',
+    'Tactical Decision Speed',
+    'Positional Discipline Rating',
+    'Collective Action Success Rate',
+    '$gameModelFocus Specific Metrics',
+  ];
 
   List<String> _getTacticalObjectives(String gameModelFocus) => [
-        'Master $gameModelFocus principles',
-        'Improve collective understanding',
-        'Enhance decision making speed',
-        'Perfect tactical execution',
-        'Develop game intelligence',
-      ];
+    'Master $gameModelFocus principles',
+    'Improve collective understanding',
+    'Enhance decision making speed',
+    'Perfect tactical execution',
+    'Develop game intelligence',
+  ];
 
   // Utility methods
   bool get isHighLoadWeek => weeklyLoad > 1400;
@@ -511,25 +518,25 @@ class Morphocycle {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'weekNumber': weekNumber,
-        'periodId': periodId,
-        'seasonPlanId': seasonPlanId,
-        'weeklyLoad': weeklyLoad,
-        'intensityDistribution': intensityDistribution,
-        'acuteChronicRatio': acuteChronicRatio,
-        'tacticalFocusAreas': tacticalFocusAreas,
-        'primaryGameModelFocus': primaryGameModelFocus,
-        'secondaryGameModelFocus': secondaryGameModelFocus,
-        'expectedAdaptation': expectedAdaptation,
-        'keyPerformanceIndicators': keyPerformanceIndicators,
-        'trainingObjectives': trainingObjectives,
-        'totalTrainingMinutes': totalTrainingMinutes,
-        'averageRPE': averageRPE,
-        'numberOfSessions': numberOfSessions,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-      };
+    'id': id,
+    'weekNumber': weekNumber,
+    'periodId': periodId,
+    'seasonPlanId': seasonPlanId,
+    'weeklyLoad': weeklyLoad,
+    'intensityDistribution': intensityDistribution,
+    'acuteChronicRatio': acuteChronicRatio,
+    'tacticalFocusAreas': tacticalFocusAreas,
+    'primaryGameModelFocus': primaryGameModelFocus,
+    'secondaryGameModelFocus': secondaryGameModelFocus,
+    'expectedAdaptation': expectedAdaptation,
+    'keyPerformanceIndicators': keyPerformanceIndicators,
+    'trainingObjectives': trainingObjectives,
+    'totalTrainingMinutes': totalTrainingMinutes,
+    'averageRPE': averageRPE,
+    'numberOfSessions': numberOfSessions,
+    'createdAt': createdAt.toIso8601String(),
+    'updatedAt': updatedAt.toIso8601String(),
+  };
 }
 
 /// Extension to add morphocycle helpers to WeekSchedule

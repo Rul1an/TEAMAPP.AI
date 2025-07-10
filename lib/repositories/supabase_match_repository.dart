@@ -9,7 +9,7 @@ import 'match_repository.dart';
 
 class SupabaseMatchRepository implements MatchRepository {
   SupabaseMatchRepository({SupabaseClient? client})
-      : _client = client ?? SupabaseConfig.client;
+    : _client = client ?? SupabaseConfig.client;
 
   final SupabaseClient _client;
   static const _table = 'matches';
@@ -39,17 +39,17 @@ class SupabaseMatchRepository implements MatchRepository {
   }
 
   Map<String, dynamic> _toRow(Match m) => {
-        'id': m.id,
-        'date': m.date.toIso8601String(),
-        'opponent': m.opponent,
-        'location': m.location.name,
-        'competition': m.competition.name,
-        'status': m.status.name,
-        'team_score': m.teamScore,
-        'opponent_score': m.opponentScore,
-        'created_at': m.createdAt.toIso8601String(),
-        'updated_at': DateTime.now().toIso8601String(),
-      }..removeWhere((k, v) => v == null);
+    'id': m.id,
+    'date': m.date.toIso8601String(),
+    'opponent': m.opponent,
+    'location': m.location.name,
+    'competition': m.competition.name,
+    'status': m.status.name,
+    'team_score': m.teamScore,
+    'opponent_score': m.opponentScore,
+    'created_at': m.createdAt.toIso8601String(),
+    'updated_at': DateTime.now().toIso8601String(),
+  }..removeWhere((k, v) => v == null);
 
   // region CRUD
 
@@ -90,8 +90,11 @@ class SupabaseMatchRepository implements MatchRepository {
   Future<Result<List<Match>>> getUpcoming() async {
     try {
       final nowIso = DateTime.now().toIso8601String();
-      final data =
-          await _client.from(_table).select().gte('date', nowIso).order('date');
+      final data = await _client
+          .from(_table)
+          .select()
+          .gte('date', nowIso)
+          .order('date');
       final matches = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))
           .toList();
@@ -139,5 +142,6 @@ class SupabaseMatchRepository implements MatchRepository {
       return Failure(NetworkFailure(e.toString()));
     }
   }
+
   // endregion
 }

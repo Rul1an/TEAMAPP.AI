@@ -14,8 +14,9 @@ void main() {
         ..playerId = 'player1'
         ..type = AssessmentType.monthly;
 
-      final bytes =
-          await const PlayerAssessmentPdfGenerator().generate(assessment);
+      final bytes = await const PlayerAssessmentPdfGenerator().generate(
+        assessment,
+      );
 
       expect(bytes, isNotEmpty);
       final header = utf8.decode(bytes.sublist(0, 5));

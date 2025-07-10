@@ -6,7 +6,7 @@ import 'season_repository.dart';
 
 class LocalSeasonRepository implements SeasonRepository {
   LocalSeasonRepository({HiveSeasonCache? cache})
-      : _cache = cache ?? HiveSeasonCache();
+    : _cache = cache ?? HiveSeasonCache();
 
   final HiveSeasonCache _cache;
 
@@ -27,8 +27,9 @@ class LocalSeasonRepository implements SeasonRepository {
       if (seasons.isEmpty) return const Success(null);
 
       try {
-        final active =
-            seasons.firstWhere((s) => s.status == SeasonStatus.active);
+        final active = seasons.firstWhere(
+          (s) => s.status == SeasonStatus.active,
+        );
         return Success(active);
       } catch (_) {
         return Success(seasons.first);

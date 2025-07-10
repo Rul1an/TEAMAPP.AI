@@ -69,8 +69,9 @@ void main() {
         ProviderScope(
           overrides: [
             demoModeProvider.overrideWith((ref) => demoNotifier),
-            app_players_provider.playersProvider
-                .overrideWith((ref) async => [stubPlayer]),
+            app_players_provider.playersProvider.overrideWith(
+              (ref) async => [stubPlayer],
+            ),
             authServiceProvider.overrideWithValue(FakeAuthService()),
             isLoggedInProvider.overrideWithValue(true),
             // Provide fake repository to avoid SupabaseConfig dependency
@@ -78,9 +79,7 @@ void main() {
               _FakePlayerRepository([stubPlayer]),
             ),
           ],
-          child: const MaterialApp(
-            home: PlayersScreen(),
-          ),
+          child: const MaterialApp(home: PlayersScreen()),
         ),
       );
 

@@ -33,8 +33,10 @@ final recentMatchesProvider = FutureProvider<List<Match>>((ref) async {
   return res.dataOrNull ?? [];
 });
 
-final matchByIdProvider =
-    FutureProvider.family<Match?, String>((ref, id) async {
+final matchByIdProvider = FutureProvider.family<Match?, String>((
+  ref,
+  id,
+) async {
   final repo = ref.read(matchRepositoryProvider);
   final res = await repo.getById(id);
   return res.dataOrNull;
@@ -42,8 +44,8 @@ final matchByIdProvider =
 
 final matchesNotifierProvider =
     StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>(
-  MatchesNotifier.new,
-);
+      MatchesNotifier.new,
+    );
 
 class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
   MatchesNotifier(this._ref) : super(const AsyncValue.loading()) {

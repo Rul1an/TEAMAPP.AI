@@ -19,9 +19,9 @@ class LoadMonitoringService {
   }
 
   static double getPeakLoad(List<Morphocycle> cycles) => cycles.fold<double>(
-        0.0,
-        (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max,
-      );
+    0.0,
+    (max, m) => m.weeklyLoad > max ? m.weeklyLoad : max,
+  );
 
   static double getCurrentAcr(List<Morphocycle> cycles) =>
       cycles.isNotEmpty ? cycles.last.acuteChronicRatio : 1.0;

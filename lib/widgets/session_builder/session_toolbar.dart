@@ -48,12 +48,7 @@ class SessionToolbar extends StatelessWidget {
             if (t != null) onTypeChanged(t);
           },
           items: TrainingType.values
-              .map(
-                (t) => DropdownMenuItem(
-                  value: t,
-                  child: Text(t.name),
-                ),
-              )
+              .map((t) => DropdownMenuItem(value: t, child: Text(t.name)))
               .toList(),
         ),
       ],

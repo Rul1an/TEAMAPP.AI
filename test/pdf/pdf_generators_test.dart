@@ -20,7 +20,7 @@ void main() {
         ..teamScore = 2
         ..opponentScore = 1;
 
-      final bytes = await const MatchReportPdfGenerator().build(match);
+      final bytes = await const MatchReportPdfGenerator().generate(match);
       expect(bytes, isNotEmpty);
       // PDF files start with '%PDF'.
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));
@@ -33,8 +33,9 @@ void main() {
         ..type = AssessmentType.monthly
         ..ballControl = 4;
 
-      final bytes =
-          await const PlayerAssessmentPdfGenerator().build(assessment);
+      final bytes = await const PlayerAssessmentPdfGenerator().generate(
+        assessment,
+      );
       expect(bytes, isNotEmpty);
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));
     });
@@ -46,8 +47,10 @@ void main() {
         trainingNumber: 12,
       );
 
-      final bytes = await const TrainingSessionPdfGenerator()
-          .build((session, const []));
+      final bytes = await const TrainingSessionPdfGenerator().generate((
+        session,
+        const [],
+      ));
       expect(bytes, isNotEmpty);
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));
     });

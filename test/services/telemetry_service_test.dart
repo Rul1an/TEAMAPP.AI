@@ -21,8 +21,10 @@ void main() {
     });
 
     test('monitorAsync returns value and completes span', () async {
-      final result =
-          await TelemetryService().monitorAsync('add', () async => 2 + 3);
+      final result = await TelemetryService().monitorAsync(
+        'add',
+        () async => 2 + 3,
+      );
       expect(result, 5);
     });
   });

@@ -9,12 +9,7 @@ part 'club.freezed.dart';
 part 'club.g.dart';
 
 /// User Role Enum for SaaS permissions
-enum UserRole {
-  bestuurder,
-  hoofdcoach,
-  assistentCoach,
-  speler,
-}
+enum UserRole { bestuurder, hoofdcoach, assistentCoach, speler }
 
 extension UserRoleExtension on UserRole {
   String get displayName {
@@ -74,11 +69,7 @@ class Club with _$Club {
 }
 
 // SaaS Tier Enum
-enum ClubTier {
-  basic,
-  pro,
-  enterprise,
-}
+enum ClubTier { basic, pro, enterprise }
 
 extension ClubTierExtension on ClubTier {
   String get displayName {
@@ -134,19 +125,9 @@ class ClubSettings with _$ClubSettings {
       _$ClubSettingsFromJson(json);
 }
 
-enum ClubStatus {
-  active,
-  inactive,
-  suspended,
-  dissolved,
-}
+enum ClubStatus { active, inactive, suspended, dissolved }
 
-enum ClubType {
-  amateur,
-  semiProfessional,
-  professional,
-  academy,
-}
+enum ClubType { amateur, semiProfessional, professional, academy }
 
 enum AgeCategory {
   jo7,

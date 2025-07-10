@@ -15,17 +15,18 @@ import 'package:jo17_tactical_manager/models/player.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  const secureStorageChannel =
-      MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
+  const secureStorageChannel = MethodChannel(
+    'plugins.it_nomads.com/flutter_secure_storage',
+  );
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(secureStorageChannel, (call) async => null);
 
   const pathProviderChannel = MethodChannel('plugins.flutter.io/path_provider');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-    pathProviderChannel,
-    (call) async => Directory.systemTemp.path,
-  );
+        pathProviderChannel,
+        (call) async => Directory.systemTemp.path,
+      );
 
   group('HivePlayerCache', () {
     setUp(() {

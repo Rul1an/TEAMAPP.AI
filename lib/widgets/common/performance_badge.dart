@@ -68,9 +68,7 @@ class PerformanceBadge extends StatelessWidget {
             if (averageRating != null) const SizedBox(width: 8),
             Text(
               _getTrendEmoji(trend!),
-              style: TextStyle(
-                fontSize: compact ? 16 : 20,
-              ),
+              style: TextStyle(fontSize: compact ? 16 : 20),
             ),
           ],
         ],
@@ -122,12 +120,7 @@ class PerformanceTrendIndicator extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: Center(
-        child: Text(
-          _getTrendEmoji(trend),
-          style: TextStyle(
-            fontSize: size,
-          ),
-        ),
+        child: Text(_getTrendEmoji(trend), style: TextStyle(fontSize: size)),
       ),
     );
   }

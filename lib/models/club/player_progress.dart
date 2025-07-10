@@ -18,9 +18,9 @@ class PlayerProgress with _$PlayerProgress {
     required DateTime startDate,
     // Technical Skills (1-10 scale)
     required TechnicalSkills
-        technicalSkills, // Physical Attributes (1-10 scale)
+    technicalSkills, // Physical Attributes (1-10 scale)
     required PhysicalAttributes
-        physicalAttributes, // Tactical Understanding (1-10 scale)
+    physicalAttributes, // Tactical Understanding (1-10 scale)
     required TacticalSkills tacticalSkills, // Mental Attributes (1-10 scale)
     required MentalAttributes mentalAttributes, // Performance Metrics
     required PerformanceMetrics performanceMetrics, // Overall Ratings
@@ -234,12 +234,7 @@ class OverallRating with _$OverallRating {
       _$OverallRatingFromJson(json);
 }
 
-enum ProgressStatus {
-  active,
-  completed,
-  onHold,
-  cancelled,
-}
+enum ProgressStatus { active, completed, onHold, cancelled }
 
 enum GoalCategory {
   technical,
@@ -250,20 +245,9 @@ enum GoalCategory {
   academic,
 }
 
-enum GoalPriority {
-  low,
-  medium,
-  high,
-  critical,
-}
+enum GoalPriority { low, medium, high, critical }
 
-enum GoalStatus {
-  notStarted,
-  inProgress,
-  completed,
-  overdue,
-  cancelled,
-}
+enum GoalStatus { notStarted, inProgress, completed, overdue, cancelled }
 
 enum AssessmentType {
   monthly,

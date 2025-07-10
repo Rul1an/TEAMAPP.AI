@@ -11,8 +11,8 @@ class PermissionRepositoryImpl implements PermissionRepository {
   PermissionRepositoryImpl({
     required SupabasePermissionDataSource remote,
     required HivePermissionCache cache,
-  })  : _remote = remote,
-        _cache = cache;
+  }) : _remote = remote,
+       _cache = cache;
 
   final SupabasePermissionDataSource _remote;
   final HivePermissionCache _cache;

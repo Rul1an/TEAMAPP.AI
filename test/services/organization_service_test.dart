@@ -11,16 +11,18 @@ void main() {
   group('OrganizationService', () {
     final service = OrganizationService();
 
-    test('createOrganization returns Organization with provided values',
-        () async {
-      final org = await service.createOrganization(
-        name: 'Test Club',
-        slug: 'test-club',
-      );
-      expect(org.name, 'Test Club');
-      expect(org.slug, 'test-club');
-      expect(org.tier, OrganizationTier.basic);
-    });
+    test(
+      'createOrganization returns Organization with provided values',
+      () async {
+        final org = await service.createOrganization(
+          name: 'Test Club',
+          slug: 'test-club',
+        );
+        expect(org.name, 'Test Club');
+        expect(org.slug, 'test-club');
+        expect(org.tier, OrganizationTier.basic);
+      },
+    );
 
     test('isSlugAvailable detects unavailable slug', () async {
       final available = await service.isSlugAvailable('admin');

@@ -21,9 +21,9 @@ class WeeklyLoadChart extends StatelessWidget {
           children: [
             Text(
               'Weekly Training Load Trend',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             SizedBox(

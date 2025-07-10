@@ -14,8 +14,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ProfileRepositoryImpl({
     required SupabaseProfileDataSource remote,
     required HiveProfileCache cache,
-  })  : _remote = remote,
-        _cache = cache;
+  }) : _remote = remote,
+       _cache = cache;
 
   final SupabaseProfileDataSource _remote;
   final HiveProfileCache _cache;

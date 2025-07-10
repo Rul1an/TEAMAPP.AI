@@ -5,7 +5,11 @@ import '../repositories/analytics_repository.dart';
 import '../providers/analytics_repository_provider.dart';
 
 class HeatMapParams {
-  HeatMapParams({required this.start, required this.end, required this.category});
+  HeatMapParams({
+    required this.start,
+    required this.end,
+    required this.category,
+  });
   final DateTime start;
   final DateTime end;
   final ActionCategory category;
@@ -33,6 +37,7 @@ class HeatMapController extends AsyncNotifier<List<ActionEvent>> {
   }
 }
 
-final heatMapControllerProvider = AsyncNotifierProvider<HeatMapController, List<ActionEvent>>(
-  HeatMapController.new,
-);
+final heatMapControllerProvider =
+    AsyncNotifierProvider<HeatMapController, List<ActionEvent>>(
+      HeatMapController.new,
+    );

@@ -20,10 +20,9 @@ class DrawingToolbar extends ConsumerWidget {
                 ? Colors.blue
                 : null,
           ),
-          onPressed: () =>
-              ref.read(lineupBuilderControllerProvider).selectDrawingTool(
-                    DrawingTool.arrow,
-                  ),
+          onPressed: () => ref
+              .read(lineupBuilderControllerProvider)
+              .selectDrawingTool(DrawingTool.arrow),
         ),
         IconButton(
           icon: Icon(
@@ -32,10 +31,9 @@ class DrawingToolbar extends ConsumerWidget {
                 ? Colors.blue
                 : null,
           ),
-          onPressed: () =>
-              ref.read(lineupBuilderControllerProvider).selectDrawingTool(
-                    DrawingTool.line,
-                  ),
+          onPressed: () => ref
+              .read(lineupBuilderControllerProvider)
+              .selectDrawingTool(DrawingTool.line),
         ),
       ],
     );

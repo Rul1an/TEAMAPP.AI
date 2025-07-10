@@ -14,9 +14,7 @@ void main() {
         tier: OrganizationTier.pro,
         primaryColor: '#000000',
         secondaryColor: '#FFFFFF',
-        settings: {
-          'maxPlayers': 50,
-        },
+        settings: {'maxPlayers': 50},
         subscriptionStatus: 'active',
         subscriptionEndDate: DateTime.utc(2025),
         createdAt: DateTime.utc(2024),

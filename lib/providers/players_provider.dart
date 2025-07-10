@@ -12,8 +12,9 @@ import '../repositories/player_repository_impl.dart';
 
 final playerCacheProvider = Provider<HivePlayerCache>((_) => HivePlayerCache());
 
-final playerRemoteProvider =
-    Provider<SupabasePlayerDataSource>((_) => SupabasePlayerDataSource());
+final playerRemoteProvider = Provider<SupabasePlayerDataSource>(
+  (_) => SupabasePlayerDataSource(),
+);
 
 // Repository --------------------------------------------------------------
 
@@ -30,24 +31,27 @@ final playersProvider = FutureProvider<List<Player>>((ref) async {
   return res.dataOrNull ?? [];
 });
 
-final playerByIdProvider =
-    FutureProvider.family<Player?, String>((ref, id) async {
+final playerByIdProvider = FutureProvider.family<Player?, String>((
+  ref,
+  id,
+) async {
   final repo = ref.read(playerRepositoryProvider);
   final res = await repo.getById(id);
   return res.dataOrNull;
 });
 
-final playersByPositionProvider =
-    FutureProvider.family<List<Player>, Position>((ref, position) async {
-  final repo = ref.read(playerRepositoryProvider);
-  final res = await repo.getByPosition(position);
-  return res.dataOrNull ?? [];
-});
+final playersByPositionProvider = FutureProvider.family<List<Player>, Position>(
+  (ref, position) async {
+    final repo = ref.read(playerRepositoryProvider);
+    final res = await repo.getByPosition(position);
+    return res.dataOrNull ?? [];
+  },
+);
 
 final playersNotifierProvider =
     StateNotifierProvider<PlayersNotifier, AsyncValue<List<Player>>>(
-  PlayersNotifier.new,
-);
+      PlayersNotifier.new,
+    );
 
 class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
   PlayersNotifier(this._ref) : super(const AsyncValue.loading()) {

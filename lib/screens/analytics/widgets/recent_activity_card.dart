@@ -22,11 +22,20 @@ class RecentActivityCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Recente Activiteit', style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              'Recente Activiteit',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: _label(context, 'Laatste beoordelingen', assessmentsAsync)),
+                Expanded(
+                  child: _label(
+                    context,
+                    'Laatste beoordelingen',
+                    assessmentsAsync,
+                  ),
+                ),
                 Expanded(child: _label(context, 'Trainingen', trainingsAsync)),
               ],
             ),
@@ -36,9 +45,14 @@ class RecentActivityCard extends StatelessWidget {
     );
   }
 
-  Widget _label(BuildContext ctx, String caption, AsyncValue<List<dynamic>> async) => async.when(
-        data: (list) => Text('$caption: ${list.length}', style: const TextStyle(fontSize: 14)),
-        loading: () => const Text('Laden...'),
-        error: (_, __) => const Text('Error'),
-      );
+  Widget _label(
+    BuildContext ctx,
+    String caption,
+    AsyncValue<List<dynamic>> async,
+  ) => async.when(
+    data: (list) =>
+        Text('$caption: ${list.length}', style: const TextStyle(fontSize: 14)),
+    loading: () => const Text('Laden...'),
+    error: (_, __) => const Text('Error'),
+  );
 }

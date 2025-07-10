@@ -46,14 +46,14 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            matches_providers.matchesProvider
-                .overrideWith((ref) async => [match]),
-            players_providers.playersProvider
-                .overrideWith((ref) async => players),
+            matches_providers.matchesProvider.overrideWith(
+              (ref) async => [match],
+            ),
+            players_providers.playersProvider.overrideWith(
+              (ref) async => players,
+            ),
           ],
-          child: const MaterialApp(
-            home: MatchDetailScreen(matchId: 'm1'),
-          ),
+          child: const MaterialApp(home: MatchDetailScreen(matchId: 'm1')),
         ),
       );
 

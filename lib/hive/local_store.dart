@@ -21,17 +21,17 @@ class LocalStore<T> {
     Duration defaultTtl = const Duration(hours: 24),
     int schemaVersion = 1,
     Future<void> Function(int oldVersion, int newVersion)? onUpgrade,
-  })  : _cache = BaseHiveCache<T>(
-          boxName: boxName,
-          valueKey: valueKey,
-          fromJson: fromJson,
-          toJson: toJson,
-          defaultTtl: defaultTtl,
-        ),
-        _boxName = boxName,
-        _versionKey = '${boxName}_version',
-        _schemaVersion = schemaVersion,
-        _onUpgrade = onUpgrade {
+  }) : _cache = BaseHiveCache<T>(
+         boxName: boxName,
+         valueKey: valueKey,
+         fromJson: fromJson,
+         toJson: toJson,
+         defaultTtl: defaultTtl,
+       ),
+       _boxName = boxName,
+       _versionKey = '${boxName}_version',
+       _schemaVersion = schemaVersion,
+       _onUpgrade = onUpgrade {
     // Check schema version asynchronously.
     _ensureVersion();
   }
@@ -63,7 +63,7 @@ class LocalStore<T> {
 
     // Run optional migration
     if (_onUpgrade != null) {
-      await _onUpgrade!(storedVersion, _schemaVersion);
+      await _onUpgrade(storedVersion, _schemaVersion);
     }
 
     // Clear cached data for incompatible schema by default

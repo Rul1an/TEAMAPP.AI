@@ -6,12 +6,12 @@ import 'base_hive_cache.dart';
 
 class HiveStatisticsCache {
   HiveStatisticsCache()
-      : _cache = BaseHiveCache<Map<String, dynamic>>(
-          boxName: _box,
-          valueKey: _key,
-          fromJson: _fromJson,
-          toJson: _toJson,
-        );
+    : _cache = BaseHiveCache<Map<String, dynamic>>(
+        boxName: _box,
+        valueKey: _key,
+        fromJson: _fromJson,
+        toJson: _toJson,
+      );
 
   static const _box = 'statistics_box';
   static const _key = 'statistics_json';
@@ -28,6 +28,6 @@ class HiveStatisticsCache {
   }
 
   static Map<String, dynamic> _toJson(Map<String, dynamic> data) => {
-        'stats': data,
-      };
+    'stats': data,
+  };
 }

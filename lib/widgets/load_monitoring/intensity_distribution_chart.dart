@@ -26,9 +26,9 @@ class IntensityDistributionChart extends StatelessWidget {
           children: [
             Text(
               'Training Intensity Distribution (Current Week)',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             SizedBox(
@@ -70,8 +70,10 @@ class IntensityDistributionChart extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 4),
-                    Text('${e.key.toUpperCase()}: ${e.value.toInt()}%',
-                        style: const TextStyle(fontSize: 12)),
+                    Text(
+                      '${e.key.toUpperCase()}: ${e.value.toInt()}%',
+                      style: const TextStyle(fontSize: 12),
+                    ),
                   ],
                 );
               }).toList(),

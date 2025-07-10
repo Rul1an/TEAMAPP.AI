@@ -12,8 +12,8 @@ class MatchRepositoryImpl implements MatchRepository {
   MatchRepositoryImpl({
     required SupabaseMatchDataSource remote,
     required HiveMatchCache cache,
-  })  : _remote = remote,
-        _cache = cache;
+  }) : _remote = remote,
+       _cache = cache;
 
   final SupabaseMatchDataSource _remote;
   final HiveMatchCache _cache;
@@ -40,9 +40,8 @@ class MatchRepositoryImpl implements MatchRepository {
   Future<Result<List<Match>>> getUpcoming() async {
     final all = await getAll();
     return all.when(
-      success: (list) => Success(
-        list.where((m) => m.date.isAfter(DateTime.now())).toList(),
-      ),
+      success: (list) =>
+          Success(list.where((m) => m.date.isAfter(DateTime.now())).toList()),
       failure: Failure.new,
     );
   }
@@ -51,9 +50,8 @@ class MatchRepositoryImpl implements MatchRepository {
   Future<Result<List<Match>>> getRecent() async {
     final all = await getAll();
     return all.when(
-      success: (list) => Success(
-        list.where((m) => m.date.isBefore(DateTime.now())).toList(),
-      ),
+      success: (list) =>
+          Success(list.where((m) => m.date.isBefore(DateTime.now())).toList()),
       failure: Failure.new,
     );
   }

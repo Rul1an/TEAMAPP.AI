@@ -24,12 +24,14 @@ class RiskSummaryCards extends StatelessWidget {
     final current = morphocycles.last;
     final avgAcr =
         morphocycles.fold<double>(0, (sum, m) => sum + m.acuteChronicRatio) /
-            morphocycles.length;
+        morphocycles.length;
 
     final highRiskWeeks = morphocycles
-        .where((m) =>
-            m.currentInjuryRisk == InjuryRisk.high ||
-            m.currentInjuryRisk == InjuryRisk.extreme)
+        .where(
+          (m) =>
+              m.currentInjuryRisk == InjuryRisk.high ||
+              m.currentInjuryRisk == InjuryRisk.extreme,
+        )
         .length;
     final overloadWeeks = morphocycles.where((m) => m.weeklyLoad > 1400).length;
 
@@ -41,8 +43,9 @@ class RiskSummaryCards extends StatelessWidget {
               child: _RiskCard(
                 title: 'Current Risk',
                 value: current.currentInjuryRisk.name.toUpperCase(),
-                color:
-                    LoadMonitoringService.riskColor(current.currentInjuryRisk),
+                color: LoadMonitoringService.riskColor(
+                  current.currentInjuryRisk,
+                ),
                 icon: LoadMonitoringService.riskIcon(current.currentInjuryRisk),
               ),
             ),
@@ -106,10 +109,7 @@ class _RiskCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           gradient: LinearGradient(
-            colors: [
-              color.withValues(alpha: 25),
-              color.withValues(alpha: 10),
-            ],
+            colors: [color.withValues(alpha: 25), color.withValues(alpha: 10)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

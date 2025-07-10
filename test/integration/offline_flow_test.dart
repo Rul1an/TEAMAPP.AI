@@ -43,9 +43,7 @@ void main() {
 
       final repo = MatchRepositoryImpl(remote: remote, cache: cache);
       final container = ProviderContainer(
-        overrides: [
-          matchRepositoryProvider.overrideWithValue(repo),
-        ],
+        overrides: [matchRepositoryProvider.overrideWithValue(repo)],
       );
 
       final list = await container.read(matchesProvider.future);
@@ -59,9 +57,7 @@ void main() {
 
       final repo = MatchRepositoryImpl(remote: remote, cache: cache);
       final container = ProviderContainer(
-        overrides: [
-          matchRepositoryProvider.overrideWithValue(repo),
-        ],
+        overrides: [matchRepositoryProvider.overrideWithValue(repo)],
       );
 
       final list = await container.read(matchesProvider.future);

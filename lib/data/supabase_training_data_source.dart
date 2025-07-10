@@ -7,7 +7,7 @@ import '../models/training.dart';
 /// Raw Supabase I/O for the `trainings` table.
 class SupabaseTrainingDataSource {
   SupabaseTrainingDataSource({SupabaseClient? client})
-      : _supabase = client ?? _tryGetClient();
+    : _supabase = client ?? _tryGetClient();
 
   final SupabaseClient _supabase;
   static const _table = 'trainings';
@@ -21,8 +21,11 @@ class SupabaseTrainingDataSource {
   }
 
   Future<Training?> fetchById(String id) async {
-    final data =
-        await _supabase.from(_table).select().eq('id', id).maybeSingle();
+    final data = await _supabase
+        .from(_table)
+        .select()
+        .eq('id', id)
+        .maybeSingle();
     return data == null ? null : _fromRow(data);
   }
 
@@ -76,25 +79,25 @@ class SupabaseTrainingDataSource {
   }
 
   static Map<String, dynamic> _toRow(Training t) => <String, dynamic>{
-        'id': t.id,
-        'date': t.date.toIso8601String(),
-        'duration': t.duration,
-        'focus': t.focus.name,
-        'intensity': t.intensity.name,
-        'status': t.status.name,
-        'location': t.location,
-        'description': t.description,
-        'objectives': t.objectives,
-        'drills': t.drills,
-        'present': t.presentPlayerIds,
-        'absent': t.absentPlayerIds,
-        'injured': t.injuredPlayerIds,
-        'late': t.latePlayerIds,
-        'coach_notes': t.coachNotes,
-        'performance_notes': t.performanceNotes,
-        'created_at': t.createdAt.toIso8601String(),
-        'updated_at': t.updatedAt.toIso8601String(),
-      }..removeWhere((_, v) => v == null);
+    'id': t.id,
+    'date': t.date.toIso8601String(),
+    'duration': t.duration,
+    'focus': t.focus.name,
+    'intensity': t.intensity.name,
+    'status': t.status.name,
+    'location': t.location,
+    'description': t.description,
+    'objectives': t.objectives,
+    'drills': t.drills,
+    'present': t.presentPlayerIds,
+    'absent': t.absentPlayerIds,
+    'injured': t.injuredPlayerIds,
+    'late': t.latePlayerIds,
+    'coach_notes': t.coachNotes,
+    'performance_notes': t.performanceNotes,
+    'created_at': t.createdAt.toIso8601String(),
+    'updated_at': t.updatedAt.toIso8601String(),
+  }..removeWhere((_, v) => v == null);
 
   static List<Training> _rowsToTrainings(List<dynamic> rows) =>
       rows.cast<Map<String, dynamic>>().map(_fromRow).toList();
@@ -108,16 +111,16 @@ class SupabaseTrainingDataSource {
   }
 
   static TrainingFocus _focus(String? s) => TrainingFocus.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingFocus.technical,
-      );
+    (e) => e.name == (s ?? '').toLowerCase(),
+    orElse: () => TrainingFocus.technical,
+  );
   static TrainingIntensity _intensity(String? s) =>
       TrainingIntensity.values.firstWhere(
         (e) => e.name == (s ?? '').toLowerCase(),
         orElse: () => TrainingIntensity.medium,
       );
   static TrainingStatus _status(String? s) => TrainingStatus.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingStatus.planned,
-      );
+    (e) => e.name == (s ?? '').toLowerCase(),
+    orElse: () => TrainingStatus.planned,
+  );
 }

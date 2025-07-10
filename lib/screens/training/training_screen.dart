@@ -118,8 +118,9 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                     shape: BoxShape.circle,
                   ),
                   todayDecoration: BoxDecoration(
-                    color:
-                        Theme.of(context).primaryColor.withValues(alpha: 0.5),
+                    color: Theme.of(
+                      context,
+                    ).primaryColor.withValues(alpha: 0.5),
                     shape: BoxShape.circle,
                   ),
                   markerDecoration: BoxDecoration(
@@ -127,9 +128,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                     shape: BoxShape.circle,
                   ),
                 ),
-                headerStyle: const HeaderStyle(
-                  titleCentered: true,
-                ),
+                headerStyle: const HeaderStyle(titleCentered: true),
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     _selectedDay = selectedDay;
@@ -219,16 +218,14 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
 }
 
 class _TrainingCard extends StatelessWidget {
-  const _TrainingCard({
-    required this.training,
-    required this.onTap,
-  });
+  const _TrainingCard({required this.training, required this.onTap});
   final Training training;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final attendancePercentage = training.presentPlayerIds.length /
+    final attendancePercentage =
+        training.presentPlayerIds.length /
         (training.presentPlayerIds.length + training.absentPlayerIds.length) *
         100;
 
@@ -243,11 +240,14 @@ class _TrainingCard extends StatelessWidget {
             children: [
               // Time and Duration
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
-                  color: _getIntensityColor(training.intensity)
-                      .withValues(alpha: 0.2),
+                  color: _getIntensityColor(
+                    training.intensity,
+                  ).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
@@ -255,8 +255,8 @@ class _TrainingCard extends StatelessWidget {
                     Text(
                       DateFormat('HH:mm').format(training.date),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       '${training.duration} min',
@@ -304,10 +304,7 @@ class _TrainingCard extends StatelessWidget {
                   padding: const EdgeInsets.all(12),
                   child: Column(
                     children: [
-                      Icon(
-                        Icons.people,
-                        color: Colors.grey[600],
-                      ),
+                      Icon(Icons.people, color: Colors.grey[600]),
                       const SizedBox(height: 4),
                       Text(
                         '${training.presentPlayerIds.length}/${training.presentPlayerIds.length + training.absentPlayerIds.length}',
@@ -316,11 +313,11 @@ class _TrainingCard extends StatelessWidget {
                       Text(
                         '${attendancePercentage.toStringAsFixed(0)}%',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: attendancePercentage >= 80
-                                  ? Colors.green
-                                  : Colors.orange,
-                            ),
+                          fontWeight: FontWeight.bold,
+                          color: attendancePercentage >= 80
+                              ? Colors.green
+                              : Colors.orange,
+                        ),
                       ),
                     ],
                   ),
@@ -364,20 +361,20 @@ class _TrainingCard extends StatelessWidget {
   }
 
   Widget _buildIntensityBadge(TrainingIntensity intensity) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          color: _getIntensityColor(intensity),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          _getIntensityText(intensity),
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    decoration: BoxDecoration(
+      color: _getIntensityColor(intensity),
+      borderRadius: BorderRadius.circular(4),
+    ),
+    child: Text(
+      _getIntensityText(intensity),
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 10,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  );
 
   Widget _buildStatusBadge(TrainingStatus status) {
     Color color;

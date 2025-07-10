@@ -12,10 +12,7 @@ import '../../models/match.dart';
 import '../../providers/matches_provider.dart';
 
 class EditMatchScreen extends ConsumerStatefulWidget {
-  const EditMatchScreen({
-    required this.matchId,
-    super.key,
-  });
+  const EditMatchScreen({required this.matchId, super.key});
   final String matchId;
 
   @override
@@ -144,8 +141,10 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     ),
                                     child: Text(
                                       _selectedDate != null
-                                          ? DateFormat('d MMMM yyyy', 'nl_NL')
-                                              .format(_selectedDate!)
+                                          ? DateFormat(
+                                              'd MMMM yyyy',
+                                              'nl_NL',
+                                            ).format(_selectedDate!)
                                           : 'Selecteer datum',
                                     ),
                                   ),
@@ -185,8 +184,9 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                       .map(
                                         (location) => DropdownMenuItem(
                                           value: location,
-                                          child:
-                                              Text(_getLocationText(location)),
+                                          child: Text(
+                                            _getLocationText(location),
+                                          ),
                                         ),
                                       )
                                       .toList(),
@@ -295,10 +295,12 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     decoration: InputDecoration(
                                       labelText: 'JO17 Score',
                                       border: const OutlineInputBorder(),
-                                      prefixIcon:
-                                          const Icon(Icons.sports_score),
-                                      fillColor:
-                                          Colors.green.withValues(alpha: 0.1),
+                                      prefixIcon: const Icon(
+                                        Icons.sports_score,
+                                      ),
+                                      fillColor: Colors.green.withValues(
+                                        alpha: 0.1,
+                                      ),
                                       filled: true,
                                     ),
                                     keyboardType: TextInputType.number,
@@ -333,10 +335,12 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     decoration: InputDecoration(
                                       labelText: 'Tegenstander Score',
                                       border: const OutlineInputBorder(),
-                                      prefixIcon:
-                                          const Icon(Icons.sports_score),
-                                      fillColor:
-                                          Colors.red.withValues(alpha: 0.1),
+                                      prefixIcon: const Icon(
+                                        Icons.sports_score,
+                                      ),
+                                      fillColor: Colors.red.withValues(
+                                        alpha: 0.1,
+                                      ),
                                       filled: true,
                                     ),
                                     keyboardType: TextInputType.number,
@@ -367,8 +371,9 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                     vertical: 12,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: _getResultColor()
-                                        .withValues(alpha: 0.2),
+                                    color: _getResultColor().withValues(
+                                      alpha: 0.2,
+                                    ),
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
                                       color: _getResultColor(),
