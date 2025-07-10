@@ -4,6 +4,7 @@ import 'dart:math';
 
 // Package imports:
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/foundation.dart';
 
 /// Handles creation and retrieval of the AES-256 encryption key for Hive boxes.
 /// The key is stored securely using `flutter_secure_storage` on mobile/desktop.
@@ -51,33 +52,117 @@ class HiveKeyManager {
 /// Minimal in-memory stub for [FlutterSecureStorage] used in tests.
 class _InMemorySecureStorage implements FlutterSecureStorage {
   final Map<String, String> _store = {};
+  final Map<String, List<ValueChanged<String?>>> _listeners = {};
 
   @override
-  Future<String?> read({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async => _store[key];
+  Future<String?> read({
+    required String key,
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async => _store[key];
 
   @override
-  Future<void> write({required String key, required String? value, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async {
+  Future<void> write({
+    required String key,
+    required String? value,
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async {
     if (value == null) {
       _store.remove(key);
     } else {
       _store[key] = value;
     }
+    _listeners[key]?.forEach((listener) => listener(value));
   }
 
   @override
-  Future<void> delete({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async {
+  Future<void> delete({
+    required String key,
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async {
     _store.remove(key);
+    _listeners[key]?.forEach((listener) => listener(null));
   }
 
   @override
-  Future<void> deleteAll({IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async {
+  Future<void> deleteAll({
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async {
     _store.clear();
+    for (final key in _listeners.keys) {
+      _listeners[key]?.forEach((l) => l(null));
+    }
   }
 
   // The rest of the API methods are no-op for this stub
   @override
-  Future<Map<String, String>> readAll({IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async => Map.of(_store);
+  Future<Map<String, String>> readAll({
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async => Map.of(_store);
 
   @override
-  Future<bool> containsKey({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? windowsOptions}) async => _store.containsKey(key);
+  Future<bool> containsKey({
+    required String key,
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async => _store.containsKey(key);
+
+  // Listener management -------------------------------------------------
+
+  @override
+  void registerListener({
+    required String key,
+    required ValueChanged<String?> listener,
+  }) {
+    _listeners.putIfAbsent(key, () => []).add(listener);
+  }
+
+  @override
+  void unregisterListener({
+    required String key,
+    required ValueChanged<String?> listener,
+  }) {
+    _listeners[key]?.remove(listener);
+  }
+
+  @override
+  void unregisterAllListenersForKey({required String key}) {
+    _listeners[key]?.clear();
+  }
+
+  @override
+  void unregisterAllListeners() {
+    _listeners.clear();
+  }
+
+  @override
+  Future<bool?> isCupertinoProtectedDataAvailable() async => false;
 }
