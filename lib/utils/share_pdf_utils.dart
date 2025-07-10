@@ -8,7 +8,7 @@ import 'package:share_plus/share_plus.dart';
 // Conditional import: use real `package:web/web.dart` on the web, otherwise
 // fall back to a minimal stub so that tests running on VM/desktop compile.
 // ignore: uri_does_not_exist
-import 'package:web/web.dart' as web
+import 'package:web/web.dart'
     if (dart.library.io) 'web_stub.dart' as web;
 
 import 'package:path_provider/path_provider.dart';
