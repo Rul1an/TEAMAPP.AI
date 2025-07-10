@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import '../models/training.dart';
 import '../repositories/training_repository.dart';
+import 'trainings_provider.dart';
 
 class TrainingEditState {
   const TrainingEditState({

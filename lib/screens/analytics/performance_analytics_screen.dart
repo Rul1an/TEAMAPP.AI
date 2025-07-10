@@ -17,7 +17,7 @@ import '../../providers/players_provider.dart' as player_data;
 import '../../providers/training_sessions_repo_provider.dart' as ts_repo;
 
 import '../players/assessment_detail_screen.dart'; // Import the new screen
-import '../widgets/heat_map_card.dart';
+import 'widgets/heat_map_card.dart';
 
 // Analytics Data Providers
 final playersProvider = player_data.playersProvider;

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../repositories/prediction_repository.dart';
 import '../repositories/prediction_repository_stub.dart';
 import '../repositories/match_repository.dart';
-import '../providers/match_repository_provider.dart';
+import '../providers/matches_provider.dart';
 
 class FormPredictionController extends AsyncNotifier<FormTrend> {
   FormPredictionController(this.teamId);
