@@ -38,7 +38,9 @@ class TrainingEditViewModel extends StateNotifier<TrainingEditState> {
   final String trainingId;
 
   Future<void> _load() async {
-    final repo = ref.read(trainingRepositoryProvider);
+    final TrainingRepository repo = ref.read<TrainingRepository>(
+      trainingRepositoryProvider,
+    );
     final res = await repo.getById(trainingId);
     if (res.isSuccess) {
       state = state.copyWith(training: res.dataOrNull, isLoading: false);
@@ -49,7 +51,9 @@ class TrainingEditViewModel extends StateNotifier<TrainingEditState> {
 
   Future<bool> save(Training updated) async {
     state = state.copyWith(isLoading: true, error: null);
-    final repo = ref.read(trainingRepositoryProvider);
+    final TrainingRepository repo = ref.read<TrainingRepository>(
+      trainingRepositoryProvider,
+    );
     final res = await repo.update(updated);
     if (!res.isSuccess) {
       state = state.copyWith(isLoading: false, error: res.errorOrNull?.message);
