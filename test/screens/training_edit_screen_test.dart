@@ -7,6 +7,7 @@ import 'package:jo17_tactical_manager/screens/training/training_edit_screen.dart
 import 'package:jo17_tactical_manager/repositories/training_repository.dart';
 import 'package:jo17_tactical_manager/providers/trainings_provider.dart';
 import 'package:jo17_tactical_manager/core/result.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class _MockTrainingRepo implements TrainingRepository {
   _MockTrainingRepo();
@@ -59,6 +60,10 @@ final _dummy = () {
 
 void main() {
   late _MockTrainingRepo repo;
+
+  setUpAll(() async {
+    await initializeDateFormatting('nl_NL', null);
+  });
 
   setUp(() {
     repo = _MockTrainingRepo();
