@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -164,4 +165,27 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
 
   @override
   Future<bool?> isCupertinoProtectedDataAvailable() async => false;
+
+  // Options getters required by FlutterSecureStorage 9.x -------------------
+
+  @override
+  AndroidOptions get aOptions => AndroidOptions.defaultOptions;
+
+  @override
+  IOSOptions get iOptions => IOSOptions.defaultOptions;
+
+  @override
+  LinuxOptions get lOptions => LinuxOptions.defaultOptions;
+
+  @override
+  MacOsOptions get mOptions => MacOsOptions.defaultOptions;
+
+  @override
+  WindowsOptions get wOptions => WindowsOptions.defaultOptions;
+
+  @override
+  WebOptions get webOptions => WebOptions.defaultOptions;
+
+  @override
+  Stream<bool>? get onCupertinoProtectedDataAvailabilityChanged => null;
 }

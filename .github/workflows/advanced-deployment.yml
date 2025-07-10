@@ -69,6 +69,7 @@ jobs:
 
       - name: 🛡️ Coverage Gate (≥40%)
         run: |
+          sudo apt-get update -y && sudo apt-get install -y bc jq
           echo "Calculating total line coverage (excluding UI/models)..."
           # Detect coverage path (root or jo17_tactical_manager)
           if [ -f "coverage/lcov.info" ]; then
@@ -237,6 +238,10 @@ jobs:
             echo "❌ build/web/index.html missing after download."
             exit 1
           fi
+
+      - name: 🔧 Install utilities (jq, bc)
+        run: |
+          sudo apt-get update -y && sudo apt-get install -y jq bc
 
       - name: 🎯 Setup Node.js
         uses: actions/setup-node@v4
