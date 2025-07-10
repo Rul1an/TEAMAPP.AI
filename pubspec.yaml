@@ -96,7 +96,7 @@ dev_dependencies:
   hive_generator: ^2.0.1
 
   # New dev dependencies
-  hive_test: ^1.1.0
+  hive_test: ^1.0.1
 
 flutter:
   uses-material-design: true
