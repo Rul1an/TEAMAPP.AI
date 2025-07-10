@@ -6,6 +6,8 @@ import '../../../providers/analytics_repository_provider.dart';
 import '../../../utils/heatmap_utils.dart';
 import '../../../widgets/async_value_widget.dart';
 import '../../../widgets/analytics/heat_map_painter.dart';
+import '../../../repositories/analytics_repository.dart';
+import '../../../models/action_event.dart';
 
 class HeatMapCard extends ConsumerStatefulWidget {
   const HeatMapCard({super.key});
