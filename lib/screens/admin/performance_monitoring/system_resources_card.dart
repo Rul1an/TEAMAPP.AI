@@ -53,7 +53,7 @@ class _Gauge extends StatelessWidget {
               value: percent,
               strokeWidth: 8,
               color: color,
-              backgroundColor: color.withOpacity(0.2),
+              backgroundColor: color.withAlpha((0.2 * 255).round()),
             ),
           ),
           Text(

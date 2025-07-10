@@ -32,7 +32,7 @@ class RealTimeMetricsCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.1),
+                        color: Colors.green.withAlpha((0.1 * 255).round()),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Text(
@@ -55,7 +55,7 @@ class RealTimeMetricsCard extends StatelessWidget {
                         drawVerticalLine: false,
                         horizontalInterval: 50,
                         getDrawingHorizontalLine: (value) => FlLine(
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Colors.grey.withAlpha((0.2 * 255).round()),
                           strokeWidth: 1,
                         ),
                       ),
@@ -115,7 +115,7 @@ class RealTimeMetricsCard extends StatelessWidget {
                           dotData: const FlDotData(show: false),
                           belowBarData: BarAreaData(
                             show: true,
-                            color: Colors.blue.withOpacity(0.1),
+                            color: Colors.blue.withAlpha((0.1 * 255).round()),
                           ),
                         ),
                       ],
@@ -152,7 +152,7 @@ class RealTimeMetricsCard extends StatelessWidget {
                         child: CircularProgressIndicator(
                           value: 0.65,
                           strokeWidth: 12,
-                          backgroundColor: Colors.grey.withOpacity(0.2),
+                          backgroundColor: Colors.grey.withAlpha((0.2 * 255).round()),
                           valueColor: const AlwaysStoppedAnimation<Color>(
                             Colors.blue,
                           ),

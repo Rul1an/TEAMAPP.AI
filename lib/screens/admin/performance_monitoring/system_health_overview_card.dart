@@ -80,9 +80,9 @@ class _HealthMetric extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: color.withOpacity(0.05),
+      color: color.withAlpha((0.05 * 255).round()),
       borderRadius: BorderRadius.circular(12),
-      border: Border.all(color: color.withOpacity(0.2)),
+      border: Border.all(color: color.withAlpha((0.2 * 255).round())),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
