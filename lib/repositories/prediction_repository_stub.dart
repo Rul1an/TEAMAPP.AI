@@ -13,9 +13,10 @@ class PredictionRepositoryStub implements PredictionRepository {
     // Fallback: use `getRecent()` and filter for team
     final matchesRes = await matchRepository.getRecent();
     if (!matchesRes.isSuccess) return Failure(matchesRes.errorOrNull!);
-    final allMatches = matchesRes.dataOrNull!
-        .where((m) => m.teamId == teamId)
-        .toList();
+    // The Match model currently has no explicit `teamId` field. In a real
+    // implementation this should be replaced with proper filtering logic once
+    // the model supports it. For the stub we simply include all matches.
+    final allMatches = matchesRes.dataOrNull!;
 
     // Take the last [n] played by date desc
     allMatches.sort((a, b) => b.date.compareTo(a.date));

@@ -16,6 +16,7 @@ import '../../widgets/common/rating_dialog.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
 import '../../models/training_session/training_session.dart';
+import 'package:collection/collection.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
   const TrainingAttendanceScreen({required this.trainingId, super.key});
@@ -568,22 +569,28 @@ class _TrainingAttendanceScreenState
   Future<void> _exportPdf(WidgetRef ref) async {
     final trainings = ref.read(trainingsProvider).value;
     if (trainings == null) return;
-    final training = trainings.firstWhere(
+
+    // Use firstWhereOrNull from collection package for safer lookup
+    final training = trainings.firstWhereOrNull(
       (t) => t.id == widget.trainingId,
-      orElse: () => null,
     );
     if (training == null) return;
 
     final players = ref.read(playersProvider).value ?? [];
     final generator = ref.read(trainingSessionPdfGeneratorProvider);
+
+    // As the legacy Training model no longer exposes a trainingNumber, we
+    // default to 1 for the exported PDF. If a dedicated session entity is
+    // available upstream, that should be used instead.
     final bytes = await generator.generate((
       TrainingSession.create(
         teamId: 'team',
         date: training.date,
-        trainingNumber: training.trainingNumber ?? 1,
+        trainingNumber: 1,
       ),
       players,
     ));
+
     await SharePdfUtils.sharePdf(bytes, 'training_${training.id}.pdf', context);
   }
 }
