@@ -13,6 +13,9 @@ import '../../models/training.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/trainings_provider.dart';
 import '../../widgets/common/rating_dialog.dart';
+import '../../providers/pdf/pdf_generators_providers.dart';
+import '../../utils/share_pdf_utils.dart';
+import '../../models/training_session/training_session.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
   const TrainingAttendanceScreen({
@@ -41,6 +44,11 @@ class _TrainingAttendanceScreenState
       appBar: AppBar(
         title: const Text('Training Aanwezigheid'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf),
+            tooltip: 'Export PDF',
+            onPressed: () => _exportPdf(ref),
+          ),
           IconButton(
             icon: const Icon(Icons.star),
             onPressed: _showRatingOptions,
@@ -560,6 +568,18 @@ class _TrainingAttendanceScreenState
         });
       }
     }
+  }
+
+  Future<void> _exportPdf(WidgetRef ref) async {
+    final trainings = ref.read(trainingsProvider).value;
+    if (trainings == null) return;
+    final training = trainings.firstWhere((t) => t.id == widget.trainingId, orElse: () => null);
+    if (training == null) return;
+
+    final players = ref.read(playersProvider).value ?? [];
+    final generator = ref.read(trainingSessionPdfGeneratorProvider);
+    final bytes = await generator.generate((TrainingSession.create(teamId: 'team', date: training.date, trainingNumber: training.trainingNumber ?? 1), players));
+    await SharePdfUtils.sharePdf(bytes, 'training_${training.id}.pdf', context);
   }
 }
 

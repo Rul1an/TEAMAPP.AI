@@ -12,6 +12,8 @@ import '../../models/player.dart';
 import '../../providers/assessments_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../widgets/common/interactive_star_rating.dart';
+import '../../providers/pdf/pdf_generators_providers.dart';
+import '../../utils/share_pdf_utils.dart';
 
 class AssessmentScreen extends ConsumerStatefulWidget {
   const AssessmentScreen({
@@ -106,7 +108,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
           if (_isEditing) ...[
             IconButton(
               icon: const Icon(Icons.picture_as_pdf),
-              onPressed: _exportToPDF,
+              onPressed: () => _exportPdf(ref),
               tooltip: 'Exporteer naar PDF',
             ),
           ],
@@ -515,47 +517,15 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
     }
   }
 
-  Future<void> _exportToPDF() async {
-    if (_player == null || _assessment == null) return;
+  Future<void> _exportPdf(WidgetRef ref) async {
+    if (_assessment == null || _player == null) return;
 
-    try {
-      // Update assessment with current form data
-      _assessment!.strengths =
-          _strengthsController.text.isEmpty ? null : _strengthsController.text;
-      _assessment!.areasForImprovement = _improvementController.text.isEmpty
-          ? null
-          : _improvementController.text;
-      _assessment!.developmentGoals =
-          _goalsController.text.isEmpty ? null : _goalsController.text;
-      _assessment!.coachNotes =
-          _notesController.text.isEmpty ? null : _notesController.text;
+    final generator = ref.read(playerAssessmentPdfGeneratorProvider);
+    final bytes = await generator.generate(_assessment!);
+    final filename = 'assessment_${_player!.id}_${DateFormat('yyyy-MM-dd').format(_assessment!.assessmentDate)}.pdf';
 
-      final fileName =
-          'assessment_${_player!.firstName}_${_player!.lastName}_${DateFormat('yyyy-MM-dd').format(_assessment!.assessmentDate)}.pdf';
-
-      // Simple feedback for all platforms
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'PDF export: $fileName - Functionaliteit wordt binnenkort toegevoegd',
-            ),
-            backgroundColor: Colors.blue,
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
-    } catch (e) {
-      // Show error feedback
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('PDF export tijdelijk niet beschikbaar'),
-            backgroundColor: Colors.orange,
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
+    if (mounted) {
+      await SharePdfUtils.sharePdf(bytes, filename, context);
     }
   }
 

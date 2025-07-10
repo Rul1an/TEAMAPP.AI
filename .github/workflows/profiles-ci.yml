@@ -65,6 +65,9 @@ jobs:
         working-directory: .
         run: flutter pub get
 
+      - name: 🔄 Run Code Generation
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
       - name: 🧪 Run integration tests (profiles)
         working-directory: .
         run: flutter test

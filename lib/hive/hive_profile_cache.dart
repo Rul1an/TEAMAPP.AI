@@ -9,7 +9,9 @@ import '../models/profile.dart';
 import 'hive_key_manager.dart';
 
 class HiveProfileCache {
-  HiveProfileCache();
+  HiveProfileCache({HiveKeyManager? keyManager}) : _keyManager = keyManager ?? HiveKeyManager();
+
+  final HiveKeyManager _keyManager;
   static const _boxName = 'profiles_box';
   static const _key = 'current_profile_json';
   static const _tsKey = 'current_profile_ts';
@@ -22,7 +24,7 @@ class HiveProfileCache {
       // No adapter needed; we store JSON string.
     }
     if (!Hive.isBoxOpen(_boxName)) {
-      final key = await HiveKeyManager().getKey();
+      final key = await _keyManager.getKey();
       await Hive.initFlutter();
       return Hive.openBox<String>(
         _boxName,

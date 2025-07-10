@@ -5,11 +5,15 @@ packages:
 
 scripts:
   analyze:
-    description: Analyze all packages in the workspace
-    run: melos exec -c 1 -- "flutter analyze"
+    description: Analyze all packages after code generation
+    run: |
+      melos run gen
+      melos exec -c 1 -- "flutter analyze"
   test:
-    description: Run tests with coverage for all packages
-    run: melos exec -c 1 -- "flutter test --coverage"
+    description: Run tests with coverage (after code generation)
+    run: |
+      melos run gen
+      melos exec -c 1 -- "flutter test --coverage"
   fix:
     description: Apply Dart fixes & format across the workspace
     run: |
@@ -18,3 +22,7 @@ scripts:
   analyze_strict:
     description: Analyze with --fatal-infos to enforce clean code
     run: melos exec -c 1 -- "flutter analyze --fatal-infos"
+  gen:
+    description: Generate code for all packages (build_runner)
+    run: |
+      melos exec -c 6 -- "flutter pub run build_runner build --delete-conflicting-outputs"
