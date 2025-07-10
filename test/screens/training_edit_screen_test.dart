@@ -72,6 +72,7 @@ void main() {
 
   setUpAll(() async {
     await initializeDateFormatting('nl_NL', null);
+    Intl.defaultLocale = 'nl_NL';
   });
 
   setUp(() {
