@@ -10,9 +10,16 @@ class PredictionRepositoryStub implements PredictionRepository {
 
   @override
   Future<Result<FormTrend>> predictForm(String teamId) async {
-    final matchesRes = await matchRepository.getLastPlayed(teamId, 3);
+    // Fallback: use `getRecent()` and filter for team
+    final matchesRes = await matchRepository.getRecent();
     if (!matchesRes.isSuccess) return Failure(matchesRes.errorOrNull!);
-    final matches = matchesRes.dataOrNull!;
+    final allMatches = matchesRes.dataOrNull!
+        .where((m) => m.teamId == teamId)
+        .toList();
+
+    // Take the last [n] played by date desc
+    allMatches.sort((a, b) => b.date.compareTo(a.date));
+    final matches = allMatches.take(3).toList();
     if (matches.isEmpty) return const Success(FormTrend.stable);
 
     final avgPts = matches
