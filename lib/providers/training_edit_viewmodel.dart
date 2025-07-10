@@ -41,9 +41,12 @@ class TrainingEditViewModel extends StateNotifier<TrainingEditState> {
     final repo = ref.read(trainingRepositoryProvider);
     final res = await repo.getById(trainingId);
     if (res.isSuccess) {
-      state = state.copyWith(training: res.value, isLoading: false);
+      state = state.copyWith(training: res.dataOrNull, isLoading: false);
     } else {
-      state = state.copyWith(error: res.errorOrNull, isLoading: false);
+      state = state.copyWith(
+        error: res.errorOrNull?.message,
+        isLoading: false,
+      );
     }
   }
 
@@ -52,7 +55,10 @@ class TrainingEditViewModel extends StateNotifier<TrainingEditState> {
     final repo = ref.read(trainingRepositoryProvider);
     final res = await repo.update(updated);
     if (!res.isSuccess) {
-      state = state.copyWith(isLoading: false, error: res.errorOrNull);
+      state = state.copyWith(
+        isLoading: false,
+        error: res.errorOrNull?.message,
+      );
       return false;
     }
     state = state.copyWith(training: updated, isLoading: false);
