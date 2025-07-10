@@ -1,6 +1,6 @@
 # Hive Profile Cache – Implementation Plan (Q3 2025)
 
-_Last updated: 2025-07-XX_
+_Last updated: 2025-07-16_
 
 ## 🎯  Goal
 Provide an encrypted offline cache for the user `Profile` entity using **Hive 4**. The cache will be leveraged by `SupabaseProfileRepository` with a stale-while-revalidate strategy.
@@ -20,12 +20,12 @@ Provide an encrypted offline cache for the user `Profile` entity using **Hive 4*
 ## 2  Task Breakdown
 | ID | Task | Owner | ETA |
 |----|------|-------|-----|
-| H1 | Add Hive deps (`hive`, `hive_flutter`) to `pubspec.yaml` | Dev | — |
-| H2 | Create `ProfileAdapter` + run codegen | Dev | — |
-| H3 | Implement `HiveProfileCache` (read/write helpers) | Dev | — |
-| H4 | Refactor `SupabaseProfileRepository` to inject optional cache & implement SW-R | Dev | — |
-| H5 | Unit tests with in-memory Hive (`Hive.initMemory()`) | QA | — |
-| H6 | Update docs (`ARCHITECTURE.md`) & diagrams | Tech writer | — |
+| H1 | Add Hive deps (`hive`, `hive_flutter`) to `pubspec.yaml` | Dev | ✅ Completed |
+| H2 | Create `ProfileAdapter` + run codegen | Dev | ✅ Completed |
+| H3 | Implement `HiveProfileCache` (read/write helpers) | Dev | ✅ Completed |
+| H4 | Refactor `SupabaseProfileRepository` to inject optional cache & implement SW-R | Dev | ✅ Completed |
+| H5 | Unit tests with in-memory Hive (`Hive.initMemory()`) | QA | ✅ Completed |
+| H6 | Update docs (`ARCHITECTURE.md`) & diagrams | Tech writer | ✅ Completed |
 
 ## 3  API Sketch
 ```dart

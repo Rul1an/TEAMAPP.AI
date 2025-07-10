@@ -117,14 +117,12 @@ JO17 Tactical Manager is een hybride Flutter applicatie voor het beheren van jeu
 └─────────────────────────────────────────────────────────────┘
                               │
 ┌─────────────────────────────────────────────────────────────┐
-│                      Business Logic Layer                    │
+│                      Repository Layer                       │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │              Services                                │   │
-│  │  - Database Service                                  │   │
-│  │  - Import Service                                    │   │
-│  │  - Export Service                                    │   │
-│  │  - Video Service (toekomstig)                       │   │
-│  │  - AI Coach Service (toekomstig)                    │   │
+│  │              Repositories                           │   │
+│  │  - ProfileRepository    - PlayerRepository          │   │
+│  │  - MatchRepository      - TrainingRepository        │   │
+│  │  - PdfGenerator facade (export)                     │   │
 │  └─────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                               │
@@ -133,6 +131,8 @@ JO17 Tactical Manager is een hybride Flutter applicatie voor het beheren van jeu
 │  ┌──────────────┐  ┌──────────────┐  ┌────────────────┐   │
 │  │ Isar (Mobile)│  │ Mock (Web)   │  │ Supabase       │   │
 │  │              │  │              │  │ (Toekomstig)   │   │
+│  │ Isar (Mobile)│  │ Hive Cache   │  │ Supabase (Online)│ │
+│  │              │  │ (Offline)    │  │ (Sync)         │   │
 │  └──────────────┘  └──────────────┘  └────────────────┘   │
 │  ┌──────────────┐  ┌──────────────┐                       │
 │  │Video Storage │  │ AI/LLM APIs │                       │
@@ -425,6 +425,9 @@ class PlayersViewModel extends ChangeNotifier {
    - PDF export voor rapporten
    - Web-compatibele file handling
 
+7. **PDF Service Modularisation** – Abstract generators implemented, legacy service removed; Match, Player, Training exports wired ✅
+8. **Large File Refactors** – All targeted screens/widgets now ≤300 LOC, PerformanceMonitoringScreen extracted ✅
+
 ### 🚧 In Progress & Roadmap
 
 #### Phase 2: Enhanced Features ✅ (Mostly Complete)
@@ -543,7 +546,7 @@ Flexibele data import en export mogelijkheden:
 
 ---
 
-*Document laatst bijgewerkt: **11 July 2025***
+*Document laatst bijgewerkt: **16 July 2025***
 *Versie: 1.1.0*
 
 ### New Data Access Layer (2025 Roadmap)

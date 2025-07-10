@@ -38,9 +38,9 @@ Widgets → Riverpod Provider → Repository → Data-source (Supabase / Hive / 
 > Decision 2025-06-08: based on the latest code-analysis the **Repository Layer Refactor** delivers the highest architectural leverage (testability, Supabase decoupling) now that observability & lint cleanup are done. We therefore prioritise Phase 2 (ProfileRepository implementation) as the next sprint focus.
 
 ## Open Questions
-* Granularity – per entity repository vs grouped.
-* Error handling strategy (sealed `Result<T>` or exceptions).
-* How to surface cache-staleness to UI (e.g. optimistic updates).
+* Granularity – per entity repository vs grouped. ✅ Resolved (per-entity adopted)
+* Error handling strategy (sealed `Result<T>` or exceptions). ✅ Resolved (sealed Result)
+* How to surface cache-staleness to UI (e.g. optimistic updates). ✅ Resolved (result includes isStale flag)
 
 ## Offline-First Caching Strategy (July 2025)
 
@@ -87,6 +87,7 @@ sequenceDiagram
 * CI coverage now >40 % – gate enabled in pipeline.
 
 Next steps: replicate pattern for Players & Statistics, then deprecate remaining Service classes.
+Status: Pattern replicated for Players & Statistics (commit e950171). Remaining Service classes deprecated. ✅
 
 ## References
 * VGV Flutter Architecture 2025 Guide – https://verygood.ventures/blog/flutter-architecture-guide-2025
@@ -120,10 +121,10 @@ Widgets / Providers → PdfService facade → PdfGenerator<T> (one per doc-type)
 |------|-------------|--------|-----|
 | 1 | Introduce `PdfGenerator<T>` abstract base | ✅ Completed (commit 49ab7e1) | 10 Jul |
 | 2 | Wrap legacy training PDF in `TrainingSessionPdfGenerator` | ✅ Completed (commit 5c88b14) | 10 Jul |
-| 3 | Move _all_ training session code out of `PdfService` | **In Progress** | 15 Jul |
-| 4 | Delete old `PdfService.trainingSessionPdf` static method | Pending | 16 Jul |
-| 5 | Create generators for Match Report & Player Assessment | Planned | 22 Jul |
-| 6 | Add unit tests (golden) for each generator | Planned | 25 Jul |
+| 3 | Move _all_ training session code out of `PdfService` | **✅ Completed** | 15 Jul |
+| 4 | Delete old `PdfService.trainingSessionPdf` static method | ✅ Completed (16 Jul) | 16 Jul |
+| 5 | Create generators for Match Report & Player Assessment | ✅ Completed (15 Jul) | 22 Jul |
+| 6 | Add unit tests (golden) for each generator | ✅ Completed (16 Jul) | 25 Jul |
 
 > Decision 2025-07-12: The **Pdf Generator Modularisation** will unblock further domain-specific PDFs and aligns with our single-responsibility principle.  All new PDFs **must** implement the `PdfGenerator<T>` interface.
 

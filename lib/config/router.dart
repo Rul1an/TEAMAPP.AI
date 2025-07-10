@@ -134,7 +134,7 @@ GoRouter createRouter(Ref ref) => GoRouter(
                   ),
                 ),
                 GoRoute(
-                  path: 'edit/:id',
+                  path: ':id/edit',
                   builder: (context, state) => EditTrainingScreen(
                     trainingId: state.pathParameters['id']!,
                   ),
