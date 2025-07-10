@@ -21,9 +21,9 @@ class ExportService {
     required PlayerRepository playerRepository,
     required MatchRepository matchRepository,
     required TrainingRepository trainingRepository,
-  })  : _playerRepo = playerRepository,
-        _matchRepo = matchRepository,
-        _trainingRepo = trainingRepository;
+  }) : _playerRepo = playerRepository,
+       _matchRepo = matchRepository,
+       _trainingRepo = trainingRepository;
 
   final PlayerRepository _playerRepo;
   final MatchRepository _matchRepo;
@@ -82,8 +82,10 @@ class ExportService {
               level: 0,
               child: pw.Text(
                 'JO17 Spelers Overzicht',
-                style:
-                    pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+                style: pw.TextStyle(
+                  fontSize: 24,
+                  fontWeight: pw.FontWeight.bold,
+                ),
               ),
             ),
             pw.SizedBox(height: 20),
@@ -103,9 +105,9 @@ class ExportService {
                     DateTime.now().difference(player.birthDate).inDays ~/ 365;
                 final speelminutenPercentage = player.matchesInSelection > 0
                     ? ((player.minutesPlayed /
-                                (player.matchesInSelection * 80)) *
-                            100)
-                        .toStringAsFixed(1)
+                                  (player.matchesInSelection * 80)) *
+                              100)
+                          .toStringAsFixed(1)
                     : '0.0';
 
                 return [
@@ -156,7 +158,7 @@ class ExportService {
     for (final player in players) {
       final speelminutenPercentage = player.matchesInSelection > 0
           ? ((player.minutesPlayed / (player.matchesInSelection * 80)) * 100)
-              .toStringAsFixed(1)
+                .toStringAsFixed(1)
           : '0.0';
 
       sheet.appendRow([
@@ -194,8 +196,10 @@ class ExportService {
               level: 0,
               child: pw.Text(
                 'JO17 Wedstrijden Overzicht',
-                style:
-                    pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+                style: pw.TextStyle(
+                  fontSize: 24,
+                  fontWeight: pw.FontWeight.bold,
+                ),
               ),
             ),
             pw.SizedBox(height: 20),
@@ -212,10 +216,11 @@ class ExportService {
               data: matches.map((match) {
                 final score =
                     match.teamScore != null && match.opponentScore != null
-                        ? '${match.teamScore} - ${match.opponentScore}'
-                        : '-';
-                final result =
-                    match.result != null ? _getResultText(match.result!) : '-';
+                    ? '${match.teamScore} - ${match.opponentScore}'
+                    : '-';
+                final result = match.result != null
+                    ? _getResultText(match.result!)
+                    : '-';
 
                 return [
                   DateFormat('dd-MM-yyyy').format(match.date),

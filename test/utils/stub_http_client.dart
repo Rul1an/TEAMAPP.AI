@@ -38,16 +38,16 @@ class StubHttpClient extends http.BaseClient {
       http.Response(
         'Stub route not found for ${request.url.path}',
         404,
-        headers: {
-          'content-type': 'text/plain',
-        },
+        headers: {'content-type': 'text/plain'},
       ),
       request,
     );
   }
 
   http.StreamedResponse _toStreamed(
-      http.Response res, http.BaseRequest original) {
+    http.Response res,
+    http.BaseRequest original,
+  ) {
     return http.StreamedResponse(
       Stream.fromIterable([res.bodyBytes]),
       res.statusCode,

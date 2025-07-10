@@ -12,7 +12,8 @@ part of 'team.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Team _$TeamFromJson(Map<String, dynamic> json) {
   return _Team.fromJson(json);
@@ -58,32 +59,33 @@ abstract class $TeamCopyWith<$Res> {
   factory $TeamCopyWith(Team value, $Res Function(Team) then) =
       _$TeamCopyWithImpl<$Res, Team>;
   @useResult
-  $Res call(
-      {String id,
-      String clubId,
-      String name,
-      String shortName,
-      AgeCategory ageCategory,
-      TeamLevel level,
-      TeamGender gender,
-      String? description,
-      String? logoUrl,
-      String? colors,
-      String currentSeason,
-      String? league,
-      String? division,
-      TeamSettings settings,
-      List<String> staffIds,
-      String? headCoachId,
-      String? assistantCoachId,
-      String? teamManagerId,
-      List<String> playerIds,
-      List<String> captainIds,
-      TeamStatus status,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      String? createdBy,
-      String? updatedBy});
+  $Res call({
+    String id,
+    String clubId,
+    String name,
+    String shortName,
+    AgeCategory ageCategory,
+    TeamLevel level,
+    TeamGender gender,
+    String? description,
+    String? logoUrl,
+    String? colors,
+    String currentSeason,
+    String? league,
+    String? division,
+    TeamSettings settings,
+    List<String> staffIds,
+    String? headCoachId,
+    String? assistantCoachId,
+    String? teamManagerId,
+    List<String> playerIds,
+    List<String> captainIds,
+    TeamStatus status,
+    DateTime createdAt,
+    DateTime? updatedAt,
+    String? createdBy,
+    String? updatedBy,
+  });
 
   $TeamSettingsCopyWith<$Res> get settings;
 }
@@ -127,108 +129,111 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
     Object? createdBy = freezed,
     Object? updatedBy = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      clubId: null == clubId
-          ? _value.clubId
-          : clubId // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      shortName: null == shortName
-          ? _value.shortName
-          : shortName // ignore: cast_nullable_to_non_nullable
-              as String,
-      ageCategory: null == ageCategory
-          ? _value.ageCategory
-          : ageCategory // ignore: cast_nullable_to_non_nullable
-              as AgeCategory,
-      level: null == level
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as TeamLevel,
-      gender: null == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as TeamGender,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      logoUrl: freezed == logoUrl
-          ? _value.logoUrl
-          : logoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      colors: freezed == colors
-          ? _value.colors
-          : colors // ignore: cast_nullable_to_non_nullable
-              as String?,
-      currentSeason: null == currentSeason
-          ? _value.currentSeason
-          : currentSeason // ignore: cast_nullable_to_non_nullable
-              as String,
-      league: freezed == league
-          ? _value.league
-          : league // ignore: cast_nullable_to_non_nullable
-              as String?,
-      division: freezed == division
-          ? _value.division
-          : division // ignore: cast_nullable_to_non_nullable
-              as String?,
-      settings: null == settings
-          ? _value.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as TeamSettings,
-      staffIds: null == staffIds
-          ? _value.staffIds
-          : staffIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      headCoachId: freezed == headCoachId
-          ? _value.headCoachId
-          : headCoachId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      assistantCoachId: freezed == assistantCoachId
-          ? _value.assistantCoachId
-          : assistantCoachId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      teamManagerId: freezed == teamManagerId
-          ? _value.teamManagerId
-          : teamManagerId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      playerIds: null == playerIds
-          ? _value.playerIds
-          : playerIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      captainIds: null == captainIds
-          ? _value.captainIds
-          : captainIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as TeamStatus,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      createdBy: freezed == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedBy: freezed == updatedBy
-          ? _value.updatedBy
-          : updatedBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            clubId: null == clubId
+                ? _value.clubId
+                : clubId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            shortName: null == shortName
+                ? _value.shortName
+                : shortName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            ageCategory: null == ageCategory
+                ? _value.ageCategory
+                : ageCategory // ignore: cast_nullable_to_non_nullable
+                      as AgeCategory,
+            level: null == level
+                ? _value.level
+                : level // ignore: cast_nullable_to_non_nullable
+                      as TeamLevel,
+            gender: null == gender
+                ? _value.gender
+                : gender // ignore: cast_nullable_to_non_nullable
+                      as TeamGender,
+            description: freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            logoUrl: freezed == logoUrl
+                ? _value.logoUrl
+                : logoUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            colors: freezed == colors
+                ? _value.colors
+                : colors // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            currentSeason: null == currentSeason
+                ? _value.currentSeason
+                : currentSeason // ignore: cast_nullable_to_non_nullable
+                      as String,
+            league: freezed == league
+                ? _value.league
+                : league // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            division: freezed == division
+                ? _value.division
+                : division // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            settings: null == settings
+                ? _value.settings
+                : settings // ignore: cast_nullable_to_non_nullable
+                      as TeamSettings,
+            staffIds: null == staffIds
+                ? _value.staffIds
+                : staffIds // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            headCoachId: freezed == headCoachId
+                ? _value.headCoachId
+                : headCoachId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            assistantCoachId: freezed == assistantCoachId
+                ? _value.assistantCoachId
+                : assistantCoachId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            teamManagerId: freezed == teamManagerId
+                ? _value.teamManagerId
+                : teamManagerId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            playerIds: null == playerIds
+                ? _value.playerIds
+                : playerIds // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            captainIds: null == captainIds
+                ? _value.captainIds
+                : captainIds // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as TeamStatus,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            createdBy: freezed == createdBy
+                ? _value.createdBy
+                : createdBy // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            updatedBy: freezed == updatedBy
+                ? _value.updatedBy
+                : updatedBy // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 
   @override
@@ -243,36 +248,38 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
 /// @nodoc
 abstract class _$$TeamImplCopyWith<$Res> implements $TeamCopyWith<$Res> {
   factory _$$TeamImplCopyWith(
-          _$TeamImpl value, $Res Function(_$TeamImpl) then) =
-      __$$TeamImplCopyWithImpl<$Res>;
+    _$TeamImpl value,
+    $Res Function(_$TeamImpl) then,
+  ) = __$$TeamImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String clubId,
-      String name,
-      String shortName,
-      AgeCategory ageCategory,
-      TeamLevel level,
-      TeamGender gender,
-      String? description,
-      String? logoUrl,
-      String? colors,
-      String currentSeason,
-      String? league,
-      String? division,
-      TeamSettings settings,
-      List<String> staffIds,
-      String? headCoachId,
-      String? assistantCoachId,
-      String? teamManagerId,
-      List<String> playerIds,
-      List<String> captainIds,
-      TeamStatus status,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      String? createdBy,
-      String? updatedBy});
+  $Res call({
+    String id,
+    String clubId,
+    String name,
+    String shortName,
+    AgeCategory ageCategory,
+    TeamLevel level,
+    TeamGender gender,
+    String? description,
+    String? logoUrl,
+    String? colors,
+    String currentSeason,
+    String? league,
+    String? division,
+    TeamSettings settings,
+    List<String> staffIds,
+    String? headCoachId,
+    String? assistantCoachId,
+    String? teamManagerId,
+    List<String> playerIds,
+    List<String> captainIds,
+    TeamStatus status,
+    DateTime createdAt,
+    DateTime? updatedAt,
+    String? createdBy,
+    String? updatedBy,
+  });
 
   @override
   $TeamSettingsCopyWith<$Res> get settings;
@@ -283,7 +290,7 @@ class __$$TeamImplCopyWithImpl<$Res>
     extends _$TeamCopyWithImpl<$Res, _$TeamImpl>
     implements _$$TeamImplCopyWith<$Res> {
   __$$TeamImplCopyWithImpl(_$TeamImpl _value, $Res Function(_$TeamImpl) _then)
-      : super(_value, _then);
+    : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -314,143 +321,145 @@ class __$$TeamImplCopyWithImpl<$Res>
     Object? createdBy = freezed,
     Object? updatedBy = freezed,
   }) {
-    return _then(_$TeamImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      clubId: null == clubId
-          ? _value.clubId
-          : clubId // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      shortName: null == shortName
-          ? _value.shortName
-          : shortName // ignore: cast_nullable_to_non_nullable
-              as String,
-      ageCategory: null == ageCategory
-          ? _value.ageCategory
-          : ageCategory // ignore: cast_nullable_to_non_nullable
-              as AgeCategory,
-      level: null == level
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as TeamLevel,
-      gender: null == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as TeamGender,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      logoUrl: freezed == logoUrl
-          ? _value.logoUrl
-          : logoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      colors: freezed == colors
-          ? _value.colors
-          : colors // ignore: cast_nullable_to_non_nullable
-              as String?,
-      currentSeason: null == currentSeason
-          ? _value.currentSeason
-          : currentSeason // ignore: cast_nullable_to_non_nullable
-              as String,
-      league: freezed == league
-          ? _value.league
-          : league // ignore: cast_nullable_to_non_nullable
-              as String?,
-      division: freezed == division
-          ? _value.division
-          : division // ignore: cast_nullable_to_non_nullable
-              as String?,
-      settings: null == settings
-          ? _value.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as TeamSettings,
-      staffIds: null == staffIds
-          ? _value._staffIds
-          : staffIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      headCoachId: freezed == headCoachId
-          ? _value.headCoachId
-          : headCoachId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      assistantCoachId: freezed == assistantCoachId
-          ? _value.assistantCoachId
-          : assistantCoachId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      teamManagerId: freezed == teamManagerId
-          ? _value.teamManagerId
-          : teamManagerId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      playerIds: null == playerIds
-          ? _value._playerIds
-          : playerIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      captainIds: null == captainIds
-          ? _value._captainIds
-          : captainIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as TeamStatus,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      createdBy: freezed == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedBy: freezed == updatedBy
-          ? _value.updatedBy
-          : updatedBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$TeamImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        clubId: null == clubId
+            ? _value.clubId
+            : clubId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        shortName: null == shortName
+            ? _value.shortName
+            : shortName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        ageCategory: null == ageCategory
+            ? _value.ageCategory
+            : ageCategory // ignore: cast_nullable_to_non_nullable
+                  as AgeCategory,
+        level: null == level
+            ? _value.level
+            : level // ignore: cast_nullable_to_non_nullable
+                  as TeamLevel,
+        gender: null == gender
+            ? _value.gender
+            : gender // ignore: cast_nullable_to_non_nullable
+                  as TeamGender,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        logoUrl: freezed == logoUrl
+            ? _value.logoUrl
+            : logoUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        colors: freezed == colors
+            ? _value.colors
+            : colors // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        currentSeason: null == currentSeason
+            ? _value.currentSeason
+            : currentSeason // ignore: cast_nullable_to_non_nullable
+                  as String,
+        league: freezed == league
+            ? _value.league
+            : league // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        division: freezed == division
+            ? _value.division
+            : division // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        settings: null == settings
+            ? _value.settings
+            : settings // ignore: cast_nullable_to_non_nullable
+                  as TeamSettings,
+        staffIds: null == staffIds
+            ? _value._staffIds
+            : staffIds // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        headCoachId: freezed == headCoachId
+            ? _value.headCoachId
+            : headCoachId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        assistantCoachId: freezed == assistantCoachId
+            ? _value.assistantCoachId
+            : assistantCoachId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        teamManagerId: freezed == teamManagerId
+            ? _value.teamManagerId
+            : teamManagerId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        playerIds: null == playerIds
+            ? _value._playerIds
+            : playerIds // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        captainIds: null == captainIds
+            ? _value._captainIds
+            : captainIds // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as TeamStatus,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        createdBy: freezed == createdBy
+            ? _value.createdBy
+            : createdBy // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        updatedBy: freezed == updatedBy
+            ? _value.updatedBy
+            : updatedBy // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$TeamImpl implements _Team {
-  const _$TeamImpl(
-      {required this.id,
-      required this.clubId,
-      required this.name,
-      required this.shortName,
-      required this.ageCategory,
-      required this.level,
-      required this.gender,
-      this.description,
-      this.logoUrl,
-      this.colors,
-      required this.currentSeason,
-      this.league,
-      this.division,
-      required this.settings,
-      final List<String> staffIds = const [],
-      this.headCoachId,
-      this.assistantCoachId,
-      this.teamManagerId,
-      final List<String> playerIds = const [],
-      final List<String> captainIds = const [],
-      required this.status,
-      required this.createdAt,
-      this.updatedAt,
-      this.createdBy,
-      this.updatedBy})
-      : _staffIds = staffIds,
-        _playerIds = playerIds,
-        _captainIds = captainIds;
+  const _$TeamImpl({
+    required this.id,
+    required this.clubId,
+    required this.name,
+    required this.shortName,
+    required this.ageCategory,
+    required this.level,
+    required this.gender,
+    this.description,
+    this.logoUrl,
+    this.colors,
+    required this.currentSeason,
+    this.league,
+    this.division,
+    required this.settings,
+    final List<String> staffIds = const [],
+    this.headCoachId,
+    this.assistantCoachId,
+    this.teamManagerId,
+    final List<String> playerIds = const [],
+    final List<String> captainIds = const [],
+    required this.status,
+    required this.createdAt,
+    this.updatedAt,
+    this.createdBy,
+    this.updatedBy,
+  }) : _staffIds = staffIds,
+       _playerIds = playerIds,
+       _captainIds = captainIds;
 
   factory _$TeamImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeamImplFromJson(json);
@@ -463,33 +472,33 @@ class _$TeamImpl implements _Team {
   final String name;
   @override
   final String shortName;
-// Team Classification
+  // Team Classification
   @override
   final AgeCategory ageCategory;
   @override
   final TeamLevel level;
   @override
   final TeamGender gender;
-// Details
+  // Details
   @override
   final String? description;
   @override
   final String? logoUrl;
   @override
   final String? colors;
-// Season Information
+  // Season Information
   @override
   final String currentSeason;
   @override
   final String? league;
   @override
   final String? division;
-// Settings
+  // Settings
   @override
   final TeamSettings settings;
-// Staff
+  // Staff
   final List<String> _staffIds;
-// Staff
+  // Staff
   @override
   @JsonKey()
   List<String> get staffIds {
@@ -504,9 +513,9 @@ class _$TeamImpl implements _Team {
   final String? assistantCoachId;
   @override
   final String? teamManagerId;
-// Players
+  // Players
   final List<String> _playerIds;
-// Players
+  // Players
   @override
   @JsonKey()
   List<String> get playerIds {
@@ -524,10 +533,10 @@ class _$TeamImpl implements _Team {
     return EqualUnmodifiableListView(_captainIds);
   }
 
-// Status
+  // Status
   @override
   final TeamStatus status;
-// Metadata
+  // Metadata
   @override
   final DateTime createdAt;
   @override
@@ -574,10 +583,14 @@ class _$TeamImpl implements _Team {
                 other.assistantCoachId == assistantCoachId) &&
             (identical(other.teamManagerId, teamManagerId) ||
                 other.teamManagerId == teamManagerId) &&
-            const DeepCollectionEquality()
-                .equals(other._playerIds, _playerIds) &&
-            const DeepCollectionEquality()
-                .equals(other._captainIds, _captainIds) &&
+            const DeepCollectionEquality().equals(
+              other._playerIds,
+              _playerIds,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._captainIds,
+              _captainIds,
+            ) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -592,33 +605,33 @@ class _$TeamImpl implements _Team {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        clubId,
-        name,
-        shortName,
-        ageCategory,
-        level,
-        gender,
-        description,
-        logoUrl,
-        colors,
-        currentSeason,
-        league,
-        division,
-        settings,
-        const DeepCollectionEquality().hash(_staffIds),
-        headCoachId,
-        assistantCoachId,
-        teamManagerId,
-        const DeepCollectionEquality().hash(_playerIds),
-        const DeepCollectionEquality().hash(_captainIds),
-        status,
-        createdAt,
-        updatedAt,
-        createdBy,
-        updatedBy
-      ]);
+    runtimeType,
+    id,
+    clubId,
+    name,
+    shortName,
+    ageCategory,
+    level,
+    gender,
+    description,
+    logoUrl,
+    colors,
+    currentSeason,
+    league,
+    division,
+    settings,
+    const DeepCollectionEquality().hash(_staffIds),
+    headCoachId,
+    assistantCoachId,
+    teamManagerId,
+    const DeepCollectionEquality().hash(_playerIds),
+    const DeepCollectionEquality().hash(_captainIds),
+    status,
+    createdAt,
+    updatedAt,
+    createdBy,
+    updatedBy,
+  ]);
 
   @JsonKey(ignore: true)
   @override
@@ -628,39 +641,38 @@ class _$TeamImpl implements _Team {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TeamImplToJson(
-      this,
-    );
+    return _$$TeamImplToJson(this);
   }
 }
 
 abstract class _Team implements Team {
-  const factory _Team(
-      {required final String id,
-      required final String clubId,
-      required final String name,
-      required final String shortName,
-      required final AgeCategory ageCategory,
-      required final TeamLevel level,
-      required final TeamGender gender,
-      final String? description,
-      final String? logoUrl,
-      final String? colors,
-      required final String currentSeason,
-      final String? league,
-      final String? division,
-      required final TeamSettings settings,
-      final List<String> staffIds,
-      final String? headCoachId,
-      final String? assistantCoachId,
-      final String? teamManagerId,
-      final List<String> playerIds,
-      final List<String> captainIds,
-      required final TeamStatus status,
-      required final DateTime createdAt,
-      final DateTime? updatedAt,
-      final String? createdBy,
-      final String? updatedBy}) = _$TeamImpl;
+  const factory _Team({
+    required final String id,
+    required final String clubId,
+    required final String name,
+    required final String shortName,
+    required final AgeCategory ageCategory,
+    required final TeamLevel level,
+    required final TeamGender gender,
+    final String? description,
+    final String? logoUrl,
+    final String? colors,
+    required final String currentSeason,
+    final String? league,
+    final String? division,
+    required final TeamSettings settings,
+    final List<String> staffIds,
+    final String? headCoachId,
+    final String? assistantCoachId,
+    final String? teamManagerId,
+    final List<String> playerIds,
+    final List<String> captainIds,
+    required final TeamStatus status,
+    required final DateTime createdAt,
+    final DateTime? updatedAt,
+    final String? createdBy,
+    final String? updatedBy,
+  }) = _$TeamImpl;
 
   factory _Team.fromJson(Map<String, dynamic> json) = _$TeamImpl.fromJson;
 
@@ -726,7 +738,7 @@ TeamSettings _$TeamSettingsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TeamSettings {
-// Training
+  // Training
   int get trainingsPerWeek => throw _privateConstructorUsedError;
   int get defaultTrainingDuration => throw _privateConstructorUsedError;
   List<String> get trainingDays => throw _privateConstructorUsedError; // Match
@@ -754,24 +766,26 @@ mixin _$TeamSettings {
 /// @nodoc
 abstract class $TeamSettingsCopyWith<$Res> {
   factory $TeamSettingsCopyWith(
-          TeamSettings value, $Res Function(TeamSettings) then) =
-      _$TeamSettingsCopyWithImpl<$Res, TeamSettings>;
+    TeamSettings value,
+    $Res Function(TeamSettings) then,
+  ) = _$TeamSettingsCopyWithImpl<$Res, TeamSettings>;
   @useResult
-  $Res call(
-      {int trainingsPerWeek,
-      int defaultTrainingDuration,
-      List<String> trainingDays,
-      String matchDay,
-      int defaultMatchDuration,
-      bool allowParentCommunication,
-      bool sendTrainingReminders,
-      bool sendMatchReminders,
-      bool trackPlayerPerformance,
-      bool enableVideoAnalysis,
-      bool enableGPSTracking,
-      bool requireMedicalCertificate,
-      bool requireInsurance,
-      bool requireVOG});
+  $Res call({
+    int trainingsPerWeek,
+    int defaultTrainingDuration,
+    List<String> trainingDays,
+    String matchDay,
+    int defaultMatchDuration,
+    bool allowParentCommunication,
+    bool sendTrainingReminders,
+    bool sendMatchReminders,
+    bool trackPlayerPerformance,
+    bool enableVideoAnalysis,
+    bool enableGPSTracking,
+    bool requireMedicalCertificate,
+    bool requireInsurance,
+    bool requireVOG,
+  });
 }
 
 /// @nodoc
@@ -802,64 +816,67 @@ class _$TeamSettingsCopyWithImpl<$Res, $Val extends TeamSettings>
     Object? requireInsurance = null,
     Object? requireVOG = null,
   }) {
-    return _then(_value.copyWith(
-      trainingsPerWeek: null == trainingsPerWeek
-          ? _value.trainingsPerWeek
-          : trainingsPerWeek // ignore: cast_nullable_to_non_nullable
-              as int,
-      defaultTrainingDuration: null == defaultTrainingDuration
-          ? _value.defaultTrainingDuration
-          : defaultTrainingDuration // ignore: cast_nullable_to_non_nullable
-              as int,
-      trainingDays: null == trainingDays
-          ? _value.trainingDays
-          : trainingDays // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      matchDay: null == matchDay
-          ? _value.matchDay
-          : matchDay // ignore: cast_nullable_to_non_nullable
-              as String,
-      defaultMatchDuration: null == defaultMatchDuration
-          ? _value.defaultMatchDuration
-          : defaultMatchDuration // ignore: cast_nullable_to_non_nullable
-              as int,
-      allowParentCommunication: null == allowParentCommunication
-          ? _value.allowParentCommunication
-          : allowParentCommunication // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sendTrainingReminders: null == sendTrainingReminders
-          ? _value.sendTrainingReminders
-          : sendTrainingReminders // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sendMatchReminders: null == sendMatchReminders
-          ? _value.sendMatchReminders
-          : sendMatchReminders // ignore: cast_nullable_to_non_nullable
-              as bool,
-      trackPlayerPerformance: null == trackPlayerPerformance
-          ? _value.trackPlayerPerformance
-          : trackPlayerPerformance // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableVideoAnalysis: null == enableVideoAnalysis
-          ? _value.enableVideoAnalysis
-          : enableVideoAnalysis // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableGPSTracking: null == enableGPSTracking
-          ? _value.enableGPSTracking
-          : enableGPSTracking // ignore: cast_nullable_to_non_nullable
-              as bool,
-      requireMedicalCertificate: null == requireMedicalCertificate
-          ? _value.requireMedicalCertificate
-          : requireMedicalCertificate // ignore: cast_nullable_to_non_nullable
-              as bool,
-      requireInsurance: null == requireInsurance
-          ? _value.requireInsurance
-          : requireInsurance // ignore: cast_nullable_to_non_nullable
-              as bool,
-      requireVOG: null == requireVOG
-          ? _value.requireVOG
-          : requireVOG // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            trainingsPerWeek: null == trainingsPerWeek
+                ? _value.trainingsPerWeek
+                : trainingsPerWeek // ignore: cast_nullable_to_non_nullable
+                      as int,
+            defaultTrainingDuration: null == defaultTrainingDuration
+                ? _value.defaultTrainingDuration
+                : defaultTrainingDuration // ignore: cast_nullable_to_non_nullable
+                      as int,
+            trainingDays: null == trainingDays
+                ? _value.trainingDays
+                : trainingDays // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            matchDay: null == matchDay
+                ? _value.matchDay
+                : matchDay // ignore: cast_nullable_to_non_nullable
+                      as String,
+            defaultMatchDuration: null == defaultMatchDuration
+                ? _value.defaultMatchDuration
+                : defaultMatchDuration // ignore: cast_nullable_to_non_nullable
+                      as int,
+            allowParentCommunication: null == allowParentCommunication
+                ? _value.allowParentCommunication
+                : allowParentCommunication // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            sendTrainingReminders: null == sendTrainingReminders
+                ? _value.sendTrainingReminders
+                : sendTrainingReminders // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            sendMatchReminders: null == sendMatchReminders
+                ? _value.sendMatchReminders
+                : sendMatchReminders // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            trackPlayerPerformance: null == trackPlayerPerformance
+                ? _value.trackPlayerPerformance
+                : trackPlayerPerformance // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            enableVideoAnalysis: null == enableVideoAnalysis
+                ? _value.enableVideoAnalysis
+                : enableVideoAnalysis // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            enableGPSTracking: null == enableGPSTracking
+                ? _value.enableGPSTracking
+                : enableGPSTracking // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            requireMedicalCertificate: null == requireMedicalCertificate
+                ? _value.requireMedicalCertificate
+                : requireMedicalCertificate // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            requireInsurance: null == requireInsurance
+                ? _value.requireInsurance
+                : requireInsurance // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            requireVOG: null == requireVOG
+                ? _value.requireVOG
+                : requireVOG // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -867,25 +884,27 @@ class _$TeamSettingsCopyWithImpl<$Res, $Val extends TeamSettings>
 abstract class _$$TeamSettingsImplCopyWith<$Res>
     implements $TeamSettingsCopyWith<$Res> {
   factory _$$TeamSettingsImplCopyWith(
-          _$TeamSettingsImpl value, $Res Function(_$TeamSettingsImpl) then) =
-      __$$TeamSettingsImplCopyWithImpl<$Res>;
+    _$TeamSettingsImpl value,
+    $Res Function(_$TeamSettingsImpl) then,
+  ) = __$$TeamSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int trainingsPerWeek,
-      int defaultTrainingDuration,
-      List<String> trainingDays,
-      String matchDay,
-      int defaultMatchDuration,
-      bool allowParentCommunication,
-      bool sendTrainingReminders,
-      bool sendMatchReminders,
-      bool trackPlayerPerformance,
-      bool enableVideoAnalysis,
-      bool enableGPSTracking,
-      bool requireMedicalCertificate,
-      bool requireInsurance,
-      bool requireVOG});
+  $Res call({
+    int trainingsPerWeek,
+    int defaultTrainingDuration,
+    List<String> trainingDays,
+    String matchDay,
+    int defaultMatchDuration,
+    bool allowParentCommunication,
+    bool sendTrainingReminders,
+    bool sendMatchReminders,
+    bool trackPlayerPerformance,
+    bool enableVideoAnalysis,
+    bool enableGPSTracking,
+    bool requireMedicalCertificate,
+    bool requireInsurance,
+    bool requireVOG,
+  });
 }
 
 /// @nodoc
@@ -893,8 +912,9 @@ class __$$TeamSettingsImplCopyWithImpl<$Res>
     extends _$TeamSettingsCopyWithImpl<$Res, _$TeamSettingsImpl>
     implements _$$TeamSettingsImplCopyWith<$Res> {
   __$$TeamSettingsImplCopyWithImpl(
-      _$TeamSettingsImpl _value, $Res Function(_$TeamSettingsImpl) _then)
-      : super(_value, _then);
+    _$TeamSettingsImpl _value,
+    $Res Function(_$TeamSettingsImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -914,91 +934,93 @@ class __$$TeamSettingsImplCopyWithImpl<$Res>
     Object? requireInsurance = null,
     Object? requireVOG = null,
   }) {
-    return _then(_$TeamSettingsImpl(
-      trainingsPerWeek: null == trainingsPerWeek
-          ? _value.trainingsPerWeek
-          : trainingsPerWeek // ignore: cast_nullable_to_non_nullable
-              as int,
-      defaultTrainingDuration: null == defaultTrainingDuration
-          ? _value.defaultTrainingDuration
-          : defaultTrainingDuration // ignore: cast_nullable_to_non_nullable
-              as int,
-      trainingDays: null == trainingDays
-          ? _value._trainingDays
-          : trainingDays // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      matchDay: null == matchDay
-          ? _value.matchDay
-          : matchDay // ignore: cast_nullable_to_non_nullable
-              as String,
-      defaultMatchDuration: null == defaultMatchDuration
-          ? _value.defaultMatchDuration
-          : defaultMatchDuration // ignore: cast_nullable_to_non_nullable
-              as int,
-      allowParentCommunication: null == allowParentCommunication
-          ? _value.allowParentCommunication
-          : allowParentCommunication // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sendTrainingReminders: null == sendTrainingReminders
-          ? _value.sendTrainingReminders
-          : sendTrainingReminders // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sendMatchReminders: null == sendMatchReminders
-          ? _value.sendMatchReminders
-          : sendMatchReminders // ignore: cast_nullable_to_non_nullable
-              as bool,
-      trackPlayerPerformance: null == trackPlayerPerformance
-          ? _value.trackPlayerPerformance
-          : trackPlayerPerformance // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableVideoAnalysis: null == enableVideoAnalysis
-          ? _value.enableVideoAnalysis
-          : enableVideoAnalysis // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableGPSTracking: null == enableGPSTracking
-          ? _value.enableGPSTracking
-          : enableGPSTracking // ignore: cast_nullable_to_non_nullable
-              as bool,
-      requireMedicalCertificate: null == requireMedicalCertificate
-          ? _value.requireMedicalCertificate
-          : requireMedicalCertificate // ignore: cast_nullable_to_non_nullable
-              as bool,
-      requireInsurance: null == requireInsurance
-          ? _value.requireInsurance
-          : requireInsurance // ignore: cast_nullable_to_non_nullable
-              as bool,
-      requireVOG: null == requireVOG
-          ? _value.requireVOG
-          : requireVOG // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$TeamSettingsImpl(
+        trainingsPerWeek: null == trainingsPerWeek
+            ? _value.trainingsPerWeek
+            : trainingsPerWeek // ignore: cast_nullable_to_non_nullable
+                  as int,
+        defaultTrainingDuration: null == defaultTrainingDuration
+            ? _value.defaultTrainingDuration
+            : defaultTrainingDuration // ignore: cast_nullable_to_non_nullable
+                  as int,
+        trainingDays: null == trainingDays
+            ? _value._trainingDays
+            : trainingDays // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        matchDay: null == matchDay
+            ? _value.matchDay
+            : matchDay // ignore: cast_nullable_to_non_nullable
+                  as String,
+        defaultMatchDuration: null == defaultMatchDuration
+            ? _value.defaultMatchDuration
+            : defaultMatchDuration // ignore: cast_nullable_to_non_nullable
+                  as int,
+        allowParentCommunication: null == allowParentCommunication
+            ? _value.allowParentCommunication
+            : allowParentCommunication // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        sendTrainingReminders: null == sendTrainingReminders
+            ? _value.sendTrainingReminders
+            : sendTrainingReminders // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        sendMatchReminders: null == sendMatchReminders
+            ? _value.sendMatchReminders
+            : sendMatchReminders // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        trackPlayerPerformance: null == trackPlayerPerformance
+            ? _value.trackPlayerPerformance
+            : trackPlayerPerformance // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        enableVideoAnalysis: null == enableVideoAnalysis
+            ? _value.enableVideoAnalysis
+            : enableVideoAnalysis // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        enableGPSTracking: null == enableGPSTracking
+            ? _value.enableGPSTracking
+            : enableGPSTracking // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        requireMedicalCertificate: null == requireMedicalCertificate
+            ? _value.requireMedicalCertificate
+            : requireMedicalCertificate // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        requireInsurance: null == requireInsurance
+            ? _value.requireInsurance
+            : requireInsurance // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        requireVOG: null == requireVOG
+            ? _value.requireVOG
+            : requireVOG // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$TeamSettingsImpl implements _TeamSettings {
-  const _$TeamSettingsImpl(
-      {this.trainingsPerWeek = 2,
-      this.defaultTrainingDuration = 90,
-      final List<String> trainingDays = const ['Tuesday', 'Thursday'],
-      this.matchDay = 'Saturday',
-      this.defaultMatchDuration = 90,
-      this.allowParentCommunication = true,
-      this.sendTrainingReminders = true,
-      this.sendMatchReminders = true,
-      this.trackPlayerPerformance = true,
-      this.enableVideoAnalysis = true,
-      this.enableGPSTracking = false,
-      this.requireMedicalCertificate = true,
-      this.requireInsurance = true,
-      this.requireVOG = false})
-      : _trainingDays = trainingDays;
+  const _$TeamSettingsImpl({
+    this.trainingsPerWeek = 2,
+    this.defaultTrainingDuration = 90,
+    final List<String> trainingDays = const ['Tuesday', 'Thursday'],
+    this.matchDay = 'Saturday',
+    this.defaultMatchDuration = 90,
+    this.allowParentCommunication = true,
+    this.sendTrainingReminders = true,
+    this.sendMatchReminders = true,
+    this.trackPlayerPerformance = true,
+    this.enableVideoAnalysis = true,
+    this.enableGPSTracking = false,
+    this.requireMedicalCertificate = true,
+    this.requireInsurance = true,
+    this.requireVOG = false,
+  }) : _trainingDays = trainingDays;
 
   factory _$TeamSettingsImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeamSettingsImplFromJson(json);
 
-// Training
+  // Training
   @override
   @JsonKey()
   final int trainingsPerWeek;
@@ -1014,14 +1036,14 @@ class _$TeamSettingsImpl implements _TeamSettings {
     return EqualUnmodifiableListView(_trainingDays);
   }
 
-// Match
+  // Match
   @override
   @JsonKey()
   final String matchDay;
   @override
   @JsonKey()
   final int defaultMatchDuration;
-// Communication
+  // Communication
   @override
   @JsonKey()
   final bool allowParentCommunication;
@@ -1031,7 +1053,7 @@ class _$TeamSettingsImpl implements _TeamSettings {
   @override
   @JsonKey()
   final bool sendMatchReminders;
-// Performance
+  // Performance
   @override
   @JsonKey()
   final bool trackPlayerPerformance;
@@ -1041,7 +1063,7 @@ class _$TeamSettingsImpl implements _TeamSettings {
   @override
   @JsonKey()
   final bool enableGPSTracking;
-// Administrative
+  // Administrative
   @override
   @JsonKey()
   final bool requireMedicalCertificate;
@@ -1065,16 +1087,22 @@ class _$TeamSettingsImpl implements _TeamSettings {
             (identical(other.trainingsPerWeek, trainingsPerWeek) ||
                 other.trainingsPerWeek == trainingsPerWeek) &&
             (identical(
-                    other.defaultTrainingDuration, defaultTrainingDuration) ||
+                  other.defaultTrainingDuration,
+                  defaultTrainingDuration,
+                ) ||
                 other.defaultTrainingDuration == defaultTrainingDuration) &&
-            const DeepCollectionEquality()
-                .equals(other._trainingDays, _trainingDays) &&
+            const DeepCollectionEquality().equals(
+              other._trainingDays,
+              _trainingDays,
+            ) &&
             (identical(other.matchDay, matchDay) ||
                 other.matchDay == matchDay) &&
             (identical(other.defaultMatchDuration, defaultMatchDuration) ||
                 other.defaultMatchDuration == defaultMatchDuration) &&
             (identical(
-                    other.allowParentCommunication, allowParentCommunication) ||
+                  other.allowParentCommunication,
+                  allowParentCommunication,
+                ) ||
                 other.allowParentCommunication == allowParentCommunication) &&
             (identical(other.sendTrainingReminders, sendTrainingReminders) ||
                 other.sendTrainingReminders == sendTrainingReminders) &&
@@ -1086,8 +1114,10 @@ class _$TeamSettingsImpl implements _TeamSettings {
                 other.enableVideoAnalysis == enableVideoAnalysis) &&
             (identical(other.enableGPSTracking, enableGPSTracking) ||
                 other.enableGPSTracking == enableGPSTracking) &&
-            (identical(other.requireMedicalCertificate,
-                    requireMedicalCertificate) ||
+            (identical(
+                  other.requireMedicalCertificate,
+                  requireMedicalCertificate,
+                ) ||
                 other.requireMedicalCertificate == requireMedicalCertificate) &&
             (identical(other.requireInsurance, requireInsurance) ||
                 other.requireInsurance == requireInsurance) &&
@@ -1098,21 +1128,22 @@ class _$TeamSettingsImpl implements _TeamSettings {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      trainingsPerWeek,
-      defaultTrainingDuration,
-      const DeepCollectionEquality().hash(_trainingDays),
-      matchDay,
-      defaultMatchDuration,
-      allowParentCommunication,
-      sendTrainingReminders,
-      sendMatchReminders,
-      trackPlayerPerformance,
-      enableVideoAnalysis,
-      enableGPSTracking,
-      requireMedicalCertificate,
-      requireInsurance,
-      requireVOG);
+    runtimeType,
+    trainingsPerWeek,
+    defaultTrainingDuration,
+    const DeepCollectionEquality().hash(_trainingDays),
+    matchDay,
+    defaultMatchDuration,
+    allowParentCommunication,
+    sendTrainingReminders,
+    sendMatchReminders,
+    trackPlayerPerformance,
+    enableVideoAnalysis,
+    enableGPSTracking,
+    requireMedicalCertificate,
+    requireInsurance,
+    requireVOG,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -1122,28 +1153,27 @@ class _$TeamSettingsImpl implements _TeamSettings {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TeamSettingsImplToJson(
-      this,
-    );
+    return _$$TeamSettingsImplToJson(this);
   }
 }
 
 abstract class _TeamSettings implements TeamSettings {
-  const factory _TeamSettings(
-      {final int trainingsPerWeek,
-      final int defaultTrainingDuration,
-      final List<String> trainingDays,
-      final String matchDay,
-      final int defaultMatchDuration,
-      final bool allowParentCommunication,
-      final bool sendTrainingReminders,
-      final bool sendMatchReminders,
-      final bool trackPlayerPerformance,
-      final bool enableVideoAnalysis,
-      final bool enableGPSTracking,
-      final bool requireMedicalCertificate,
-      final bool requireInsurance,
-      final bool requireVOG}) = _$TeamSettingsImpl;
+  const factory _TeamSettings({
+    final int trainingsPerWeek,
+    final int defaultTrainingDuration,
+    final List<String> trainingDays,
+    final String matchDay,
+    final int defaultMatchDuration,
+    final bool allowParentCommunication,
+    final bool sendTrainingReminders,
+    final bool sendMatchReminders,
+    final bool trackPlayerPerformance,
+    final bool enableVideoAnalysis,
+    final bool enableGPSTracking,
+    final bool requireMedicalCertificate,
+    final bool requireInsurance,
+    final bool requireVOG,
+  }) = _$TeamSettingsImpl;
 
   factory _TeamSettings.fromJson(Map<String, dynamic> json) =
       _$TeamSettingsImpl.fromJson;

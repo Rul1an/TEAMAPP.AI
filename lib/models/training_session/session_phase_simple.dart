@@ -11,7 +11,7 @@ enum PhaseType {
   smallSidedGames,
   match,
   cooldown,
-  discussion
+  discussion,
 }
 
 @JsonSerializable()

@@ -21,9 +21,7 @@ class ExerciseSearchBar extends ConsumerWidget {
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.search),
           hintText: 'Search exercises…',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
       ),
     );

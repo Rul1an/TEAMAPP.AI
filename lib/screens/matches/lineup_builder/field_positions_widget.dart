@@ -33,9 +33,7 @@ class FieldPositionsWidget extends ConsumerWidget {
           },
           child: Card(
             color: player == null ? Colors.grey[200] : Colors.green[200],
-            child: Center(
-              child: Text(player?.name ?? posKey),
-            ),
+            child: Center(child: Text(player?.name ?? posKey)),
           ),
         );
       }).toList(),

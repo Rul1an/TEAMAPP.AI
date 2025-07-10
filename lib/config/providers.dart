@@ -29,8 +29,9 @@ export '../providers/demo_mode_provider.dart';
 export '../providers/organization_provider.dart';
 
 // Club repository dependencies
-final supabaseClubDataSourceProvider =
-    Provider<SupabaseClubDataSource>((ref) => SupabaseClubDataSource());
+final supabaseClubDataSourceProvider = Provider<SupabaseClubDataSource>(
+  (ref) => SupabaseClubDataSource(),
+);
 
 final hiveClubCacheProvider = Provider<HiveClubCache>((ref) => HiveClubCache());
 
@@ -41,16 +42,15 @@ final clubRepositoryProvider = Provider<ClubRepository>((ref) {
 });
 
 // Feature service provider
-final featureServiceProvider =
-    Provider<FeatureService>((ref) => FeatureService());
+final featureServiceProvider = Provider<FeatureService>(
+  (ref) => FeatureService(),
+);
 
 // Club provider using repository
-final clubProvider = ChangeNotifierProvider<ClubProvider>(
-  (ref) {
-    final repo = ref.watch(clubRepositoryProvider);
-    return ClubProvider(clubRepository: repo);
-  },
-);
+final clubProvider = ChangeNotifierProvider<ClubProvider>((ref) {
+  final repo = ref.watch(clubRepositoryProvider);
+  return ClubProvider(clubRepository: repo);
+});
 
 // Calendar provider
 final calendarProvider = ChangeNotifierProvider<CalendarProvider>(
@@ -65,11 +65,12 @@ final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>(
 // Organization repository deps
 final supabaseOrganizationDataSourceProvider =
     Provider<SupabaseOrganizationDataSource>(
-  (ref) => SupabaseOrganizationDataSource(),
-);
+      (ref) => SupabaseOrganizationDataSource(),
+    );
 
-final hiveOrganizationCacheProvider =
-    Provider<HiveOrganizationCache>((ref) => HiveOrganizationCache());
+final hiveOrganizationCacheProvider = Provider<HiveOrganizationCache>(
+  (ref) => HiveOrganizationCache(),
+);
 
 final organizationRepositoryProvider = Provider<OrganizationRepository>((ref) {
   final remote = ref.watch(supabaseOrganizationDataSourceProvider);
@@ -80,8 +81,8 @@ final organizationRepositoryProvider = Provider<OrganizationRepository>((ref) {
 // Permission & Feature repository deps
 final supabasePermissionDataSourceProvider =
     Provider<SupabasePermissionDataSource>(
-  (ref) => SupabasePermissionDataSource(),
-);
+      (ref) => SupabasePermissionDataSource(),
+    );
 
 final hivePermissionCacheProvider = Provider<HivePermissionCache>(
   (ref) => HivePermissionCache(),

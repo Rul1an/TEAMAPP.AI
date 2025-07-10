@@ -3,12 +3,12 @@ import 'base_hive_cache.dart';
 
 class HivePermissionCache {
   HivePermissionCache()
-      : _cache = BaseHiveCache<Map<String, bool>>(
-          boxName: _box,
-          valueKey: _key,
-          fromJson: (map) => (map['permissions'] as Map).cast<String, bool>(),
-          toJson: (value) => {'permissions': value},
-        );
+    : _cache = BaseHiveCache<Map<String, bool>>(
+        boxName: _box,
+        valueKey: _key,
+        fromJson: (map) => (map['permissions'] as Map).cast<String, bool>(),
+        toJson: (value) => {'permissions': value},
+      );
   static const _box = 'perm_box';
   static const _key = 'perm_json';
 

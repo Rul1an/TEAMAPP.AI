@@ -7,7 +7,7 @@ import 'performance_rating_repository.dart';
 /// Local implementation backed by [HivePerformanceRatingCache].
 class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
   LocalPerformanceRatingRepository({HivePerformanceRatingCache? cache})
-      : _cache = cache ?? HivePerformanceRatingCache();
+    : _cache = cache ?? HivePerformanceRatingCache();
 
   final HivePerformanceRatingCache _cache;
 
@@ -50,8 +50,9 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
     int? lastNRatings,
   }) async {
     try {
-      final ratings =
-          (await _all()).where((r) => r.playerId == playerId).toList();
+      final ratings = (await _all())
+          .where((r) => r.playerId == playerId)
+          .toList();
       if (ratings.isEmpty) return const Success(0);
       ratings.sort((a, b) => b.date.compareTo(a.date));
       final considered = lastNRatings != null && lastNRatings < ratings.length
@@ -59,7 +60,7 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
           : ratings;
       final avg =
           considered.map((r) => r.overallRating).reduce((a, b) => a + b) /
-              considered.length;
+          considered.length;
       return Success(avg);
     } catch (e) {
       return Failure(CacheFailure(e.toString()));
@@ -71,14 +72,15 @@ class LocalPerformanceRatingRepository implements PerformanceRatingRepository {
     String playerId,
   ) async {
     try {
-      final ratings =
-          (await _all()).where((r) => r.playerId == playerId).toList();
+      final ratings = (await _all())
+          .where((r) => r.playerId == playerId)
+          .toList();
       final trendStr = PerformanceRating.calculateTrend(ratings);
       final trend = trendStr == '↗️'
           ? PerformanceTrend.improving
           : trendStr == '↘️'
-              ? PerformanceTrend.declining
-              : PerformanceTrend.stable;
+          ? PerformanceTrend.declining
+          : PerformanceTrend.stable;
       return Success(trend);
     } catch (e) {
       return Failure(CacheFailure(e.toString()));

@@ -69,132 +69,130 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
 
   @override
   Widget build(BuildContext context) => Column(
-        children: [
-          _buildCanvasControls(),
-          Expanded(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: Colors.green[50],
-                border: Border.all(color: Colors.green[300]!, width: 2),
-              ),
-              child: InteractiveViewer(
-                transformationController: _transformController,
-                minScale: 0.5,
-                maxScale: 3,
-                panEnabled: widget.currentTool == DiagramTool.select,
-                child: GestureDetector(
-                  onTapDown: _handleTapDown,
-                  onPanStart: _handlePanStart,
-                  onPanUpdate: _handlePanUpdate,
-                  onPanEnd: _handlePanEnd,
-                  child: SizedBox.expand(
-                    child: CustomPaint(
-                      painter: FieldPainter(
-                        diagram: widget.diagram,
-                        selectedElementId: widget.selectedElementId,
-                        showGrid: _showGrid,
-                        gridSize: _gridSize,
-                        currentLinePoints: widget.currentLinePoints,
-                        isDrawingLine: widget.isDrawingLine,
-                        selectedLineType: widget.selectedLineType,
-                      ),
-                      size: Size.infinite,
-                    ),
+    children: [
+      _buildCanvasControls(),
+      Expanded(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.green[50],
+            border: Border.all(color: Colors.green[300]!, width: 2),
+          ),
+          child: InteractiveViewer(
+            transformationController: _transformController,
+            minScale: 0.5,
+            maxScale: 3,
+            panEnabled: widget.currentTool == DiagramTool.select,
+            child: GestureDetector(
+              onTapDown: _handleTapDown,
+              onPanStart: _handlePanStart,
+              onPanUpdate: _handlePanUpdate,
+              onPanEnd: _handlePanEnd,
+              child: SizedBox.expand(
+                child: CustomPaint(
+                  painter: FieldPainter(
+                    diagram: widget.diagram,
+                    selectedElementId: widget.selectedElementId,
+                    showGrid: _showGrid,
+                    gridSize: _gridSize,
+                    currentLinePoints: widget.currentLinePoints,
+                    isDrawingLine: widget.isDrawingLine,
+                    selectedLineType: widget.selectedLineType,
                   ),
+                  size: Size.infinite,
                 ),
               ),
             ),
           ),
-        ],
-      );
+        ),
+      ),
+    ],
+  );
 
   Widget _buildCanvasControls() => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          color: Colors.grey[50],
-          border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    decoration: BoxDecoration(
+      color: Colors.grey[50],
+      border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
+    ),
+    child: Row(
+      children: [
+        // Zoom controls
+        IconButton(
+          icon: const Icon(Icons.zoom_in),
+          onPressed: _zoomIn,
+          tooltip: 'Inzoomen',
+          iconSize: 20,
         ),
-        child: Row(
+        IconButton(
+          icon: const Icon(Icons.zoom_out),
+          onPressed: _zoomOut,
+          tooltip: 'Uitzoomen',
+          iconSize: 20,
+        ),
+        IconButton(
+          icon: const Icon(Icons.center_focus_strong),
+          onPressed: _resetZoom,
+          tooltip: 'Reset Zoom',
+          iconSize: 20,
+        ),
+        const SizedBox(width: 16),
+
+        // 🔧 CASCADE OPERATOR DOCUMENTATION: Widget State Update Pattern
+        // This setState pattern demonstrates a common Flutter pattern where
+        // cascade notation could improve readability for state updates.
+        //
+        // **CURRENT PATTERN**: setState(() => property = value) (arrow function)
+        // **RECOMMENDED**: setState(() { property = value; }) (cascade notation)
+        //
+        // **CASCADE BENEFITS FOR STATE UPDATES**:
+        // ✅ More consistent with multi-line state updates
+        // ✅ Easier to extend with additional state changes
+        // ✅ Better readability when multiple properties change
+        // ✅ Maintains Flutter widget state patterns
+        //
+        // **TRANSFORMATION EXAMPLE**:
+        // ```dart
+        // // Current: arrow function
+        // onChanged: (value) => setState(() => _showGrid = value ?? true),
+        //
+        // // Recommended: cascade-friendly block
+        // onChanged: (value) => setState(() {
+        //   _showGrid = value ?? true;
+        // }),
+        // ```
+        // Grid controls
+        Row(
           children: [
-            // Zoom controls
-            IconButton(
-              icon: const Icon(Icons.zoom_in),
-              onPressed: _zoomIn,
-              tooltip: 'Inzoomen',
-              iconSize: 20,
+            Checkbox(
+              value: _showGrid,
+              onChanged: (value) => setState(() => _showGrid = value ?? true),
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            IconButton(
-              icon: const Icon(Icons.zoom_out),
-              onPressed: _zoomOut,
-              tooltip: 'Uitzoomen',
-              iconSize: 20,
-            ),
-            IconButton(
-              icon: const Icon(Icons.center_focus_strong),
-              onPressed: _resetZoom,
-              tooltip: 'Reset Zoom',
-              iconSize: 20,
-            ),
-            const SizedBox(width: 16),
-
-            // 🔧 CASCADE OPERATOR DOCUMENTATION: Widget State Update Pattern
-            // This setState pattern demonstrates a common Flutter pattern where
-            // cascade notation could improve readability for state updates.
-            //
-            // **CURRENT PATTERN**: setState(() => property = value) (arrow function)
-            // **RECOMMENDED**: setState(() { property = value; }) (cascade notation)
-            //
-            // **CASCADE BENEFITS FOR STATE UPDATES**:
-            // ✅ More consistent with multi-line state updates
-            // ✅ Easier to extend with additional state changes
-            // ✅ Better readability when multiple properties change
-            // ✅ Maintains Flutter widget state patterns
-            //
-            // **TRANSFORMATION EXAMPLE**:
-            // ```dart
-            // // Current: arrow function
-            // onChanged: (value) => setState(() => _showGrid = value ?? true),
-            //
-            // // Recommended: cascade-friendly block
-            // onChanged: (value) => setState(() {
-            //   _showGrid = value ?? true;
-            // }),
-            // ```
-            // Grid controls
-            Row(
-              children: [
-                Checkbox(
-                  value: _showGrid,
-                  onChanged: (value) =>
-                      setState(() => _showGrid = value ?? true),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                const Text('Grid', style: TextStyle(fontSize: 12)),
-              ],
-            ),
-            const SizedBox(width: 8),
-            Row(
-              children: [
-                Checkbox(
-                  value: _snapToGrid,
-                  onChanged: (value) =>
-                      setState(() => _snapToGrid = value ?? true),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                const Text('Snap', style: TextStyle(fontSize: 12)),
-              ],
-            ),
-
-            const Spacer(),
-
-            // Scale indicator
-            Text(
-              'Zoom: ${(_getCurrentScale() * 100).toInt()}%',
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-            ),
+            const Text('Grid', style: TextStyle(fontSize: 12)),
           ],
         ),
-      );
+        const SizedBox(width: 8),
+        Row(
+          children: [
+            Checkbox(
+              value: _snapToGrid,
+              onChanged: (value) => setState(() => _snapToGrid = value ?? true),
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            const Text('Snap', style: TextStyle(fontSize: 12)),
+          ],
+        ),
+
+        const Spacer(),
+
+        // Scale indicator
+        Text(
+          'Zoom: ${(_getCurrentScale() * 100).toInt()}%',
+          style: const TextStyle(fontSize: 12, color: Colors.grey),
+        ),
+      ],
+    ),
+  );
 
   void _handleTapDown(TapDownDetails details) {
     final localPosition = details.localPosition;
@@ -243,8 +241,9 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
 
     if (_isDragging && _draggedElementId != null) {
       // Moving an element
-      final snappedPosition =
-          _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
+      final snappedPosition = _snapToGrid
+          ? _snapPositionToGrid(fieldPosition)
+          : fieldPosition;
       widget.onElementMoved(_draggedElementId!, snappedPosition);
     } else if (widget.currentTool == DiagramTool.line && widget.isDrawingLine) {
       // Drawing a line - add points
@@ -268,8 +267,9 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _addPlayer(Position fieldPosition) {
-    final snappedPosition =
-        _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
+    final snappedPosition = _snapToGrid
+        ? _snapPositionToGrid(fieldPosition)
+        : fieldPosition;
 
     // Get color based on player type
     String playerColor;
@@ -295,8 +295,9 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _addEquipment(Position fieldPosition) {
-    final snappedPosition =
-        _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
+    final snappedPosition = _snapToGrid
+        ? _snapPositionToGrid(fieldPosition)
+        : fieldPosition;
     final newEquipment = EquipmentMarker(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       position: snappedPosition,
@@ -306,8 +307,9 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
   }
 
   void _addText(Position fieldPosition) {
-    final snappedPosition =
-        _snapToGrid ? _snapPositionToGrid(fieldPosition) : fieldPosition;
+    final snappedPosition = _snapToGrid
+        ? _snapPositionToGrid(fieldPosition)
+        : fieldPosition;
 
     // Show text input dialog
     _showTextInputDialog((text) {
@@ -437,10 +439,7 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
     final snappedY =
         (position.y / normalizedGridSize).round() * normalizedGridSize;
 
-    return Position(
-      snappedX.clamp(0, 100),
-      snappedY.clamp(0, 100),
-    );
+    return Position(snappedX.clamp(0, 100), snappedY.clamp(0, 100));
   }
 
   void _showTextInputDialog(void Function(String) onTextEntered) {

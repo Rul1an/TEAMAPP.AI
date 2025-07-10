@@ -14,6 +14,27 @@ class ActionEvent {
   final double y;
   final ActionType type;
   final DateTime timestamp;
+
+  factory ActionEvent.fromJson(Map<String, dynamic> json) => ActionEvent(
+        id: json['id'] as String,
+        matchId: json['matchId'] as String,
+        x: (json['x'] as num).toDouble(),
+        y: (json['y'] as num).toDouble(),
+        type: ActionType.values.firstWhere(
+          (e) => e.name == json['type'],
+          orElse: () => ActionType.touch,
+        ),
+        timestamp: DateTime.parse(json['timestamp'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'matchId': matchId,
+        'x': x,
+        'y': y,
+        'type': type.name,
+        'timestamp': timestamp.toIso8601String(),
+      };
 }
 
 enum ActionType { touch, shot, passKey, tackle, interception }

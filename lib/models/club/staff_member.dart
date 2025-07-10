@@ -167,13 +167,7 @@ enum StaffRole {
   boardMember,
 }
 
-enum StaffStatus {
-  active,
-  inactive,
-  suspended,
-  terminated,
-  onLeave,
-}
+enum StaffStatus { active, inactive, suspended, terminated, onLeave }
 
 extension StaffRoleExtension on StaffRole {
   String get displayName {

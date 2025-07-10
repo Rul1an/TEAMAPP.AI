@@ -125,10 +125,7 @@ class _SummaryCard extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   unit,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                 ),
               ],
             ),

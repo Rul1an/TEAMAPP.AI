@@ -84,16 +84,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         success: (prof) {
           setState(() => _profile = prof);
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Profiel bijgewerkt')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Profiel bijgewerkt')));
           }
         },
         failure: (e) {
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Fout: ${e.message}')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Fout: ${e.message}')));
           }
         },
       );
@@ -121,7 +121,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           radius: 48,
                           backgroundImage: _profile!.avatarUrl != null
                               ? NetworkImage(_profile!.avatarUrl!)
-                                  as ImageProvider
+                                    as ImageProvider
                               : const AssetImage(
                                   'assets/images/avatar_placeholder.png',
                                 ),

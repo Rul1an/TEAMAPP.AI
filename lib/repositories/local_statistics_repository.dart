@@ -5,7 +5,7 @@ import 'statistics_repository.dart';
 
 class LocalStatisticsRepository implements StatisticsRepository {
   LocalStatisticsRepository({HiveStatisticsCache? cache})
-      : _cache = cache ?? HiveStatisticsCache();
+    : _cache = cache ?? HiveStatisticsCache();
 
   final HiveStatisticsCache _cache;
 

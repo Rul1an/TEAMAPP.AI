@@ -41,9 +41,7 @@ void main() {
     final players = [Player()..id = '1'];
     final repo = _FakeRepo(players);
     final container = ProviderContainer(
-      overrides: [
-        playerRepositoryProvider.overrideWithValue(repo),
-      ],
+      overrides: [playerRepositoryProvider.overrideWithValue(repo)],
     );
     addTearDown(container.dispose);
 

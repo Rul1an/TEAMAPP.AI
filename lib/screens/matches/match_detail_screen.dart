@@ -15,10 +15,7 @@ import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
-  const MatchDetailScreen({
-    required this.matchId,
-    super.key,
-  });
+  const MatchDetailScreen({required this.matchId, super.key});
   final String matchId;
 
   @override
@@ -165,254 +162,246 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   }
 
   Widget _buildMatchInfo(Match match) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Wedstrijd Informatie',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              _buildInfoRow('Tegenstander', match.opponent),
-              _buildInfoRow(
-                'Datum',
-                DateFormat('dd-MM-yyyy HH:mm').format(match.date),
-              ),
-              _buildInfoRow(
-                'Locatie',
-                match.location == Location.home ? 'Thuis' : 'Uit',
-              ),
-              _buildInfoRow(
-                'Competitie',
-                _getCompetitionName(match.competition),
-              ),
-              _buildInfoRow('Status', _getStatusName(match.status)),
-            ],
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Wedstrijd Informatie',
+            style: Theme.of(context).textTheme.titleLarge,
           ),
-        ),
-      );
+          const SizedBox(height: 16),
+          _buildInfoRow('Tegenstander', match.opponent),
+          _buildInfoRow(
+            'Datum',
+            DateFormat('dd-MM-yyyy HH:mm').format(match.date),
+          ),
+          _buildInfoRow(
+            'Locatie',
+            match.location == Location.home ? 'Thuis' : 'Uit',
+          ),
+          _buildInfoRow('Competitie', _getCompetitionName(match.competition)),
+          _buildInfoRow('Status', _getStatusName(match.status)),
+        ],
+      ),
+    ),
+  );
 
   Widget _buildInfoRow(String label, String value) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 120,
-              child: Text(
-                '$label:',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Expanded(child: Text(value)),
-          ],
+    padding: const EdgeInsets.symmetric(vertical: 4),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 120,
+          child: Text(
+            '$label:',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-      );
+        Expanded(child: Text(value)),
+      ],
+    ),
+  );
 
   Widget _buildScoreSection(Match match) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Score', style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 16),
+          Row(
             children: [
-              Text(
-                'Score',
-                style: Theme.of(context).textTheme.titleLarge,
+              Expanded(
+                child: TextFormField(
+                  controller: _teamScoreController,
+                  decoration: const InputDecoration(
+                    labelText: 'JO17',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _teamScoreController,
-                      decoration: const InputDecoration(
-                        labelText: 'JO17',
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
+              const SizedBox(width: 16),
+              Text('-', style: Theme.of(context).textTheme.headlineLarge),
+              const SizedBox(width: 16),
+              Expanded(
+                child: TextFormField(
+                  controller: _opponentScoreController,
+                  decoration: InputDecoration(
+                    labelText: match.opponent,
+                    border: const OutlineInputBorder(),
                   ),
-                  const SizedBox(width: 16),
-                  Text(
-                    '-',
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _opponentScoreController,
-                      decoration: InputDecoration(
-                        labelText: match.opponent,
-                        border: const OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                  ),
-                ],
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
             ],
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 
   Widget _buildLineupSection(List<Player> players) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Basisopstelling',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  TextButton.icon(
-                    onPressed: () => _showPlayerSelection(
-                      context,
-                      players,
-                      _selectedStartingLineup,
-                      'Basisopstelling',
-                      11,
-                    ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Selecteer'),
-                  ),
-                ],
+              Text(
+                'Basisopstelling',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: 16),
-              if (_selectedStartingLineup.isEmpty)
-                const Text('Geen spelers geselecteerd')
-              else
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: _selectedStartingLineup.map((playerId) {
-                    final player = players.firstWhere(
-                      (p) => p.id == playerId,
-                      orElse: () => Player()
-                        ..firstName = 'Onbekend'
-                        ..lastName = ''
-                        ..jerseyNumber = 0
-                        ..birthDate = DateTime.now()
-                        ..position = Position.midfielder
-                        ..preferredFoot = PreferredFoot.right
-                        ..height = 0
-                        ..weight = 0,
-                    );
-                    return Chip(
-                      label: Text('${player.jerseyNumber} - ${player.name}'),
-                      onDeleted: () {
-                        setState(() {
-                          _selectedStartingLineup.remove(playerId);
-                        });
-                      },
-                      backgroundColor: _getPositionColor(player.position)
-                          .withValues(alpha: 0.2),
-                    );
-                  }).toList(),
+              TextButton.icon(
+                onPressed: () => _showPlayerSelection(
+                  context,
+                  players,
+                  _selectedStartingLineup,
+                  'Basisopstelling',
+                  11,
                 ),
+                icon: const Icon(Icons.add),
+                label: const Text('Selecteer'),
+              ),
             ],
           ),
-        ),
-      );
+          const SizedBox(height: 16),
+          if (_selectedStartingLineup.isEmpty)
+            const Text('Geen spelers geselecteerd')
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _selectedStartingLineup.map((playerId) {
+                final player = players.firstWhere(
+                  (p) => p.id == playerId,
+                  orElse: () => Player()
+                    ..firstName = 'Onbekend'
+                    ..lastName = ''
+                    ..jerseyNumber = 0
+                    ..birthDate = DateTime.now()
+                    ..position = Position.midfielder
+                    ..preferredFoot = PreferredFoot.right
+                    ..height = 0
+                    ..weight = 0,
+                );
+                return Chip(
+                  label: Text('${player.jerseyNumber} - ${player.name}'),
+                  onDeleted: () {
+                    setState(() {
+                      _selectedStartingLineup.remove(playerId);
+                    });
+                  },
+                  backgroundColor: _getPositionColor(
+                    player.position,
+                  ).withValues(alpha: 0.2),
+                );
+              }).toList(),
+            ),
+        ],
+      ),
+    ),
+  );
 
   Widget _buildSubstitutesSection(List<Player> players) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Wisselspelers',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  TextButton.icon(
-                    onPressed: () => _showPlayerSelection(
-                      context,
-                      players,
-                      _selectedSubstitutes,
-                      'Wisselspelers',
-                      7,
-                    ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Selecteer'),
-                  ),
-                ],
+              Text(
+                'Wisselspelers',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: 16),
-              if (_selectedSubstitutes.isEmpty)
-                const Text('Geen wisselspelers geselecteerd')
-              else
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: _selectedSubstitutes.map((playerId) {
-                    final player = players.firstWhere(
-                      (p) => p.id == playerId,
-                      orElse: () => Player()
-                        ..firstName = 'Onbekend'
-                        ..lastName = ''
-                        ..jerseyNumber = 0
-                        ..birthDate = DateTime.now()
-                        ..position = Position.midfielder
-                        ..preferredFoot = PreferredFoot.right
-                        ..height = 0
-                        ..weight = 0,
-                    );
-                    return Chip(
-                      label: Text('${player.jerseyNumber} - ${player.name}'),
-                      onDeleted: () {
-                        setState(() {
-                          _selectedSubstitutes.remove(playerId);
-                        });
-                      },
-                      backgroundColor: Colors.grey.withValues(alpha: 0.2),
-                    );
-                  }).toList(),
+              TextButton.icon(
+                onPressed: () => _showPlayerSelection(
+                  context,
+                  players,
+                  _selectedSubstitutes,
+                  'Wisselspelers',
+                  7,
                 ),
+                icon: const Icon(Icons.add),
+                label: const Text('Selecteer'),
+              ),
             ],
           ),
-        ),
-      );
+          const SizedBox(height: 16),
+          if (_selectedSubstitutes.isEmpty)
+            const Text('Geen wisselspelers geselecteerd')
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _selectedSubstitutes.map((playerId) {
+                final player = players.firstWhere(
+                  (p) => p.id == playerId,
+                  orElse: () => Player()
+                    ..firstName = 'Onbekend'
+                    ..lastName = ''
+                    ..jerseyNumber = 0
+                    ..birthDate = DateTime.now()
+                    ..position = Position.midfielder
+                    ..preferredFoot = PreferredFoot.right
+                    ..height = 0
+                    ..weight = 0,
+                );
+                return Chip(
+                  label: Text('${player.jerseyNumber} - ${player.name}'),
+                  onDeleted: () {
+                    setState(() {
+                      _selectedSubstitutes.remove(playerId);
+                    });
+                  },
+                  backgroundColor: Colors.grey.withValues(alpha: 0.2),
+                );
+              }).toList(),
+            ),
+        ],
+      ),
+    ),
+  );
 
   Widget _buildRatingsSection(Match match, List<Player> players) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Speler Beoordelingen',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: _showRatingOptions,
-                    icon: const Icon(Icons.star),
-                    label: const Text('Beoordeel'),
-                  ),
-                ],
+              Text(
+                'Speler Beoordelingen',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: 16),
-              // Show existing ratings or placeholder
-              const Text('Klik op "Beoordeel" om spelers te beoordelen'),
+              ElevatedButton.icon(
+                onPressed: _showRatingOptions,
+                icon: const Icon(Icons.star),
+                label: const Text('Beoordeel'),
+              ),
             ],
           ),
-        ),
-      );
+          const SizedBox(height: 16),
+          // Show existing ratings or placeholder
+          const Text('Klik op "Beoordeel" om spelers te beoordelen'),
+        ],
+      ),
+    ),
+  );
 
   void _showPlayerSelection(
     BuildContext context,

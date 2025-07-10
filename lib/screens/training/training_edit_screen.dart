@@ -11,10 +11,7 @@ import '../../models/training.dart';
 import '../../providers/trainings_provider.dart';
 
 class TrainingEditScreen extends ConsumerStatefulWidget {
-  const TrainingEditScreen({
-    required this.trainingId,
-    super.key,
-  });
+  const TrainingEditScreen({required this.trainingId, super.key});
 
   final String trainingId;
 
@@ -94,15 +91,15 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
 
       if (mounted) {
         context.pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Training bijgewerkt')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Training bijgewerkt')));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Fout: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Fout: $e')));
       }
     } finally {
       if (mounted) setState(() => _isSaving = false);
@@ -139,10 +136,14 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.calendar_today),
                       ),
-                      child: Text(_selectedDate != null
-                          ? DateFormat('d MMM yyyy', 'nl_NL')
-                              .format(_selectedDate!)
-                          : 'Selecteer datum'),
+                      child: Text(
+                        _selectedDate != null
+                            ? DateFormat(
+                                'd MMM yyyy',
+                                'nl_NL',
+                              ).format(_selectedDate!)
+                            : 'Selecteer datum',
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -165,43 +166,49 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                   ),
                   const SizedBox(height: 16),
                   // Focus & Intensity
-                  Row(children: [
-                    Expanded(
-                      child: DropdownButtonFormField<TrainingFocus>(
-                        value: _focus,
-                        decoration: const InputDecoration(
-                          labelText: 'Focus',
-                          border: OutlineInputBorder(),
-                        ),
-                        items: TrainingFocus.values
-                            .map((f) => DropdownMenuItem(
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonFormField<TrainingFocus>(
+                          value: _focus,
+                          decoration: const InputDecoration(
+                            labelText: 'Focus',
+                            border: OutlineInputBorder(),
+                          ),
+                          items: TrainingFocus.values
+                              .map(
+                                (f) => DropdownMenuItem(
                                   value: f,
                                   child: Text(f.name),
-                                ))
-                            .toList(),
-                        onChanged: (v) => setState(() => _focus = v),
-                        validator: (v) => v == null ? 'Verplicht' : null,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: DropdownButtonFormField<TrainingIntensity>(
-                        value: _intensity,
-                        decoration: const InputDecoration(
-                          labelText: 'Intensiteit',
-                          border: OutlineInputBorder(),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (v) => setState(() => _focus = v),
+                          validator: (v) => v == null ? 'Verplicht' : null,
                         ),
-                        items: TrainingIntensity.values
-                            .map((i) => DropdownMenuItem(
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: DropdownButtonFormField<TrainingIntensity>(
+                          value: _intensity,
+                          decoration: const InputDecoration(
+                            labelText: 'Intensiteit',
+                            border: OutlineInputBorder(),
+                          ),
+                          items: TrainingIntensity.values
+                              .map(
+                                (i) => DropdownMenuItem(
                                   value: i,
                                   child: Text(i.name),
-                                ))
-                            .toList(),
-                        onChanged: (v) => setState(() => _intensity = v),
-                        validator: (v) => v == null ? 'Verplicht' : null,
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (v) => setState(() => _intensity = v),
+                          validator: (v) => v == null ? 'Verplicht' : null,
+                        ),
                       ),
-                    ),
-                  ]),
+                    ],
+                  ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<TrainingStatus>(
                     value: _status,
@@ -210,10 +217,10 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                       border: OutlineInputBorder(),
                     ),
                     items: TrainingStatus.values
-                        .map((s) => DropdownMenuItem(
-                              value: s,
-                              child: Text(s.name),
-                            ))
+                        .map(
+                          (s) =>
+                              DropdownMenuItem(value: s, child: Text(s.name)),
+                        )
                         .toList(),
                     onChanged: (v) => setState(() => _status = v),
                     validator: (v) => v == null ? 'Verplicht' : null,

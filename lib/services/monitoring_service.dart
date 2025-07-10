@@ -10,9 +10,7 @@ import 'telemetry_service.dart';
 /// Enhanced monitoring service for production-ready SaaS application
 /// Implements comprehensive error tracking, performance monitoring, and analytics
 class MonitoringService {
-  static const String _sentryDsn = String.fromEnvironment(
-    'SENTRY_DSN',
-  );
+  static const String _sentryDsn = String.fromEnvironment('SENTRY_DSN');
 
   /// 🔧 CASCADE OPERATOR DOCUMENTATION - MONITORING SERVICE CONFIGURATION
   ///
@@ -55,37 +53,37 @@ class MonitoringService {
   /// ```  /// Initialize monitoring services
   static Future<void> initialize() async {
     if (_sentryDsn.isNotEmpty && !kDebugMode) {
-      await SentryFlutter.init(
-        (options) {
-          options
-            ..dsn = _sentryDsn
-            ..environment = kReleaseMode ? 'production' : 'staging'
-            ..release = 'jo17-tactical-manager@1.0.0'
-            ..tracesSampleRate = 0.1 // 10% of transactions
-            ..profilesSampleRate = 0.1 // 10% for profiling
-            ..beforeSend = (event, hint) {
-              // Filter out development errors
-              if (kDebugMode) return null;
+      await SentryFlutter.init((options) {
+        options
+          ..dsn = _sentryDsn
+          ..environment = kReleaseMode ? 'production' : 'staging'
+          ..release = 'jo17-tactical-manager@1.0.0'
+          ..tracesSampleRate =
+              0.1 // 10% of transactions
+          ..profilesSampleRate =
+              0.1 // 10% for profiling
+          ..beforeSend = (event, hint) {
+            // Filter out development errors
+            if (kDebugMode) return null;
 
-              // Filter out known non-critical errors
-              final rawError = event.throwable;
-              if (rawError != null) {
-                final rawErrorStr = rawError.toString();
-                if (rawErrorStr.contains('SocketException')) {
-                  // Network errors are handled gracefully
-                  return null;
-                }
+            // Filter out known non-critical errors
+            final rawError = event.throwable;
+            if (rawError != null) {
+              final rawErrorStr = rawError.toString();
+              if (rawErrorStr.contains('SocketException')) {
+                // Network errors are handled gracefully
+                return null;
               }
+            }
 
-              return event;
-            }
-            ..beforeSendTransaction = (transaction, hint) {
-              return transaction;
-            }
-            ..beforeBreadcrumb =
-                (Breadcrumb? breadcrumb, Hint? hint) => breadcrumb;
-        },
-      );
+            return event;
+          }
+          ..beforeSendTransaction = (transaction, hint) {
+            return transaction;
+          }
+          ..beforeBreadcrumb = (Breadcrumb? breadcrumb, Hint? hint) =>
+              breadcrumb;
+      });
     }
   }
 
@@ -145,11 +143,7 @@ class MonitoringService {
 
     await trackEvent(
       name: 'ai_feature_used',
-      parameters: {
-        'feature': feature,
-        'action': action,
-        'metadata': metadata,
-      },
+      parameters: {'feature': feature, 'action': action, 'metadata': metadata},
       userId: userId,
     );
   }
@@ -164,11 +158,7 @@ class MonitoringService {
   }) async {
     await trackEvent(
       name: 'user_journey',
-      parameters: {
-        'step': step,
-        'status': status,
-        'context': context,
-      },
+      parameters: {'step': step, 'status': status, 'context': context},
       userId: userId,
       userRole: userRole,
     );
@@ -204,9 +194,10 @@ class MonitoringService {
           ..setData('error_message', errorMessage)
           ..setData('metadata', metadata))
         .finish(
-      status:
-          success ? const SpanStatus.ok() : const SpanStatus.internalError(),
-    );
+          status: success
+              ? const SpanStatus.ok()
+              : const SpanStatus.internalError(),
+        );
   }
 
   /// Track business metrics
@@ -367,19 +358,14 @@ mixin MonitoringMixin {
     dynamic error, {
     StackTrace? stackTrace,
     String? context,
-  }) =>
-      MonitoringService.reportError(
-        error: error,
-        stackTrace: stackTrace,
-        context: context,
-      );
+  }) => MonitoringService.reportError(
+    error: error,
+    stackTrace: stackTrace,
+    context: context,
+  );
 
   Future<T> monitorOperation<T>(
     String operation,
     Future<T> Function() function,
-  ) =>
-      MonitoringService.monitorAsync(
-        operation: operation,
-        function: function,
-      );
+  ) => MonitoringService.monitorAsync(operation: operation, function: function);
 }

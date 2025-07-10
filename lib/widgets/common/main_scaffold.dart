@@ -11,10 +11,7 @@ import '../../providers/demo_mode_provider.dart';
 import '../organization/organization_badge.dart';
 
 class MainScaffold extends ConsumerWidget {
-  const MainScaffold({
-    required this.child,
-    super.key,
-  });
+  const MainScaffold({required this.child, super.key});
   final Widget child;
 
   @override
@@ -46,8 +43,8 @@ class MainScaffold extends ConsumerWidget {
                     Text(
                       'JO17',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     // Organization badge
@@ -158,9 +155,7 @@ class MainScaffold extends ConsumerWidget {
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
-            Expanded(
-              child: child,
-            ),
+            Expanded(child: child),
           ],
         ),
       );

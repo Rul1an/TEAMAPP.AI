@@ -156,14 +156,10 @@ class ExerciseFilterBar extends ConsumerWidget {
                 decoration: const InputDecoration(labelText: 'Category'),
                 value: category,
                 items: [
-                  const DropdownMenuItem<ExerciseCategory?>(
-                    child: Text('All'),
-                  ),
+                  const DropdownMenuItem<ExerciseCategory?>(child: Text('All')),
                   ...ExerciseCategory.values.map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e.displayName),
-                    ),
+                    (e) =>
+                        DropdownMenuItem(value: e, child: Text(e.displayName)),
                   ),
                 ],
                 onChanged: (value) => setState(() => category = value),
@@ -178,10 +174,8 @@ class ExerciseFilterBar extends ConsumerWidget {
                     child: Text('All'),
                   ),
                   ...ExerciseComplexity.values.map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e.displayName),
-                    ),
+                    (e) =>
+                        DropdownMenuItem(value: e, child: Text(e.displayName)),
                   ),
                 ],
                 onChanged: (value) => setState(() => complexity = value),
@@ -210,14 +204,10 @@ class ExerciseFilterBar extends ConsumerWidget {
                 decoration: const InputDecoration(labelText: 'Tactical Focus'),
                 value: tacticalFocus,
                 items: [
-                  const DropdownMenuItem<TacticalFocus?>(
-                    child: Text('All'),
-                  ),
+                  const DropdownMenuItem<TacticalFocus?>(child: Text('All')),
                   ...TacticalFocus.values.map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e.displayName),
-                    ),
+                    (e) =>
+                        DropdownMenuItem(value: e, child: Text(e.displayName)),
                   ),
                 ],
                 onChanged: (value) => setState(() => tacticalFocus = value),

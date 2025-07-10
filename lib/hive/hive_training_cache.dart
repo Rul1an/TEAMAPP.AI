@@ -5,12 +5,12 @@ import 'base_hive_cache.dart';
 /// Offline cache for [Training] list using encrypted Hive.
 class HiveTrainingCache {
   HiveTrainingCache()
-      : _cache = BaseHiveCache<List<Training>>(
-          boxName: _boxName,
-          valueKey: _valueKey,
-          fromJson: _fromJson,
-          toJson: _toJson,
-        );
+    : _cache = BaseHiveCache<List<Training>>(
+        boxName: _boxName,
+        valueKey: _valueKey,
+        fromJson: _fromJson,
+        toJson: _toJson,
+      );
 
   // Box/value identifiers --------------------------------------------------
   static const _boxName = 'trainings_box';
@@ -29,14 +29,14 @@ class HiveTrainingCache {
 
   // region JSON helpers ----------------------------------------------------
   static List<Training> _fromJson(Map<String, dynamic> map) {
-    final list =
-        (map['trainings'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
+    final list = (map['trainings'] as List<dynamic>? ?? [])
+        .cast<Map<String, dynamic>>();
     return list.map(_trainingFromJson).toList();
   }
 
   static Map<String, dynamic> _toJson(List<Training> list) => {
-        'trainings': list.map(_trainingToJson).toList(),
-      };
+    'trainings': list.map(_trainingToJson).toList(),
+  };
 
   static Training _trainingFromJson(Map<String, dynamic> json) {
     final t = Training()
@@ -51,55 +51,57 @@ class HiveTrainingCache {
       ..description = json['description'] as String?
       ..objectives = json['objectives'] as String?
       ..drills = (json['drills'] as List<dynamic>? ?? []).cast<String>()
-      ..presentPlayerIds =
-          (json['present'] as List<dynamic>? ?? []).cast<String>()
-      ..absentPlayerIds =
-          (json['absent'] as List<dynamic>? ?? []).cast<String>()
-      ..injuredPlayerIds =
-          (json['injured'] as List<dynamic>? ?? []).cast<String>()
+      ..presentPlayerIds = (json['present'] as List<dynamic>? ?? [])
+          .cast<String>()
+      ..absentPlayerIds = (json['absent'] as List<dynamic>? ?? [])
+          .cast<String>()
+      ..injuredPlayerIds = (json['injured'] as List<dynamic>? ?? [])
+          .cast<String>()
       ..latePlayerIds = (json['late'] as List<dynamic>? ?? []).cast<String>()
       ..coachNotes = json['coach_notes'] as String?
       ..performanceNotes = json['performance_notes'] as String?
-      ..createdAt = DateTime.tryParse(json['created_at'] as String? ?? '') ??
+      ..createdAt =
+          DateTime.tryParse(json['created_at'] as String? ?? '') ??
           DateTime.now()
-      ..updatedAt = DateTime.tryParse(json['updated_at'] as String? ?? '') ??
+      ..updatedAt =
+          DateTime.tryParse(json['updated_at'] as String? ?? '') ??
           DateTime.now();
     return t;
   }
 
   static Map<String, dynamic> _trainingToJson(Training t) => <String, dynamic>{
-        'id': t.id,
-        'date': t.date.toIso8601String(),
-        'duration': t.duration,
-        'focus': t.focus.name,
-        'intensity': t.intensity.name,
-        'status': t.status.name,
-        'location': t.location,
-        'description': t.description,
-        'objectives': t.objectives,
-        'drills': t.drills,
-        'present': t.presentPlayerIds,
-        'absent': t.absentPlayerIds,
-        'injured': t.injuredPlayerIds,
-        'late': t.latePlayerIds,
-        'coach_notes': t.coachNotes,
-        'performance_notes': t.performanceNotes,
-        'created_at': t.createdAt.toIso8601String(),
-        'updated_at': t.updatedAt.toIso8601String(),
-      }..removeWhere((_, v) => v == null);
+    'id': t.id,
+    'date': t.date.toIso8601String(),
+    'duration': t.duration,
+    'focus': t.focus.name,
+    'intensity': t.intensity.name,
+    'status': t.status.name,
+    'location': t.location,
+    'description': t.description,
+    'objectives': t.objectives,
+    'drills': t.drills,
+    'present': t.presentPlayerIds,
+    'absent': t.absentPlayerIds,
+    'injured': t.injuredPlayerIds,
+    'late': t.latePlayerIds,
+    'coach_notes': t.coachNotes,
+    'performance_notes': t.performanceNotes,
+    'created_at': t.createdAt.toIso8601String(),
+    'updated_at': t.updatedAt.toIso8601String(),
+  }..removeWhere((_, v) => v == null);
 
   static TrainingFocus _focus(String? s) => TrainingFocus.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingFocus.technical,
-      );
+    (e) => e.name == (s ?? '').toLowerCase(),
+    orElse: () => TrainingFocus.technical,
+  );
   static TrainingIntensity _intensity(String? s) =>
       TrainingIntensity.values.firstWhere(
         (e) => e.name == (s ?? '').toLowerCase(),
         orElse: () => TrainingIntensity.medium,
       );
   static TrainingStatus _status(String? s) => TrainingStatus.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingStatus.planned,
-      );
+    (e) => e.name == (s ?? '').toLowerCase(),
+    orElse: () => TrainingStatus.planned,
+  );
   // endregion --------------------------------------------------------------
 }

@@ -40,9 +40,9 @@ class PlayerRadarChartScreen extends StatelessWidget {
                     Text(
                       'Skill Profiel',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -57,8 +57,10 @@ class PlayerRadarChartScreen extends StatelessWidget {
                           dataSets: radarData,
                           radarBackgroundColor: Colors.transparent,
                           borderData: FlBorderData(show: false),
-                          radarBorderData:
-                              const BorderSide(color: Colors.grey, width: 2),
+                          radarBorderData: const BorderSide(
+                            color: Colors.grey,
+                            width: 2,
+                          ),
                           titleTextStyle: const TextStyle(
                             color: Colors.black,
                             fontSize: 14,

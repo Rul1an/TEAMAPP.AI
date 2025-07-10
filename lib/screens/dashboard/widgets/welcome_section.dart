@@ -41,15 +41,9 @@ class WelcomeSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
+            Text(title, style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
       ),

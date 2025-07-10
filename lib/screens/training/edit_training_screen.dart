@@ -12,10 +12,7 @@ import '../../models/training.dart';
 import '../../providers/trainings_provider.dart';
 
 class EditTrainingScreen extends ConsumerStatefulWidget {
-  const EditTrainingScreen({
-    required this.trainingId,
-    super.key,
-  });
+  const EditTrainingScreen({required this.trainingId, super.key});
   final String trainingId;
 
   @override
@@ -137,8 +134,10 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                                     ),
                                     child: Text(
                                       _selectedDate != null
-                                          ? DateFormat('d MMMM yyyy', 'nl_NL')
-                                              .format(_selectedDate!)
+                                          ? DateFormat(
+                                              'd MMMM yyyy',
+                                              'nl_NL',
+                                            ).format(_selectedDate!)
                                           : 'Selecteer datum',
                                     ),
                                   ),
@@ -260,33 +259,33 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
                               Expanded(
                                 child:
                                     DropdownButtonFormField<TrainingIntensity>(
-                                  value: _selectedIntensity,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Intensiteit',
-                                    border: OutlineInputBorder(),
-                                  ),
-                                  items: TrainingIntensity.values
-                                      .map(
-                                        (intensity) => DropdownMenuItem(
-                                          value: intensity,
-                                          child: Text(
-                                            _getIntensityText(intensity),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedIntensity = value;
-                                    });
-                                  },
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'Selecteer een intensiteit';
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                      value: _selectedIntensity,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Intensiteit',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      items: TrainingIntensity.values
+                                          .map(
+                                            (intensity) => DropdownMenuItem(
+                                              value: intensity,
+                                              child: Text(
+                                                _getIntensityText(intensity),
+                                              ),
+                                            ),
+                                          )
+                                          .toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedIntensity = value;
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return 'Selecteer een intensiteit';
+                                        }
+                                        return null;
+                                      },
+                                    ),
                               ),
                             ],
                           ),
@@ -454,8 +453,9 @@ class _EditTrainingScreenState extends ConsumerState<EditTrainingScreen> {
         _selectedTime!.minute,
       );
       _training!.duration = int.parse(_durationController.text);
-      _training!.location =
-          _locationController.text.isEmpty ? null : _locationController.text;
+      _training!.location = _locationController.text.isEmpty
+          ? null
+          : _locationController.text;
       _training!.description = _descriptionController.text.isEmpty
           ? null
           : _descriptionController.text;

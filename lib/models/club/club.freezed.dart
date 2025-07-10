@@ -12,7 +12,8 @@ part of 'club.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Club _$ClubFromJson(Map<String, dynamic> json) {
   return _Club.fromJson(json);
@@ -55,31 +56,32 @@ abstract class $ClubCopyWith<$Res> {
   factory $ClubCopyWith(Club value, $Res Function(Club) then) =
       _$ClubCopyWithImpl<$Res, Club>;
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String shortName,
-      String? description,
-      String? logoUrl,
-      String? website,
-      String? email,
-      String? phone,
-      String? street,
-      String? city,
-      String? postalCode,
-      String? country,
-      DateTime foundedDate,
-      String? colors,
-      String? motto,
-      ClubTier tier,
-      List<Team> teams,
-      List<StaffMember> staff,
-      ClubSettings settings,
-      ClubStatus status,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      String? createdBy,
-      String? updatedBy});
+  $Res call({
+    String id,
+    String name,
+    String shortName,
+    String? description,
+    String? logoUrl,
+    String? website,
+    String? email,
+    String? phone,
+    String? street,
+    String? city,
+    String? postalCode,
+    String? country,
+    DateTime foundedDate,
+    String? colors,
+    String? motto,
+    ClubTier tier,
+    List<Team> teams,
+    List<StaffMember> staff,
+    ClubSettings settings,
+    ClubStatus status,
+    DateTime createdAt,
+    DateTime? updatedAt,
+    String? createdBy,
+    String? updatedBy,
+  });
 
   $ClubSettingsCopyWith<$Res> get settings;
 }
@@ -122,104 +124,107 @@ class _$ClubCopyWithImpl<$Res, $Val extends Club>
     Object? createdBy = freezed,
     Object? updatedBy = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      shortName: null == shortName
-          ? _value.shortName
-          : shortName // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      logoUrl: freezed == logoUrl
-          ? _value.logoUrl
-          : logoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      website: freezed == website
-          ? _value.website
-          : website // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phone: freezed == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      street: freezed == street
-          ? _value.street
-          : street // ignore: cast_nullable_to_non_nullable
-              as String?,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      postalCode: freezed == postalCode
-          ? _value.postalCode
-          : postalCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      foundedDate: null == foundedDate
-          ? _value.foundedDate
-          : foundedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      colors: freezed == colors
-          ? _value.colors
-          : colors // ignore: cast_nullable_to_non_nullable
-              as String?,
-      motto: freezed == motto
-          ? _value.motto
-          : motto // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tier: null == tier
-          ? _value.tier
-          : tier // ignore: cast_nullable_to_non_nullable
-              as ClubTier,
-      teams: null == teams
-          ? _value.teams
-          : teams // ignore: cast_nullable_to_non_nullable
-              as List<Team>,
-      staff: null == staff
-          ? _value.staff
-          : staff // ignore: cast_nullable_to_non_nullable
-              as List<StaffMember>,
-      settings: null == settings
-          ? _value.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as ClubSettings,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ClubStatus,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      createdBy: freezed == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedBy: freezed == updatedBy
-          ? _value.updatedBy
-          : updatedBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            shortName: null == shortName
+                ? _value.shortName
+                : shortName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            description: freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            logoUrl: freezed == logoUrl
+                ? _value.logoUrl
+                : logoUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            website: freezed == website
+                ? _value.website
+                : website // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            email: freezed == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            phone: freezed == phone
+                ? _value.phone
+                : phone // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            street: freezed == street
+                ? _value.street
+                : street // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            city: freezed == city
+                ? _value.city
+                : city // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            postalCode: freezed == postalCode
+                ? _value.postalCode
+                : postalCode // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            country: freezed == country
+                ? _value.country
+                : country // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            foundedDate: null == foundedDate
+                ? _value.foundedDate
+                : foundedDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            colors: freezed == colors
+                ? _value.colors
+                : colors // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            motto: freezed == motto
+                ? _value.motto
+                : motto // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            tier: null == tier
+                ? _value.tier
+                : tier // ignore: cast_nullable_to_non_nullable
+                      as ClubTier,
+            teams: null == teams
+                ? _value.teams
+                : teams // ignore: cast_nullable_to_non_nullable
+                      as List<Team>,
+            staff: null == staff
+                ? _value.staff
+                : staff // ignore: cast_nullable_to_non_nullable
+                      as List<StaffMember>,
+            settings: null == settings
+                ? _value.settings
+                : settings // ignore: cast_nullable_to_non_nullable
+                      as ClubSettings,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as ClubStatus,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            createdBy: freezed == createdBy
+                ? _value.createdBy
+                : createdBy // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            updatedBy: freezed == updatedBy
+                ? _value.updatedBy
+                : updatedBy // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 
   @override
@@ -234,35 +239,37 @@ class _$ClubCopyWithImpl<$Res, $Val extends Club>
 /// @nodoc
 abstract class _$$ClubImplCopyWith<$Res> implements $ClubCopyWith<$Res> {
   factory _$$ClubImplCopyWith(
-          _$ClubImpl value, $Res Function(_$ClubImpl) then) =
-      __$$ClubImplCopyWithImpl<$Res>;
+    _$ClubImpl value,
+    $Res Function(_$ClubImpl) then,
+  ) = __$$ClubImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String shortName,
-      String? description,
-      String? logoUrl,
-      String? website,
-      String? email,
-      String? phone,
-      String? street,
-      String? city,
-      String? postalCode,
-      String? country,
-      DateTime foundedDate,
-      String? colors,
-      String? motto,
-      ClubTier tier,
-      List<Team> teams,
-      List<StaffMember> staff,
-      ClubSettings settings,
-      ClubStatus status,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      String? createdBy,
-      String? updatedBy});
+  $Res call({
+    String id,
+    String name,
+    String shortName,
+    String? description,
+    String? logoUrl,
+    String? website,
+    String? email,
+    String? phone,
+    String? street,
+    String? city,
+    String? postalCode,
+    String? country,
+    DateTime foundedDate,
+    String? colors,
+    String? motto,
+    ClubTier tier,
+    List<Team> teams,
+    List<StaffMember> staff,
+    ClubSettings settings,
+    ClubStatus status,
+    DateTime createdAt,
+    DateTime? updatedAt,
+    String? createdBy,
+    String? updatedBy,
+  });
 
   @override
   $ClubSettingsCopyWith<$Res> get settings;
@@ -273,7 +280,7 @@ class __$$ClubImplCopyWithImpl<$Res>
     extends _$ClubCopyWithImpl<$Res, _$ClubImpl>
     implements _$$ClubImplCopyWith<$Res> {
   __$$ClubImplCopyWithImpl(_$ClubImpl _value, $Res Function(_$ClubImpl) _then)
-      : super(_value, _then);
+    : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -303,138 +310,140 @@ class __$$ClubImplCopyWithImpl<$Res>
     Object? createdBy = freezed,
     Object? updatedBy = freezed,
   }) {
-    return _then(_$ClubImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      shortName: null == shortName
-          ? _value.shortName
-          : shortName // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      logoUrl: freezed == logoUrl
-          ? _value.logoUrl
-          : logoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      website: freezed == website
-          ? _value.website
-          : website // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phone: freezed == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      street: freezed == street
-          ? _value.street
-          : street // ignore: cast_nullable_to_non_nullable
-              as String?,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      postalCode: freezed == postalCode
-          ? _value.postalCode
-          : postalCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      foundedDate: null == foundedDate
-          ? _value.foundedDate
-          : foundedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      colors: freezed == colors
-          ? _value.colors
-          : colors // ignore: cast_nullable_to_non_nullable
-              as String?,
-      motto: freezed == motto
-          ? _value.motto
-          : motto // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tier: null == tier
-          ? _value.tier
-          : tier // ignore: cast_nullable_to_non_nullable
-              as ClubTier,
-      teams: null == teams
-          ? _value._teams
-          : teams // ignore: cast_nullable_to_non_nullable
-              as List<Team>,
-      staff: null == staff
-          ? _value._staff
-          : staff // ignore: cast_nullable_to_non_nullable
-              as List<StaffMember>,
-      settings: null == settings
-          ? _value.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as ClubSettings,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ClubStatus,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      createdBy: freezed == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedBy: freezed == updatedBy
-          ? _value.updatedBy
-          : updatedBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$ClubImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        shortName: null == shortName
+            ? _value.shortName
+            : shortName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        logoUrl: freezed == logoUrl
+            ? _value.logoUrl
+            : logoUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        website: freezed == website
+            ? _value.website
+            : website // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        email: freezed == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        phone: freezed == phone
+            ? _value.phone
+            : phone // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        street: freezed == street
+            ? _value.street
+            : street // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        city: freezed == city
+            ? _value.city
+            : city // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        postalCode: freezed == postalCode
+            ? _value.postalCode
+            : postalCode // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        country: freezed == country
+            ? _value.country
+            : country // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        foundedDate: null == foundedDate
+            ? _value.foundedDate
+            : foundedDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        colors: freezed == colors
+            ? _value.colors
+            : colors // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        motto: freezed == motto
+            ? _value.motto
+            : motto // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        tier: null == tier
+            ? _value.tier
+            : tier // ignore: cast_nullable_to_non_nullable
+                  as ClubTier,
+        teams: null == teams
+            ? _value._teams
+            : teams // ignore: cast_nullable_to_non_nullable
+                  as List<Team>,
+        staff: null == staff
+            ? _value._staff
+            : staff // ignore: cast_nullable_to_non_nullable
+                  as List<StaffMember>,
+        settings: null == settings
+            ? _value.settings
+            : settings // ignore: cast_nullable_to_non_nullable
+                  as ClubSettings,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as ClubStatus,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        createdBy: freezed == createdBy
+            ? _value.createdBy
+            : createdBy // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        updatedBy: freezed == updatedBy
+            ? _value.updatedBy
+            : updatedBy // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ClubImpl extends _Club {
-  const _$ClubImpl(
-      {required this.id,
-      required this.name,
-      required this.shortName,
-      this.description,
-      this.logoUrl,
-      this.website,
-      this.email,
-      this.phone,
-      this.street,
-      this.city,
-      this.postalCode,
-      this.country,
-      required this.foundedDate,
-      this.colors,
-      this.motto,
-      this.tier = ClubTier.basic,
-      final List<Team> teams = const [],
-      final List<StaffMember> staff = const [],
-      required this.settings,
-      required this.status,
-      required this.createdAt,
-      this.updatedAt,
-      this.createdBy,
-      this.updatedBy})
-      : _teams = teams,
-        _staff = staff,
-        super._();
+  const _$ClubImpl({
+    required this.id,
+    required this.name,
+    required this.shortName,
+    this.description,
+    this.logoUrl,
+    this.website,
+    this.email,
+    this.phone,
+    this.street,
+    this.city,
+    this.postalCode,
+    this.country,
+    required this.foundedDate,
+    this.colors,
+    this.motto,
+    this.tier = ClubTier.basic,
+    final List<Team> teams = const [],
+    final List<StaffMember> staff = const [],
+    required this.settings,
+    required this.status,
+    required this.createdAt,
+    this.updatedAt,
+    this.createdBy,
+    this.updatedBy,
+  }) : _teams = teams,
+       _staff = staff,
+       super._();
 
   factory _$ClubImpl.fromJson(Map<String, dynamic> json) =>
       _$$ClubImplFromJson(json);
@@ -455,7 +464,7 @@ class _$ClubImpl extends _Club {
   final String? email;
   @override
   final String? phone;
-// Address
+  // Address
   @override
   final String? street;
   @override
@@ -464,14 +473,14 @@ class _$ClubImpl extends _Club {
   final String? postalCode;
   @override
   final String? country;
-// Club Details
+  // Club Details
   @override
   final DateTime foundedDate;
   @override
   final String? colors;
   @override
   final String? motto;
-// SaaS Properties
+  // SaaS Properties
   @override
   @JsonKey()
   final ClubTier tier;
@@ -493,13 +502,13 @@ class _$ClubImpl extends _Club {
     return EqualUnmodifiableListView(_staff);
   }
 
-// Settings
+  // Settings
   @override
   final ClubSettings settings;
-// Status
+  // Status
   @override
   final ClubStatus status;
-// Metadata
+  // Metadata
   @override
   final DateTime createdAt;
   @override
@@ -557,32 +566,32 @@ class _$ClubImpl extends _Club {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        name,
-        shortName,
-        description,
-        logoUrl,
-        website,
-        email,
-        phone,
-        street,
-        city,
-        postalCode,
-        country,
-        foundedDate,
-        colors,
-        motto,
-        tier,
-        const DeepCollectionEquality().hash(_teams),
-        const DeepCollectionEquality().hash(_staff),
-        settings,
-        status,
-        createdAt,
-        updatedAt,
-        createdBy,
-        updatedBy
-      ]);
+    runtimeType,
+    id,
+    name,
+    shortName,
+    description,
+    logoUrl,
+    website,
+    email,
+    phone,
+    street,
+    city,
+    postalCode,
+    country,
+    foundedDate,
+    colors,
+    motto,
+    tier,
+    const DeepCollectionEquality().hash(_teams),
+    const DeepCollectionEquality().hash(_staff),
+    settings,
+    status,
+    createdAt,
+    updatedAt,
+    createdBy,
+    updatedBy,
+  ]);
 
   @JsonKey(ignore: true)
   @override
@@ -592,38 +601,37 @@ class _$ClubImpl extends _Club {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ClubImplToJson(
-      this,
-    );
+    return _$$ClubImplToJson(this);
   }
 }
 
 abstract class _Club extends Club {
-  const factory _Club(
-      {required final String id,
-      required final String name,
-      required final String shortName,
-      final String? description,
-      final String? logoUrl,
-      final String? website,
-      final String? email,
-      final String? phone,
-      final String? street,
-      final String? city,
-      final String? postalCode,
-      final String? country,
-      required final DateTime foundedDate,
-      final String? colors,
-      final String? motto,
-      final ClubTier tier,
-      final List<Team> teams,
-      final List<StaffMember> staff,
-      required final ClubSettings settings,
-      required final ClubStatus status,
-      required final DateTime createdAt,
-      final DateTime? updatedAt,
-      final String? createdBy,
-      final String? updatedBy}) = _$ClubImpl;
+  const factory _Club({
+    required final String id,
+    required final String name,
+    required final String shortName,
+    final String? description,
+    final String? logoUrl,
+    final String? website,
+    final String? email,
+    final String? phone,
+    final String? street,
+    final String? city,
+    final String? postalCode,
+    final String? country,
+    required final DateTime foundedDate,
+    final String? colors,
+    final String? motto,
+    final ClubTier tier,
+    final List<Team> teams,
+    final List<StaffMember> staff,
+    required final ClubSettings settings,
+    required final ClubStatus status,
+    required final DateTime createdAt,
+    final DateTime? updatedAt,
+    final String? createdBy,
+    final String? updatedBy,
+  }) = _$ClubImpl;
   const _Club._() : super._();
 
   factory _Club.fromJson(Map<String, dynamic> json) = _$ClubImpl.fromJson;
@@ -688,7 +696,7 @@ ClubSettings _$ClubSettingsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ClubSettings {
-// General
+  // General
   String get defaultLanguage => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
   String get timezone => throw _privateConstructorUsedError; // Features
@@ -718,26 +726,28 @@ mixin _$ClubSettings {
 /// @nodoc
 abstract class $ClubSettingsCopyWith<$Res> {
   factory $ClubSettingsCopyWith(
-          ClubSettings value, $Res Function(ClubSettings) then) =
-      _$ClubSettingsCopyWithImpl<$Res, ClubSettings>;
+    ClubSettings value,
+    $Res Function(ClubSettings) then,
+  ) = _$ClubSettingsCopyWithImpl<$Res, ClubSettings>;
   @useResult
-  $Res call(
-      {String defaultLanguage,
-      String currency,
-      String timezone,
-      bool enablePlayerTracking,
-      bool enableCommunication,
-      bool enableFinancialManagement,
-      bool enableAdvancedAnalytics,
-      bool allowParentAccess,
-      bool allowPlayerSelfRegistration,
-      bool requireVOGForStaff,
-      bool emailNotifications,
-      bool pushNotifications,
-      bool smsNotifications,
-      int defaultTrainingDuration,
-      int defaultMatchDuration,
-      int dataRetentionYears});
+  $Res call({
+    String defaultLanguage,
+    String currency,
+    String timezone,
+    bool enablePlayerTracking,
+    bool enableCommunication,
+    bool enableFinancialManagement,
+    bool enableAdvancedAnalytics,
+    bool allowParentAccess,
+    bool allowPlayerSelfRegistration,
+    bool requireVOGForStaff,
+    bool emailNotifications,
+    bool pushNotifications,
+    bool smsNotifications,
+    int defaultTrainingDuration,
+    int defaultMatchDuration,
+    int dataRetentionYears,
+  });
 }
 
 /// @nodoc
@@ -770,72 +780,75 @@ class _$ClubSettingsCopyWithImpl<$Res, $Val extends ClubSettings>
     Object? defaultMatchDuration = null,
     Object? dataRetentionYears = null,
   }) {
-    return _then(_value.copyWith(
-      defaultLanguage: null == defaultLanguage
-          ? _value.defaultLanguage
-          : defaultLanguage // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      timezone: null == timezone
-          ? _value.timezone
-          : timezone // ignore: cast_nullable_to_non_nullable
-              as String,
-      enablePlayerTracking: null == enablePlayerTracking
-          ? _value.enablePlayerTracking
-          : enablePlayerTracking // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableCommunication: null == enableCommunication
-          ? _value.enableCommunication
-          : enableCommunication // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableFinancialManagement: null == enableFinancialManagement
-          ? _value.enableFinancialManagement
-          : enableFinancialManagement // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableAdvancedAnalytics: null == enableAdvancedAnalytics
-          ? _value.enableAdvancedAnalytics
-          : enableAdvancedAnalytics // ignore: cast_nullable_to_non_nullable
-              as bool,
-      allowParentAccess: null == allowParentAccess
-          ? _value.allowParentAccess
-          : allowParentAccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      allowPlayerSelfRegistration: null == allowPlayerSelfRegistration
-          ? _value.allowPlayerSelfRegistration
-          : allowPlayerSelfRegistration // ignore: cast_nullable_to_non_nullable
-              as bool,
-      requireVOGForStaff: null == requireVOGForStaff
-          ? _value.requireVOGForStaff
-          : requireVOGForStaff // ignore: cast_nullable_to_non_nullable
-              as bool,
-      emailNotifications: null == emailNotifications
-          ? _value.emailNotifications
-          : emailNotifications // ignore: cast_nullable_to_non_nullable
-              as bool,
-      pushNotifications: null == pushNotifications
-          ? _value.pushNotifications
-          : pushNotifications // ignore: cast_nullable_to_non_nullable
-              as bool,
-      smsNotifications: null == smsNotifications
-          ? _value.smsNotifications
-          : smsNotifications // ignore: cast_nullable_to_non_nullable
-              as bool,
-      defaultTrainingDuration: null == defaultTrainingDuration
-          ? _value.defaultTrainingDuration
-          : defaultTrainingDuration // ignore: cast_nullable_to_non_nullable
-              as int,
-      defaultMatchDuration: null == defaultMatchDuration
-          ? _value.defaultMatchDuration
-          : defaultMatchDuration // ignore: cast_nullable_to_non_nullable
-              as int,
-      dataRetentionYears: null == dataRetentionYears
-          ? _value.dataRetentionYears
-          : dataRetentionYears // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            defaultLanguage: null == defaultLanguage
+                ? _value.defaultLanguage
+                : defaultLanguage // ignore: cast_nullable_to_non_nullable
+                      as String,
+            currency: null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                      as String,
+            timezone: null == timezone
+                ? _value.timezone
+                : timezone // ignore: cast_nullable_to_non_nullable
+                      as String,
+            enablePlayerTracking: null == enablePlayerTracking
+                ? _value.enablePlayerTracking
+                : enablePlayerTracking // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            enableCommunication: null == enableCommunication
+                ? _value.enableCommunication
+                : enableCommunication // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            enableFinancialManagement: null == enableFinancialManagement
+                ? _value.enableFinancialManagement
+                : enableFinancialManagement // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            enableAdvancedAnalytics: null == enableAdvancedAnalytics
+                ? _value.enableAdvancedAnalytics
+                : enableAdvancedAnalytics // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            allowParentAccess: null == allowParentAccess
+                ? _value.allowParentAccess
+                : allowParentAccess // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            allowPlayerSelfRegistration: null == allowPlayerSelfRegistration
+                ? _value.allowPlayerSelfRegistration
+                : allowPlayerSelfRegistration // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            requireVOGForStaff: null == requireVOGForStaff
+                ? _value.requireVOGForStaff
+                : requireVOGForStaff // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            emailNotifications: null == emailNotifications
+                ? _value.emailNotifications
+                : emailNotifications // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            pushNotifications: null == pushNotifications
+                ? _value.pushNotifications
+                : pushNotifications // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            smsNotifications: null == smsNotifications
+                ? _value.smsNotifications
+                : smsNotifications // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            defaultTrainingDuration: null == defaultTrainingDuration
+                ? _value.defaultTrainingDuration
+                : defaultTrainingDuration // ignore: cast_nullable_to_non_nullable
+                      as int,
+            defaultMatchDuration: null == defaultMatchDuration
+                ? _value.defaultMatchDuration
+                : defaultMatchDuration // ignore: cast_nullable_to_non_nullable
+                      as int,
+            dataRetentionYears: null == dataRetentionYears
+                ? _value.dataRetentionYears
+                : dataRetentionYears // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -843,27 +856,29 @@ class _$ClubSettingsCopyWithImpl<$Res, $Val extends ClubSettings>
 abstract class _$$ClubSettingsImplCopyWith<$Res>
     implements $ClubSettingsCopyWith<$Res> {
   factory _$$ClubSettingsImplCopyWith(
-          _$ClubSettingsImpl value, $Res Function(_$ClubSettingsImpl) then) =
-      __$$ClubSettingsImplCopyWithImpl<$Res>;
+    _$ClubSettingsImpl value,
+    $Res Function(_$ClubSettingsImpl) then,
+  ) = __$$ClubSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String defaultLanguage,
-      String currency,
-      String timezone,
-      bool enablePlayerTracking,
-      bool enableCommunication,
-      bool enableFinancialManagement,
-      bool enableAdvancedAnalytics,
-      bool allowParentAccess,
-      bool allowPlayerSelfRegistration,
-      bool requireVOGForStaff,
-      bool emailNotifications,
-      bool pushNotifications,
-      bool smsNotifications,
-      int defaultTrainingDuration,
-      int defaultMatchDuration,
-      int dataRetentionYears});
+  $Res call({
+    String defaultLanguage,
+    String currency,
+    String timezone,
+    bool enablePlayerTracking,
+    bool enableCommunication,
+    bool enableFinancialManagement,
+    bool enableAdvancedAnalytics,
+    bool allowParentAccess,
+    bool allowPlayerSelfRegistration,
+    bool requireVOGForStaff,
+    bool emailNotifications,
+    bool pushNotifications,
+    bool smsNotifications,
+    int defaultTrainingDuration,
+    int defaultMatchDuration,
+    int dataRetentionYears,
+  });
 }
 
 /// @nodoc
@@ -871,8 +886,9 @@ class __$$ClubSettingsImplCopyWithImpl<$Res>
     extends _$ClubSettingsCopyWithImpl<$Res, _$ClubSettingsImpl>
     implements _$$ClubSettingsImplCopyWith<$Res> {
   __$$ClubSettingsImplCopyWithImpl(
-      _$ClubSettingsImpl _value, $Res Function(_$ClubSettingsImpl) _then)
-      : super(_value, _then);
+    _$ClubSettingsImpl _value,
+    $Res Function(_$ClubSettingsImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -894,100 +910,103 @@ class __$$ClubSettingsImplCopyWithImpl<$Res>
     Object? defaultMatchDuration = null,
     Object? dataRetentionYears = null,
   }) {
-    return _then(_$ClubSettingsImpl(
-      defaultLanguage: null == defaultLanguage
-          ? _value.defaultLanguage
-          : defaultLanguage // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      timezone: null == timezone
-          ? _value.timezone
-          : timezone // ignore: cast_nullable_to_non_nullable
-              as String,
-      enablePlayerTracking: null == enablePlayerTracking
-          ? _value.enablePlayerTracking
-          : enablePlayerTracking // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableCommunication: null == enableCommunication
-          ? _value.enableCommunication
-          : enableCommunication // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableFinancialManagement: null == enableFinancialManagement
-          ? _value.enableFinancialManagement
-          : enableFinancialManagement // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableAdvancedAnalytics: null == enableAdvancedAnalytics
-          ? _value.enableAdvancedAnalytics
-          : enableAdvancedAnalytics // ignore: cast_nullable_to_non_nullable
-              as bool,
-      allowParentAccess: null == allowParentAccess
-          ? _value.allowParentAccess
-          : allowParentAccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      allowPlayerSelfRegistration: null == allowPlayerSelfRegistration
-          ? _value.allowPlayerSelfRegistration
-          : allowPlayerSelfRegistration // ignore: cast_nullable_to_non_nullable
-              as bool,
-      requireVOGForStaff: null == requireVOGForStaff
-          ? _value.requireVOGForStaff
-          : requireVOGForStaff // ignore: cast_nullable_to_non_nullable
-              as bool,
-      emailNotifications: null == emailNotifications
-          ? _value.emailNotifications
-          : emailNotifications // ignore: cast_nullable_to_non_nullable
-              as bool,
-      pushNotifications: null == pushNotifications
-          ? _value.pushNotifications
-          : pushNotifications // ignore: cast_nullable_to_non_nullable
-              as bool,
-      smsNotifications: null == smsNotifications
-          ? _value.smsNotifications
-          : smsNotifications // ignore: cast_nullable_to_non_nullable
-              as bool,
-      defaultTrainingDuration: null == defaultTrainingDuration
-          ? _value.defaultTrainingDuration
-          : defaultTrainingDuration // ignore: cast_nullable_to_non_nullable
-              as int,
-      defaultMatchDuration: null == defaultMatchDuration
-          ? _value.defaultMatchDuration
-          : defaultMatchDuration // ignore: cast_nullable_to_non_nullable
-              as int,
-      dataRetentionYears: null == dataRetentionYears
-          ? _value.dataRetentionYears
-          : dataRetentionYears // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return _then(
+      _$ClubSettingsImpl(
+        defaultLanguage: null == defaultLanguage
+            ? _value.defaultLanguage
+            : defaultLanguage // ignore: cast_nullable_to_non_nullable
+                  as String,
+        currency: null == currency
+            ? _value.currency
+            : currency // ignore: cast_nullable_to_non_nullable
+                  as String,
+        timezone: null == timezone
+            ? _value.timezone
+            : timezone // ignore: cast_nullable_to_non_nullable
+                  as String,
+        enablePlayerTracking: null == enablePlayerTracking
+            ? _value.enablePlayerTracking
+            : enablePlayerTracking // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        enableCommunication: null == enableCommunication
+            ? _value.enableCommunication
+            : enableCommunication // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        enableFinancialManagement: null == enableFinancialManagement
+            ? _value.enableFinancialManagement
+            : enableFinancialManagement // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        enableAdvancedAnalytics: null == enableAdvancedAnalytics
+            ? _value.enableAdvancedAnalytics
+            : enableAdvancedAnalytics // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        allowParentAccess: null == allowParentAccess
+            ? _value.allowParentAccess
+            : allowParentAccess // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        allowPlayerSelfRegistration: null == allowPlayerSelfRegistration
+            ? _value.allowPlayerSelfRegistration
+            : allowPlayerSelfRegistration // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        requireVOGForStaff: null == requireVOGForStaff
+            ? _value.requireVOGForStaff
+            : requireVOGForStaff // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        emailNotifications: null == emailNotifications
+            ? _value.emailNotifications
+            : emailNotifications // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        pushNotifications: null == pushNotifications
+            ? _value.pushNotifications
+            : pushNotifications // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        smsNotifications: null == smsNotifications
+            ? _value.smsNotifications
+            : smsNotifications // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        defaultTrainingDuration: null == defaultTrainingDuration
+            ? _value.defaultTrainingDuration
+            : defaultTrainingDuration // ignore: cast_nullable_to_non_nullable
+                  as int,
+        defaultMatchDuration: null == defaultMatchDuration
+            ? _value.defaultMatchDuration
+            : defaultMatchDuration // ignore: cast_nullable_to_non_nullable
+                  as int,
+        dataRetentionYears: null == dataRetentionYears
+            ? _value.dataRetentionYears
+            : dataRetentionYears // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ClubSettingsImpl implements _ClubSettings {
-  const _$ClubSettingsImpl(
-      {this.defaultLanguage = 'nl',
-      this.currency = 'EUR',
-      this.timezone = 'Europe/Amsterdam',
-      this.enablePlayerTracking = true,
-      this.enableCommunication = true,
-      this.enableFinancialManagement = false,
-      this.enableAdvancedAnalytics = false,
-      this.allowParentAccess = true,
-      this.allowPlayerSelfRegistration = false,
-      this.requireVOGForStaff = true,
-      this.emailNotifications = true,
-      this.pushNotifications = true,
-      this.smsNotifications = false,
-      this.defaultTrainingDuration = 90,
-      this.defaultMatchDuration = 90,
-      this.dataRetentionYears = 7});
+  const _$ClubSettingsImpl({
+    this.defaultLanguage = 'nl',
+    this.currency = 'EUR',
+    this.timezone = 'Europe/Amsterdam',
+    this.enablePlayerTracking = true,
+    this.enableCommunication = true,
+    this.enableFinancialManagement = false,
+    this.enableAdvancedAnalytics = false,
+    this.allowParentAccess = true,
+    this.allowPlayerSelfRegistration = false,
+    this.requireVOGForStaff = true,
+    this.emailNotifications = true,
+    this.pushNotifications = true,
+    this.smsNotifications = false,
+    this.defaultTrainingDuration = 90,
+    this.defaultMatchDuration = 90,
+    this.dataRetentionYears = 7,
+  });
 
   factory _$ClubSettingsImpl.fromJson(Map<String, dynamic> json) =>
       _$$ClubSettingsImplFromJson(json);
 
-// General
+  // General
   @override
   @JsonKey()
   final String defaultLanguage;
@@ -997,7 +1016,7 @@ class _$ClubSettingsImpl implements _ClubSettings {
   @override
   @JsonKey()
   final String timezone;
-// Features
+  // Features
   @override
   @JsonKey()
   final bool enablePlayerTracking;
@@ -1010,7 +1029,7 @@ class _$ClubSettingsImpl implements _ClubSettings {
   @override
   @JsonKey()
   final bool enableAdvancedAnalytics;
-// Privacy
+  // Privacy
   @override
   @JsonKey()
   final bool allowParentAccess;
@@ -1020,7 +1039,7 @@ class _$ClubSettingsImpl implements _ClubSettings {
   @override
   @JsonKey()
   final bool requireVOGForStaff;
-// Notifications
+  // Notifications
   @override
   @JsonKey()
   final bool emailNotifications;
@@ -1030,14 +1049,14 @@ class _$ClubSettingsImpl implements _ClubSettings {
   @override
   @JsonKey()
   final bool smsNotifications;
-// Training
+  // Training
   @override
   @JsonKey()
   final int defaultTrainingDuration;
   @override
   @JsonKey()
   final int defaultMatchDuration;
-// Data Retention
+  // Data Retention
   @override
   @JsonKey()
   final int dataRetentionYears;
@@ -1062,16 +1081,22 @@ class _$ClubSettingsImpl implements _ClubSettings {
                 other.enablePlayerTracking == enablePlayerTracking) &&
             (identical(other.enableCommunication, enableCommunication) ||
                 other.enableCommunication == enableCommunication) &&
-            (identical(other.enableFinancialManagement,
-                    enableFinancialManagement) ||
+            (identical(
+                  other.enableFinancialManagement,
+                  enableFinancialManagement,
+                ) ||
                 other.enableFinancialManagement == enableFinancialManagement) &&
             (identical(
-                    other.enableAdvancedAnalytics, enableAdvancedAnalytics) ||
+                  other.enableAdvancedAnalytics,
+                  enableAdvancedAnalytics,
+                ) ||
                 other.enableAdvancedAnalytics == enableAdvancedAnalytics) &&
             (identical(other.allowParentAccess, allowParentAccess) ||
                 other.allowParentAccess == allowParentAccess) &&
-            (identical(other.allowPlayerSelfRegistration,
-                    allowPlayerSelfRegistration) ||
+            (identical(
+                  other.allowPlayerSelfRegistration,
+                  allowPlayerSelfRegistration,
+                ) ||
                 other.allowPlayerSelfRegistration ==
                     allowPlayerSelfRegistration) &&
             (identical(other.requireVOGForStaff, requireVOGForStaff) ||
@@ -1083,7 +1108,9 @@ class _$ClubSettingsImpl implements _ClubSettings {
             (identical(other.smsNotifications, smsNotifications) ||
                 other.smsNotifications == smsNotifications) &&
             (identical(
-                    other.defaultTrainingDuration, defaultTrainingDuration) ||
+                  other.defaultTrainingDuration,
+                  defaultTrainingDuration,
+                ) ||
                 other.defaultTrainingDuration == defaultTrainingDuration) &&
             (identical(other.defaultMatchDuration, defaultMatchDuration) ||
                 other.defaultMatchDuration == defaultMatchDuration) &&
@@ -1094,23 +1121,24 @@ class _$ClubSettingsImpl implements _ClubSettings {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      defaultLanguage,
-      currency,
-      timezone,
-      enablePlayerTracking,
-      enableCommunication,
-      enableFinancialManagement,
-      enableAdvancedAnalytics,
-      allowParentAccess,
-      allowPlayerSelfRegistration,
-      requireVOGForStaff,
-      emailNotifications,
-      pushNotifications,
-      smsNotifications,
-      defaultTrainingDuration,
-      defaultMatchDuration,
-      dataRetentionYears);
+    runtimeType,
+    defaultLanguage,
+    currency,
+    timezone,
+    enablePlayerTracking,
+    enableCommunication,
+    enableFinancialManagement,
+    enableAdvancedAnalytics,
+    allowParentAccess,
+    allowPlayerSelfRegistration,
+    requireVOGForStaff,
+    emailNotifications,
+    pushNotifications,
+    smsNotifications,
+    defaultTrainingDuration,
+    defaultMatchDuration,
+    dataRetentionYears,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -1120,30 +1148,29 @@ class _$ClubSettingsImpl implements _ClubSettings {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ClubSettingsImplToJson(
-      this,
-    );
+    return _$$ClubSettingsImplToJson(this);
   }
 }
 
 abstract class _ClubSettings implements ClubSettings {
-  const factory _ClubSettings(
-      {final String defaultLanguage,
-      final String currency,
-      final String timezone,
-      final bool enablePlayerTracking,
-      final bool enableCommunication,
-      final bool enableFinancialManagement,
-      final bool enableAdvancedAnalytics,
-      final bool allowParentAccess,
-      final bool allowPlayerSelfRegistration,
-      final bool requireVOGForStaff,
-      final bool emailNotifications,
-      final bool pushNotifications,
-      final bool smsNotifications,
-      final int defaultTrainingDuration,
-      final int defaultMatchDuration,
-      final int dataRetentionYears}) = _$ClubSettingsImpl;
+  const factory _ClubSettings({
+    final String defaultLanguage,
+    final String currency,
+    final String timezone,
+    final bool enablePlayerTracking,
+    final bool enableCommunication,
+    final bool enableFinancialManagement,
+    final bool enableAdvancedAnalytics,
+    final bool allowParentAccess,
+    final bool allowPlayerSelfRegistration,
+    final bool requireVOGForStaff,
+    final bool emailNotifications,
+    final bool pushNotifications,
+    final bool smsNotifications,
+    final int defaultTrainingDuration,
+    final int defaultMatchDuration,
+    final int dataRetentionYears,
+  }) = _$ClubSettingsImpl;
 
   factory _ClubSettings.fromJson(Map<String, dynamic> json) =
       _$ClubSettingsImpl.fromJson;

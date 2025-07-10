@@ -79,21 +79,14 @@ class SupabaseConfig {
     required String password,
     Map<String, dynamic>? data,
   }) async =>
-      _client!.auth.signUp(
-        email: email,
-        password: password,
-        data: data,
-      );
+      _client!.auth.signUp(email: email, password: password, data: data);
 
   /// Sign in user
   static Future<AuthResponse> signIn({
     required String email,
     required String password,
   }) async =>
-      _client!.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
+      _client!.auth.signInWithPassword(email: email, password: password);
 
   /// Sign out user
   static Future<void> signOut() async {
@@ -109,7 +102,9 @@ class SupabaseConfig {
   static Future<List<Map<String, dynamic>>> getUserOrganizations() async {
     if (!isAuthenticated) return [];
 
-    final response = await _client!.from('organization_members').select('''
+    final response = await _client!
+        .from('organization_members')
+        .select('''
           organization_id,
           role,
           organizations (
@@ -124,7 +119,8 @@ class SupabaseConfig {
             settings,
             branding
           )
-        ''').eq('user_id', currentUserId!);
+        ''')
+        .eq('user_id', currentUserId!);
 
     return List<Map<String, dynamic>>.from(response);
   }
@@ -192,15 +188,18 @@ class SupabaseConfig {
     required String status,
     DateTime? trialEndsAt,
   }) async {
-    await _client!.from('organizations').update({
-      'subscription_tier': tier,
-      'subscription_status': status,
-      'trial_ends_at': trialEndsAt?.toIso8601String(),
-      // Update limits based on tier
-      'max_players': _getMaxPlayers(tier),
-      'max_teams': _getMaxTeams(tier),
-      'max_coaches': _getMaxCoaches(tier),
-    }).eq('id', organizationId);
+    await _client!
+        .from('organizations')
+        .update({
+          'subscription_tier': tier,
+          'subscription_status': status,
+          'trial_ends_at': trialEndsAt?.toIso8601String(),
+          // Update limits based on tier
+          'max_players': _getMaxPlayers(tier),
+          'max_teams': _getMaxTeams(tier),
+          'max_coaches': _getMaxCoaches(tier),
+        })
+        .eq('id', organizationId);
   }
 
   /// Helper: Get max players for subscription tier
@@ -249,27 +248,25 @@ class SupabaseConfig {
   static Future<dynamic> rpc(
     String functionName, [
     Map<String, dynamic>? params,
-  ]) async =>
-      await _client!.rpc(functionName, params: params);
+  ]) async => await _client!.rpc(functionName, params: params);
 
   /// Realtime subscription for organization data
   static RealtimeChannel subscribeToOrganization(
     String organizationId,
     void Function(PostgresChangePayload) callback,
-  ) =>
-      _client!
-          .channel('organization_$organizationId')
-          .onPostgresChanges(
-            event: PostgresChangeEvent.all,
-            schema: 'public',
-            filter: PostgresChangeFilter(
-              type: PostgresChangeFilterType.eq,
-              column: 'organization_id',
-              value: organizationId,
-            ),
-            callback: callback,
-          )
-          .subscribe();
+  ) => _client!
+      .channel('organization_$organizationId')
+      .onPostgresChanges(
+        event: PostgresChangeEvent.all,
+        schema: 'public',
+        filter: PostgresChangeFilter(
+          type: PostgresChangeFilterType.eq,
+          column: 'organization_id',
+          value: organizationId,
+        ),
+        callback: callback,
+      )
+      .subscribe();
 }
 
 /// Extension for easier access to Supabase client

@@ -9,14 +9,15 @@ import '../../pdf/generators/training_session_pdf_generator.dart';
 
 final matchReportPdfGeneratorProvider =
     Provider.autoDispose<MatchReportPdfGenerator>(
-  (ref) => const MatchReportPdfGenerator(),
-);
+      (ref) => const MatchReportPdfGenerator(),
+    );
 
 final playerAssessmentPdfGeneratorProvider =
     Provider.autoDispose<PlayerAssessmentPdfGenerator>(
-  (ref) => const PlayerAssessmentPdfGenerator(),
-);
+      (ref) => const PlayerAssessmentPdfGenerator(),
+    );
 
-final trainingSessionPdfGeneratorProvider = Provider.autoDispose<TrainingSessionPdfGenerator>(
-  (ref) => const TrainingSessionPdfGenerator(),
-);
+final trainingSessionPdfGeneratorProvider =
+    Provider.autoDispose<TrainingSessionPdfGenerator>(
+      (ref) => const TrainingSessionPdfGenerator(),
+    );

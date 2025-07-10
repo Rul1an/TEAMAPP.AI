@@ -19,95 +19,89 @@ class FormationTemplateSelector extends StatefulWidget {
 class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
   @override
   Widget build(BuildContext context) => Dialog(
-        child: Container(
-          width: 600,
-          height: 500,
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    child: Container(
+      width: 600,
+      height: 500,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Icon(Icons.sports_soccer, color: Colors.green[700]),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Kies Opstelling',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
+              Icon(Icons.sports_soccer, color: Colors.green[700]),
+              const SizedBox(width: 8),
+              Text(
+                'Kies Opstelling',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                  ),
-                  itemCount: _formations.length,
-                  itemBuilder: (context, index) {
-                    final formation = _formations[index];
-                    return _buildFormationCard(formation);
-                  },
-                ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.pop(context),
               ),
             ],
           ),
-        ),
-      );
-
-  Widget _buildFormationCard(FormationData formation) => Card(
-        elevation: 2,
-        child: InkWell(
-          onTap: () => _selectFormation(formation),
-          borderRadius: BorderRadius.circular(8),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: [
-                Text(
-                  formation.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.green[50],
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: Colors.green[200]!),
-                    ),
-                    child: CustomPaint(
-                      painter: FormationPreviewPainter(formation.positions),
-                      size: Size.infinite,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  formation.description,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+          const SizedBox(height: 16),
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemCount: _formations.length,
+              itemBuilder: (context, index) {
+                final formation = _formations[index];
+                return _buildFormationCard(formation);
+              },
             ),
           ),
+        ],
+      ),
+    ),
+  );
+
+  Widget _buildFormationCard(FormationData formation) => Card(
+    elevation: 2,
+    child: InkWell(
+      onTap: () => _selectFormation(formation),
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            Text(
+              formation.name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.green[50],
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: Colors.green[200]!),
+                ),
+                child: CustomPaint(
+                  painter: FormationPreviewPainter(formation.positions),
+                  size: Size.infinite,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              formation.description,
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   void _selectFormation(FormationData formation) {
     final players = [
@@ -192,7 +186,7 @@ class FormationPreviewPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Draw field background
     final fieldPaint = Paint()
-      ..color = Colors.green[100]!
+      ..color = Colors.green[100]
       ..style = PaintingStyle.fill;
 
     final fieldRect = Rect.fromLTWH(0, 0, size.width, size.height);

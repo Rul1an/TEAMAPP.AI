@@ -22,9 +22,9 @@ class AcuteChronicChart extends StatelessWidget {
           children: [
             Text(
               'Acute:Chronic Workload Ratio',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
@@ -38,9 +38,7 @@ class AcuteChronicChart extends StatelessWidget {
                   ? const Center(child: Text('No data available'))
                   : LineChart(
                       LineChartData(
-                        gridData: const FlGridData(
-                          horizontalInterval: 0.2,
-                        ),
+                        gridData: const FlGridData(horizontalInterval: 0.2),
                         titlesData: FlTitlesData(
                           bottomTitles: AxisTitles(
                             sideTitles: SideTitles(
@@ -99,8 +97,10 @@ class AcuteChronicChart extends StatelessWidget {
                           LineChartBarData(
                             spots: [
                               for (int i = 0; i < morphocycles.length; i++)
-                                FlSpot(i.toDouble(),
-                                    morphocycles[i].acuteChronicRatio),
+                                FlSpot(
+                                  i.toDouble(),
+                                  morphocycles[i].acuteChronicRatio,
+                                ),
                             ],
                             isCurved: true,
                             color: Colors.orange,
@@ -109,11 +109,13 @@ class AcuteChronicChart extends StatelessWidget {
                             dotData: FlDotData(
                               getDotPainter: (spot, _, __, ___) =>
                                   FlDotCirclePainter(
-                                radius: 4,
-                                color: LoadMonitoringService.acrColor(spot.y),
-                                strokeWidth: 2,
-                                strokeColor: Colors.white,
-                              ),
+                                    radius: 4,
+                                    color: LoadMonitoringService.acrColor(
+                                      spot.y,
+                                    ),
+                                    strokeWidth: 2,
+                                    strokeColor: Colors.white,
+                                  ),
                             ),
                           ),
                         ],

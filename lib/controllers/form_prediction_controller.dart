@@ -3,14 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../repositories/prediction_repository.dart';
 import '../repositories/prediction_repository_stub.dart';
 import '../repositories/match_repository.dart';
-import '../providers/match_repository_provider.dart';
+import '../providers/matches_provider.dart';
 
-class FormPredictionController extends AsyncNotifier<FormTrend> {
-  FormPredictionController(this.teamId);
-  final String teamId;
-
+class FormPredictionController extends FamilyAsyncNotifier<FormTrend, String> {
   @override
-  Future<FormTrend> build() async {
+  Future<FormTrend> build(String teamId) async {
     final repo = PredictionRepositoryStub(
       matchRepository: ref.read(matchRepositoryProvider),
     );
@@ -21,5 +18,5 @@ class FormPredictionController extends AsyncNotifier<FormTrend> {
 
 final formPredictionProvider =
     AsyncNotifierProvider.family<FormPredictionController, FormTrend, String>(
-  (ref, teamId) => FormPredictionController(teamId),
-);
+      FormPredictionController.new,
+    );

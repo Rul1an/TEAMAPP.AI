@@ -15,7 +15,7 @@ import '../models/profile.dart';
 /// domain-specific failures and wrap results into [Result].
 class SupabaseProfileDataSource {
   SupabaseProfileDataSource({SupabaseClient? client})
-      : _supabase = client ?? _tryGetClient();
+    : _supabase = client ?? _tryGetClient();
 
   final SupabaseClient _supabase;
 

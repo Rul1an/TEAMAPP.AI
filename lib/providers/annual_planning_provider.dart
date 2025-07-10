@@ -39,19 +39,18 @@ class AnnualPlanningState {
     PeriodizationPlan? selectedPeriodizationPlan,
     List<TrainingPeriod>? trainingPeriods,
     List<Morphocycle>? morphocycles,
-  }) =>
-      AnnualPlanningState(
-        weekSchedules: weekSchedules ?? this.weekSchedules,
-        selectedWeek: selectedWeek ?? this.selectedWeek,
-        seasonStartDate: seasonStartDate ?? this.seasonStartDate,
-        seasonEndDate: seasonEndDate ?? this.seasonEndDate,
-        isLoading: isLoading ?? this.isLoading,
-        error: error ?? this.error,
-        selectedPeriodizationPlan:
-            selectedPeriodizationPlan ?? this.selectedPeriodizationPlan,
-        trainingPeriods: trainingPeriods ?? this.trainingPeriods,
-        morphocycles: morphocycles ?? this.morphocycles,
-      );
+  }) => AnnualPlanningState(
+    weekSchedules: weekSchedules ?? this.weekSchedules,
+    selectedWeek: selectedWeek ?? this.selectedWeek,
+    seasonStartDate: seasonStartDate ?? this.seasonStartDate,
+    seasonEndDate: seasonEndDate ?? this.seasonEndDate,
+    isLoading: isLoading ?? this.isLoading,
+    error: error ?? this.error,
+    selectedPeriodizationPlan:
+        selectedPeriodizationPlan ?? this.selectedPeriodizationPlan,
+    trainingPeriods: trainingPeriods ?? this.trainingPeriods,
+    morphocycles: morphocycles ?? this.morphocycles,
+  );
 
   int get currentWeekNumber {
     final now = DateTime.now();
@@ -387,8 +386,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     for (var week = 1; week <= totalWeeks; week++) {
       final weekStart = startDate.add(Duration(days: (week - 1) * 7));
       final currentPeriod = _findPeriodForWeek(week);
-      schedules
-          .add(_createWeekScheduleWithPeriod(week, weekStart, currentPeriod));
+      schedules.add(
+        _createWeekScheduleWithPeriod(week, weekStart, currentPeriod),
+      );
     }
 
     state = state.copyWith(weekSchedules: schedules);
@@ -431,8 +431,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
 
     if (morphocycle != null) {
       // Create training sessions based on morphocycle structure
-      trainingSessions
-          .addAll(_createMorphocycleTrainingSessions(weekStart, morphocycle));
+      trainingSessions.addAll(
+        _createMorphocycleTrainingSessions(weekStart, morphocycle),
+      );
     } else {
       // Fallback to period-based training generation
       final trainingTypes = _getTrainingTypesForPeriod(period);
@@ -441,8 +442,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       final tuesday = weekStart.add(const Duration(days: 1));
       trainingSessions.add(
         WeeklyTraining(
-          name:
-              trainingTypes.isNotEmpty ? trainingTypes[0] : 'Algemene Training',
+          name: trainingTypes.isNotEmpty
+              ? trainingTypes[0]
+              : 'Algemene Training',
           dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
           location: _getTrainingLocation(weekNumber),
           notes: _getTrainingNotesWithPeriod(weekNumber, period),
@@ -453,10 +455,16 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       final thursday = weekStart.add(const Duration(days: 3));
       trainingSessions.add(
         WeeklyTraining(
-          name:
-              trainingTypes.length > 1 ? trainingTypes[1] : 'Algemene Training',
-          dateTime:
-              DateTime(thursday.year, thursday.month, thursday.day, 19, 30),
+          name: trainingTypes.length > 1
+              ? trainingTypes[1]
+              : 'Algemene Training',
+          dateTime: DateTime(
+            thursday.year,
+            thursday.month,
+            thursday.day,
+            19,
+            30,
+          ),
           location: _getTrainingLocation(weekNumber),
         ),
       );
@@ -471,8 +479,13 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       matches.add(
         WeeklyMatch(
           opponent: _getOpponent(weekNumber),
-          dateTime:
-              DateTime(saturday.year, saturday.month, saturday.day, 14, 30),
+          dateTime: DateTime(
+            saturday.year,
+            saturday.month,
+            saturday.day,
+            14,
+            30,
+          ),
           location: weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
           isHomeMatch: weekNumber.isEven,
           type: _getMatchType(weekNumber),
@@ -638,10 +651,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       schedules.add(_createWeekSchedule(week, weekStart));
     }
 
-    state = state.copyWith(
-      weekSchedules: schedules,
-      isLoading: false,
-    );
+    state = state.copyWith(weekSchedules: schedules, isLoading: false);
   }
 
   WeekSchedule _createWeekSchedule(int weekNumber, DateTime weekStart) {
@@ -684,8 +694,13 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       matches.add(
         WeeklyMatch(
           opponent: _getOpponent(weekNumber),
-          dateTime:
-              DateTime(saturday.year, saturday.month, saturday.day, 14, 30),
+          dateTime: DateTime(
+            saturday.year,
+            saturday.month,
+            saturday.day,
+            14,
+            30,
+          ),
           location: weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
           isHomeMatch: weekNumber.isEven,
           type: _getMatchType(weekNumber),
@@ -846,5 +861,5 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
 
 final annualPlanningProvider =
     StateNotifierProvider<AnnualPlanningNotifier, AnnualPlanningState>(
-  (ref) => AnnualPlanningNotifier(),
-);
+      (ref) => AnnualPlanningNotifier(),
+    );

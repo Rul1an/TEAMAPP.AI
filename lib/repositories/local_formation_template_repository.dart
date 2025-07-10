@@ -6,7 +6,7 @@ import 'formation_template_repository.dart';
 
 class LocalFormationTemplateRepository implements FormationTemplateRepository {
   LocalFormationTemplateRepository({HiveFormationTemplateCache? cache})
-      : _cache = cache ?? HiveFormationTemplateCache();
+    : _cache = cache ?? HiveFormationTemplateCache();
 
   final HiveFormationTemplateCache _cache;
 

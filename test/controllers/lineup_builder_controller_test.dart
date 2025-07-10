@@ -21,12 +21,15 @@ void main() {
     late ProviderContainer container;
 
     setUp(() {
-      container = ProviderContainer(overrides: [
-        formationTemplateRepositoryProvider
-            .overrideWithValue(_FakeFormationTemplateRepository()),
-        matchRepositoryProvider.overrideWithValue(_FakeMatchRepository()),
-        playerRepositoryProvider.overrideWithValue(_FakePlayerRepository()),
-      ]);
+      container = ProviderContainer(
+        overrides: [
+          formationTemplateRepositoryProvider.overrideWithValue(
+            _FakeFormationTemplateRepository(),
+          ),
+          matchRepositoryProvider.overrideWithValue(_FakeMatchRepository()),
+          playerRepositoryProvider.overrideWithValue(_FakePlayerRepository()),
+        ],
+      );
     });
 
     tearDown(() => container.dispose());

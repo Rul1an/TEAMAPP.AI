@@ -2,7 +2,6 @@
 import 'package:intl/intl.dart';
 
 // Model imports:
-import '../../models/training.dart';
 
 /// Validates training duration input (String minutes).
 /// Returns error message in Dutch when out of range, otherwise null.

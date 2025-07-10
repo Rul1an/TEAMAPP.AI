@@ -66,9 +66,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Seizoen Overzicht',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
+                          style: Theme.of(context).textTheme.titleMedium
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -99,7 +97,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.green[600]!, Colors.green[400]!],
+                      colors: [Colors.green[600], Colors.green[400]],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -158,9 +156,9 @@ class AnnualPlanningScreen extends ConsumerWidget {
             // Quick Actions Section
             Text(
               '⚡ Snelle Acties',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
 
@@ -282,8 +280,9 @@ class AnnualPlanningScreen extends ConsumerWidget {
                           ),
                           trailing: Chip(
                             label: Text(season.getCurrentPhase().displayName),
-                            backgroundColor:
-                                _getPhaseColor(season.getCurrentPhase()),
+                            backgroundColor: _getPhaseColor(
+                              season.getCurrentPhase(),
+                            ),
                           ),
                         ),
                       ),
@@ -396,9 +395,7 @@ class AnnualPlanningScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Planning Tips',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
+                          style: Theme.of(context).textTheme.titleMedium
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                               ),

@@ -141,8 +141,10 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
                           onPressed: () => widget.onExerciseRemoved(exercise),
                         )
                       : IconButton(
-                          icon:
-                              const Icon(Icons.add_circle, color: Colors.green),
+                          icon: const Icon(
+                            Icons.add_circle,
+                            color: Colors.green,
+                          ),
                           onPressed: () => widget.onExerciseSelected(exercise),
                         ),
                   onTap: () => _showExercisePreview(exercise),
@@ -155,27 +157,26 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
     );
   }
 
-  List<TrainingExercise> _filterExercises() =>
-      widget.availableExercises.where((exercise) {
-        // Search filter
-        if (searchQuery.isNotEmpty) {
-          if (!exercise.name
-                  .toLowerCase()
-                  .contains(searchQuery.toLowerCase()) &&
-              !exercise.description
-                  .toLowerCase()
-                  .contains(searchQuery.toLowerCase())) {
-            return false;
-          }
-        }
+  List<TrainingExercise> _filterExercises() => widget.availableExercises.where((
+    exercise,
+  ) {
+    // Search filter
+    if (searchQuery.isNotEmpty) {
+      if (!exercise.name.toLowerCase().contains(searchQuery.toLowerCase()) &&
+          !exercise.description.toLowerCase().contains(
+            searchQuery.toLowerCase(),
+          )) {
+        return false;
+      }
+    }
 
-        // Type filter
-        if (selectedType != null && exercise.type != selectedType) {
-          return false;
-        }
+    // Type filter
+    if (selectedType != null && exercise.type != selectedType) {
+      return false;
+    }
 
-        return true;
-      }).toList();
+    return true;
+  }).toList();
 
   String _getTypeDisplayName(ExerciseType type) {
     switch (type) {

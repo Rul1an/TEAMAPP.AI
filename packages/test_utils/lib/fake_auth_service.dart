@@ -28,16 +28,17 @@ class FakeAuthService implements AuthService {
       throw UnimplementedError();
 
   @override
-  Future<AuthResponse> signInWithPassword(
-          {required String email, required String password}) =>
-      throw UnimplementedError();
+  Future<AuthResponse> signInWithPassword({
+    required String email,
+    required String password,
+  }) => throw UnimplementedError();
 
   @override
-  Future<AuthResponse> signUp(
-          {required String email,
-          required String password,
-          Map<String, dynamic>? metadata}) =>
-      throw UnimplementedError();
+  Future<AuthResponse> signUp({
+    required String email,
+    required String password,
+    Map<String, dynamic>? metadata,
+  }) => throw UnimplementedError();
 
   @override
   Future<void> signOut() async => throw UnimplementedError();

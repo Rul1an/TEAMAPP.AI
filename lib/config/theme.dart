@@ -33,125 +33,103 @@ class AppTheme {
   static const Color adminColor = Color(0xFFD32F2F); // Red
 
   static ThemeData get lightTheme => ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: primaryColor,
-          primary: primaryColor,
-          secondary: secondaryColor,
-          error: errorColor,
-          surface: surfaceColor,
-        ),
-        textTheme: GoogleFonts.interTextTheme().copyWith(
-          headlineLarge: GoogleFonts.inter(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: textPrimaryColor,
-          ),
-          headlineMedium: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            color: textPrimaryColor,
-          ),
-          headlineSmall: GoogleFonts.inter(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: textPrimaryColor,
-          ),
-          titleLarge: GoogleFonts.inter(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: textPrimaryColor,
-          ),
-          titleMedium: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: textPrimaryColor,
-          ),
-          titleSmall: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: textPrimaryColor,
-          ),
-          bodyLarge: GoogleFonts.inter(
-            fontSize: 16,
-            color: textPrimaryColor,
-          ),
-          bodyMedium: GoogleFonts.inter(
-            fontSize: 14,
-            color: textPrimaryColor,
-          ),
-          bodySmall: GoogleFonts.inter(
-            fontSize: 12,
-            color: textSecondaryColor,
-          ),
-        ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: surfaceColor,
-          elevation: 0,
-          centerTitle: true,
-          iconTheme: const IconThemeData(color: textPrimaryColor),
-          titleTextStyle: GoogleFonts.inter(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: textPrimaryColor,
-          ),
-        ),
-        cardTheme: CardThemeData(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          color: surfaceColor,
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: primaryColor,
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            textStyle: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: backgroundColor,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: primaryColor, width: 2),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: errorColor),
-          ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        ),
-        chipTheme: ChipThemeData(
-          backgroundColor: backgroundColor,
-          selectedColor: primaryColor.withValues(alpha: 0.2),
-          labelStyle: GoogleFonts.inter(
-            fontSize: 14,
-            color: textPrimaryColor,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
-      );
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: primaryColor,
+      primary: primaryColor,
+      secondary: secondaryColor,
+      error: errorColor,
+      surface: surfaceColor,
+    ),
+    textTheme: GoogleFonts.interTextTheme().copyWith(
+      headlineLarge: GoogleFonts.inter(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        color: textPrimaryColor,
+      ),
+      headlineMedium: GoogleFonts.inter(
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      headlineSmall: GoogleFonts.inter(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      titleLarge: GoogleFonts.inter(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      titleMedium: GoogleFonts.inter(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: textPrimaryColor,
+      ),
+      titleSmall: GoogleFonts.inter(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: textPrimaryColor,
+      ),
+      bodyLarge: GoogleFonts.inter(fontSize: 16, color: textPrimaryColor),
+      bodyMedium: GoogleFonts.inter(fontSize: 14, color: textPrimaryColor),
+      bodySmall: GoogleFonts.inter(fontSize: 12, color: textSecondaryColor),
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: surfaceColor,
+      elevation: 0,
+      centerTitle: true,
+      iconTheme: const IconThemeData(color: textPrimaryColor),
+      titleTextStyle: GoogleFonts.inter(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+    ),
+    cardTheme: CardThemeData(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: surfaceColor,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: primaryColor,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        textStyle: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: backgroundColor,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(color: primaryColor, width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(color: errorColor),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: backgroundColor,
+      selectedColor: primaryColor.withValues(alpha: 0.2),
+      labelStyle: GoogleFonts.inter(fontSize: 14, color: textPrimaryColor),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
+  );
 
   static ThemeData get darkTheme =>
       lightTheme; // TODO(author): Implement dark theme
@@ -190,15 +168,15 @@ class AppTheme {
   }
 
   static BoxDecoration getTierBadgeDecoration(String tier) => BoxDecoration(
-        color: getTierColor(tier),
-        borderRadius: BorderRadius.circular(12),
-      );
+    color: getTierColor(tier),
+    borderRadius: BorderRadius.circular(12),
+  );
 
   static Color getAdminColor() => adminColor;
 
   static TextStyle get tierBadgeTextStyle => const TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-        fontSize: 12,
-      );
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontSize: 12,
+  );
 }

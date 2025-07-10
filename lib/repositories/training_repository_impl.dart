@@ -12,8 +12,8 @@ class TrainingRepositoryImpl implements TrainingRepository {
   TrainingRepositoryImpl({
     required SupabaseTrainingDataSource remote,
     required HiveTrainingCache cache,
-  })  : _remote = remote,
-        _cache = cache;
+  }) : _remote = remote,
+       _cache = cache;
 
   final SupabaseTrainingDataSource _remote;
   final HiveTrainingCache _cache;
@@ -104,9 +104,8 @@ class TrainingRepositoryImpl implements TrainingRepository {
     final now = DateTime.now();
     final res = await getAll();
     return res.when(
-      success: (list) => Success(
-        list.where((t) => t.date.isAfter(now)).toList(),
-      ),
+      success: (list) =>
+          Success(list.where((t) => t.date.isAfter(now)).toList()),
       failure: Failure.new,
     );
   }

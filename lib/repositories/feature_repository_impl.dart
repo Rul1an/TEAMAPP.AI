@@ -12,8 +12,8 @@ class FeatureRepositoryImpl implements FeatureRepository {
   FeatureRepositoryImpl({
     required SupabaseFeatureDataSource remote,
     required HiveFeatureCache cache,
-  })  : _remote = remote,
-        _cache = cache;
+  }) : _remote = remote,
+       _cache = cache;
 
   final SupabaseFeatureDataSource _remote;
   final HiveFeatureCache _cache;

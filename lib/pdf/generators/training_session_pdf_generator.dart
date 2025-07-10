@@ -21,9 +21,7 @@ class TrainingSessionPdfGenerator
   const TrainingSessionPdfGenerator();
 
   @override
-  Future<Uint8List> generate(
-    (TrainingSession, List<Player>) input,
-  ) async {
+  Future<Uint8List> generate((TrainingSession, List<Player>) input) async {
     final (session, players) = input;
 
     final pdf = pw.Document();
@@ -120,10 +118,7 @@ class TrainingSessionPdfGenerator
           pw.SizedBox(height: 12),
           pw.Text(
             '${DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(session.date)} | ${session.sessionDuration.inMinutes} minuten',
-            style: const pw.TextStyle(
-              fontSize: 14,
-              color: PdfColors.white,
-            ),
+            style: const pw.TextStyle(fontSize: 14, color: PdfColors.white),
           ),
         ],
       ),
@@ -176,10 +171,7 @@ class TrainingSessionPdfGenerator
                       session.trainingNumber.toString(),
                     ),
                     pw.SizedBox(height: 6),
-                    _buildInfoRow(
-                      'Type:',
-                      _getTrainingTypeText(session.type),
-                    ),
+                    _buildInfoRow('Type:', _getTrainingTypeText(session.type)),
                   ],
                 ),
               ),
@@ -481,10 +473,7 @@ class TrainingSessionPdfGenerator
     );
   }
 
-  pw.Widget _buildTrainingFooter(
-    TrainingSession session,
-    PdfColor greyColor,
-  ) {
+  pw.Widget _buildTrainingFooter(TrainingSession session, PdfColor greyColor) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(12),
       decoration: pw.BoxDecoration(
@@ -524,31 +513,31 @@ class TrainingSessionPdfGenerator
   // ---------------------------------------------------------------------------
 
   pw.Widget _buildInfoRow(String label, String value) => pw.Row(
-        children: [
-          pw.SizedBox(
-            width: 60,
-            child: pw.Text(
-              label,
-              style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
-            ),
-          ),
-          pw.Expanded(
-            child: pw.Text(value, style: const pw.TextStyle(fontSize: 10)),
-          ),
-        ],
-      );
+    children: [
+      pw.SizedBox(
+        width: 60,
+        child: pw.Text(
+          label,
+          style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+        ),
+      ),
+      pw.Expanded(
+        child: pw.Text(value, style: const pw.TextStyle(fontSize: 10)),
+      ),
+    ],
+  );
 
   pw.Widget _buildObjectiveItem(String label, String content) => pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text(
-            label,
-            style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
-          ),
-          pw.SizedBox(height: 3),
-          pw.Text(content, style: const pw.TextStyle(fontSize: 10)),
-        ],
-      );
+    crossAxisAlignment: pw.CrossAxisAlignment.start,
+    children: [
+      pw.Text(
+        label,
+        style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+      ),
+      pw.SizedBox(height: 3),
+      pw.Text(content, style: const pw.TextStyle(fontSize: 10)),
+    ],
+  );
 
   String _getTrainingTypeText(TrainingType type) {
     switch (type) {

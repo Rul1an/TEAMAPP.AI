@@ -12,10 +12,7 @@ import '../../models/player.dart';
 import '../../providers/players_provider.dart';
 
 class EditPlayerScreen extends ConsumerStatefulWidget {
-  const EditPlayerScreen({
-    required this.playerId,
-    super.key,
-  });
+  const EditPlayerScreen({required this.playerId, super.key});
   final String playerId;
 
   @override
@@ -188,8 +185,10 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                               ),
                               child: Text(
                                 _selectedDate != null
-                                    ? DateFormat('d MMMM yyyy', 'nl_NL')
-                                        .format(_selectedDate!)
+                                    ? DateFormat(
+                                        'd MMMM yyyy',
+                                        'nl_NL',
+                                      ).format(_selectedDate!)
                                     : 'Selecteer datum',
                               ),
                             ),
@@ -253,8 +252,9 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
                                       .map(
                                         (position) => DropdownMenuItem(
                                           value: position,
-                                          child:
-                                              Text(_getPositionText(position)),
+                                          child: Text(
+                                            _getPositionText(position),
+                                          ),
                                         ),
                                       )
                                       .toList(),
@@ -406,7 +406,8 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
   Future<void> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
-      initialDate: _selectedDate ??
+      initialDate:
+          _selectedDate ??
           DateTime.now().subtract(const Duration(days: 365 * 16)),
       firstDate: DateTime(1990),
       lastDate: DateTime.now(),
@@ -446,8 +447,9 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
       _player!.preferredFoot = _selectedFoot!;
       _player!.height = double.parse(_heightController.text);
       _player!.weight = double.parse(_weightController.text);
-      _player!.email =
-          _emailController.text.isEmpty ? null : _emailController.text;
+      _player!.email = _emailController.text.isEmpty
+          ? null
+          : _emailController.text;
 
       await ref.read(playersNotifierProvider.notifier).updatePlayer(_player!);
 
@@ -483,8 +485,9 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Speler verwijderen'),
-        content:
-            Text('Weet je zeker dat je ${_player!.name} wilt verwijderen?'),
+        content: Text(
+          'Weet je zeker dat je ${_player!.name} wilt verwijderen?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

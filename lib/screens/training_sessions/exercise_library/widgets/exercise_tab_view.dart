@@ -28,8 +28,9 @@ class ExerciseTabView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final exercises =
-        ref.watch(exerciseLibraryControllerProvider).filteredExercises;
+    final exercises = ref
+        .watch(exerciseLibraryControllerProvider)
+        .filteredExercises;
 
     return TabBarView(
       controller: tabController,
@@ -59,8 +60,9 @@ class ExerciseTabView extends ConsumerWidget {
       'Development (5–7)': exercises
           .where((e) => e.primaryIntensity >= 5 && e.primaryIntensity <= 7)
           .toList(),
-      'Acquisition (≥8)':
-          exercises.where((e) => e.primaryIntensity >= 8).toList(),
+      'Acquisition (≥8)': exercises
+          .where((e) => e.primaryIntensity >= 8)
+          .toList(),
     };
 
     return _buildGroupedList(context, groups);
@@ -97,8 +99,9 @@ class ExerciseTabView extends ConsumerWidget {
   ) {
     final groups = <String, List<TrainingExercise>>{};
     for (final focus in TacticalFocus.values) {
-      groups[focus.displayName] =
-          exercises.where((e) => e.tacticalFocus == focus).toList();
+      groups[focus.displayName] = exercises
+          .where((e) => e.tacticalFocus == focus)
+          .toList();
     }
     return _buildGroupedList(context, groups);
   }
@@ -119,10 +122,9 @@ class ExerciseTabView extends ConsumerWidget {
           children: [
             Text(
               entry.key,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             _buildExerciseList(context, entry.value),

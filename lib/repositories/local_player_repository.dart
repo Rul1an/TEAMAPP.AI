@@ -9,48 +9,46 @@ import 'player_repository.dart';
 /// new repository abstraction.
 class LocalPlayerRepository implements PlayerRepository {
   LocalPlayerRepository({LocalStore<List<Player>>? store})
-      : _store = store ?? _defaultStore();
+    : _store = store ?? _defaultStore();
 
   final LocalStore<List<Player>> _store;
 
   static LocalStore<List<Player>> _defaultStore() => LocalStore<List<Player>>(
-        boxName: 'player_box',
-        valueKey: 'players_json',
-        fromJson: (map) => (map['players'] as List<dynamic>? ?? [])
-            .cast<Map<String, dynamic>>()
-            .map(_fromPlayerJson)
-            .toList(),
-        toJson: (list) => {
-          'players': list.map(_toPlayerJson).toList(),
-        },
-      );
+    boxName: 'player_box',
+    valueKey: 'players_json',
+    fromJson: (map) => (map['players'] as List<dynamic>? ?? [])
+        .cast<Map<String, dynamic>>()
+        .map(_fromPlayerJson)
+        .toList(),
+    toJson: (list) => {'players': list.map(_toPlayerJson).toList()},
+  );
 
   // Player <-> JSON ------------------------------------------------------
   static Map<String, dynamic> _toPlayerJson(Player p) => {
-        'id': p.id,
-        'firstName': p.firstName,
-        'lastName': p.lastName,
-        'jerseyNumber': p.jerseyNumber,
-        'birthDate': p.birthDate.toIso8601String(),
-        'position': p.position.name,
-        'preferredFoot': p.preferredFoot.name,
-        'height': p.height,
-        'weight': p.weight,
-        'phoneNumber': p.phoneNumber,
-        'email': p.email,
-        'parentContact': p.parentContact,
-        'matchesPlayed': p.matchesPlayed,
-        'matchesInSelection': p.matchesInSelection,
-        'minutesPlayed': p.minutesPlayed,
-        'goals': p.goals,
-        'assists': p.assists,
-        'yellowCards': p.yellowCards,
-        'redCards': p.redCards,
-        'trainingsAttended': p.trainingsAttended,
-        'trainingsTotal': p.trainingsTotal,
-        'createdAt': p.createdAt.toIso8601String(),
-        'updatedAt': p.updatedAt.toIso8601String(),
-      };
+    'id': p.id,
+    'firstName': p.firstName,
+    'lastName': p.lastName,
+    'jerseyNumber': p.jerseyNumber,
+    'birthDate': p.birthDate.toIso8601String(),
+    'position': p.position.name,
+    'preferredFoot': p.preferredFoot.name,
+    'height': p.height,
+    'weight': p.weight,
+    'phoneNumber': p.phoneNumber,
+    'email': p.email,
+    'parentContact': p.parentContact,
+    'matchesPlayed': p.matchesPlayed,
+    'matchesInSelection': p.matchesInSelection,
+    'minutesPlayed': p.minutesPlayed,
+    'goals': p.goals,
+    'assists': p.assists,
+    'yellowCards': p.yellowCards,
+    'redCards': p.redCards,
+    'trainingsAttended': p.trainingsAttended,
+    'trainingsTotal': p.trainingsTotal,
+    'createdAt': p.createdAt.toIso8601String(),
+    'updatedAt': p.updatedAt.toIso8601String(),
+  };
 
   static Player _fromPlayerJson(Map<String, dynamic> map) {
     final p = Player()
@@ -59,10 +57,12 @@ class LocalPlayerRepository implements PlayerRepository {
       ..lastName = map['lastName'] as String? ?? ''
       ..jerseyNumber = map['jerseyNumber'] as int? ?? 0
       ..birthDate = DateTime.parse(map['birthDate'] as String)
-      ..position = Position.values
-          .firstWhere((e) => e.name == (map['position'] as String))
-      ..preferredFoot = PreferredFoot.values
-          .firstWhere((e) => e.name == (map['preferredFoot'] as String))
+      ..position = Position.values.firstWhere(
+        (e) => e.name == (map['position'] as String),
+      )
+      ..preferredFoot = PreferredFoot.values.firstWhere(
+        (e) => e.name == (map['preferredFoot'] as String),
+      )
       ..height = (map['height'] as num?)?.toDouble() ?? 0
       ..weight = (map['weight'] as num?)?.toDouble() ?? 0
       ..phoneNumber = map['phoneNumber'] as String?

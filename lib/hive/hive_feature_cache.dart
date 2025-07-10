@@ -3,12 +3,12 @@ import 'base_hive_cache.dart';
 
 class HiveFeatureCache {
   HiveFeatureCache()
-      : _cache = BaseHiveCache<Map<String, bool>>(
-          boxName: _box,
-          valueKey: _key,
-          fromJson: (map) => (map['features'] as Map).cast<String, bool>(),
-          toJson: (value) => {'features': value},
-        );
+    : _cache = BaseHiveCache<Map<String, bool>>(
+        boxName: _box,
+        valueKey: _key,
+        fromJson: (map) => (map['features'] as Map).cast<String, bool>(),
+        toJson: (value) => {'features': value},
+      );
   static const _box = 'feature_box';
   static const _key = 'feature_json';
 

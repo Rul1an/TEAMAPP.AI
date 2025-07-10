@@ -11,7 +11,7 @@ import '../models/player.dart';
 /// unified error handling.
 class SupabasePlayerDataSource {
   SupabasePlayerDataSource({SupabaseClient? client})
-      : _supabase = client ?? _tryGetClient();
+    : _supabase = client ?? _tryGetClient();
 
   final SupabaseClient _supabase;
 
@@ -28,8 +28,11 @@ class SupabasePlayerDataSource {
   }
 
   Future<Player?> fetchById(String id) async {
-    final data =
-        await _supabase.from(_table).select().eq('id', id).maybeSingle();
+    final data = await _supabase
+        .from(_table)
+        .select()
+        .eq('id', id)
+        .maybeSingle();
     return data == null ? null : _fromRow(data);
   }
 
@@ -51,9 +54,7 @@ class SupabasePlayerDataSource {
   Stream<List<Player>> subscribe() {
     return _supabase
         .from(_table)
-        .stream(
-          primaryKey: ['id'],
-        )
+        .stream(primaryKey: ['id'])
         .map(_rowsToPlayers)
         .distinct(_listEquals);
   }
@@ -117,30 +118,30 @@ class SupabasePlayerDataSource {
   }
 
   static Map<String, dynamic> _toRow(Player p) => <String, dynamic>{
-        'id': p.id,
-        'first_name': p.firstName,
-        'last_name': p.lastName,
-        'jersey_number': p.jerseyNumber,
-        'birth_date': p.birthDate.toIso8601String(),
-        'position': p.position.name,
-        'preferred_foot': p.preferredFoot.name,
-        'height_cm': p.height,
-        'weight_kg': p.weight,
-        'phone': p.phoneNumber,
-        'email': p.email,
-        'parent_contact': p.parentContact,
-        'matches_played': p.matchesPlayed,
-        'matches_in_selection': p.matchesInSelection,
-        'minutes_played': p.minutesPlayed,
-        'goals': p.goals,
-        'assists': p.assists,
-        'yellow_cards': p.yellowCards,
-        'red_cards': p.redCards,
-        'trainings_attended': p.trainingsAttended,
-        'trainings_total': p.trainingsTotal,
-        'created_at': p.createdAt.toIso8601String(),
-        'updated_at': DateTime.now().toIso8601String(),
-      }..removeWhere((_, v) => v == null);
+    'id': p.id,
+    'first_name': p.firstName,
+    'last_name': p.lastName,
+    'jersey_number': p.jerseyNumber,
+    'birth_date': p.birthDate.toIso8601String(),
+    'position': p.position.name,
+    'preferred_foot': p.preferredFoot.name,
+    'height_cm': p.height,
+    'weight_kg': p.weight,
+    'phone': p.phoneNumber,
+    'email': p.email,
+    'parent_contact': p.parentContact,
+    'matches_played': p.matchesPlayed,
+    'matches_in_selection': p.matchesInSelection,
+    'minutes_played': p.minutesPlayed,
+    'goals': p.goals,
+    'assists': p.assists,
+    'yellow_cards': p.yellowCards,
+    'red_cards': p.redCards,
+    'trainings_attended': p.trainingsAttended,
+    'trainings_total': p.trainingsTotal,
+    'created_at': p.createdAt.toIso8601String(),
+    'updated_at': DateTime.now().toIso8601String(),
+  }..removeWhere((_, v) => v == null);
 
   static bool _listEquals(List<Player> a, List<Player> b) {
     if (a.length != b.length) return false;

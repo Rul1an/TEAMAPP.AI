@@ -5,12 +5,12 @@ import 'base_hive_cache.dart';
 /// Offline Hive cache for [TrainingSession] lists.
 class HiveTrainingSessionCache {
   HiveTrainingSessionCache()
-      : _cache = BaseHiveCache<List<TrainingSession>>(
-          boxName: _box,
-          valueKey: _key,
-          fromJson: _fromJson,
-          toJson: _toJson,
-        );
+    : _cache = BaseHiveCache<List<TrainingSession>>(
+        boxName: _box,
+        valueKey: _key,
+        fromJson: _fromJson,
+        toJson: _toJson,
+      );
 
   static const _box = 'training_sessions_box';
   static const _key = 'training_sessions_json';
@@ -23,12 +23,12 @@ class HiveTrainingSessionCache {
 
   // JSON helpers
   static List<TrainingSession> _fromJson(Map<String, dynamic> map) {
-    final raw =
-        (map['sessions'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
+    final raw = (map['sessions'] as List<dynamic>? ?? [])
+        .cast<Map<String, dynamic>>();
     return raw.map(TrainingSession.fromJson).toList();
   }
 
   static Map<String, dynamic> _toJson(List<TrainingSession> list) => {
-        'sessions': list.map((s) => s.toJson()).toList(),
-      };
+    'sessions': list.map((s) => s.toJson()).toList(),
+  };
 }

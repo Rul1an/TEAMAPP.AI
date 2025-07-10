@@ -53,10 +53,12 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            trainings_providers.trainingsProvider
-                .overrideWith((ref) async => [training]),
-            players_providers.playersProvider
-                .overrideWith((ref) async => [player]),
+            trainings_providers.trainingsProvider.overrideWith(
+              (ref) async => [training],
+            ),
+            players_providers.playersProvider.overrideWith(
+              (ref) async => [player],
+            ),
           ],
           child: const MaterialApp(
             home: TrainingAttendanceScreen(trainingId: 't99'),

@@ -11,15 +11,9 @@ class PdfTheme {
   static const PdfColor grey = PdfColor.fromInt(0xFF757575);
 
   // Text styles (will be completed by generators when fonts loaded)
-  static pw.TextStyle header(pw.Font bold) => pw.TextStyle(
-        font: bold,
-        fontSize: 18,
-        color: PdfColors.white,
-      );
+  static pw.TextStyle header(pw.Font bold) =>
+      pw.TextStyle(font: bold, fontSize: 18, color: PdfColors.white);
 
-  static pw.TextStyle body(pw.Font regular) => pw.TextStyle(
-        font: regular,
-        fontSize: 10,
-        color: PdfColors.black,
-      );
+  static pw.TextStyle body(pw.Font regular) =>
+      pw.TextStyle(font: regular, fontSize: 10, color: PdfColors.black);
 }

@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthService {
   /// Allow dependency injection for testing by passing a custom [SupabaseClient].
   AuthService({SupabaseClient? client})
-      : _supabase = client ?? Supabase.instance.client;
+    : _supabase = client ?? Supabase.instance.client;
 
   final SupabaseClient _supabase;
 
@@ -76,9 +76,7 @@ class AuthService {
   // Update user metadata
   Future<UserResponse> updateUserMetadata(Map<String, dynamic> metadata) async {
     try {
-      return await _supabase.auth.updateUser(
-        UserAttributes(data: metadata),
-      );
+      return await _supabase.auth.updateUser(UserAttributes(data: metadata));
     } catch (e) {
       throw AuthException('Failed to update user: $e');
     }

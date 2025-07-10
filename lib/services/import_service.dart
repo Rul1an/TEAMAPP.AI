@@ -39,10 +39,7 @@ class ImportService {
       final bytes = file.bytes;
 
       if (bytes == null) {
-        return ImportResult(
-          success: false,
-          message: 'Kon bestand niet lezen',
-        );
+        return ImportResult(success: false, message: 'Kon bestand niet lezen');
       }
 
       // Process based on file type
@@ -52,10 +49,7 @@ class ImportService {
         return await _importPlayersFromExcel(bytes);
       }
     } catch (e) {
-      return ImportResult(
-        success: false,
-        message: 'Fout bij importeren: $e',
-      );
+      return ImportResult(success: false, message: 'Fout bij importeren: $e');
     }
   }
 
@@ -65,10 +59,7 @@ class ImportService {
       final rows = const CsvToListConverter().convert(csvString);
 
       if (rows.isEmpty) {
-        return ImportResult(
-          success: false,
-          message: 'CSV bestand is leeg',
-        );
+        return ImportResult(success: false, message: 'CSV bestand is leeg');
       }
 
       // Skip header row
@@ -91,10 +82,7 @@ class ImportService {
       final rows = sheet.rows;
 
       if (rows.isEmpty) {
-        return ImportResult(
-          success: false,
-          message: 'Excel bestand is leeg',
-        );
+        return ImportResult(success: false, message: 'Excel bestand is leeg');
       }
 
       // Convert to list and skip header
@@ -169,12 +157,7 @@ class ImportService {
   DateTime _parseDate(String dateStr) {
     try {
       // Try different date formats
-      final formats = [
-        'dd-MM-yyyy',
-        'dd/MM/yyyy',
-        'yyyy-MM-dd',
-        'MM/dd/yyyy',
-      ];
+      final formats = ['dd-MM-yyyy', 'dd/MM/yyyy', 'yyyy-MM-dd', 'MM/dd/yyyy'];
 
       for (final format in formats) {
         try {

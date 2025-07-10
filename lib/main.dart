@@ -34,17 +34,16 @@ void main() async {
     (options) {
       options
         ..dsn = dotenv.env['SENTRY_DSN'] ?? ''
-        ..tracesSampleRate = 0.2 // keep within free 100k tx/mo quota
-        ..profilesSampleRate = 0.2 // same as traces for consistency
+        ..tracesSampleRate =
+            0.2 // keep within free 100k tx/mo quota
+        ..profilesSampleRate =
+            0.2 // same as traces for consistency
         // Session Replay is not yet GA for Flutter (SDK >= 9.2) – keep disabled for now.
         ..environment = Environment.current.name;
       // TODO(roel): Add app release / build version automatically
     },
-    appRunner: () => runApp(
-      const ProviderScope(
-        child: JO17TacticalManagerApp(),
-      ),
-    ),
+    appRunner: () =>
+        runApp(const ProviderScope(child: JO17TacticalManagerApp())),
   );
 }
 

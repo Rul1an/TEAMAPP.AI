@@ -4,32 +4,33 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:jo17_tactical_manager/controllers/heat_map_controller.dart';
 import 'package:jo17_tactical_manager/models/action_event.dart';
+import 'package:jo17_tactical_manager/models/action_category.dart';
 import 'package:jo17_tactical_manager/screens/analytics/widgets/heat_map_card.dart';
 
-class _MockHeatMapNotifier extends StateNotifier<AsyncValue<List<ActionEvent>>> {
-  _MockHeatMapNotifier()
-      : super(AsyncData([
-          ActionEvent(
-            id: '1',
-            matchId: 'm',
-            x: 0.1,
-            y: 0.1,
-            type: ActionType.touch,
-            timestamp: DateTime.now(),
-          ),
-        ]));
-
+class _MockHeatMapController extends HeatMapController {
   int loadCalls = 0;
 
+  @override
+  Future<List<ActionEvent>> build() async => [
+        ActionEvent(
+          id: '1',
+          matchId: 'm',
+          x: 0.1,
+          y: 0.1,
+          type: ActionType.touch,
+          timestamp: DateTime.now(),
+        ),
+      ];
+
+  @override
   Future<void> load(HeatMapParams params) async {
     loadCalls += 1;
-    // return same state for simplicity
   }
 }
 
 void main() {
   testWidgets('HeatMapCard calls load on filter change', (tester) async {
-    final mockNotifier = _MockHeatMapNotifier();
+    final mockNotifier = _MockHeatMapController();
 
     await tester.pumpWidget(
       ProviderScope(

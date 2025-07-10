@@ -4,12 +4,12 @@ import 'base_hive_cache.dart';
 
 class HiveAssessmentCache {
   HiveAssessmentCache()
-      : _cache = BaseHiveCache<List<PlayerAssessment>>(
-          boxName: _box,
-          valueKey: _key,
-          fromJson: _fromJson,
-          toJson: _toJson,
-        );
+    : _cache = BaseHiveCache<List<PlayerAssessment>>(
+        boxName: _box,
+        valueKey: _key,
+        fromJson: _fromJson,
+        toJson: _toJson,
+      );
 
   static const _box = 'player_assessments_box';
   static const _key = 'player_assessments_json';
@@ -28,48 +28,48 @@ class HiveAssessmentCache {
   }
 
   static Map<String, dynamic> _toJson(List<PlayerAssessment> list) => {
-        'assessments': list.map(_toMap).toList(),
-      };
+    'assessments': list.map(_toMap).toList(),
+  };
 
   // Serialize
   static Map<String, dynamic> _toMap(PlayerAssessment a) => {
-        'id': a.id,
-        'playerId': a.playerId,
-        'assessmentDate': a.assessmentDate.toIso8601String(),
-        'type': a.type.name,
-        // technical
-        'ballControl': a.ballControl,
-        'passing': a.passing,
-        'shooting': a.shooting,
-        'dribbling': a.dribbling,
-        'defending': a.defending,
-        // tactical
-        'positioning': a.positioning,
-        'gameReading': a.gameReading,
-        'decisionMaking': a.decisionMaking,
-        'communication': a.communication,
-        'teamwork': a.teamwork,
-        // physical
-        'speed': a.speed,
-        'stamina': a.stamina,
-        'strength': a.strength,
-        'agility': a.agility,
-        'coordination': a.coordination,
-        // mental
-        'confidence': a.confidence,
-        'concentration': a.concentration,
-        'leadership': a.leadership,
-        'coachability': a.coachability,
-        'motivation': a.motivation,
-        // text fields
-        'strengths': a.strengths,
-        'areasForImprovement': a.areasForImprovement,
-        'developmentGoals': a.developmentGoals,
-        'coachNotes': a.coachNotes,
-        'assessorId': a.assessorId,
-        'createdAt': a.createdAt.toIso8601String(),
-        'updatedAt': a.updatedAt.toIso8601String(),
-      };
+    'id': a.id,
+    'playerId': a.playerId,
+    'assessmentDate': a.assessmentDate.toIso8601String(),
+    'type': a.type.name,
+    // technical
+    'ballControl': a.ballControl,
+    'passing': a.passing,
+    'shooting': a.shooting,
+    'dribbling': a.dribbling,
+    'defending': a.defending,
+    // tactical
+    'positioning': a.positioning,
+    'gameReading': a.gameReading,
+    'decisionMaking': a.decisionMaking,
+    'communication': a.communication,
+    'teamwork': a.teamwork,
+    // physical
+    'speed': a.speed,
+    'stamina': a.stamina,
+    'strength': a.strength,
+    'agility': a.agility,
+    'coordination': a.coordination,
+    // mental
+    'confidence': a.confidence,
+    'concentration': a.concentration,
+    'leadership': a.leadership,
+    'coachability': a.coachability,
+    'motivation': a.motivation,
+    // text fields
+    'strengths': a.strengths,
+    'areasForImprovement': a.areasForImprovement,
+    'developmentGoals': a.developmentGoals,
+    'coachNotes': a.coachNotes,
+    'assessorId': a.assessorId,
+    'createdAt': a.createdAt.toIso8601String(),
+    'updatedAt': a.updatedAt.toIso8601String(),
+  };
 
   // Deserialize
   static PlayerAssessment _fromMap(Map<String, dynamic> json) {

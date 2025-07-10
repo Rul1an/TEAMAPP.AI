@@ -16,17 +16,18 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   // Mock secure storage & path provider channels used by HiveFlutter
-  const secureStorageChannel =
-      MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
+  const secureStorageChannel = MethodChannel(
+    'plugins.it_nomads.com/flutter_secure_storage',
+  );
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(secureStorageChannel, (call) async => null);
 
   const pathProviderChannel = MethodChannel('plugins.flutter.io/path_provider');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-    pathProviderChannel,
-    (call) async => Directory.systemTemp.path,
-  );
+        pathProviderChannel,
+        (call) async => Directory.systemTemp.path,
+      );
 
   group('HiveTrainingCache', () {
     setUp(() {
@@ -60,10 +61,7 @@ void main() {
         isNotNull,
       );
       await Future<void>.delayed(const Duration(milliseconds: 60));
-      expect(
-        await cache.read(ttl: const Duration(milliseconds: 50)),
-        isNull,
-      );
+      expect(await cache.read(ttl: const Duration(milliseconds: 50)), isNull);
     });
   });
 }

@@ -41,8 +41,9 @@ void main() {
   });
 
   test('getUpcoming filters correctly', () async {
-    when(() => remote.fetchAll())
-        .thenAnswer((_) async => [matchPast, matchNow]);
+    when(
+      () => remote.fetchAll(),
+    ).thenAnswer((_) async => [matchPast, matchNow]);
     when(() => cache.write(any())).thenAnswer((_) async {});
 
     final res = await repo.getUpcoming();

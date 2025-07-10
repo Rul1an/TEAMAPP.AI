@@ -14,10 +14,14 @@ class _MockStorage extends Mock implements FlutterSecureStorage {}
 void main() {
   test('generates and stores key', () async {
     final storage = _MockStorage();
-    when(() => storage.read(key: any(named: 'key')))
-        .thenAnswer((_) async => null);
     when(
-      () => storage.write(key: any(named: 'key'), value: any(named: 'value')),
+      () => storage.read(key: any(named: 'key')),
+    ).thenAnswer((_) async => null);
+    when(
+      () => storage.write(
+        key: any(named: 'key'),
+        value: any(named: 'value'),
+      ),
     ).thenAnswer((_) async {});
 
     final manager = HiveKeyManager(storage: storage);
@@ -34,8 +38,9 @@ void main() {
   test('returns cached key on subsequent calls', () async {
     final initial = base64Encode(List<int>.filled(32, 1));
     final storage = _MockStorage();
-    when(() => storage.read(key: any(named: 'key')))
-        .thenAnswer((_) async => initial);
+    when(
+      () => storage.read(key: any(named: 'key')),
+    ).thenAnswer((_) async => initial);
 
     final manager = HiveKeyManager(storage: storage);
     final k1 = await manager.getKey();

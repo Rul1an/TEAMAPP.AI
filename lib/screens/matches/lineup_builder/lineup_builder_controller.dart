@@ -72,10 +72,7 @@ class LineupBuilderController extends ChangeNotifier {
 
     // Bench
     for (final id in match!.substituteIds) {
-      final p = players.firstWhere(
-        (pl) => pl.id == id,
-        orElse: Player.new,
-      );
+      final p = players.firstWhere((pl) => pl.id == id, orElse: Player.new);
       if (p.id.isNotEmpty) benchPlayers.add(p);
     }
   }
@@ -117,8 +114,9 @@ class LineupBuilderController extends ChangeNotifier {
 
   void assignPlayerToPosition(Player player, String positionKey) {
     // Remove from any previous spot or bench
-    fieldPositions
-        .updateAll((key, value) => value?.id == player.id ? null : value);
+    fieldPositions.updateAll(
+      (key, value) => value?.id == player.id ? null : value,
+    );
     benchPlayers.removeWhere((p) => p.id == player.id);
 
     fieldPositions[positionKey] = player;
@@ -143,5 +141,5 @@ class LineupBuilderController extends ChangeNotifier {
 /// Riverpod provider
 final lineupBuilderControllerProvider =
     ChangeNotifierProvider.autoDispose<LineupBuilderController>((ref) {
-  return LineupBuilderController(ref);
-});
+      return LineupBuilderController(ref);
+    });

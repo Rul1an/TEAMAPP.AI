@@ -38,12 +38,7 @@ class ElementPainter {
 
     // Players
     for (final player in diagram.players) {
-      _drawPlayer(
-        canvas,
-        fieldRect,
-        player,
-        player.id == selectedElementId,
-      );
+      _drawPlayer(canvas, fieldRect, player, player.id == selectedElementId);
     }
 
     // Equipment
@@ -58,12 +53,7 @@ class ElementPainter {
 
     // Text labels
     for (final label in diagram.labels) {
-      _drawTextLabel(
-        canvas,
-        fieldRect,
-        label,
-        label.id == selectedElementId,
-      );
+      _drawTextLabel(canvas, fieldRect, label, label.id == selectedElementId);
     }
   }
 
@@ -155,14 +145,11 @@ class ElementPainter {
   ) {
     final size = isSelected ? 14.0 : 12.0;
     final path = Path()
-      ..addPolygon(
-        [
-          Offset(pos.dx, pos.dy - size),
-          Offset(pos.dx - size / 2, pos.dy + size / 2),
-          Offset(pos.dx + size / 2, pos.dy + size / 2),
-        ],
-        true,
-      );
+      ..addPolygon([
+        Offset(pos.dx, pos.dy - size),
+        Offset(pos.dx - size / 2, pos.dy + size / 2),
+        Offset(pos.dx + size / 2, pos.dy + size / 2),
+      ], true);
 
     final border = Paint()
       ..color = Colors.black
@@ -262,10 +249,7 @@ class ElementPainter {
       ),
       textDirection: TextDirection.ltr,
     )..layout();
-    tp.paint(
-      canvas,
-      pos - Offset(tp.width / 2, tp.height / 2),
-    );
+    tp.paint(canvas, pos - Offset(tp.width / 2, tp.height / 2));
   }
 
   // --------------------------------------------------------------------------
@@ -330,7 +314,9 @@ class ElementPainter {
     if (line.hasArrowHead && line.points.length >= 2) {
       final last = _fieldToCanvasPosition(line.points.last, fieldRect);
       final beforeLast = _fieldToCanvasPosition(
-          line.points[line.points.length - 2], fieldRect);
+        line.points[line.points.length - 2],
+        fieldRect,
+      );
       if (_isValidOffset(last) && _isValidOffset(beforeLast)) {
         _drawArrowHead(canvas, beforeLast, last, paint);
       }
@@ -345,7 +331,7 @@ class ElementPainter {
         ..strokeCap = StrokeCap.round;
       final selPath = Path();
       final pts = [
-        for (final p in line.points) _fieldToCanvasPosition(p, fieldRect)
+        for (final p in line.points) _fieldToCanvasPosition(p, fieldRect),
       ].where(_isValidOffset).toList();
       if (pts.length >= 2) {
         selPath.addPolygon(pts, false);

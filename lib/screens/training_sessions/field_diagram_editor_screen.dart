@@ -203,10 +203,9 @@ class _FieldDiagramEditorScreenState
         );
       }
 
-      await ref.read(fieldDiagramProvider.notifier).exportDiagram(
-            diagramState.diagram,
-            format,
-          );
+      await ref
+          .read(fieldDiagramProvider.notifier)
+          .exportDiagram(diagramState.diagram, format);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -235,12 +234,13 @@ class _FieldDiagramEditorScreenState
 
     try {
       if (widget.exerciseId != null) {
-        await ref.read(fieldDiagramProvider.notifier).saveDiagramToExercise(
-              widget.exerciseId!,
-              diagramState.diagram,
-            );
+        await ref
+            .read(fieldDiagramProvider.notifier)
+            .saveDiagramToExercise(widget.exerciseId!, diagramState.diagram);
       } else {
-        await ref.read(fieldDiagramProvider.notifier).saveDiagramTemplate(
+        await ref
+            .read(fieldDiagramProvider.notifier)
+            .saveDiagramTemplate(
               diagramState.diagram,
               'Nieuwe diagram ${DateTime.now().toString().substring(0, 16)}',
             );

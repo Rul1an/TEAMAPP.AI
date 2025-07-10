@@ -8,10 +8,7 @@ class SessionPhase {
   SessionPhase();
 
   // Named constructors for common phases
-  SessionPhase.warmup({
-    required DateTime start,
-    int durationMinutes = 15,
-  }) {
+  SessionPhase.warmup({required DateTime start, int durationMinutes = 15}) {
     name = 'Warming-up';
     type = PhaseType.warmup;
     startTime = start;
@@ -47,10 +44,7 @@ class SessionPhase {
     exerciseIds = [];
   }
 
-  SessionPhase.evaluation({
-    required DateTime start,
-    int durationMinutes = 10,
-  }) {
+  SessionPhase.evaluation({required DateTime start, int durationMinutes = 10}) {
     name = 'Evaluatie';
     type = PhaseType.evaluation;
     startTime = start;
@@ -60,10 +54,7 @@ class SessionPhase {
     exerciseIds = [];
   }
 
-  SessionPhase.cooldown({
-    required DateTime start,
-    int durationMinutes = 10,
-  }) {
+  SessionPhase.cooldown({required DateTime start, int durationMinutes = 10}) {
     name = 'Cool-down';
     type = PhaseType.cooldown;
     startTime = start;
@@ -159,17 +150,17 @@ class SessionPhase {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'startTime': startTime.toIso8601String(),
-        'endTime': endTime.toIso8601String(),
-        'description': description,
-        'orderIndex': orderIndex,
-        'type': type.name,
-        'exerciseIds': exerciseIds,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-      };
+    'id': id,
+    'name': name,
+    'startTime': startTime.toIso8601String(),
+    'endTime': endTime.toIso8601String(),
+    'description': description,
+    'orderIndex': orderIndex,
+    'type': type.name,
+    'exerciseIds': exerciseIds,
+    'createdAt': createdAt.toIso8601String(),
+    'updatedAt': updatedAt.toIso8601String(),
+  };
 
   // Copy with method
   SessionPhase copyWith({
@@ -223,5 +214,5 @@ enum PhaseType {
   game, // Partijtje/spelvormen
   discussion, // Bespreking/tactiekbespreking
   evaluation, // Evaluatie van training
-  cooldown // Afkoeling
+  cooldown, // Afkoeling
 }

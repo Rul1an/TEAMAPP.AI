@@ -9,10 +9,7 @@ import '../providers/demo_mode_provider.dart';
 
 /// 🚀 Demo Mode Starter - Automatically activates demo mode for testing
 class DemoModeStarter extends ConsumerStatefulWidget {
-  const DemoModeStarter({
-    required this.child,
-    super.key,
-  });
+  const DemoModeStarter({required this.child, super.key});
   final Widget child;
 
   @override
@@ -43,7 +40,9 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
 
   void _startDemoMode() {
     // Start demo mode with hoofdcoach role
-    ref.read(demoModeProvider.notifier).startDemo(
+    ref
+        .read(demoModeProvider.notifier)
+        .startDemo(
           role: DemoRole.coach, // hoofdcoach
           organizationId: 'demo-voab-jo17',
           userId: 'demo-user-coach',

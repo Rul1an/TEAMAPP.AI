@@ -15,17 +15,13 @@ class SessionBuilderView extends ConsumerWidget {
     final state = ref.watch(sessionBuilderControllerProvider(sessionId));
 
     if (state.isLoading || state.session == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    final session = state.session!;
+    final session = state.session;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Training ${session.trainingNumber}'),
-      ),
+      appBar: AppBar(title: Text('Training ${session.trainingNumber}')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

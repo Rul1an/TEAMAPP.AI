@@ -33,16 +33,32 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
           _buildOverview(assessment, regular, bold),
           pw.SizedBox(height: 16),
           _buildSkillsSection(
-              'Technisch', assessment.technicalSkills, regular, bold),
+            'Technisch',
+            assessment.technicalSkills,
+            regular,
+            bold,
+          ),
           pw.SizedBox(height: 12),
           _buildSkillsSection(
-              'Tactisch', assessment.tacticalSkills, regular, bold),
+            'Tactisch',
+            assessment.tacticalSkills,
+            regular,
+            bold,
+          ),
           pw.SizedBox(height: 12),
           _buildSkillsSection(
-              'Fysiek', assessment.physicalAttributes, regular, bold),
+            'Fysiek',
+            assessment.physicalAttributes,
+            regular,
+            bold,
+          ),
           pw.SizedBox(height: 12),
           _buildSkillsSection(
-              'Mentaal', assessment.mentalAttributes, regular, bold),
+            'Mentaal',
+            assessment.mentalAttributes,
+            regular,
+            bold,
+          ),
           if (assessment.strengths != null ||
               assessment.areasForImprovement != null ||
               assessment.developmentGoals != null) ...[
@@ -60,31 +76,24 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
   // Header
   // --------------------------------------------------------------------------
   pw.Widget _buildHeader(PlayerAssessment a, pw.Font bold) => pw.Container(
-        width: double.infinity,
-        padding: const pw.EdgeInsets.all(12),
-        decoration: pw.BoxDecoration(
-          color: PdfTheme.primary,
-          borderRadius: pw.BorderRadius.circular(6),
+    width: double.infinity,
+    padding: const pw.EdgeInsets.all(12),
+    decoration: pw.BoxDecoration(
+      color: PdfTheme.primary,
+      borderRadius: pw.BorderRadius.circular(6),
+    ),
+    child: pw.Column(
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      children: [
+        pw.Text('Spelersbeoordeling', style: PdfTheme.header(bold)),
+        pw.SizedBox(height: 4),
+        pw.Text(
+          'Speler ID: ${a.playerId}',
+          style: pw.TextStyle(font: bold, fontSize: 12, color: PdfColors.white),
         ),
-        child: pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: [
-            pw.Text(
-              'Spelersbeoordeling',
-              style: PdfTheme.header(bold),
-            ),
-            pw.SizedBox(height: 4),
-            pw.Text(
-              'Speler ID: ${a.playerId}',
-              style: pw.TextStyle(
-                font: bold,
-                fontSize: 12,
-                color: PdfColors.white,
-              ),
-            ),
-          ],
-        ),
-      );
+      ],
+    ),
+  );
 
   // --------------------------------------------------------------------------
   // Overview block (date, type, averages)
@@ -94,7 +103,11 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
       _infoRow('Datum', PdfUtils.formatDate(a.assessmentDate), regular, bold),
       _infoRow('Type', a.type.displayName, regular, bold),
       _infoRow(
-          'Totaalscore', a.overallAverage.toStringAsFixed(1), regular, bold),
+        'Totaalscore',
+        a.overallAverage.toStringAsFixed(1),
+        regular,
+        bold,
+      ),
     ];
 
     return pw.Container(
@@ -119,24 +132,35 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
   ) {
     final rows = skills.entries
         .map(
-          (e) => pw.TableRow(children: [
-            pw.Padding(
-              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-              child: pw.Text(e.key,
-                  style: pw.TextStyle(font: regular, fontSize: 10)),
-            ),
-            pw.Text(e.value.toString(),
-                style: pw.TextStyle(font: bold, fontSize: 10)),
-          ]),
+          (e) => pw.TableRow(
+            children: [
+              pw.Padding(
+                padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                child: pw.Text(
+                  e.key,
+                  style: pw.TextStyle(font: regular, fontSize: 10),
+                ),
+              ),
+              pw.Text(
+                e.value.toString(),
+                style: pw.TextStyle(font: bold, fontSize: 10),
+              ),
+            ],
+          ),
         )
         .toList();
 
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
-        pw.Text(title,
-            style: pw.TextStyle(
-                font: bold, fontSize: 12, color: PdfTheme.primary)),
+        pw.Text(
+          title,
+          style: pw.TextStyle(
+            font: bold,
+            fontSize: 12,
+            color: PdfTheme.primary,
+          ),
+        ),
         pw.SizedBox(height: 4),
         pw.Table(
           columnWidths: {1: const pw.FixedColumnWidth(30)},
@@ -151,26 +175,29 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
   // Free-text notes
   // --------------------------------------------------------------------------
   pw.Widget _buildNotesSection(
-      PlayerAssessment a, pw.Font regular, pw.Font bold) {
+    PlayerAssessment a,
+    pw.Font regular,
+    pw.Font bold,
+  ) {
     pw.Widget _note(String heading, String? text) =>
         text == null || text.isEmpty
-            ? pw.Container()
-            : pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    heading,
-                    style: pw.TextStyle(
-                        font: bold, fontSize: 12, color: PdfTheme.primary),
-                  ),
-                  pw.SizedBox(height: 2),
-                  pw.Text(
-                    text,
-                    style: pw.TextStyle(font: regular, fontSize: 10),
-                  ),
-                  pw.SizedBox(height: 8),
-                ],
-              );
+        ? pw.Container()
+        : pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text(
+                heading,
+                style: pw.TextStyle(
+                  font: bold,
+                  fontSize: 12,
+                  color: PdfTheme.primary,
+                ),
+              ),
+              pw.SizedBox(height: 2),
+              pw.Text(text, style: pw.TextStyle(font: regular, fontSize: 10)),
+              pw.SizedBox(height: 8),
+            ],
+          );
 
     return pw.Container(
       padding: const pw.EdgeInsets.all(12),
@@ -194,25 +221,33 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
   // Helper row
   // --------------------------------------------------------------------------
   pw.Widget _infoRow(
-          String label, String value, pw.Font regular, pw.Font bold) =>
-      pw.Padding(
-        padding: const pw.EdgeInsets.symmetric(vertical: 2),
-        child: pw.Row(
-          children: [
-            pw.Expanded(
-              flex: 2,
-              child: pw.Text(
-                '$label:',
-                style: pw.TextStyle(
-                    font: bold, fontSize: 10, color: PdfTheme.primary),
-              ),
+    String label,
+    String value,
+    pw.Font regular,
+    pw.Font bold,
+  ) => pw.Padding(
+    padding: const pw.EdgeInsets.symmetric(vertical: 2),
+    child: pw.Row(
+      children: [
+        pw.Expanded(
+          flex: 2,
+          child: pw.Text(
+            '$label:',
+            style: pw.TextStyle(
+              font: bold,
+              fontSize: 10,
+              color: PdfTheme.primary,
             ),
-            pw.Expanded(
-              flex: 3,
-              child: pw.Text(value,
-                  style: pw.TextStyle(font: regular, fontSize: 10)),
-            ),
-          ],
+          ),
         ),
-      );
+        pw.Expanded(
+          flex: 3,
+          child: pw.Text(
+            value,
+            style: pw.TextStyle(font: regular, fontSize: 10),
+          ),
+        ),
+      ],
+    ),
+  );
 }

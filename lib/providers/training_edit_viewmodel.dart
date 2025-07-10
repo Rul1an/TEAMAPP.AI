@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import '../models/training.dart';
 import '../repositories/training_repository.dart';
+import 'trainings_provider.dart';
 
 class TrainingEditState {
   const TrainingEditState({
@@ -21,15 +22,15 @@ class TrainingEditState {
     bool? isLoading,
     String? error,
   }) => TrainingEditState(
-        training: training ?? this.training,
-        isLoading: isLoading ?? this.isLoading,
-        error: error,
-      );
+    training: training ?? this.training,
+    isLoading: isLoading ?? this.isLoading,
+    error: error,
+  );
 }
 
 class TrainingEditViewModel extends StateNotifier<TrainingEditState> {
   TrainingEditViewModel(this.ref, this.trainingId)
-      : super(const TrainingEditState(training: null, isLoading: true)) {
+    : super(const TrainingEditState(training: null, isLoading: true)) {
     _load();
   }
 
@@ -37,21 +38,25 @@ class TrainingEditViewModel extends StateNotifier<TrainingEditState> {
   final String trainingId;
 
   Future<void> _load() async {
-    final repo = ref.read(trainingRepositoryProvider);
+    final TrainingRepository repo = ref.read<TrainingRepository>(
+      trainingRepositoryProvider,
+    );
     final res = await repo.getById(trainingId);
     if (res.isSuccess) {
-      state = state.copyWith(training: res.value, isLoading: false);
+      state = state.copyWith(training: res.dataOrNull, isLoading: false);
     } else {
-      state = state.copyWith(error: res.errorOrNull, isLoading: false);
+      state = state.copyWith(error: res.errorOrNull?.message, isLoading: false);
     }
   }
 
   Future<bool> save(Training updated) async {
     state = state.copyWith(isLoading: true, error: null);
-    final repo = ref.read(trainingRepositoryProvider);
+    final TrainingRepository repo = ref.read<TrainingRepository>(
+      trainingRepositoryProvider,
+    );
     final res = await repo.update(updated);
     if (!res.isSuccess) {
-      state = state.copyWith(isLoading: false, error: res.errorOrNull);
+      state = state.copyWith(isLoading: false, error: res.errorOrNull?.message);
       return false;
     }
     state = state.copyWith(training: updated, isLoading: false);
@@ -59,7 +64,11 @@ class TrainingEditViewModel extends StateNotifier<TrainingEditState> {
   }
 }
 
-final trainingEditViewModelProvider = StateNotifierProvider.family<
-    TrainingEditViewModel, TrainingEditState, String>((ref, trainingId) {
-  return TrainingEditViewModel(ref, trainingId);
-});
+final trainingEditViewModelProvider =
+    StateNotifierProvider.family<
+      TrainingEditViewModel,
+      TrainingEditState,
+      String
+    >((ref, trainingId) {
+      return TrainingEditViewModel(ref, trainingId);
+    });

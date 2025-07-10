@@ -57,18 +57,23 @@ class _RatingDialogState extends ConsumerState<RatingDialog> {
       date: DateTime.now(),
       type: widget.type,
       overallRating: _overallRating,
-      attackingRating:
-          widget.type == RatingType.match ? _attackingRating : null,
-      defendingRating:
-          widget.type == RatingType.match ? _defendingRating : null,
+      attackingRating: widget.type == RatingType.match
+          ? _attackingRating
+          : null,
+      defendingRating: widget.type == RatingType.match
+          ? _defendingRating
+          : null,
       tacticalRating: _tacticalRating,
       workRateRating: _workRateRating,
-      technicalRating:
-          widget.type == RatingType.training ? _technicalRating : null,
-      coachabilityRating:
-          widget.type == RatingType.training ? _coachabilityRating : null,
-      teamworkRating:
-          widget.type == RatingType.training ? _teamworkRating : null,
+      technicalRating: widget.type == RatingType.training
+          ? _technicalRating
+          : null,
+      coachabilityRating: widget.type == RatingType.training
+          ? _coachabilityRating
+          : null,
+      teamworkRating: widget.type == RatingType.training
+          ? _teamworkRating
+          : null,
       notes: _notesController.text.isNotEmpty ? _notesController.text : null,
       coachId: 'coach1', // TODO(author): Get from auth
     );
