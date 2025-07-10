@@ -8,6 +8,7 @@ import 'package:jo17_tactical_manager/screens/training/training_edit_screen.dart
 import 'package:jo17_tactical_manager/repositories/training_repository.dart';
 import 'package:jo17_tactical_manager/providers/trainings_provider.dart';
 import 'package:jo17_tactical_manager/core/result.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class _MockTrainingRepo implements TrainingRepository {
   _MockTrainingRepo();
@@ -21,7 +22,7 @@ class _MockTrainingRepo implements TrainingRepository {
   Future<Result<void>> delete(String id) async => const Success(null);
 
   @override
-  Future<Result<List<Training>>> getAll() async => const Success([]);
+  Future<Result<List<Training>>> getAll() async => Success([_dummy]);
 
   @override
   Future<Result<Training?>> getById(String id) async => Success(_dummy);
@@ -68,6 +69,10 @@ Widget _wrapWithRouter(Widget child) => ProviderScope(
 
 void main() {
   late _MockTrainingRepo repo;
+
+  setUpAll(() async {
+    await initializeDateFormatting('nl_NL', null);
+  });
 
   setUp(() {
     repo = _MockTrainingRepo();
