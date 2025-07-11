@@ -89,6 +89,8 @@ class Match {
   String id = '';
 
   late DateTime date;
+  // Reference to team (used in repositories & tests)
+  String? teamId;
   late String opponent;
 
   @Enumerated(EnumType.name)

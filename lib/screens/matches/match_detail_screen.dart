@@ -77,15 +77,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         data: (matches) {
           final match = matches.firstWhere(
             (m) => m.id == widget.matchId,
-            orElse: () => Match()
-              ..date = DateTime.now()
-              ..opponent = ''
-              ..location = Location.home
-              ..competition = Competition.league
-              ..status = MatchStatus.scheduled,
+            orElse: Match.new,
           );
-
-          if (match.id == '0') {
+          if (match.id.isEmpty) {
             return const Center(child: Text('Wedstrijd niet gevonden'));
           }
 
@@ -592,9 +586,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
     matchAsync.whenData((matches) async {
       final match = matches.firstWhere(
         (m) => m.id == widget.matchId,
-        orElse: () => null,
+        orElse: Match.new,
       );
-      if (match == null) return;
+      if (match.id.isEmpty) return;
 
       final generator = ref.read(matchReportPdfGeneratorProvider);
       final bytes = await generator.generate(match);
