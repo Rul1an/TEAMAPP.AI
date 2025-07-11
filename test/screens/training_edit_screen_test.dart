@@ -49,6 +49,7 @@ final _dummy = () {
     ..id = '1'
     ..date = DateTime(2025, 7, 20)
     ..duration = 60
+    ..trainingNumber = 1
     ..focus = TrainingFocus.technical
     ..intensity = TrainingIntensity.medium
     ..status = TrainingStatus.planned

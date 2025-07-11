@@ -28,3 +28,7 @@ class _MockMatchRepo implements MatchRepository {
   @override
   Future<Result<void>> update(Match match) async => const Success(null);
 }
+
+void main() {
+  // No-op: detailed tests will be added once PredictionRepository is implemented.
+}
