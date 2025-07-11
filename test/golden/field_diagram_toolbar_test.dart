@@ -56,7 +56,7 @@ void main() {
         find.byType(FieldDiagramToolbar),
         matchesGoldenFile('goldens/field_diagram_toolbar_select.png'),
       );
-    }, skip: isCi);
+    );
 
     testWidgets('line tool expanded', (tester) async {
       await tester.pumpWidget(
@@ -76,7 +76,7 @@ void main() {
         find.byType(FieldDiagramToolbar),
         matchesGoldenFile('goldens/field_diagram_toolbar_line.png'),
       );
-    }, skip: isCi);
+    );
   });
 }
 
