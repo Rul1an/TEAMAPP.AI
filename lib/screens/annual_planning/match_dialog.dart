@@ -51,7 +51,7 @@ class _MatchDialogState extends State<MatchDialog> {
     super.initState();
 
     if (widget.existingMatch != null) {
-      final match = widget.existingMatch;
+      final match = widget.existingMatch!;
       _opponentController.text = match.opponent;
       _locationController.text = match.location;
       _notesController.text = match.notes ?? '';

@@ -25,10 +25,10 @@ class SharePdfUtils {
   ) async {
     try {
       if (kIsWeb) {
-        final blob = web.Blob([data], 'application/pdf');
+        final blob = web.Blob(<dynamic>[data], 'application/pdf');
         final url = web.Url.createObjectUrlFromBlob(blob);
         final anchor = web.AnchorElement(href: url)
-          ..setAttribute('download', filename)
+          ..download = filename
           ..click();
         web.Url.revokeObjectUrl(url);
       } else {
