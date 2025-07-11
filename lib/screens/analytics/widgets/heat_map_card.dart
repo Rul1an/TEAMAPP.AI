@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../controllers/heat_map_controller.dart';
+// ignore: unused_import
 import '../../../providers/analytics_repository_provider.dart';
 import '../../../utils/heatmap_utils.dart';
 import '../../../widgets/async_value_widget.dart';

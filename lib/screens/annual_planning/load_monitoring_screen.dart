@@ -904,12 +904,12 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
       gradient: LinearGradient(
-        colors: [Colors.blue[50], Colors.green[50]],
+        colors: [Colors.blue.shade50, Colors.green.shade50],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
       borderRadius: BorderRadius.circular(12),
-      border: Border.all(color: Colors.blue[200]!),
+      border: Border.all(color: Colors.blue.shade200),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

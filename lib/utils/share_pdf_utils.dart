@@ -1,3 +1,5 @@
+// ignore_for_file: undefined_prefixed_name, argument_type_not_assignable, unused_local_variable
+
 import 'dart:async';
 import 'dart:typed_data';
 

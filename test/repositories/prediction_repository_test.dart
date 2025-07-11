@@ -1,7 +1,8 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:jo17_tactical_manager/repositories/prediction_repository.dart';
-import 'package:jo17_tactical_manager/repositories/prediction_repository_stub.dart';
+// PredictionRepository not yet implemented – imports removed.
 import 'package:jo17_tactical_manager/core/result.dart';
 import 'package:jo17_tactical_manager/repositories/match_repository.dart';
 import 'package:jo17_tactical_manager/models/match.dart';

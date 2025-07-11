@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+// ignore: unused_import
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
