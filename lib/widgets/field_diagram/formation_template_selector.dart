@@ -28,7 +28,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
         children: [
           Row(
             children: [
-              Icon(Icons.sports_soccer, color: Colors.green[700]),
+              Icon(Icons.sports_soccer, color: Colors.green.shade700),
               const SizedBox(width: 8),
               Text(
                 'Kies Opstelling',
@@ -79,9 +79,9 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
             Expanded(
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Colors.green[50],
+                  color: Colors.green.shade50,
                   borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: Colors.green[200]!),
+                  border: Border.all(color: Colors.green.shade200),
                 ),
                 child: CustomPaint(
                   painter: FormationPreviewPainter(formation.positions),
@@ -186,7 +186,7 @@ class FormationPreviewPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Draw field background
     final fieldPaint = Paint()
-      ..color = Colors.green[100]
+      ..color = Colors.green.shade100
       ..style = PaintingStyle.fill;
 
     final fieldRect = Rect.fromLTWH(0, 0, size.width, size.height);

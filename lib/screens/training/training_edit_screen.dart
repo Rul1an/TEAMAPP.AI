@@ -47,6 +47,24 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
       (t) => t.id == widget.trainingId,
       orElse: Training.new,
     );
+    if (_training == null || _training!.id.isEmpty) {
+      // Fallback: fetch directly from repository (unit tests may not populate list)
+      final repo = ref.read(trainingRepositoryProvider);
+      repo.getById(widget.trainingId).then((res) {
+        final fetched = res.dataOrNull;
+        if (fetched != null && mounted) {
+          setState(() {
+            _training = fetched;
+            _selectedDate = _training!.date;
+            _durationCtrl.text = _training!.duration.toString();
+            _focus = _training!.focus;
+            _intensity = _training!.intensity;
+            _status = _training!.status;
+          });
+        }
+      });
+    }
+
     if (_training != null && _training!.id.isNotEmpty) {
       _selectedDate = _training!.date;
       _durationCtrl.text = _training!.duration.toString();

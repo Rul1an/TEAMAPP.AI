@@ -92,6 +92,12 @@ class Training {
 
   // Attendance
   List<String> presentPlayerIds = [];
+  // Sequence number within a season/week – used by PDF generator and UI. Optional.
+  int? trainingNumber;
+
+  // Association
+  String? teamId;
+
   List<String> absentPlayerIds = [];
   List<String> injuredPlayerIds = [];
   List<String> latePlayerIds = [];

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -49,6 +51,7 @@ final _dummy = () {
     ..id = '1'
     ..date = DateTime(2025, 7, 20)
     ..duration = 60
+    ..trainingNumber = 1
     ..focus = TrainingFocus.technical
     ..intensity = TrainingIntensity.medium
     ..status = TrainingStatus.planned

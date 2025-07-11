@@ -12,6 +12,10 @@ analyzer:
     - "build/**"
     - "test/**/*.mocks.dart"
     - "packages/test_utils/**"
+    # Ignore Flutter SDK dev tools & sample tests that are not part of this project
+    - "**/flutter*/dev/**"
+    - "**/flutter*/packages/**/test/**"
+    - "**/.pub-cache/**"
 
   language:
     strict-casts: true
