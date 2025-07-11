@@ -2,6 +2,13 @@ name: "🔎 CI Monitor"
 
 on:
   workflow_run:
+    # List of workflow names to monitor (must match the "name" field in each workflow)
+    workflows:
+      - "🚀 Advanced Flutter SaaS Deployment"
+      - "Flutter Web CI/CD"
+      - "docs-snippets"
+      - "👤 Profiles Migration & Tests"
+      - "🔐 Supabase RLS Migration"
     # Monitor all workflows in this repo; filter for completed events
     types: [completed]
   schedule:
