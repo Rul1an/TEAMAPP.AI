@@ -89,6 +89,9 @@ class Match {
   String id = '';
 
   late DateTime date;
+  // Team identifier this match belongs to
+  // Added to enable features like form prediction that rely on the team context.
+  String teamId = '';
   late String opponent;
 
   @Enumerated(EnumType.name)
