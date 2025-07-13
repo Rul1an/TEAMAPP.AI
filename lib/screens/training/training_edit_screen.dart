@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 // Project imports:
 import '../../models/training.dart';
@@ -36,13 +37,20 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   Training? _training;
 
   @override
+  void initState() {
+    super.initState();
+
+    // Ensure Dutch locale date symbols are available during tests.
+    initializeDateFormatting('nl_NL', null).catchError((_) {});
+  }
+
+  @override
   void dispose() {
     _durationCtrl.dispose();
     super.dispose();
   }
 
-  void _load() {
-    final list = ref.read(trainingsProvider).value ?? [];
+  void _load(List<Training> list) {
     _training = list.firstWhere(
       (t) => t.id == widget.trainingId,
       orElse: Training.new,
@@ -106,6 +114,14 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
     }
   }
 
+  String _formatDate(DateTime date) {
+    try {
+      return DateFormat('d MMM yyyy', 'nl_NL').format(date);
+    } catch (_) {
+      return DateFormat('d MMM yyyy').format(date);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(trainingsProvider);
@@ -115,8 +131,8 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Fout: $e')),
-        data: (_) {
-          if (_training == null) _load();
+        data: (trainings) {
+          _load(trainings);
           if (_training == null || _training!.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));
           }
@@ -138,10 +154,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                       ),
                       child: Text(
                         _selectedDate != null
-                            ? DateFormat(
-                                'd MMM yyyy',
-                                'nl_NL',
-                              ).format(_selectedDate!)
+                            ? _formatDate(_selectedDate!)
                             : 'Selecteer datum',
                       ),
                     ),

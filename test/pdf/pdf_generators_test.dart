@@ -45,7 +45,11 @@ void main() {
         teamId: 'team1',
         date: DateTime.utc(2025, 4, 20),
         trainingNumber: 12,
-      );
+      )
+        ..id = 'ts1'
+        ..durationMinutes = 120
+        ..startTime = DateTime.utc(2025, 4, 20, 18, 0)
+        ..endTime = DateTime.utc(2025, 4, 20, 20, 0);
 
       final bytes = await const TrainingSessionPdfGenerator().generate((
         session,

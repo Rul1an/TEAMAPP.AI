@@ -592,9 +592,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
     matchAsync.whenData((matches) async {
       final match = matches.firstWhere(
         (m) => m.id == widget.matchId,
-        orElse: () => null,
+        orElse: () => Match(),
       );
-      if (match == null) return;
+      if (match.id.isEmpty) return;
 
       final generator = ref.read(matchReportPdfGeneratorProvider);
       final bytes = await generator.generate(match);

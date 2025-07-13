@@ -4,12 +4,9 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:cross_file/cross_file.dart';
 
-// Conditional import: use real `package:web/web.dart` on the web, otherwise
-// fall back to a minimal stub so that tests running on VM/desktop compile.
-// ignore: uri_does_not_exist
-import 'package:web/web.dart'
-    if (dart.library.io) 'web_stub.dart' as web;
+// No direct web API usage required with ShareXFiles.
 
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
@@ -23,12 +20,9 @@ class SharePdfUtils {
   ) async {
     try {
       if (kIsWeb) {
-        final blob = web.Blob([data], 'application/pdf');
-        final url = web.Url.createObjectUrlFromBlob(blob);
-        final anchor = web.AnchorElement(href: url)
-          ..setAttribute('download', filename)
-          ..click();
-        web.Url.revokeObjectUrl(url);
+        await Share.shareXFiles(
+          [XFile.fromData(data, name: filename, mimeType: 'application/pdf')],
+        );
       } else {
         final dir = await getTemporaryDirectory();
         final file = io.File('${dir.path}/$filename');

@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -23,6 +24,31 @@ class TrainingSessionPdfGenerator
   @override
   Future<Uint8List> generate((TrainingSession, List<Player>) input) async {
     final (session, players) = input;
+
+    // Fail fast if essential fields are missing – prevents cryptic errors
+    assert(
+      session.teamId.isNotEmpty,
+      'TrainingSessionPdfGenerator: teamId mag niet leeg zijn',
+    );
+    assert(
+      session.trainingNumber > 0,
+      'TrainingSessionPdfGenerator: trainingNumber moet > 0 zijn',
+    );
+    assert(
+      session.date != null,
+      'TrainingSessionPdfGenerator: date is verplicht',
+    );
+    assert(
+      session.sessionDuration.inMinutes > 0,
+      'TrainingSessionPdfGenerator: sessieduur moet positief zijn',
+    );
+
+    // Ensure Dutch locale symbols are loaded for DateFormat.
+    try {
+      await initializeDateFormatting('nl_NL', null);
+    } catch (_) {
+      // Ignore if already initialized or locale data unavailable.
+    }
 
     final pdf = pw.Document();
 
@@ -62,6 +88,7 @@ class TrainingSessionPdfGenerator
     TrainingSession session,
     PdfColor primaryColor,
   ) {
+    final dateString = _formatDate(session.date);
     return pw.Container(
       padding: const pw.EdgeInsets.all(20),
       decoration: pw.BoxDecoration(
@@ -117,7 +144,7 @@ class TrainingSessionPdfGenerator
           ),
           pw.SizedBox(height: 12),
           pw.Text(
-            '${DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(session.date)} | ${session.sessionDuration.inMinutes} minuten',
+            '$dateString | ${session.sessionDuration.inMinutes} minuten',
             style: const pw.TextStyle(fontSize: 14, color: PdfColors.white),
           ),
         ],
@@ -130,6 +157,7 @@ class TrainingSessionPdfGenerator
     PdfColor primaryColor,
     PdfColor backgroundColor,
   ) {
+    final dateString = _formatDate(session.date);
     return pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
@@ -163,7 +191,7 @@ class TrainingSessionPdfGenerator
                   children: [
                     _buildInfoRow(
                       'Datum:',
-                      DateFormat('dd-MM-yyyy').format(session.date),
+                      dateString,
                     ),
                     pw.SizedBox(height: 6),
                     _buildInfoRow(
@@ -587,6 +615,15 @@ class TrainingSessionPdfGenerator
         return const PdfColor.fromInt(0xFF607D8B);
       default:
         return const PdfColor.fromInt(0xFF757575);
+    }
+  }
+
+  String _formatDate(DateTime date) {
+    try {
+      return DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(date);
+    } catch (_) {
+      // Fallback to default locale if Dutch symbols unavailable.
+      return DateFormat('EEEE d MMMM yyyy').format(date);
     }
   }
 }
