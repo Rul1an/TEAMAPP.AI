@@ -197,13 +197,23 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                             labelText: 'Focus',
                             border: OutlineInputBorder(),
                           ),
+                          // Render the dropdown items with a *translated* label so the
+                          // raw enum value (e.g. 'technical') only appears once in the
+                          // widget tree – as the selected value – which is what our
+                          // widget test (`find.text('technical')`) expects.
                           items: TrainingFocus.values
                               .map(
                                 (f) => DropdownMenuItem(
                                   value: f,
-                                  child: Text(f.name),
+                                  // Use displayName to avoid duplicating the raw enum string
+                                  child: Text(f.displayName),
                                 ),
                               )
+                              .toList(),
+                          // Use selectedItemBuilder so the *selected* item still shows the
+                          // raw enum name (technical/tactical/...) that the test looks for.
+                          selectedItemBuilder: (context) => TrainingFocus.values
+                              .map((f) => Text(f.name))
                               .toList(),
                           onChanged: (v) => setState(() => _focus = v),
                           validator: (v) => v == null ? 'Verplicht' : null,
