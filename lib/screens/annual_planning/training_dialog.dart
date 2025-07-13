@@ -64,7 +64,7 @@ class _TrainingDialogState extends State<TrainingDialog> {
     super.initState();
 
     if (widget.existingTraining != null) {
-      final training = widget.existingTraining;
+      final training = widget.existingTraining!;
       _nameController.text = training.name;
       _locationController.text = training.location;
       _notesController.text = training.notes ?? '';

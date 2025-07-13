@@ -97,7 +97,10 @@ class AnnualPlanningScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.green[600], Colors.green[400]],
+                      colors: [
+                        Colors.green.shade600,
+                        Colors.green.shade400,
+                      ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
