@@ -78,7 +78,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      locale: const Locale('nl', 'NL'),
+      // Keep default locale for test environment compatibility
     );
     if (picked != null) setState(() => _selectedDate = picked);
   }
@@ -134,6 +134,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         data: (_) {
           // Training data already triggered in initState
           if (_training == null) {
+            // Still loading data
             return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
