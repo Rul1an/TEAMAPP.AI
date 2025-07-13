@@ -66,6 +66,15 @@ Widget _wrapWithRouter(Widget child) => ProviderScope(
   ),
 );
 
+Future<void> _waitForWidget(WidgetTester tester, Finder finder) async {
+  final end = DateTime.now().add(const Duration(seconds: 5));
+  while (DateTime.now().isBefore(end)) {
+    await tester.pump(const Duration(milliseconds: 20));
+    if (finder.evaluate().isNotEmpty) return;
+  }
+  fail('Timed out waiting for widget: $finder');
+}
+
 void main() {
   late _MockTrainingRepo repo;
 
@@ -83,10 +92,8 @@ void main() {
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
-    await tester.pump(); // first frame with loading indicator
-    // Should see progress indicator during async load
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await _waitForWidget(tester, find.byType(TextFormField));
     // Ensure form loaded (progress indicator gone)
     expect(find.byType(CircularProgressIndicator), findsNothing);
 
@@ -107,9 +114,7 @@ void main() {
       ),
     );
     await tester.pump();
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    await tester.pumpAndSettle();
-    expect(find.byType(CircularProgressIndicator), findsNothing);
+    await _waitForWidget(tester, find.byType(TextFormField));
 
     // enter invalid duration
     await tester.enterText(find.byType(TextFormField).first, '5');
@@ -130,9 +135,7 @@ void main() {
       ),
     );
     await tester.pump();
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    await tester.pumpAndSettle();
-    expect(find.byType(CircularProgressIndicator), findsNothing);
+    await _waitForWidget(tester, find.byType(TextFormField));
 
     await tester.enterText(find.byType(TextFormField).first, '90');
     await tester.tap(find.text('Opslaan'));

@@ -80,6 +80,7 @@ void main() {
       // The PDF text should contain the training number
       final textSnippet = String.fromCharCodes(bytes);
       expect(textSnippet.contains('Training 12'), isTrue);
+      expect(textSnippet.contains('/Type /Page'), isTrue);
     });
   });
 }
