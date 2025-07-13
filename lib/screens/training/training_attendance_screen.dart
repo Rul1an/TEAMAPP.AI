@@ -579,7 +579,8 @@ class _TrainingAttendanceScreenState
       TrainingSession.create(
         teamId: 'team',
         date: training.date,
-        trainingNumber: 1,
+        // Use the actual training sequence number instead of always "1".
+        trainingNumber: trainingIndex + 1,
       ),
       players,
     ));
