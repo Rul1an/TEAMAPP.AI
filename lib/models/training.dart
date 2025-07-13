@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:isar/isar.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 // part 'training.g.dart'; // Temporarily commented out
 
@@ -68,13 +69,13 @@ class Training {
     createdAt = DateTime.now();
     updatedAt = DateTime.now();
     status = TrainingStatus.planned;
-    trainingNumber = 1; // Default to first training of season
   }
   String id = '';
 
   late DateTime date;
   late int duration; // in minutes
-  late int trainingNumber; // Sequential number within the season or cycle
+  @JsonKey(defaultValue: 1)
+  int trainingNumber = 1; // Sequential number within the season or cycle
 
   @Enumerated(EnumType.name)
   late TrainingFocus focus;
