@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -590,9 +591,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   Future<void> _exportPdf() async {
     final matchAsync = ref.read(matchesProvider);
     matchAsync.whenData((matches) async {
-      final match = matches.firstWhere(
+      final match = matches.firstWhereOrNull(
         (m) => m.id == widget.matchId,
-        orElse: () => null,
       );
       if (match == null) return;
 

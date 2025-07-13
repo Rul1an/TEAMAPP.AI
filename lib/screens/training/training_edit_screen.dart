@@ -36,23 +36,43 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   Training? _training;
 
   @override
+  void initState() {
+    super.initState();
+    // Load training asynchronously after widget initialization.
+    _load();
+  }
+
+  @override
   void dispose() {
     _durationCtrl.dispose();
     super.dispose();
   }
 
-  void _load() {
+  Future<void> _load() async {
+    // 1. Try to find the training in the already-loaded list (if any).
     final list = ref.read(trainingsProvider).value ?? [];
-    _training = list.firstWhere(
+    var training = list.firstWhere(
       (t) => t.id == widget.trainingId,
-      orElse: Training.new,
+      orElse: () => Training(),
     );
-    if (_training != null && _training!.id.isNotEmpty) {
-      _selectedDate = _training!.date;
-      _durationCtrl.text = _training!.duration.toString();
-      _focus = _training!.focus;
-      _intensity = _training!.intensity;
-      _status = _training!.status;
+
+    // 2. If not found, fetch it directly from the repository.
+    if (training.id.isEmpty) {
+      final repo = ref.read(trainingRepositoryProvider);
+      final res = await repo.getById(widget.trainingId);
+      training = res.dataOrNull ?? Training();
+    }
+
+    // 3. Populate the UI only when we have a valid training.
+    if (training.id.isNotEmpty && mounted) {
+      setState(() {
+        _training = training;
+        _selectedDate = training.date;
+        _durationCtrl.text = training.duration.toString();
+        _focus = training.focus;
+        _intensity = training.intensity;
+        _status = training.status;
+      });
     }
   }
 
@@ -116,7 +136,6 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (_) {
-          if (_training == null) _load();
           if (_training == null || _training!.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));
           }

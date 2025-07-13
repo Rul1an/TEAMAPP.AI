@@ -1,24 +1,24 @@
 name: "🔎 CI Monitor"
 
 on:
-  workflow_run:
-    # Monitor all workflows in this repo; filter for completed events
+  # Trigger after any job (build / test / deploy) completes in this repository.
+  check_suite:
     types: [completed]
+  # Fallback daily run to catch very old failed runs (optional)
   schedule:
-    # Daily check at 03:00 UTC to catch runs older than 90 days (optional extension point)
     - cron: '0 3 * * *'
 
 jobs:
   monitor:
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' }}
+    if: ${{ github.event_name == 'check_suite' && github.event.check_suite.conclusion != 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: 📣 Open or comment on CI failure issue
         uses: actions/github-script@v7
         with:
           script: |
-            const run = context.payload.workflow_run;
-            const issueTitle = `CI failure: ${run.name} – Run #${run.id}`;
+            const run = context.payload.check_suite;
+            const issueTitle = `CI failure: ${run.head_branch || 'unknown-branch'} – Suite #${run.id}`;
             // Search for an existing open issue with this exact title.
             const search = await github.rest.search.issuesAndPullRequests({
               q: `repo:${context.repo.owner}/${context.repo.repo} is:issue in:title "${issueTitle}" state:open`
@@ -28,7 +28,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: issueTitle,
-                body: `The workflow **${run.name}** ([details](${run.html_url})) finished with conclusion **${run.conclusion}**.\n\nPlease investigate the logs and fix failing steps.`,
+                body: `The check suite for branch **${run.head_branch || 'unknown'}** ([details](${run.html_url})) finished with conclusion **${run.conclusion}**.\n\nPlease investigate the logs and fix failing steps.`,
                 labels: ['ci']
               });
               console.log(`Opened new issue for failed run ${run.id}`);
@@ -38,7 +38,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issueNumber,
-                body: `Another failure detected for run [#${run.id}](${run.html_url}) – conclusion: **${run.conclusion}**.`
+                body: `Another failure detected for suite [#${run.id}](${run.html_url}) – conclusion: **${run.conclusion}**.`
               });
               console.log(`Appended comment to existing issue #${issueNumber}`);
             }
