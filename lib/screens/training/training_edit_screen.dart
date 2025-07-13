@@ -41,8 +41,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
     super.dispose();
   }
 
-  void _load() {
-    final list = ref.read(trainingsProvider).value ?? [];
+  void _load(List<Training> list) {
     _training = list.firstWhere(
       (t) => t.id == widget.trainingId,
       orElse: Training.new,
@@ -117,7 +116,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (_) {
           if (_training == null) {
-            _load();
+            _load(ref.read(trainingsProvider).value ?? []);
           }
           if (_training == null || _training!.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));
