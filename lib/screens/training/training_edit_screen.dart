@@ -39,14 +39,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   void initState() {
     super.initState();
 
-    // Listen for trainingsProvider data and load when available
-    ref.listen<AsyncValue<List<Training>>>(trainingsProvider, (prev, next) {
-      next.whenData((list) {
-        if (mounted && (_training == null || _training!.id.isEmpty)) {
-          setState(() => _load(list));
-        }
-      });
-    });
+    // No-op initState (oversimplified after refactor)
   }
 
   @override
@@ -129,9 +122,13 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (trainings) {
-          // _training is already loaded via ref.listen; fall back to list
           if (_training == null || _training!.id.isEmpty) {
-            return const Center(child: Text('Training niet gevonden'));
+            // Defer load to next frame to avoid setState during build
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!mounted) return;
+              setState(() => _load(trainings));
+            });
+            return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
