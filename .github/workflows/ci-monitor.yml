@@ -3,6 +3,7 @@ name: "🔎 CI Monitor"
 on:
   workflow_run:
     # Monitor all workflows in this repo; filter for completed events
+    workflows: ['**']
     types: [completed]
   schedule:
     # Daily check at 03:00 UTC to catch runs older than 90 days (optional extension point)
