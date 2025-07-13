@@ -8,6 +8,7 @@ import 'package:jo17_tactical_manager/pdf/generators/training_session_pdf_genera
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/assessment.dart';
 import 'package:jo17_tactical_manager/models/training_session/training_session.dart';
+import 'package:jo17_tactical_manager/models/player.dart';
 
 void main() {
   group('PDF Generators', () {
@@ -49,7 +50,7 @@ void main() {
 
       final bytes = await const TrainingSessionPdfGenerator().generate((
         session,
-        const [],
+        <Player>[],
       ));
       expect(bytes, isNotEmpty);
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));

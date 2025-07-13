@@ -76,7 +76,10 @@ void main() {
   testWidgets('prefills form with existing training data', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          trainingRepositoryProvider.overrideWithValue(repo),
+          trainingsProvider.overrideWithValue(Future.value([_dummy])),
+        ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
@@ -91,7 +94,10 @@ void main() {
   testWidgets('shows validation error on invalid duration', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          trainingRepositoryProvider.overrideWithValue(repo),
+          trainingsProvider.overrideWithValue(Future.value([_dummy])),
+        ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
@@ -108,7 +114,10 @@ void main() {
   testWidgets('successful save calls repository update', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          trainingRepositoryProvider.overrideWithValue(repo),
+          trainingsProvider.overrideWithValue(Future.value([_dummy])),
+        ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
