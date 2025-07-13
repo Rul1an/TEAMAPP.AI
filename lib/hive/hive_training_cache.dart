@@ -44,6 +44,7 @@ class HiveTrainingCache {
       ..date =
           DateTime.tryParse(json['date'] as String? ?? '') ?? DateTime.now()
       ..duration = json['duration'] as int? ?? 0
+      ..trainingNumber = json['trainingNumber'] as int? ?? 1
       ..focus = _focus(json['focus'] as String?)
       ..intensity = _intensity(json['intensity'] as String?)
       ..status = _status(json['status'] as String?)
@@ -73,6 +74,7 @@ class HiveTrainingCache {
     'id': t.id,
     'date': t.date.toIso8601String(),
     'duration': t.duration,
+    'trainingNumber': t.trainingNumber,
     'focus': t.focus.name,
     'intensity': t.intensity.name,
     'status': t.status.name,

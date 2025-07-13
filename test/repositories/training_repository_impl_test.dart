@@ -26,7 +26,8 @@ void main() {
         ..duration = 90
         ..focus = TrainingFocus.technical
         ..intensity = TrainingIntensity.medium
-        ..status = TrainingStatus.planned,
+        ..status = TrainingStatus.planned
+        ..trainingNumber = 1,
     );
   });
 
@@ -43,7 +44,8 @@ void main() {
       ..duration = 90
       ..focus = TrainingFocus.technical
       ..intensity = TrainingIntensity.medium
-      ..status = TrainingStatus.planned;
+      ..status = TrainingStatus.planned
+      ..trainingNumber = 1;
   }
 
   late Training tUpcoming;
