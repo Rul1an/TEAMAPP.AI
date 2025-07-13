@@ -1,4 +1,4 @@
-THIS SHOULD BE A LINTER ERROR// Flutter imports:
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -133,8 +133,8 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (_) {
           // Training data already triggered in initState
-          if (_training == null || _training!.id.isEmpty) {
-            return const Center(child: Text('Training niet gevonden'));
+          if (_training == null) {
+            return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -154,10 +154,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                       ),
                       child: Text(
                         _selectedDate != null
-                            ? DateFormat(
-                                'd MMM yyyy',
-                                'nl_NL',
-                              ).format(_selectedDate!)
+                            ? DateFormat('d MMM yyyy').format(_selectedDate!)
                             : 'Selecteer datum',
                       ),
                     ),
