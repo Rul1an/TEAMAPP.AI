@@ -1,4 +1,4 @@
-// Flutter imports:
+THIS SHOULD BE A LINTER ERROR// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -50,12 +50,10 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
 
   Future<void> _load() async {
     final list = ref.read(trainingsProvider).value ?? [];
-    _training = list.firstWhere(
-      (t) => t.id == widget.trainingId,
-      orElse: () => Training(),
-    );
+    final idx = list.indexWhere((t) => t.id == widget.trainingId);
+    _training = idx != -1 ? list[idx] : null;
 
-    if (_training == null || _training!.id.isEmpty) {
+    if (_training == null) {
       // Fallback to repository fetch (unit tests often stub only the repo)
       final repo = ref.read(trainingRepositoryProvider);
       final res = await repo.getById(widget.trainingId);
@@ -63,7 +61,8 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         _training = res.dataOrNull;
       }
     }
-    if (_training != null && _training!.id.isNotEmpty) {
+
+    if (_training != null) {
       _selectedDate = _training!.date;
       _durationCtrl.text = _training!.duration.toString();
       _focus = _training!.focus;
