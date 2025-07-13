@@ -125,11 +125,9 @@ class PlayerDetailScreen extends ConsumerWidget {
   Future<void> _exportPdf(WidgetRef ref, BuildContext context) async {
     final playersAsync = ref.read(playersProvider);
     playersAsync.whenData((players) async {
-      final player = players.firstWhere(
-        (p) => p.id == playerId,
-        orElse: () => null,
-      );
-      if (player == null) return;
+      final playerIndex = players.indexWhere((p) => p.id == playerId);
+      if (playerIndex == -1) return;
+      final player = players[playerIndex];
 
       // Placeholder minimal assessment for demo
       final assessmentGenerator = ref.read(

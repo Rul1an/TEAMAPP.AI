@@ -60,6 +60,7 @@ class SupabaseTrainingDataSource {
       ..id = r['id'] as String? ?? ''
       ..date = DateTime.parse(r['date'] as String)
       ..duration = r['duration'] as int? ?? 0
+      ..trainingNumber = r['training_number'] as int?
       ..focus = _focus(r['focus'] as String?)
       ..intensity = _intensity(r['intensity'] as String?)
       ..status = _status(r['status'] as String?)
@@ -82,6 +83,7 @@ class SupabaseTrainingDataSource {
     'id': t.id,
     'date': t.date.toIso8601String(),
     'duration': t.duration,
+    'training_number': t.trainingNumber,
     'focus': t.focus.name,
     'intensity': t.intensity.name,
     'status': t.status.name,

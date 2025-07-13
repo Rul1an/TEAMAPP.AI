@@ -568,11 +568,10 @@ class _TrainingAttendanceScreenState
   Future<void> _exportPdf(WidgetRef ref) async {
     final trainings = ref.read(trainingsProvider).value;
     if (trainings == null) return;
-    final training = trainings.firstWhere(
-      (t) => t.id == widget.trainingId,
-      orElse: () => null,
-    );
-    if (training == null) return;
+
+    final trainingIndex = trainings.indexWhere((t) => t.id == widget.trainingId);
+    if (trainingIndex == -1) return;
+    final training = trainings[trainingIndex];
 
     final players = ref.read(playersProvider).value ?? [];
     final generator = ref.read(trainingSessionPdfGeneratorProvider);
@@ -580,6 +579,7 @@ class _TrainingAttendanceScreenState
       TrainingSession.create(
         teamId: 'team',
         date: training.date,
+        // Use the stored training number, falling back to 1 if not available.
         trainingNumber: training.trainingNumber ?? 1,
       ),
       players,
