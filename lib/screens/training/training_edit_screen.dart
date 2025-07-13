@@ -36,6 +36,20 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   Training? _training;
 
   @override
+  void initState() {
+    super.initState();
+
+    // Listen for trainingsProvider data and load when available
+    ref.listen<AsyncValue<List<Training>>>(trainingsProvider, (prev, next) {
+      next.whenData((list) {
+        if (mounted && (_training == null || _training!.id.isEmpty)) {
+          setState(() => _load(list));
+        }
+      });
+    });
+  }
+
+  @override
   void dispose() {
     _durationCtrl.dispose();
     super.dispose();
@@ -115,9 +129,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (trainings) {
-          if (_training == null || _training!.id.isEmpty) {
-            _load(trainings);
-          }
+          // _training is already loaded via ref.listen; fall back to list
           if (_training == null || _training!.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));
           }
