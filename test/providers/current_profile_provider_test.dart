@@ -44,7 +44,7 @@ class _FakeRepo implements ProfileRepository {
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
-    _controller.add(_profile);
+    _controller.add(_profile!);
     return Success(_profile!);
   }
 
