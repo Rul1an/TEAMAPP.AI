@@ -36,23 +36,40 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   Training? _training;
 
   @override
+  void initState() {
+    super.initState();
+    // Ensure training data loaded on first frame
+    _load();
+  }
+
+  @override
   void dispose() {
     _durationCtrl.dispose();
     super.dispose();
   }
 
-  void _load() {
+  Future<void> _load() async {
     final list = ref.read(trainingsProvider).value ?? [];
     _training = list.firstWhere(
       (t) => t.id == widget.trainingId,
-      orElse: Training.new,
+      orElse: () => Training(),
     );
+
+    if (_training == null || _training!.id.isEmpty) {
+      // Fallback to repository fetch (unit tests often stub only the repo)
+      final repo = ref.read(trainingRepositoryProvider);
+      final res = await repo.getById(widget.trainingId);
+      if (res.isSuccess && res.dataOrNull != null) {
+        _training = res.dataOrNull;
+      }
+    }
     if (_training != null && _training!.id.isNotEmpty) {
       _selectedDate = _training!.date;
       _durationCtrl.text = _training!.duration.toString();
       _focus = _training!.focus;
       _intensity = _training!.intensity;
       _status = _training!.status;
+      if (mounted) setState(() {});
     }
   }
 
@@ -116,7 +133,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (_) {
-          if (_training == null) _load();
+          // Training data already triggered in initState
           if (_training == null || _training!.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));
           }

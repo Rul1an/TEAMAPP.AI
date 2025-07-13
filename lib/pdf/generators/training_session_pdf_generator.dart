@@ -117,7 +117,7 @@ class TrainingSessionPdfGenerator
           ),
           pw.SizedBox(height: 12),
           pw.Text(
-            '${DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(session.date)} | ${session.sessionDuration.inMinutes} minuten',
+            '${DateFormat('EEEE d MMMM yyyy').format(session.date)} | ${session.sessionDuration.inMinutes} minuten',
             style: const pw.TextStyle(fontSize: 14, color: PdfColors.white),
           ),
         ],

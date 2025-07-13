@@ -224,7 +224,7 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
       case ExerciseType.physical:
         return Colors.red;
       case ExerciseType.goalkeeping:
-        return Colors.yellow[700]!;
+        return Colors.yellow.shade700;
       case ExerciseType.psychological:
         return Colors.deepPurple;
       case ExerciseType.warmUp:
