@@ -1,4 +1,4 @@
-// Package imports:
+THIS SHOULD BE A LINTER ERROR// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:

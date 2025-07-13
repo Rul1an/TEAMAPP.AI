@@ -99,8 +99,20 @@ void main() {
 
     // Duration field should contain 60
     expect(find.widgetWithText(TextFormField, '60'), findsOneWidget);
-    // Focus dropdown should show technical
-    expect(find.text(TrainingFocus.technical.name), findsOneWidget);
+    // Dropdowns prefilled
+    expect(
+      tester.widget<DropdownButtonFormField>(
+        find.byType(DropdownButtonFormField).at(0),
+      ).initialValue,
+      TrainingFocus.technical,
+    );
+
+    expect(
+      tester.widget<DropdownButtonFormField>(
+        find.byType(DropdownButtonFormField).at(1),
+      ).initialValue,
+      TrainingIntensity.medium,
+    );
   });
 
   testWidgets('shows validation error on invalid duration', (tester) async {
@@ -121,6 +133,7 @@ void main() {
     await tester.tap(find.text('Opslaan'));
     await tester.pumpAndSettle();
 
+    // Error message should appear
     expect(find.textContaining('15–240'), findsOneWidget);
   });
 
@@ -142,5 +155,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repo.saved.duration, 90);
+    // Snackbar success appears
+    expect(find.byType(SnackBar), findsOneWidget);
   });
 }
