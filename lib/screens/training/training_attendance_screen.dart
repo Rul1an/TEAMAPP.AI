@@ -579,7 +579,8 @@ class _TrainingAttendanceScreenState
       TrainingSession.create(
         teamId: 'team',
         date: training.date,
-        trainingNumber: 1,
+        // Use the stored training number, falling back to 1 if not available.
+        trainingNumber: training.trainingNumber ?? 1,
       ),
       players,
     ));
