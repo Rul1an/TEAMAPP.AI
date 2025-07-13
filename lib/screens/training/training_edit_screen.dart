@@ -114,9 +114,9 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Fout: $e')),
-        data: (_) {
-          if (_training == null) {
-            _load(ref.read(trainingsProvider).value ?? []);
+        data: (trainings) {
+          if (_training == null || _training!.id.isEmpty) {
+            _load(trainings);
           }
           if (_training == null || _training!.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));
