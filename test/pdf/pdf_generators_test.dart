@@ -62,13 +62,24 @@ void main() {
         trainingNumber: 12,
       )..phases = [phase];
 
-      final bytes = await const TrainingSessionPdfGenerator().generate((
-        session,
-        <Player>[player],
-      ));
+      late List<int> bytes;
+      try {
+        bytes = await const TrainingSessionPdfGenerator().generate((
+          session,
+          <Player>[player],
+        ));
+      } catch (e) {
+        fail('PDF generation threw an exception: $e');
+      }
 
-      expect(bytes.length, greaterThan(5000)); // basic size check
+      // Basic checks
+      expect(bytes, isNotEmpty);
+      expect(bytes.length, greaterThan(5000));
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));
+
+      // The PDF text should contain the training number
+      final textSnippet = String.fromCharCodes(bytes);
+      expect(textSnippet.contains('Training 12'), isTrue);
     });
   });
 }

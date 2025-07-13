@@ -83,7 +83,9 @@ void main() {
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
-    await tester.pump(); // start async load
+    await tester.pump(); // first frame with loading indicator
+    // Should see progress indicator during async load
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.pumpAndSettle();
 
     // Duration field should contain 60
@@ -103,6 +105,7 @@ void main() {
       ),
     );
     await tester.pump();
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.pumpAndSettle();
 
     // enter invalid duration
@@ -124,6 +127,7 @@ void main() {
       ),
     );
     await tester.pump();
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byType(TextFormField).first, '90');
