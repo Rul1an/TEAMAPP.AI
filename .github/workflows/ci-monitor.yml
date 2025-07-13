@@ -1,11 +1,17 @@
 name: "🔎 CI Monitor"
 
 on:
+  # Trigger when any of the listed primary workflows finish (success or failure).
   workflow_run:
-    # Monitor all workflows in this repo; filter for completed events
+    workflows:
+      - '🚀 Advanced Flutter SaaS Deployment'
+      - 'Flutter Web CI/CD'
+      - '👤 Profiles Migration & Tests'
+      - '🔐 Supabase RLS Migration'
+      - 'docs-snippets'
     types: [completed]
+  # Fallback daily schedule to catch stale runs that might have been missed.
   schedule:
-    # Daily check at 03:00 UTC to catch runs older than 90 days (optional extension point)
     - cron: '0 3 * * *'
 
 jobs:
