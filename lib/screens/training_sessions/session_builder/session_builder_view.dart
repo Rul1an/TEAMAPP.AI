@@ -18,7 +18,8 @@ class SessionBuilderView extends ConsumerWidget {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    final session = state.session;
+    // At this point `state.session` is guaranteed non-null due to early return above.
+    final session = state.session!;
 
     return Scaffold(
       appBar: AppBar(title: Text('Training ${session.trainingNumber}')),
