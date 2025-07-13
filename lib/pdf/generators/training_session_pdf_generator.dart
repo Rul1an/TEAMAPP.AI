@@ -24,6 +24,24 @@ class TrainingSessionPdfGenerator
   Future<Uint8List> generate((TrainingSession, List<Player>) input) async {
     final (session, players) = input;
 
+    // Fail fast if essential fields are missing – prevents cryptic errors
+    assert(
+      session.teamId.isNotEmpty,
+      'TrainingSessionPdfGenerator: teamId mag niet leeg zijn',
+    );
+    assert(
+      session.trainingNumber > 0,
+      'TrainingSessionPdfGenerator: trainingNumber moet > 0 zijn',
+    );
+    assert(
+      session.date != null,
+      'TrainingSessionPdfGenerator: date is verplicht',
+    );
+    assert(
+      session.sessionDuration.inMinutes > 0,
+      'TrainingSessionPdfGenerator: sessieduur moet positief zijn',
+    );
+
     final pdf = pw.Document();
 
     // VOAB color palette
