@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -125,9 +126,8 @@ class PlayerDetailScreen extends ConsumerWidget {
   Future<void> _exportPdf(WidgetRef ref, BuildContext context) async {
     final playersAsync = ref.read(playersProvider);
     playersAsync.whenData((players) async {
-      final player = players.firstWhere(
+      final player = players.firstWhereOrNull(
         (p) => p.id == playerId,
-        orElse: () => null,
       );
       if (player == null) return;
 

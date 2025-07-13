@@ -1,16 +1,16 @@
 name: "🔎 CI Monitor"
 
 on:
-  workflow_run:
-    # Monitor all workflows in this repo; filter for completed events
+  # Trigger after any job (build / test / deploy) completes in this repository.
+  check_suite:
     types: [completed]
+  # Fallback daily run to catch very old failed runs (optional)
   schedule:
-    # Daily check at 03:00 UTC to catch runs older than 90 days (optional extension point)
     - cron: '0 3 * * *'
 
 jobs:
   monitor:
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' }}
+    if: ${{ github.event_name == 'check_suite' && github.event.check_suite.conclusion != 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: 📣 Open or comment on CI failure issue

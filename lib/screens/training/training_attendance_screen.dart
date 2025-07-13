@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,16 +62,11 @@ class _TrainingAttendanceScreenState
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(child: Text('Fout: $error')),
         data: (trainings) {
-          final training = trainings.firstWhere(
+          final training = trainings.firstWhereOrNull(
             (t) => t.id == widget.trainingId,
-            orElse: () => Training()
-              ..date = DateTime.now()
-              ..focus = TrainingFocus.technical
-              ..intensity = TrainingIntensity.medium
-              ..status = TrainingStatus.planned,
           );
 
-          if (training.id == '') {
+          if (training == null) {
             return const Center(child: Text('Training niet gevonden'));
           }
 
@@ -568,9 +564,8 @@ class _TrainingAttendanceScreenState
   Future<void> _exportPdf(WidgetRef ref) async {
     final trainings = ref.read(trainingsProvider).value;
     if (trainings == null) return;
-    final training = trainings.firstWhere(
+    final training = trainings.firstWhereOrNull(
       (t) => t.id == widget.trainingId,
-      orElse: () => null,
     );
     if (training == null) return;
 
@@ -580,7 +575,7 @@ class _TrainingAttendanceScreenState
       TrainingSession.create(
         teamId: 'team',
         date: training.date,
-        trainingNumber: training.trainingNumber ?? 1,
+        trainingNumber: training.trainingNumber,
       ),
       players,
     ));
