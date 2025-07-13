@@ -117,12 +117,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (_) {
           if (_training == null) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (!mounted || _training != null) return;
-              setState(() {
-                _load();
-              });
-            });
+            _load();
           }
           if (_training == null || _training!.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));

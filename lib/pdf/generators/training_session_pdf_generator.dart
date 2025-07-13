@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -41,6 +42,13 @@ class TrainingSessionPdfGenerator
       session.sessionDuration.inMinutes > 0,
       'TrainingSessionPdfGenerator: sessieduur moet positief zijn',
     );
+
+    // Ensure Dutch locale symbols are loaded for DateFormat.
+    try {
+      await initializeDateFormatting('nl_NL', null);
+    } catch (_) {
+      // Ignore if already initialized or locale data unavailable.
+    }
 
     final pdf = pw.Document();
 
