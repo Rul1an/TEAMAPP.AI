@@ -577,7 +577,10 @@ class _TrainingAttendanceScreenState
     final trainingNumber = (() {
       try {
         return training.trainingNumber;
-      } catch (_) {
+      } on LateInitializationError {
+        // If the trainingNumber field was never initialized (for older persisted
+        // Training documents), fall back to 1. Any other exception should
+        // propagate so that genuine issues aren t masked.
         return 1;
       }
     })();
