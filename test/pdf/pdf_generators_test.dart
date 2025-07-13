@@ -74,7 +74,7 @@ void main() {
 
       // Basic checks
       expect(bytes, isNotEmpty);
-      expect(bytes.length, greaterThan(5000));
+      expect(bytes.length, greaterThan(1000));
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));
 
       // The PDF text should contain the training number

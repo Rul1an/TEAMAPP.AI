@@ -87,6 +87,8 @@ void main() {
     // Should see progress indicator during async load
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.pumpAndSettle();
+    // Ensure form loaded (progress indicator gone)
+    expect(find.byType(CircularProgressIndicator), findsNothing);
 
     // Duration field should contain 60
     expect(find.widgetWithText(TextFormField, '60'), findsOneWidget);
@@ -107,6 +109,7 @@ void main() {
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.pumpAndSettle();
+    expect(find.byType(CircularProgressIndicator), findsNothing);
 
     // enter invalid duration
     await tester.enterText(find.byType(TextFormField).first, '5');
@@ -129,6 +132,7 @@ void main() {
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.pumpAndSettle();
+    expect(find.byType(CircularProgressIndicator), findsNothing);
 
     await tester.enterText(find.byType(TextFormField).first, '90');
     await tester.tap(find.text('Opslaan'));
