@@ -21,7 +21,7 @@ class _MockTrainingRepo implements TrainingRepository {
   Future<Result<void>> delete(String id) async => const Success(null);
 
   @override
-  Future<Result<List<Training>>> getAll() async => const Success([]);
+  Future<Result<List<Training>>> getAll() async => Success([_dummy]);
 
   @override
   Future<Result<Training?>> getById(String id) async => Success(_dummy);

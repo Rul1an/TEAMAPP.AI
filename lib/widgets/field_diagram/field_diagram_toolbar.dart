@@ -188,7 +188,7 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
       case PlayerType.defending:
         playerIconColor = Colors.red;
       case PlayerType.neutral:
-        playerIconColor = Colors.yellow[700];
+        playerIconColor = Colors.yellow.shade700;
       case PlayerType.goalkeeper:
         playerIconColor = Colors.green;
     }
@@ -267,7 +267,7 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
                 width: 16,
                 height: 16,
                 decoration: BoxDecoration(
-                  color: Colors.yellow[700],
+                  color: Colors.yellow.shade700,
                   shape: BoxShape.circle,
                 ),
               ),

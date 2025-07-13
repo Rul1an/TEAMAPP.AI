@@ -63,14 +63,9 @@ class _TrainingAttendanceScreenState
         data: (trainings) {
           final training = trainings.firstWhere(
             (t) => t.id == widget.trainingId,
-            orElse: () => Training()
-              ..date = DateTime.now()
-              ..focus = TrainingFocus.technical
-              ..intensity = TrainingIntensity.medium
-              ..status = TrainingStatus.planned,
+            orElse: Training.new,
           );
-
-          if (training.id == '') {
+          if (training.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));
           }
 
@@ -570,9 +565,9 @@ class _TrainingAttendanceScreenState
     if (trainings == null) return;
     final training = trainings.firstWhere(
       (t) => t.id == widget.trainingId,
-      orElse: () => null,
+      orElse: Training.new,
     );
-    if (training == null) return;
+    if (training.id.isEmpty) return;
 
     final players = ref.read(playersProvider).value ?? [];
     final generator = ref.read(trainingSessionPdfGeneratorProvider);
@@ -580,7 +575,7 @@ class _TrainingAttendanceScreenState
       TrainingSession.create(
         teamId: 'team',
         date: training.date,
-        trainingNumber: training.trainingNumber ?? 1,
+        trainingNumber: 1,
       ),
       players,
     ));
