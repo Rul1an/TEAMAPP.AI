@@ -19,9 +19,10 @@ class TrainingSession {
   TrainingSession.create({
     required this.teamId,
     required this.date,
-    required this.trainingNumber,
+    int? trainingNumber,
     this.type = TrainingType.regularTraining,
   }) {
+    this.trainingNumber = trainingNumber ?? 1;
     createdAt = DateTime.now();
     updatedAt = DateTime.now();
   }
@@ -59,7 +60,7 @@ class TrainingSession {
   // Basic session info
   late String teamId;
   late DateTime date;
-  late int trainingNumber;
+  int trainingNumber = 1;
   late TrainingType type;
 
   // Session details
