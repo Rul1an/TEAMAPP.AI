@@ -85,6 +85,8 @@ class Training {
 
   String? location;
   String? description;
+  // Session number within the week/season
+  int? trainingNumber;
   String? objectives;
 
   // Drills/exercises

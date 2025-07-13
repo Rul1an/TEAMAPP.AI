@@ -16,7 +16,8 @@ class HeatMapPainter extends CustomPainter {
         final val = matrix[i][j];
         if (val == 0) continue;
         final intensity = val / max;
-        paint.color = Color.lerp(Colors.yellow, Colors.red, intensity);
+        // Color.lerp may return null for intensity outside 0-1, fallback to yellow.
+        paint.color = Color.lerp(Colors.yellow, Colors.red, intensity) ?? Colors.yellow;
         final rect = Rect.fromLTWH(i * cellW, j * cellH, cellW, cellH);
         canvas.drawRect(rect, paint);
       }

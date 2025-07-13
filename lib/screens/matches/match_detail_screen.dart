@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import '../../extensions/color_extensions.dart';
 
 // Project imports:
 import '../../models/match.dart';
@@ -590,11 +591,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   Future<void> _exportPdf() async {
     final matchAsync = ref.read(matchesProvider);
     matchAsync.whenData((matches) async {
-      final match = matches.firstWhere(
-        (m) => m.id == widget.matchId,
-        orElse: () => null,
-      );
-      if (match == null) return;
+      final idx = matches.indexWhere((m) => m.id == widget.matchId);
+      if (idx == -1) return;
+      final match = matches[idx];
 
       final generator = ref.read(matchReportPdfGeneratorProvider);
       final bytes = await generator.generate(match);

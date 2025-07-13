@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import '../../extensions/color_extensions.dart';
 
 // Project imports:
 import '../../models/performance_rating.dart';
@@ -568,11 +569,9 @@ class _TrainingAttendanceScreenState
   Future<void> _exportPdf(WidgetRef ref) async {
     final trainings = ref.read(trainingsProvider).value;
     if (trainings == null) return;
-    final training = trainings.firstWhere(
-      (t) => t.id == widget.trainingId,
-      orElse: () => null,
-    );
-    if (training == null) return;
+    final index = trainings.indexWhere((t) => t.id == widget.trainingId);
+    if (index == -1) return;
+    final training = trainings[index];
 
     final players = ref.read(playersProvider).value ?? [];
     final generator = ref.read(trainingSessionPdfGeneratorProvider);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../extensions/color_extensions.dart';
 
 // Project imports:
 import '../../models/training_session/field_diagram.dart';
@@ -188,7 +189,7 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
       case PlayerType.defending:
         playerIconColor = Colors.red;
       case PlayerType.neutral:
-        playerIconColor = Colors.yellow[700];
+        playerIconColor = Colors.yellow.shade700;
       case PlayerType.goalkeeper:
         playerIconColor = Colors.green;
     }
@@ -454,7 +455,7 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
 
     return Material(
       borderRadius: BorderRadius.circular(8),
-      color: isSelected ? color.withValues(alpha: 0.2) : Colors.transparent,
+      color: isSelected ? color.withOpacity(0.2) : Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: () => _selectLineType(lineType),
