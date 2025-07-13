@@ -22,8 +22,15 @@ class _MockMatchRepo implements MatchRepository {
   }
 
   @override
-  Future<Result<Match?>> getById(String id) async =>
-      Success(matches.firstWhere((m) => m.id == id, orElse: () => Match()));
+  Future<Result<Match?>> getById(String id) async {
+    try {
+      final match = matches.firstWhere((m) => m.id == id);
+      return Success(match);
+    } catch (_) {
+      // No match found – return Success with null to honor the nullable contract.
+      return const Success(null);
+    }
+  }
 
   @override
   Future<Result<List<Match>>> getRecent() async => Success(matches);
