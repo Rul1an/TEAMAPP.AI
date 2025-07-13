@@ -571,16 +571,9 @@ class _TrainingAttendanceScreenState
 
     final players = ref.read(playersProvider).value ?? [];
     final generator = ref.read(trainingSessionPdfGeneratorProvider);
-    // Some older persisted Training documents may not have an initialised
-    // trainingNumber (added later in the data-model). Safely fall back to 1
-    // to avoid a LateInitializationError.
-    final trainingNumber = (() {
-      try {
-        return training.trainingNumber;
-      } catch (_) {
-        return 1;
-      }
-    })();
+    // Since Training.trainingNumber now has a default value (1) and is no
+    // longer `late`, we can directly access it without defensive checks.
+    final trainingNumber = training.trainingNumber;
 
     final bytes = await generator.generate((
       TrainingSession.create(

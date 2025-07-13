@@ -52,6 +52,7 @@ final _dummy = () {
     ..focus = TrainingFocus.technical
     ..intensity = TrainingIntensity.medium
     ..status = TrainingStatus.planned
+    ..trainingNumber = 1
     ..presentPlayerIds = []
     ..absentPlayerIds = [];
   return t;

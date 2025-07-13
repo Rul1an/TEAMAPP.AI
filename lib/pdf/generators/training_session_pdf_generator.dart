@@ -26,6 +26,9 @@ class TrainingSessionPdfGenerator
 
     final pdf = pw.Document();
 
+    // Ensure a non-zero training number (for backwards compatibility).
+    final safeNr = session.trainingNumber == 0 ? 1 : session.trainingNumber;
+
     // VOAB color palette
     const primaryColor = PdfColor.fromInt(0xFF1976D2);
     const backgroundColor = PdfColor.fromInt(0xFFF5F5F5);
@@ -36,9 +39,14 @@ class TrainingSessionPdfGenerator
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(20),
         build: (context) => [
-          _buildTrainingHeader(session, primaryColor),
+          _buildTrainingHeader(session, primaryColor, safeNr),
           pw.SizedBox(height: 20),
-          _buildTrainingInfoSection(session, primaryColor, backgroundColor),
+          _buildTrainingInfoSection(
+            session,
+            primaryColor,
+            backgroundColor,
+            safeNr,
+          ),
           pw.SizedBox(height: 16),
           _buildPlayersSection(session, players, primaryColor, backgroundColor),
           pw.SizedBox(height: 16),
@@ -61,6 +69,7 @@ class TrainingSessionPdfGenerator
   pw.Widget _buildTrainingHeader(
     TrainingSession session,
     PdfColor primaryColor,
+    int safeNr,
   ) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(20),
@@ -105,7 +114,7 @@ class TrainingSessionPdfGenerator
                   borderRadius: pw.BorderRadius.circular(16),
                 ),
                 child: pw.Text(
-                  'Training ${session.trainingNumber}',
+                  'Training $safeNr',
                   style: pw.TextStyle(
                     fontSize: 12,
                     fontWeight: pw.FontWeight.bold,
@@ -129,6 +138,7 @@ class TrainingSessionPdfGenerator
     TrainingSession session,
     PdfColor primaryColor,
     PdfColor backgroundColor,
+    int safeNr,
   ) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(16),
@@ -168,7 +178,7 @@ class TrainingSessionPdfGenerator
                     pw.SizedBox(height: 6),
                     _buildInfoRow(
                       'Training Nr:',
-                      session.trainingNumber.toString(),
+                      safeNr.toString(),
                     ),
                     pw.SizedBox(height: 6),
                     _buildInfoRow('Type:', _getTrainingTypeText(session.type)),
