@@ -9,6 +9,7 @@ import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/assessment.dart';
 import 'package:jo17_tactical_manager/models/training_session/training_session.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
+import 'package:jo17_tactical_manager/models/training_session/session_phase.dart';
 
 void main() {
   group('PDF Generators', () {
@@ -42,17 +43,31 @@ void main() {
     });
 
     test('TrainingSessionPdfGenerator produces valid PDF bytes', () async {
+      final now = DateTime.utc(2025, 4, 20, 18);
+      final phase = SessionPhase.warmup(start: now, durationMinutes: 15);
+      final player = Player()
+        ..id = 'p1'
+        ..firstName = 'Jan'
+        ..lastName = 'Jansen'
+        ..jerseyNumber = 10
+        ..position = Position.midfielder
+        ..birthDate = DateTime(2008, 1, 1)
+        ..preferredFoot = PreferredFoot.right
+        ..height = 170
+        ..weight = 60;
+
       final session = TrainingSession.create(
         teamId: 'team1',
-        date: DateTime.utc(2025, 4, 20),
+        date: now,
         trainingNumber: 12,
-      );
+      )..phases = [phase];
 
       final bytes = await const TrainingSessionPdfGenerator().generate((
         session,
-        <Player>[],
+        <Player>[player],
       ));
-      expect(bytes, isNotEmpty);
+
+      expect(bytes.length, greaterThan(5000)); // basic size check
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));
     });
   });
