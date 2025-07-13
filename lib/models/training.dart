@@ -74,6 +74,11 @@ class Training {
   late DateTime date;
   late int duration; // in minutes
 
+  /// Sequential number of the training session within the season.
+  /// May be `null` when the value hasn't been assigned yet. Consumers
+  /// should fall back to `1` (or another sensible default) when `null`.
+  int? trainingNumber;
+
   @Enumerated(EnumType.name)
   late TrainingFocus focus;
 
