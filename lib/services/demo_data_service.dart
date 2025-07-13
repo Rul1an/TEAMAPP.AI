@@ -241,6 +241,7 @@ class DemoDataService {
       final match = Match()
         ..id = _uuid.v4()
         ..date = date
+        ..teamId = teamId
         ..opponent = opponents[i % opponents.length]
         ..location = i.isEven ? Location.home : Location.away
         ..competition = Competition.league
@@ -258,6 +259,7 @@ class DemoDataService {
       final match = Match()
         ..id = _uuid.v4()
         ..date = date
+        ..teamId = teamId
         ..opponent = opponents[(i + 3) % opponents.length]
         ..location = i.isEven ? Location.away : Location.home
         ..competition = Competition.league

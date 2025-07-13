@@ -133,7 +133,10 @@ class _EnhancedExerciseLibraryScreenState
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.blue[600], Colors.blue[400]],
+          colors: [
+            Colors.blue.shade600,
+            Colors.blue.shade400,
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

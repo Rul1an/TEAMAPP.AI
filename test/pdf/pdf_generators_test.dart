@@ -8,6 +8,8 @@ import 'package:jo17_tactical_manager/pdf/generators/training_session_pdf_genera
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/assessment.dart';
 import 'package:jo17_tactical_manager/models/training_session/training_session.dart';
+import 'package:jo17_tactical_manager/models/player.dart';
+import 'package:jo17_tactical_manager/models/training_session/session_phase.dart';
 
 void main() {
   group('PDF Generators', () {
@@ -41,18 +43,47 @@ void main() {
     });
 
     test('TrainingSessionPdfGenerator produces valid PDF bytes', () async {
+      final now = DateTime.utc(2025, 4, 20, 18);
+      final phase = SessionPhase.warmup(start: now, durationMinutes: 15);
+      final player = Player()
+        ..id = 'p1'
+        ..firstName = 'Jan'
+        ..lastName = 'Jansen'
+        ..jerseyNumber = 10
+        ..position = Position.midfielder
+        ..birthDate = DateTime(2008, 1, 1)
+        ..preferredFoot = PreferredFoot.right
+        ..height = 170
+        ..weight = 60;
+
       final session = TrainingSession.create(
         teamId: 'team1',
-        date: DateTime.utc(2025, 4, 20),
+        date: now,
         trainingNumber: 12,
-      );
+      )..phases = [phase];
 
-      final bytes = await const TrainingSessionPdfGenerator().generate((
-        session,
-        const [],
-      ));
+      late List<int> bytes;
+      try {
+        bytes = await const TrainingSessionPdfGenerator().generate((
+          session,
+          <Player>[player],
+        ));
+      } catch (e) {
+        fail('PDF generation threw an exception: $e');
+      }
+
+      // Basic checks
       expect(bytes, isNotEmpty);
+      expect(bytes.length, greaterThan(1000));
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));
+
+      // The PDF text should contain the training number
+      final textSnippet = String.fromCharCodes(bytes);
+      expect(textSnippet.contains('Training 12'), isTrue);
+      expect(textSnippet.contains('/Type /Page'), isTrue);
+      // Validate that the PDF contains at least one page object marker
+      final pageMarkers = RegExp(r'/Type /Page').allMatches(textSnippet).length;
+      expect(pageMarkers, greaterThanOrEqualTo(1));
     });
   });
 }

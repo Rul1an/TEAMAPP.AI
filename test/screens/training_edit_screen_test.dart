@@ -66,6 +66,15 @@ Widget _wrapWithRouter(Widget child) => ProviderScope(
   ),
 );
 
+Future<void> _waitForWidget(WidgetTester tester, Finder finder) async {
+  final end = DateTime.now().add(const Duration(seconds: 5));
+  while (DateTime.now().isBefore(end)) {
+    await tester.pump(const Duration(milliseconds: 20));
+    if (finder.evaluate().isNotEmpty) return;
+  }
+  fail('Timed out waiting for widget: $finder');
+}
+
 void main() {
   late _MockTrainingRepo repo;
 
@@ -76,48 +85,77 @@ void main() {
   testWidgets('prefills form with existing training data', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          trainingRepositoryProvider.overrideWithValue(repo),
+          trainingsProvider.overrideWith((ref) => Future.value([_dummy])),
+        ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await _waitForWidget(tester, find.byType(TextFormField));
+    // Ensure form loaded (progress indicator gone)
+    expect(find.byType(CircularProgressIndicator), findsNothing);
 
     // Duration field should contain 60
     expect(find.widgetWithText(TextFormField, '60'), findsOneWidget);
-    // Focus dropdown should show technical
-    expect(find.text(TrainingFocus.technical.name), findsOneWidget);
+    // Dropdowns prefilled
+    expect(
+      tester.widget<DropdownButtonFormField>(
+        find.byType(DropdownButtonFormField).at(0),
+      ).initialValue,
+      TrainingFocus.technical,
+    );
+
+    expect(
+      tester.widget<DropdownButtonFormField>(
+        find.byType(DropdownButtonFormField).at(1),
+      ).initialValue,
+      TrainingIntensity.medium,
+    );
   });
 
   testWidgets('shows validation error on invalid duration', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          trainingRepositoryProvider.overrideWithValue(repo),
+          trainingsProvider.overrideWith((ref) => Future.value([_dummy])),
+        ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await _waitForWidget(tester, find.byType(TextFormField));
 
     // enter invalid duration
     await tester.enterText(find.byType(TextFormField).first, '5');
     await tester.tap(find.text('Opslaan'));
     await tester.pumpAndSettle();
 
+    // Error message should appear
     expect(find.textContaining('15–240'), findsOneWidget);
   });
 
   testWidgets('successful save calls repository update', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          trainingRepositoryProvider.overrideWithValue(repo),
+          trainingsProvider.overrideWith((ref) => Future.value([_dummy])),
+        ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await _waitForWidget(tester, find.byType(TextFormField));
 
     await tester.enterText(find.byType(TextFormField).first, '90');
     await tester.tap(find.text('Opslaan'));
     await tester.pumpAndSettle();
 
     expect(repo.saved.duration, 90);
+    // Snackbar success appears
+    expect(find.byType(SnackBar), findsOneWidget);
   });
 }

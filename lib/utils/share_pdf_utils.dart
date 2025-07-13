@@ -5,14 +5,15 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
-// Conditional import: use real `package:web/web.dart` on the web, otherwise
-// fall back to a minimal stub so that tests running on VM/desktop compile.
-// ignore: uri_does_not_exist
-import 'package:web/web.dart'
+// Conditionally import a thin wrapper around `dart:html` on web.
+// ignore: conditional_uri_does_not_exist
+import 'share_pdf_web.dart'
     if (dart.library.io) 'web_stub.dart' as web;
 
 import 'package:path_provider/path_provider.dart';
-import 'dart:io' as io;
+// Conditionally import dart:io only on non-web platforms.
+// ignore: conditional_uri_does_not_exist
+import 'dart:io' as io if (dart.library.html) 'io_stub.dart';
 
 /// Helper to share or download PDF bytes across platforms.
 class SharePdfUtils {

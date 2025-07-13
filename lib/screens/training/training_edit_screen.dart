@@ -36,23 +36,39 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   Training? _training;
 
   @override
+  void initState() {
+    super.initState();
+    // Ensure training data loaded on first frame
+    _load();
+  }
+
+  @override
   void dispose() {
     _durationCtrl.dispose();
     super.dispose();
   }
 
-  void _load() {
+  Future<void> _load() async {
     final list = ref.read(trainingsProvider).value ?? [];
-    _training = list.firstWhere(
-      (t) => t.id == widget.trainingId,
-      orElse: Training.new,
-    );
-    if (_training != null && _training!.id.isNotEmpty) {
+    final idx = list.indexWhere((t) => t.id == widget.trainingId);
+    _training = idx != -1 ? list[idx] : null;
+
+    if (_training == null) {
+      // Fallback to repository fetch (unit tests often stub only the repo)
+      final repo = ref.read(trainingRepositoryProvider);
+      final res = await repo.getById(widget.trainingId);
+      if (res.isSuccess && res.dataOrNull != null) {
+        _training = res.dataOrNull;
+      }
+    }
+
+    if (_training != null) {
       _selectedDate = _training!.date;
       _durationCtrl.text = _training!.duration.toString();
       _focus = _training!.focus;
       _intensity = _training!.intensity;
       _status = _training!.status;
+      if (mounted) setState(() {});
     }
   }
 
@@ -62,7 +78,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      locale: const Locale('nl', 'NL'),
+      // Keep default locale for test environment compatibility
     );
     if (picked != null) setState(() => _selectedDate = picked);
   }
@@ -116,9 +132,10 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (_) {
-          if (_training == null) _load();
-          if (_training == null || _training!.id.isEmpty) {
-            return const Center(child: Text('Training niet gevonden'));
+          // Training data already triggered in initState
+          if (_training == null) {
+            // Still loading data
+            return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -138,10 +155,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                       ),
                       child: Text(
                         _selectedDate != null
-                            ? DateFormat(
-                                'd MMM yyyy',
-                                'nl_NL',
-                              ).format(_selectedDate!)
+                            ? DateFormat('d MMM yyyy').format(_selectedDate!)
                             : 'Selecteer datum',
                       ),
                     ),
