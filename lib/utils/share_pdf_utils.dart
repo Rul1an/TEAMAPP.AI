@@ -23,12 +23,9 @@ class SharePdfUtils {
   ) async {
     try {
       if (kIsWeb) {
-        final blob = web.Blob([data], 'application/pdf');
-        final url = web.Url.createObjectUrlFromBlob(blob);
-        final anchor = web.AnchorElement(href: url)
-          ..setAttribute('download', filename)
-          ..click();
-        web.Url.revokeObjectUrl(url);
+        await Share.shareXFiles(
+          [XFile.fromData(data, name: filename, mimeType: 'application/pdf')],
+        );
       } else {
         final dir = await getTemporaryDirectory();
         final file = io.File('${dir.path}/$filename');

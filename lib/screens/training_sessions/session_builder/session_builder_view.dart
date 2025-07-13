@@ -18,7 +18,7 @@ class SessionBuilderView extends ConsumerWidget {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    final session = state.session;
+    final session = state.session!;
 
     return Scaffold(
       appBar: AppBar(title: Text('Training ${session.trainingNumber}')),

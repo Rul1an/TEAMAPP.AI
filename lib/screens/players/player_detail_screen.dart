@@ -43,13 +43,10 @@ class PlayerDetailScreen extends ConsumerWidget {
         data: (players) {
           final player = players.firstWhere(
             (p) => p.id == playerId,
-            orElse: () {
-              final newPlayer = Player()
-                ..id = 'unknown'
-                ..firstName = 'Onbekend'
-                ..lastName = '';
-              return newPlayer;
-            },
+            orElse: () => Player()
+              ..id = 'unknown'
+              ..firstName = 'Onbekend'
+              ..lastName = '',
           );
 
           if (player.id == 'unknown') {
@@ -127,7 +124,7 @@ class PlayerDetailScreen extends ConsumerWidget {
     playersAsync.whenData((players) async {
       final player = players.firstWhere(
         (p) => p.id == playerId,
-        orElse: () => null,
+        orElse: Player.new,
       );
       if (player == null) return;
 
