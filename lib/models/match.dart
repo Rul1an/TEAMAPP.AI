@@ -91,9 +91,6 @@ class Match {
   late DateTime date;
   late String opponent;
 
-  // Association
-  late String teamId;
-
   @Enumerated(EnumType.name)
   late Location location;
 

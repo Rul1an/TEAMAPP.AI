@@ -41,31 +41,18 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
     super.dispose();
   }
 
-  Future<void> _load() async {
-    // 1. Try to find the training in the already-loaded list (if any).
+  void _load() {
     final list = ref.read(trainingsProvider).value ?? [];
-    var training = list.firstWhere(
+    _training = list.firstWhere(
       (t) => t.id == widget.trainingId,
-      orElse: () => Training(),
+      orElse: Training.new,
     );
-
-    // 2. If not found, fetch it directly from the repository.
-    if (training.id.isEmpty) {
-      final repo = ref.read(trainingRepositoryProvider);
-      final res = await repo.getById(widget.trainingId);
-      training = res.dataOrNull ?? Training();
-    }
-
-    // 3. Populate the UI only when we have a valid training.
-    if (training.id.isNotEmpty && mounted) {
-      setState(() {
-        _training = training;
-        _selectedDate = training.date;
-        _durationCtrl.text = training.duration.toString();
-        _focus = training.focus;
-        _intensity = training.intensity;
-        _status = training.status;
-      });
+    if (_training != null && _training!.id.isNotEmpty) {
+      _selectedDate = _training!.date;
+      _durationCtrl.text = _training!.duration.toString();
+      _focus = _training!.focus;
+      _intensity = _training!.intensity;
+      _status = _training!.status;
     }
   }
 

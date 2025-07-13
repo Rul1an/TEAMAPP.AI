@@ -35,7 +35,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          heatMapControllerProvider.overrideWith(() => mockNotifier),
+          heatMapControllerProvider.overrideWith((ref) => mockNotifier),
         ],
         child: const MaterialApp(home: Scaffold(body: HeatMapCard())),
       ),
