@@ -83,6 +83,7 @@ void main() {
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
+    await tester.pump(); // start async load
     await tester.pumpAndSettle();
 
     // Duration field should contain 60
@@ -101,6 +102,7 @@ void main() {
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
+    await tester.pump();
     await tester.pumpAndSettle();
 
     // enter invalid duration
@@ -121,6 +123,7 @@ void main() {
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
+    await tester.pump();
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byType(TextFormField).first, '90');
