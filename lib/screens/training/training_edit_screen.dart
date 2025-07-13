@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 // Project imports:
 import '../../models/training.dart';
@@ -39,7 +40,8 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   void initState() {
     super.initState();
 
-    // No-op initState (oversimplified after refactor)
+    // Ensure Dutch locale date symbols are available during tests.
+    initializeDateFormatting('nl_NL', null).catchError((_) {});
   }
 
   @override
@@ -112,6 +114,14 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
     }
   }
 
+  String _formatDate(DateTime date) {
+    try {
+      return DateFormat('d MMM yyyy', 'nl_NL').format(date);
+    } catch (_) {
+      return DateFormat('d MMM yyyy').format(date);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(trainingsProvider);
@@ -144,10 +154,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                       ),
                       child: Text(
                         _selectedDate != null
-                            ? DateFormat(
-                                'd MMM yyyy',
-                                'nl_NL',
-                              ).format(_selectedDate!)
+                            ? _formatDate(_selectedDate!)
                             : 'Selecteer datum',
                       ),
                     ),
