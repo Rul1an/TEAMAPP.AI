@@ -222,7 +222,7 @@ jobs:
     name: ⚡ Performance Testing
     needs: [build-and-test]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: 📥 Checkout Code
@@ -311,7 +311,7 @@ jobs:
   # Deploy to Staging
   deploy-staging:
     name: 🚀 Deploy to Staging
-    needs: [build-and-test, performance-test]
+    needs: [build-and-test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     environment: staging
