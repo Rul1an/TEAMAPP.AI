@@ -20,6 +20,15 @@ class TrainingEditScreen extends ConsumerStatefulWidget {
 }
 
 class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Trigger initial data load as soon as the widget is inserted into the
+    // tree so tests and real usage don’t rely on the additional rebuild that
+    // happens after trainingsProvider finishes loading.
+    Future.microtask(_load);
+  }
+
   // Form key
   final _formKey = GlobalKey<FormState>();
 
@@ -103,7 +112,10 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
       if (!res.isSuccess) throw Exception(res.errorOrNull);
 
       if (mounted) {
-        context.pop();
+        // Safely navigate back only when the current Navigator stack can pop.
+        if (Navigator.of(context).canPop()) {
+          context.pop();
+        }
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('Training bijgewerkt')));
