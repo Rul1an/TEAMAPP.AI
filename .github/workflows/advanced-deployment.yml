@@ -1,6 +1,7 @@
 name: 🚀 Advanced Flutter SaaS Deployment
 
 on:
+  workflow_dispatch:
   push:
     branches: [main, develop]
   pull_request:
@@ -310,7 +311,7 @@ jobs:
   # Deploy to Staging
   deploy-staging:
     name: 🚀 Deploy to Staging
-    needs: [build-and-test, performance-test]
+    needs: [build-and-test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     environment: staging
