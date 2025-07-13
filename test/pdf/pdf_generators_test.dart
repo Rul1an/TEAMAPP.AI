@@ -1,4 +1,4 @@
-THIS SHOULD BE A LINTER ERROR// Package imports:
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:
@@ -81,6 +81,9 @@ void main() {
       final textSnippet = String.fromCharCodes(bytes);
       expect(textSnippet.contains('Training 12'), isTrue);
       expect(textSnippet.contains('/Type /Page'), isTrue);
+      // Validate that the PDF contains at least one page object marker
+      final pageMarkers = RegExp(r'/Type /Page').allMatches(textSnippet).length;
+      expect(pageMarkers, greaterThanOrEqualTo(1));
     });
   });
 }
