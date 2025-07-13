@@ -78,7 +78,7 @@ void main() {
       ProviderScope(
         overrides: [
           trainingRepositoryProvider.overrideWithValue(repo),
-          trainingsProvider.overrideWithValue(Future.value([_dummy])),
+          trainingsProvider.overrideWith((ref) => Future.value([_dummy])),
         ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
@@ -96,7 +96,7 @@ void main() {
       ProviderScope(
         overrides: [
           trainingRepositoryProvider.overrideWithValue(repo),
-          trainingsProvider.overrideWithValue(Future.value([_dummy])),
+          trainingsProvider.overrideWith((ref) => Future.value([_dummy])),
         ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
@@ -116,7 +116,7 @@ void main() {
       ProviderScope(
         overrides: [
           trainingRepositoryProvider.overrideWithValue(repo),
-          trainingsProvider.overrideWithValue(Future.value([_dummy])),
+          trainingsProvider.overrideWith((ref) => Future.value([_dummy])),
         ],
         child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
