@@ -68,11 +68,13 @@ class Training {
     createdAt = DateTime.now();
     updatedAt = DateTime.now();
     status = TrainingStatus.planned;
+    trainingNumber = 1; // Default to first training of season
   }
   String id = '';
 
   late DateTime date;
   late int duration; // in minutes
+  late int trainingNumber; // Sequential number within the season or cycle
 
   @Enumerated(EnumType.name)
   late TrainingFocus focus;
