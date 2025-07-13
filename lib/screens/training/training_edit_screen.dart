@@ -36,6 +36,13 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   Training? _training;
 
   @override
+  void initState() {
+    super.initState();
+    // Load training asynchronously after widget initialization.
+    _load();
+  }
+
+  @override
   void dispose() {
     _durationCtrl.dispose();
     super.dispose();
@@ -129,7 +136,6 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Fout: $e')),
         data: (_) {
-          if (_training == null) _load();
           if (_training == null || _training!.id.isEmpty) {
             return const Center(child: Text('Training niet gevonden'));
           }
