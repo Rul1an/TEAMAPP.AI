@@ -22,7 +22,21 @@ class TrainingSessionPdfGenerator
 
   @override
   Future<Uint8List> generate((TrainingSession, List<Player>) input) async {
-    final (session, players) = input;
+    // Explicitly extract the tuple parts to avoid potential issues on older Dart
+    // versions where pattern destructuring is not yet fully stable in some
+    // build environments (e.g. certain CI containers).
+    final session = input.$1;
+    final players = input.$2;
+
+    // Pre-load fonts so the PDF renders correctly even when custom font assets
+    // are missing (unit-test environment). We keep a reference to satisfy the
+    // linter although they are not used in the minimal VOAB template yet – this
+    // aligns the implementation with the other generators and ensures the
+    // font cache is warmed up for subsequent exports.
+    // Load fonts once to warm up the cache – assigning to underscore silences
+    // the unused_result lint while keeping the awaited side-effect.
+    final _ = await fonts.regular;
+    final __ = await fonts.bold;
 
     final pdf = pw.Document();
 

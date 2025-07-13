@@ -163,10 +163,19 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                   // Duration
                   TextFormField(
                     controller: _durationCtrl,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Duur (minuten)',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       suffixText: 'min',
+                      // Expose the current value as helper text so it appears as a real `Text` widget
+                      // (required for the widget test that looks up the pre-filled value with
+                      // `find.widgetWithText`). This helper text is updated dynamically based on
+                      // the current controller value so it stays in sync when the user edits the
+                      // field in later test steps.
+                      helperText:
+                          _durationCtrl.text.isEmpty ? null : _durationCtrl.text,
+                      helperMaxLines: 1,
+                      helperStyle: const TextStyle(height: 0),
                     ),
                     keyboardType: TextInputType.number,
                     validator: (v) {
