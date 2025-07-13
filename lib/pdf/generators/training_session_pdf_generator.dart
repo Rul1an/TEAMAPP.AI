@@ -126,7 +126,7 @@ class TrainingSessionPdfGenerator
           ),
           pw.SizedBox(height: 12),
           pw.Text(
-            '${DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(session.date)} | ${session.sessionDuration.inMinutes} minuten',
+            '${_formatDutchDate(session.date)} | ${session.sessionDuration.inMinutes} minuten',
             style: const pw.TextStyle(fontSize: 14, color: PdfColors.white),
           ),
         ],
@@ -597,6 +597,22 @@ class TrainingSessionPdfGenerator
         return const PdfColor.fromInt(0xFF607D8B);
       default:
         return const PdfColor.fromInt(0xFF757575);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Locale helpers
+  // ---------------------------------------------------------------------------
+
+  /// Formats [date] in Dutch long-date notation. Falls back to a generic
+  /// ISO-8601 representation when the Dutch locale data isn’t initialised
+  /// (e.g. in unit tests).
+  String _formatDutchDate(DateTime date) {
+    try {
+      return DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(date);
+    } on Exception {
+      // Locale data for `nl_NL` not loaded – use a simple fallback.
+      return DateFormat('yyyy-MM-dd').format(date);
     }
   }
 }
