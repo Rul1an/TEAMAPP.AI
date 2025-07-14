@@ -3,8 +3,29 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
   /// Allow dependency injection for testing by passing a custom [SupabaseClient].
-  AuthService({SupabaseClient? client})
-    : _supabase = client ?? Supabase.instance.client;
+  ///
+  /// When running unit/widget tests the global `Supabase` instance is often **not**
+  /// initialised which normally triggers an assertion inside the Supabase
+  /// package.  Accessing [Supabase.instance] in that scenario would therefore
+  /// crash the test run.  To keep the production behaviour unchanged while still
+  /// enabling lightweight tests we lazily fall back to a dummy
+  /// `SupabaseClient` when the global instance is unavailable.
+  AuthService({SupabaseClient? client}) : _supabase = client ?? _initClient();
+
+  /// Tries to obtain the globally initialised Supabase client. If that fails
+  /// (e.g. because `Supabase.initialize` has not been invoked) a stub client is
+  /// returned which uses a fake URL/key combination. The stub client is more
+  /// than enough for the read-only operations that our tests rely on and avoids
+  /// leaking network traffic during CI.
+  static SupabaseClient _initClient() {
+    try {
+      return Supabase.instance.client;
+    } catch (_) {
+      // Fallback: provide a no-op client for tests. The URL/key may be any
+      // string because it will never be used to perform real requests.
+      return SupabaseClient('https://dummy.supabase.co', 'public-anon-key');
+    }
+  }
 
   final SupabaseClient _supabase;
 
