@@ -16,6 +16,7 @@ import '../screens/matches/edit_match_screen.dart';
 import '../screens/matches/lineup_builder_screen.dart';
 import '../screens/matches/match_detail_screen.dart';
 import '../screens/matches/matches_screen.dart';
+import '../screens/insights/insights_screen.dart';
 import '../screens/player_tracking/svs_dashboard_screen.dart';
 import '../screens/players/add_player_screen.dart';
 import '../screens/players/assessment_screen.dart';
@@ -234,6 +235,15 @@ GoRouter createRouter(Ref ref) => GoRouter(
           pageBuilder: (context, state) =>
               const NoTransitionPage(child: SeasonHubScreen()),
         ),
+        // New combined insights route
+        GoRoute(
+          path: '/insights',
+          name: 'insights',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: InsightsScreen()),
+        ),
+
+        // Legacy deep-links – keep but hidden from nav
         GoRoute(
           path: '/analytics',
           name: 'performance-analytics',

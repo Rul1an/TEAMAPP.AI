@@ -16,6 +16,8 @@ import '../../widgets/common/rating_dialog.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
 import '../../models/training_session/training_session.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
   const TrainingAttendanceScreen({required this.trainingId, super.key});
@@ -37,24 +39,29 @@ class _TrainingAttendanceScreenState
     final playersAsync = ref.watch(playersProvider);
     final isDesktop = MediaQuery.of(context).size.width > 900;
 
+    final userRole = ref.watch(userRoleProvider);
+    final canManage = !PermissionService.isViewOnlyUser(userRole);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Training Aanwezigheid'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.picture_as_pdf),
-            tooltip: 'Export PDF',
-            onPressed: () => _exportPdf(ref),
-          ),
-          IconButton(
-            icon: const Icon(Icons.star),
-            onPressed: _showRatingOptions,
-            tooltip: 'Beoordeel Spelers',
-          ),
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _isLoading ? null : _saveAttendance,
-          ),
+          if (canManage) ...[
+            IconButton(
+              icon: const Icon(Icons.picture_as_pdf),
+              tooltip: 'Export PDF',
+              onPressed: () => _exportPdf(ref),
+            ),
+            IconButton(
+              icon: const Icon(Icons.star),
+              onPressed: _showRatingOptions,
+              tooltip: 'Beoordeel Spelers',
+            ),
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: _isLoading ? null : _saveAttendance,
+            ),
+          ],
         ],
       ),
       body: trainingsAsync.when(
@@ -93,6 +100,14 @@ class _TrainingAttendanceScreenState
           );
         },
       ),
+      floatingActionButton: isDesktop
+          ? null
+          : canManage
+              ? FloatingActionButton(
+                  onPressed: () => context.go('/training/add'),
+                  child: const Icon(Icons.add),
+                )
+              : null,
     );
   }
 
@@ -540,7 +555,9 @@ class _TrainingAttendanceScreenState
             backgroundColor: Colors.green,
           ),
         );
-        context.pop();
+        // Remain on the current screen so the user can continue working.
+        // Navigating away immediately after saving caused integration tests to fail
+        // and disrupted the UX when users want to verify their changes.
       }
     } catch (e) {
       if (mounted) {

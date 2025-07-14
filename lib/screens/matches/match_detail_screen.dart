@@ -13,6 +13,8 @@ import '../../providers/matches_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({required this.matchId, super.key});
@@ -29,6 +31,12 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
 
   List<String> _selectedStartingLineup = [];
   List<String> _selectedSubstitutes = [];
+
+  // Determines if the current user is allowed to manage (edit) match data.
+  bool get canManage {
+    final userRole = ref.watch(userRoleProvider);
+    return !PermissionService.isViewOnlyUser(userRole);
+  }
 
   @override
   void initState() {
@@ -53,22 +61,24 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       appBar: AppBar(
         title: const Text('Wedstrijd Details'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              context.go('/matches/${widget.matchId}/edit');
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.picture_as_pdf),
-            tooltip: 'Exporteer PDF',
-            onPressed: _exportPdf,
-          ),
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _saveMatch,
-            tooltip: 'Opslaan',
-          ),
+          if (canManage) ...[
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                context.go('/matches/${widget.matchId}/edit');
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.picture_as_pdf),
+              tooltip: 'Exporteer PDF',
+              onPressed: _exportPdf,
+            ),
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: _saveMatch,
+              tooltip: 'Opslaan',
+            ),
+          ],
         ],
       ),
       body: matchesAsync.when(
@@ -130,26 +140,27 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                     // Action Buttons
                     if (match.status == MatchStatus.scheduled) ...[
                       const SizedBox(height: 24),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () =>
-                                  context.go('/lineup?matchId=${match.id}'),
-                              icon: const Icon(Icons.people),
-                              label: const Text('Opstelling Maken'),
+                      if (canManage)
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                onPressed: () =>
+                                    context.go('/lineup?matchId=${match.id}'),
+                                icon: const Icon(Icons.people),
+                                label: const Text('Opstelling Maken'),
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () => _showScoreDialog(context, match),
-                              icon: const Icon(Icons.sports_score),
-                              label: const Text('Score Invoeren'),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                onPressed: () => _showScoreDialog(context, match),
+                                icon: const Icon(Icons.sports_score),
+                                label: const Text('Score Invoeren'),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
                     ],
                   ],
                 ),
@@ -263,13 +274,15 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               TextButton.icon(
-                onPressed: () => _showPlayerSelection(
-                  context,
-                  players,
-                  _selectedStartingLineup,
-                  'Basisopstelling',
-                  11,
-                ),
+                onPressed: canManage
+                    ? () => _showPlayerSelection(
+                          context,
+                          players,
+                          _selectedStartingLineup,
+                          'Basisopstelling',
+                          11,
+                        )
+                    : null,
                 icon: const Icon(Icons.add),
                 label: const Text('Selecteer'),
               ),
@@ -327,13 +340,15 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               TextButton.icon(
-                onPressed: () => _showPlayerSelection(
-                  context,
-                  players,
-                  _selectedSubstitutes,
-                  'Wisselspelers',
-                  7,
-                ),
+                onPressed: canManage
+                    ? () => _showPlayerSelection(
+                          context,
+                          players,
+                          _selectedSubstitutes,
+                          'Wisselspelers',
+                          7,
+                        )
+                    : null,
                 icon: const Icon(Icons.add),
                 label: const Text('Selecteer'),
               ),
@@ -389,7 +404,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               ElevatedButton.icon(
-                onPressed: _showRatingOptions,
+                onPressed: canManage ? _showRatingOptions : null,
                 icon: const Icon(Icons.star),
                 label: const Text('Beoordeel'),
               ),
