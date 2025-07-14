@@ -32,6 +32,12 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   List<String> _selectedStartingLineup = [];
   List<String> _selectedSubstitutes = [];
 
+  // Determines if the current user is allowed to manage (edit) match data.
+  bool get canManage {
+    final userRole = ref.watch(userRoleProvider);
+    return !PermissionService.isViewOnlyUser(userRole);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,8 +56,6 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   Widget build(BuildContext context) {
     final matchesAsync = ref.watch(matchesProvider);
     final playersAsync = ref.watch(playersProvider);
-    final userRole = ref.watch(userRoleProvider);
-    final canManage = !PermissionService.isViewOnlyUser(userRole);
 
     return Scaffold(
       appBar: AppBar(
