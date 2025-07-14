@@ -130,58 +130,60 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
       appBar: AppBar(
         title: const Text('Spelers'),
         actions: [
-          // Duidelijke import knop
-          IconButton(
-            icon: const Icon(Icons.upload_file),
-            tooltip: 'Importeer spelers',
-            onPressed: _importPlayers,
-          ),
-          // Menu voor meer opties
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert),
-            tooltip: 'Meer opties',
-            onSelected: (value) async {
-              switch (value) {
-                case 'import':
-                  await _importPlayers();
-                case 'export':
-                  await _exportPlayers();
-                case 'template':
-                  await _downloadTemplate();
-              }
-            },
-            itemBuilder: (BuildContext context) => [
-              const PopupMenuItem(
-                value: 'import',
-                child: ListTile(
-                  leading: Icon(Icons.upload_file, size: 20),
-                  title: Text('Importeer spelers'),
-                  contentPadding: EdgeInsets.zero,
+          if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider))) ...[
+            IconButton(
+              icon: const Icon(Icons.upload_file),
+              tooltip: 'Importeer spelers',
+              onPressed: _importPlayers,
+            ),
+            // Menu voor meer opties
+            PopupMenuButton<String>(
+              icon: const Icon(Icons.more_vert),
+              tooltip: 'Meer opties',
+              onSelected: (value) async {
+                switch (value) {
+                  case 'import':
+                    await _importPlayers();
+                  case 'export':
+                    await _exportPlayers();
+                  case 'template':
+                    await _downloadTemplate();
+                }
+              },
+              itemBuilder: (BuildContext context) => [
+                const PopupMenuItem(
+                  value: 'import',
+                  child: ListTile(
+                    leading: Icon(Icons.upload_file, size: 20),
+                    title: Text('Importeer spelers'),
+                    contentPadding: EdgeInsets.zero,
+                  ),
                 ),
-              ),
-              const PopupMenuItem(
-                value: 'export',
-                child: ListTile(
-                  leading: Icon(Icons.download, size: 20),
-                  title: Text('Exporteer spelers'),
-                  contentPadding: EdgeInsets.zero,
+                const PopupMenuItem(
+                  value: 'export',
+                  child: ListTile(
+                    leading: Icon(Icons.download, size: 20),
+                    title: Text('Exporteer spelers'),
+                    contentPadding: EdgeInsets.zero,
+                  ),
                 ),
-              ),
-              const PopupMenuDivider(),
-              const PopupMenuItem(
-                value: 'template',
-                child: ListTile(
-                  leading: Icon(Icons.description, size: 20),
-                  title: Text('Download template'),
-                  contentPadding: EdgeInsets.zero,
+                const PopupMenuDivider(),
+                const PopupMenuItem(
+                  value: 'template',
+                  child: ListTile(
+                    leading: Icon(Icons.description, size: 20),
+                    title: Text('Download template'),
+                    contentPadding: EdgeInsets.zero,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          IconButton(
-            icon: const Icon(Icons.person_add),
-            onPressed: () => context.go('/players/add'),
-          ),
+              ],
+            ),
+          ],
+          if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+            IconButton(
+              icon: const Icon(Icons.person_add),
+              onPressed: () => context.go('/players/add'),
+            ),
         ],
       ),
       body: Column(
@@ -310,11 +312,12 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 8),
-                        ElevatedButton.icon(
-                          onPressed: () => context.go('/players/add'),
-                          icon: const Icon(Icons.person_add),
-                          label: const Text('Voeg eerste speler toe'),
-                        ),
+                        if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+                          ElevatedButton.icon(
+                            onPressed: () => context.go('/players/add'),
+                            icon: const Icon(Icons.person_add),
+                            label: const Text('Voeg eerste speler toe'),
+                          ),
                       ],
                     ),
                   );

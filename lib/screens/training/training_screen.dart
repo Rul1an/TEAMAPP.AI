@@ -49,10 +49,11 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
       appBar: AppBar(
         title: const Text('Trainingen'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => context.go('/training/add'),
-          ),
+          if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => context.go('/training/add'),
+            ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.download),
             onSelected: (value) async {
@@ -181,11 +182,12 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           const SizedBox(height: 8),
-                          ElevatedButton.icon(
-                            onPressed: () => context.go('/training/add'),
-                            icon: const Icon(Icons.add),
-                            label: const Text('Plan training'),
-                          ),
+                          if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+                            ElevatedButton.icon(
+                              onPressed: () => context.go('/training/add'),
+                              icon: const Icon(Icons.add),
+                              label: const Text('Plan training'),
+                            ),
                         ],
                       ),
                     );

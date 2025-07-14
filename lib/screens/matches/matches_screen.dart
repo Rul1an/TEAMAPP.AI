@@ -45,10 +45,11 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
       appBar: AppBar(
         title: const Text('Wedstrijden'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => context.go('/matches/add'),
-          ),
+          if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => context.go('/matches/add'),
+            ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.download),
             onSelected: (value) async {
@@ -150,11 +151,12 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             const SizedBox(height: 16),
             Text(emptyMessage, style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),
-            ElevatedButton.icon(
-              onPressed: () => context.go('/matches/add'),
-              icon: const Icon(Icons.add),
-              label: const Text('Voeg wedstrijd toe'),
-            ),
+            if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+              ElevatedButton.icon(
+                onPressed: () => context.go('/matches/add'),
+                icon: const Icon(Icons.add),
+                label: const Text('Voeg wedstrijd toe'),
+              ),
           ],
         ),
       );

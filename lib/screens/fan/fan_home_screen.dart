@@ -67,7 +67,7 @@ class FanHomeScreen extends ConsumerWidget {
       case _HomeCard.stats:
         icon = Icons.bar_chart;
         label = 'Mijn Statistieken';
-        route = '/analytics'; // Temporary reuse analytics screen
+        route = '/my-stats';
     }
 
     return Card(

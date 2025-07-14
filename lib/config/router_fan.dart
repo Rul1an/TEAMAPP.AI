@@ -14,6 +14,7 @@ import '../screens/auth/login_screen.dart';
 import '../screens/fan/fan_home_screen.dart';
 import '../widgets/common/main_scaffold.dart';
 import 'router.dart' as core; // for the rest of the screens
+import '../screens/fan/fan_stats_screen.dart';
 
 GoRouter createFanRouter(Ref ref) => GoRouter(
       initialLocation: '/auth',
@@ -45,6 +46,14 @@ GoRouter createFanRouter(Ref ref) => GoRouter(
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: FanHomeScreen()),
             ),
+            // My stats screen (fan-only)
+            GoRoute(
+              path: '/my-stats',
+              name: 'fan-stats',
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: FanStatsScreen()),
+            ),
+
             // Delegate remaining routes to core router by embedding them as
             // sub-routes: we expose core routes list but skip its own shell.
             ..._cloneCoreRoutesExceptDashboard(ref),
