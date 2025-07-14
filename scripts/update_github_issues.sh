@@ -48,11 +48,11 @@ echo "[info] gh CLI klaar voor gebruik."
 
 # 3. Sluit de afgeronde issues ───────────────────────────────────────────────
 CLOSE_LIST=(30 29 28 7 6 5)
-echo "[action] Sluit afgeronde issues: ${CLOSE_LIST[*]}…"
-gh issue close "${CLOSE_LIST[@]}" \
-  --repo "$REPO" \
-  --comment "Gereed – implementatie is opgenomen in main."
-
+echo "[action] Sluit afgeronde issues afzonderlijk…"
+for num in "${CLOSE_LIST[@]}"; do
+  echo "  → Sluit #$num…"
+  gh issue close "$num" --repo "$REPO" --comment "Gereed – implementatie is opgenomen in main."
+done
 echo "[info] Afgeronde issues gesloten."
 
 # 4. Voorbereiden Markdown-comments voor de open issues ───────────────────────
