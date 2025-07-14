@@ -43,4 +43,36 @@ class MatchSchedule {
   /// Meta timestamps.
   late DateTime createdAt;
   late DateTime updatedAt;
+
+  // ---------------------------------------------------------------------------
+  // JSON serialization helpers – keep manual (avoid codegen for now)
+  // ---------------------------------------------------------------------------
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'id': id,
+        'date_time': dateTime.toIso8601String(),
+        'opponent': opponent,
+        'location': location.name,
+        'competition': competition.name,
+        'created_at': createdAt.toIso8601String(),
+        'updated_at': updatedAt.toIso8601String(),
+      }..removeWhere((_, v) => v == null);
+
+  static MatchSchedule fromJson(Map<String, dynamic> json) => MatchSchedule()
+    ..id = json['id'] as String? ?? ''
+    ..dateTime = DateTime.tryParse(json['date_time'] as String? ?? '') ??
+        DateTime.now()
+    ..opponent = json['opponent'] as String? ?? ''
+    ..location = Location.values.firstWhere(
+      (e) => e.name == (json['location'] as String? ?? '').toLowerCase(),
+      orElse: () => Location.home,
+    )
+    ..competition = Competition.values.firstWhere(
+      (e) => e.name == (json['competition'] as String? ?? '').toLowerCase(),
+      orElse: () => Competition.league,
+    )
+    ..createdAt = DateTime.tryParse(json['created_at'] as String? ?? '') ??
+        DateTime.now()
+    ..updatedAt = DateTime.tryParse(json['updated_at'] as String? ?? '') ??
+        DateTime.now();
 }
