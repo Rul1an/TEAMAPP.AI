@@ -69,6 +69,13 @@ void main() {
       await initializeDateFormatting('nl_NL');
     });
 
+    tearDownAll(() async {
+      // Sign out and clear caches so other tests start from a clean slate.
+      try {
+        await Supabase.instance.client.auth.signOut();
+      } catch (_) {/* ignore if not initialised */}
+    });
+
     testWidgets('renders basic UI with stubbed data', (tester) async {
       await tester.pumpWidget(
         ProviderScope(

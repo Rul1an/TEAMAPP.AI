@@ -85,4 +85,10 @@ void main() {
 
     // Additional functional tests can be added here
   });
+
+  tearDownAll(() async {
+    try {
+      await Supabase.instance.client.auth.signOut();
+    } catch (_) {/* ignore */}
+  });
 }
