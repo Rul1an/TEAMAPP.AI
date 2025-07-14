@@ -555,7 +555,9 @@ class _TrainingAttendanceScreenState
             backgroundColor: Colors.green,
           ),
         );
-        context.pop();
+        // Remain on the current screen so the user can continue working.
+        // Navigating away immediately after saving caused integration tests to fail
+        // and disrupted the UX when users want to verify their changes.
       }
     } catch (e) {
       if (mounted) {
