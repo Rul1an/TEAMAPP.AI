@@ -148,9 +148,9 @@ class MainScaffold extends ConsumerWidget {
                   label: Text('Spelers'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.analytics_outlined),
-                  selectedIcon: Icon(Icons.analytics),
-                  label: Text('Analytics'),
+                  icon: Icon(Icons.insights_outlined),
+                  selectedIcon: Icon(Icons.insights),
+                  label: Text('Insights'),
                 ),
               ],
             ),
@@ -193,9 +193,9 @@ class MainScaffold extends ConsumerWidget {
               label: 'Spelers',
             ),
             NavigationDestination(
-              icon: Icon(Icons.analytics_outlined),
-              selectedIcon: Icon(Icons.analytics),
-              label: 'Analytics',
+              icon: Icon(Icons.insights_outlined),
+              selectedIcon: Icon(Icons.insights),
+              label: 'Insights',
             ),
           ],
         ),
@@ -218,7 +218,8 @@ class MainScaffold extends ConsumerWidget {
       return 3;
     }
     if (currentRoute.startsWith('/players')) return 4;
-    if (currentRoute.startsWith('/analytics') ||
+    if (currentRoute.startsWith('/insights') ||
+        currentRoute.startsWith('/analytics') ||
         currentRoute.startsWith('/svs')) {
       return 5;
     }
@@ -238,7 +239,7 @@ class MainScaffold extends ConsumerWidget {
       case 4:
         context.go('/players');
       case 5:
-        context.go('/analytics');
+        context.go('/insights');
     }
   }
 }
