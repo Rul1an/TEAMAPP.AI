@@ -104,8 +104,8 @@ class _TrainingAttendanceScreenState
           ? null
           : canManage
               ? FloatingActionButton(
-                  onPressed: () => context.go('/training/add'),
-                  child: const Icon(Icons.add),
+                  onPressed: () => context.go('/training/${widget.trainingId}/edit'),
+                  child: const Icon(Icons.edit),
                 )
               : null,
     );
