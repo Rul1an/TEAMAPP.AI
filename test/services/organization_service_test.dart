@@ -9,7 +9,14 @@ import 'package:jo17_tactical_manager/services/organization_service.dart';
 
 void main() {
   group('OrganizationService', () {
-    final service = OrganizationService();
+    late OrganizationService service;
+
+    setUp(() {
+      // Instantiate the service **inside** the test zone so that the
+      // internally constructed `SupabaseClient` can rely on the mocked
+      // MethodChannels and HTTP overrides that Flutter testing installs.
+      service = OrganizationService();
+    });
 
     test(
       'createOrganization returns Organization with provided values',

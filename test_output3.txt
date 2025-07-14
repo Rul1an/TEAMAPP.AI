@@ -1,0 +1,1378 @@
+00:00 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:01 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:02 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:02 +0 -1: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Failed to load "/workspace/test/widget/training_attendance_screen_test.dart":
+  Compilation failed for testPath=/workspace/test/widget/training_attendance_screen_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/training_attendance_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/training_attendance_screen_test.dart'
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:05 +0 -2: loading /workspace/test/widget/dashboard_screen_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/widget/dashboard_screen_test.dart":
+  Compilation failed for testPath=/workspace/test/widget/dashboard_screen_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/dashboard_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/dashboard_screen_test.dart'
+00:05 +0 -2: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:07 +0 -3: loading /workspace/test/widget/match_detail_screen_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/widget/match_detail_screen_test.dart":
+  Compilation failed for testPath=/workspace/test/widget/match_detail_screen_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/match_detail_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/match_detail_screen_test.dart'
+00:07 +0 -3: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:10 +0 -4: loading /workspace/test/widget/match/match_detail_screen_test.dart [E]                                                                                                                    
+  Failed to load "/workspace/test/widget/match/match_detail_screen_test.dart":
+  Compilation failed for testPath=/workspace/test/widget/match/match_detail_screen_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/match/match_detail_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/match/match_detail_screen_test.dart'
+00:10 +0 -4: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:12 +0 -5: loading /workspace/test/hive/hive_key_manager_test.dart [E]                                                                                                                               
+  Failed to load "/workspace/test/hive/hive_key_manager_test.dart":
+  Compilation failed for testPath=/workspace/test/hive/hive_key_manager_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/hive/hive_key_manager_test.dart -p vm --plain-name 'loading /workspace/test/hive/hive_key_manager_test.dart'
+00:12 +0 -5: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:15 +0 -6: loading /workspace/test/hive/hive_profile_cache_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/hive/hive_profile_cache_test.dart":
+  Compilation failed for testPath=/workspace/test/hive/hive_profile_cache_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/hive/hive_profile_cache_test.dart -p vm --plain-name 'loading /workspace/test/hive/hive_profile_cache_test.dart'
+00:15 +0 -6: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:17 +0 -7: loading /workspace/test/hive/hive_training_cache_test.dart [E]                                                                                                                            
+  Failed to load "/workspace/test/hive/hive_training_cache_test.dart":
+  Compilation failed for testPath=/workspace/test/hive/hive_training_cache_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/hive/hive_training_cache_test.dart -p vm --plain-name 'loading /workspace/test/hive/hive_training_cache_test.dart'
+00:17 +0 -7: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:20 +0 -8: loading /workspace/test/hive/hive_player_cache_test.dart [E]                                                                                                                              
+  Failed to load "/workspace/test/hive/hive_player_cache_test.dart":
+  Compilation failed for testPath=/workspace/test/hive/hive_player_cache_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/hive/hive_player_cache_test.dart -p vm --plain-name 'loading /workspace/test/hive/hive_player_cache_test.dart'
+00:20 +0 -8: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:22 +0 -9: loading /workspace/test/golden/field_diagram_toolbar_test.dart [E]                                                                                                                        
+  Failed to load "/workspace/test/golden/field_diagram_toolbar_test.dart":
+  Compilation failed for testPath=/workspace/test/golden/field_diagram_toolbar_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/golden/field_diagram_toolbar_test.dart -p vm --plain-name 'loading /workspace/test/golden/field_diagram_toolbar_test.dart'
+00:23 +0 -9: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:25 +0 -10: loading /workspace/test/golden/training_attendance_screen_test.dart [E]                                                                                                                  
+  Failed to load "/workspace/test/golden/training_attendance_screen_test.dart":
+  Compilation failed for testPath=/workspace/test/golden/training_attendance_screen_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/golden/training_attendance_screen_test.dart -p vm --plain-name 'loading /workspace/test/golden/training_attendance_screen_test.dart'
+00:25 +0 -10: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:28 +0 -11: loading /workspace/test/screens/training_edit_screen_test.dart [E]                                                                                                                       
+  Failed to load "/workspace/test/screens/training_edit_screen_test.dart":
+  Compilation failed for testPath=/workspace/test/screens/training_edit_screen_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/screens/training_edit_screen_test.dart -p vm --plain-name 'loading /workspace/test/screens/training_edit_screen_test.dart'
+00:28 +0 -11: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:30 +0 -12: loading /workspace/test/services/auth_service_test.dart [E]                                                                                                                              
+  Failed to load "/workspace/test/services/auth_service_test.dart":
+  Compilation failed for testPath=/workspace/test/services/auth_service_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/auth_service_test.dart -p vm --plain-name 'loading /workspace/test/services/auth_service_test.dart'
+00:30 +0 -12: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:33 +0 -13: loading /workspace/test/services/organization_service_test.dart [E]                                                                                                                      
+  Failed to load "/workspace/test/services/organization_service_test.dart":
+  Compilation failed for testPath=/workspace/test/services/organization_service_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/organization_service_test.dart -p vm --plain-name 'loading /workspace/test/services/organization_service_test.dart'
+00:33 +0 -13: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:35 +0 -14: loading /workspace/test/services/permission_service_test.dart [E]                                                                                                                        
+  Failed to load "/workspace/test/services/permission_service_test.dart":
+  Compilation failed for testPath=/workspace/test/services/permission_service_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/permission_service_test.dart -p vm --plain-name 'loading /workspace/test/services/permission_service_test.dart'
+00:35 +0 -14: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:37 +0 -15: loading /workspace/test/services/telemetry_service_test.dart [E]                                                                                                                         
+  Failed to load "/workspace/test/services/telemetry_service_test.dart":
+  Compilation failed for testPath=/workspace/test/services/telemetry_service_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/telemetry_service_test.dart -p vm --plain-name 'loading /workspace/test/services/telemetry_service_test.dart'
+00:37 +0 -15: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:40 +0 -16: loading /workspace/test/services/demo_data_service_test.dart [E]                                                                                                                         
+  Failed to load "/workspace/test/services/demo_data_service_test.dart":
+  Compilation failed for testPath=/workspace/test/services/demo_data_service_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/demo_data_service_test.dart -p vm --plain-name 'loading /workspace/test/services/demo_data_service_test.dart'
+00:40 +0 -16: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:42 +0 -17: loading /workspace/test/providers/players_notifier_test.dart [E]                                                                                                                         
+  Failed to load "/workspace/test/providers/players_notifier_test.dart":
+  Compilation failed for testPath=/workspace/test/providers/players_notifier_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/providers/players_notifier_test.dart -p vm --plain-name 'loading /workspace/test/providers/players_notifier_test.dart'
+00:42 +0 -17: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:45 +0 -18: loading /workspace/test/providers/field_diagram_provider_test.dart [E]                                                                                                                   
+  Failed to load "/workspace/test/providers/field_diagram_provider_test.dart":
+  Compilation failed for testPath=/workspace/test/providers/field_diagram_provider_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/providers/field_diagram_provider_test.dart -p vm --plain-name 'loading /workspace/test/providers/field_diagram_provider_test.dart'
+00:45 +0 -18: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:47 +0 -19: loading /workspace/test/providers/current_profile_provider_test.dart [E]                                                                                                                 
+  Failed to load "/workspace/test/providers/current_profile_provider_test.dart":
+  Compilation failed for testPath=/workspace/test/providers/current_profile_provider_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/providers/current_profile_provider_test.dart -p vm --plain-name 'loading /workspace/test/providers/current_profile_provider_test.dart'
+00:47 +0 -19: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:50 +0 -20: loading /workspace/test/models/club_model_test.dart [E]                                                                                                                                  
+  Failed to load "/workspace/test/models/club_model_test.dart":
+  Compilation failed for testPath=/workspace/test/models/club_model_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/club_model_test.dart -p vm --plain-name 'loading /workspace/test/models/club_model_test.dart'
+00:50 +0 -20: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:52 +0 -21: loading /workspace/test/models/organization_model_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/models/organization_model_test.dart":
+  Compilation failed for testPath=/workspace/test/models/organization_model_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/organization_model_test.dart -p vm --plain-name 'loading /workspace/test/models/organization_model_test.dart'
+00:52 +0 -21: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:55 +0 -22: loading /workspace/test/models/annual_planning/season_plan_test.dart [E]                                                                                                                 
+  Failed to load "/workspace/test/models/annual_planning/season_plan_test.dart":
+  Compilation failed for testPath=/workspace/test/models/annual_planning/season_plan_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/annual_planning/season_plan_test.dart -p vm --plain-name 'loading /workspace/test/models/annual_planning/season_plan_test.dart'
+00:55 +0 -22: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:57 +0 -23: loading /workspace/test/models/annual_planning/training_period_test.dart [E]                                                                                                             
+  Failed to load "/workspace/test/models/annual_planning/training_period_test.dart":
+  Compilation failed for testPath=/workspace/test/models/annual_planning/training_period_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/annual_planning/training_period_test.dart -p vm --plain-name 'loading /workspace/test/models/annual_planning/training_period_test.dart'
+00:57 +0 -23: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:59 +0 -24: loading /workspace/test/models/annual_planning/periodization_plan_test.dart [E]                                                                                                          
+  Failed to load "/workspace/test/models/annual_planning/periodization_plan_test.dart":
+  Compilation failed for testPath=/workspace/test/models/annual_planning/periodization_plan_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/annual_planning/periodization_plan_test.dart -p vm --plain-name 'loading /workspace/test/models/annual_planning/periodization_plan_test.dart'
+00:59 +0 -24: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:02 +0 -25: loading /workspace/test/models/annual_planning/morphocycle_test.dart [E]                                                                                                                 
+  Failed to load "/workspace/test/models/annual_planning/morphocycle_test.dart":
+  Compilation failed for testPath=/workspace/test/models/annual_planning/morphocycle_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/annual_planning/morphocycle_test.dart -p vm --plain-name 'loading /workspace/test/models/annual_planning/morphocycle_test.dart'
+01:02 +0 -25: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:05 +0 -26: loading /workspace/test/models/player_model_test.dart [E]                                                                                                                                
+  Failed to load "/workspace/test/models/player_model_test.dart":
+  Compilation failed for testPath=/workspace/test/models/player_model_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/player_model_test.dart -p vm --plain-name 'loading /workspace/test/models/player_model_test.dart'
+01:05 +0 -26: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:08 +0 -27: loading /workspace/test/pdf/pdf_generators_test.dart [E]                                                                                                                                 
+  Failed to load "/workspace/test/pdf/pdf_generators_test.dart":
+  Compilation failed for testPath=/workspace/test/pdf/pdf_generators_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/pdf/pdf_generators_test.dart -p vm --plain-name 'loading /workspace/test/pdf/pdf_generators_test.dart'
+01:08 +0 -27: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:10 +0 -28: loading /workspace/test/pdf/match_report_pdf_generator_test.dart [E]                                                                                                                     
+  Failed to load "/workspace/test/pdf/match_report_pdf_generator_test.dart":
+  Compilation failed for testPath=/workspace/test/pdf/match_report_pdf_generator_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/pdf/match_report_pdf_generator_test.dart -p vm --plain-name 'loading /workspace/test/pdf/match_report_pdf_generator_test.dart'
+01:10 +0 -28: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:13 +0 -29: loading /workspace/test/pdf/player_assessment_pdf_generator_test.dart [E]                                                                                                                
+  Failed to load "/workspace/test/pdf/player_assessment_pdf_generator_test.dart":
+  Compilation failed for testPath=/workspace/test/pdf/player_assessment_pdf_generator_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/pdf/player_assessment_pdf_generator_test.dart -p vm --plain-name 'loading /workspace/test/pdf/player_assessment_pdf_generator_test.dart'
+01:13 +0 -29: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:15 +0 -30: loading /workspace/test/config/supabase_config_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/config/supabase_config_test.dart":
+  Compilation failed for testPath=/workspace/test/config/supabase_config_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/config/supabase_config_test.dart -p vm --plain-name 'loading /workspace/test/config/supabase_config_test.dart'
+01:15 +0 -30: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:18 +0 -31: loading /workspace/test/integration/stub_supabase_integration_test.dart [E]                                                                                                              
+  Failed to load "/workspace/test/integration/stub_supabase_integration_test.dart":
+  Compilation failed for testPath=/workspace/test/integration/stub_supabase_integration_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/stub_supabase_integration_test.dart -p vm --plain-name 'loading /workspace/test/integration/stub_supabase_integration_test.dart'
+01:18 +0 -31: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:20 +0 -32: loading /workspace/test/integration/rls_isolation_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/integration/rls_isolation_test.dart":
+  Compilation failed for testPath=/workspace/test/integration/rls_isolation_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/rls_isolation_test.dart -p vm --plain-name 'loading /workspace/test/integration/rls_isolation_test.dart'
+01:20 +0 -32: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:23 +0 -33: loading /workspace/test/integration/app_flow_login_demo_test.dart [E]                                                                                                                    
+  Failed to load "/workspace/test/integration/app_flow_login_demo_test.dart":
+  Compilation failed for testPath=/workspace/test/integration/app_flow_login_demo_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/app_flow_login_demo_test.dart -p vm --plain-name 'loading /workspace/test/integration/app_flow_login_demo_test.dart'
+01:23 +0 -33: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:25 +0 -34: loading /workspace/test/integration/offline_flow_test.dart [E]                                                                                                                           
+  Failed to load "/workspace/test/integration/offline_flow_test.dart":
+  Compilation failed for testPath=/workspace/test/integration/offline_flow_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/offline_flow_test.dart -p vm --plain-name 'loading /workspace/test/integration/offline_flow_test.dart'
+01:25 +0 -34: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:27 +0 -35: loading /workspace/test/integration/match_flow_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/integration/match_flow_test.dart":
+  Compilation failed for testPath=/workspace/test/integration/match_flow_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/match_flow_test.dart -p vm --plain-name 'loading /workspace/test/integration/match_flow_test.dart'
+01:27 +0 -35: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:30 +0 -36: loading /workspace/test/integration/training_flow_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/integration/training_flow_test.dart":
+  Compilation failed for testPath=/workspace/test/integration/training_flow_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/training_flow_test.dart -p vm --plain-name 'loading /workspace/test/integration/training_flow_test.dart'
+01:30 +0 -36: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:32 +0 -37: loading /workspace/test/widgets/heat_map_card_test.dart [E]                                                                                                                              
+  Failed to load "/workspace/test/widgets/heat_map_card_test.dart":
+  Compilation failed for testPath=/workspace/test/widgets/heat_map_card_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widgets/heat_map_card_test.dart -p vm --plain-name 'loading /workspace/test/widgets/heat_map_card_test.dart'
+01:32 +0 -37: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:36 +0 -38: loading /workspace/test/controllers/lineup_builder_controller_test.dart [E]                                                                                                              
+  Failed to load "/workspace/test/controllers/lineup_builder_controller_test.dart":
+  Compilation failed for testPath=/workspace/test/controllers/lineup_builder_controller_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/controllers/lineup_builder_controller_test.dart -p vm --plain-name 'loading /workspace/test/controllers/lineup_builder_controller_test.dart'
+01:36 +0 -38: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:38 +0 -39: loading /workspace/test/permission_service_test.dart [E]                                                                                                                                 
+  Failed to load "/workspace/test/permission_service_test.dart":
+  Compilation failed for testPath=/workspace/test/permission_service_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/permission_service_test.dart -p vm --plain-name 'loading /workspace/test/permission_service_test.dart'
+01:38 +0 -39: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:41 +0 -40: loading /workspace/test/core/result_test.dart [E]                                                                                                                                        
+  Failed to load "/workspace/test/core/result_test.dart":
+  Compilation failed for testPath=/workspace/test/core/result_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/core/result_test.dart -p vm --plain-name 'loading /workspace/test/core/result_test.dart'
+01:41 +0 -40: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:44 +0 -41: loading /workspace/test/utils/app_logger_test.dart [E]                                                                                                                                   
+  Failed to load "/workspace/test/utils/app_logger_test.dart":
+  Compilation failed for testPath=/workspace/test/utils/app_logger_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/utils/app_logger_test.dart -p vm --plain-name 'loading /workspace/test/utils/app_logger_test.dart'
+01:44 +0 -41: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                  
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:46 +0 -42: loading /workspace/test/utils/validators/training_validators_test.dart [E]                                                                                                               
+  Failed to load "/workspace/test/utils/validators/training_validators_test.dart":
+  Compilation failed for testPath=/workspace/test/utils/validators/training_validators_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/utils/validators/training_validators_test.dart -p vm --plain-name 'loading /workspace/test/utils/validators/training_validators_test.dart'
+01:46 +0 -42: loading /workspace/test/repositories/prediction_repository_test.dart                                                                                                                     01:46 +0 -42: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                    01:46 +0 -42: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                    
+  Skip: PredictionRepository tests disabled – pending MatchRepository mock implementation
+01:46 +0 ~1 -42: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                 01:46 +0 ~1 -42: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                               
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:48 +0 ~1 -43: loading /workspace/test/utils/heatmap_utils_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/utils/heatmap_utils_test.dart":
+  Compilation failed for testPath=/workspace/test/utils/heatmap_utils_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/utils/heatmap_utils_test.dart -p vm --plain-name 'loading /workspace/test/utils/heatmap_utils_test.dart'
+01:48 +0 ~1 -43: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                               
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:51 +0 ~1 -44: loading /workspace/test/repositories/match_repository_impl_test.dart [E]                                                                                                              
+  Failed to load "/workspace/test/repositories/match_repository_impl_test.dart":
+  Compilation failed for testPath=/workspace/test/repositories/match_repository_impl_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/repositories/match_repository_impl_test.dart -p vm --plain-name 'loading /workspace/test/repositories/match_repository_impl_test.dart'
+01:51 +0 ~1 -44: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                               
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:53 +0 ~1 -45: loading /workspace/test/repositories/profile_repository_impl_test.dart [E]                                                                                                            
+  Failed to load "/workspace/test/repositories/profile_repository_impl_test.dart":
+  Compilation failed for testPath=/workspace/test/repositories/profile_repository_impl_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/repositories/profile_repository_impl_test.dart -p vm --plain-name 'loading /workspace/test/repositories/profile_repository_impl_test.dart'
+01:53 +0 ~1 -45: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                               
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:56 +0 ~1 -46: loading /workspace/test/repositories/training_repository_impl_test.dart [E]                                                                                                           
+  Failed to load "/workspace/test/repositories/training_repository_impl_test.dart":
+  Compilation failed for testPath=/workspace/test/repositories/training_repository_impl_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/repositories/training_repository_impl_test.dart -p vm --plain-name 'loading /workspace/test/repositories/training_repository_impl_test.dart'
+01:56 +0 ~1 -46: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                               
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+01:58 +0 ~1 -47: loading /workspace/test/repositories/player_repository_impl_test.dart [E]                                                                                                             
+  Failed to load "/workspace/test/repositories/player_repository_impl_test.dart":
+  Compilation failed for testPath=/workspace/test/repositories/player_repository_impl_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/repositories/player_repository_impl_test.dart -p vm --plain-name 'loading /workspace/test/repositories/player_repository_impl_test.dart'
+01:58 +0 ~1 -47: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                               
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 907:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 951:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 980:13               Future._propagateToListeners
+  dart:async/future_impl.dart 865:9                Future._propagateToListeners
+  dart:async/future_impl.dart 723:5                Future._completeWithValue
+  dart:async/future_impl.dart 807:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+02:01 +0 ~1 -48: loading /workspace/test/navigation_route_mapping_test.dart [E]                                                                                                                        
+  Failed to load "/workspace/test/navigation_route_mapping_test.dart":
+  Compilation failed for testPath=/workspace/test/navigation_route_mapping_test.dart: test/flutter_test_config.dart:31:24: Error: The argument type 'AuthClientOptions' can't be assigned to the parameter type 'FlutterAuthClientOptions'.
+   - 'AuthClientOptions' is from 'package:supabase/src/supabase_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase-2.8.0/lib/src/supabase_client_options.dart').
+   - 'FlutterAuthClientOptions' is from 'package:supabase_flutter/src/flutter_go_true_client_options.dart' ('/home/ubuntu/.pub-cache/hosted/pub.dev/supabase_flutter-2.9.1/lib/src/flutter_go_true_client_options.dart').
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+                         ^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/navigation_route_mapping_test.dart -p vm --plain-name 'loading /workspace/test/navigation_route_mapping_test.dart'
+02:01 +0 ~1 -48: Some tests failed.                                                                                                                                                                    

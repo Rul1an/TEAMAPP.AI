@@ -1,0 +1,338 @@
+00:00 +0: loading /workspace/test/widget/training_attendance_screen_test.dart
+00:00 +0: /workspace/test/widget/training_attendance_screen_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:00 +0: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen (setUpAll)
+00:00 +0: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen renders basic UI with stubbed data
+00:00 +1: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen (tearDownAll)
+00:00 +1: /workspace/test/widget/training_attendance_screen_test.dart: (tearDownAll)
+00:00 +1: /workspace/test/widget/dashboard_screen_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:01 +1: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Coach role shows training & lineup actions and demo banner
+00:01 +2: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Player role hides action icons but shows banner
+00:01 +3: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Demo mode off hides RBAC banner
+00:02 +3: /workspace/test/widget/match_detail_screen_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:02 +3: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Demo mode off hides RBAC banner
+00:02 +4: /workspace/test/widget/match_detail_screen_test.dart: MatchDetailScreen renders basic match information
+00:02 +5: /workspace/test/widget/match_detail_screen_test.dart: (tearDownAll)
+00:03 +5: /workspace/test/widget/match/match_detail_screen_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:03 +5: /workspace/test/widget/match/match_detail_screen_test.dart: MatchDetailScreen widget tests (setUpAll)
+00:03 +5: /workspace/test/widget/match/match_detail_screen_test.dart: MatchDetailScreen widget tests renders basic match information
+00:04 +6: /workspace/test/widget/match/match_detail_screen_test.dart: MatchDetailScreen widget tests (tearDownAll)
+00:04 +6: /workspace/test/hive/hive_key_manager_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:04 +6: /workspace/test/hive/hive_key_manager_test.dart: generates and stores key
+00:04 +7: /workspace/test/hive/hive_key_manager_test.dart: returns cached key on subsequent calls
+00:04 +8: /workspace/test/hive/hive_key_manager_test.dart: (tearDownAll)
+00:05 +8: /workspace/test/hive/hive_profile_cache_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:05 +8: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache writes and reads profile within TTL
+00:05 +9: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache returns null after TTL expiration
+00:05 +10: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache clear removes cached profile
+00:05 +11: /workspace/test/hive/hive_profile_cache_test.dart: (tearDownAll)
+00:06 +11: /workspace/test/hive/hive_training_cache_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:06 +11: /workspace/test/hive/hive_training_cache_test.dart: HiveTrainingCache write & read list
+Recovering corrupted box.
+00:06 +12: /workspace/test/hive/hive_training_cache_test.dart: HiveTrainingCache returns null after TTL expiry
+00:06 +13: /workspace/test/hive/hive_training_cache_test.dart: (tearDownAll)
+00:06 +13: /workspace/test/hive/hive_player_cache_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:06 +13: /workspace/test/hive/hive_player_cache_test.dart: HivePlayerCache write & read list
+Recovering corrupted box.
+00:06 +14: /workspace/test/hive/hive_player_cache_test.dart: HivePlayerCache returns null after TTL expiry
+00:06 +15: /workspace/test/hive/hive_player_cache_test.dart: (tearDownAll)
+00:07 +15: /workspace/test/golden/field_diagram_toolbar_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:07 +15: /workspace/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests default (select) tool
+00:07 +15 ~1: /workspace/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests line tool expanded
+00:07 +15 ~2: /workspace/test/golden/field_diagram_toolbar_test.dart: (tearDownAll)
+00:08 +15 ~2: /workspace/test/golden/training_attendance_screen_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:08 +15 ~2: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests (setUpAll)
+00:08 +15 ~2: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile light mode
+00:08 +16 ~2: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile dark mode
+00:08 +16 ~2: /workspace/test/screens/training_edit_screen_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:08 +16 ~2: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile dark mode
+00:08 +17 ~2: /workspace/test/screens/training_edit_screen_test.dart: prefills form with existing training data
+00:09 +18 ~2: /workspace/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration
+00:09 +18 ~2: /workspace/test/services/auth_service_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:09 +18 ~2: /workspace/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration
+00:09 +19 ~2: /workspace/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration
+00:09 +20 ~2: /workspace/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration
+00:09 +21 ~2: /workspace/test/screens/training_edit_screen_test.dart: successful save calls repository update
+00:10 +22 ~2: /workspace/test/screens/training_edit_screen_test.dart: (tearDownAll)
+00:10 +22 ~2 -1: loading /workspace/test/services/organization_service_test.dart [E]
+  Failed to load "/workspace/test/services/organization_service_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                        printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                         _MockHttpOverrides.createHttpClient
+  dart:_http                                                              new HttpClient
+  package:http/src/io_client.dart 50:53                                   new IOClient
+  package:http/src/io_client.dart 20:10                                   createClient
+  package:http/src/client.dart 37:37                                      new Client
+  package:supabase/src/supabase_client.dart 146:52                        new SupabaseClient
+  package:jo17_tactical_manager/services/organization_service.dart 25:14  OrganizationService._tryGetSupabaseInstance
+  package:jo17_tactical_manager/services/organization_service.dart 12:29  new OrganizationService
+  test/services/organization_service_test.dart 12:21                      main.<fn>
+  package:test_api                                                        Declarer.group
+  package:flutter_test/src/test_compat.dart 210:13                        group
+  test/services/organization_service_test.dart 11:3                       main
+  
+00:11 +22 ~2 -1: /workspace/test/services/permission_service_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:11 +22 ~2 -1: /workspace/test/services/permission_service_test.dart: PermissionService view-only helpers Players and parents are view-only users
+00:11 +23 ~2 -1: /workspace/test/services/permission_service_test.dart: PermissionService view-only helpers Coach is NOT view-only
+00:11 +24 ~2 -1: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "bestuurder" has access
+00:11 +25 ~2 -1: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "hoofdcoach" has access
+00:11 +26 ~2 -1: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "assistent" has access
+00:11 +27 ~2 -1: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "admin" has access
+00:11 +28 ~2 -1: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "speler" has NO access
+00:11 +29 ~2 -1: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "ouder" has NO access
+00:11 +30 ~2 -1: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "null" has NO access
+00:11 +31 ~2 -1: /workspace/test/services/permission_service_test.dart: SVS access per tier Basic tier never grants SVS
+00:11 +32 ~2 -1: /workspace/test/services/permission_service_test.dart: SVS access per tier Pro tier grants SVS for coach/admin roles
+00:11 +33 ~2 -1: /workspace/test/services/permission_service_test.dart: Accessible routes Player gets only view routes
+00:11 +34 ~2 -1: /workspace/test/services/permission_service_test.dart: Accessible routes Admin gets admin route
+00:11 +35 ~2 -1: /workspace/test/services/permission_service_test.dart: (tearDownAll)
+00:12 +35 ~2 -1: /workspace/test/services/telemetry_service_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:12 +35 ~2 -1: /workspace/test/services/telemetry_service_test.dart: TelemetryService trackEvent completes without error
+00:12 +36 ~2 -1: /workspace/test/services/telemetry_service_test.dart: TelemetryService monitorAsync returns value and completes span
+00:12 +37 ~2 -1: /workspace/test/services/telemetry_service_test.dart: (tearDownAll)
+00:13 +37 ~2 -1: /workspace/test/services/demo_data_service_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:13 +37 ~2 -1: /workspace/test/services/demo_data_service_test.dart: DemoDataService generateDemoData returns data for club admin
+00:13 +38 ~2 -1: /workspace/test/services/demo_data_service_test.dart: DemoDataService OrganizationService.isSlugAvailable rejects reserved slugs
+00:13 +39 ~2 -1: /workspace/test/services/demo_data_service_test.dart: (tearDownAll)
+00:14 +39 ~2 -1: /workspace/test/providers/players_notifier_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:14 +39 ~2 -1: /workspace/test/providers/players_notifier_test.dart: PlayersNotifier loads data successfully
+00:14 +40 ~2 -1: /workspace/test/providers/players_notifier_test.dart: (tearDownAll)
+00:14 +40 ~2 -1: /workspace/test/providers/field_diagram_provider_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:14 +40 ~2 -1: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Initial state is select tool & half field
+00:14 +41 ~2 -1: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Selecting line type switches tool to line
+00:14 +42 ~2 -1: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Change field type adds to history and supports undo/redo
+00:14 +43 ~2 -1: /workspace/test/providers/field_diagram_provider_test.dart: (tearDownAll)
+00:15 +43 ~2 -1: /workspace/test/providers/current_profile_provider_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:15 +43 ~2 -1: /workspace/test/providers/current_profile_provider_test.dart: currentProfileProvider emits data
+00:15 +44 ~2 -1: /workspace/test/providers/current_profile_provider_test.dart: (tearDownAll)
+00:16 +44 ~2 -1: /workspace/test/models/club_model_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:16 +44 ~2 -1: /workspace/test/models/club_model_test.dart: Club model toJson / fromJson round-trip
+00:16 +45 ~2 -1: /workspace/test/models/club_model_test.dart: (tearDownAll)
+00:16 +45 ~2 -1: /workspace/test/models/organization_model_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:16 +45 ~2 -1: /workspace/test/models/organization_model_test.dart: Organization model toJson / fromJson round-trip
+00:16 +46 ~2 -1: /workspace/test/models/organization_model_test.dart: (tearDownAll)
+00:17 +46 ~2 -1: /workspace/test/models/annual_planning/season_plan_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:17 +46 ~2 -1: /workspace/test/models/annual_planning/season_plan_test.dart: SeasonPlan JO17 Dutch season JSON roundtrip
+00:17 +47 ~2 -1: /workspace/test/models/annual_planning/season_plan_test.dart: (tearDownAll)
+00:18 +47 ~2 -1: /workspace/test/models/annual_planning/training_period_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:18 +47 ~2 -1: /workspace/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Preparation period JSON roundtrip
+00:18 +48 ~2 -1: /workspace/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Transition period has lower intensity
+00:18 +49 ~2 -1: /workspace/test/models/annual_planning/training_period_test.dart: (tearDownAll)
+00:18 +49 ~2 -1: /workspace/test/models/annual_planning/periodization_plan_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:18 +49 ~2 -1: /workspace/test/models/annual_planning/periodization_plan_test.dart: PeriodizationPlan templates KNVB Youth U17 round-trip JSON
+00:19 +50 ~2 -1: /workspace/test/models/annual_planning/periodization_plan_test.dart: PeriodizationPlan templates Block periodization template parameters
+00:19 +51 ~2 -1: /workspace/test/models/annual_planning/periodization_plan_test.dart: (tearDownAll)
+00:19 +51 ~2 -1: /workspace/test/models/annual_planning/morphocycle_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:19 +51 ~2 -1: /workspace/test/models/annual_planning/morphocycle_test.dart: Morphocycle KNVB standard morphocycle JSON roundtrip
+00:19 +52 ~2 -1: /workspace/test/models/annual_planning/morphocycle_test.dart: Morphocycle Helpers classify load correctly
+00:19 +53 ~2 -1: /workspace/test/models/annual_planning/morphocycle_test.dart: (tearDownAll)
+00:20 +53 ~2 -1: /workspace/test/models/player_model_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:20 +53 ~2 -1: /workspace/test/models/player_model_test.dart: Player model name combines first and last name
+00:20 +54 ~2 -1: /workspace/test/models/player_model_test.dart: Player model age calculation is correct
+00:20 +55 ~2 -1: /workspace/test/models/player_model_test.dart: Player model attendancePercentage returns 0 if no trainings
+00:20 +56 ~2 -1: /workspace/test/models/player_model_test.dart: Player model attendancePercentage calculates correctly
+00:20 +57 ~2 -1: /workspace/test/models/player_model_test.dart: Player model matchMinutesPercentage returns 0 if no selection
+00:20 +58 ~2 -1: /workspace/test/models/player_model_test.dart: Player model matchMinutesPercentage calculates correctly
+00:20 +59 ~2 -1: /workspace/test/models/player_model_test.dart: Player model averageMinutesPerMatch returns 0 if matchesPlayed is 0
+00:20 +60 ~2 -1: /workspace/test/models/player_model_test.dart: Player model averageMinutesPerMatch calculates correctly
+00:20 +61 ~2 -1: /workspace/test/models/player_model_test.dart: (tearDownAll)
+00:20 +61 ~2 -1: /workspace/test/pdf/pdf_generators_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:20 +61 ~2 -1: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators MatchReportPdfGenerator produces valid PDF bytes
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "–" (U+2013) try to provide a TextStyle.fontFallback
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+00:21 +62 ~2 -1: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators PlayerAssessmentPdfGenerator produces valid PDF bytes
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+00:21 +63 ~2 -1: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators TrainingSessionPdfGenerator produces valid PDF bytes
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "✓" (U+2713) try to provide a TextStyle.fontFallback
+00:21 +64 ~2 -1: /workspace/test/pdf/pdf_generators_test.dart: (tearDownAll)
+00:21 +64 ~2 -1: /workspace/test/pdf/match_report_pdf_generator_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:21 +64 ~2 -1: /workspace/test/pdf/match_report_pdf_generator_test.dart: MatchReportPdfGenerator generates a valid PDF
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "–" (U+2013) try to provide a TextStyle.fontFallback
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+00:21 +65 ~2 -1: /workspace/test/pdf/match_report_pdf_generator_test.dart: (tearDownAll)
+00:22 +65 ~2 -1: /workspace/test/pdf/player_assessment_pdf_generator_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:22 +65 ~2 -1: /workspace/test/pdf/player_assessment_pdf_generator_test.dart: PlayerAssessmentPdfGenerator generates a valid PDF
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+00:22 +66 ~2 -1: /workspace/test/pdf/player_assessment_pdf_generator_test.dart: (tearDownAll)
+00:23 +66 ~2 -1: /workspace/test/config/supabase_config_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:23 +66 ~2 -1: /workspace/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns false when currentUser is null
+00:23 +67 ~2 -1: /workspace/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns true when currentUser is not null
+00:23 +68 ~2 -1: /workspace/test/config/supabase_config_test.dart: (tearDownAll)
+00:23 +68 ~2 -1: /workspace/test/integration/stub_supabase_integration_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:23 +68 ~2 -1: /workspace/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration SupabaseConfig.getUserOrganizations returns stubbed data
+00:23 +69 ~2 -1: /workspace/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration OrganizationService.createOrganization works with stubbed client
+00:23 +70 ~2 -1: /workspace/test/integration/stub_supabase_integration_test.dart: (tearDownAll)
+00:24 +70 ~2 -1: /workspace/test/integration/rls_isolation_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:24 +70 ~2 -1: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation fromOrg throws when no organization selected
+00:24 +71 ~2 -1: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Query returns data only for selected organization
+00:24 +71 ~2 -1: /workspace/test/integration/rls_isolation_test.dart: (setUpAll)
+supabase.auth: INFO: Refresh session 
+00:24 +72 ~2 -1: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Switching organization returns isolated dataset
+00:24 +72 ~2 -1: /workspace/test/integration/rls_isolation_test.dart: (setUpAll)
+supabase.auth: INFO: Refresh session 
+00:24 +73 ~2 -1: /workspace/test/integration/rls_isolation_test.dart: (tearDownAll)
+00:25 +73 ~2 -1: /workspace/test/integration/app_flow_login_demo_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:25 +73 ~2 -1: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) (setUpAll)
+00:26 +73 ~2 -2: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) (setUpAll) [E]
+  'package:supabase_flutter/src/supabase.dart': Failed assertion: line 91 pos 7: '!_instance._initialized': This instance is already initialized
+  dart:core                                             _AssertionError._throwNew
+  package:supabase_flutter/src/supabase.dart 91:7       Supabase.initialize
+  test/integration/app_flow_login_demo_test.dart 40:22  main.<fn>.<fn>
+  
+00:26 +73 ~2 -2: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) (tearDownAll)
+00:26 +73 ~2 -2: /workspace/test/integration/app_flow_login_demo_test.dart: (tearDownAll)
+00:26 +73 ~2 -2: /workspace/test/integration/offline_flow_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:26 +73 ~2 -2: /workspace/test/integration/offline_flow_test.dart: Offline/online flow falls back to cache when remote fails
+00:26 +74 ~2 -2: /workspace/test/integration/offline_flow_test.dart: Offline/online flow returns remote when available and updates cache
+00:26 +75 ~2 -2: /workspace/test/integration/offline_flow_test.dart: (tearDownAll)
+00:27 +75 ~2 -2: /workspace/test/integration/match_flow_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:27 +75 ~2 -2: /workspace/test/integration/match_flow_test.dart: Integration – Match flow (setUpAll)
+00:27 +75 ~2 -2: /workspace/test/integration/match_flow_test.dart: Integration – Match flow create match → lineup builder button visible → score dialog button visible
+00:28 +75 ~2 -2: /workspace/test/integration/training_flow_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:28 +75 ~2 -2: /workspace/test/integration/match_flow_test.dart: Integration – Match flow create match → lineup builder button visible → score dialog button visible
+00:28 +76 ~2 -2: /workspace/test/integration/training_flow_test.dart: Integration – Training flow create training → mark attendance
+00:29 +77 ~2 -2: /workspace/test/integration/training_flow_test.dart: Integration – Training flow (tearDownAll)
+00:29 +77 ~2 -2: /workspace/test/integration/training_flow_test.dart: (tearDownAll)
+00:29 +77 ~2 -2: /workspace/test/widgets/heat_map_card_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:29 +77 ~2 -2: /workspace/test/widgets/heat_map_card_test.dart: HeatMapCard calls load on filter change
+00:30 +77 ~2 -2: /workspace/test/controllers/lineup_builder_controller_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:30 +77 ~2 -2: /workspace/test/widgets/heat_map_card_test.dart: HeatMapCard calls load on filter change
+00:30 +78 ~2 -2: /workspace/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController toggleDrawingMode flips the boolean flag
+00:30 +79 ~2 -2: /workspace/test/widgets/heat_map_card_test.dart: (tearDownAll)
+00:30 +80 ~2 -2: /workspace/test/widgets/heat_map_card_test.dart: (tearDownAll)
+00:30 +81 ~2 -2: /workspace/test/widgets/heat_map_card_test.dart: (tearDownAll)
+00:31 +81 ~2 -2: /workspace/test/permission_service_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:31 +81 ~2 -2: /workspace/test/permission_service_test.dart: PermissionService identifies player & parent as view-only users
+00:31 +82 ~2 -2: /workspace/test/permission_service_test.dart: PermissionService canManagePlayers for roles
+00:31 +83 ~2 -2: /workspace/test/permission_service_test.dart: PermissionService access SVS depends on tier and role
+00:31 +84 ~2 -2: /workspace/test/permission_service_test.dart: (tearDownAll)
+00:32 +84 ~2 -2: /workspace/test/core/result_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:32 +84 ~2 -2: /workspace/test/core/result_test.dart: Result success returns data
+00:32 +85 ~2 -2: /workspace/test/core/result_test.dart: Result failure returns error
+00:32 +86 ~2 -2: /workspace/test/core/result_test.dart: Result when helper works
+00:32 +87 ~2 -2: /workspace/test/core/result_test.dart: (tearDownAll)
+00:32 +87 ~2 -2: /workspace/test/utils/app_logger_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:32 +87 ~2 -2: /workspace/test/utils/app_logger_test.dart: AppLogger does not throw on various levels
+[38;5;244m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;244m│  trace[0m
+[38;5;244m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+│ 🐛 debug
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[38;5;12m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;12m│ 💡 info[0m
+[38;5;12m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;208m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;208m│ ⚠️ warn[0m
+[38;5;208m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;196m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;196m│ ⛔ error[0m
+[38;5;196m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:32 +88 ~2 -2: /workspace/test/utils/app_logger_test.dart: (tearDownAll)
+00:33 +88 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:33 +88 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateDuration null or empty
+00:33 +89 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateDuration non numeric
+00:33 +90 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateDuration below minimum
+00:33 +91 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateDuration above maximum
+00:33 +92 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateDuration within range
+00:33 +93 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateRequired null value returns error
+00:33 +94 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateRequired non-null passes
+00:33 +95 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateDate null date
+00:33 +96 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateDate far future date
+00:33 +97 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: validateDate valid date
+00:33 +98 ~2 -2: /workspace/test/utils/validators/training_validators_test.dart: (tearDownAll)
+00:33 +98 ~2 -2: /workspace/test/utils/heatmap_utils_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:34 +98 ~2 -2: /workspace/test/utils/heatmap_utils_test.dart: binEvents counts correctly
+00:34 +99 ~2 -2: /workspace/test/utils/heatmap_utils_test.dart: (tearDownAll)
+00:35 +99 ~2 -2: /workspace/test/repositories/match_repository_impl_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:35 +99 ~2 -2: /workspace/test/repositories/match_repository_impl_test.dart: getUpcoming filters correctly
+00:35 +100 ~2 -2: /workspace/test/repositories/match_repository_impl_test.dart: getRecent filters correctly with cache fallback
+00:35 +101 ~2 -2: /workspace/test/repositories/match_repository_impl_test.dart: mutation clears cache
+00:35 +102 ~2 -2: /workspace/test/repositories/match_repository_impl_test.dart: (tearDownAll)
+00:35 +102 ~2 -2: /workspace/test/repositories/prediction_repository_test.dart: (suite)
+  Skip: PredictionRepository tests disabled – pending MatchRepository mock implementation
+00:35 +102 ~3 -2: /workspace/test/repositories/profile_repository_impl_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:35 +102 ~3 -2: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl (setUpAll)
+00:35 +102 ~3 -2: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl getCurrent returns remote data and writes to cache
+00:35 +103 ~3 -2: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl getCurrent falls back to cache on error
+00:35 +104 ~3 -2: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl watch emits cached then remote updates
+00:35 +105 ~3 -2: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl (tearDownAll)
+00:35 +105 ~3 -2: /workspace/test/repositories/profile_repository_impl_test.dart: (tearDownAll)
+00:36 +105 ~3 -2: /workspace/test/repositories/training_repository_impl_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:36 +105 ~3 -2: /workspace/test/repositories/training_repository_impl_test.dart: getUpcoming filters upcoming trainings from remote list
+00:36 +106 ~3 -2: /workspace/test/repositories/training_repository_impl_test.dart: getByDateRange returns trainings within range
+00:36 +107 ~3 -2: /workspace/test/repositories/training_repository_impl_test.dart: fallback to cache uses cache on network failure
+00:36 +108 ~3 -2: /workspace/test/repositories/training_repository_impl_test.dart: mutations add clears cache on success
+00:36 +109 ~3 -2: /workspace/test/repositories/training_repository_impl_test.dart: (tearDownAll)
+00:36 +109 ~3 -2: /workspace/test/repositories/player_repository_impl_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:36 +109 ~3 -2: /workspace/test/repositories/player_repository_impl_test.dart: getAll returns remote data & writes cache on success
+00:37 +110 ~3 -2: /workspace/test/repositories/player_repository_impl_test.dart: getAll falls back to cache when network fails
+00:37 +111 ~3 -2: /workspace/test/repositories/player_repository_impl_test.dart: getAll returns failure when network & cache both fail
+00:37 +112 ~3 -2: /workspace/test/repositories/player_repository_impl_test.dart: mutations add clears cache on success
+00:37 +113 ~3 -2: /workspace/test/repositories/player_repository_impl_test.dart: mutations update passes failure
+00:37 +114 ~3 -2: /workspace/test/repositories/player_repository_impl_test.dart: (tearDownAll)
+00:37 +114 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: (setUpAll)
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:37 +114 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps dashboard routes to index 0
+00:37 +115 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps season & annual planning routes to index 1
+00:37 +116 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps training related routes to index 2
+00:37 +117 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps matches related routes to index 3
+00:37 +118 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps players route to index 4
+00:37 +119 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps insights & legacy analytics routes to index 5
+00:37 +120 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex defaults to 0 for unknown routes
+00:37 +121 ~3 -2: /workspace/test/navigation_route_mapping_test.dart: (tearDownAll)
+00:37 +121 ~3 -2: Some tests failed.
