@@ -20,6 +20,16 @@ class NotificationService {
 
   final _messaging = FirebaseMessaging.instance;
 
+  Future<void> subscribeToTopic(String topic) async {
+    await _messaging.subscribeToTopic(topic);
+    debugPrint('Subscribed to $topic');
+  }
+
+  Future<void> unsubscribeFromTopic(String topic) async {
+    await _messaging.unsubscribeFromTopic(topic);
+    debugPrint('Unsubscribed from $topic');
+  }
+
   /// Call once on app startup *after* widgets binding & Firebase.initializeApp.
   Future<void> init() async {
     // Request permissions (iOS & Web)

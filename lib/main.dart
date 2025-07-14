@@ -17,6 +17,7 @@ import 'config/theme.dart';
 import 'widgets/demo_mode_starter.dart';
 import 'services/deep_link_service.dart';
 import 'services/analytics_service.dart';
+import 'providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,6 +67,11 @@ class JO17TacticalManagerApp extends ConsumerWidget {
     // Init deep link service once router available
     WidgetsBinding.instance.addPostFrameCallback((_) {
       DeepLinkService.instance.init(router);
+      // Subscribe to organization topic for push notifications
+      final orgId = ref.read(organizationIdProvider);
+      if (orgId != null) {
+        NotificationService.instance.subscribeToTopic('org_$orgId');
+      }
     });
 
     return DemoModeStarter(

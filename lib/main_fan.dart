@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'services/notification_service.dart';
 import 'services/deep_link_service.dart';
 import 'services/analytics_service.dart';
+import 'providers/auth_provider.dart';
 
 // Project imports:
 import 'config/environment.dart';
@@ -62,6 +63,10 @@ class FanFamilyApp extends ConsumerWidget {
     final router = ref.watch(routerFanProvider);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       DeepLinkService.instance.init(router);
+      final orgId = ref.read(organizationIdProvider);
+      if (orgId != null) {
+        NotificationService.instance.subscribeToTopic('org_$orgId');
+      }
     });
 
     return DemoModeStarter(
