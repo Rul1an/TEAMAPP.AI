@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:go_router/go_router.dart';
+import 'analytics_service.dart';
 
 class DeepLinkService {
   DeepLinkService._();
@@ -54,6 +55,7 @@ class DeepLinkService {
 
   Future<void> shareMatchLink(String matchId) async {
     final url = await createMatchLink(matchId);
+    await AnalyticsService.instance.logEvent('share_match', params: {'matchId': matchId});
     await Share.share('Bekijk de wedstrijd $url');
   }
 }

@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'services/notification_service.dart';
 import 'services/deep_link_service.dart';
+import 'services/analytics_service.dart';
 
 // Project imports:
 import 'config/environment.dart';
@@ -36,6 +37,7 @@ Future<void> main() async {
   // Initialise Firebase & Messaging
   await Firebase.initializeApp();
   await NotificationService.instance.init();
+  await AnalyticsService.instance.logEvent('app_open');
 
   // Initialise Sentry for crash & performance monitoring
   await SentryFlutter.init(

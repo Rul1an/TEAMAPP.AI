@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
+import '../../services/analytics_service.dart';
 
 class FanHomeScreen extends ConsumerWidget {
   const FanHomeScreen({super.key});
@@ -73,7 +74,10 @@ class FanHomeScreen extends ConsumerWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => context.go(route),
+        onTap: () {
+          AnalyticsService.instance.logEvent('navigate_card', params: {'destination': label});
+          context.go(route);
+        },
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,

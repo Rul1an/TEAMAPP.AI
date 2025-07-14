@@ -16,6 +16,7 @@ import 'config/router.dart';
 import 'config/theme.dart';
 import 'widgets/demo_mode_starter.dart';
 import 'services/deep_link_service.dart';
+import 'services/analytics_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,7 @@ void main() async {
   // Initialize Firebase & Messaging
   await Firebase.initializeApp();
   await NotificationService.instance.init();
+  await AnalyticsService.instance.logEvent('app_open');
 
   // Initialize Sentry for crash & performance monitoring
   await SentryFlutter.init(

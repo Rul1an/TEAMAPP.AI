@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'analytics_service.dart';
 
 class NotificationService {
   NotificationService._();
@@ -51,11 +52,13 @@ class NotificationService {
 
   void _onForegroundMessage(RemoteMessage message) {
     debugPrint('Foreground message: ${message.messageId}');
+    AnalyticsService.instance.logEvent('push_foreground', params: {'id': message.messageId ?? ''});
     // TODO: show in-app banner or local notification
   }
 
   void _onMessageOpenedApp(RemoteMessage message) {
     debugPrint('Notification interaction: ${message.messageId}');
+    AnalyticsService.instance.logEvent('push_open', params: {'id': message.messageId ?? ''});
     // TODO: Navigate based on deep link in message.data
   }
 }
