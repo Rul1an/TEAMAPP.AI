@@ -36,13 +36,13 @@
 
 ### 3.1 Packages installeren
 ```bash
-flutter pub add --dev @evilmartians/lefthook_cli
+npm install --save-dev lefthook
 flutter pub add --dev very_good_analysis dart_code_metrics
 ```
 
 ### 3.2 Lefthook initialiseren
 ```bash
-npx lefthook install    # schrijft .git/hooks
+lefthook install    # schrijft .git/hooks
 ```
 
 ### 3.3 .lefthook.yml (voorbeeld)

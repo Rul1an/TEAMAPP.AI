@@ -26,12 +26,24 @@ if ! command -v gh >/dev/null 2>&1; then
     aarch64|arm64) ARCH="arm64" ;;
     *) echo "[error] Unsupported architecture: $ARCH" >&2; exit 1 ;;
   esac
+  # Detect operating system for correct binary
+  OS_NAME="$(uname -s)"
+  case "$OS_NAME" in
+    Linux*)   PLATFORM="linux" ;;
+    Darwin*)  PLATFORM="macOS" ;;
+    *) echo "[error] Unsupported OS: $OS_NAME" >&2; exit 1 ;;
+  esac
   TMP_DIR="$(mktemp -d)"
-  curl -sSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_${ARCH}.tar.gz" -o "$TMP_DIR/gh.tgz"
+  curl -sSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_${PLATFORM}_${ARCH}.tar.gz" -o "$TMP_DIR/gh.tgz"
   tar -xf "$TMP_DIR/gh.tgz" -C "$TMP_DIR"
-  install -m 0755 "$TMP_DIR/gh_${GH_VERSION}_linux_${ARCH}/bin/gh" /usr/local/bin/
+  # Install into user-writable path
+  DEST="$HOME/.local/bin"
+  mkdir -p "$DEST"
+  install -m 0755 "$TMP_DIR/gh_${GH_VERSION}_${PLATFORM}_${ARCH}/bin/gh" "$DEST/"
   rm -rf "$TMP_DIR"
-  echo "[setup] gh ${GH_VERSION} geïnstalleerd."
+  # Ensure freshly installed gh is on PATH for the rest of the script run
+  export PATH="$DEST:$PATH"
+  echo "[setup] gh ${GH_VERSION} geïnstalleerd in $DEST."
 fi
 
 # 2. Authenticeren indien nodig ───────────────────────────────────────────────
