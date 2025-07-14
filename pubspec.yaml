@@ -73,6 +73,8 @@ dependencies:
 
   # Networking
   http: ^0.13.6
+  firebase_core: ^3.0.0
+  firebase_messaging: ^14.7.1
 
 dev_dependencies:
   flutter_test:

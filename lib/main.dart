@@ -7,6 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'services/notification_service.dart';
 
 // Project imports:
 import 'config/environment.dart';
@@ -28,6 +30,10 @@ void main() async {
     url: Environment.current.supabaseUrl,
     anonKey: Environment.current.supabaseAnonKey,
   );
+
+  // Initialize Firebase & Messaging
+  await Firebase.initializeApp();
+  await NotificationService.instance.init();
 
   // Initialize Sentry for crash & performance monitoring
   await SentryFlutter.init(
