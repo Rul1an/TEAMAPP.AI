@@ -5,6 +5,7 @@ import 'dart:typed_data';
 // Package imports:
 import 'package:csv/csv.dart';
 import 'package:intl/intl.dart';
+import 'package:excel/excel.dart';
 
 // Project imports:
 import '../models/match.dart';
@@ -150,6 +151,42 @@ class MatchScheduleImportService {
       if (result is Success) saved++;
     }
     return Success(saved);
+  }
+
+  /// Convenience wrapper that routes to the correct preview method based on
+  /// file extension.
+  Future<ImportPreview> previewFile(Uint8List bytes, String extension) {
+    switch (extension.toLowerCase()) {
+      case 'csv':
+        return previewCsv(bytes);
+      case 'xlsx':
+      case 'xls':
+        return previewExcel(bytes);
+      default:
+        throw UnsupportedError('Bestandstype .$extension wordt niet ondersteund');
+    }
+  }
+
+  Future<ImportPreview> previewExcel(Uint8List bytes) async {
+    final excel = Excel.decodeBytes(bytes);
+    final sheet = excel.tables.values.first;
+    final rows = sheet.rows;
+    if (rows.isEmpty || rows.length == 1) {
+      return ImportPreview(rows: <ImportRowPreview>[]);
+    }
+
+    final dataRows = rows
+        .skip(1)
+        .map((row) => row.map((cell) => cell?.value).toList())
+        .toList();
+
+    // Reuse CSV preview logic by converting to CSV-compatible List<List>.
+    final csvBytes = const ListToCsvConverter().convert([
+      ['match_date', 'opponent', 'venue', 'team_id'],
+      ...dataRows,
+    ]).codeUnits;
+
+    return previewCsv(Uint8List.fromList(csvBytes));
   }
 
   // endregion -------------------------------------------------------------
