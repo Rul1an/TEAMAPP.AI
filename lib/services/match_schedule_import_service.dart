@@ -1,0 +1,187 @@
+// Dart imports:
+import 'dart:convert';
+import 'dart:typed_data';
+
+// Package imports:
+import 'package:csv/csv.dart';
+import 'package:intl/intl.dart';
+
+// Project imports:
+import '../models/match.dart';
+import '../repositories/match_repository.dart';
+import '../utils/duplicate_detector.dart';
+import '../core/result.dart';
+
+/// State of a row during preview – used by the wizard UI to colour-code rows.
+enum ImportRowState { newRecord, duplicate, error }
+
+class ImportRowPreview {
+  ImportRowPreview({
+    required this.rowNumber,
+    this.match,
+    required this.state,
+    this.error,
+  });
+
+  final int rowNumber;
+  final Match? match;
+  final ImportRowState state;
+  final String? error;
+}
+
+class ImportPreview {
+  ImportPreview({required this.rows});
+
+  final List<ImportRowPreview> rows;
+
+  int get newCount =>
+      rows.where((r) => r.state == ImportRowState.newRecord).length;
+  int get duplicateCount =>
+      rows.where((r) => r.state == ImportRowState.duplicate).length;
+  int get errorCount =>
+      rows.where((r) => r.state == ImportRowState.error).length;
+}
+
+/// Service that parses CSV/XLSX schedules, detects duplicates and optionally
+/// persists them. Designed to be UI-agnostic so the wizard can display a
+/// preview first.
+class MatchScheduleImportService {
+  MatchScheduleImportService(this._matchRepository);
+
+  final MatchRepository _matchRepository;
+
+  // region Public API -----------------------------------------------------
+
+  Future<ImportPreview> previewCsv(Uint8List bytes) async {
+    final csvString = utf8.decode(bytes);
+    final rows = const CsvToListConverter().convert(csvString);
+    if (rows.isEmpty || rows.length == 1) {
+      // Either empty or only header.
+      return ImportPreview(rows: <ImportRowPreview>[]);
+    }
+
+    // Skip header
+    final dataRows = rows.skip(1).toList();
+
+    // Prepare duplicate detector seeded with existing matches.
+    final existingResult = await _matchRepository.getAll();
+    final existingMatches = existingResult.when(
+      success: (list) => list,
+      failure: (_) => <Match>[],
+    );
+
+    final existingHashes = existingMatches
+        .map((m) => _matchHash(m.date, m.opponent, m.venue ?? '', m.id))
+        .toSet();
+    final detector = DuplicateDetector<String>(initialHashes: existingHashes);
+
+    final previews = <ImportRowPreview>[];
+
+    for (var i = 0; i < dataRows.length; i++) {
+      final rowIndex = i + 2; // +2 because we skipped header and 0-index
+      final row = dataRows[i];
+      try {
+        if (row.length < 4) {
+          previews.add(
+            ImportRowPreview(
+              rowNumber: rowIndex,
+              state: ImportRowState.error,
+              error: 'Onvoldoende kolommen (verwacht 4) – gevonden ${row.length}',
+            ),
+          );
+          continue;
+        }
+
+        final date = _parseDate(row[0].toString());
+        final opponent = row[1].toString().trim();
+        final venue = row[2].toString().trim();
+        final teamId = row[3].toString().trim();
+
+        // Basic validation
+        if (opponent.isEmpty || teamId.isEmpty) {
+          previews.add(
+            ImportRowPreview(
+              rowNumber: rowIndex,
+              state: ImportRowState.error,
+              error: 'Gegenstander of teamId ontbreekt',
+            ),
+          );
+          continue;
+        }
+
+        final hash = _matchHash(date, opponent, venue, teamId);
+        final isDup = detector.isDuplicate(hash);
+
+        final match = Match()
+          ..date = date
+          ..opponent = opponent
+          ..venue = venue
+          ..location = _determineLocation(venue)
+          ..competition = Competition.league; // Default – can be updated later
+
+        previews.add(
+          ImportRowPreview(
+            rowNumber: rowIndex,
+            match: match,
+            state: isDup ? ImportRowState.duplicate : ImportRowState.newRecord,
+          ),
+        );
+      } catch (e) {
+        previews.add(
+          ImportRowPreview(
+            rowNumber: rowIndex,
+            state: ImportRowState.error,
+            error: e.toString(),
+          ),
+        );
+      }
+    }
+
+    return ImportPreview(rows: previews);
+  }
+
+  /// Persist all NEW matches from the preview. Duplicate or error rows are
+  /// skipped. Returns counts for feedback.
+  Future<Result<int>> persist(ImportPreview preview) async {
+    var saved = 0;
+    for (final row in preview.rows) {
+      if (row.state != ImportRowState.newRecord || row.match == null) continue;
+      final result = await _matchRepository.add(row.match!);
+      if (result is Success) saved++;
+    }
+    return Success(saved);
+  }
+
+  // endregion -------------------------------------------------------------
+
+  // region Helpers --------------------------------------------------------
+
+  DateTime _parseDate(String dateStr) {
+    final formats = ['yyyy-MM-dd', 'dd-MM-yyyy', 'dd/MM/yyyy', 'MM/dd/yyyy'];
+    for (final fmt in formats) {
+      try {
+        return DateFormat(fmt).parse(dateStr);
+      } catch (_) {
+        // continue
+      }
+    }
+    throw FormatException('Ongeldig datumformaat: $dateStr');
+  }
+
+  Location _determineLocation(String venue) {
+    final v = venue.toLowerCase();
+    if (v.contains('uit') || v.contains('away')) return Location.away;
+    return Location.home;
+  }
+
+  String _matchHash(
+    DateTime date,
+    String opponent,
+    String venue,
+    String teamId,
+  ) {
+    return '${DateFormat('yyyy-MM-dd').format(date)}|${opponent.toLowerCase().trim()}|${venue.toLowerCase().trim()}|$teamId';
+  }
+
+  // endregion -------------------------------------------------------------
+}
