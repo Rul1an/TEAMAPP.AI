@@ -25,4 +25,30 @@ platform :flutter do
   lane :web_fan_family do
     sh "flutter build web --release --dart-define=FLAVOR=fan_family -t lib/main_fan.dart --output build/web_fan_family"
   end
+
+  desc "Distribute Fan & Family iOS beta to TestFlight"
+  lane :ios_fan_family_beta do
+    sh "flutter build ipa --flavor fan_family -t lib/main_fan.dart --export-options-plist=ios/Runner/ExportOptions.plist"
+    pilot(
+      ipa: Dir["build/ios/ipa/*.ipa"].first,
+      skip_waiting_for_build_processing: true,
+      distribute_external: true,
+      groups: ["FanFamilyBeta"],
+      changelog: ENV['CHANGELOG'] || "Fan & Family beta build"
+    )
+  end
+
+  desc "Distribute Fan & Family Android internal test"
+  lane :android_fan_family_internal do
+    sh "flutter build apk --flavor fan_family -t lib/main_fan.dart --dart-define=FLAVOR=fan_family"
+    supply(
+      apk: Dir["build/app/outputs/flutter-apk/*fan_family*.apk"].first,
+      track: "internal",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      release_status: "draft",
+      changelog: ENV['CHANGELOG'] || "Fan & Family internal test build"
+    )
+  end
 end
