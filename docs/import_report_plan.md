@@ -28,7 +28,7 @@ Key goals:
 | 5 | Import service + preview DTO | ✅ Completed |
 | 6 | UI Wizard – Step 3 “Review & Confirm” | ✅ Completed |
 | 7 | End-to-end & widget tests | 🔲 Pending |
-| 8 | Docs (`import_guide.md`) & Loom demo | 🔲 Pending |
+| 8 | Docs (`import_guide.md`) & Loom demo | ✅ Completed |
 
 Legend: ✅ = Done, ⏳ = In Progress, 🔲 = Not started
 
