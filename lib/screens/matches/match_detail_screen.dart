@@ -56,6 +56,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   Widget build(BuildContext context) {
     final matchesAsync = ref.watch(matchesProvider);
     final playersAsync = ref.watch(playersProvider);
+    final userRole = ref.watch(userRoleProvider);
+    final canManage = !PermissionService.isViewOnlyUser(userRole);
 
     return Scaffold(
       appBar: AppBar(
