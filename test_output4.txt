@@ -1,0 +1,771 @@
+00:00 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:01 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:02 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:03 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:03 +0 -1: loading /workspace/test/widget/training_attendance_screen_test.dart [E]                                                                                                                   
+  Failed to load "/workspace/test/widget/training_attendance_screen_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.HKLEAU/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/training_attendance_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/training_attendance_screen_test.dart'
+00:04 +0 -2: loading /workspace/test/widget/dashboard_screen_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/widget/dashboard_screen_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.DHJUYB/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/dashboard_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/dashboard_screen_test.dart'
+00:05 +0 -3: loading /workspace/test/widget/match_detail_screen_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/widget/match_detail_screen_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.MGMWBG/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/match_detail_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/match_detail_screen_test.dart'
+00:06 +0 -4: loading /workspace/test/widget/match/match_detail_screen_test.dart [E]                                                                                                                    
+  Failed to load "/workspace/test/widget/match/match_detail_screen_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.YEYYLA/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/match/match_detail_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/match/match_detail_screen_test.dart'
+00:07 +0 -5: loading /workspace/test/hive/hive_key_manager_test.dart [E]                                                                                                                               
+  Failed to load "/workspace/test/hive/hive_key_manager_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.LRIMDQ/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/hive/hive_key_manager_test.dart -p vm --plain-name 'loading /workspace/test/hive/hive_key_manager_test.dart'
+00:08 +0 -6: loading /workspace/test/hive/hive_profile_cache_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/hive/hive_profile_cache_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.MADKPJ/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/hive/hive_profile_cache_test.dart -p vm --plain-name 'loading /workspace/test/hive/hive_profile_cache_test.dart'
+00:08 +0 -7: loading /workspace/test/hive/hive_training_cache_test.dart [E]                                                                                                                            
+  Failed to load "/workspace/test/hive/hive_training_cache_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.ZKASSK/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/hive/hive_training_cache_test.dart -p vm --plain-name 'loading /workspace/test/hive/hive_training_cache_test.dart'
+00:09 +0 -8: loading /workspace/test/hive/hive_player_cache_test.dart [E]                                                                                                                              
+  Failed to load "/workspace/test/hive/hive_player_cache_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.ECSFCP/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/hive/hive_player_cache_test.dart -p vm --plain-name 'loading /workspace/test/hive/hive_player_cache_test.dart'
+00:09 +0 -9: loading /workspace/test/golden/field_diagram_toolbar_test.dart [E]                                                                                                                        
+  Failed to load "/workspace/test/golden/field_diagram_toolbar_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.IVJQUG/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/golden/field_diagram_toolbar_test.dart -p vm --plain-name 'loading /workspace/test/golden/field_diagram_toolbar_test.dart'
+00:10 +0 -10: loading /workspace/test/golden/training_attendance_screen_test.dart [E]                                                                                                                  
+  Failed to load "/workspace/test/golden/training_attendance_screen_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.GCXCVZ/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/golden/training_attendance_screen_test.dart -p vm --plain-name 'loading /workspace/test/golden/training_attendance_screen_test.dart'
+00:11 +0 -11: loading /workspace/test/screens/training_edit_screen_test.dart [E]                                                                                                                       
+  Failed to load "/workspace/test/screens/training_edit_screen_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.KSBCHM/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/screens/training_edit_screen_test.dart -p vm --plain-name 'loading /workspace/test/screens/training_edit_screen_test.dart'
+00:11 +0 -12: loading /workspace/test/services/auth_service_test.dart [E]                                                                                                                              
+  Failed to load "/workspace/test/services/auth_service_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.NUSATG/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/auth_service_test.dart -p vm --plain-name 'loading /workspace/test/services/auth_service_test.dart'
+00:12 +0 -13: loading /workspace/test/services/organization_service_test.dart [E]                                                                                                                      
+  Failed to load "/workspace/test/services/organization_service_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.SWNNIU/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/organization_service_test.dart -p vm --plain-name 'loading /workspace/test/services/organization_service_test.dart'
+00:13 +0 -14: loading /workspace/test/services/permission_service_test.dart [E]                                                                                                                        
+  Failed to load "/workspace/test/services/permission_service_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.MHLIMF/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/permission_service_test.dart -p vm --plain-name 'loading /workspace/test/services/permission_service_test.dart'
+00:13 +0 -15: loading /workspace/test/services/telemetry_service_test.dart [E]                                                                                                                         
+  Failed to load "/workspace/test/services/telemetry_service_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.VECHXC/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/telemetry_service_test.dart -p vm --plain-name 'loading /workspace/test/services/telemetry_service_test.dart'
+00:14 +0 -16: loading /workspace/test/services/demo_data_service_test.dart [E]                                                                                                                         
+  Failed to load "/workspace/test/services/demo_data_service_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.NLRKMO/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/services/demo_data_service_test.dart -p vm --plain-name 'loading /workspace/test/services/demo_data_service_test.dart'
+00:15 +0 -17: loading /workspace/test/providers/players_notifier_test.dart [E]                                                                                                                         
+  Failed to load "/workspace/test/providers/players_notifier_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.DELMHC/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/providers/players_notifier_test.dart -p vm --plain-name 'loading /workspace/test/providers/players_notifier_test.dart'
+00:15 +0 -18: loading /workspace/test/providers/field_diagram_provider_test.dart [E]                                                                                                                   
+  Failed to load "/workspace/test/providers/field_diagram_provider_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.CLXZTX/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/providers/field_diagram_provider_test.dart -p vm --plain-name 'loading /workspace/test/providers/field_diagram_provider_test.dart'
+00:16 +0 -19: loading /workspace/test/providers/current_profile_provider_test.dart [E]                                                                                                                 
+  Failed to load "/workspace/test/providers/current_profile_provider_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.PNTYMS/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/providers/current_profile_provider_test.dart -p vm --plain-name 'loading /workspace/test/providers/current_profile_provider_test.dart'
+00:17 +0 -20: loading /workspace/test/models/club_model_test.dart [E]                                                                                                                                  
+  Failed to load "/workspace/test/models/club_model_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.XIEGZZ/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/club_model_test.dart -p vm --plain-name 'loading /workspace/test/models/club_model_test.dart'
+00:17 +0 -21: loading /workspace/test/models/organization_model_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/models/organization_model_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.EUUAYD/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/organization_model_test.dart -p vm --plain-name 'loading /workspace/test/models/organization_model_test.dart'
+00:18 +0 -22: loading /workspace/test/models/annual_planning/season_plan_test.dart [E]                                                                                                                 
+  Failed to load "/workspace/test/models/annual_planning/season_plan_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.SPTXGO/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/annual_planning/season_plan_test.dart -p vm --plain-name 'loading /workspace/test/models/annual_planning/season_plan_test.dart'
+00:19 +0 -23: loading /workspace/test/models/annual_planning/training_period_test.dart [E]                                                                                                             
+  Failed to load "/workspace/test/models/annual_planning/training_period_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.NUUIDA/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/annual_planning/training_period_test.dart -p vm --plain-name 'loading /workspace/test/models/annual_planning/training_period_test.dart'
+00:20 +0 -24: loading /workspace/test/models/annual_planning/periodization_plan_test.dart [E]                                                                                                          
+  Failed to load "/workspace/test/models/annual_planning/periodization_plan_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.SBDIUK/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/annual_planning/periodization_plan_test.dart -p vm --plain-name 'loading /workspace/test/models/annual_planning/periodization_plan_test.dart'
+00:20 +0 -25: loading /workspace/test/models/annual_planning/morphocycle_test.dart [E]                                                                                                                 
+  Failed to load "/workspace/test/models/annual_planning/morphocycle_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.JYZZWR/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/annual_planning/morphocycle_test.dart -p vm --plain-name 'loading /workspace/test/models/annual_planning/morphocycle_test.dart'
+00:21 +0 -26: loading /workspace/test/models/player_model_test.dart [E]                                                                                                                                
+  Failed to load "/workspace/test/models/player_model_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.QBKHQV/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/models/player_model_test.dart -p vm --plain-name 'loading /workspace/test/models/player_model_test.dart'
+00:21 +0 -27: loading /workspace/test/pdf/pdf_generators_test.dart [E]                                                                                                                                 
+  Failed to load "/workspace/test/pdf/pdf_generators_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.NLOBNL/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/pdf/pdf_generators_test.dart -p vm --plain-name 'loading /workspace/test/pdf/pdf_generators_test.dart'
+00:22 +0 -28: loading /workspace/test/pdf/match_report_pdf_generator_test.dart [E]                                                                                                                     
+  Failed to load "/workspace/test/pdf/match_report_pdf_generator_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.WITRNA/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/pdf/match_report_pdf_generator_test.dart -p vm --plain-name 'loading /workspace/test/pdf/match_report_pdf_generator_test.dart'
+00:23 +0 -29: loading /workspace/test/pdf/player_assessment_pdf_generator_test.dart [E]                                                                                                                
+  Failed to load "/workspace/test/pdf/player_assessment_pdf_generator_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.JGGJWK/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/pdf/player_assessment_pdf_generator_test.dart -p vm --plain-name 'loading /workspace/test/pdf/player_assessment_pdf_generator_test.dart'
+00:24 +0 -30: loading /workspace/test/config/supabase_config_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/config/supabase_config_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.WLDFGP/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/config/supabase_config_test.dart -p vm --plain-name 'loading /workspace/test/config/supabase_config_test.dart'
+00:24 +0 -31: loading /workspace/test/integration/stub_supabase_integration_test.dart [E]                                                                                                              
+  Failed to load "/workspace/test/integration/stub_supabase_integration_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.RMSSYF/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/stub_supabase_integration_test.dart -p vm --plain-name 'loading /workspace/test/integration/stub_supabase_integration_test.dart'
+00:25 +0 -32: loading /workspace/test/integration/rls_isolation_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/integration/rls_isolation_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.TRBBAL/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/rls_isolation_test.dart -p vm --plain-name 'loading /workspace/test/integration/rls_isolation_test.dart'
+00:26 +0 -33: loading /workspace/test/integration/app_flow_login_demo_test.dart [E]                                                                                                                    
+  Failed to load "/workspace/test/integration/app_flow_login_demo_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.SMGJQG/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/app_flow_login_demo_test.dart -p vm --plain-name 'loading /workspace/test/integration/app_flow_login_demo_test.dart'
+00:26 +0 -34: loading /workspace/test/integration/offline_flow_test.dart [E]                                                                                                                           
+  Failed to load "/workspace/test/integration/offline_flow_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.YZKSJQ/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/offline_flow_test.dart -p vm --plain-name 'loading /workspace/test/integration/offline_flow_test.dart'
+00:27 +0 -35: loading /workspace/test/integration/match_flow_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/integration/match_flow_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.PJGVFH/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/match_flow_test.dart -p vm --plain-name 'loading /workspace/test/integration/match_flow_test.dart'
+00:28 +0 -36: loading /workspace/test/integration/training_flow_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/integration/training_flow_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.OHPDHL/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/training_flow_test.dart -p vm --plain-name 'loading /workspace/test/integration/training_flow_test.dart'
+00:28 +0 -37: loading /workspace/test/widgets/heat_map_card_test.dart [E]                                                                                                                              
+  Failed to load "/workspace/test/widgets/heat_map_card_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.YJHNIW/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widgets/heat_map_card_test.dart -p vm --plain-name 'loading /workspace/test/widgets/heat_map_card_test.dart'
+00:29 +0 -38: loading /workspace/test/controllers/lineup_builder_controller_test.dart [E]                                                                                                              
+  Failed to load "/workspace/test/controllers/lineup_builder_controller_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.XNSKPH/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/controllers/lineup_builder_controller_test.dart -p vm --plain-name 'loading /workspace/test/controllers/lineup_builder_controller_test.dart'
+00:30 +0 -39: loading /workspace/test/permission_service_test.dart [E]                                                                                                                                 
+  Failed to load "/workspace/test/permission_service_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.CYDIYT/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/permission_service_test.dart -p vm --plain-name 'loading /workspace/test/permission_service_test.dart'
+00:30 +0 -40: loading /workspace/test/core/result_test.dart [E]                                                                                                                                        
+  Failed to load "/workspace/test/core/result_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.PJOLBT/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/core/result_test.dart -p vm --plain-name 'loading /workspace/test/core/result_test.dart'
+00:31 +0 -41: loading /workspace/test/utils/app_logger_test.dart [E]                                                                                                                                   
+  Failed to load "/workspace/test/utils/app_logger_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.DLCLUV/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/utils/app_logger_test.dart -p vm --plain-name 'loading /workspace/test/utils/app_logger_test.dart'
+00:31 +0 -42: loading /workspace/test/utils/validators/training_validators_test.dart [E]                                                                                                               
+  Failed to load "/workspace/test/utils/validators/training_validators_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.ZNJNYH/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/utils/validators/training_validators_test.dart -p vm --plain-name 'loading /workspace/test/utils/validators/training_validators_test.dart'
+00:31 +0 -42: loading /workspace/test/repositories/prediction_repository_test.dart                                                                                                                     00:31 +0 -42: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                    00:31 +0 -42: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                    
+  Skip: PredictionRepository tests disabled – pending MatchRepository mock implementation
+00:31 +0 ~1 -42: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                 00:32 +0 ~1 -42: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                 00:32 +0 ~1 -43: loading /workspace/test/utils/heatmap_utils_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/utils/heatmap_utils_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.WJFNPG/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/utils/heatmap_utils_test.dart -p vm --plain-name 'loading /workspace/test/utils/heatmap_utils_test.dart'
+00:33 +0 ~1 -44: loading /workspace/test/repositories/match_repository_impl_test.dart [E]                                                                                                              
+  Failed to load "/workspace/test/repositories/match_repository_impl_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.JPWEPS/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/repositories/match_repository_impl_test.dart -p vm --plain-name 'loading /workspace/test/repositories/match_repository_impl_test.dart'
+00:34 +0 ~1 -45: loading /workspace/test/repositories/profile_repository_impl_test.dart [E]                                                                                                            
+  Failed to load "/workspace/test/repositories/profile_repository_impl_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.MXKFQD/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/repositories/profile_repository_impl_test.dart -p vm --plain-name 'loading /workspace/test/repositories/profile_repository_impl_test.dart'
+00:34 +0 ~1 -46: loading /workspace/test/repositories/training_repository_impl_test.dart [E]                                                                                                           
+  Failed to load "/workspace/test/repositories/training_repository_impl_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.KXWCRM/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/repositories/training_repository_impl_test.dart -p vm --plain-name 'loading /workspace/test/repositories/training_repository_impl_test.dart'
+00:35 +0 ~1 -47: loading /workspace/test/repositories/player_repository_impl_test.dart [E]                                                                                                             
+  Failed to load "/workspace/test/repositories/player_repository_impl_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.LILBSW/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/repositories/player_repository_impl_test.dart -p vm --plain-name 'loading /workspace/test/repositories/player_repository_impl_test.dart'
+00:36 +0 ~1 -48: loading /workspace/test/navigation_route_mapping_test.dart [E]                                                                                                                        
+  Failed to load "/workspace/test/navigation_route_mapping_test.dart": Bad state: There is no current invoker. Please make sure that you are making the call inside a test zone.
+  package:test_api                                                              printOnFailure
+  package:flutter_test/src/_binding_io.dart 84:20                               _MockHttpOverrides.createHttpClient
+  dart:_http                                                                    new HttpClient
+  package:http/src/io_client.dart 50:53                                         new IOClient
+  package:http/src/io_client.dart 20:10                                         createClient
+  package:http/src/client.dart 37:37                                            new Client
+  package:supabase/src/supabase_client.dart 146:52                              new SupabaseClient
+  package:supabase_flutter/src/supabase.dart 198:14                             Supabase._init
+  package:supabase_flutter/src/supabase.dart 120:15                             Supabase.initialize
+  test/flutter_test_config.dart 28:18                                           testExecutable
+  ../tmp/flutter_tools.MRSCGV/flutter_test_listener.FYSCJI/listener.dart 50:30  main.<fn>.<fn>
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/navigation_route_mapping_test.dart -p vm --plain-name 'loading /workspace/test/navigation_route_mapping_test.dart'
+00:36 +0 ~1 -48: Some tests failed.                                                                                                                                                                    

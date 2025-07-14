@@ -28,6 +28,7 @@ void main() {
     setUpAll(() async {
       await initializeDateFormatting('nl_NL');
       SharedPreferences.setMockInitialValues({});
+      // Supabase is already initialised globally in `flutter_test_config.dart`.
       // Suppress overflow errors that are not critical for integration flow
       FlutterError.onError = (details) {
         final exception = details.exceptionAsString();
@@ -37,10 +38,6 @@ void main() {
         }
         FlutterError.presentError(details);
       };
-      await Supabase.initialize(
-        url: 'https://dummy.supabase.co',
-        anonKey: 'dummy-key',
-      );
     });
 
     testWidgets('navigates through core flow without auth', (tester) async {
