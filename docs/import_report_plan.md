@@ -26,7 +26,7 @@ Key goals:
 | 3 | CSV parser (`MatchScheduleCsvParser`) | ✅ Completed |
 | 4 | Duplicate detection utility (`DuplicateDetector`) | ✅ Completed |
 | 5 | Import service + preview DTO | ✅ Completed |
-| 6 | UI Wizard – Step 3 “Review & Confirm” | ⏳ In&nbsp;Progress |
+| 6 | UI Wizard – Step 3 “Review & Confirm” | ✅ Completed |
 | 7 | End-to-end & widget tests | 🔲 Pending |
 | 8 | Docs (`import_guide.md`) & Loom demo | 🔲 Pending |
 

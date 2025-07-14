@@ -2,28 +2,36 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:typed_data';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import '../../services/match_schedule_import_service.dart';
 import '../../widgets/import/match_schedule_review_table.dart';
 import '../../widgets/training/session_wizard_stepper.dart';
 import '../../utils/app_logger.dart';
+import '../../providers/import_providers.dart';
 
-class MatchScheduleImportWizardScreen extends StatefulWidget {
+class MatchScheduleImportWizardScreen extends ConsumerStatefulWidget {
   const MatchScheduleImportWizardScreen({super.key});
 
   @override
-  State<MatchScheduleImportWizardScreen> createState() => _State();
+  ConsumerState<MatchScheduleImportWizardScreen> createState() => _State();
 }
 
-class _State extends State<MatchScheduleImportWizardScreen> {
+class _State extends ConsumerState<MatchScheduleImportWizardScreen> {
   int _currentStep = 0;
   Uint8List? _fileBytes;
   String? _fileExt;
   ImportPreview? _preview;
   bool _isLoading = false;
 
-  final _importService = MatchScheduleImportService(/* TODO: inject repo via provider */ throw UnimplementedError());
+  late final MatchScheduleImportService _importService;
+
+  @override
+  void initState() {
+    super.initState();
+    _importService = ref.read(matchScheduleImportServiceProvider);
+  }
 
   @override
   Widget build(BuildContext context) {
