@@ -1,0 +1,810 @@
+00:00 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:01 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:02 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:03 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:04 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:05 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:06 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:07 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:08 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:09 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:10 +0: loading /workspace/test/widget/training_attendance_screen_test.dart                                                                                                                          00:10 +0: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen (setUpAll)                                                                                             00:10 +0: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen renders basic UI with stubbed data                                                                     00:11 +0: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen renders basic UI with stubbed data                                                                     00:11 +0: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen renders basic UI with stubbed data                                                                     
+Pending timers:
+Timer (duration: 0:00:10.000000, periodic: true), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:187:15)
+#5      GoTrueClient.startAutoRefresh (package:gotrue/src/gotrue_client.dart:1011:32)
+#6      new GoTrueClient (package:gotrue/src/gotrue_client.dart:128:7)
+#7      SupabaseClient._initSupabaseAuthClient (package:supabase/src/supabase_client.dart:286:12)
+#8      new SupabaseClient (package:supabase/src/supabase_client.dart:140:21)
+#9      AuthService._initClient (package:jo17_tactical_manager/services/auth_service.dart:26:14)
+#10     new AuthService (package:jo17_tactical_manager/services/auth_service.dart:13:65)
+#11     authServiceProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:9:60)
+#12     Provider._create (package:riverpod/src/provider/base.dart:59:57)
+#13     ProviderElement.create (package:riverpod/src/provider/base.dart:345:23)
+#14     ProviderElementBase.buildState (package:riverpod/src/framework/element.dart:426:7)
+#15     ProviderElementBase.mount (package:riverpod/src/framework/element.dart:228:5)
+#16     _StateReader._create (package:riverpod/src/framework/container.dart:47:11)
+#17     _StateReader.getElement (package:riverpod/src/framework/container.dart:35:52)
+#18     ProviderContainer.readProviderElement (package:riverpod/src/framework/container.dart:479:19)
+#19     ProviderElementBase._debugAssertCanDependOn.<anonymous closure> (package:riverpod/src/framework/element.dart:624:42)
+#20     ProviderElementBase._debugAssertCanDependOn (package:riverpod/src/framework/element.dart:667:8)
+#21     ProviderElementBase.watch (package:riverpod/src/framework/element.dart:714:12)
+#22     userRoleProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:31:27)
+#23     Provider._create (package:riverpod/src/provider/base.dart:59:57)
+#24     ProviderElement.create (package:riverpod/src/provider/base.dart:345:23)
+#25     ProviderElementBase.buildState (package:riverpod/src/framework/element.dart:426:7)
+#26     ProviderElementBase.mount (package:riverpod/src/framework/element.dart:228:5)
+#27     _StateReader._create (package:riverpod/src/framework/container.dart:47:11)
+#28     _StateReader.getElement (package:riverpod/src/framework/container.dart:35:52)
+#29     ProviderContainer.readProviderElement.<anonymous closure> (package:riverpod/src/framework/container.dart:440:40)
+#30     ProviderContainer.readProviderElement (package:riverpod/src/framework/container.dart:475:8)
+#31     ProviderBase.addListener (package:riverpod/src/framework/provider_base.dart:79:26)
+#32     ProviderContainer.listen (package:riverpod/src/framework/container.dart:280:21)
+#33     ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/consumer.dart:564:25)
+#34     _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:674:23)
+#35     ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:557:26)
+#36     _TrainingAttendanceScreenState.build (package:jo17_tactical_manager/screens/training/training_attendance_screen.dart:42:26)
+#37     StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+#38     ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+#39     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+#40     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#41     Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#42     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+#43     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+#44     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+...     Normal element mounting (228 frames)
+#272    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+#273    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+#274    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+...     Normal element mounting (463 frames)
+#737    _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+...     Normal element mounting (9 frames)
+#746    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+#747    Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+#748    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#749    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#750    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#751    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#752    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#753    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#754    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#755    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#756    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#757    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#758    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#759    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#760    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#761    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#762    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#763    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#764    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#765    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#766    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#767    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#768    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#769    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#770    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#771    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#772    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#773    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#774    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#775    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#776    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#777    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#778    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#779    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#780    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#781    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#782    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#783    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#784    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#785    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#786    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#787    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#788    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#789    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#790    _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+#791    _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+#792    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#793    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#794    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#795    StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+#796    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#797    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#798    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#799    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#800    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#801    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#802    RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+#803    RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+#804    RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+#805    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#806    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+#807    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+#808    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+#809    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+#810    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+#811    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+#812    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+#813    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+#816    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#817    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+#818    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+#821    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#822    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+#823    main.<anonymous closure>.<anonymous closure> (file:///workspace/test/widget/training_attendance_screen_test.dart:52:20)
+#824    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+<asynchronous suspension>
+#825    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 7 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1626 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1626:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  renders basic UI with stubbed data
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:11 +0 -1: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen renders basic UI with stubbed data [E]                                                              
+  Test failed. See exception logs above.
+  The test description was: renders basic UI with stubbed data
+  
+Warning: At least one test in this suite creates an HttpClient. When running a test suite that uses
+TestWidgetsFlutterBinding, all HTTP requests will return status code 400, and no network request
+will actually be made. Any test expecting a real network connection and status code will fail.
+To test code that needs an HttpClient, provide your own HttpClient implementation to the code under
+test, so that your test can consistently provide a testable response to the code under test.
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/training_attendance_screen_test.dart -p vm --plain-name 'TrainingAttendanceScreen renders basic UI with stubbed data'
+00:11 +0 -1: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen (tearDownAll)                                                                                       00:12 +0 -1: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen (tearDownAll)                                                                                       00:13 +0 -1: /workspace/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen (tearDownAll)                                                                                       00:13 +0 -1: loading /workspace/test/widget/dashboard_screen_test.dart                                                                                                                                 00:13 +0 -1: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Coach role shows training & lineup actions and demo banner                                          00:14 +0 -1: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Coach role shows training & lineup actions and demo banner                                          00:14 +0 -2: loading /workspace/test/widget/match_detail_screen_test.dart [E]                                                                                                                          
+  Failed to load "/workspace/test/widget/match_detail_screen_test.dart":
+  Compilation failed for testPath=/workspace/test/widget/match_detail_screen_test.dart: lib/screens/matches/match_detail_screen.dart:273:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage
+                             ^^^^^^^^^
+  lib/screens/matches/match_detail_screen.dart:339:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage
+                             ^^^^^^^^^
+  lib/screens/matches/match_detail_screen.dart:403:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage ? _showRatingOptions : null,
+                             ^^^^^^^^^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/match_detail_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/match_detail_screen_test.dart'
+00:14 +1 -2: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Coach role shows training & lineup actions and demo banner                                          00:14 +1 -2: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Player role hides action icons but shows banner                                                     00:14 +2 -2: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Player role hides action icons but shows banner                                                     00:14 +2 -2: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Demo mode off hides RBAC banner                                                                     00:15 +2 -2: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Demo mode off hides RBAC banner                                                                     00:15 +3 -2: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Demo mode off hides RBAC banner                                                                     00:16 +3 -2: /workspace/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Demo mode off hides RBAC banner                                                                     00:16 +3 -3: loading /workspace/test/widget/match/match_detail_screen_test.dart [E]                                                                                                                    
+  Failed to load "/workspace/test/widget/match/match_detail_screen_test.dart":
+  Compilation failed for testPath=/workspace/test/widget/match/match_detail_screen_test.dart: lib/screens/matches/match_detail_screen.dart:273:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage
+                             ^^^^^^^^^
+  lib/screens/matches/match_detail_screen.dart:339:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage
+                             ^^^^^^^^^
+  lib/screens/matches/match_detail_screen.dart:403:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage ? _showRatingOptions : null,
+                             ^^^^^^^^^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/widget/match/match_detail_screen_test.dart -p vm --plain-name 'loading /workspace/test/widget/match/match_detail_screen_test.dart'
+00:19 +3 -3: loading /workspace/test/hive/hive_key_manager_test.dart                                                                                                                                   00:19 +3 -3: /workspace/test/hive/hive_key_manager_test.dart: generates and stores key                                                                                                                 00:19 +4 -3: /workspace/test/hive/hive_key_manager_test.dart: generates and stores key                                                                                                                 00:19 +4 -3: /workspace/test/hive/hive_key_manager_test.dart: returns cached key on subsequent calls                                                                                                   00:19 +5 -3: /workspace/test/hive/hive_key_manager_test.dart: returns cached key on subsequent calls                                                                                                   00:20 +5 -3: /workspace/test/hive/hive_key_manager_test.dart: returns cached key on subsequent calls                                                                                                   00:20 +5 -3: loading /workspace/test/hive/hive_profile_cache_test.dart                                                                                                                                 00:20 +5 -3: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache writes and reads profile within TTL                                                                                   00:20 +6 -3: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache writes and reads profile within TTL                                                                                   00:20 +6 -3: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache returns null after TTL expiration                                                                                     00:20 +7 -3: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache returns null after TTL expiration                                                                                     00:20 +7 -3: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache clear removes cached profile                                                                                          00:20 +8 -3: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache clear removes cached profile                                                                                          00:21 +8 -3: /workspace/test/hive/hive_profile_cache_test.dart: HiveProfileCache clear removes cached profile                                                                                          00:21 +8 -3: loading /workspace/test/hive/hive_training_cache_test.dart                                                                                                                                00:21 +8 -3: /workspace/test/hive/hive_training_cache_test.dart: HiveTrainingCache write & read list                                                                                                   00:21 +9 -3: /workspace/test/hive/hive_training_cache_test.dart: HiveTrainingCache write & read list                                                                                                   00:21 +9 -3: /workspace/test/hive/hive_training_cache_test.dart: HiveTrainingCache returns null after TTL expiry                                                                                       00:21 +10 -3: /workspace/test/hive/hive_training_cache_test.dart: HiveTrainingCache returns null after TTL expiry                                                                                      00:22 +10 -3: /workspace/test/hive/hive_training_cache_test.dart: HiveTrainingCache returns null after TTL expiry                                                                                      00:22 +10 -3: loading /workspace/test/hive/hive_player_cache_test.dart                                                                                                                                 00:22 +10 -3: /workspace/test/hive/hive_player_cache_test.dart: HivePlayerCache write & read list                                                                                                      00:22 +11 -3: /workspace/test/hive/hive_player_cache_test.dart: HivePlayerCache write & read list                                                                                                      00:22 +11 -3: /workspace/test/hive/hive_player_cache_test.dart: HivePlayerCache returns null after TTL expiry                                                                                          00:22 +12 -3: /workspace/test/hive/hive_player_cache_test.dart: HivePlayerCache returns null after TTL expiry                                                                                          00:23 +12 -3: /workspace/test/hive/hive_player_cache_test.dart: HivePlayerCache returns null after TTL expiry                                                                                          00:23 +12 -3: loading /workspace/test/golden/field_diagram_toolbar_test.dart                                                                                                                           00:23 +12 -3: /workspace/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests default (select) tool                                                                           00:23 +12 -3: /workspace/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests default (select) tool                                                                           
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/field_diagram_toolbar_select.png": Pixel test failed, 1.41%, 900px diff detected.
+Failure feedback can be found at /workspace/test/golden/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:123:26)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:509:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/test/golden/field_diagram_toolbar_test.dart:55:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:23 +12 -4: /workspace/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests default (select) tool [E]                                                                       
+  Test failed. See exception logs above.
+  The test description was: default (select) tool
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/golden/field_diagram_toolbar_test.dart -p vm --plain-name 'FieldDiagramToolbar golden tests default (select) tool'
+00:23 +12 -4: /workspace/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests line tool expanded                                                                              00:23 +12 -4: /workspace/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests line tool expanded                                                                              
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/field_diagram_toolbar_line.png": Pixel test failed, 2.11%, 1350px diff detected.
+Failure feedback can be found at /workspace/test/golden/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:123:26)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:509:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/test/golden/field_diagram_toolbar_test.dart:75:7)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:23 +12 -5: /workspace/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests line tool expanded [E]                                                                          
+  Test failed. See exception logs above.
+  The test description was: line tool expanded
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/golden/field_diagram_toolbar_test.dart -p vm --plain-name 'FieldDiagramToolbar golden tests line tool expanded'
+00:23 +12 -5: loading /workspace/test/golden/training_attendance_screen_test.dart                                                                                                                      00:23 +12 -5: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests (setUpAll)                                                                            00:23 +12 -5: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile light mode                                                                     00:24 +12 -5: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile light mode                                                                     00:24 +12 -5: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile light mode                                                                     
+Pending timers:
+Timer (duration: 0:00:10.000000, periodic: true), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:187:15)
+#5      GoTrueClient.startAutoRefresh (package:gotrue/src/gotrue_client.dart:1011:32)
+#6      new GoTrueClient (package:gotrue/src/gotrue_client.dart:128:7)
+#7      SupabaseClient._initSupabaseAuthClient (package:supabase/src/supabase_client.dart:286:12)
+#8      new SupabaseClient (package:supabase/src/supabase_client.dart:140:21)
+#9      AuthService._initClient (package:jo17_tactical_manager/services/auth_service.dart:26:14)
+#10     new AuthService (package:jo17_tactical_manager/services/auth_service.dart:13:65)
+#11     authServiceProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:9:60)
+#12     Provider._create (package:riverpod/src/provider/base.dart:59:57)
+#13     ProviderElement.create (package:riverpod/src/provider/base.dart:345:23)
+#14     ProviderElementBase.buildState (package:riverpod/src/framework/element.dart:426:7)
+#15     ProviderElementBase.mount (package:riverpod/src/framework/element.dart:228:5)
+#16     _StateReader._create (package:riverpod/src/framework/container.dart:47:11)
+#17     _StateReader.getElement (package:riverpod/src/framework/container.dart:35:52)
+#18     ProviderContainer.readProviderElement (package:riverpod/src/framework/container.dart:479:19)
+#19     ProviderElementBase._debugAssertCanDependOn.<anonymous closure> (package:riverpod/src/framework/element.dart:624:42)
+#20     ProviderElementBase._debugAssertCanDependOn (package:riverpod/src/framework/element.dart:667:8)
+#21     ProviderElementBase.watch (package:riverpod/src/framework/element.dart:714:12)
+#22     userRoleProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:31:27)
+#23     Provider._create (package:riverpod/src/provider/base.dart:59:57)
+#24     ProviderElement.create (package:riverpod/src/provider/base.dart:345:23)
+#25     ProviderElementBase.buildState (package:riverpod/src/framework/element.dart:426:7)
+#26     ProviderElementBase.mount (package:riverpod/src/framework/element.dart:228:5)
+#27     _StateReader._create (package:riverpod/src/framework/container.dart:47:11)
+#28     _StateReader.getElement (package:riverpod/src/framework/container.dart:35:52)
+#29     ProviderContainer.readProviderElement.<anonymous closure> (package:riverpod/src/framework/container.dart:440:40)
+#30     ProviderContainer.readProviderElement (package:riverpod/src/framework/container.dart:475:8)
+#31     ProviderBase.addListener (package:riverpod/src/framework/provider_base.dart:79:26)
+#32     ProviderContainer.listen (package:riverpod/src/framework/container.dart:280:21)
+#33     ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/consumer.dart:564:25)
+#34     _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:674:23)
+#35     ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:557:26)
+#36     _TrainingAttendanceScreenState.build (package:jo17_tactical_manager/screens/training/training_attendance_screen.dart:42:26)
+#37     StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+#38     ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+#39     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+#40     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#41     Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#42     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+#43     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+#44     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+...     Normal element mounting (228 frames)
+#272    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+#273    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+#274    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+...     Normal element mounting (463 frames)
+#737    _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+...     Normal element mounting (9 frames)
+#746    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+#747    Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+#748    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#749    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#750    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#751    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#752    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#753    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#754    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#755    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#756    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#757    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#758    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#759    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#760    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#761    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#762    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#763    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#764    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#765    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#766    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#767    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#768    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#769    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#770    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#771    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#772    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#773    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#774    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#775    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#776    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#777    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#778    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#779    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#780    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#781    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#782    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#783    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#784    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#785    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#786    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#787    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#788    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#789    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#790    _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+#791    _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+#792    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#793    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#794    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#795    StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+#796    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#797    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#798    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#799    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#800    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#801    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#802    RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+#803    RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+#804    RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+#805    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#806    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+#807    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+#808    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+#809    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+#810    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+#811    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+#812    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+#813    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+#816    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#817    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+#818    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+#821    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#822    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+#823    main.<anonymous closure>.<anonymous closure> (file:///workspace/test/golden/training_attendance_screen_test.dart:58:20)
+#824    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+<asynchronous suspension>
+#825    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 7 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1626 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1626:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  mobile light mode
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:24 +12 -6: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile light mode [E]                                                                 
+  Test failed. See exception logs above.
+  The test description was: mobile light mode
+  
+Warning: At least one test in this suite creates an HttpClient. When running a test suite that uses
+TestWidgetsFlutterBinding, all HTTP requests will return status code 400, and no network request
+will actually be made. Any test expecting a real network connection and status code will fail.
+To test code that needs an HttpClient, provide your own HttpClient implementation to the code under
+test, so that your test can consistently provide a testable response to the code under test.
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/golden/training_attendance_screen_test.dart -p vm --plain-name 'TrainingAttendanceScreen golden tests mobile light mode'
+00:24 +12 -6: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile dark mode                                                                      00:24 +12 -6: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile dark mode                                                                      
+Pending timers:
+Timer (duration: 0:00:10.000000, periodic: true), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:187:15)
+#5      GoTrueClient.startAutoRefresh (package:gotrue/src/gotrue_client.dart:1011:32)
+#6      new GoTrueClient (package:gotrue/src/gotrue_client.dart:128:7)
+#7      SupabaseClient._initSupabaseAuthClient (package:supabase/src/supabase_client.dart:286:12)
+#8      new SupabaseClient (package:supabase/src/supabase_client.dart:140:21)
+#9      AuthService._initClient (package:jo17_tactical_manager/services/auth_service.dart:26:14)
+#10     new AuthService (package:jo17_tactical_manager/services/auth_service.dart:13:65)
+#11     authServiceProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:9:60)
+#12     Provider._create (package:riverpod/src/provider/base.dart:59:57)
+#13     ProviderElement.create (package:riverpod/src/provider/base.dart:345:23)
+#14     ProviderElementBase.buildState (package:riverpod/src/framework/element.dart:426:7)
+#15     ProviderElementBase.mount (package:riverpod/src/framework/element.dart:228:5)
+#16     _StateReader._create (package:riverpod/src/framework/container.dart:47:11)
+#17     _StateReader.getElement (package:riverpod/src/framework/container.dart:35:52)
+#18     ProviderContainer.readProviderElement (package:riverpod/src/framework/container.dart:479:19)
+#19     ProviderElementBase._debugAssertCanDependOn.<anonymous closure> (package:riverpod/src/framework/element.dart:624:42)
+#20     ProviderElementBase._debugAssertCanDependOn (package:riverpod/src/framework/element.dart:667:8)
+#21     ProviderElementBase.watch (package:riverpod/src/framework/element.dart:714:12)
+#22     userRoleProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:31:27)
+#23     Provider._create (package:riverpod/src/provider/base.dart:59:57)
+#24     ProviderElement.create (package:riverpod/src/provider/base.dart:345:23)
+#25     ProviderElementBase.buildState (package:riverpod/src/framework/element.dart:426:7)
+#26     ProviderElementBase.mount (package:riverpod/src/framework/element.dart:228:5)
+#27     _StateReader._create (package:riverpod/src/framework/container.dart:47:11)
+#28     _StateReader.getElement (package:riverpod/src/framework/container.dart:35:52)
+#29     ProviderContainer.readProviderElement.<anonymous closure> (package:riverpod/src/framework/container.dart:440:40)
+#30     ProviderContainer.readProviderElement (package:riverpod/src/framework/container.dart:475:8)
+#31     ProviderBase.addListener (package:riverpod/src/framework/provider_base.dart:79:26)
+#32     ProviderContainer.listen (package:riverpod/src/framework/container.dart:280:21)
+#33     ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/consumer.dart:564:25)
+#34     _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:674:23)
+#35     ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:557:26)
+#36     _TrainingAttendanceScreenState.build (package:jo17_tactical_manager/screens/training/training_attendance_screen.dart:42:26)
+#37     StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+#38     ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+#39     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+#40     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#41     Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#42     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+#43     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+#44     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+...     Normal element mounting (228 frames)
+#272    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+#273    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+#274    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+...     Normal element mounting (463 frames)
+#737    _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+...     Normal element mounting (9 frames)
+#746    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+#747    Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+#748    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#749    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#750    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#751    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#752    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#753    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#754    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#755    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#756    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#757    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#758    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#759    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#760    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#761    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#762    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#763    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#764    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#765    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#766    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#767    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#768    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#769    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#770    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#771    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#772    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#773    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#774    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#775    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#776    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#777    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#778    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#779    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#780    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#781    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#782    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#783    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#784    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#785    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#786    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#787    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#788    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#789    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#790    _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+#791    _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+#792    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#793    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#794    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#795    StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+#796    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#797    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#798    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#799    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#800    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#801    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#802    RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+#803    RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+#804    RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+#805    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#806    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+#807    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+#808    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+#809    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+#810    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+#811    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+#812    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+#813    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+#816    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#817    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+#818    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+#821    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#822    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+#823    main.<anonymous closure>.<anonymous closure> (file:///workspace/test/golden/training_attendance_screen_test.dart:84:20)
+#824    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+<asynchronous suspension>
+#825    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 7 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1626 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1626:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  mobile dark mode
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:24 +12 -7: /workspace/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile dark mode [E]                                                                  
+  Test failed. See exception logs above.
+  The test description was: mobile dark mode
+  
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/golden/training_attendance_screen_test.dart -p vm --plain-name 'TrainingAttendanceScreen golden tests mobile dark mode'
+00:24 +12 -7: /workspace/test/screens/training_edit_screen_test.dart: prefills form with existing training data                                                                                        00:25 +12 -7: /workspace/test/screens/training_edit_screen_test.dart: prefills form with existing training data                                                                                        00:25 +13 -7: /workspace/test/screens/training_edit_screen_test.dart: prefills form with existing training data                                                                                        00:25 +13 -7: /workspace/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration                                                                                       00:25 +14 -7: /workspace/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration                                                                                       00:25 +15 -7: /workspace/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration                                                                                       00:25 +16 -7: /workspace/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration                                                                                       00:25 +16 -7: /workspace/test/screens/training_edit_screen_test.dart: successful save calls repository update                                                                                          00:25 +17 -7: /workspace/test/screens/training_edit_screen_test.dart: successful save calls repository update                                                                                          00:26 +17 -7: /workspace/test/screens/training_edit_screen_test.dart: successful save calls repository update                                                                                          00:26 +17 -7: loading /workspace/test/services/organization_service_test.dart                                                                                                                          00:26 +17 -7: /workspace/test/services/organization_service_test.dart: OrganizationService createOrganization returns Organization with provided values                                                00:26 +18 -7: /workspace/test/services/organization_service_test.dart: OrganizationService createOrganization returns Organization with provided values                                                00:26 +18 -7: /workspace/test/services/organization_service_test.dart: OrganizationService isSlugAvailable detects unavailable slug                                                                    00:26 +19 -7: /workspace/test/services/organization_service_test.dart: OrganizationService isSlugAvailable detects unavailable slug                                                                    00:26 +19 -7: /workspace/test/services/organization_service_test.dart: OrganizationService isSlugAvailable allows custom slug                                                                          00:26 +20 -7: /workspace/test/services/organization_service_test.dart: OrganizationService isSlugAvailable allows custom slug                                                                          00:26 +20 -7: /workspace/test/services/organization_service_test.dart: OrganizationService updateOrganization updates updatedAt field                                                                  00:26 +21 -7: /workspace/test/services/organization_service_test.dart: OrganizationService updateOrganization updates updatedAt field                                                                  00:27 +21 -7: /workspace/test/services/organization_service_test.dart: OrganizationService updateOrganization updates updatedAt field                                                                  00:27 +21 -7: loading /workspace/test/services/permission_service_test.dart                                                                                                                            00:27 +21 -7: /workspace/test/services/permission_service_test.dart: PermissionService view-only helpers Players and parents are view-only users                                                       00:27 +22 -7: /workspace/test/services/permission_service_test.dart: PermissionService view-only helpers Players and parents are view-only users                                                       00:27 +22 -7: /workspace/test/services/permission_service_test.dart: PermissionService view-only helpers Coach is NOT view-only                                                                        00:27 +23 -7: /workspace/test/services/permission_service_test.dart: PermissionService view-only helpers Coach is NOT view-only                                                                        00:27 +23 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "bestuurder" has access                                                                          00:27 +24 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "bestuurder" has access                                                                          00:27 +24 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "hoofdcoach" has access                                                                          00:27 +25 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "hoofdcoach" has access                                                                          00:27 +25 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "assistent" has access                                                                           00:27 +26 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "assistent" has access                                                                           00:27 +26 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "admin" has access                                                                               00:27 +27 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "admin" has access                                                                               00:27 +27 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "speler" has NO access                                                                           00:27 +28 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "speler" has NO access                                                                           00:27 +28 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "ouder" has NO access                                                                            00:27 +29 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "ouder" has NO access                                                                            00:27 +29 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "null" has NO access                                                                             00:27 +30 -7: /workspace/test/services/permission_service_test.dart: Field-diagram editor access Role "null" has NO access                                                                             00:27 +30 -7: /workspace/test/services/permission_service_test.dart: SVS access per tier Basic tier never grants SVS                                                                                   00:27 +31 -7: /workspace/test/services/permission_service_test.dart: SVS access per tier Basic tier never grants SVS                                                                                   00:27 +31 -7: /workspace/test/services/permission_service_test.dart: SVS access per tier Pro tier grants SVS for coach/admin roles                                                                     00:27 +32 -7: /workspace/test/services/permission_service_test.dart: SVS access per tier Pro tier grants SVS for coach/admin roles                                                                     00:27 +32 -7: /workspace/test/services/permission_service_test.dart: Accessible routes Player gets only view routes                                                                                    00:27 +33 -7: /workspace/test/services/permission_service_test.dart: Accessible routes Player gets only view routes                                                                                    00:27 +33 -7: /workspace/test/services/permission_service_test.dart: Accessible routes Admin gets admin route                                                                                          00:27 +34 -7: /workspace/test/services/permission_service_test.dart: Accessible routes Admin gets admin route                                                                                          00:28 +34 -7: /workspace/test/services/permission_service_test.dart: Accessible routes Admin gets admin route                                                                                          00:28 +34 -7: loading /workspace/test/services/telemetry_service_test.dart                                                                                                                             00:28 +34 -7: /workspace/test/services/telemetry_service_test.dart: TelemetryService trackEvent completes without error                                                                                00:28 +35 -7: /workspace/test/services/telemetry_service_test.dart: TelemetryService trackEvent completes without error                                                                                00:28 +35 -7: /workspace/test/services/telemetry_service_test.dart: TelemetryService monitorAsync returns value and completes span                                                                     00:28 +36 -7: /workspace/test/services/telemetry_service_test.dart: TelemetryService monitorAsync returns value and completes span                                                                     00:29 +36 -7: /workspace/test/services/telemetry_service_test.dart: TelemetryService monitorAsync returns value and completes span                                                                     00:29 +36 -7: loading /workspace/test/services/demo_data_service_test.dart                                                                                                                             00:29 +36 -7: /workspace/test/services/demo_data_service_test.dart: DemoDataService generateDemoData returns data for club admin                                                                       00:29 +37 -7: /workspace/test/services/demo_data_service_test.dart: DemoDataService generateDemoData returns data for club admin                                                                       00:29 +37 -7: /workspace/test/services/demo_data_service_test.dart: DemoDataService OrganizationService.isSlugAvailable rejects reserved slugs                                                         00:29 +38 -7: /workspace/test/services/demo_data_service_test.dart: DemoDataService OrganizationService.isSlugAvailable rejects reserved slugs                                                         00:30 +38 -7: /workspace/test/services/demo_data_service_test.dart: DemoDataService OrganizationService.isSlugAvailable rejects reserved slugs                                                         00:30 +38 -7: loading /workspace/test/providers/players_notifier_test.dart                                                                                                                             00:30 +38 -7: /workspace/test/providers/players_notifier_test.dart: PlayersNotifier loads data successfully                                                                                            00:30 +39 -7: /workspace/test/providers/players_notifier_test.dart: PlayersNotifier loads data successfully                                                                                            00:30 +39 -7: loading /workspace/test/providers/field_diagram_provider_test.dart                                                                                                                       00:30 +39 -7: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Initial state is select tool & half field                                       00:31 +39 -7: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Initial state is select tool & half field                                       00:31 +40 -7: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Initial state is select tool & half field                                       00:31 +40 -7: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Selecting line type switches tool to line                                       00:31 +41 -7: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Selecting line type switches tool to line                                       00:31 +41 -7: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Change field type adds to history and supports undo/redo                        00:31 +42 -7: /workspace/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Change field type adds to history and supports undo/redo                        00:31 +42 -7: loading /workspace/test/providers/current_profile_provider_test.dart                                                                                                                     00:31 +42 -7: /workspace/test/providers/current_profile_provider_test.dart: currentProfileProvider emits data                                                                                          00:32 +42 -7: /workspace/test/providers/current_profile_provider_test.dart: currentProfileProvider emits data                                                                                          00:32 +43 -7: /workspace/test/providers/current_profile_provider_test.dart: currentProfileProvider emits data                                                                                          00:32 +43 -7: loading /workspace/test/models/club_model_test.dart                                                                                                                                      00:32 +43 -7: /workspace/test/models/club_model_test.dart: Club model toJson / fromJson round-trip                                                                                                     00:32 +44 -7: /workspace/test/models/club_model_test.dart: Club model toJson / fromJson round-trip                                                                                                     00:33 +44 -7: /workspace/test/models/club_model_test.dart: Club model toJson / fromJson round-trip                                                                                                     00:33 +44 -7: loading /workspace/test/models/organization_model_test.dart                                                                                                                              00:33 +44 -7: /workspace/test/models/organization_model_test.dart: Organization model toJson / fromJson round-trip                                                                                     00:33 +45 -7: /workspace/test/models/organization_model_test.dart: Organization model toJson / fromJson round-trip                                                                                     00:34 +45 -7: /workspace/test/models/organization_model_test.dart: Organization model toJson / fromJson round-trip                                                                                     00:34 +45 -7: loading /workspace/test/models/annual_planning/season_plan_test.dart                                                                                                                     00:34 +45 -7: /workspace/test/models/annual_planning/season_plan_test.dart: SeasonPlan JO17 Dutch season JSON roundtrip                                                                                00:34 +46 -7: /workspace/test/models/annual_planning/season_plan_test.dart: SeasonPlan JO17 Dutch season JSON roundtrip                                                                                00:35 +46 -7: /workspace/test/models/annual_planning/season_plan_test.dart: SeasonPlan JO17 Dutch season JSON roundtrip                                                                                00:35 +46 -7: loading /workspace/test/models/annual_planning/training_period_test.dart                                                                                                                 00:35 +46 -7: /workspace/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Preparation period JSON roundtrip                                                             00:35 +47 -7: /workspace/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Preparation period JSON roundtrip                                                             00:35 +47 -7: /workspace/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Transition period has lower intensity                                                         00:35 +48 -7: /workspace/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Transition period has lower intensity                                                         00:36 +48 -7: /workspace/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Transition period has lower intensity                                                         00:36 +48 -7: loading /workspace/test/models/annual_planning/periodization_plan_test.dart                                                                                                              00:36 +48 -7: /workspace/test/models/annual_planning/periodization_plan_test.dart: PeriodizationPlan templates KNVB Youth U17 round-trip JSON                                                          00:36 +49 -7: /workspace/test/models/annual_planning/periodization_plan_test.dart: PeriodizationPlan templates KNVB Youth U17 round-trip JSON                                                          00:36 +49 -7: /workspace/test/models/annual_planning/periodization_plan_test.dart: PeriodizationPlan templates Block periodization template parameters                                                 00:36 +50 -7: /workspace/test/models/annual_planning/periodization_plan_test.dart: PeriodizationPlan templates Block periodization template parameters                                                 00:36 +50 -7: loading /workspace/test/models/annual_planning/morphocycle_test.dart                                                                                                                     00:36 +50 -7: /workspace/test/models/annual_planning/morphocycle_test.dart: Morphocycle KNVB standard morphocycle JSON roundtrip                                                                       00:36 +51 -7: /workspace/test/models/annual_planning/morphocycle_test.dart: Morphocycle KNVB standard morphocycle JSON roundtrip                                                                       00:36 +51 -7: /workspace/test/models/annual_planning/morphocycle_test.dart: Morphocycle Helpers classify load correctly                                                                                00:36 +52 -7: /workspace/test/models/annual_planning/morphocycle_test.dart: Morphocycle Helpers classify load correctly                                                                                00:37 +52 -7: /workspace/test/models/annual_planning/morphocycle_test.dart: Morphocycle Helpers classify load correctly                                                                                00:37 +52 -7: loading /workspace/test/models/player_model_test.dart                                                                                                                                    00:37 +52 -7: /workspace/test/models/player_model_test.dart: Player model name combines first and last name                                                                                            00:37 +53 -7: /workspace/test/models/player_model_test.dart: Player model name combines first and last name                                                                                            00:37 +53 -7: /workspace/test/models/player_model_test.dart: Player model age calculation is correct                                                                                                   00:37 +54 -7: /workspace/test/models/player_model_test.dart: Player model age calculation is correct                                                                                                   00:37 +54 -7: /workspace/test/models/player_model_test.dart: Player model attendancePercentage returns 0 if no trainings                                                                               00:37 +55 -7: /workspace/test/models/player_model_test.dart: Player model attendancePercentage returns 0 if no trainings                                                                               00:37 +55 -7: /workspace/test/models/player_model_test.dart: Player model attendancePercentage calculates correctly                                                                                    00:37 +56 -7: /workspace/test/models/player_model_test.dart: Player model attendancePercentage calculates correctly                                                                                    00:37 +56 -7: /workspace/test/models/player_model_test.dart: Player model matchMinutesPercentage returns 0 if no selection                                                                             00:37 +57 -7: /workspace/test/models/player_model_test.dart: Player model matchMinutesPercentage returns 0 if no selection                                                                             00:37 +57 -7: /workspace/test/models/player_model_test.dart: Player model matchMinutesPercentage calculates correctly                                                                                  00:37 +58 -7: /workspace/test/models/player_model_test.dart: Player model matchMinutesPercentage calculates correctly                                                                                  00:37 +58 -7: /workspace/test/models/player_model_test.dart: Player model averageMinutesPerMatch returns 0 if matchesPlayed is 0                                                                       00:37 +59 -7: /workspace/test/models/player_model_test.dart: Player model averageMinutesPerMatch returns 0 if matchesPlayed is 0                                                                       00:37 +59 -7: /workspace/test/models/player_model_test.dart: Player model averageMinutesPerMatch calculates correctly                                                                                  00:37 +60 -7: /workspace/test/models/player_model_test.dart: Player model averageMinutesPerMatch calculates correctly                                                                                  00:38 +60 -7: /workspace/test/models/player_model_test.dart: Player model averageMinutesPerMatch calculates correctly                                                                                  00:38 +60 -7: loading /workspace/test/pdf/pdf_generators_test.dart                                                                                                                                     00:38 +60 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators MatchReportPdfGenerator produces valid PDF bytes                                                                            00:38 +60 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators MatchReportPdfGenerator produces valid PDF bytes                                                                            
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "–" (U+2013) try to provide a TextStyle.fontFallback
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+00:38 +61 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators MatchReportPdfGenerator produces valid PDF bytes                                                                            00:38 +61 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators PlayerAssessmentPdfGenerator produces valid PDF bytes                                                                       00:38 +61 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators PlayerAssessmentPdfGenerator produces valid PDF bytes                                                                       
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+00:38 +62 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators PlayerAssessmentPdfGenerator produces valid PDF bytes                                                                       00:38 +62 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators TrainingSessionPdfGenerator produces valid PDF bytes                                                                        00:38 +62 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators TrainingSessionPdfGenerator produces valid PDF bytes                                                                        
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "✓" (U+2713) try to provide a TextStyle.fontFallback
+00:38 +63 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators TrainingSessionPdfGenerator produces valid PDF bytes                                                                        00:39 +63 -7: /workspace/test/pdf/pdf_generators_test.dart: PDF Generators TrainingSessionPdfGenerator produces valid PDF bytes                                                                        00:39 +63 -7: loading /workspace/test/pdf/match_report_pdf_generator_test.dart                                                                                                                         00:39 +63 -7: /workspace/test/pdf/match_report_pdf_generator_test.dart: MatchReportPdfGenerator generates a valid PDF                                                                                  00:39 +63 -7: /workspace/test/pdf/match_report_pdf_generator_test.dart: MatchReportPdfGenerator generates a valid PDF                                                                                  
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "–" (U+2013) try to provide a TextStyle.fontFallback
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+00:39 +64 -7: /workspace/test/pdf/match_report_pdf_generator_test.dart: MatchReportPdfGenerator generates a valid PDF                                                                                  00:40 +64 -7: /workspace/test/pdf/match_report_pdf_generator_test.dart: MatchReportPdfGenerator generates a valid PDF                                                                                  00:40 +64 -7: loading /workspace/test/pdf/player_assessment_pdf_generator_test.dart                                                                                                                    00:40 +64 -7: /workspace/test/pdf/player_assessment_pdf_generator_test.dart: PlayerAssessmentPdfGenerator generates a valid PDF                                                                        00:40 +64 -7: /workspace/test/pdf/player_assessment_pdf_generator_test.dart: PlayerAssessmentPdfGenerator generates a valid PDF                                                                        
+Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+00:40 +65 -7: /workspace/test/pdf/player_assessment_pdf_generator_test.dart: PlayerAssessmentPdfGenerator generates a valid PDF                                                                        00:40 +65 -7: loading /workspace/test/config/supabase_config_test.dart                                                                                                                                 00:40 +65 -7: /workspace/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns false when currentUser is null                                                                  00:40 +66 -7: /workspace/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns false when currentUser is null                                                                  00:40 +66 -7: /workspace/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns true when currentUser is not null                                                               00:40 +67 -7: /workspace/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns true when currentUser is not null                                                               00:41 +67 -7: /workspace/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns true when currentUser is not null                                                               00:41 +67 -7: loading /workspace/test/integration/stub_supabase_integration_test.dart                                                                                                                  00:41 +67 -7: /workspace/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration SupabaseConfig.getUserOrganizations returns stubbed data                          00:42 +67 -7: /workspace/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration SupabaseConfig.getUserOrganizations returns stubbed data                          00:42 +68 -7: /workspace/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration SupabaseConfig.getUserOrganizations returns stubbed data                          00:42 +68 -7: /workspace/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration OrganizationService.createOrganization works with stubbed client                  00:42 +69 -7: /workspace/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration OrganizationService.createOrganization works with stubbed client                  00:43 +69 -7: /workspace/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration OrganizationService.createOrganization works with stubbed client                  00:43 +69 -7: loading /workspace/test/integration/rls_isolation_test.dart                                                                                                                              00:43 +69 -7: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation fromOrg throws when no organization selected                                            00:43 +70 -7: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation fromOrg throws when no organization selected                                            00:43 +70 -7: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Query returns data only for selected organization                                       00:43 +71 -7: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Query returns data only for selected organization                                       00:43 +71 -7: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Switching organization returns isolated dataset                                         00:43 +72 -7: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Switching organization returns isolated dataset                                         00:44 +72 -7: /workspace/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Switching organization returns isolated dataset                                         00:44 +72 -7: loading /workspace/test/integration/app_flow_login_demo_test.dart                                                                                                                        00:44 +72 -7: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) (setUpAll)                                                           00:44 +72 -7: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) (setUpAll)                                                           
+supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+00:44 +72 -7: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) navigates through core flow without auth                             00:45 +72 -7: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) navigates through core flow without auth                             00:45 +73 -7: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) navigates through core flow without auth                             00:45 +74 -7: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) navigates through core flow without auth                             00:45 +75 -7: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) navigates through core flow without auth                             00:45 +75 -7: /workspace/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) (tearDownAll)                                                        00:45 +75 -8: loading /workspace/test/integration/match_flow_test.dart [E]                                                                                                                             
+  Failed to load "/workspace/test/integration/match_flow_test.dart":
+  Compilation failed for testPath=/workspace/test/integration/match_flow_test.dart: lib/screens/matches/match_detail_screen.dart:273:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage
+                             ^^^^^^^^^
+  lib/screens/matches/match_detail_screen.dart:339:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage
+                             ^^^^^^^^^
+  lib/screens/matches/match_detail_screen.dart:403:28: Error: The getter 'canManage' isn't defined for the class '_MatchDetailScreenState'.
+   - '_MatchDetailScreenState' is from 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart' ('lib/screens/matches/match_detail_screen.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'canManage'.
+                  onPressed: canManage ? _showRatingOptions : null,
+                             ^^^^^^^^^
+  .
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/match_flow_test.dart -p vm --plain-name 'loading /workspace/test/integration/match_flow_test.dart'
+00:48 +75 -8: loading /workspace/test/integration/training_flow_test.dart                                                                                                                              00:48 +75 -8: /workspace/test/integration/training_flow_test.dart: Integration – Training flow (setUpAll)                                                                                              00:48 +75 -8: /workspace/test/integration/training_flow_test.dart: Integration – Training flow create training → mark attendance                                                                       00:49 +75 -8: /workspace/test/integration/training_flow_test.dart: Integration – Training flow create training → mark attendance                                                                       00:49 +75 -8: /workspace/test/integration/training_flow_test.dart: Integration – Training flow create training → mark attendance                                                                       
+Pending timers:
+Timer (duration: 0:00:10.000000, periodic: true), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:187:15)
+#5      GoTrueClient.startAutoRefresh (package:gotrue/src/gotrue_client.dart:1011:32)
+#6      new GoTrueClient (package:gotrue/src/gotrue_client.dart:128:7)
+#7      SupabaseClient._initSupabaseAuthClient (package:supabase/src/supabase_client.dart:286:12)
+#8      new SupabaseClient (package:supabase/src/supabase_client.dart:140:21)
+#9      AuthService._initClient (package:jo17_tactical_manager/services/auth_service.dart:26:14)
+#10     new AuthService (package:jo17_tactical_manager/services/auth_service.dart:13:65)
+#11     authServiceProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:9:60)
+#12     Provider._create (package:riverpod/src/provider/base.dart:59:57)
+#13     ProviderElement.create (package:riverpod/src/provider/base.dart:345:23)
+#14     ProviderElementBase.buildState (package:riverpod/src/framework/element.dart:426:7)
+#15     ProviderElementBase.mount (package:riverpod/src/framework/element.dart:228:5)
+#16     _StateReader._create (package:riverpod/src/framework/container.dart:47:11)
+#17     _StateReader.getElement (package:riverpod/src/framework/container.dart:35:52)
+#18     ProviderContainer.readProviderElement (package:riverpod/src/framework/container.dart:479:19)
+#19     ProviderElementBase._debugAssertCanDependOn.<anonymous closure> (package:riverpod/src/framework/element.dart:624:42)
+#20     ProviderElementBase._debugAssertCanDependOn (package:riverpod/src/framework/element.dart:667:8)
+#21     ProviderElementBase.watch (package:riverpod/src/framework/element.dart:714:12)
+#22     userRoleProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:31:27)
+#23     Provider._create (package:riverpod/src/provider/base.dart:59:57)
+#24     ProviderElement.create (package:riverpod/src/provider/base.dart:345:23)
+#25     ProviderElementBase.buildState (package:riverpod/src/framework/element.dart:426:7)
+#26     ProviderElementBase.mount (package:riverpod/src/framework/element.dart:228:5)
+#27     _StateReader._create (package:riverpod/src/framework/container.dart:47:11)
+#28     _StateReader.getElement (package:riverpod/src/framework/container.dart:35:52)
+#29     ProviderContainer.readProviderElement.<anonymous closure> (package:riverpod/src/framework/container.dart:440:40)
+#30     ProviderContainer.readProviderElement (package:riverpod/src/framework/container.dart:475:8)
+#31     ProviderBase.addListener (package:riverpod/src/framework/provider_base.dart:79:26)
+#32     ProviderContainer.listen (package:riverpod/src/framework/container.dart:280:21)
+#33     ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/consumer.dart:564:25)
+#34     _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:674:23)
+#35     ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:557:26)
+#36     _TrainingAttendanceScreenState.build (package:jo17_tactical_manager/screens/training/training_attendance_screen.dart:42:26)
+#37     StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+#38     ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+#39     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+#40     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#41     Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#42     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+#43     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+#44     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+...     Normal element mounting (228 frames)
+#272    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+#273    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+#274    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+...     Normal element mounting (463 frames)
+#737    _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+...     Normal element mounting (9 frames)
+#746    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+#747    Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+#748    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#749    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#750    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#751    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#752    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#753    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#754    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#755    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#756    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#757    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#758    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#759    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#760    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#761    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#762    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#763    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#764    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#765    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#766    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#767    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#768    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#769    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#770    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#771    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#772    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#773    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#774    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#775    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#776    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#777    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#778    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#779    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#780    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#781    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#782    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#783    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#784    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#785    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#786    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#787    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#788    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+#789    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#790    _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+#791    _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+#792    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#793    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#794    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#795    StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+#796    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#797    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+#798    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+#799    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#800    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+#801    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+#802    RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+#803    RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+#804    RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+#805    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+#806    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+#807    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+#808    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+#809    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+#810    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+#811    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+#812    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+#813    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+#816    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#817    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+#818    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+#821    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#822    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+#823    main.<anonymous closure>.<anonymous closure> (file:///workspace/test/integration/training_flow_test.dart:53:20)
+#824    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+<asynchronous suspension>
+#825    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 7 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1626 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1626:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  create training → mark attendance
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:49 +75 -9: /workspace/test/integration/training_flow_test.dart: Integration – Training flow create training → mark attendance [E]                                                                   
+  Test failed. See exception logs above.
+  The test description was: create training → mark attendance
+  
+Warning: At least one test in this suite creates an HttpClient. When running a test suite that uses
+TestWidgetsFlutterBinding, all HTTP requests will return status code 400, and no network request
+will actually be made. Any test expecting a real network connection and status code will fail.
+To test code that needs an HttpClient, provide your own HttpClient implementation to the code under
+test, so that your test can consistently provide a testable response to the code under test.
+
+To run this test again: /workspace/flutter_sdk/bin/cache/dart-sdk/bin/dart test /workspace/test/integration/training_flow_test.dart -p vm --plain-name 'Integration – Training flow create training → mark attendance'
+00:49 +75 -9: /workspace/test/integration/training_flow_test.dart: Integration – Training flow (tearDownAll)                                                                                           00:49 +75 -9: loading /workspace/test/widgets/heat_map_card_test.dart                                                                                                                                  00:49 +75 -9: /workspace/test/widgets/heat_map_card_test.dart: HeatMapCard calls load on filter change                                                                                                 00:50 +75 -9: /workspace/test/widgets/heat_map_card_test.dart: HeatMapCard calls load on filter change                                                                                                 00:50 +76 -9: /workspace/test/widgets/heat_map_card_test.dart: HeatMapCard calls load on filter change                                                                                                 00:50 +76 -9: loading /workspace/test/controllers/lineup_builder_controller_test.dart                                                                                                                  00:50 +76 -9: /workspace/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController toggleDrawingMode flips the boolean flag                                                        00:50 +77 -9: /workspace/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController toggleDrawingMode flips the boolean flag                                                        00:50 +77 -9: /workspace/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController assignPlayerToPosition moves player from bench onto the field                                   00:50 +78 -9: /workspace/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController assignPlayerToPosition moves player from bench onto the field                                   00:50 +78 -9: /workspace/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController moveFieldPlayerToBench moves player from field to bench                                         00:50 +79 -9: /workspace/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController moveFieldPlayerToBench moves player from field to bench                                         00:51 +79 -9: /workspace/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController moveFieldPlayerToBench moves player from field to bench                                         00:51 +79 -9: loading /workspace/test/permission_service_test.dart                                                                                                                                     00:51 +79 -9: /workspace/test/permission_service_test.dart: PermissionService identifies player & parent as view-only users                                                                            00:51 +80 -9: /workspace/test/permission_service_test.dart: PermissionService identifies player & parent as view-only users                                                                            00:51 +80 -9: /workspace/test/permission_service_test.dart: PermissionService canManagePlayers for roles                                                                                               00:51 +81 -9: /workspace/test/permission_service_test.dart: PermissionService canManagePlayers for roles                                                                                               00:51 +81 -9: /workspace/test/permission_service_test.dart: PermissionService access SVS depends on tier and role                                                                                      00:51 +82 -9: /workspace/test/permission_service_test.dart: PermissionService access SVS depends on tier and role                                                                                      00:52 +82 -9: /workspace/test/permission_service_test.dart: PermissionService access SVS depends on tier and role                                                                                      00:52 +82 -9: loading /workspace/test/core/result_test.dart                                                                                                                                            00:52 +82 -9: /workspace/test/core/result_test.dart: Result success returns data                                                                                                                       00:52 +83 -9: /workspace/test/core/result_test.dart: Result success returns data                                                                                                                       00:52 +83 -9: /workspace/test/core/result_test.dart: Result failure returns error                                                                                                                      00:52 +84 -9: /workspace/test/core/result_test.dart: Result failure returns error                                                                                                                      00:52 +84 -9: /workspace/test/core/result_test.dart: Result when helper works                                                                                                                          00:52 +85 -9: /workspace/test/core/result_test.dart: Result when helper works                                                                                                                          00:53 +85 -9: /workspace/test/core/result_test.dart: Result when helper works                                                                                                                          00:53 +85 -9: loading /workspace/test/utils/app_logger_test.dart                                                                                                                                       00:53 +85 -9: /workspace/test/utils/app_logger_test.dart: AppLogger does not throw on various levels                                                                                                   00:53 +85 -9: /workspace/test/utils/app_logger_test.dart: AppLogger does not throw on various levels                                                                                                   
+[38;5;244m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;244m│  trace[0m
+[38;5;244m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+│ 🐛 debug
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[38;5;12m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;12m│ 💡 info[0m
+[38;5;12m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;208m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;208m│ ⚠️ warn[0m
+[38;5;208m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;196m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[38;5;196m│ ⛔ error[0m
+[38;5;196m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+00:53 +86 -9: /workspace/test/utils/app_logger_test.dart: AppLogger does not throw on various levels                                                                                                   00:53 +86 -9: loading /workspace/test/utils/validators/training_validators_test.dart                                                                                                                   00:53 +86 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration null or empty                                                                                           00:53 +87 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration null or empty                                                                                           00:53 +87 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration non numeric                                                                                             00:53 +88 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration non numeric                                                                                             00:53 +88 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration below minimum                                                                                           00:53 +89 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration below minimum                                                                                           00:53 +89 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration above maximum                                                                                           00:53 +90 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration above maximum                                                                                           00:53 +90 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration within range                                                                                            00:53 +91 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDuration within range                                                                                            00:53 +91 -9: /workspace/test/utils/validators/training_validators_test.dart: validateRequired null value returns error                                                                                00:53 +92 -9: /workspace/test/utils/validators/training_validators_test.dart: validateRequired null value returns error                                                                                00:53 +92 -9: /workspace/test/utils/validators/training_validators_test.dart: validateRequired non-null passes                                                                                         00:53 +93 -9: /workspace/test/utils/validators/training_validators_test.dart: validateRequired non-null passes                                                                                         00:53 +93 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDate null date                                                                                                   00:53 +94 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDate null date                                                                                                   00:53 +94 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDate far future date                                                                                             00:53 +95 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDate far future date                                                                                             00:53 +95 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDate valid date                                                                                                  00:53 +96 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDate valid date                                                                                                  00:54 +96 -9: /workspace/test/utils/validators/training_validators_test.dart: validateDate valid date                                                                                                  00:54 +96 -9: loading /workspace/test/repositories/prediction_repository_test.dart                                                                                                                     00:54 +96 -9: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                    00:54 +96 -9: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                    
+  Skip: PredictionRepository tests disabled – pending MatchRepository mock implementation
+00:54 +96 ~1 -9: /workspace/test/repositories/prediction_repository_test.dart: (suite)                                                                                                                 00:54 +96 ~1 -9: loading /workspace/test/utils/heatmap_utils_test.dart                                                                                                                                 00:54 +96 ~1 -9: /workspace/test/utils/heatmap_utils_test.dart: binEvents counts correctly                                                                                                             00:54 +97 ~1 -9: /workspace/test/utils/heatmap_utils_test.dart: binEvents counts correctly                                                                                                             00:55 +97 ~1 -9: /workspace/test/utils/heatmap_utils_test.dart: binEvents counts correctly                                                                                                             00:55 +97 ~1 -9: loading /workspace/test/repositories/match_repository_impl_test.dart                                                                                                                  00:55 +97 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: (setUpAll)                                                                                                              00:55 +97 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: getUpcoming filters correctly                                                                                           00:55 +98 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: getUpcoming filters correctly                                                                                           00:55 +98 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: getRecent filters correctly with cache fallback                                                                         00:55 +99 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: getRecent filters correctly with cache fallback                                                                         00:55 +99 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: mutation clears cache                                                                                                   00:55 +100 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: mutation clears cache                                                                                                  00:55 +100 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: (tearDownAll)                                                                                                          00:56 +100 ~1 -9: /workspace/test/repositories/match_repository_impl_test.dart: (tearDownAll)                                                                                                          00:56 +100 ~1 -9: loading /workspace/test/repositories/profile_repository_impl_test.dart                                                                                                               00:56 +100 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl (setUpAll)                                                                                     00:56 +100 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl getCurrent returns remote data and writes to cache                                             00:56 +101 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl getCurrent returns remote data and writes to cache                                             00:56 +101 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl getCurrent falls back to cache on error                                                        00:56 +102 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl getCurrent falls back to cache on error                                                        00:56 +102 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl watch emits cached then remote updates                                                         00:56 +103 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl watch emits cached then remote updates                                                         00:56 +103 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl (tearDownAll)                                                                                  00:57 +103 ~1 -9: /workspace/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl (tearDownAll)                                                                                  00:57 +103 ~1 -9: loading /workspace/test/repositories/training_repository_impl_test.dart                                                                                                              00:57 +103 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: (setUpAll)                                                                                                          00:57 +103 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: getUpcoming filters upcoming trainings from remote list                                                             00:57 +104 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: getUpcoming filters upcoming trainings from remote list                                                             00:57 +104 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: getByDateRange returns trainings within range                                                                       00:57 +105 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: getByDateRange returns trainings within range                                                                       00:57 +105 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: fallback to cache uses cache on network failure                                                                     00:57 +106 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: fallback to cache uses cache on network failure                                                                     00:57 +106 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: mutations add clears cache on success                                                                               00:57 +107 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: mutations add clears cache on success                                                                               00:57 +107 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: (tearDownAll)                                                                                                       00:58 +107 ~1 -9: /workspace/test/repositories/training_repository_impl_test.dart: (tearDownAll)                                                                                                       00:58 +107 ~1 -9: loading /workspace/test/repositories/player_repository_impl_test.dart                                                                                                                00:58 +107 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: (setUpAll)                                                                                                            00:58 +107 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: getAll returns remote data & writes cache on success                                                                  00:58 +108 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: getAll returns remote data & writes cache on success                                                                  00:58 +108 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: getAll falls back to cache when network fails                                                                         00:58 +109 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: getAll falls back to cache when network fails                                                                         00:58 +109 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: getAll returns failure when network & cache both fail                                                                 00:58 +110 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: getAll returns failure when network & cache both fail                                                                 00:58 +110 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: mutations add clears cache on success                                                                                 00:58 +111 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: mutations add clears cache on success                                                                                 00:58 +111 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: mutations update passes failure                                                                                       00:58 +112 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: mutations update passes failure                                                                                       00:58 +112 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: (tearDownAll)                                                                                                         00:59 +112 ~1 -9: /workspace/test/repositories/player_repository_impl_test.dart: (tearDownAll)                                                                                                         00:59 +112 ~1 -9: loading /workspace/test/navigation_route_mapping_test.dart                                                                                                                           00:59 +112 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps dashboard routes to index 0                                                                    00:59 +113 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps dashboard routes to index 0                                                                    00:59 +113 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps season & annual planning routes to index 1                                                     00:59 +114 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps season & annual planning routes to index 1                                                     00:59 +114 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps training related routes to index 2                                                             00:59 +115 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps training related routes to index 2                                                             00:59 +115 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps matches related routes to index 3                                                              00:59 +116 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps matches related routes to index 3                                                              00:59 +116 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps players route to index 4                                                                       00:59 +117 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps players route to index 4                                                                       00:59 +117 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps insights & legacy analytics routes to index 5                                                  00:59 +118 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps insights & legacy analytics routes to index 5                                                  00:59 +118 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex defaults to 0 for unknown routes                                                                    00:59 +119 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex defaults to 0 for unknown routes                                                                    01:00 +119 ~1 -9: /workspace/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex defaults to 0 for unknown routes                                                                    01:00 +119 ~1 -9: Some tests failed.                                                                                                                                                                   

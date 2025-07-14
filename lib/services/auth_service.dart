@@ -21,9 +21,15 @@ class AuthService {
     try {
       return Supabase.instance.client;
     } catch (_) {
-      // Fallback: provide a no-op client for tests. The URL/key may be any
-      // string because it will never be used to perform real requests.
-      return SupabaseClient('https://dummy.supabase.co', 'public-anon-key');
+      // Fallback: provide a no-op client for tests.  We also disable the
+      // automatic token-refresh mechanism, otherwise GoTrue would start a
+      // periodic timer which makes widget tests fail with the infamous
+      // "A Timer is still pending" assertion.
+      return SupabaseClient(
+        'https://dummy.supabase.co',
+        'public-anon-key',
+        authOptions: const AuthClientOptions(autoRefreshToken: false),
+      );
     }
   }
 
