@@ -6,12 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:test_utils/fake_auth_service.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/player.dart';
 import 'package:jo17_tactical_manager/screens/matches/match_detail_screen.dart';
 
+import 'package:jo17_tactical_manager/providers/auth_provider.dart'
+    as auth_providers;
 import 'package:jo17_tactical_manager/providers/matches_provider.dart'
     as matches_providers;
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
@@ -72,6 +75,8 @@ void main() {
             players_providers.playersProvider.overrideWith(
               (ref) async => players,
             ),
+            auth_providers.authServiceProvider
+                .overrideWithValue(FakeAuthService()),
           ],
           child: const MaterialApp(home: MatchDetailScreen(matchId: 'm1')),
         ),
