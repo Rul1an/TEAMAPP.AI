@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/models/match.dart';
@@ -16,6 +18,24 @@ import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as players_providers;
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() async {
+    // Mock persistent storage for SupabaseFlutter.
+    SharedPreferences.setMockInitialValues({});
+
+    // Guard against re-initialisation during the full test suite.
+    try {
+      Supabase.instance.client;
+    } catch (_) {
+      await Supabase.initialize(
+        url: 'https://dummy.supabase.co',
+        anonKey: 'public-anon-key',
+        authOptions: const FlutterAuthClientOptions(autoRefreshToken: false),
+      );
+    }
+  });
+
   group('MatchDetailScreen', () {
     late Match match;
     late List<Player> players;

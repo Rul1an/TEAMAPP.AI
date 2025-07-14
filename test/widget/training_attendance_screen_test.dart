@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/models/player.dart';
@@ -45,6 +47,25 @@ void main() {
     });
 
     setUpAll(() async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+
+      // Mock persistent storage used by SupabaseFlutter.
+      SharedPreferences.setMockInitialValues({});
+
+      // Initialise Supabase **once** when not already initialised. This guard
+      // prevents the "instance already initialised" assertion when the test
+      // suite is executed multiple times or in combination with other global
+      // setups.
+      try {
+        Supabase.instance.client;
+      } catch (_) {
+        await Supabase.initialize(
+          url: 'https://dummy.supabase.co',
+          anonKey: 'public-anon-key',
+          authOptions: const FlutterAuthClientOptions(autoRefreshToken: false),
+        );
+      }
+
       await initializeDateFormatting('nl_NL');
     });
 
