@@ -14,6 +14,8 @@ import '../../providers/export_service_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../services/import_service.dart';
 import '../../utils/colors.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class PlayersScreen extends ConsumerStatefulWidget {
   const PlayersScreen({super.key});
@@ -387,7 +389,8 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
           ),
         ],
       ),
-      floatingActionButton: isDesktop
+      floatingActionButton: (isDesktop ||
+              PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
           ? null
           : FloatingActionButton(
               onPressed: () => context.go('/players/add'),

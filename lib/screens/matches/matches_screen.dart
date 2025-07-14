@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import '../../models/match.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/matches_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
   const MatchesScreen({super.key});
@@ -124,7 +126,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
           );
         },
       ),
-      floatingActionButton: isDesktop
+      floatingActionButton: (isDesktop ||
+              PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
           ? null
           : FloatingActionButton(
               onPressed: () => context.go('/matches/add'),
