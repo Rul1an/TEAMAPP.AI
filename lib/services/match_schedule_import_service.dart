@@ -12,6 +12,8 @@ import '../models/match.dart';
 import '../repositories/match_repository.dart';
 import '../utils/duplicate_detector.dart';
 import '../core/result.dart';
+import '../parsers/match_schedule_csv_parser.dart';
+import '../models/dto/match_schedule_dto.dart';
 
 /// State of a row during preview – used by the wizard UI to colour-code rows.
 enum ImportRowState { newRecord, duplicate, error }
@@ -55,14 +57,13 @@ class MatchScheduleImportService {
 
   Future<ImportPreview> previewCsv(Uint8List bytes) async {
     final csvString = utf8.decode(bytes);
-    final rows = const CsvToListConverter().convert(csvString);
-    if (rows.isEmpty || rows.length == 1) {
-      // Either empty or only header.
+
+    final parser = MatchScheduleCsvParser();
+    final parseResult = parser.parse(csvString);
+
+    if (parseResult.items.isEmpty && parseResult.errors.isEmpty) {
       return ImportPreview(rows: <ImportRowPreview>[]);
     }
-
-    // Skip header
-    final dataRows = rows.skip(1).toList();
 
     // Prepare duplicate detector seeded with existing matches.
     final existingResult = await _matchRepository.getAll();
@@ -78,46 +79,38 @@ class MatchScheduleImportService {
 
     final previews = <ImportRowPreview>[];
 
-    for (var i = 0; i < dataRows.length; i++) {
-      final rowIndex = i + 2; // +2 because we skipped header and 0-index
-      final row = dataRows[i];
+    // Handle parse errors first (row numbers already encoded in message)
+    for (final err in parseResult.errors) {
+      // Expect format 'Row X: message'
+      final match = RegExp(r'Row (\d+): (.*)').firstMatch(err);
+      if (match != null) {
+        previews.add(
+          ImportRowPreview(
+            rowNumber: int.parse(match.group(1)!)+0, // row number as parsed
+            state: ImportRowState.error,
+            error: match.group(2),
+          ),
+        );
+      } else {
+        previews.add(
+          ImportRowPreview(rowNumber: -1, state: ImportRowState.error, error: err),
+        );
+      }
+    }
+
+    for (var i = 0; i < parseResult.items.length; i++) {
+      final dto = parseResult.items[i];
+      final rowIndex = i + 2; // assuming same order as CSV rows (header skipped)
+
       try {
-        if (row.length < 4) {
-          previews.add(
-            ImportRowPreview(
-              rowNumber: rowIndex,
-              state: ImportRowState.error,
-              error: 'Onvoldoende kolommen (verwacht 4) – gevonden ${row.length}',
-            ),
-          );
-          continue;
-        }
-
-        final date = _parseDate(row[0].toString());
-        final opponent = row[1].toString().trim();
-        final venue = row[2].toString().trim();
-        final teamId = row[3].toString().trim();
-
-        // Basic validation
-        if (opponent.isEmpty || teamId.isEmpty) {
-          previews.add(
-            ImportRowPreview(
-              rowNumber: rowIndex,
-              state: ImportRowState.error,
-              error: 'Gegenstander of teamId ontbreekt',
-            ),
-          );
-          continue;
-        }
-
-        final hash = _matchHash(date, opponent, venue, teamId);
+        final hash = _matchHash(dto.date, dto.opponent, dto.venue, dto.teamId);
         final isDup = detector.isDuplicate(hash);
 
         final match = Match()
-          ..date = date
-          ..opponent = opponent
-          ..venue = venue
-          ..location = _determineLocation(venue)
+          ..date = dto.date
+          ..opponent = dto.opponent
+          ..venue = dto.venue
+          ..location = _determineLocation(dto.venue)
           ..competition = Competition.league; // Default – can be updated later
 
         previews.add(

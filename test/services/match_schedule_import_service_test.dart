@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/repositories/match_repository.dart';
 import 'package:jo17_tactical_manager/services/match_schedule_import_service.dart';

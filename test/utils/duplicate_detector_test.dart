@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:jo17_tactical_manager/utils/duplicate_detector.dart';
 
 void main() {

@@ -23,9 +23,9 @@ Key goals:
 |---:|-------------|:-------:|
 | 1 | Data-schema extension (`match_schedule` table) | ✅ Completed |
 | 2 | Repository layer (`MatchScheduleRepository` + Isar/Supabase sync) | ✅ Completed |
-| 3 | CSV parser (`MatchScheduleCsvParser`) | ⏳ In&nbsp;Progress |
+| 3 | CSV parser (`MatchScheduleCsvParser`) | ✅ Completed |
 | 4 | Duplicate detection utility (`DuplicateDetector`) | ✅ Completed |
-| 5 | Import service + preview DTO | ⏳ In&nbsp;Progress |
+| 5 | Import service + preview DTO | ✅ Completed |
 | 6 | UI Wizard – Step 3 “Review & Confirm” | ⏳ In&nbsp;Progress |
 | 7 | End-to-end & widget tests | 🔲 Pending |
 | 8 | Docs (`import_guide.md`) & Loom demo | 🔲 Pending |
