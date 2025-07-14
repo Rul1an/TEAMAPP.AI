@@ -206,6 +206,12 @@ class MainScaffold extends ConsumerWidget {
   }
 
   int _getSelectedIndex(String currentRoute) {
+    return routeToNavIndex(currentRoute);
+  }
+
+  /// Public helper for testing: maps a route string to the nav index used
+  /// by both NavigationRail and NavigationBar.
+  static int routeToNavIndex(String currentRoute) {
     if (currentRoute.startsWith('/dashboard')) return 0;
     if (currentRoute.startsWith('/season') ||
         currentRoute.startsWith('/annual-planning')) {
