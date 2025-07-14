@@ -1,0 +1,21 @@
+pre-commit:
+  # Run tasks in parallel for speed
+  parallel: true
+  commands:
+    format:
+      description: "Dart formatter (staged)"
+      run: dart format --line-length=100 {staged_files}
+    import_sorter:
+      description: "Sort Dart imports (staged)"
+      run: flutter pub run import_sorter:main {staged_files}
+    analyze:
+      description: "Static analysis (fatal infos)"
+      run: dart analyze --fatal-infos
+    dcm:
+      description: "Dart Code Metrics – style & performance"
+      run: dcm analyze --fatal-style --fatal-performance ./
+
+commit-msg:
+  scripts:
+    commitlint:
+      runner: npx --yes commitlint --edit $1

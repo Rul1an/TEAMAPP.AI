@@ -1,0 +1,23 @@
+name: "🧹 Lefthook Quality Gate"
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lefthook:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Install commitlint
+        run: npm install --global @commitlint/cli @commitlint/config-conventional
+      - name: Run Lefthook hooks
+        run: |
+          npm install --global lefthook # ensure binary present
+          npx lefthook run --all
