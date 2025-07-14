@@ -15,6 +15,7 @@ import 'config/environment.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
 import 'widgets/demo_mode_starter.dart';
+import 'services/deep_link_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,6 +60,11 @@ class JO17TacticalManagerApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
+
+    // Init deep link service once router available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      DeepLinkService.instance.init(router);
+    });
 
     return DemoModeStarter(
       child: MaterialApp.router(

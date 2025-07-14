@@ -13,6 +13,7 @@ import '../../providers/matches_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
+import '../../services/deep_link_service.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({required this.matchId, super.key});
@@ -58,6 +59,11 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
             onPressed: () {
               context.go('/matches/${widget.matchId}/edit');
             },
+          ),
+          IconButton(
+            icon: const Icon(Icons.share),
+            tooltip: 'Deel',
+            onPressed: () => DeepLinkService.instance.shareMatchLink(widget.matchId),
           ),
           IconButton(
             icon: const Icon(Icons.picture_as_pdf),

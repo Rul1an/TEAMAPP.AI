@@ -6,6 +6,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'services/notification_service.dart';
+import 'services/deep_link_service.dart';
 
 // Project imports:
 import 'config/environment.dart';
@@ -57,6 +58,9 @@ class FanFamilyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerFanProvider);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      DeepLinkService.instance.init(router);
+    });
 
     return DemoModeStarter(
       child: MaterialApp.router(
