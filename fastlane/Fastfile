@@ -1,0 +1,28 @@
+default_platform(:flutter)
+
+platform :flutter do
+  desc "Build Android APK for coach_suite"
+  lane :android_coach_suite do
+    sh "flutter build apk --flavor coach_suite -t lib/main.dart"
+  end
+
+  desc "Build Android APK for fan_family"
+  lane :android_fan_family do
+    sh "flutter build apk --flavor fan_family -t lib/main_fan.dart"
+  end
+
+  desc "Build iOS ipa for coach_suite"
+  lane :ios_coach_suite do
+    sh "flutter build ipa --flavor coach_suite -t lib/main.dart"
+  end
+
+  desc "Build iOS ipa for fan_family"
+  lane :ios_fan_family do
+    sh "flutter build ipa --flavor fan_family -t lib/main_fan.dart"
+  end
+
+  desc "Build web for fan_family"
+  lane :web_fan_family do
+    sh "flutter build web --release --dart-define=FLAVOR=fan_family -t lib/main_fan.dart --output build/web_fan_family"
+  end
+end
