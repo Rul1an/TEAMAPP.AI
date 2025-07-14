@@ -1,0 +1,7 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+
+// --- Fan & Family flavour specifics ---
+FLUTTER_TARGET=lib/main_fan.dart
+PRODUCT_BUNDLE_IDENTIFIER=com.voab.jo17TacticalManager.fan
+APPLICATION_EXTENSION_API_ONLY=NO

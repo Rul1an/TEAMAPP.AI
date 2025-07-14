@@ -1,7 +1,4 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -9,65 +6,63 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'services/notification_service.dart';
-
-// Project imports:
-import 'config/environment.dart';
-import 'config/router.dart';
-import 'config/theme.dart';
-import 'widgets/demo_mode_starter.dart';
 import 'services/deep_link_service.dart';
 import 'services/analytics_service.dart';
 import 'providers/auth_provider.dart';
 
-void main() async {
+// Project imports:
+import 'config/environment.dart';
+import 'config/router_fan.dart';
+import 'config/theme_fan.dart';
+import 'widgets/demo_mode_starter.dart';
+
+/// Entry-point for the **Fan & Family** flavour.
+///
+/// Mirrors [`main.dart`] but wires in a flavour-specific router & theme so we
+/// can progressively prune staff-only screens without touching the shared
+/// coach_suite entry-point.
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load environment variables (contains SENTRY_DSN, etc.)
   await dotenv.load();
 
-  // Initialize date formatting for Dutch locale
+  // Initialise date formatting for Dutch locale
   await initializeDateFormatting('nl');
 
-  // Initialize Supabase
+  // Initialise Supabase
   await Supabase.initialize(
     url: Environment.current.supabaseUrl,
     anonKey: Environment.current.supabaseAnonKey,
   );
-
-  // Initialize Firebase & Messaging
+  // Initialise Firebase & Messaging
   await Firebase.initializeApp();
   await NotificationService.instance.init();
   await AnalyticsService.instance.logEvent('app_open');
 
-  // Initialize Sentry for crash & performance monitoring
+  // Initialise Sentry for crash & performance monitoring
   await SentryFlutter.init(
     (options) {
       options
         ..dsn = dotenv.env['SENTRY_DSN'] ?? ''
-        ..tracesSampleRate =
-            0.2 // keep within free 100k tx/mo quota
-        ..profilesSampleRate =
-            0.2 // same as traces for consistency
-        // Session Replay is not yet GA for Flutter (SDK >= 9.2) – keep disabled for now.
-        ..environment = Environment.current.name;
-      // TODO(roel): Add app release / build version automatically
+        ..tracesSampleRate = 0.2
+        ..profilesSampleRate = 0.2
+        ..environment = '${Environment.current.name}-fan_family';
     },
-    appRunner: () =>
-        runApp(const ProviderScope(child: JO17TacticalManagerApp())),
+    appRunner: () => runApp(
+      const ProviderScope(child: FanFamilyApp()),
+    ),
   );
 }
 
-class JO17TacticalManagerApp extends ConsumerWidget {
-  const JO17TacticalManagerApp({super.key});
+class FanFamilyApp extends ConsumerWidget {
+  const FanFamilyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-
-    // Init deep link service once router available
+    final router = ref.watch(routerFanProvider);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       DeepLinkService.instance.init(router);
-      // Subscribe to organization topic for push notifications
       final orgId = ref.read(organizationIdProvider);
       if (orgId != null) {
         NotificationService.instance.subscribeToTopic('org_$orgId');
@@ -76,12 +71,10 @@ class JO17TacticalManagerApp extends ConsumerWidget {
 
     return DemoModeStarter(
       child: MaterialApp.router(
-        title: 'JO17 Tactical Manager',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
+        title: 'JO17 Fan & Family',
+        theme: FanTheme.lightTheme,
+        darkTheme: FanTheme.darkTheme,
         routerConfig: router,
-        // TODO(roel): Once Flutter exposes navigatorObservers on MaterialApp.router,
-        // integrate SentryNavigatorObserver via GoRouter observers
         debugShowCheckedModeBanner: false,
       ),
     );

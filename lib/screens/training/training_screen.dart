@@ -11,6 +11,8 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../models/training.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/trainings_provider.dart';
+import '../../services/permission_service.dart';
+import '../../providers/auth_provider.dart';
 
 class TrainingScreen extends ConsumerStatefulWidget {
   const TrainingScreen({super.key});
@@ -47,10 +49,11 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
       appBar: AppBar(
         title: const Text('Trainingen'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => context.go('/training/add'),
-          ),
+          if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => context.go('/training/add'),
+            ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.download),
             onSelected: (value) async {
@@ -179,11 +182,12 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           const SizedBox(height: 8),
-                          ElevatedButton.icon(
-                            onPressed: () => context.go('/training/add'),
-                            icon: const Icon(Icons.add),
-                            label: const Text('Plan training'),
-                          ),
+                          if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+                            ElevatedButton.icon(
+                              onPressed: () => context.go('/training/add'),
+                              icon: const Icon(Icons.add),
+                              label: const Text('Plan training'),
+                            ),
                         ],
                       ),
                     );
@@ -209,10 +213,12 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.go('/training/add'),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: PermissionService.isViewOnlyUser(ref.read(userRoleProvider))
+          ? null
+          : FloatingActionButton(
+              onPressed: () => context.go('/training/add'),
+              child: const Icon(Icons.add),
+            ),
     );
   }
 }

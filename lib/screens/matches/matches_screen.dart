@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import '../../models/match.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/matches_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
   const MatchesScreen({super.key});
@@ -43,10 +45,11 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
       appBar: AppBar(
         title: const Text('Wedstrijden'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => context.go('/matches/add'),
-          ),
+          if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => context.go('/matches/add'),
+            ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.download),
             onSelected: (value) async {
@@ -124,7 +127,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
           );
         },
       ),
-      floatingActionButton: isDesktop
+      floatingActionButton: (isDesktop ||
+              PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
           ? null
           : FloatingActionButton(
               onPressed: () => context.go('/matches/add'),
@@ -147,11 +151,12 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             const SizedBox(height: 16),
             Text(emptyMessage, style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),
-            ElevatedButton.icon(
-              onPressed: () => context.go('/matches/add'),
-              icon: const Icon(Icons.add),
-              label: const Text('Voeg wedstrijd toe'),
-            ),
+            if (!PermissionService.isViewOnlyUser(ref.read(userRoleProvider)))
+              ElevatedButton.icon(
+                onPressed: () => context.go('/matches/add'),
+                icon: const Icon(Icons.add),
+                label: const Text('Voeg wedstrijd toe'),
+              ),
           ],
         ),
       );

@@ -690,3 +690,31 @@ Key advantages:
 * Navigation updated – route `/training-sessions/builder` resolves to `SessionBuilderView`.
 
 This lays the groundwork for further extraction of sub-widgets (toolbar, phase list) which will live under `widgets/session_builder/`.
+
+### 🔀 Build Flavours (2025 Q3)
+
+The workspace now contains two Flutter flavours sharing > 85 % of code:
+
+| Flavour | Entry-point | Audience | Feature level |
+|---------|-------------|----------|---------------|
+| coach_suite (default) | `lib/main.dart` | Staff (coaches, admins) | full CRUD, management tooling |
+| fan_family | `lib/main_fan.dart` | Parents & Players | read-only UI, push opt-in, slim theme |
+
+Both flavours reuse models, repositories and widgets. Divergence is handled via:
+
+* Separate `router_fan.dart` overriding only the dashboard route.
+* Flavour-specific themes & assets located in `lib/config/theme_fan.dart` and `web/fan_family/`, `android/app/src/fan_family/`.
+* CI matrix builds (`build_fan.yml`) ensure both flavours compile on every PR.
+
+### 📲 Growth Stack (Firebase)
+
+| Service | Purpose |
+|---------|---------|
+| **firebase_core** 3.x | Core initialisation (both flavours) |
+| **firebase_messaging** 14.x | Push notifications + topic `org_<id>` |
+| **firebase_dynamic_links** 5.x | Deep-links (match share) |
+| **firebase_analytics** 11.x | GA4 events (`app_open`, `navigate_card`, etc.) |
+
+Core services are initialised in both entry-points before Sentry.
+
+See `lib/services/notification_service.dart`, `deep_link_service.dart`, `analytics_service.dart`.

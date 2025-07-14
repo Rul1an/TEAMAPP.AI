@@ -33,6 +33,7 @@ import '../screens/training_sessions/field_diagram_editor_screen.dart';
 import '../screens/training_sessions/session_builder/session_builder_view.dart';
 import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
+import '../screens/insights/insights_screen.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
   initialLocation: '/auth',
@@ -245,6 +246,12 @@ GoRouter createRouter(Ref ref) => GoRouter(
           name: 'svs-dashboard',
           pageBuilder: (context, state) =>
               const NoTransitionPage(child: SVSDashboardScreen()),
+        ),
+        GoRoute(
+          path: '/insights',
+          name: 'insights',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: InsightsScreen()),
         ),
         GoRoute(
           path: '/admin',

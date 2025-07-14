@@ -13,6 +13,9 @@ import '../../providers/matches_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
+import '../../services/deep_link_service.dart';
+import '../../services/permission_service.dart';
+import '../../providers/auth_provider.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({required this.matchId, super.key});
@@ -48,27 +51,33 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   Widget build(BuildContext context) {
     final matchesAsync = ref.watch(matchesProvider);
     final playersAsync = ref.watch(playersProvider);
+    final canManage = !PermissionService.isViewOnlyUser(ref.read(userRoleProvider));
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wedstrijd Details'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              context.go('/matches/${widget.matchId}/edit');
-            },
+            icon: const Icon(Icons.share),
+            tooltip: 'Deel',
+            onPressed: () => DeepLinkService.instance.shareMatchLink(widget.matchId),
           ),
-          IconButton(
-            icon: const Icon(Icons.picture_as_pdf),
-            tooltip: 'Exporteer PDF',
-            onPressed: _exportPdf,
-          ),
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _saveMatch,
-            tooltip: 'Opslaan',
-          ),
+          if (canManage) ...[
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () => context.go('/matches/${widget.matchId}/edit'),
+            ),
+            IconButton(
+              icon: const Icon(Icons.picture_as_pdf),
+              tooltip: 'Exporteer PDF',
+              onPressed: _exportPdf,
+            ),
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: _saveMatch,
+              tooltip: 'Opslaan',
+            ),
+          ],
         ],
       ),
       body: matchesAsync.when(

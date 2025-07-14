@@ -37,6 +37,22 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    // ➡️ Flavour configuration
+    flavorDimensions += "app"
+
+    productFlavors {
+        create("coach_suite") {
+            dimension = "app"
+            // Default applicationId already set in defaultConfig
+            resValue("string", "app_name", "JO17 Tactical Manager")
+        }
+        create("fan_family") {
+            dimension = "app"
+            applicationIdSuffix = ".fan"
+            resValue("string", "app_name", "JO17 Fan & Family")
+        }
+    }
 }
 
 flutter {
