@@ -243,26 +243,6 @@ GoRouter createRouter(Ref ref) => GoRouter(
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: InsightsScreen()),
             ),
-
-            // Legacy deep-links – keep but hidden from nav
-            GoRoute(
-              path: '/analytics',
-              name: 'performance-analytics',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: PerformanceAnalyticsScreen()),
-            ),
-            GoRoute(
-              path: '/svs',
-              name: 'svs-dashboard',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: SVSDashboardScreen()),
-            ),
-            GoRoute(
-              path: '/admin',
-              name: 'admin-panel',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: AdminPanelScreen()),
-            ),
           ],
         ),
       ],
