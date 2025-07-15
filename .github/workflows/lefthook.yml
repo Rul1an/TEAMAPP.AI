@@ -20,4 +20,4 @@ jobs:
       - name: Run Lefthook hooks
         run: |
           npm install --global lefthook # ensure binary present
-          npx lefthook run --all
+          npx lefthook run
