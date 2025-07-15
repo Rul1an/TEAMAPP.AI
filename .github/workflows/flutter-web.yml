@@ -34,8 +34,9 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.32.2'
+        flutter-version: '3.32.x'
         channel: 'stable'
+        cache: true
 
     - name: Install dependencies
       run: |
@@ -50,6 +51,17 @@ jobs:
         else
           echo "ERROR: Could not find pubspec.yaml"
           exit 1
+        fi
+
+    - name: Bootstrap (melos)
+      run: |
+        if [ -f "melos.yaml" ]; then
+          melos bootstrap
+        elif [ -f "jo17_tactical_manager/melos.yaml" ]; then
+          cd jo17_tactical_manager
+          melos bootstrap
+        else
+          echo "No melos.yaml found – skipping bootstrap."
         fi
 
     - name: Run tests with coverage
@@ -83,9 +95,9 @@ jobs:
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
-          flutter analyze --no-fatal-warnings
+          dart analyze
         elif [ -f "pubspec.yaml" ]; then
-          flutter analyze --no-fatal-warnings
+          dart analyze
         else
           echo "ERROR: Could not find pubspec.yaml"
           exit 1
