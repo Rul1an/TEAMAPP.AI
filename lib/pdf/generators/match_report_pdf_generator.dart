@@ -59,13 +59,13 @@ class MatchReportPdfGenerator extends PdfGenerator<Match> {
             pw.Text(
               'Wedstrijd Rapport',
               style: pw.TextStyle(
-                  font: bold, fontSize: 18, color: PdfColors.white),
+                  font: bold, fontSize: 18, color: PdfColors.white,),
             ),
             pw.SizedBox(height: 4),
             pw.Text(
               '${match.opponent} – ${PdfUtils.formatDate(match.date)}',
               style: pw.TextStyle(
-                  font: bold, fontSize: 12, color: PdfColors.white),
+                  font: bold, fontSize: 12, color: PdfColors.white,),
             ),
           ],
         ),

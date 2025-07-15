@@ -62,7 +62,7 @@ class _AdvancedAnalyticsScreenState
           Row(
             children: [
               const Icon(Icons.analytics_outlined,
-                  size: 32, color: Colors.blue),
+                  size: 32, color: Colors.blue,),
               const SizedBox(width: 12),
               const Text(
                 'Advanced Analytics',
@@ -91,12 +91,12 @@ class _AdvancedAnalyticsScreenState
           underline: const SizedBox(),
           items: const [
             DropdownMenuItem(
-                value: 'Last 24 hours', child: Text('Last 24 hours')),
+                value: 'Last 24 hours', child: Text('Last 24 hours'),),
             DropdownMenuItem(value: 'Last 7 days', child: Text('Last 7 days')),
             DropdownMenuItem(
-                value: 'Last 30 days', child: Text('Last 30 days')),
+                value: 'Last 30 days', child: Text('Last 30 days'),),
             DropdownMenuItem(
-                value: 'Last 90 days', child: Text('Last 90 days')),
+                value: 'Last 90 days', child: Text('Last 90 days'),),
           ],
           onChanged: (value) {
             // Track time range change
@@ -208,7 +208,7 @@ class _AdvancedAnalyticsScreenState
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               Text(title,
-                  style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),),
             ],
           ),
         ),
@@ -615,7 +615,7 @@ class _AdvancedAnalyticsScreenState
             ),
             const SizedBox(height: 4),
             Text(title,
-                style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),),
           ],
         ),
       );

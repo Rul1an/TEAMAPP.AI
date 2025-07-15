@@ -235,7 +235,7 @@ class RBACDemoWidget extends ConsumerWidget {
         const PermissionInfo('Spelers bekijken', hasAccess: true), // Everyone
         const PermissionInfo('Training bekijken', hasAccess: true), // Everyone
         const PermissionInfo('Wedstrijden bekijken',
-            hasAccess: true), // Everyone
+            hasAccess: true,), // Everyone
         const PermissionInfo('---MANAGEMENT---', hasAccess: false), // Separator
         PermissionInfo(
           'Spelers beheren',

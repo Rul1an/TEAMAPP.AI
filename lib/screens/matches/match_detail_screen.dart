@@ -194,7 +194,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                 match.location == Location.home ? 'Thuis' : 'Uit',
               ),
               _buildInfoRow(
-                  'Competitie', _getCompetitionName(match.competition)),
+                  'Competitie', _getCompetitionName(match.competition),),
               _buildInfoRow('Status', _getStatusName(match.status)),
             ],
           ),

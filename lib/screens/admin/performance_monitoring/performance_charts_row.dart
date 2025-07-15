@@ -55,7 +55,7 @@ class _MemoryUsageCard extends StatelessWidget {
                       BarChartGroupData(
                         x: 3,
                         barRods: [
-                          BarChartRodData(toY: 81, color: Colors.orange)
+                          BarChartRodData(toY: 81, color: Colors.orange),
                         ],
                       ),
                     ],

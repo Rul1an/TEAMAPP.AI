@@ -412,7 +412,7 @@ class CoachDashboardScreen extends ConsumerWidget {
                 Stack(
                   children: [
                     Icon(icon,
-                        size: 28, color: isAvailable ? color : Colors.grey),
+                        size: 28, color: isAvailable ? color : Colors.grey,),
                     if (!isAvailable)
                       const Positioned(
                         right: -4,

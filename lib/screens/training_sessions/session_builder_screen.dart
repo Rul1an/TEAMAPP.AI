@@ -162,10 +162,10 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
             const SizedBox(width: 8),
             if (currentStep < _stepCount - 1)
               ElevatedButton(
-                  onPressed: _nextStep, child: const Text('Volgende'))
+                  onPressed: _nextStep, child: const Text('Volgende'),)
             else
               ElevatedButton(
-                  onPressed: _saveSession, child: const Text('Opslaan')),
+                  onPressed: _saveSession, child: const Text('Opslaan'),),
             const SizedBox(width: 16),
           ],
         ),
@@ -652,10 +652,10 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                           20,
                         ),
                         _buildPhaseTemplate(
-                            'Tactiek Vorm', PhaseType.tactical, 25),
+                            'Tactiek Vorm', PhaseType.tactical, 25,),
                         _buildPhaseTemplate('Partijtje', PhaseType.game, 15),
                         _buildPhaseTemplate(
-                            'Extra Uitloop', PhaseType.cooldown, 5),
+                            'Extra Uitloop', PhaseType.cooldown, 5,),
                       ],
                     ),
                   ],

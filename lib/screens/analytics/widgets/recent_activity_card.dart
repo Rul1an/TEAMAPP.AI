@@ -52,7 +52,7 @@ class RecentActivityCard extends StatelessWidget {
   ) =>
       async.when(
         data: (list) => Text('$caption: ${list.length}',
-            style: const TextStyle(fontSize: 14)),
+            style: const TextStyle(fontSize: 14),),
         loading: () => const Text('Laden...'),
         error: (_, __) => const Text('Error'),
       );

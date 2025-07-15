@@ -140,7 +140,7 @@ class _PhaseDesignerState extends State<PhaseDesigner> {
 
               // Phase type selector
               Text('Fase Type:',
-                  style: Theme.of(context).textTheme.labelMedium),
+                  style: Theme.of(context).textTheme.labelMedium,),
               const SizedBox(height: 4),
               Wrap(
                 spacing: 8,

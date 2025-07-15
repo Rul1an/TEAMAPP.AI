@@ -236,7 +236,7 @@ List<TrainingExercise> _getSampleExercises() => [
         coachingPoints: [
           'Keep head up',
           'Use both feet',
-          'Quick pass decisions'
+          'Quick pass decisions',
         ],
       ),
       TrainingExercise.create(
@@ -269,7 +269,7 @@ List<TrainingExercise> _getSampleExercises() => [
         coachingPoints: [
           'Press together',
           'Cut passing lanes',
-          'Win ball high'
+          'Win ball high',
         ],
       ),
       TrainingExercise.create(

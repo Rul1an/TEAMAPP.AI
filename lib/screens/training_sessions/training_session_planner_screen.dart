@@ -25,7 +25,7 @@ class _TrainingSessionPlannerScreenState
                 context,
                 MaterialPageRoute<void>(
                   builder: (context) => ExerciseLibraryScreen(
-                      weekNumber: _getCurrentWeekNumber()),
+                      weekNumber: _getCurrentWeekNumber(),),
                 ),
               ),
               tooltip: 'Exercise Library',

@@ -275,7 +275,7 @@ class SeasonHubScreen extends ConsumerWidget {
           child: Column(
             children: [
               Icon(Icons.sports_soccer_outlined,
-                  size: 64, color: Colors.grey[400]),
+                  size: 64, color: Colors.grey[400],),
               const SizedBox(height: 16),
               Text(
                 'Geen Actief Seizoen',
@@ -332,7 +332,7 @@ class SeasonHubScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Snelle Acties',
-                  style: Theme.of(context).textTheme.titleMedium),
+                  style: Theme.of(context).textTheme.titleMedium,),
               const SizedBox(height: 12),
               Row(
                 children: [
@@ -430,7 +430,7 @@ class SeasonHubScreen extends ConsumerWidget {
           const Spacer(),
           if (onViewAll != null)
             TextButton(
-                onPressed: onViewAll, child: const Text('Alles bekijken')),
+                onPressed: onViewAll, child: const Text('Alles bekijken'),),
         ],
       );
 

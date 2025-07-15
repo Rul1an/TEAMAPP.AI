@@ -351,7 +351,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 16, fontWeight: FontWeight.bold,),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 4),
