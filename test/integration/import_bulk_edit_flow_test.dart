@@ -18,9 +18,9 @@ import 'package:jo17_tactical_manager/providers/players_provider.dart';
 import 'package:jo17_tactical_manager/repositories/player_repository.dart';
 import 'package:jo17_tactical_manager/screens/players/players_screen.dart';
 import 'package:jo17_tactical_manager/widgets/editable_data_table.dart';
-import 'package:jo17_tactical_manager/widgets/merge_duplicates_dialog.dart';
+import 'package:jo17_tactical_manager/dialogs/merge_duplicates_dialog.dart';
 import 'package:jo17_tactical_manager/services/import_history_service.dart';
-import 'package:jo17_tactical_manager/core/import_transaction.dart';
+import 'package:jo17_tactical_manager/models/import_transaction.dart';
 
 // ---------------------------------------------------------------------------
 // Mocks & fakes
