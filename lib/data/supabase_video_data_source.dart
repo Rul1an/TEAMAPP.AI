@@ -84,6 +84,17 @@ class SupabaseVideoDataSource {
     return list.fold<int>(0, (sum, row) => sum + (row['file_size'] as int? ?? 0));
   }
 
+  Future<void> delete(Video video) async {
+    // Delete storage object
+    try {
+      final uri = Uri.parse(video.videoUrl);
+      final path = uri.path.split('/').skip(3).join('/'); // assuming /storage/v1/object/public/videos/<path>
+      await _supabase.storage.from(_bucket).remove([path]);
+    } catch (_) {}
+    // Delete DB row
+    await _supabase.from(_table).delete().eq('id', video.id);
+  }
+
   // helpers
   static SupabaseClient _tryGetClient() {
     try {

@@ -51,4 +51,14 @@ class SupabaseVideoRepository implements VideoRepository {
 
   @override
   Future<int> totalBytes() => _ds.fetchTotalBytes();
+
+  @override
+  Future<Result<void>> delete(Video video) async {
+    try {
+      await _ds.delete(video);
+      return const Success(null);
+    } catch (e) {
+      return Failure(NetworkFailure(e.toString()));
+    }
+  }
 }

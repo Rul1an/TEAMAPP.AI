@@ -123,9 +123,25 @@ class _VideoDetailScreenState extends ConsumerState<VideoDetailScreen> {
       ),
     );
     if (confirm != true) return;
-    // TODO: implement delete via repo
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Delete nog niet geïmplementeerd.')),
+    final repo = ref.read(videoRepositoryProvider);
+    final res = await repo.getById(widget.videoId);
+    final video = res.dataOrNull;
+    if (video == null) return;
+    final delRes = await repo.delete(video);
+    delRes.when(
+      success: (_) {
+        if (mounted) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Video verwijderd.')),
+          );
+        }
+      },
+      failure: (err) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Verwijderen mislukt: ${err.message}')),
+        );
+      },
     );
   }
 }

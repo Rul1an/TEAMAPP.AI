@@ -27,4 +27,6 @@ abstract interface class VideoRepository {
   Future<Result<Video>> getById(String id);
 
   Future<int> totalBytes();
+
+  Future<Result<void>> delete(Video video);
 }
