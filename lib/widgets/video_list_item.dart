@@ -18,11 +18,23 @@ class VideoListItem extends ConsumerWidget {
     final asyncStatus = ref.watch(videoUploadStatusProvider(file));
 
     return asyncStatus.when(
-      data: (status) => ListTile(
-        leading: VideoStatusChip(status: status),
-        title: Text(p.basename(file.path)),
-        subtitle: _buildSubtitle(status),
-      ),
+      data: (status) {
+        // Show one-off snackbar on completion/failure
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (status.stage == UploadStage.complete) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('${p.basename(file.path)} klaar voor weergave')),);
+          } else if (status.stage == UploadStage.failed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Upload mislukt voor ${p.basename(file.path)}')),);
+          }
+        });
+        return ListTile(
+          leading: VideoStatusChip(status: status),
+          title: Text(p.basename(file.path)),
+          subtitle: _buildSubtitle(status),
+        );
+      },
       loading: () => ListTile(
         leading: const CircularProgressIndicator(),
         title: Text(p.basename(file.path)),
