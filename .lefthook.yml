@@ -14,8 +14,8 @@ pre-commit:
       run: dart analyze --fatal-infos
     dcm:
       description: "Dart Code Metrics – style & performance"
-      # Run Dart Code Metrics on the staged Dart files
-      run: dart run dcm analyze --fatal-style --fatal-warnings {staged_files}
+      # Run Dart Code Metrics (global CLI) on the staged Dart files
+      run: dcm analyze --fatal-style --fatal-warnings {staged_files}
 
 commit-msg:
   scripts:

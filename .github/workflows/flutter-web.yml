@@ -44,6 +44,11 @@ jobs:
         dart pub global activate melos 2.9.0
         echo "${HOME}/.pub-cache/bin" >> $GITHUB_PATH
 
+    - name: Install DCM CLI
+      uses: CQLabs/setup-dcm@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Cache pub dependencies
       uses: actions/cache@v4
       with:
@@ -132,7 +137,7 @@ jobs:
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
         fi
-        dart run dcm analyze lib --fatal-style --fatal-warnings
+        dcm analyze lib --fatal-style --fatal-warnings
 
     - name: Build web
       run: |
