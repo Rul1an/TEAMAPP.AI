@@ -32,6 +32,20 @@ Gebruik de _Download template_-knop op stap 1 om een kant-en-klaar `.xlsx` besta
 
 ---
 
+## 2b. Player Roster bestanden
+
+| Kolom | Verplicht | Voorbeeld |
+|-------|-----------|-----------|
+| `first_name` | ✅ | Jan |
+| `last_name` | ✅ | Jansen |
+| `birth_date` | ✅ | 2008-03-15 |
+| `jersey_number` | ✅ | 10 |
+| `position` | ✅ | Middenvelder |
+
+Extra kolommen zoals `height`, `weight` worden genegeerd. Hash voor duplicates: `first_name + last_name + birth_date`. 
+
+---
+
 ## 3. Kleur-legenda & Duplicate-detectie
 
 | Kleur | Betekenis | Actie |
