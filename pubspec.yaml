@@ -1,7 +1,7 @@
 name: jo17_tactical_manager
 description: A tactical football team management app for JO17 teams
 publish_to: 'none'
-version: 1.0.0+1
+version: 0.9.0+0
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
