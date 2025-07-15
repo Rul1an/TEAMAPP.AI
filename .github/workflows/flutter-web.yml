@@ -47,7 +47,7 @@ jobs:
     - name: Install DCM CLI
       uses: CQLabs/setup-dcm@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Cache pub dependencies
       uses: actions/cache@v4
