@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:data_table_2/data_table_2.dart';
+import 'editable_column.dart';
 
 /// Generic editable table with virtual scrolling & cell editing.
 /// Accepts [columns] definitions and [rows] data (List of maps).
@@ -18,9 +19,9 @@ class EditableDataTable extends StatelessWidget {
     super.key,
   });
 
-  final List<String> columns;
+  final List<EditableColumn> columns;
   final List<Map<String, dynamic>> rows;
-  final void Function(int rowIdx, String column, dynamic newValue) onChanged;
+  final void Function(int rowIdx, EditableColumn column, dynamic newValue) onChanged;
   final double rowHeight;
 
   @override
@@ -29,22 +30,22 @@ class EditableDataTable extends StatelessWidget {
       columnSpacing: 12,
       horizontalMargin: 12,
       dataRowHeight: rowHeight,
-      minWidth: columns.length * 120,
+      minWidth: columns.length * 140,
       columns: [
-        for (final col in columns) DataColumn2(label: Text(col), size: ColumnSize.L),
+        for (final col in columns) DataColumn2(label: Text(col.label), size: ColumnSize.L),
       ],
       rows: [
         for (var i = 0; i < rows.length; i++)
           DataRow2(
             cells: [
-              for (final col in columns) _buildCell(context, i, col, rows[i][col]),
+              for (final col in columns) _buildCell(context, i, col, rows[i][col.dataKey]),
             ],
           ),
       ],
     );
   }
 
-  DataCell _buildCell(BuildContext context, int rowIdx, String col, dynamic value) {
+  DataCell _buildCell(BuildContext context, int rowIdx, EditableColumn col, dynamic value) {
     return DataCell(
       GestureDetector(
         onTap: () async {
@@ -52,8 +53,13 @@ class EditableDataTable extends StatelessWidget {
           final result = await showDialog<String>(
             context: context,
             builder: (ctx) => AlertDialog(
-              title: Text('Wijzig $col'),
-              content: TextField(controller: controller, autofocus: true),
+              title: Text('Wijzig ${col.label}'),
+              content: TextField(
+                controller: controller,
+                autofocus: true,
+                keyboardType: col.type==CellType.number?TextInputType.number:null,
+                decoration: const InputDecoration(errorText: null),
+              ),
               actions: [
                 TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Annuleren')),
                 ElevatedButton(onPressed: () => Navigator.pop(ctx, controller.text), child: const Text('Opslaan')),
@@ -61,6 +67,13 @@ class EditableDataTable extends StatelessWidget {
             ),
           );
           if (result != null && result != value) {
+            if (col.validator != null) {
+              final err = col.validator!(result);
+              if (err != null) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err)));
+                return;
+              }
+            }
             onChanged(rowIdx, col, result);
           }
         },
