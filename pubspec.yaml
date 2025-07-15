@@ -74,6 +74,8 @@ dependencies:
   # Networking
   http: ^0.13.6
 
+  video_compress: ^3.1.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
