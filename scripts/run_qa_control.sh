@@ -34,22 +34,15 @@ API="https://api.github.com/repos/$GH_REPOSITORY"
 HEAD_SHA=$(git rev-parse HEAD)
 
 info "Looking for successful workflow runs (branch: $HEAD_BRANCH)…"
-RUN_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs?per_page=20&branch=$HEAD_BRANCH")
-RUN_ID=$(echo "$RUN_JSON" | jq -r '.workflow_runs | map(select(.conclusion=="success"))[0].id')
-
-if [[ "$RUN_ID" == "null" || -z "$RUN_ID" ]]; then
-  info "No successful run on $HEAD_BRANCH. Trying 'main' branch…"
-  RUN_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs?per_page=20&branch=main")
-  RUN_ID=$(echo "$RUN_JSON" | jq -r '.workflow_runs | map(select(.conclusion=="success"))[0].id')
-fi
-
-if [[ "$RUN_ID" == "null" || -z "$RUN_ID" ]]; then
-  info "No successful run on 'main'. Falling back to latest successful run across branches…"
-  RUN_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs?per_page=20")
-  RUN_ID=$(echo "$RUN_JSON" | jq -r '.workflow_runs | map(select(.conclusion=="success"))[0].id')
-fi
-
-[[ "$RUN_ID" == "null" || -z "$RUN_ID" ]] && fail "No successful workflow run found after fallback attempts."
+SUCCESS_RUNS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs?per_page=20&branch=$HEAD_BRANCH" | jq -r '.workflow_runs | map(select(.conclusion=="success")) | .[].id')
+for RUN_CANDIDATE in $SUCCESS_RUNS; do
+  ART_COUNT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs/$RUN_CANDIDATE/artifacts" | jq '.total_count')
+  if [[ "$ART_COUNT" -gt 0 ]]; then
+    RUN_ID=$RUN_CANDIDATE
+    break
+  fi
+done
+[[ -z "${RUN_ID:-}" ]] && fail "No successful workflow run with artifacts found."
 
 success "Found workflow run $RUN_ID"
 ARTIFACTS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs/$RUN_ID/artifacts")
