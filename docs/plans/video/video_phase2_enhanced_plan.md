@@ -30,7 +30,7 @@ Phase-2 focust op _processing & optimisation_ en vult de basis-upload (Phase-1) 
 | # | Punt | Reden skip | Nieuw commitment |
 |---|------|------------|------------------|
 | S-01 | Multi-thumbnail selectie | UI backlog vol | Sprint 4 opnemen |
-| S-02 | Retry-queue bij upload-failure | Onvoldoende infra-hooks | Realiseren via Storage Hooks v0.7 |
+| S-02 | Retry-queue bij upload-failure | Onvoldoende infra-hooks | **Verplaatst naar Sprint 3 (OPS-071)** |
 | S-03 | Cleanup job oude renditions | Lage prioriteit | Cron Edge-Function Sprint 4 |
 
 ## ✅ Checklist Implementatie

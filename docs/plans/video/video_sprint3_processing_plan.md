@@ -16,6 +16,7 @@
 | **FLUT-102** | **Device-side pre-compress (Flutter)** | ✅ _All libs stable_ | Upload-tijd < 60 s bij 100 MB bron | UI wijzigt niet |
 | **UI-089** | **Realtime status chip** toont _Queued → Processing → Complete_ | ✅ SignalR channels live | Status-update ≤ 1 s | Chip in VideoListItem |
 | **TST-044** | **Unit & widget tests** voor upload flow | ✅ Mock-Supabase lib geverifieerd | CI ≥ 90 % pass  | 15 testcases |
+| **OPS-071** | **Retry-queue bij upload-failure (S-02)** | ✅ Storage Hooks v0.7 live | Mislukte uploads worden max 3× geretry’d | Kritiek voor stabiliteit |
 
 **Conclusie:** Alle drie stories zijn _Ready-for-Dev_ – afhankelijkheden (`video_compress 3.1.2`, `ffmpeg_kit_flutter 6.0.3`, Supabase Channels) zijn getest op Android 14 + iOS 17.
 
@@ -31,11 +32,12 @@
 | D3 | Chip component + theming | UI-089 | 0.5 pd |
 | D3 | E2E happy-flow Cypress | UI-089 | 0.5 pd |
 | D4 | Mock storage + upload tests | TST-044 | 1 pd |
+| D4 | Implement Retry-queue logic (storage hook) | OPS-071 | 0.5 pd |
+| D4 | QA scenario’s “offline / 4G drop” | OPS-071 | 0.5 pd |
 | D5 | CI integration + coverage badge | TST-044 | 0.5 pd |
 | D5 | Tech-debt: refactor `upload_bloc` | ‑ | 0.5 pd |
 
-_Total: 6.5 person-days → fits 2-week cadence (capacity 9 pd)._  
-_Buffer **2.5 pd** reserved for spill-over / bugs_
+_Total: 7.5 person-days → capacity 9 pd (buffer 1.5 pd)._
 
 ## 🔄 Definition of Done
 
