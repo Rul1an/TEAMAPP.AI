@@ -57,7 +57,7 @@ ARTIFACTS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/r
 mkdir -p .qa_artifacts && cd .qa_artifacts
 
 ### Coverage report -----------------------------------------------------------
-COV_ID=$(echo "$ARTIFACTS_JSON" | jq -r '.artifacts[] | select(.name|test("coverage")) | .id' | head -n1)
+COV_ID=$(echo "$ARTIFACTS_JSON" | jq -r '.artifacts[] | select(.name|test("coverage|lcov")) | .id' | head -n1)
 if [[ -n "$COV_ID" ]]; then
   info "Downloading coverage artifact (#$COV_ID)…"
   curl -L -H "Authorization: token $GITHUB_TOKEN" "$API/actions/artifacts/$COV_ID/zip" -o coverage.zip
@@ -77,7 +77,7 @@ else
 fi
 
 ### Web build artifact --------------------------------------------------------
-WEB_ID=$(echo "$ARTIFACTS_JSON" | jq -r '.artifacts[] | select(.name=="build-web") | .id' | head -n1)
+WEB_ID=$(echo "$ARTIFACTS_JSON" | jq -r '.artifacts[] | select(.name=="web-build" or .name=="build-web") | .id' | head -n1)
 if [[ -n "$WEB_ID" ]]; then
   info "Downloading web build artifact (#$WEB_ID)…"
   curl -L -H "Authorization: token $GITHUB_TOKEN" "$API/actions/artifacts/$WEB_ID/zip" -o web-build.zip

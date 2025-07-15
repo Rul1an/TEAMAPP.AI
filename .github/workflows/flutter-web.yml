@@ -156,22 +156,23 @@ jobs:
           exit 1
         fi
 
-    - name: Upload artifacts
+    - name: Upload web build artifact
       uses: actions/upload-artifact@v4
       with:
         name: web-build
         path: |
-          build/web/
-          jo17_tactical_manager/build/web/
-        if-no-files-found: warn
+          build/web/**
+          jo17_tactical_manager/build/web/**
+        if-no-files-found: error
 
-    - name: Upload coverage artifact
+    - name: Upload lcov coverage
       uses: actions/upload-artifact@v4
       with:
-        name: coverage-report
+        name: lcov-report
         path: |
-          coverage/html/
-          jo17_tactical_manager/coverage/html/
+          coverage/lcov.info
+          jo17_tactical_manager/coverage/lcov.info
+        if-no-files-found: warn
 
   lighthouse:
     name: Lighthouse CI
