@@ -102,3 +102,14 @@ flutter test integration_test/import_flow_test.dart
 
 ---
 *Laatste update:* 2025-07-14
+
+---
+
+## 7 – Progress Update (2025-07-15)
+
+* ✅ Data-schema & repository implemented (`MatchSchedule`, `MatchScheduleRepository`).
+* ✅ CSV parser & duplicate detection service finished; unit-tests green.
+* ✅ Wizard UI (Step 3 – Review & Confirm) merged in PR #212.
+* ✅ Docs updated & Loom demo recorded (link in `docs/import_guide.md`).
+* ✅ CI workflow now runs `flutter test --coverage`, `dart analyze` and caches the Flutter SDK (see `.github/workflows/flutter-web.yml`).
+* 🔜 **Next step**: Final QA sign-off → run regression E2E suite against staging and prepare release notes.
