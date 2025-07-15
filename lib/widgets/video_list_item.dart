@@ -9,6 +9,8 @@ import '../screens/video/video_player_screen.dart';
 import '../providers/video_upload_provider.dart';
 import '../services/video_upload_service.dart';
 import 'video_status_chip.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'thumbnail_selector_dialog.dart';
 
 class VideoListItem extends ConsumerWidget {
   const VideoListItem(this.file, {super.key});
@@ -57,6 +59,26 @@ class VideoListItem extends ConsumerWidget {
                       ),
                     ),
                   );
+                }
+              : null,
+          onLongPress: status.stage == UploadStage.complete &&
+                  (status.thumbnails?.isNotEmpty ?? false)
+              ? () async {
+                  final selected = await showDialog<String>(
+                    context: context,
+                    builder: (_) => ThumbnailSelectorDialog(
+                      thumbnails: status.thumbnails!,
+                    ),
+                  );
+                  if (selected != null && status.path != null) {
+                    await Supabase.instance.client
+                        .from('video_assets')
+                        .update({'thumbnail1': selected})
+                        .eq('path', status.path!)
+                        .execute();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Thumbnail bijgewerkt')));
+                  }
                 }
               : null,
         );

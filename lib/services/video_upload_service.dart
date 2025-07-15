@@ -24,6 +24,7 @@ class UploadStatus {
   String? signedUrl;
   List<String>? thumbnails;
   int? duration; // seconds
+  String? path; // storage path
 
   UploadStatus({
     required this.stage,
@@ -33,6 +34,7 @@ class UploadStatus {
     this.signedUrl,
     this.thumbnails,
     this.duration,
+    this.path,
   });
 }
 
@@ -131,6 +133,7 @@ class VideoUploadService {
                   signedUrl: p['signedUrl'] as String?,
                   thumbnails: (p['thumbs'] as List?)?.cast<String>(),
                   duration: (p['duration'] as num?)?.toInt(),
+                  path: path,
                 ));
                 channel.unsubscribe();
                 controller.close();
