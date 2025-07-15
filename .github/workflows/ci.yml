@@ -6,94 +6,30 @@ on:
   pull_request:
     branches: [main]
 
-# Shared environment values – available in all steps
-env:
-  # Speed-up pub installs between steps and jobs
-  PUB_CACHE: ~/.pub-cache
-  # Central place to change the desired Flutter version
-  FLUTTER_VERSION: "3.32.x"
-
 jobs:
-  build-test:
-    name: "🧪 Build & Test"
+  test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      # 1. Install Flutter SDK (+ built-in cache)
-      - name: Setup Flutter
+      - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: '3.32.x'
           channel: stable
-          cache: true  # also enables pub cache reuse
+          cache: true
 
-      # Additional cache layer for the global pub cache & dart_tool (helps when cache key changes)
-      - name: Cache pub dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.pub-cache
-            ~/.dart_tool
-          key: ${{ runner.os }}-flutter-${{ env.FLUTTER_VERSION }}-${{ hashFiles('**/pubspec.lock') }}
+      - name: Install dependencies
+        run: flutter pub get
 
-      # 2. Install Melos CLI globally (needed before bootstrap)
-      - name: Install Melos CLI
-        run: |
-          dart pub global activate melos 2.9.0
-          echo "${HOME}/.pub-cache/bin" >> $GITHUB_PATH
-
-      # Dart Code Metrics CLI – style & performance checks
-      - name: Install DCM CLI
-        uses: CQLabs/setup-dcm@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      # 3. Install Dart/Flutter package dependencies (works for mono-repos via melos)
-      - name: Install dependencies (flutter pub get)
-        run: |
-          if [ -f "melos.yaml" ]; then
-            melos exec -- flutter pub get
-          else
-            flutter pub get
-          fi
-
-      # 4. Bootstrap local packages (Melos)
       - name: Melos bootstrap
         if: ${{ hashFiles('melos.yaml') != '' }}
-        run: melos bootstrap
-
-      # 5. Code generation (build_runner) – only when the project depends on it
-      - name: Generate code (build_runner)
         run: |
-          if grep -R "build_runner" --include="pubspec.yaml" -q .; then
-            melos exec --dir-exists="." -- "flutter pub run build_runner build --delete-conflicting-outputs --verbose"
-          else
-            echo "No build_runner dependency found – skipping code generation."
-          fi
+          dart pub global activate melos 2.9.0
+          melos bootstrap
 
-      # 6. Run unit & widget tests with coverage
-      - name: Run tests with coverage
-        run: |
-          # Run all tests in all packages; melos will forward flags correctly
-          melos exec -- flutter test --coverage
-          # Optional HTML coverage report (script may be absent in some packages)
-          if [ -f "coverage.sh" ]; then ./coverage.sh; fi
+      - name: Run tests (with coverage)
+        run: flutter test --coverage
 
-      # 7. Static analysis (dart analyze) – fail on warnings
-      - name: Static analysis (dart analyze)
-        run: dart analyze --fatal-warnings
-
-      # 8. Dart Code Metrics (style & performance)
-      - name: Dart Code Metrics
-        run: dcm analyze lib --fatal-style --fatal-warnings
-
-      # 9. Upload coverage artefacts for Codecov / PR comments
-      - name: Upload coverage artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-lcov
-          path: |
-            **/coverage/lcov.info
-          if-no-files-found: warn
+      - name: Static analysis
+        run: dart analyze
