@@ -28,13 +28,28 @@ fi
 
 : "${STAGING_URL:?Set STAGING_URL to staging site (e.g. https://staging--site.netlify.app)}"
 
+HEAD_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
 API="https://api.github.com/repos/$GH_REPOSITORY"
 HEAD_SHA=$(git rev-parse HEAD)
 
-info "Fetching latest successful workflow run for commit $HEAD_SHA…"
-RUN_ID=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs?per_page=10&event=push&branch=$(git rev-parse --abbrev-ref HEAD)" \
-  | jq -r '.workflow_runs | map(select(.conclusion=="success"))[0].id')
-[[ "$RUN_ID" == "null" || -z "$RUN_ID" ]] && fail "No successful workflow run found."
+info "Looking for successful workflow runs (branch: $HEAD_BRANCH)…"
+RUN_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs?per_page=20&branch=$HEAD_BRANCH")
+RUN_ID=$(echo "$RUN_JSON" | jq -r '.workflow_runs | map(select(.conclusion=="success"))[0].id')
+
+if [[ "$RUN_ID" == "null" || -z "$RUN_ID" ]]; then
+  info "No successful run on $HEAD_BRANCH. Trying 'main' branch…"
+  RUN_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs?per_page=20&branch=main")
+  RUN_ID=$(echo "$RUN_JSON" | jq -r '.workflow_runs | map(select(.conclusion=="success"))[0].id')
+fi
+
+if [[ "$RUN_ID" == "null" || -z "$RUN_ID" ]]; then
+  info "No successful run on 'main'. Falling back to latest successful run across branches…"
+  RUN_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs?per_page=20")
+  RUN_ID=$(echo "$RUN_JSON" | jq -r '.workflow_runs | map(select(.conclusion=="success"))[0].id')
+fi
+
+[[ "$RUN_ID" == "null" || -z "$RUN_ID" ]] && fail "No successful workflow run found after fallback attempts."
 
 success "Found workflow run $RUN_ID"
 ARTIFACTS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$API/actions/runs/$RUN_ID/artifacts")
