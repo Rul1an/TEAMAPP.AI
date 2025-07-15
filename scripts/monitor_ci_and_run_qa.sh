@@ -7,9 +7,9 @@ set -euo pipefail
 
 check_deps() {
   for bin in curl jq date; do
-    command -v "$bin" >/dev/null 2>&1 || {
-      echo "❌ $bin not installed" && exit 1;
-    done
+    if ! command -v "$bin" >/dev/null 2>&1; then
+      echo "❌ $bin not installed" && exit 1
+    fi
   done
 }
 
