@@ -21,12 +21,18 @@ class UploadStatus {
   double progress; // 0-1 for uploading/compressing
   String? message;
   int retryCount;
+  String? signedUrl;
+  List<String>? thumbnails;
+  int? duration; // seconds
 
   UploadStatus({
     required this.stage,
     this.progress = 0,
     this.message,
     this.retryCount = 0,
+    this.signedUrl,
+    this.thumbnails,
+    this.duration,
   });
 }
 
@@ -120,7 +126,12 @@ class VideoUploadService {
             (payload, [ref]) {
               final p = payload as Map<String, dynamic>;
               if (p['path'] == path) {
-                emit(UploadStatus(stage: UploadStage.complete));
+                emit(UploadStatus(
+                  stage: UploadStage.complete,
+                  signedUrl: p['signedUrl'] as String?,
+                  thumbnails: (p['thumbs'] as List?)?.cast<String>(),
+                  duration: (p['duration'] as num?)?.toInt(),
+                ));
                 channel.unsubscribe();
                 controller.close();
               }

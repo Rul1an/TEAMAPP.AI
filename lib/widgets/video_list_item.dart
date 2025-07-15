@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
+import 'package:cached_network_image/cached_network_image.dart';
+import '../screens/video/video_player_screen.dart';
 
 import '../providers/video_upload_provider.dart';
 import '../services/video_upload_service.dart';
@@ -30,9 +32,33 @@ class VideoListItem extends ConsumerWidget {
           }
         });
         return ListTile(
-          leading: VideoStatusChip(status: status),
+          leading: status.stage == UploadStage.complete &&
+                  (status.thumbnails?.isNotEmpty ?? false)
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: CachedNetworkImage(
+                    imageUrl: status.thumbnails!.first,
+                    width: 56,
+                    height: 56,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              : VideoStatusChip(status: status),
           title: Text(p.basename(file.path)),
           subtitle: _buildSubtitle(status),
+          onTap: status.stage == UploadStage.complete &&
+                  status.signedUrl != null
+              ? () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => VideoPlayerScreen(
+                        url: status.signedUrl!,
+                        title: p.basename(file.path),
+                      ),
+                    ),
+                  );
+                }
+              : null,
         );
       },
       loading: () => ListTile(
