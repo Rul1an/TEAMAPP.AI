@@ -9,7 +9,7 @@ import 'player_repository.dart';
 
 class SupabasePlayerRepository implements PlayerRepository {
   SupabasePlayerRepository({SupabaseClient? client})
-    : _client = client ?? SupabaseConfig.client;
+      : _client = client ?? SupabaseConfig.client;
 
   final SupabaseClient _client;
   static const _table = 'players';
@@ -57,30 +57,30 @@ class SupabasePlayerRepository implements PlayerRepository {
   }
 
   Map<String, dynamic> _toRow(Player p) => {
-    'id': p.id,
-    'first_name': p.firstName,
-    'last_name': p.lastName,
-    'jersey_number': p.jerseyNumber,
-    'birth_date': p.birthDate.toIso8601String(),
-    'position': p.position.name,
-    'preferred_foot': p.preferredFoot.name,
-    'height_cm': p.height,
-    'weight_kg': p.weight,
-    'phone': p.phoneNumber,
-    'email': p.email,
-    'parent_contact': p.parentContact,
-    'matches_played': p.matchesPlayed,
-    'matches_in_selection': p.matchesInSelection,
-    'minutes_played': p.minutesPlayed,
-    'goals': p.goals,
-    'assists': p.assists,
-    'yellow_cards': p.yellowCards,
-    'red_cards': p.redCards,
-    'trainings_attended': p.trainingsAttended,
-    'trainings_total': p.trainingsTotal,
-    'created_at': p.createdAt.toIso8601String(),
-    'updated_at': DateTime.now().toIso8601String(),
-  }..removeWhere((key, value) => value == null);
+        'id': p.id,
+        'first_name': p.firstName,
+        'last_name': p.lastName,
+        'jersey_number': p.jerseyNumber,
+        'birth_date': p.birthDate.toIso8601String(),
+        'position': p.position.name,
+        'preferred_foot': p.preferredFoot.name,
+        'height_cm': p.height,
+        'weight_kg': p.weight,
+        'phone': p.phoneNumber,
+        'email': p.email,
+        'parent_contact': p.parentContact,
+        'matches_played': p.matchesPlayed,
+        'matches_in_selection': p.matchesInSelection,
+        'minutes_played': p.minutesPlayed,
+        'goals': p.goals,
+        'assists': p.assists,
+        'yellow_cards': p.yellowCards,
+        'red_cards': p.redCards,
+        'trainings_attended': p.trainingsAttended,
+        'trainings_total': p.trainingsTotal,
+        'created_at': p.createdAt.toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
+      }..removeWhere((key, value) => value == null);
 
   // endregion
 
@@ -131,10 +131,8 @@ class SupabasePlayerRepository implements PlayerRepository {
   @override
   Future<Result<List<Player>>> getByPosition(Position position) async {
     try {
-      final data = await _client
-          .from(_table)
-          .select()
-          .eq('position', position.name);
+      final data =
+          await _client.from(_table).select().eq('position', position.name);
       final players = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))
           .toList();

@@ -13,7 +13,7 @@ import '../repositories/club_repository.dart';
 /// Manages club-level operations, teams, staff, and player progress
 class ClubProvider extends ChangeNotifier {
   ClubProvider({required ClubRepository clubRepository})
-    : _clubRepository = clubRepository;
+      : _clubRepository = clubRepository;
   final ClubRepository _clubRepository;
 
   // State

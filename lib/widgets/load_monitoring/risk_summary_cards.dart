@@ -24,7 +24,7 @@ class RiskSummaryCards extends StatelessWidget {
     final current = morphocycles.last;
     final avgAcr =
         morphocycles.fold<double>(0, (sum, m) => sum + m.acuteChronicRatio) /
-        morphocycles.length;
+            morphocycles.length;
 
     final highRiskWeeks = morphocycles
         .where(

@@ -3,9 +3,9 @@
 // These no-op implementations should never be executed on web builds.
 
 class Blob {
+  Blob(this._parts, [this._type = 'application/octet-stream']);
   final List<dynamic> _parts;
   final String _type;
-  Blob(this._parts, [this._type = 'application/octet-stream']);
 }
 
 class Url {
@@ -14,8 +14,8 @@ class Url {
 }
 
 class AnchorElement {
-  String? href;
   AnchorElement({this.href});
+  String? href;
 
   void setAttribute(String name, String value) {}
   void click() {}

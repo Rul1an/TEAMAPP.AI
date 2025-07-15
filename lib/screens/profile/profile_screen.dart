@@ -121,7 +121,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           radius: 48,
                           backgroundImage: _profile!.avatarUrl != null
                               ? NetworkImage(_profile!.avatarUrl!)
-                                    as ImageProvider
+                                  as ImageProvider
                               : const AssetImage(
                                   'assets/images/avatar_placeholder.png',
                                 ),

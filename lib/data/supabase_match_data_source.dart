@@ -7,7 +7,7 @@ import '../models/match.dart';
 /// Raw Supabase access for `matches` table.
 class SupabaseMatchDataSource {
   SupabaseMatchDataSource({SupabaseClient? client})
-    : _supabase = client ?? _tryGetClient();
+      : _supabase = client ?? _tryGetClient();
 
   final SupabaseClient _supabase;
   static const _table = 'matches';
@@ -22,11 +22,8 @@ class SupabaseMatchDataSource {
   }
 
   Future<Match?> fetchById(String id) async {
-    final data = await _supabase
-        .from(_table)
-        .select()
-        .eq('id', id)
-        .maybeSingle();
+    final data =
+        await _supabase.from(_table).select().eq('id', id).maybeSingle();
     return data == null ? null : _fromRow(data);
   }
 
@@ -95,17 +92,17 @@ class SupabaseMatchDataSource {
   }
 
   static Map<String, dynamic> _toRow(Match m) => <String, dynamic>{
-    'id': m.id,
-    'date': m.date.toIso8601String(),
-    'opponent': m.opponent,
-    'location': m.location.name,
-    'competition': m.competition.name,
-    'status': m.status.name,
-    'team_score': m.teamScore,
-    'opponent_score': m.opponentScore,
-    'created_at': m.createdAt.toIso8601String(),
-    'updated_at': DateTime.now().toIso8601String(),
-  }..removeWhere((_, v) => v == null);
+        'id': m.id,
+        'date': m.date.toIso8601String(),
+        'opponent': m.opponent,
+        'location': m.location.name,
+        'competition': m.competition.name,
+        'status': m.status.name,
+        'team_score': m.teamScore,
+        'opponent_score': m.opponentScore,
+        'created_at': m.createdAt.toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
+      }..removeWhere((_, v) => v == null);
 
   static bool _listEquals(List<Match> a, List<Match> b) {
     if (a.length != b.length) return false;

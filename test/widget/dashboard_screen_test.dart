@@ -46,14 +46,16 @@ class FakeAuthService implements AuthService {
   Future<AuthResponse> signInWithPassword({
     required String email,
     required String password,
-  }) => throw UnimplementedError();
+  }) =>
+      throw UnimplementedError();
 
   @override
   Future<AuthResponse> signUp({
     required String email,
     required String password,
     Map<String, dynamic>? metadata,
-  }) => throw UnimplementedError();
+  }) =>
+      throw UnimplementedError();
 
   @override
   Future<void> signOut() async => throw UnimplementedError();
@@ -118,18 +120,18 @@ class _StatsStub extends MapBase<String, dynamic> {
 
   @override
   Iterable<String> get keys => [
-    'totalTrainingAttendance',
-    'totalMatches',
-    'wins',
-    'draws',
-    'losses',
-    'goalsFor',
-    'goalsAgainst',
-    'goalDifference',
-    'totalTrainings',
-    'winPercentage',
-    ..._inner.keys,
-  ];
+        'totalTrainingAttendance',
+        'totalMatches',
+        'wins',
+        'draws',
+        'losses',
+        'goalsFor',
+        'goalsAgainst',
+        'goalDifference',
+        'totalTrainings',
+        'winPercentage',
+        ..._inner.keys,
+      ];
 
   @override
   dynamic remove(Object? key) => _inner.remove(key);

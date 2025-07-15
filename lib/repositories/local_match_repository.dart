@@ -6,7 +6,7 @@ import 'match_repository.dart';
 
 class LocalMatchRepository implements MatchRepository {
   LocalMatchRepository({HiveMatchCache? cache})
-    : _cache = cache ?? HiveMatchCache();
+      : _cache = cache ?? HiveMatchCache();
 
   final HiveMatchCache _cache;
 

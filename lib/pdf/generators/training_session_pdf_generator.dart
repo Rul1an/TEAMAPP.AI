@@ -35,17 +35,13 @@ class TrainingSessionPdfGenerator
       'TrainingSessionPdfGenerator: trainingNumber moet > 0 zijn',
     );
     assert(
-      session.date != null,
-      'TrainingSessionPdfGenerator: date is verplicht',
-    );
-    assert(
       session.sessionDuration.inMinutes > 0,
       'TrainingSessionPdfGenerator: sessieduur moet positief zijn',
     );
 
     // Ensure Dutch locale symbols are loaded for DateFormat.
     try {
-      await initializeDateFormatting('nl_NL', null);
+      await initializeDateFormatting('nl_NL');
     } catch (_) {
       // Ignore if already initialized or locale data unavailable.
     }
@@ -541,31 +537,31 @@ class TrainingSessionPdfGenerator
   // ---------------------------------------------------------------------------
 
   pw.Widget _buildInfoRow(String label, String value) => pw.Row(
-    children: [
-      pw.SizedBox(
-        width: 60,
-        child: pw.Text(
-          label,
-          style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
-        ),
-      ),
-      pw.Expanded(
-        child: pw.Text(value, style: const pw.TextStyle(fontSize: 10)),
-      ),
-    ],
-  );
+        children: [
+          pw.SizedBox(
+            width: 60,
+            child: pw.Text(
+              label,
+              style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+            ),
+          ),
+          pw.Expanded(
+            child: pw.Text(value, style: const pw.TextStyle(fontSize: 10)),
+          ),
+        ],
+      );
 
   pw.Widget _buildObjectiveItem(String label, String content) => pw.Column(
-    crossAxisAlignment: pw.CrossAxisAlignment.start,
-    children: [
-      pw.Text(
-        label,
-        style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
-      ),
-      pw.SizedBox(height: 3),
-      pw.Text(content, style: const pw.TextStyle(fontSize: 10)),
-    ],
-  );
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text(
+            label,
+            style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+          ),
+          pw.SizedBox(height: 3),
+          pw.Text(content, style: const pw.TextStyle(fontSize: 10)),
+        ],
+      );
 
   String _getTrainingTypeText(TrainingType type) {
     switch (type) {

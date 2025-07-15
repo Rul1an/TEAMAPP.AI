@@ -41,23 +41,23 @@ class WeeklyTable extends ConsumerWidget {
   }
 
   Widget _buildHeader() => DecoratedBox(
-    decoration: BoxDecoration(
-      color: Colors.green[100],
-      border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
-    ),
-    child: const Row(
-      children: [
-        _TableCell('Week', width: 60, isHeader: true),
-        _TableCell('Load', width: 50, isHeader: true),
-        _TableCell('Training', width: 180, isHeader: true),
-        _TableCell('Wedstrijd', width: 150, isHeader: true),
-        _TableCell('Datum', width: 100, isHeader: true),
-        _TableCell('Locatie', width: 120, isHeader: true),
-        _TableCell('Tijd', width: 80, isHeader: true),
-        _TableCell('Notities', isHeader: true),
-      ],
-    ),
-  );
+        decoration: BoxDecoration(
+          color: Colors.green[100],
+          border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+        ),
+        child: const Row(
+          children: [
+            _TableCell('Week', width: 60, isHeader: true),
+            _TableCell('Load', width: 50, isHeader: true),
+            _TableCell('Training', width: 180, isHeader: true),
+            _TableCell('Wedstrijd', width: 150, isHeader: true),
+            _TableCell('Datum', width: 100, isHeader: true),
+            _TableCell('Locatie', width: 120, isHeader: true),
+            _TableCell('Tijd', width: 80, isHeader: true),
+            _TableCell('Notities', isHeader: true),
+          ],
+        ),
+      );
 }
 
 class _WeekRow extends ConsumerWidget {
@@ -74,8 +74,8 @@ class _WeekRow extends ConsumerWidget {
     final backgroundColor = isVacation
         ? Colors.orange[50]
         : isCurrent
-        ? Colors.green[50]
-        : Colors.white;
+            ? Colors.green[50]
+            : Colors.white;
 
     if (isVacation) {
       return _VacationRow(weekSchedule: weekSchedule, bg: backgroundColor);
@@ -147,26 +147,28 @@ class _VacationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
-    decoration: BoxDecoration(
-      color: bg,
-      border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
-    ),
-    child: Row(
-      children: [
-        _TableCell('${weekSchedule.weekNumber}', width: 60),
-        const _TableCell('', width: 50),
-        _TableCell(weekSchedule.vacationDescription ?? 'Vakantie', width: 180),
-        const _TableCell('', width: 150),
-        _TableCell(_formatWeekDate(weekSchedule.weekStartDate), width: 100),
-        const _TableCell('', width: 120),
-        const _TableCell('', width: 80),
-        const _TableCell(
-          'VAKANTIE',
-          style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+        decoration: BoxDecoration(
+          color: bg,
+          border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
         ),
-      ],
-    ),
-  );
+        child: Row(
+          children: [
+            _TableCell('${weekSchedule.weekNumber}', width: 60),
+            const _TableCell('', width: 50),
+            _TableCell(weekSchedule.vacationDescription ?? 'Vakantie',
+                width: 180),
+            const _TableCell('', width: 150),
+            _TableCell(_formatWeekDate(weekSchedule.weekStartDate), width: 100),
+            const _TableCell('', width: 120),
+            const _TableCell('', width: 80),
+            const _TableCell(
+              'VAKANTIE',
+              style:
+                  TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      );
 }
 
 class _ActivityRow extends ConsumerWidget {
@@ -228,8 +230,8 @@ class _ActivityRow extends ConsumerWidget {
             training != null
                 ? '${training!.dayName} ${_formatDate(training!.dateTime)}'
                 : match != null
-                ? '${match!.dayName} ${_formatDate(match!.dateTime)}'
-                : '',
+                    ? '${match!.dayName} ${_formatDate(match!.dateTime)}'
+                    : '',
             width: 100,
           ),
           _TableCell(
@@ -298,24 +300,23 @@ class _TableCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    width: width,
-    padding: const EdgeInsets.all(8),
-    decoration: BoxDecoration(
-      border: Border(right: BorderSide(color: Colors.grey[300]!)),
-    ),
-    child: Text(
-      text,
-      style:
-          style ??
-          TextStyle(
-            fontSize: isHeader ? 12 : 11,
-            fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-            color: isHeader ? Colors.green[800] : Colors.black87,
-          ),
-      overflow: TextOverflow.ellipsis,
-      maxLines: isHeader ? 1 : 2,
-    ),
-  );
+        width: width,
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          border: Border(right: BorderSide(color: Colors.grey[300]!)),
+        ),
+        child: Text(
+          text,
+          style: style ??
+              TextStyle(
+                fontSize: isHeader ? 12 : 11,
+                fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+                color: isHeader ? Colors.green[800] : Colors.black87,
+              ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: isHeader ? 1 : 2,
+        ),
+      );
 }
 
 class _MorphocycleLoadCell extends StatelessWidget {

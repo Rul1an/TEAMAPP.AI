@@ -58,9 +58,8 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: result.errors
-                      .map((error) => Text('• $error'))
-                      .toList(),
+                  children:
+                      result.errors.map((error) => Text('• $error')).toList(),
                 ),
               ),
               actions: [
@@ -280,14 +279,12 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
             child: playersAsync.when(
               data: (players) {
                 final filteredPlayers = players.where((player) {
-                  final fullName = '${player.firstName} ${player.lastName}'
-                      .toLowerCase();
-                  final matchesSearch =
-                      _searchQuery.isEmpty ||
+                  final fullName =
+                      '${player.firstName} ${player.lastName}'.toLowerCase();
+                  final matchesSearch = _searchQuery.isEmpty ||
                       fullName.contains(_searchQuery) ||
                       player.jerseyNumber.toString().contains(_searchQuery);
-                  final matchesPosition =
-                      _selectedPosition == null ||
+                  final matchesPosition = _selectedPosition == null ||
                       player.position == _selectedPosition;
                   return matchesSearch && matchesPosition;
                 }).toList();
@@ -327,11 +324,11 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                           padding: const EdgeInsets.all(24),
                           gridDelegate:
                               const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 400,
-                                childAspectRatio: 1.5,
-                                crossAxisSpacing: 16,
-                                mainAxisSpacing: 16,
-                              ),
+                            maxCrossAxisExtent: 400,
+                            childAspectRatio: 1.5,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
                           itemCount: filteredPlayers.length,
                           itemBuilder: (context, index) {
                             final player = filteredPlayers[index];
@@ -417,76 +414,77 @@ class _PlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-    child: InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundColor: getPositionColor(player.position),
-              child: Text(
-                player.jerseyNumber.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${player.firstName} ${player.lastName}',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: getPositionColor(player.position),
+                  child: Text(
+                    player.jerseyNumber.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    _getPositionText(player.position),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.sports_soccer,
-                        size: 16,
-                        color: Colors.grey[600],
-                      ),
-                      const SizedBox(width: 4),
                       Text(
-                        '${player.matchesPlayed} wedstrijden',
-                        style: Theme.of(context).textTheme.bodySmall,
+                        '${player.firstName} ${player.lastName}',
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
-                      const SizedBox(width: 16),
-                      Icon(
-                        Icons.sports_score,
-                        size: 16,
-                        color: Colors.grey[600],
-                      ),
-                      const SizedBox(width: 4),
+                      const SizedBox(height: 4),
                       Text(
-                        '${player.goals} goals',
-                        style: Theme.of(context).textTheme.bodySmall,
+                        _getPositionText(player.position),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.sports_soccer,
+                            size: 16,
+                            color: Colors.grey[600],
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${player.matchesPlayed} wedstrijden',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          const SizedBox(width: 16),
+                          Icon(
+                            Icons.sports_score,
+                            size: 16,
+                            color: Colors.grey[600],
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${player.goals} goals',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                Icon(Icons.chevron_right, color: Colors.grey[400]),
+              ],
             ),
-            Icon(Icons.chevron_right, color: Colors.grey[400]),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   String _getPositionText(Position position) {
     switch (position) {

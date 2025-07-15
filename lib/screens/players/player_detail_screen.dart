@@ -126,7 +126,6 @@ class PlayerDetailScreen extends ConsumerWidget {
         (p) => p.id == playerId,
         orElse: Player.new,
       );
-      if (player == null) return;
 
       // Placeholder minimal assessment for demo
       final assessmentGenerator = ref.read(

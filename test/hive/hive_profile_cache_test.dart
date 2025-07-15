@@ -25,35 +25,35 @@ void main() {
 
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(secureStorageChannel, (
-        MethodCall methodCall,
-      ) async {
-        // We simply ignore all calls and return dummy values so that the plugin
-        // never tries to hit the platform layer during unit tests.
-        switch (methodCall.method) {
-          case 'read':
-            return null;
-          case 'write':
-          case 'delete':
-          case 'deleteAll':
-            return null;
-          case 'readAll':
-            return <String, String>{};
-          default:
-            return null;
-        }
-      });
+    MethodCall methodCall,
+  ) async {
+    // We simply ignore all calls and return dummy values so that the plugin
+    // never tries to hit the platform layer during unit tests.
+    switch (methodCall.method) {
+      case 'read':
+        return null;
+      case 'write':
+      case 'delete':
+      case 'deleteAll':
+        return null;
+      case 'readAll':
+        return <String, String>{};
+      default:
+        return null;
+    }
+  });
 
   // Mock path_provider MethodChannel used by Hive.initFlutter
   const pathProviderChannel = MethodChannel('plugins.flutter.io/path_provider');
 
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(pathProviderChannel, (
-        MethodCall methodCall,
-      ) async {
-        // Return a valid temporary directory path for any directory request
-        final tmpPath = Directory.systemTemp.path;
-        return tmpPath;
-      });
+    MethodCall methodCall,
+  ) async {
+    // Return a valid temporary directory path for any directory request
+    final tmpPath = Directory.systemTemp.path;
+    return tmpPath;
+  });
 
   group('HiveProfileCache', () {
     late HiveProfileCache cache;
@@ -75,8 +75,8 @@ void main() {
         username: 'tester',
         avatarUrl: 'https://example.com/avatar.png',
         website: 'https://example.com',
-        createdAt: DateTime.utc(2025, 1, 1),
-        updatedAt: DateTime.utc(2025, 1, 1),
+        createdAt: DateTime.utc(2025),
+        updatedAt: DateTime.utc(2025),
       );
 
       await cache.write(profile);
@@ -91,16 +91,14 @@ void main() {
         userId: 'u2',
         organizationId: 'org2',
         username: 'expired',
-        avatarUrl: null,
-        website: null,
-        createdAt: DateTime.utc(2025, 1, 1),
-        updatedAt: DateTime.utc(2025, 1, 1),
+        createdAt: DateTime.utc(2025),
+        updatedAt: DateTime.utc(2025),
       );
 
       await cache.write(profile);
 
       // Simulate expired TTL by overriding internal timestamp.
-      final box = await Hive.box<String>('profiles_box');
+      final box = Hive.box<String>('profiles_box');
       final pastTs = DateTime.now()
           .subtract(const Duration(hours: 1))
           .millisecondsSinceEpoch

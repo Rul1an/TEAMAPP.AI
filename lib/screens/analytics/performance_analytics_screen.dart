@@ -72,7 +72,9 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Performance Analytics',
-                          style: Theme.of(context).textTheme.titleLarge
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -236,84 +238,88 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     AsyncValue<List<Player>> playersAsync,
     AsyncValue<List<PlayerAssessment>> assessmentsAsync,
     AsyncValue<List<TrainingSession>> trainingsAsync,
-  ) => Row(
-    children: [
-      Expanded(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                const Icon(Icons.people, color: Colors.blue, size: 32),
-                const SizedBox(height: 8),
-                playersAsync.when(
-                  data: (players) => Text(
-                    '${players.length}',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
+  ) =>
+      Row(
+        children: [
+          Expanded(
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    const Icon(Icons.people, color: Colors.blue, size: 32),
+                    const SizedBox(height: 8),
+                    playersAsync.when(
+                      data: (players) => Text(
+                        '${players.length}',
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      loading: () => const Text('...'),
+                      error: (_, __) => const Text('0'),
                     ),
-                  ),
-                  loading: () => const Text('...'),
-                  error: (_, __) => const Text('0'),
+                    const Text('Spelers'),
+                  ],
                 ),
-                const Text('Spelers'),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-      const SizedBox(width: 12),
-      Expanded(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                const Icon(Icons.assessment, color: Colors.green, size: 32),
-                const SizedBox(height: 8),
-                assessmentsAsync.when(
-                  data: (assessments) => Text(
-                    '${assessments.length}',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
+          const SizedBox(width: 12),
+          Expanded(
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    const Icon(Icons.assessment, color: Colors.green, size: 32),
+                    const SizedBox(height: 8),
+                    assessmentsAsync.when(
+                      data: (assessments) => Text(
+                        '${assessments.length}',
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      loading: () => const Text('...'),
+                      error: (_, __) => const Text('0'),
                     ),
-                  ),
-                  loading: () => const Text('...'),
-                  error: (_, __) => const Text('0'),
+                    const Text('Beoordelingen'),
+                  ],
                 ),
-                const Text('Beoordelingen'),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-      const SizedBox(width: 12),
-      Expanded(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                const Icon(Icons.sports, color: Colors.orange, size: 32),
-                const SizedBox(height: 8),
-                trainingsAsync.when(
-                  data: (trainings) => Text(
-                    '${trainings.length}',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
+          const SizedBox(width: 12),
+          Expanded(
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    const Icon(Icons.sports, color: Colors.orange, size: 32),
+                    const SizedBox(height: 8),
+                    trainingsAsync.when(
+                      data: (trainings) => Text(
+                        '${trainings.length}',
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      loading: () => const Text('...'),
+                      error: (_, __) => const Text('0'),
                     ),
-                  ),
-                  loading: () => const Text('...'),
-                  error: (_, __) => const Text('0'),
+                    const Text('Trainingen'),
+                  ],
                 ),
-                const Text('Trainingen'),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    ],
-  );
+        ],
+      );
 
   Widget _buildFeatureCard({
     required BuildContext context,
@@ -322,85 +328,88 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
     required IconData icon,
     required Color color,
     required VoidCallback onTap,
-  }) => Card(
-    elevation: 4,
-    child: InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: color.withAlpha(30),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(icon, color: color, size: 32),
+  }) =>
+      Card(
+        elevation: 4,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: color.withAlpha(30),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(icon, color: color, size: 32),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  title,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-              textAlign: TextAlign.center,
-            ),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   Widget _buildRecentActivity(
     BuildContext context,
     AsyncValue<List<PlayerAssessment>> assessmentsAsync,
     AsyncValue<List<TrainingSession>> trainingsAsync,
-  ) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Recente Activiteit',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 12),
-          Row(
+  ) =>
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: assessmentsAsync.when(
-                  data: (assessments) => Text(
-                    'Laatste beoordelingen: ${assessments.length}',
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                  loading: () => const Text('Laden...'),
-                  error: (_, __) => const Text('Error'),
-                ),
+              Text(
+                'Recente Activiteit',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-              Expanded(
-                child: trainingsAsync.when(
-                  data: (trainings) => Text(
-                    'Trainingen: ${trainings.length}',
-                    style: const TextStyle(fontSize: 14),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: assessmentsAsync.when(
+                      data: (assessments) => Text(
+                        'Laatste beoordelingen: ${assessments.length}',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      loading: () => const Text('Laden...'),
+                      error: (_, __) => const Text('Error'),
+                    ),
                   ),
-                  loading: () => const Text('Laden...'),
-                  error: (_, __) => const Text('Error'),
-                ),
+                  Expanded(
+                    child: trainingsAsync.when(
+                      data: (trainings) => Text(
+                        'Trainingen: ${trainings.length}',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      loading: () => const Text('Laden...'),
+                      error: (_, __) => const Text('Error'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   // Feature implementations
   void _showPlayerDevelopment(BuildContext context, WidgetRef ref) {
@@ -453,10 +462,10 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
                     .toList();
 
                 // Sort by score and take top 5
-                final topPlayers =
-                    (scoredPlayers..sort((a, b) => b.value.compareTo(a.value)))
-                        .take(5)
-                        .toList();
+                final topPlayers = (scoredPlayers
+                      ..sort((a, b) => b.value.compareTo(a.value)))
+                    .take(5)
+                    .toList();
 
                 return Column(
                   children: [
@@ -491,56 +500,57 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
 
   Widget _buildPlayerPerformanceChart(
     List<MapEntry<Player, double>> topPlayers,
-  ) => BarChart(
-    BarChartData(
-      alignment: BarChartAlignment.spaceAround,
-      maxY: 5,
-      barTouchData: BarTouchData(enabled: false),
-      titlesData: FlTitlesData(
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: (double value, TitleMeta meta) {
-              final index = value.toInt();
-              if (index >= 0 && index < topPlayers.length) {
-                return SideTitleWidget(
-                  axisSide: meta.axisSide,
-                  space: 4,
-                  child: Text(
-                    topPlayers[index].key.name.split(' ').first,
-                    style: const TextStyle(fontSize: 10),
-                  ),
-                );
-              }
-              return const Text('');
-            },
-            reservedSize: 30,
-          ),
-        ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: true, reservedSize: 28),
-        ),
-        topTitles: const AxisTitles(),
-        rightTitles: const AxisTitles(),
-      ),
-      borderData: FlBorderData(show: false),
-      barGroups: topPlayers.asMap().entries.map((entry) {
-        final index = entry.key;
-        final playerData = entry.value;
-        return BarChartGroupData(
-          x: index,
-          barRods: [
-            BarChartRodData(
-              toY: playerData.value,
-              color: Colors.blue,
-              width: 20,
+  ) =>
+      BarChart(
+        BarChartData(
+          alignment: BarChartAlignment.spaceAround,
+          maxY: 5,
+          barTouchData: BarTouchData(enabled: false),
+          titlesData: FlTitlesData(
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: (double value, TitleMeta meta) {
+                  final index = value.toInt();
+                  if (index >= 0 && index < topPlayers.length) {
+                    return SideTitleWidget(
+                      axisSide: meta.axisSide,
+                      space: 4,
+                      child: Text(
+                        topPlayers[index].key.name.split(' ').first,
+                        style: const TextStyle(fontSize: 10),
+                      ),
+                    );
+                  }
+                  return const Text('');
+                },
+                reservedSize: 30,
+              ),
             ),
-          ],
-          showingTooltipIndicators: [0],
-        );
-      }).toList(),
-    ),
-  );
+            leftTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: true, reservedSize: 28),
+            ),
+            topTitles: const AxisTitles(),
+            rightTitles: const AxisTitles(),
+          ),
+          borderData: FlBorderData(show: false),
+          barGroups: topPlayers.asMap().entries.map((entry) {
+            final index = entry.key;
+            final playerData = entry.value;
+            return BarChartGroupData(
+              x: index,
+              barRods: [
+                BarChartRodData(
+                  toY: playerData.value,
+                  color: Colors.blue,
+                  width: 20,
+                ),
+              ],
+              showingTooltipIndicators: [0],
+            );
+          }).toList(),
+        ),
+      );
 
   void _showTrainingEffectiveness(BuildContext context, WidgetRef ref) {
     final playersAsync = ref.read(playersProvider);
@@ -573,8 +583,7 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
 
               final topPlayers = sortedPlayers.take(5).toList();
 
-              final avgAttendance =
-                  players
+              final avgAttendance = players
                       .map((p) => p.attendancePercentage)
                       .reduce((a, b) => a + b) /
                   players.length;
@@ -636,63 +645,63 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
   }
 
   Widget _buildAttendanceChart(List<Player> topPlayers) => BarChart(
-    BarChartData(
-      alignment: BarChartAlignment.spaceAround,
-      barTouchData: BarTouchData(enabled: false),
-      titlesData: FlTitlesData(
-        leftTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: (double value, TitleMeta meta) {
-              final index = value.toInt();
-              if (index >= 0 && index < topPlayers.length) {
-                return Text(
-                  topPlayers[index].name,
-                  style: const TextStyle(fontSize: 10),
-                );
-              }
-              return const Text('');
-            },
-            reservedSize: 100,
-          ),
-        ),
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: (double value, TitleMeta meta) {
-              if (value % 20 == 0) return Text('${value.toInt()}%');
-              return const Text('');
-            },
-            reservedSize: 20,
-          ),
-        ),
-        topTitles: const AxisTitles(),
-        rightTitles: const AxisTitles(),
-      ),
-      borderData: FlBorderData(show: false),
-      barGroups: topPlayers.asMap().entries.map((entry) {
-        final index = entry.key;
-        final player = entry.value;
-        return BarChartGroupData(
-          x: index,
-          barRods: [
-            BarChartRodData(
-              toY: player.attendancePercentage,
-              color: _getAttendanceColor(player.attendancePercentage),
-              width: 15,
-              borderRadius: BorderRadius.zero,
+        BarChartData(
+          alignment: BarChartAlignment.spaceAround,
+          barTouchData: BarTouchData(enabled: false),
+          titlesData: FlTitlesData(
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: (double value, TitleMeta meta) {
+                  final index = value.toInt();
+                  if (index >= 0 && index < topPlayers.length) {
+                    return Text(
+                      topPlayers[index].name,
+                      style: const TextStyle(fontSize: 10),
+                    );
+                  }
+                  return const Text('');
+                },
+                reservedSize: 100,
+              ),
             ),
-          ],
-        );
-      }).toList(),
-      gridData: FlGridData(
-        getDrawingHorizontalLine: (value) =>
-            const FlLine(color: Colors.black12, strokeWidth: 1),
-        getDrawingVerticalLine: (value) =>
-            const FlLine(color: Colors.black12, strokeWidth: 1),
-      ),
-    ),
-  );
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: (double value, TitleMeta meta) {
+                  if (value % 20 == 0) return Text('${value.toInt()}%');
+                  return const Text('');
+                },
+                reservedSize: 20,
+              ),
+            ),
+            topTitles: const AxisTitles(),
+            rightTitles: const AxisTitles(),
+          ),
+          borderData: FlBorderData(show: false),
+          barGroups: topPlayers.asMap().entries.map((entry) {
+            final index = entry.key;
+            final player = entry.value;
+            return BarChartGroupData(
+              x: index,
+              barRods: [
+                BarChartRodData(
+                  toY: player.attendancePercentage,
+                  color: _getAttendanceColor(player.attendancePercentage),
+                  width: 15,
+                  borderRadius: BorderRadius.zero,
+                ),
+              ],
+            );
+          }).toList(),
+          gridData: FlGridData(
+            getDrawingHorizontalLine: (value) =>
+                const FlLine(color: Colors.black12, strokeWidth: 1),
+            getDrawingVerticalLine: (value) =>
+                const FlLine(color: Colors.black12, strokeWidth: 1),
+          ),
+        ),
+      );
 
   void _showTeamOverview(BuildContext context, WidgetRef ref) {
     final playersAsync = ref.read(playersProvider);
@@ -717,15 +726,13 @@ class PerformanceAnalyticsScreen extends ConsumerWidget {
               }
 
               // Calculate statistics
-              final totalGoals = players
-                  .map((p) => p.goals)
-                  .fold(0, (a, b) => a + b);
-              final totalAssists = players
-                  .map((p) => p.assists)
-                  .fold(0, (a, b) => a + b);
+              final totalGoals =
+                  players.map((p) => p.goals).fold(0, (a, b) => a + b);
+              final totalAssists =
+                  players.map((p) => p.assists).fold(0, (a, b) => a + b);
               final avgAge =
                   players.map((p) => p.age).fold(0, (a, b) => a + b) /
-                  players.length;
+                      players.length;
 
               // Group by position
               final positionGroups = <Position, List<Player>>{};

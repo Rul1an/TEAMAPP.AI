@@ -52,7 +52,9 @@ class TrainingSessionsScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Training Tools',
-                          style: Theme.of(context).textTheme.titleMedium
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -157,11 +159,11 @@ class TrainingSessionsScreen extends ConsumerWidget {
                       const SizedBox(width: 8),
                       Text(
                         'Coaching Tip',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
                     ],
                   ),

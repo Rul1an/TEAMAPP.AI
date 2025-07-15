@@ -158,125 +158,125 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
   }
 
   Widget _buildAcuteChronicChart(List<Morphocycle> morphocycles) => Card(
-    elevation: 4,
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Acute:Chronic Workload Ratio',
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Sweet spot: 0.8 - 1.3 (Optimal adaptation zone)',
-            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 250,
-            child: morphocycles.isEmpty
-                ? const Center(child: Text('No data available'))
-                : LineChart(
-                    LineChartData(
-                      gridData: const FlGridData(
-                        horizontalInterval: 0.2,
-                        verticalInterval: 2,
-                      ),
-                      titlesData: FlTitlesData(
-                        bottomTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: 30,
-                            interval: 2,
-                            getTitlesWidget: (value, meta) {
-                              final weekIndex = value.toInt();
-                              if (weekIndex >= 0 &&
-                                  weekIndex < morphocycles.length) {
-                                return Text(
-                                  'W${morphocycles[weekIndex].weekNumber}',
-                                  style: const TextStyle(fontSize: 10),
-                                );
-                              }
-                              return const Text('');
-                            },
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Acute:Chronic Workload Ratio',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Sweet spot: 0.8 - 1.3 (Optimal adaptation zone)',
+                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 250,
+                child: morphocycles.isEmpty
+                    ? const Center(child: Text('No data available'))
+                    : LineChart(
+                        LineChartData(
+                          gridData: const FlGridData(
+                            horizontalInterval: 0.2,
+                            verticalInterval: 2,
                           ),
-                        ),
-                        leftTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: 40,
-                            interval: 0.2,
-                            getTitlesWidget: (value, meta) => Text(
-                              value.toStringAsFixed(1),
-                              style: const TextStyle(fontSize: 10),
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 30,
+                                interval: 2,
+                                getTitlesWidget: (value, meta) {
+                                  final weekIndex = value.toInt();
+                                  if (weekIndex >= 0 &&
+                                      weekIndex < morphocycles.length) {
+                                    return Text(
+                                      'W${morphocycles[weekIndex].weekNumber}',
+                                      style: const TextStyle(fontSize: 10),
+                                    );
+                                  }
+                                  return const Text('');
+                                },
+                              ),
                             ),
-                          ),
-                        ),
-                        topTitles: const AxisTitles(),
-                        rightTitles: const AxisTitles(),
-                      ),
-                      borderData: FlBorderData(
-                        show: true,
-                        border: Border.all(color: Colors.grey[300]!),
-                      ),
-                      minX: 0,
-                      maxX: (morphocycles.length - 1).toDouble(),
-                      minY: 0,
-                      maxY: 2,
-                      extraLinesData: ExtraLinesData(
-                        horizontalLines: [
-                          HorizontalLine(
-                            y: 0.8,
-                            color: Colors.green.withValues(alpha: 0.5),
-                            dashArray: [5, 5],
-                          ),
-                          HorizontalLine(
-                            y: 1.3,
-                            color: Colors.green.withValues(alpha: 0.5),
-                            dashArray: [5, 5],
-                          ),
-                        ],
-                      ),
-                      lineBarsData: [
-                        LineChartBarData(
-                          spots: morphocycles
-                              .asMap()
-                              .entries
-                              .map(
-                                (entry) => FlSpot(
-                                  entry.key.toDouble(),
-                                  entry.value.acuteChronicRatio,
+                            leftTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 40,
+                                interval: 0.2,
+                                getTitlesWidget: (value, meta) => Text(
+                                  value.toStringAsFixed(1),
+                                  style: const TextStyle(fontSize: 10),
                                 ),
-                              )
-                              .toList(),
-                          isCurved: true,
-                          color: Colors.orange,
-                          barWidth: 3,
-                          isStrokeCapRound: true,
-                          dotData: FlDotData(
-                            getDotPainter: (spot, percent, barData, index) {
-                              final acr = spot.y;
-                              return FlDotCirclePainter(
-                                radius: 4,
-                                color: LoadMonitoringService.acrColor(acr),
-                                strokeWidth: 2,
-                                strokeColor: Colors.white,
-                              );
-                            },
+                              ),
+                            ),
+                            topTitles: const AxisTitles(),
+                            rightTitles: const AxisTitles(),
                           ),
+                          borderData: FlBorderData(
+                            show: true,
+                            border: Border.all(color: Colors.grey[300]!),
+                          ),
+                          minX: 0,
+                          maxX: (morphocycles.length - 1).toDouble(),
+                          minY: 0,
+                          maxY: 2,
+                          extraLinesData: ExtraLinesData(
+                            horizontalLines: [
+                              HorizontalLine(
+                                y: 0.8,
+                                color: Colors.green.withValues(alpha: 0.5),
+                                dashArray: [5, 5],
+                              ),
+                              HorizontalLine(
+                                y: 1.3,
+                                color: Colors.green.withValues(alpha: 0.5),
+                                dashArray: [5, 5],
+                              ),
+                            ],
+                          ),
+                          lineBarsData: [
+                            LineChartBarData(
+                              spots: morphocycles
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (entry) => FlSpot(
+                                      entry.key.toDouble(),
+                                      entry.value.acuteChronicRatio,
+                                    ),
+                                  )
+                                  .toList(),
+                              isCurved: true,
+                              color: Colors.orange,
+                              barWidth: 3,
+                              isStrokeCapRound: true,
+                              dotData: FlDotData(
+                                getDotPainter: (spot, percent, barData, index) {
+                                  final acr = spot.y;
+                                  return FlDotCirclePainter(
+                                    radius: 4,
+                                    color: LoadMonitoringService.acrColor(acr),
+                                    strokeWidth: 2,
+                                    strokeColor: Colors.white,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildIntensityDistributionChart(List<Morphocycle> morphocycles) {
     if (morphocycles.isEmpty) return const SizedBox.shrink();
@@ -398,7 +398,7 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     final currentMorphocycle = morphocycles.last;
     final avgAcr =
         morphocycles.fold(0.0, (sum, m) => sum + m.acuteChronicRatio) /
-        morphocycles.length;
+            morphocycles.length;
     final highRiskWeeks = morphocycles
         .where(
           (m) =>
@@ -466,161 +466,167 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     String value,
     Color color,
     IconData icon,
-  ) => Card(
-    elevation: 4,
-    child: Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        gradient: LinearGradient(
-          colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+  ) =>
+      Card(
+        elevation: 4,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            gradient: LinearGradient(
+              colors: [
+                color.withValues(alpha: 0.1),
+                color.withValues(alpha: 0.05)
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: color, size: 20),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
+              Row(
+                children: [
+                  Icon(icon, color: color, size: 20),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: color,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildRiskFactorsChart(List<Morphocycle> morphocycles) => Card(
-    elevation: 4,
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Injury Risk Factors Over Time',
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 250,
-            child: morphocycles.isEmpty
-                ? const Center(child: Text('No data available'))
-                : LineChart(
-                    LineChartData(
-                      titlesData: FlTitlesData(
-                        bottomTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: 30,
-                            getTitlesWidget: (value, meta) {
-                              final weekIndex = value.toInt();
-                              if (weekIndex >= 0 &&
-                                  weekIndex < morphocycles.length) {
-                                return Text(
-                                  'W${morphocycles[weekIndex].weekNumber}',
-                                  style: const TextStyle(fontSize: 10),
-                                );
-                              }
-                              return const Text('');
-                            },
-                          ),
-                        ),
-                        leftTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: 40,
-                            getTitlesWidget: (value, meta) => Text(
-                              value.toStringAsFixed(1),
-                              style: const TextStyle(fontSize: 10),
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Injury Risk Factors Over Time',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 250,
+                child: morphocycles.isEmpty
+                    ? const Center(child: Text('No data available'))
+                    : LineChart(
+                        LineChartData(
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 30,
+                                getTitlesWidget: (value, meta) {
+                                  final weekIndex = value.toInt();
+                                  if (weekIndex >= 0 &&
+                                      weekIndex < morphocycles.length) {
+                                    return Text(
+                                      'W${morphocycles[weekIndex].weekNumber}',
+                                      style: const TextStyle(fontSize: 10),
+                                    );
+                                  }
+                                  return const Text('');
+                                },
+                              ),
                             ),
-                          ),
-                        ),
-                        topTitles: const AxisTitles(),
-                        rightTitles: const AxisTitles(),
-                      ),
-                      borderData: FlBorderData(show: true),
-                      lineBarsData: [
-                        LineChartBarData(
-                          spots: morphocycles
-                              .asMap()
-                              .entries
-                              .map(
-                                (entry) => FlSpot(
-                                  entry.key.toDouble(),
-                                  entry.value.acuteChronicRatio,
+                            leftTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 40,
+                                getTitlesWidget: (value, meta) => Text(
+                                  value.toStringAsFixed(1),
+                                  style: const TextStyle(fontSize: 10),
                                 ),
-                              )
-                              .toList(),
-                          isCurved: true,
-                          color: Colors.red,
-                          barWidth: 3,
-                          dotData: FlDotData(
-                            getDotPainter: (spot, percent, barData, index) {
-                              final acr = spot.y;
-                              final risk = Morphocycle.assessInjuryRisk(acr);
-                              return FlDotCirclePainter(
-                                radius: 5,
-                                color: LoadMonitoringService.riskColor(risk),
-                                strokeWidth: 2,
-                                strokeColor: Colors.white,
-                              );
-                            },
+                              ),
+                            ),
+                            topTitles: const AxisTitles(),
+                            rightTitles: const AxisTitles(),
+                          ),
+                          borderData: FlBorderData(show: true),
+                          lineBarsData: [
+                            LineChartBarData(
+                              spots: morphocycles
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (entry) => FlSpot(
+                                      entry.key.toDouble(),
+                                      entry.value.acuteChronicRatio,
+                                    ),
+                                  )
+                                  .toList(),
+                              isCurved: true,
+                              color: Colors.red,
+                              barWidth: 3,
+                              dotData: FlDotData(
+                                getDotPainter: (spot, percent, barData, index) {
+                                  final acr = spot.y;
+                                  final risk =
+                                      Morphocycle.assessInjuryRisk(acr);
+                                  return FlDotCirclePainter(
+                                    radius: 5,
+                                    color:
+                                        LoadMonitoringService.riskColor(risk),
+                                    strokeWidth: 2,
+                                    strokeColor: Colors.white,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                          extraLinesData: ExtraLinesData(
+                            horizontalLines: [
+                              HorizontalLine(
+                                y: 0.8,
+                                color: Colors.green.withValues(alpha: 0.5),
+                                strokeWidth: 1,
+                                dashArray: [5, 5],
+                              ),
+                              HorizontalLine(
+                                y: 1.3,
+                                color: Colors.orange.withValues(alpha: 0.5),
+                                strokeWidth: 1,
+                                dashArray: [5, 5],
+                              ),
+                              HorizontalLine(
+                                y: 1.5,
+                                color: Colors.red.withValues(alpha: 0.5),
+                                strokeWidth: 1,
+                                dashArray: [5, 5],
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                      extraLinesData: ExtraLinesData(
-                        horizontalLines: [
-                          HorizontalLine(
-                            y: 0.8,
-                            color: Colors.green.withValues(alpha: 0.5),
-                            strokeWidth: 1,
-                            dashArray: [5, 5],
-                          ),
-                          HorizontalLine(
-                            y: 1.3,
-                            color: Colors.orange.withValues(alpha: 0.5),
-                            strokeWidth: 1,
-                            dashArray: [5, 5],
-                          ),
-                          HorizontalLine(
-                            y: 1.5,
-                            color: Colors.red.withValues(alpha: 0.5),
-                            strokeWidth: 1,
-                            dashArray: [5, 5],
-                          ),
-                        ],
                       ),
-                    ),
-                  ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildRiskRecommendations(List<Morphocycle> morphocycles) {
     if (morphocycles.isEmpty) return const SizedBox.shrink();
@@ -697,18 +703,16 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
     if (morphocycles.isEmpty) return const SizedBox.shrink();
 
     final loadZones = {
-      'Recovery Zone (<800 AU)': morphocycles
-          .where((m) => m.weeklyLoad < 800)
-          .length,
+      'Recovery Zone (<800 AU)':
+          morphocycles.where((m) => m.weeklyLoad < 800).length,
       'Optimal Zone (800-1200 AU)': morphocycles
           .where((m) => m.weeklyLoad >= 800 && m.weeklyLoad <= 1200)
           .length,
       'High Load Zone (1200-1600 AU)': morphocycles
           .where((m) => m.weeklyLoad > 1200 && m.weeklyLoad <= 1600)
           .length,
-      'Danger Zone (>1600 AU)': morphocycles
-          .where((m) => m.weeklyLoad > 1600)
-          .length,
+      'Danger Zone (>1600 AU)':
+          morphocycles.where((m) => m.weeklyLoad > 1600).length,
     };
 
     return Card(
@@ -831,201 +835,206 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
   }
 
   Widget _buildAdaptationTab(AnnualPlanningState state) => const Padding(
-    padding: EdgeInsets.all(16),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '🏃‍♂️ Adaptation Tracking',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 16),
-        Card(
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Icon(Icons.timeline, size: 48, color: Colors.blue),
-                SizedBox(height: 16),
-                Text(
-                  'Geavanceerde Prestatie Monitoring',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Volg training aanpassingen, fitness verbeteringen en prestatie ontwikkeling over tijd. Beschikbaar in toekomstige versie.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '🏃‍♂️ Adaptation Tracking',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-          ),
+            SizedBox(height: 16),
+            Card(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Icon(Icons.timeline, size: 48, color: Colors.blue),
+                    SizedBox(height: 16),
+                    Text(
+                      'Geavanceerde Prestatie Monitoring',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Volg training aanpassingen, fitness verbeteringen en prestatie ontwikkeling over tijd. Beschikbaar in toekomstige versie.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   Widget _buildAnalyticsTab(AnnualPlanningState state) => const Padding(
-    padding: EdgeInsets.all(16),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '📊 Advanced Analytics',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 16),
-        Card(
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Icon(Icons.analytics, size: 48, color: Colors.green),
-                SizedBox(height: 16),
-                Text(
-                  'Uitgebreide Data Analyse',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '📊 Advanced Analytics',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16),
+            Card(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Icon(Icons.analytics, size: 48, color: Colors.green),
+                    SizedBox(height: 16),
+                    Text(
+                      'Uitgebreide Data Analyse',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Diepgaande inzichten in training effectiviteit, speler ontwikkeling en voorspellende analyses. Wordt ontwikkeld voor volgende versie.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 8),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget _buildMorphocycleInfo(Morphocycle morphocycle) => Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade50, Colors.green.shade50],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.blue[200]!),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Text(
-                  'Diepgaande inzichten in training effectiviteit, speler ontwikkeling en voorspellende analyses. Wordt ontwikkeld voor volgende versie.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey),
+                  'Week ${morphocycle.weekNumber}',
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color:
+                        LoadMonitoringService.loadColor(morphocycle.weeklyLoad),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    '${morphocycle.weeklyLoad.toInt()} AU',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-        ),
-      ],
-    ),
-  );
+            const SizedBox(height: 12),
 
-  Widget _buildMorphocycleInfo(Morphocycle morphocycle) => Container(
-    padding: const EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Colors.blue.shade50, Colors.green.shade50],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-      borderRadius: BorderRadius.circular(12),
-      border: Border.all(color: Colors.blue[200]!),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Week ${morphocycle.weekNumber}',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: LoadMonitoringService.loadColor(morphocycle.weeklyLoad),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                '${morphocycle.weeklyLoad.toInt()} AU',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
+            // Game Model Focus
+            Row(
+              children: [
+                const Icon(Icons.sports_soccer, size: 16, color: Colors.blue),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Focus: ${morphocycle.primaryGameModelFocus}',
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-        const SizedBox(height: 12),
+            const SizedBox(height: 8),
 
-        // Game Model Focus
-        Row(
-          children: [
-            const Icon(Icons.sports_soccer, size: 16, color: Colors.blue),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                'Focus: ${morphocycle.primaryGameModelFocus}',
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-
-        // Adaptation Expectation
-        Row(
-          children: [
-            const Icon(Icons.trending_up, size: 16, color: Colors.green),
-            const SizedBox(width: 8),
-            Text(
-              'Verwachte Adaptatie: ${morphocycle.expectedAdaptation.toInt()}%',
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-
-        // ACWR Risk Indicator
-        Row(
-          children: [
-            Icon(
-              LoadMonitoringService.acwRIcon(morphocycle.acuteChronicRatio),
-              size: 16,
-              color: LoadMonitoringService.acwrColor(
-                morphocycle.acuteChronicRatio,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              'Belasting Ratio: ${morphocycle.acuteChronicRatio.toStringAsFixed(2)}',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: LoadMonitoringService.acwrColor(
-                  morphocycle.acuteChronicRatio,
+            // Adaptation Expectation
+            Row(
+              children: [
+                const Icon(Icons.trending_up, size: 16, color: Colors.green),
+                const SizedBox(width: 8),
+                Text(
+                  'Verwachte Adaptatie: ${morphocycle.expectedAdaptation.toInt()}%',
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+            const SizedBox(height: 8),
 
-        if (morphocycle.tacticalFocusAreas.isNotEmpty) ...[
-          const SizedBox(height: 12),
-          const Text(
-            'Tactische Focus Areas:',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 4),
-          Wrap(
-            spacing: 6,
-            runSpacing: 4,
-            children: morphocycle.tacticalFocusAreas
-                .map(
-                  (area) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      area,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.blue[800],
-                        fontWeight: FontWeight.w500,
-                      ),
+            // ACWR Risk Indicator
+            Row(
+              children: [
+                Icon(
+                  LoadMonitoringService.acwRIcon(morphocycle.acuteChronicRatio),
+                  size: 16,
+                  color: LoadMonitoringService.acwrColor(
+                    morphocycle.acuteChronicRatio,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Belasting Ratio: ${morphocycle.acuteChronicRatio.toStringAsFixed(2)}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: LoadMonitoringService.acwrColor(
+                      morphocycle.acuteChronicRatio,
                     ),
                   ),
-                )
-                .toList(),
-          ),
-        ],
-      ],
-    ),
-  );
+                ),
+              ],
+            ),
+
+            if (morphocycle.tacticalFocusAreas.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              const Text(
+                'Tactische Focus Areas:',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 4),
+              Wrap(
+                spacing: 6,
+                runSpacing: 4,
+                children: morphocycle.tacticalFocusAreas
+                    .map(
+                      (area) => Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.blue[100],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          area,
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.blue[800],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
+          ],
+        ),
+      );
 }

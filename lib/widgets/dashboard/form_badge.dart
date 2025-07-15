@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../repositories/prediction_repository.dart';
 
 class FormBadge extends StatelessWidget {
-  const FormBadge({super.key, required this.trend});
+  const FormBadge({required this.trend, super.key});
 
   final FormTrend trend;
 
