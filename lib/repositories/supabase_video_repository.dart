@@ -48,4 +48,7 @@ class SupabaseVideoRepository implements VideoRepository {
       return Failure(NetworkFailure(e.toString()));
     }
   }
+
+  @override
+  Future<int> totalBytes() => _ds.fetchTotalBytes();
 }

@@ -11,6 +11,8 @@ import 'package:video_player/video_player.dart';
 
 // Project imports:
 import '../../providers/video_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class VideoDetailScreen extends ConsumerStatefulWidget {
   const VideoDetailScreen({super.key, required this.videoId});
@@ -90,9 +92,40 @@ class _VideoDetailScreenState extends ConsumerState<VideoDetailScreen> {
       body = Chewie(controller: _chewieController!);
     }
 
+    final userRole = ref.watch(userRoleProvider);
+    final canManage = PermissionService.canManageVideos(userRole);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Video')),
+      appBar: AppBar(
+        title: const Text('Video'),
+        actions: [
+          if (canManage && _chewieController != null)
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: _confirmDelete,
+            ),
+        ],
+      ),
       body: body,
+    );
+  }
+
+  Future<void> _confirmDelete() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Video verwijderen?'),
+        content: const Text('Deze actie kan niet ongedaan worden gemaakt.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Annuleren')),
+          ElevatedButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Verwijderen')),
+        ],
+      ),
+    );
+    if (confirm != true) return;
+    // TODO: implement delete via repo
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Delete nog niet geïmplementeerd.')),
     );
   }
 }

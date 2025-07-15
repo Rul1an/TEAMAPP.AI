@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../providers/video_provider.dart';
 import '../../widgets/video/video_card.dart';
 import '../../widgets/video/video_upload_button.dart';
+import '../../models/video.dart';
 
 class VideoGridScreen extends ConsumerWidget {
   const VideoGridScreen({super.key});

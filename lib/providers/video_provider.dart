@@ -25,3 +25,8 @@ final videosProvider = StreamProvider<List<Video>>((ref) {
   final repo = ref.read(videoRepositoryProvider);
   return repo.watchAll();
 });
+
+final videoStorageUsageProvider = FutureProvider<int>((ref) {
+  final repo = ref.read(videoRepositoryProvider);
+  return repo.totalBytes();
+});

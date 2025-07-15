@@ -78,6 +78,12 @@ class SupabaseVideoDataSource {
     return data == null ? null : Video.fromJson(data);
   }
 
+  Future<int> fetchTotalBytes() async {
+    final res = await _supabase.from(_table).select('file_size');
+    final list = (res as List).cast<Map<String, dynamic>>();
+    return list.fold<int>(0, (sum, row) => sum + (row['file_size'] as int? ?? 0));
+  }
+
   // helpers
   static SupabaseClient _tryGetClient() {
     try {

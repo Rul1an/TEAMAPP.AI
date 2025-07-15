@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../repositories/video_repository.dart';
 import '../../models/video.dart';
 import '../../providers/video_provider.dart';
-import '../../providers/user_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 
 /// FAB-style button that opens a file picker and uploads a video via [VideoRepository].

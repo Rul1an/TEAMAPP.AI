@@ -25,4 +25,6 @@ abstract interface class VideoRepository {
 
   /// Fetches a single video by its id.
   Future<Result<Video>> getById(String id);
+
+  Future<int> totalBytes();
 }
