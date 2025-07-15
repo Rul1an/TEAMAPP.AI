@@ -74,6 +74,15 @@ dependencies:
   # Networking
   http: ^0.13.6
 
+  # Video processing
+  video_compress: ^3.1.2
+  ffmpeg_kit_flutter: ^6.0.3
+  cached_video_player: ^2.0.4
+
+  # Observability
+  opentelemetry_api: ^1.11.0
+  opentelemetry_otlp: ^1.11.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
