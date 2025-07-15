@@ -45,6 +45,7 @@ jobs:
         echo "${HOME}/.pub-cache/bin" >> $GITHUB_PATH
 
     - name: Install DCM CLI
+      if: ${{ secrets.DCM_CI_KEY != '' && secrets.DCM_EMAIL != '' }}
       uses: CQLabs/setup-dcm@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -132,12 +133,16 @@ jobs:
         fi
       continue-on-error: true
 
-    - name: Dart Code Metrics Analysis
+    - name: Dart Code Metrics Analysis (license-protected)
+      if: ${{ secrets.DCM_CI_KEY != '' && secrets.DCM_EMAIL != '' }}
+      env:
+        DCM_CI_KEY: ${{ secrets.DCM_CI_KEY }}
+        DCM_EMAIL: ${{ secrets.DCM_EMAIL }}
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
         fi
-        dcm analyze lib --fatal-style --fatal-warnings
+        dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
 
     - name: Build web
       run: |
