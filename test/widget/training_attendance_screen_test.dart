@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/models/player.dart';
@@ -46,6 +48,19 @@ void main() {
 
     setUpAll(() async {
       await initializeDateFormatting('nl_NL');
+
+      SharedPreferences.setMockInitialValues({});
+
+      // Ensure Supabase singleton is initialised to avoid provider assertion.
+      try {
+        await Supabase.initialize(
+          url: 'https://dummy.supabase.co',
+          anonKey: 'public-anon-key',
+          debug: false,
+        );
+      } catch (_) {
+        // ignore if already initialized
+      }
     });
 
     testWidgets('renders basic UI with stubbed data', (tester) async {
