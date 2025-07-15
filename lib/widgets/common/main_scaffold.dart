@@ -154,6 +154,11 @@ class MainScaffold extends ConsumerWidget {
                   selectedIcon: const Icon(Icons.insights),
                   label: Text(_navLabel('Insights', compactLabels)),
                 ),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.video_library_outlined),
+                  selectedIcon: const Icon(Icons.video_library),
+                  label: Text(_navLabel('Video', compactLabels)),
+                ),
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
@@ -199,6 +204,11 @@ class MainScaffold extends ConsumerWidget {
               selectedIcon: const Icon(Icons.insights),
               label: _navLabel('Insights', compactLabels),
             ),
+            NavigationDestination(
+              icon: const Icon(Icons.video_library_outlined),
+              selectedIcon: const Icon(Icons.video_library),
+              label: _navLabel('Video', compactLabels),
+            ),
           ],
         ),
       );
@@ -235,6 +245,7 @@ class MainScaffold extends ConsumerWidget {
         currentRoute.startsWith('/svs')) {
       return 5;
     }
+    if (currentRoute.startsWith('/videos')) return 6;
     return 0;
   }
 
@@ -252,6 +263,8 @@ class MainScaffold extends ConsumerWidget {
         context.go('/players');
       case 5:
         context.go('/insights');
+      case 6:
+        context.go('/videos');
     }
   }
 
