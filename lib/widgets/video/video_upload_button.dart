@@ -45,7 +45,16 @@ class _VideoUploadButtonState extends ConsumerState<VideoUploadButton> {
     try {
       final res = await FilePicker.platform.pickFiles(type: FileType.video);
       if (res == null || res.files.single.path == null) return;
-      final file = io.File(res.files.single.path!);
+      final filePath = res.files.single.path!;
+      final extension = filePath.split('.').last.toLowerCase();
+      const supported = ['mp4', 'mov', 'mkv', 'webm'];
+      if (!supported.contains(extension)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Niet-ondersteund videoformaat. Alleen MP4/MOV/MKV/WebM.')),
+        );
+        return;
+      }
+      final file = io.File(filePath);
 
       final repo = ref.read(videoRepositoryProvider);
       final result = await repo.upload(file: file, title: res.files.single.name);

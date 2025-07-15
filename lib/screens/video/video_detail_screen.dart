@@ -23,6 +23,7 @@ class VideoDetailScreen extends ConsumerStatefulWidget {
 
 class _VideoDetailScreenState extends ConsumerState<VideoDetailScreen> {
   ChewieController? _chewieController;
+  Object? _error;
 
   @override
   void initState() {
@@ -31,21 +32,31 @@ class _VideoDetailScreenState extends ConsumerState<VideoDetailScreen> {
   }
 
   Future<void> _load() async {
-    final repo = ref.read(videoRepositoryProvider);
-    final res = await repo.getById(widget.videoId);
-    final video = res.dataOrNull;
-    if (video == null) return;
-    final controller = VideoPlayerController.networkUrl(Uri.parse(video.videoUrl));
-    await controller.initialize();
+    setState(() {
+      _error = null;
+    });
+    try {
+      final repo = ref.read(videoRepositoryProvider);
+      final res = await repo.getById(widget.videoId);
+      final video = res.dataOrNull;
+      if (video == null) {
+        throw Exception('Video niet gevonden');
+      }
+      final controller = VideoPlayerController.networkUrl(Uri.parse(video.videoUrl));
+      await controller.initialize();
 
-    _chewieController = ChewieController(
-      videoPlayerController: controller,
-      autoPlay: true,
-      looping: false,
-      allowMuting: true,
-      allowFullScreen: true,
-    );
-    if (mounted) setState(() {});
+      _chewieController?.dispose();
+      _chewieController = ChewieController(
+        videoPlayerController: controller,
+        autoPlay: true,
+        looping: false,
+        allowMuting: true,
+        allowFullScreen: true,
+      );
+      if (mounted) setState(() {});
+    } catch (e) {
+      setState(() => _error = e);
+    }
   }
 
   @override
@@ -56,11 +67,32 @@ class _VideoDetailScreenState extends ConsumerState<VideoDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Widget body;
+    if (_error != null) {
+      body = Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.error, size: 48, color: Colors.red),
+            const SizedBox(height: 8),
+            Text(_error.toString()),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _load,
+              child: const Text('Opnieuw proberen'),
+            ),
+          ],
+        ),
+      );
+    } else if (_chewieController == null) {
+      body = const Center(child: CircularProgressIndicator());
+    } else {
+      body = Chewie(controller: _chewieController!);
+    }
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Video')), // might show title later
-      body: _chewieController == null
-          ? const Center(child: CircularProgressIndicator())
-          : Chewie(controller: _chewieController!),
+      appBar: AppBar(title: const Text('Video')),
+      body: body,
     );
   }
 }

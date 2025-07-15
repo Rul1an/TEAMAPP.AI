@@ -103,6 +103,7 @@ dev_dependencies:
 
   # New dev dependency
   hive_test: ^1.0.1
+  golden_toolkit: ^0.15.0
 
 flutter:
   uses-material-design: true
