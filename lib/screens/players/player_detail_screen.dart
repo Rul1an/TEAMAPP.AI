@@ -138,7 +138,7 @@ class PlayerDetailScreen extends ConsumerWidget {
 
       final bytes = await assessmentGenerator.generate(assessment);
       final filename = 'assessment_${player.id}.pdf';
-      // ignore: use_build_context_synchronously
+      if (!context.mounted) return;
       await SharePdfUtils.sharePdf(bytes, filename, context);
     });
   }

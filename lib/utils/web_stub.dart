@@ -1,4 +1,5 @@
 // Minimal stubs to allow non-web platforms (e.g., unit tests) to compile
+// ignore_for_file: unused_field
 // when `package:web/web.dart` is imported conditionally.
 // These no-op implementations should never be executed on web builds.
 
