@@ -49,82 +49,108 @@ class VideoUploadService {
     required String bucket,
     required String path,
     VideoQuality quality = VideoQuality.MediumQuality,
-  }) async* {
-    // 1. Start queued
-    var status = UploadStatus(stage: UploadStage.queued);
-    yield status;
+  }) {
+    final controller = StreamController<UploadStatus>();
 
-    // 2. Pre-compress (skip on Web/desktop)
-    File outputFile = file;
-    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
-      status = UploadStatus(stage: UploadStage.precompressing, progress: 0);
-      yield status;
-
-      // Listen to progress stream
-      final sub = VideoCompress.compressProgress$.listen((progress) async {
-        // progress is 0–100 (double)
-        status = UploadStatus(
-          stage: UploadStage.precompressing,
-          progress: progress / 100.0,
-        );
-        // Yield from inside listener via controller? Instead we'll ignore minor updates <5%
-      });
-
-      try {
-        final info = await VideoCompress.compressVideo(
-          file.path,
-          quality: quality,
-          deleteOrigin: false,
-          includeAudio: true,
-        );
-        if (info != null && info.path != null) {
-          outputFile = File(info.path!);
-        }
-      } catch (e) {
-        debugPrint('Compression failed, fallback to original: $e');
-      } finally {
-        await sub.cancel();
+    // Async task so that method returns immediately with stream.
+    () async {
+      void emit(UploadStatus s) {
+        if (!controller.isClosed) controller.add(s);
       }
-    }
 
-    // 3. Attempt upload with retry logic
-    int attempt = 0;
-    while (attempt < _maxRetries) {
-      try {
-        if (attempt > 0) {
-          status = UploadStatus(
-            stage: UploadStage.retrying,
-            retryCount: attempt,
-            message: 'Retry $attempt',
+      // 1. Start queued
+      emit(UploadStatus(stage: UploadStage.queued));
+
+      // 2. Pre-compress (skip on Web/desktop)
+      File outputFile = file;
+      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+        emit(UploadStatus(stage: UploadStage.precompressing, progress: 0));
+
+        // Listen to progress stream
+        final sub = VideoCompress.compressProgress$.listen((progress) {
+          emit(UploadStatus(
+            stage: UploadStage.precompressing,
+            progress: progress / 100.0,
+          ));
+        });
+
+        try {
+          final info = await VideoCompress.compressVideo(
+            file.path,
+            quality: quality,
+            deleteOrigin: false,
+            includeAudio: true,
           );
-          yield status;
+          if (info != null && info.path != null) {
+            outputFile = File(info.path!);
+          }
+        } catch (e) {
+          debugPrint('Compression failed, fallback to original: $e');
+        } finally {
+          await sub.cancel();
         }
-
-        status = UploadStatus(stage: UploadStage.uploading, progress: 0);
-        yield status;
-
-        // Use Supabase storage upload
-        final storage = _supabase.storage.from(bucket);
-        await storage.upload(path, outputFile);
-
-        status = UploadStatus(stage: UploadStage.processing);
-        yield status;
-
-        // Listen for realtime processing done event (edge-function will dispatch)
-        // TODO: implement listening logic.
-
-        status = UploadStatus(stage: UploadStage.complete);
-        yield status;
-        return;
-      } catch (e, st) {
-        debugPrint('Upload attempt $attempt failed: $e\n$st');
-        attempt += 1;
-        // Exponential back-off: 0.5s, 1s, 2s …
-        await Future.delayed(Duration(milliseconds: 500 * (1 << (attempt - 1))));
       }
-    }
 
-    status = UploadStatus(stage: UploadStage.failed, message: 'All retries exhausted');
-    yield status;
+      // 3. Attempt upload with retry logic
+      int attempt = 0;
+      while (attempt < _maxRetries) {
+        try {
+          if (attempt > 0) {
+            emit(UploadStatus(
+              stage: UploadStage.retrying,
+              retryCount: attempt,
+              message: 'Retry $attempt',
+            ));
+          }
+
+          emit(UploadStatus(stage: UploadStage.uploading));
+
+          // Use Supabase storage upload
+          final storage = _supabase.storage.from(bucket);
+          await storage.upload(path, outputFile);
+
+          emit(UploadStatus(stage: UploadStage.processing));
+
+          // --- Realtime listener for processing done ---
+          final channel = _supabase.channel('video_processing');
+
+          channel.on(
+            'broadcast',
+            {'event': 'processing_done'},
+            (payload, [ref]) {
+              final p = payload as Map<String, dynamic>;
+              if (p['path'] == path) {
+                emit(UploadStatus(stage: UploadStage.complete));
+                channel.unsubscribe();
+                controller.close();
+              }
+            },
+          );
+
+          channel.subscribe();
+
+          // Optionally timeout after 10 minutes.
+          await Future.delayed(const Duration(minutes: 10));
+          if (!controller.isClosed) {
+            emit(UploadStatus(stage: UploadStage.failed, message: 'Processing timeout'));
+            channel.unsubscribe();
+            controller.close();
+          }
+
+          return;
+        } catch (e, st) {
+          debugPrint('Upload attempt $attempt failed: $e\n$st');
+          attempt += 1;
+          // Exponential back-off: 0.5s, 1s, 2s …
+          await Future.delayed(Duration(milliseconds: 500 * (1 << (attempt - 1))));
+        }
+      }
+
+      // All retries exhausted
+      emit(UploadStatus(stage: UploadStage.failed, message: 'Upload failed'));
+      await controller.close();
+    }();
+
+    return controller.stream;
   }
 }
