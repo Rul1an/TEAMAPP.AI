@@ -17,6 +17,10 @@ import 'package:jo17_tactical_manager/models/player.dart';
 import 'package:jo17_tactical_manager/providers/players_provider.dart';
 import 'package:jo17_tactical_manager/repositories/player_repository.dart';
 import 'package:jo17_tactical_manager/screens/players/players_screen.dart';
+import 'package:jo17_tactical_manager/widgets/editable_data_table.dart';
+import 'package:jo17_tactical_manager/widgets/merge_duplicates_dialog.dart';
+import 'package:jo17_tactical_manager/services/import_history_service.dart';
+import 'package:jo17_tactical_manager/core/import_transaction.dart';
 
 // ---------------------------------------------------------------------------
 // Mocks & fakes
@@ -164,5 +168,118 @@ void main() {
         verify(() => mockRepo.add(any())).called(rows);
       },
     );
+
+    // ---------------------------------------------------------------------
+    // Component-level tests (bulk-edit, merge duplicates, undo)
+    // ---------------------------------------------------------------------
+    testWidgets('EditableDataTable – inline bulk edit propagates changes',
+        (tester) async {
+      // Minimal player model subset
+      final players = [
+        Player()
+          ..id = 'p1'
+          ..firstName = 'John'
+          ..lastName = 'Doe',
+        Player()
+          ..id = 'p2'
+          ..firstName = 'Anna'
+          ..lastName = 'Smith',
+      ];
+
+      late List<Player> latest;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: EditableDataTable<Player>(
+              columns: [
+                EditableColumn<Player>(
+                  label: 'Voornaam',
+                  getValue: (p) => p.firstName,
+                  setValue: (p, v) => p.firstName = v,
+                ),
+                EditableColumn<Player>(
+                  label: 'Achternaam',
+                  getValue: (p) => p.lastName,
+                  setValue: (p, v) => p.lastName = v,
+                ),
+              ],
+              rows: players,
+              onChanged: (rows) => latest = rows.cast<Player>(),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      // Edit first cell (row 0 – Voornaam).
+      final firstNameField =
+          find.widgetWithText(TextFormField, 'John').first;
+      await tester.enterText(firstNameField, 'Peter');
+      // Submit (simulate Enter)
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pump();
+
+      expect(latest.first.firstName, 'Peter');
+    });
+
+    testWidgets('MergeDuplicatesDialog returns chosen field values',
+        (tester) async {
+      final left = {'Naam': 'Sara', 'Team': 'U17'};
+      final right = {'Naam': 'Sarah', 'Team': 'U17'};
+
+      // Open dialog
+      late MergeResult? result;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Builder(builder: (context) {
+            return ElevatedButton(
+              onPressed: () async {
+                result = await MergeDuplicatesDialog.show(
+                  context,
+                  leftTitle: 'Bestaand',
+                  rightTitle: 'Nieuw',
+                  leftValues: left,
+                  rightValues: right,
+                );
+              },
+              child: const Text('open'),
+            );
+          }),
+        ),
+      );
+
+      await tester.tap(find.text('open'));
+      await tester.pumpAndSettle();
+
+      // Select right candidate for 'Naam'
+      await tester.tap(find.text('Sarah').first);
+      await tester.pump();
+
+      // Save
+      await tester.tap(find.text('Opslaan'));
+      await tester.pumpAndSettle();
+
+      expect(result, isNotNull);
+      expect(result!['Naam'], 'Sarah');
+      expect(result!['Team'], 'U17');
+    });
+
+    test('ImportHistoryService stores and undoes transactions', () {
+      final svc = ImportHistoryService.instance;
+      svc.clear();
+
+      final tx1 = ImportTransaction<int>(items: [1, 2, 3]);
+      final tx2 = ImportTransaction<int>(items: [4]);
+
+      svc.push(tx1);
+      svc.push(tx2);
+
+      expect(svc.canUndo, isTrue);
+      final undone = svc.undo();
+      expect(undone, tx2);
+      expect(svc.transactions.length, 1);
+    });
   });
 }
