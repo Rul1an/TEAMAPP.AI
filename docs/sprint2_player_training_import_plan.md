@@ -15,8 +15,8 @@
 | 3 | Duplicate detection (players) | Configurable hash (`firstName+lastName+birthDate`) – reuse utility | ✅ Completed |
 | 4 | Import services | `PlayerRosterImportService`, `TrainingSessionImportService` | ✅ Completed |
 | 5 | UI Wizard integration | Re-usable Wizard step (file → preview → confirm) | ✅ Completed |
-| 6 | Widget & integration tests | `integration_test/import_players_flow_test.dart` | CI green on first run |
-| 7 | Docs & Demo | Update `import_guide.md` + Loom demo | Docs published; demo link shared in Slack |
+| 6 | Widget & integration tests | `integration_test/import_players_flow_test.dart` | ✅ Completed |
+| 7 | Docs & Demo | Update `import_guide.md` + Loom demo | ⏳ In Progress |
 
 Legend: ✅ = Done, ⏳ = In Progress, 🔲 = Not started
 
