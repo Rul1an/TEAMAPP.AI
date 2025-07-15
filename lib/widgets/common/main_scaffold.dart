@@ -45,8 +45,8 @@ class MainScaffold extends ConsumerWidget {
                     Text(
                       'JO17',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     const SizedBox(height: 16),
                     // Organization badge

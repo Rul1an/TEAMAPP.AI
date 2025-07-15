@@ -148,8 +148,8 @@ class ExerciseLibraryController extends ChangeNotifier {
 /// Riverpod provider wrapping above controller.
 final exerciseLibraryControllerProvider =
     ChangeNotifierProvider.autoDispose<ExerciseLibraryController>((ref) {
-      final ctrl = ExerciseLibraryController(ref);
-      // Kick off initial load (fire-and-forget)
-      ctrl.loadExercises();
-      return ctrl;
-    });
+  final ctrl = ExerciseLibraryController(ref);
+  // Kick off initial load (fire-and-forget)
+  ctrl.loadExercises();
+  return ctrl;
+});

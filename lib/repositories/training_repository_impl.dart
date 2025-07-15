@@ -12,8 +12,8 @@ class TrainingRepositoryImpl implements TrainingRepository {
   TrainingRepositoryImpl({
     required SupabaseTrainingDataSource remote,
     required HiveTrainingCache cache,
-  }) : _remote = remote,
-       _cache = cache;
+  })  : _remote = remote,
+        _cache = cache;
 
   final SupabaseTrainingDataSource _remote;
   final HiveTrainingCache _cache;

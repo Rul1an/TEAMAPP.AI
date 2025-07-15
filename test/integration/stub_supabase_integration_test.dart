@@ -19,44 +19,44 @@ void main() {
       final routes = <Pattern, http.Response Function(http.BaseRequest)>{
         // Auth token exchange
         'auth/v1/token': (_) => http.Response(
-          jsonEncode({
-            'access_token': 'stub-token',
-            'refresh_token': 'stub-refresh',
-            'token_type': 'bearer',
-            'expires_in': 3600,
-            'user': {
-              'id': 'user123',
-              'aud': 'authenticated',
-              'email': 'test@example.com',
-              'created_at': DateTime.now().toIso8601String(),
-            },
-          }),
-          200,
-          headers: {'content-type': 'application/json'},
-        ),
+              jsonEncode({
+                'access_token': 'stub-token',
+                'refresh_token': 'stub-refresh',
+                'token_type': 'bearer',
+                'expires_in': 3600,
+                'user': {
+                  'id': 'user123',
+                  'aud': 'authenticated',
+                  'email': 'test@example.com',
+                  'created_at': DateTime.now().toIso8601String(),
+                },
+              }),
+              200,
+              headers: {'content-type': 'application/json'},
+            ),
         // organization_members view
         'organization_members': (_) => http.Response(
-          jsonEncode([
-            {
-              'organization_id': 'org1',
-              'role': 'owner',
-              'organizations': {
-                'id': 'org1',
-                'name': 'Test Org',
-                'slug': 'test-org',
-                'subscription_tier': 'basic',
-                'subscription_status': 'active',
-                'max_players': 25,
-                'max_teams': 2,
-                'max_coaches': 4,
-                'settings': <String, dynamic>{},
-                'branding': null,
-              },
-            },
-          ]),
-          200,
-          headers: {'content-type': 'application/json'},
-        ),
+              jsonEncode([
+                {
+                  'organization_id': 'org1',
+                  'role': 'owner',
+                  'organizations': {
+                    'id': 'org1',
+                    'name': 'Test Org',
+                    'slug': 'test-org',
+                    'subscription_tier': 'basic',
+                    'subscription_status': 'active',
+                    'max_players': 25,
+                    'max_teams': 2,
+                    'max_coaches': 4,
+                    'settings': <String, dynamic>{},
+                    'branding': null,
+                  },
+                },
+              ]),
+              200,
+              headers: {'content-type': 'application/json'},
+            ),
       };
 
       client = SupabaseClient(

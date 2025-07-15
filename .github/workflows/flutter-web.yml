@@ -34,8 +34,29 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.32.2'
+        flutter-version: '3.32.x'
         channel: 'stable'
+        cache: true
+
+    # Install Melos CLI globally so that `melos bootstrap` is available
+    - name: Install Melos CLI
+      run: |
+        dart pub global activate melos 2.9.0
+        echo "${HOME}/.pub-cache/bin" >> $GITHUB_PATH
+
+    - name: Install DCM CLI
+      if: ${{ secrets.DCM_CI_KEY != '' && secrets.DCM_EMAIL != '' }}
+      uses: CQLabs/setup-dcm@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Cache pub dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.pub-cache
+          ~/.dart_tool
+        key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
 
     - name: Install dependencies
       run: |
@@ -52,12 +73,34 @@ jobs:
           exit 1
         fi
 
+    - name: Bootstrap (melos)
+      run: |
+        if [ -f "melos.yaml" ]; then
+          melos bootstrap
+        elif [ -f "jo17_tactical_manager/melos.yaml" ]; then
+          cd jo17_tactical_manager
+          melos bootstrap
+        else
+          echo "No melos.yaml found – skipping bootstrap."
+        fi
+
+    - name: Generate code (build_runner)
+      run: |
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+          cd jo17_tactical_manager
+          flutter pub run build_runner build --delete-conflicting-outputs --verbose
+        elif [ -f "pubspec.yaml" ]; then
+          flutter pub run build_runner build --delete-conflicting-outputs --verbose
+        fi
+
     - name: Run tests with coverage
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
+          flutter test --coverage
           ./coverage.sh
         elif [ -f "pubspec.yaml" ]; then
+          flutter test --coverage
           ./coverage.sh
         else
           echo "ERROR: Could not find pubspec.yaml"
@@ -81,14 +124,25 @@ jobs:
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
-          flutter analyze --no-fatal-warnings
+          dart analyze
         elif [ -f "pubspec.yaml" ]; then
-          flutter analyze --no-fatal-warnings
+          dart analyze
         else
           echo "ERROR: Could not find pubspec.yaml"
           exit 1
         fi
       continue-on-error: true
+
+    - name: Dart Code Metrics Analysis (license-protected)
+      if: ${{ secrets.DCM_CI_KEY != '' && secrets.DCM_EMAIL != '' }}
+      env:
+        DCM_CI_KEY: ${{ secrets.DCM_CI_KEY }}
+        DCM_EMAIL: ${{ secrets.DCM_EMAIL }}
+      run: |
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+          cd jo17_tactical_manager
+        fi
+        dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
 
     - name: Build web
       run: |

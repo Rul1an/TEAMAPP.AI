@@ -25,9 +25,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _startDemoMode(DemoRole role) {
-    ref
-        .read(demoModeProvider.notifier)
-        .startDemo(
+    ref.read(demoModeProvider.notifier).startDemo(
           role: role,
           organizationId: 'demo-org-1',
           userId: 'demo-user-${role.name}',
@@ -304,12 +302,10 @@ class _DemoRoleButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: isPrimary
-            ? null
-            : theme.colorScheme.secondaryContainer,
-        foregroundColor: isPrimary
-            ? null
-            : theme.colorScheme.onSecondaryContainer,
+        backgroundColor:
+            isPrimary ? null : theme.colorScheme.secondaryContainer,
+        foregroundColor:
+            isPrimary ? null : theme.colorScheme.onSecondaryContainer,
         padding: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: isPrimary ? 2 : 0,
@@ -319,30 +315,30 @@ class _DemoRoleButton extends StatelessWidget {
   }
 
   Widget _buildContent(ThemeData theme) => Row(
-    children: [
-      Icon(icon, size: 24),
-      const SizedBox(width: 16),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+        children: [
+          Icon(icon, size: 24),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 2),
-            Text(
-              subtitle,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ),
-      ),
-      const Icon(Icons.arrow_forward_ios, size: 16),
-    ],
-  );
+          ),
+          const Icon(Icons.arrow_forward_ios, size: 16),
+        ],
+      );
 }

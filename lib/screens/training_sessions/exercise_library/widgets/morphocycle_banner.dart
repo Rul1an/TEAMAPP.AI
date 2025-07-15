@@ -73,13 +73,11 @@ class MorphocycleBanner extends ConsumerWidget {
             children: TrainingIntensity.values
                 .where((e) => e != TrainingIntensity.competition)
                 .map((intensity) {
-                  final pct =
-                      morphocycle.intensityDistribution[intensity.name
-                          .toLowerCase()] ??
-                      0.0;
-                  return _buildIntensityChip(intensity, pct);
-                })
-                .toList(),
+              final pct = morphocycle
+                      .intensityDistribution[intensity.name.toLowerCase()] ??
+                  0.0;
+              return _buildIntensityChip(intensity, pct);
+            }).toList(),
           ),
         ],
       ),

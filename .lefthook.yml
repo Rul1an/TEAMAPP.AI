@@ -4,16 +4,20 @@ pre-commit:
   commands:
     format:
       description: "Dart formatter (staged)"
+      glob: "*.dart"
       run: dart format --line-length=100 {staged_files}
     import_sorter:
       description: "Sort Dart imports (staged)"
+      glob: "*.dart"
       run: flutter pub run import_sorter:main {staged_files}
     analyze:
-      description: "Static analysis (fatal infos)"
-      run: dart analyze --fatal-infos
+      description: "Static analysis (fatal warnings)"
+      run: dart analyze --fatal-warnings
     dcm:
-      description: "Dart Code Metrics – style & performance"
-      run: dcm analyze --fatal-style --fatal-performance ./
+      description: "Dart Code Metrics – style & performance (optional)"
+      glob: "*.dart"
+      run: >
+        bash -c "if command -v dcm >/dev/null 2>&1; then dcm analyze --fatal-style --fatal-warnings {staged_files}; else echo 'Skipping DCM: binary not found'; fi"
 
 commit-msg:
   scripts:

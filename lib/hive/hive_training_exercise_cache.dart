@@ -4,12 +4,12 @@ import 'base_hive_cache.dart';
 
 class HiveTrainingExerciseCache {
   HiveTrainingExerciseCache()
-    : _cache = BaseHiveCache<List<TrainingExercise>>(
-        boxName: _box,
-        valueKey: _key,
-        fromJson: _fromJson,
-        toJson: _toJson,
-      );
+      : _cache = BaseHiveCache<List<TrainingExercise>>(
+          boxName: _box,
+          valueKey: _key,
+          fromJson: _fromJson,
+          toJson: _toJson,
+        );
 
   static const _box = 'training_exercises_box';
   static const _key = 'training_exercises_json';
@@ -22,12 +22,12 @@ class HiveTrainingExerciseCache {
   Future<void> clear() => _cache.clear();
 
   static List<TrainingExercise> _fromJson(Map<String, dynamic> map) {
-    final raw = (map['exercises'] as List<dynamic>? ?? [])
-        .cast<Map<String, dynamic>>();
+    final raw =
+        (map['exercises'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
     return raw.map(TrainingExercise.fromJson).toList();
   }
 
   static Map<String, dynamic> _toJson(List<TrainingExercise> list) => {
-    'exercises': list.map((e) => e.toJson()).toList(),
-  };
+        'exercises': list.map((e) => e.toJson()).toList(),
+      };
 }

@@ -19,8 +19,8 @@ final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
 
 final periodizationPlanRepositoryProvider =
     Provider<PeriodizationPlanRepository>((ref) {
-      return LocalPeriodizationPlanRepository();
-    });
+  return LocalPeriodizationPlanRepository();
+});
 
 final trainingPeriodRepositoryProvider = Provider<TrainingPeriodRepository>((
   ref,

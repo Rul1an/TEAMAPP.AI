@@ -21,48 +21,48 @@ void main() {
       final routes = <Pattern, http.Response Function(http.BaseRequest)>{
         // Stub token exchange for sign-in.
         'auth/v1/token': (_) => http.Response(
-          jsonEncode({
-            'access_token': 'stub-token',
-            'refresh_token': 'stub-refresh',
-            'token_type': 'bearer',
-            'expires_in': 3600,
-            'user': {
-              'id': 'user123',
-              'email': 'test@example.com',
-              'user_metadata': <String, dynamic>{},
-            },
-          }),
-          200,
-          headers: {'content-type': 'application/json'},
-        ),
+              jsonEncode({
+                'access_token': 'stub-token',
+                'refresh_token': 'stub-refresh',
+                'token_type': 'bearer',
+                'expires_in': 3600,
+                'user': {
+                  'id': 'user123',
+                  'email': 'test@example.com',
+                  'user_metadata': <String, dynamic>{},
+                },
+              }),
+              200,
+              headers: {'content-type': 'application/json'},
+            ),
         // User metadata update / fetch
         'auth/v1/user': (_) => http.Response(
-          jsonEncode({
-            'user': {
-              'id': 'user123',
-              'email': 'test@example.com',
-              'user_metadata': {'organization_id': 'org1'},
-            },
-            'access_token': 'stub-token',
-            'refresh_token': 'stub-refresh',
-            'token_type': 'bearer',
-            'expires_in': 3600,
-          }),
-          200,
-          headers: {'content-type': 'application/json'},
-        ),
+              jsonEncode({
+                'user': {
+                  'id': 'user123',
+                  'email': 'test@example.com',
+                  'user_metadata': {'organization_id': 'org1'},
+                },
+                'access_token': 'stub-token',
+                'refresh_token': 'stub-refresh',
+                'token_type': 'bearer',
+                'expires_in': 3600,
+              }),
+              200,
+              headers: {'content-type': 'application/json'},
+            ),
         // Teams endpoint returns a single record for the currently selected organization.
         '/rest/v1/teams': (_) => http.Response(
-          jsonEncode([
-            {
-              'id': currentOrgId == 'org1' ? 1 : 2,
-              'name': currentOrgId == 'org1' ? 'Team A' : 'Team B',
-              'organization_id': currentOrgId,
-            },
-          ]),
-          200,
-          headers: {'content-type': 'application/json'},
-        ),
+              jsonEncode([
+                {
+                  'id': currentOrgId == 'org1' ? 1 : 2,
+                  'name': currentOrgId == 'org1' ? 'Team A' : 'Team B',
+                  'organization_id': currentOrgId,
+                },
+              ]),
+              200,
+              headers: {'content-type': 'application/json'},
+            ),
         // Any unfiltered access should be denied → simulate RLS error.
         RegExp(r'/rest/v1/teams(\?|\b)(?!.*organization_id=eq\.).*'): (_) =>
             http.Response('Row level security violation', 403),

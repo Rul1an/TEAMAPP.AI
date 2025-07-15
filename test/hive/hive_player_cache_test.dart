@@ -24,9 +24,9 @@ void main() {
   const pathProviderChannel = MethodChannel('plugins.flutter.io/path_provider');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-        pathProviderChannel,
-        (call) async => Directory.systemTemp.path,
-      );
+    pathProviderChannel,
+    (call) async => Directory.systemTemp.path,
+  );
 
   group('HivePlayerCache', () {
     setUp(() {

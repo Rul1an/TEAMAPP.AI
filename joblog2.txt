@@ -1,0 +1,1379 @@
+﻿2025-07-15T11:26:41.0309185Z Current runner version: '2.326.0'
+2025-07-15T11:26:41.0332241Z ##[group]Runner Image Provisioner
+2025-07-15T11:26:41.0333048Z Hosted Compute Agent
+2025-07-15T11:26:41.0333705Z Version: 20250711.363
+2025-07-15T11:26:41.0334494Z Commit: 6785254374ce925a23743850c1cb91912ce5c14c
+2025-07-15T11:26:41.0335158Z Build Date: 2025-07-11T20:04:25Z
+2025-07-15T11:26:41.0335791Z ##[endgroup]
+2025-07-15T11:26:41.0336351Z ##[group]Operating System
+2025-07-15T11:26:41.0336888Z Ubuntu
+2025-07-15T11:26:41.0337425Z 24.04.2
+2025-07-15T11:26:41.0337853Z LTS
+2025-07-15T11:26:41.0338298Z ##[endgroup]
+2025-07-15T11:26:41.0339097Z ##[group]Runner Image
+2025-07-15T11:26:41.0339929Z Image: ubuntu-24.04
+2025-07-15T11:26:41.0340811Z Version: 20250710.1.0
+2025-07-15T11:26:41.0342418Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250710.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-07-15T11:26:41.0345144Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250710.1
+2025-07-15T11:26:41.0346779Z ##[endgroup]
+2025-07-15T11:26:41.0348494Z ##[group]GITHUB_TOKEN Permissions
+2025-07-15T11:26:41.0351066Z Contents: read
+2025-07-15T11:26:41.0351861Z Metadata: read
+2025-07-15T11:26:41.0352698Z Packages: read
+2025-07-15T11:26:41.0353396Z ##[endgroup]
+2025-07-15T11:26:41.0356695Z Secret source: Actions
+2025-07-15T11:26:41.0357877Z Prepare workflow directory
+2025-07-15T11:26:41.0748435Z Prepare all required actions
+2025-07-15T11:26:41.0785760Z Getting action download info
+2025-07-15T11:26:41.3444229Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-07-15T11:26:41.3445288Z Version: 4.2.2
+2025-07-15T11:26:41.3446273Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-07-15T11:26:41.3447354Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-07-15T11:26:41.3448176Z ##[endgroup]
+2025-07-15T11:26:41.4472306Z Download action repository 'subosito/flutter-action@v2' (SHA:e938fdf56512cc96ef2f93601a5a40bde3801046)
+2025-07-15T11:26:41.5928895Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-07-15T11:26:41.5929713Z Version: 4.6.2
+2025-07-15T11:26:41.5930394Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-07-15T11:26:41.5931467Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-07-15T11:26:41.5932119Z ##[endgroup]
+2025-07-15T11:26:41.7816671Z Getting action download info
+2025-07-15T11:26:41.9313353Z ##[group]Download immutable action package 'actions/cache@v4'
+2025-07-15T11:26:41.9314606Z Version: 4.2.3
+2025-07-15T11:26:41.9315554Z Digest: sha256:c8a3bb963e1f1826d8fcc8d1354f0dd29d8ac1db1d4f6f20247055ae11b81ed9
+2025-07-15T11:26:41.9317786Z Source commit SHA: 5a3ec84eff668545956fd18022155c47e93e2684
+2025-07-15T11:26:41.9318374Z ##[endgroup]
+2025-07-15T11:26:42.0940880Z Complete job name: Test Flutter Web
+2025-07-15T11:26:42.1709393Z ##[group]Run actions/checkout@v4
+2025-07-15T11:26:42.1710529Z with:
+2025-07-15T11:26:42.1711217Z   repository: Rul1an/TEAMAPP.AI
+2025-07-15T11:26:42.1712287Z   token: ***
+2025-07-15T11:26:42.1712958Z   ssh-strict: true
+2025-07-15T11:26:42.1713632Z   ssh-user: git
+2025-07-15T11:26:42.1714526Z   persist-credentials: true
+2025-07-15T11:26:42.1715309Z   clean: true
+2025-07-15T11:26:42.1716023Z   sparse-checkout-cone-mode: true
+2025-07-15T11:26:42.1716867Z   fetch-depth: 1
+2025-07-15T11:26:42.1717548Z   fetch-tags: false
+2025-07-15T11:26:42.1718256Z   show-progress: true
+2025-07-15T11:26:42.1718960Z   lfs: false
+2025-07-15T11:26:42.1719610Z   submodules: false
+2025-07-15T11:26:42.1720324Z   set-safe-directory: true
+2025-07-15T11:26:42.1721337Z ##[endgroup]
+2025-07-15T11:26:42.2811725Z Syncing repository: Rul1an/TEAMAPP.AI
+2025-07-15T11:26:42.2815499Z ##[group]Getting Git version info
+2025-07-15T11:26:42.2817391Z Working directory is '/home/runner/work/TEAMAPP.AI/TEAMAPP.AI'
+2025-07-15T11:26:42.2820129Z [command]/usr/bin/git version
+2025-07-15T11:26:42.2875266Z git version 2.50.1
+2025-07-15T11:26:42.2901338Z ##[endgroup]
+2025-07-15T11:26:42.2916547Z Temporarily overriding HOME='/home/runner/work/_temp/aea69bd9-64ad-4c8f-87ec-4f546e956d9d' before making global git config changes
+2025-07-15T11:26:42.2920860Z Adding repository directory to the temporary git global config as a safe directory
+2025-07-15T11:26:42.2924350Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T11:26:42.2959128Z Deleting the contents of '/home/runner/work/TEAMAPP.AI/TEAMAPP.AI'
+2025-07-15T11:26:42.2962653Z ##[group]Initializing the repository
+2025-07-15T11:26:42.2967746Z [command]/usr/bin/git init /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T11:26:42.3036626Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-07-15T11:26:42.3038352Z hint: is subject to change. To configure the initial branch name to use in all
+2025-07-15T11:26:42.3040267Z hint: of your new repositories, which will suppress this warning, call:
+2025-07-15T11:26:42.3041665Z hint:
+2025-07-15T11:26:42.3043099Z hint: 	git config --global init.defaultBranch <name>
+2025-07-15T11:26:42.3045054Z hint:
+2025-07-15T11:26:42.3046732Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-07-15T11:26:42.3049375Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-07-15T11:26:42.3051464Z hint:
+2025-07-15T11:26:42.3052651Z hint: 	git branch -m <name>
+2025-07-15T11:26:42.3054236Z hint:
+2025-07-15T11:26:42.3056025Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-07-15T11:26:42.3058865Z Initialized empty Git repository in /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/.git/
+2025-07-15T11:26:42.3062111Z [command]/usr/bin/git remote add origin https://github.com/Rul1an/TEAMAPP.AI
+2025-07-15T11:26:42.3089357Z ##[endgroup]
+2025-07-15T11:26:42.3091520Z ##[group]Disabling automatic garbage collection
+2025-07-15T11:26:42.3093477Z [command]/usr/bin/git config --local gc.auto 0
+2025-07-15T11:26:42.3122173Z ##[endgroup]
+2025-07-15T11:26:42.3124471Z ##[group]Setting up auth
+2025-07-15T11:26:42.3129495Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-07-15T11:26:42.3160767Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-07-15T11:26:42.3470704Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-07-15T11:26:42.3500922Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-07-15T11:26:42.3715090Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-07-15T11:26:42.3748755Z ##[endgroup]
+2025-07-15T11:26:42.3750032Z ##[group]Fetching the repository
+2025-07-15T11:26:42.3757089Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +06bf6021a62df092de41bea3297de529c2484510:refs/remotes/pull/74/merge
+2025-07-15T11:26:42.6765480Z From https://github.com/Rul1an/TEAMAPP.AI
+2025-07-15T11:26:42.6767496Z  * [new ref]         06bf6021a62df092de41bea3297de529c2484510 -> pull/74/merge
+2025-07-15T11:26:42.6792075Z ##[endgroup]
+2025-07-15T11:26:42.6793871Z ##[group]Determining the checkout info
+2025-07-15T11:26:42.6795872Z ##[endgroup]
+2025-07-15T11:26:42.6798192Z [command]/usr/bin/git sparse-checkout disable
+2025-07-15T11:26:42.6838934Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-07-15T11:26:42.6866220Z ##[group]Checking out the ref
+2025-07-15T11:26:42.6868511Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/74/merge
+2025-07-15T11:26:42.7470790Z Note: switching to 'refs/remotes/pull/74/merge'.
+2025-07-15T11:26:42.7472452Z 
+2025-07-15T11:26:42.7473168Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-07-15T11:26:42.7474764Z changes and commit them, and you can discard any commits you make in this
+2025-07-15T11:26:42.7548273Z state without impacting any branches by switching back to a branch.
+2025-07-15T11:26:42.7548871Z 
+2025-07-15T11:26:42.7549246Z If you want to create a new branch to retain commits you create, you may
+2025-07-15T11:26:42.7550096Z do so (now or later) by using -c with the switch command. Example:
+2025-07-15T11:26:42.7550592Z 
+2025-07-15T11:26:42.7550799Z   git switch -c <new-branch-name>
+2025-07-15T11:26:42.7551129Z 
+2025-07-15T11:26:42.7551326Z Or undo this operation with:
+2025-07-15T11:26:42.7551640Z 
+2025-07-15T11:26:42.7551822Z   git switch -
+2025-07-15T11:26:42.7552116Z 
+2025-07-15T11:26:42.7552586Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-07-15T11:26:42.7553107Z 
+2025-07-15T11:26:42.7553745Z HEAD is now at 06bf602 Merge 761d4645dc7f133e4e777bd88ed7ef6194780ee5 into 0f40832207d924d37e03b84bf3bc6b30faf02cc8
+2025-07-15T11:26:42.7556213Z ##[endgroup]
+2025-07-15T11:26:42.7557528Z [command]/usr/bin/git log -1 --format=%H
+2025-07-15T11:26:42.7558133Z 06bf6021a62df092de41bea3297de529c2484510
+2025-07-15T11:26:42.7730424Z ##[group]Run echo "=== Current directory ==="
+2025-07-15T11:26:42.7730861Z [36;1mecho "=== Current directory ==="[0m
+2025-07-15T11:26:42.7731176Z [36;1mpwd[0m
+2025-07-15T11:26:42.7731433Z [36;1mecho "=== Root directory contents ==="[0m
+2025-07-15T11:26:42.7731741Z [36;1mls -la[0m
+2025-07-15T11:26:42.7732049Z [36;1mecho "=== Check if jo17_tactical_manager exists ==="[0m
+2025-07-15T11:26:42.7732407Z [36;1mif [ -d "jo17_tactical_manager" ]; then[0m
+2025-07-15T11:26:42.7732758Z [36;1m  echo "jo17_tactical_manager directory exists"[0m
+2025-07-15T11:26:42.7733112Z [36;1m  echo "=== Contents of jo17_tactical_manager ==="[0m
+2025-07-15T11:26:42.7733460Z [36;1m  ls -la jo17_tactical_manager/[0m
+2025-07-15T11:26:42.7733729Z [36;1melse[0m
+2025-07-15T11:26:42.7734150Z [36;1m  echo "jo17_tactical_manager directory NOT found"[0m
+2025-07-15T11:26:42.7734533Z [36;1m  echo "=== Looking for pubspec.yaml ==="[0m
+2025-07-15T11:26:42.7734894Z [36;1m  find . -name "pubspec.yaml" -type f[0m
+2025-07-15T11:26:42.7735180Z [36;1mfi[0m
+2025-07-15T11:26:42.7766603Z shell: /usr/bin/bash -e {0}
+2025-07-15T11:26:42.7766899Z ##[endgroup]
+2025-07-15T11:26:42.7831409Z === Current directory ===
+2025-07-15T11:26:42.7831926Z /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T11:26:42.7832441Z === Root directory contents ===
+2025-07-15T11:26:42.7847482Z total 4136
+2025-07-15T11:26:42.7847990Z drwxr-xr-x 19 runner docker    4096 Jul 15 11:26 .
+2025-07-15T11:26:42.7848713Z drwxr-xr-x  3 runner docker    4096 Jul 15 11:26 ..
+2025-07-15T11:26:42.7849240Z -rw-r--r--  1 runner docker     389 Jul 15 11:26 .dart_code_metrics.yaml
+2025-07-15T11:26:42.7849980Z drwxr-xr-x  7 runner docker    4096 Jul 15 11:26 .git
+2025-07-15T11:26:42.7850355Z drwxr-xr-x  3 runner docker    4096 Jul 15 11:26 .github
+2025-07-15T11:26:42.7850734Z -rw-r--r--  1 runner docker     709 Jul 15 11:26 .gitignore
+2025-07-15T11:26:42.7851143Z drwxr-xr-x  2 runner docker    4096 Jul 15 11:26 .idx
+2025-07-15T11:26:42.7851774Z -rw-r--r--  1 runner docker     636 Jul 15 11:26 .lefthook.yml
+2025-07-15T11:26:42.7852424Z -rw-r--r--  1 runner docker     964 Jul 15 11:26 .metadata
+2025-07-15T11:26:42.7852938Z drwxr-xr-x  2 runner docker    4096 Jul 15 11:26 .vscode
+2025-07-15T11:26:42.7853312Z -rw-r--r--  1 runner docker     858 Jul 15 11:26 CHANGELOG.md
+2025-07-15T11:26:42.7853672Z -rw-r--r--  1 runner docker    2987 Jul 15 11:26 README.md
+2025-07-15T11:26:42.7854192Z -rw-r--r--  1 runner docker    3947 Jul 15 11:26 TODO.md
+2025-07-15T11:26:42.7854634Z -rw-r--r--  1 runner docker    7962 Jul 15 11:26 analysis_options.yaml
+2025-07-15T11:26:42.7855100Z -rw-r--r--  1 runner docker 1583565 Jul 15 11:26 analyze_complete_output.txt
+2025-07-15T11:26:42.7855564Z -rw-r--r--  1 runner docker  170310 Jul 15 11:26 analyze_full_output.txt
+2025-07-15T11:26:42.7855998Z -rw-r--r--  1 runner docker 1820862 Jul 15 11:26 analyze_output.txt
+2025-07-15T11:26:42.7856593Z drwxr-xr-x  5 runner docker    4096 Jul 15 11:26 android
+2025-07-15T11:26:42.7856956Z drwxr-xr-x  4 runner docker    4096 Jul 15 11:26 assets
+2025-07-15T11:26:42.7857315Z -rw-r--r--  1 runner docker    1098 Jul 15 11:26 build.yaml
+2025-07-15T11:26:42.7857712Z -rw-r--r--  1 runner docker      69 Jul 15 11:26 commitlint.config.js
+2025-07-15T11:26:42.7858113Z drwxr-xr-x  3 runner docker    4096 Jul 15 11:26 coverage
+2025-07-15T11:26:42.7858479Z -rwxr-xr-x  1 runner docker     409 Jul 15 11:26 coverage.sh
+2025-07-15T11:26:42.7858843Z -rw-r--r--  1 runner docker     109 Jul 15 11:26 cr.json
+2025-07-15T11:26:42.7859222Z -rw-r--r--  1 runner docker    1853 Jul 15 11:26 critical_errors.txt
+2025-07-15T11:26:42.7859639Z -rw-r--r--  1 runner docker     184 Jul 15 11:26 devtools_options.yaml
+2025-07-15T11:26:42.7860039Z drwxr-xr-x 10 runner docker    4096 Jul 15 11:26 docs
+2025-07-15T11:26:42.7860437Z -rwxr-xr-x  1 runner docker     892 Jul 15 11:26 error_triage_strategy.sh
+2025-07-15T11:26:42.7860895Z -rwxr-xr-x  1 runner docker    2572 Jul 15 11:26 final_error_cleanup.sh
+2025-07-15T11:26:42.7861500Z -rwxr-xr-x  1 runner docker    1888 Jul 15 11:26 fix_analysis_errors.sh
+2025-07-15T11:26:42.7861969Z -rwxr-xr-x  1 runner docker    2198 Jul 15 11:26 fix_critical_core_files.sh
+2025-07-15T11:26:42.7862430Z -rwxr-xr-x  1 runner docker     403 Jul 15 11:26 fix_critical_errors.sh
+2025-07-15T11:26:42.7862886Z -rwxr-xr-x  1 runner docker    3397 Jul 15 11:26 intelligent_dart_syntax_fix.sh
+2025-07-15T11:26:42.7863308Z drwxr-xr-x  7 runner docker    4096 Jul 15 11:26 ios
+2025-07-15T11:26:42.7863824Z -rw-r--r--  1 runner docker  364627 Jul 15 11:26 jo17_tactical_manager_with_performance_roadmap_20250607_005235.tar.gz
+2025-07-15T11:26:42.7864597Z -rw-r--r--  1 runner docker   29612 Jul 15 11:26 joblog.txt
+2025-07-15T11:26:42.7864964Z drwxr-xr-x 15 runner docker    4096 Jul 15 11:26 lib
+2025-07-15T11:26:42.7865352Z -rw-r--r--  1 runner docker     614 Jul 15 11:26 lighthouserc.json
+2025-07-15T11:26:42.7865770Z drwxr-xr-x  7 runner docker    4096 Jul 15 11:26 macos
+2025-07-15T11:26:42.7866138Z -rw-r--r--  1 runner docker     855 Jul 15 11:26 melos.yaml
+2025-07-15T11:26:42.7866513Z -rw-r--r--  1 runner docker     903 Jul 15 11:26 netlify.toml
+2025-07-15T11:26:42.7866890Z drwxr-xr-x  3 runner docker    4096 Jul 15 11:26 packages
+2025-07-15T11:26:42.7867274Z -rw-r--r--  1 runner docker   48768 Jul 15 11:26 pubspec.lock
+2025-07-15T11:26:42.7867646Z -rw-r--r--  1 runner docker    1999 Jul 15 11:26 pubspec.yaml
+2025-07-15T11:26:42.7868060Z -rw-r--r--  1 runner docker     115 Jul 15 11:26 pubspec_overrides.yaml
+2025-07-15T11:26:42.7868503Z -rwxr-xr-x  1 runner docker    4607 Jul 15 11:26 restore_working_core.sh
+2025-07-15T11:26:42.7868906Z drwxr-xr-x  2 runner docker    4096 Jul 15 11:26 scripts
+2025-07-15T11:26:42.7869270Z drwxr-xr-x  4 runner docker    4096 Jul 15 11:26 supabase
+2025-07-15T11:26:42.7869681Z -rwxr-xr-x  1 runner docker    1683 Jul 15 11:26 surgical_syntax_fix.sh
+2025-07-15T11:26:42.7870109Z -rw-r--r--  1 runner docker       1 Jul 15 11:26 temp_db.dart
+2025-07-15T11:26:42.7870514Z -rw-r--r--  1 runner docker     519 Jul 15 11:26 temp_radar_fix.txt
+2025-07-15T11:26:42.7870897Z drwxr-xr-x 17 runner docker    4096 Jul 15 11:26 test
+2025-07-15T11:26:42.7871248Z drwxr-xr-x  2 runner docker    4096 Jul 15 11:26 tool
+2025-07-15T11:26:42.7871593Z drwxr-xr-x  3 runner docker    4096 Jul 15 11:26 web
+2025-07-15T11:26:42.7871962Z === Check if jo17_tactical_manager exists ===
+2025-07-15T11:26:42.7872277Z jo17_tactical_manager directory NOT found
+2025-07-15T11:26:42.7872593Z === Looking for pubspec.yaml ===
+2025-07-15T11:26:42.7896829Z ./pubspec.yaml
+2025-07-15T11:26:42.7897178Z ./packages/test_utils/pubspec.yaml
+2025-07-15T11:26:42.8029341Z ##[group]Run subosito/flutter-action@v2
+2025-07-15T11:26:42.8029669Z with:
+2025-07-15T11:26:42.8029896Z   flutter-version: 3.32.x
+2025-07-15T11:26:42.8030146Z   channel: stable
+2025-07-15T11:26:42.8030366Z   cache: true
+2025-07-15T11:26:42.8030587Z   architecture: X64
+2025-07-15T11:26:42.8030982Z   pub-cache-path: default
+2025-07-15T11:26:42.8031232Z   dry-run: false
+2025-07-15T11:26:42.8031515Z   git-source: https://github.com/flutter/flutter.git
+2025-07-15T11:26:42.8031849Z ##[endgroup]
+2025-07-15T11:26:42.8121332Z ##[group]Run chmod +x "$GITHUB_ACTION_PATH/setup.sh"
+2025-07-15T11:26:42.8121737Z [36;1mchmod +x "$GITHUB_ACTION_PATH/setup.sh"[0m
+2025-07-15T11:26:42.8148993Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2025-07-15T11:26:42.8149373Z ##[endgroup]
+2025-07-15T11:26:42.8252419Z ##[group]Run $GITHUB_ACTION_PATH/setup.sh -p \
+2025-07-15T11:26:42.8252812Z [36;1m$GITHUB_ACTION_PATH/setup.sh -p \[0m
+2025-07-15T11:26:42.8253124Z [36;1m  -n '3.32.x' \[0m
+2025-07-15T11:26:42.8253408Z [36;1m  -f '' \[0m
+2025-07-15T11:26:42.8253636Z [36;1m  -a 'X64' \[0m
+2025-07-15T11:26:42.8253871Z [36;1m  -k '' \[0m
+2025-07-15T11:26:42.8254560Z [36;1m  -c '' \[0m
+2025-07-15T11:26:42.8254788Z [36;1m  -l '' \[0m
+2025-07-15T11:26:42.8255009Z [36;1m  -d 'default' \[0m
+2025-07-15T11:26:42.8255333Z [36;1m  -g 'https://github.com/flutter/flutter.git' \[0m
+2025-07-15T11:26:42.8255661Z [36;1m  stable[0m
+2025-07-15T11:26:42.8281506Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2025-07-15T11:26:42.8281878Z ##[endgroup]
+2025-07-15T11:26:42.9813474Z ##[group]Run actions/cache@v4
+2025-07-15T11:26:42.9813764Z with:
+2025-07-15T11:26:42.9814283Z   path: /opt/hostedtoolcache/flutter/stable-3.32.6-x64
+2025-07-15T11:26:42.9814773Z   key: flutter-linux-stable-3.32.6-x64-077b4a4ce10a07b82caa6897f0c626f9c0a3ac90
+2025-07-15T11:26:42.9815206Z   enableCrossOsArchive: false
+2025-07-15T11:26:42.9815474Z   fail-on-cache-miss: false
+2025-07-15T11:26:42.9815750Z   lookup-only: false
+2025-07-15T11:26:42.9815971Z   save-always: false
+2025-07-15T11:26:42.9816194Z ##[endgroup]
+2025-07-15T11:26:43.2604381Z Cache not found for input keys: flutter-linux-stable-3.32.6-x64-077b4a4ce10a07b82caa6897f0c626f9c0a3ac90
+2025-07-15T11:26:43.3989111Z ##[group]Run actions/cache@v4
+2025-07-15T11:26:43.3989403Z with:
+2025-07-15T11:26:43.3989620Z   path: /home/runner/.pub-cache
+2025-07-15T11:26:43.3990343Z   key: flutter-pub-linux-stable-3.32.6-x64-077b4a4ce10a07b82caa6897f0c626f9c0a3ac90-334a48f799cfc0630fc02947041f6474e3b5133f0b83e8acdf38099c38c8341e
+2025-07-15T11:26:43.3991068Z   enableCrossOsArchive: false
+2025-07-15T11:26:43.3991335Z   fail-on-cache-miss: false
+2025-07-15T11:26:43.3991586Z   lookup-only: false
+2025-07-15T11:26:43.3991812Z   save-always: false
+2025-07-15T11:26:43.3992038Z ##[endgroup]
+2025-07-15T11:26:43.5895901Z Cache not found for input keys: flutter-pub-linux-stable-3.32.6-x64-077b4a4ce10a07b82caa6897f0c626f9c0a3ac90-334a48f799cfc0630fc02947041f6474e3b5133f0b83e8acdf38099c38c8341e
+2025-07-15T11:26:43.6002253Z ##[group]Run $GITHUB_ACTION_PATH/setup.sh \
+2025-07-15T11:26:43.6002621Z [36;1m$GITHUB_ACTION_PATH/setup.sh \[0m
+2025-07-15T11:26:43.6002919Z [36;1m  -n '3.32.6' \[0m
+2025-07-15T11:26:43.6003172Z [36;1m  -a 'x64' \[0m
+2025-07-15T11:26:43.6003489Z [36;1m  -c '/opt/hostedtoolcache/flutter/stable-3.32.6-x64' \[0m
+2025-07-15T11:26:43.6003875Z [36;1m  -d '/home/runner/.pub-cache' \[0m
+2025-07-15T11:26:43.6004386Z [36;1m  stable[0m
+2025-07-15T11:26:43.6031806Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2025-07-15T11:26:43.6032179Z ##[endgroup]
+2025-07-15T11:26:43.7354294Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2025-07-15T11:26:43.7355128Z                                  Dload  Upload   Total   Spent    Left  Speed
+2025-07-15T11:26:43.7355688Z 
+2025-07-15T11:26:44.1395980Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2025-07-15T11:26:45.1396666Z   4 1366M    4 62.3M    0     0   154M      0  0:00:08 --:--:--  0:00:08  154M
+2025-07-15T11:26:46.1405973Z  19 1366M   19  269M    0     0   191M      0  0:00:07  0:00:01  0:00:06  191M
+2025-07-15T11:26:47.1398002Z  36 1366M   36  496M    0     0   206M      0  0:00:06  0:00:02  0:00:04  206M
+2025-07-15T11:26:48.1397034Z  55 1366M   55  753M    0     0   221M      0  0:00:06  0:00:03  0:00:03  221M
+2025-07-15T11:26:49.1393761Z  75 1366M   75 1027M    0     0   233M      0  0:00:05  0:00:04  0:00:01  233M
+2025-07-15T11:26:49.3577531Z  95 1366M   95 1302M    0     0   241M      0  0:00:05  0:00:05 --:--:--  248M
+2025-07-15T11:26:49.3578298Z 100 1366M  100 1366M    0     0   243M      0  0:00:05  0:00:05 --:--:--  260M
+2025-07-15T11:27:38.5541440Z ##[group]Run dart pub global activate melos 2.9.0
+2025-07-15T11:27:38.5541847Z [36;1mdart pub global activate melos 2.9.0[0m
+2025-07-15T11:27:38.5542166Z [36;1mecho "${HOME}/.pub-cache/bin" >> $GITHUB_PATH[0m
+2025-07-15T11:27:38.5573010Z shell: /usr/bin/bash -e {0}
+2025-07-15T11:27:38.5573247Z env:
+2025-07-15T11:27:38.5573508Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.32.6-x64
+2025-07-15T11:27:38.5573861Z   PUB_CACHE: /home/runner/.pub-cache
+2025-07-15T11:27:38.5574281Z ##[endgroup]
+2025-07-15T11:27:38.6682659Z Resolving dependencies...
+2025-07-15T11:27:39.2784700Z Downloading packages...
+2025-07-15T11:27:40.3316779Z + ansi_styles 0.3.2+1
+2025-07-15T11:27:40.3317233Z + args 2.7.0
+2025-07-15T11:27:40.3318621Z + async 2.13.0
+2025-07-15T11:27:40.3318971Z + boolean_selector 2.1.2
+2025-07-15T11:27:40.3319393Z + charcode 1.4.0
+2025-07-15T11:27:40.3319734Z + cli_util 0.3.5 (0.4.2 available)
+2025-07-15T11:27:40.3320150Z + collection 1.19.1
+2025-07-15T11:27:40.3320634Z + conventional_commit 0.5.0+1 (0.6.1+1 available)
+2025-07-15T11:27:40.3321455Z + file 6.1.4 (7.0.1 available)
+2025-07-15T11:27:40.3321882Z + glob 2.1.3
+2025-07-15T11:27:40.3322190Z + graphs 2.3.2
+2025-07-15T11:27:40.3322782Z + http 0.13.6 (1.4.0 available)
+2025-07-15T11:27:40.3323194Z + http_parser 4.1.2
+2025-07-15T11:27:40.3323566Z + io 1.0.5
+2025-07-15T11:27:40.3323880Z + json_annotation 4.9.0
+2025-07-15T11:27:40.3324423Z + matcher 0.12.17
+2025-07-15T11:27:40.3324749Z + melos 2.9.0 (6.3.3 available)
+2025-07-15T11:27:40.3325110Z + meta 1.17.0
+2025-07-15T11:27:40.3325479Z + mustache_template 2.0.0
+2025-07-15T11:27:40.3325857Z + path 1.9.1
+2025-07-15T11:27:40.3326228Z + platform 3.1.6
+2025-07-15T11:27:40.3326547Z + pool 1.5.1
+2025-07-15T11:27:40.3326869Z + process 4.2.4 (5.0.4 available)
+2025-07-15T11:27:40.3327257Z + prompts 2.0.0
+2025-07-15T11:27:40.3327587Z + pub_semver 2.2.0
+2025-07-15T11:27:40.3327938Z + pub_updater 0.2.4 (0.5.0 available)
+2025-07-15T11:27:40.3328357Z + pubspec 2.3.0
+2025-07-15T11:27:40.3328692Z + quiver 3.2.2
+2025-07-15T11:27:40.3329003Z + source_span 1.10.1
+2025-07-15T11:27:40.3329347Z + stack_trace 1.12.1
+2025-07-15T11:27:40.3329671Z + stream_channel 2.1.4
+2025-07-15T11:27:40.3330037Z + string_scanner 1.4.1
+2025-07-15T11:27:40.3330378Z + term_glyph 1.2.2
+2025-07-15T11:27:40.3330712Z + test_api 0.7.6
+2025-07-15T11:27:40.3331344Z + typed_data 1.4.0
+2025-07-15T11:27:40.3331652Z + uri 1.0.0
+2025-07-15T11:27:40.3331934Z + yaml 3.1.3
+2025-07-15T11:27:40.3332241Z + yaml_edit 2.2.2
+2025-07-15T11:27:40.3618004Z Building package executables...
+2025-07-15T11:27:41.2055488Z Built melos:melos.
+2025-07-15T11:27:41.2463364Z Installed executable melos.
+2025-07-15T11:27:41.2520329Z Activated melos 2.9.0.
+2025-07-15T11:27:41.2960546Z ##[group]Run # Check if jo17_tactical_manager exists and contains a pubspec; prefer it over workspace-level pubspec.yaml
+2025-07-15T11:27:41.2961331Z [36;1m# Check if jo17_tactical_manager exists and contains a pubspec; prefer it over workspace-level pubspec.yaml[0m
+2025-07-15T11:27:41.2962399Z [36;1mif [ -f "jo17_tactical_manager/pubspec.yaml" ]; then[0m
+2025-07-15T11:27:41.2962836Z [36;1m  echo "Found pubspec.yaml in jo17_tactical_manager → using that as project root"[0m
+2025-07-15T11:27:41.2963217Z [36;1m  cd jo17_tactical_manager[0m
+2025-07-15T11:27:41.2963445Z [36;1m  flutter pub get[0m
+2025-07-15T11:27:41.2963691Z [36;1melif [ -f "pubspec.yaml" ]; then[0m
+2025-07-15T11:27:41.2963978Z [36;1m  echo "Using pubspec.yaml in workspace root"[0m
+2025-07-15T11:27:41.2964599Z [36;1m  flutter pub get[0m
+2025-07-15T11:27:41.2964789Z [36;1melse[0m
+2025-07-15T11:27:41.2964992Z [36;1m  echo "ERROR: Could not find pubspec.yaml"[0m
+2025-07-15T11:27:41.2965477Z [36;1m  exit 1[0m
+2025-07-15T11:27:41.2965634Z [36;1mfi[0m
+2025-07-15T11:27:41.2994209Z shell: /usr/bin/bash -e {0}
+2025-07-15T11:27:41.2994438Z env:
+2025-07-15T11:27:41.2994691Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.32.6-x64
+2025-07-15T11:27:41.2995016Z   PUB_CACHE: /home/runner/.pub-cache
+2025-07-15T11:27:41.2995244Z ##[endgroup]
+2025-07-15T11:27:41.3041011Z Using pubspec.yaml in workspace root
+2025-07-15T11:27:45.9859385Z Resolving dependencies...
+2025-07-15T11:27:47.4760905Z Downloading packages...
+2025-07-15T11:27:57.3434983Z   _fe_analyzer_shared 61.0.0 (85.0.0 available)
+2025-07-15T11:27:57.3435434Z   analyzer 5.13.0 (7.5.9 available)
+2025-07-15T11:27:57.3435812Z   analyzer_plugin 0.11.2 (0.13.4 available)
+2025-07-15T11:27:57.3436213Z   archive 3.6.1 (4.0.7 available)
+2025-07-15T11:27:57.3436564Z   build 2.4.1 (2.5.4 available)
+2025-07-15T11:27:57.3436944Z   build_resolvers 2.4.2 (2.5.4 available)
+2025-07-15T11:27:57.3437373Z   build_runner 2.4.13 (2.5.4 available)
+2025-07-15T11:27:57.3437759Z   build_runner_core 7.3.2 (9.1.2 available)
+2025-07-15T11:27:57.3438169Z   characters 1.4.0 (1.4.1 available)
+2025-07-15T11:27:57.3438583Z   checked_yaml 2.0.3 (2.0.4 available)
+2025-07-15T11:27:57.3439069Z   coverage 1.14.1 (1.15.0 available)
+2025-07-15T11:27:57.3439526Z   custom_lint_core 0.6.3 (0.7.5 available)
+2025-07-15T11:27:57.3440024Z   dart_code_metrics 5.7.6 (discontinued)
+2025-07-15T11:27:57.3440500Z   dart_code_metrics_presets 1.8.0 (2.24.0 available)
+2025-07-15T11:27:57.3440950Z   dart_style 2.3.2 (3.1.0 available)
+2025-07-15T11:27:57.3441377Z   file 6.1.4 (7.0.1 available)
+2025-07-15T11:27:57.3441920Z   file_picker 10.1.9 (10.2.0 available)
+2025-07-15T11:27:57.3442399Z   file_saver 0.2.14 (0.3.1 available)
+2025-07-15T11:27:57.3442829Z   fl_chart 0.68.0 (1.0.0 available)
+2025-07-15T11:27:57.3443286Z   flutter_form_builder 9.7.0 (10.1.0 available)
+2025-07-15T11:27:57.3443886Z   flutter_secure_storage_linux 1.2.3 (2.0.1 available)
+2025-07-15T11:27:57.3444754Z   flutter_secure_storage_macos 3.1.3 (4.0.0 available)
+2025-07-15T11:27:57.3445507Z   flutter_secure_storage_platform_interface 1.1.2 (2.0.1 available)
+2025-07-15T11:27:57.3446262Z   flutter_secure_storage_web 1.2.1 (2.0.0 available)
+2025-07-15T11:27:57.3446939Z   flutter_secure_storage_windows 3.1.2 (4.0.0 available)
+2025-07-15T11:27:57.3449184Z   freezed 2.5.2 (3.1.0 available)
+2025-07-15T11:27:57.3449687Z   freezed_annotation 2.4.4 (3.1.0 available)
+2025-07-15T11:27:57.3450130Z   go_router 14.8.1 (16.0.0 available)
+2025-07-15T11:27:57.3450530Z   google_fonts 4.0.4 (6.2.1 available)
+2025-07-15T11:27:57.3450925Z   http 0.13.6 (1.4.0 available)
+2025-07-15T11:27:57.3451277Z   image 4.3.0 (4.5.4 available)
+2025-07-15T11:27:57.3451935Z   intl 0.19.0 (0.20.2 available)
+2025-07-15T11:27:57.3452322Z   jni 0.14.1 (0.14.2 available)
+2025-07-15T11:27:57.3452670Z   js 0.6.7 (0.7.2 available)
+2025-07-15T11:27:57.3453048Z   json_serializable 6.8.0 (6.9.5 available)
+2025-07-15T11:27:57.3453491Z   leak_tracker 10.0.9 (11.0.1 available)
+2025-07-15T11:27:57.3454511Z   leak_tracker_flutter_testing 3.0.9 (3.0.10 available)
+2025-07-15T11:27:57.3455051Z   leak_tracker_testing 3.0.1 (3.0.2 available)
+2025-07-15T11:27:57.3455535Z   material_color_utilities 0.11.1 (0.13.0 available)
+2025-07-15T11:27:57.3455984Z   meta 1.16.0 (1.17.0 available)
+2025-07-15T11:27:57.3456331Z   mime 1.0.6 (2.0.0 available)
+2025-07-15T11:27:57.3456702Z   petitparser 6.1.0 (7.0.0 available)
+2025-07-15T11:27:57.3457090Z   process 4.2.4 (5.0.4 available)
+2025-07-15T11:27:57.3457461Z   protobuf 3.1.0 (4.1.0 available)
+2025-07-15T11:27:57.3457844Z   pub_updater 0.3.0 (0.5.0 available)
+2025-07-15T11:27:57.3458285Z   riverpod_analyzer_utils 0.5.1 (0.5.10 available)
+2025-07-15T11:27:57.3458820Z   riverpod_generator 2.4.0 (2.6.5 available)
+2025-07-15T11:27:57.3459271Z   sentry 9.2.0 (9.4.1 available)
+2025-07-15T11:27:57.3459664Z   sentry_dio 9.2.0 (9.4.1 available)
+2025-07-15T11:27:57.3460079Z   sentry_flutter 9.2.0 (9.4.1 available)
+2025-07-15T11:27:57.3460820Z   share_plus 7.2.2 (11.0.0 available)
+2025-07-15T11:27:57.3461326Z   share_plus_platform_interface 3.4.0 (6.0.0 available)
+2025-07-15T11:27:57.3462195Z   shelf_web_socket 2.0.1 (3.0.0 available)
+2025-07-15T11:27:57.3462645Z   source_gen 1.5.0 (2.0.0 available)
+2025-07-15T11:27:57.3463069Z   source_helper 1.3.5 (1.3.6 available)
+2025-07-15T11:27:57.3463500Z   table_calendar 3.1.3 (3.2.0 available)
+2025-07-15T11:27:57.3463932Z   test_api 0.7.4 (0.7.6 available)
+2025-07-15T11:27:57.3464802Z ! test_utils 0.0.1 from path packages/test_utils (overridden in ./pubspec_overrides.yaml)
+2025-07-15T11:27:57.3465467Z   url_launcher 6.3.1 (6.3.2 available)
+2025-07-15T11:27:57.3465845Z   uuid 3.0.7 (4.5.1 available)
+2025-07-15T11:27:57.3466245Z   vector_math 2.1.4 (2.2.0 available)
+2025-07-15T11:27:57.3466643Z   very_good_analysis 5.1.0 (9.0.0 available)
+2025-07-15T11:27:57.3467063Z   vm_service 15.0.0 (15.0.2 available)
+2025-07-15T11:27:57.3467440Z   watcher 1.1.1 (1.1.2 available)
+2025-07-15T11:27:57.3467798Z   win32 5.13.0 (5.14.0 available)
+2025-07-15T11:27:57.3468142Z   xml 6.5.0 (6.6.0 available)
+2025-07-15T11:27:57.3468481Z Got dependencies!
+2025-07-15T11:27:57.3468786Z 1 package is discontinued.
+2025-07-15T11:27:57.3475443Z 64 packages have newer versions incompatible with dependency constraints.
+2025-07-15T11:27:57.3476174Z Try `flutter pub outdated` for more information.
+2025-07-15T11:27:59.3575652Z ##[group]Run if [ -f "melos.yaml" ]; then
+2025-07-15T11:27:59.3575985Z [36;1mif [ -f "melos.yaml" ]; then[0m
+2025-07-15T11:27:59.3576231Z [36;1m  melos bootstrap[0m
+2025-07-15T11:27:59.3576496Z [36;1melif [ -f "jo17_tactical_manager/melos.yaml" ]; then[0m
+2025-07-15T11:27:59.3576794Z [36;1m  cd jo17_tactical_manager[0m
+2025-07-15T11:27:59.3577018Z [36;1m  melos bootstrap[0m
+2025-07-15T11:27:59.3577212Z [36;1melse[0m
+2025-07-15T11:27:59.3577446Z [36;1m  echo "No melos.yaml found – skipping bootstrap."[0m
+2025-07-15T11:27:59.3577711Z [36;1mfi[0m
+2025-07-15T11:27:59.3606416Z shell: /usr/bin/bash -e {0}
+2025-07-15T11:27:59.3606653Z env:
+2025-07-15T11:27:59.3606898Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.32.6-x64
+2025-07-15T11:27:59.3607239Z   PUB_CACHE: /home/runner/.pub-cache
+2025-07-15T11:27:59.3607474Z ##[endgroup]
+2025-07-15T11:27:59.6816059Z melos bootstrap
+2025-07-15T11:27:59.6845051Z   └> /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T11:27:59.6866880Z 
+2025-07-15T11:27:59.6869633Z Running "flutter pub get" in workspace packages...
+2025-07-15T11:28:05.3273146Z   ✓ jo17_tactical_manager
+2025-07-15T11:28:05.3288428Z     └> .
+2025-07-15T11:28:05.3288950Z   ✓ test_utils
+2025-07-15T11:28:05.3290510Z     └> packages/test_utils
+2025-07-15T11:28:05.3291172Z 
+2025-07-15T11:28:05.3291583Z Linking workspace packages...
+2025-07-15T11:28:05.3649958Z   > SUCCESS
+2025-07-15T11:28:05.3650522Z 
+2025-07-15T11:28:05.3650719Z Generating IntelliJ IDE files...
+2025-07-15T11:28:05.3858033Z   > SUCCESS
+2025-07-15T11:28:05.3858237Z 
+2025-07-15T11:28:05.3859981Z  -> 2 packages bootstrapped
+2025-07-15T11:28:05.4125305Z ##[group]Run if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+2025-07-15T11:28:05.4125806Z [36;1mif [ -f "jo17_tactical_manager/pubspec.yaml" ]; then[0m
+2025-07-15T11:28:05.4126124Z [36;1m  cd jo17_tactical_manager[0m
+2025-07-15T11:28:05.4126354Z [36;1m  flutter test --coverage[0m
+2025-07-15T11:28:05.4126580Z [36;1m  ./coverage.sh[0m
+2025-07-15T11:28:05.4126797Z [36;1melif [ -f "pubspec.yaml" ]; then[0m
+2025-07-15T11:28:05.4127036Z [36;1m  flutter test --coverage[0m
+2025-07-15T11:28:05.4127251Z [36;1m  ./coverage.sh[0m
+2025-07-15T11:28:05.4127427Z [36;1melse[0m
+2025-07-15T11:28:05.4127638Z [36;1m  echo "ERROR: Could not find pubspec.yaml"[0m
+2025-07-15T11:28:05.4127889Z [36;1m  exit 1[0m
+2025-07-15T11:28:05.4128055Z [36;1mfi[0m
+2025-07-15T11:28:05.4157346Z shell: /usr/bin/bash -e {0}
+2025-07-15T11:28:05.4157568Z env:
+2025-07-15T11:28:05.4157915Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.32.6-x64
+2025-07-15T11:28:05.4158298Z   PUB_CACHE: /home/runner/.pub-cache
+2025-07-15T11:28:05.4158742Z ##[endgroup]
+2025-07-15T11:28:09.0174306Z 
+2025-07-15T11:28:18.1868220Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/club_model_test.dart: Club model toJson / fromJson round-trip
+2025-07-15T11:28:18.6455285Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widgets/heat_map_card_test.dart: HeatMapCard calls load on filter change
+2025-07-15T11:28:20.3165897Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/player_model_test.dart: Player model name combines first and last name
+2025-07-15T11:28:20.3203469Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/player_model_test.dart: Player model age calculation is correct
+2025-07-15T11:28:20.3239116Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/player_model_test.dart: Player model attendancePercentage returns 0 if no trainings
+2025-07-15T11:28:20.3261551Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/player_model_test.dart: Player model attendancePercentage calculates correctly
+2025-07-15T11:28:20.3284927Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/player_model_test.dart: Player model matchMinutesPercentage returns 0 if no selection
+2025-07-15T11:28:20.3310557Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/player_model_test.dart: Player model matchMinutesPercentage calculates correctly
+2025-07-15T11:28:20.3337485Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/player_model_test.dart: Player model averageMinutesPerMatch returns 0 if matchesPlayed is 0
+2025-07-15T11:28:20.3367290Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/player_model_test.dart: Player model averageMinutesPerMatch calculates correctly
+2025-07-15T11:28:21.1348276Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/organization_model_test.dart: Organization model toJson / fromJson round-trip
+2025-07-15T11:28:22.2202255Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/annual_planning/periodization_plan_test.dart: PeriodizationPlan templates KNVB Youth U17 round-trip JSON
+2025-07-15T11:28:22.2233021Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/annual_planning/periodization_plan_test.dart: PeriodizationPlan templates Block periodization template parameters
+2025-07-15T11:28:23.2193852Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/annual_planning/morphocycle_test.dart: Morphocycle KNVB standard morphocycle JSON roundtrip
+2025-07-15T11:28:23.2219295Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/annual_planning/morphocycle_test.dart: Morphocycle Helpers classify load correctly
+2025-07-15T11:28:24.2099398Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/annual_planning/season_plan_test.dart: SeasonPlan JO17 Dutch season JSON roundtrip
+2025-07-15T11:28:25.0380828Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Preparation period JSON roundtrip
+2025-07-15T11:28:25.0419218Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/models/annual_planning/training_period_test.dart: TrainingPeriod templates Transition period has lower intensity
+2025-07-15T11:28:26.2558142Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/core/result_test.dart: Result success returns data
+2025-07-15T11:28:26.2583509Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/core/result_test.dart: Result failure returns error
+2025-07-15T11:28:26.2613425Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/core/result_test.dart: Result when helper works
+2025-07-15T11:28:28.0234859Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController toggleDrawingMode flips the boolean flag
+2025-07-15T11:28:28.0319243Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController assignPlayerToPosition moves player from bench onto the field
+2025-07-15T11:28:28.0355248Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/controllers/lineup_builder_controller_test.dart: LineupBuilderController moveFieldPlayerToBench moves player from field to bench
+2025-07-15T11:28:33.7374474Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns false when currentUser is null
+2025-07-15T11:28:33.7414500Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/config/supabase_config_test.dart: SupabaseConfig isAuthenticated returns true when currentUser is not null
+2025-07-15T11:28:34.5855616Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/providers/players_notifier_test.dart: PlayersNotifier loads data successfully
+2025-07-15T11:28:36.1554638Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/providers/current_profile_provider_test.dart: currentProfileProvider emits data
+2025-07-15T11:28:39.4688193Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Initial state is select tool & half field
+2025-07-15T11:28:39.4761254Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Selecting line type switches tool to line
+2025-07-15T11:28:39.4825241Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/providers/field_diagram_provider_test.dart: FieldDiagramProvider basic state transitions Change field type adds to history and supports undo/redo
+2025-07-15T11:28:41.6227210Z ❎ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests default (select) tool (skipped)
+2025-07-15T11:28:41.6229590Z ❎ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/golden/field_diagram_toolbar_test.dart: FieldDiagramToolbar golden tests line tool expanded (skipped)
+2025-07-15T11:28:41.7876628Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/screens/training_edit_screen_test.dart: prefills form with existing training data
+2025-07-15T11:28:42.1443583Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/screens/training_edit_screen_test.dart: shows validation error on invalid duration
+2025-07-15T11:28:42.3150350Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/screens/training_edit_screen_test.dart: successful save calls repository update
+2025-07-15T11:28:45.1806574Z ##[group]✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/pdf/player_assessment_pdf_generator_test.dart: PlayerAssessmentPdfGenerator generates a valid PDF
+2025-07-15T11:28:45.1810526Z Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:45.1811665Z Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:45.1812753Z ##[endgroup]
+2025-07-15T11:28:45.1965684Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile light mode
+2025-07-15T11:28:45.3465952Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/golden/training_attendance_screen_test.dart: TrainingAttendanceScreen golden tests mobile dark mode
+2025-07-15T11:28:47.7785795Z ##[group]✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/pdf/match_report_pdf_generator_test.dart: MatchReportPdfGenerator generates a valid PDF
+2025-07-15T11:28:47.7787363Z Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:47.7793065Z Unable to find a font to draw "–" (U+2013) try to provide a TextStyle.fontFallback
+2025-07-15T11:28:47.7795082Z Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:47.7795977Z Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+2025-07-15T11:28:47.7796669Z Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+2025-07-15T11:28:47.7797404Z ##[endgroup]
+2025-07-15T11:28:48.7423064Z ##[group]✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/pdf/pdf_generators_test.dart: PDF Generators MatchReportPdfGenerator produces valid PDF bytes
+2025-07-15T11:28:48.7424403Z Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:48.7425818Z Unable to find a font to draw "–" (U+2013) try to provide a TextStyle.fontFallback
+2025-07-15T11:28:48.7428699Z Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:48.7431266Z Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+2025-07-15T11:28:48.7432748Z Unable to find a font to draw "—" (U+2014) try to provide a TextStyle.fontFallback
+2025-07-15T11:28:48.7433769Z ##[endgroup]
+2025-07-15T11:28:48.7837775Z ##[group]✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/pdf/pdf_generators_test.dart: PDF Generators PlayerAssessmentPdfGenerator produces valid PDF bytes
+2025-07-15T11:28:48.7841020Z Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:48.7843597Z Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:48.7855261Z ##[endgroup]
+2025-07-15T11:28:48.8333948Z ##[group]✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/pdf/pdf_generators_test.dart: PDF Generators TrainingSessionPdfGenerator produces valid PDF bytes
+2025-07-15T11:28:48.8336567Z Helvetica-Bold has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:48.8338815Z Helvetica has no Unicode support see https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
+2025-07-15T11:28:48.8339927Z Unable to find a font to draw "✓" (U+2713) try to provide a TextStyle.fontFallback
+2025-07-15T11:28:48.8340979Z ##[endgroup]
+2025-07-15T11:28:50.3771200Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_profile_cache_test.dart: HiveProfileCache writes and reads profile within TTL
+2025-07-15T11:28:50.3925382Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_profile_cache_test.dart: HiveProfileCache returns null after TTL expiration
+2025-07-15T11:28:50.4014383Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_profile_cache_test.dart: HiveProfileCache clear removes cached profile
+2025-07-15T11:28:51.3149488Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_training_cache_test.dart: HiveTrainingCache write & read list
+2025-07-15T11:28:51.3835700Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_training_cache_test.dart: HiveTrainingCache returns null after TTL expiry
+2025-07-15T11:28:52.4231255Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_key_manager_test.dart: generates and stores key
+2025-07-15T11:28:52.4264498Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_key_manager_test.dart: returns cached key on subsequent calls
+2025-07-15T11:28:53.5398002Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_player_cache_test.dart: HivePlayerCache write & read list
+2025-07-15T11:28:53.6150112Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/hive/hive_player_cache_test.dart: HivePlayerCache returns null after TTL expiry
+2025-07-15T11:28:54.5676910Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateDuration null or empty
+2025-07-15T11:28:54.5714670Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateDuration non numeric
+2025-07-15T11:28:54.5744810Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateDuration below minimum
+2025-07-15T11:28:54.5763589Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateDuration above maximum
+2025-07-15T11:28:54.5785181Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateDuration within range
+2025-07-15T11:28:54.5806809Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateRequired null value returns error
+2025-07-15T11:28:54.5825525Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateRequired non-null passes
+2025-07-15T11:28:54.5850481Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateDate null date
+2025-07-15T11:28:54.5883880Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateDate far future date
+2025-07-15T11:28:54.5903640Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/validators/training_validators_test.dart: validateDate valid date
+2025-07-15T11:28:55.8896179Z ##[group]✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/app_logger_test.dart: AppLogger does not throw on various levels
+2025-07-15T11:28:55.8910682Z [38;5;244m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+2025-07-15T11:28:55.8911408Z [38;5;244m│  trace[0m
+2025-07-15T11:28:55.8912532Z [38;5;244m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+2025-07-15T11:28:55.8913506Z ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+2025-07-15T11:28:55.8923179Z │ 🐛 debug
+2025-07-15T11:28:55.8923935Z └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+2025-07-15T11:28:55.8925254Z [38;5;12m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+2025-07-15T11:28:55.8925978Z [38;5;12m│ 💡 info[0m
+2025-07-15T11:28:55.8926829Z [38;5;12m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+2025-07-15T11:28:55.8927951Z [38;5;208m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+2025-07-15T11:28:55.8928664Z [38;5;208m│ ⚠️ warn[0m
+2025-07-15T11:28:55.8931010Z [38;5;208m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+2025-07-15T11:28:55.8932898Z [38;5;196m┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+2025-07-15T11:28:55.8939317Z [38;5;196m│ ⛔ error[0m
+2025-07-15T11:28:55.8940162Z [38;5;196m└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+2025-07-15T11:28:55.8941170Z ##[endgroup]
+2025-07-15T11:28:56.6760607Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/utils/heatmap_utils_test.dart: binEvents counts correctly
+2025-07-15T11:28:58.4254503Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/permission_service_test.dart: PermissionService identifies player & parent as view-only users
+2025-07-15T11:28:58.4277914Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/permission_service_test.dart: PermissionService canManagePlayers for roles
+2025-07-15T11:28:58.4300694Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/permission_service_test.dart: PermissionService access SVS depends on tier and role
+2025-07-15T11:29:00.8488979Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match_detail_screen_test.dart: MatchDetailScreen renders basic match information
+2025-07-15T11:29:03.0426148Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Coach role shows training & lineup actions and demo banner
+2025-07-15T11:29:03.3335790Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Player role hides action icons but shows banner
+2025-07-15T11:29:03.5448554Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/dashboard_screen_test.dart: DashboardScreen RBAC & Demo banner Demo mode off hides RBAC banner
+2025-07-15T11:29:04.8996337Z ##[group]❌ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart: MatchDetailScreen widget tests renders basic match information (failed)
+2025-07-15T11:29:04.9001309Z ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+2025-07-15T11:29:04.9002555Z The following assertion was thrown building MatchDetailScreen(dirty, dependencies:
+2025-07-15T11:29:04.9003408Z [UncontrolledProviderScope], state: _MatchDetailScreenState#d7d32):
+2025-07-15T11:29:04.9004381Z You must initialize the supabase instance before calling Supabase.instance
+2025-07-15T11:29:04.9005028Z 'package:supabase_flutter/src/supabase.dart':
+2025-07-15T11:29:04.9005561Z Failed assertion: line 45 pos 7: '_instance._initialized'
+2025-07-15T11:29:04.9005919Z 
+2025-07-15T11:29:04.9006079Z The relevant error-causing widget was:
+2025-07-15T11:29:04.9006462Z   MatchDetailScreen
+2025-07-15T11:29:04.9007238Z   MatchDetailScreen:file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:70:42
+2025-07-15T11:29:04.9007967Z 
+2025-07-15T11:29:04.9008157Z When the exception was thrown, this was the stack:
+2025-07-15T11:29:04.9009329Z #1      _ProviderStateSubscription.read (package:riverpod/src/framework/provider_base.dart:181:28)
+2025-07-15T11:29:04.9010341Z #2      ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:568:8)
+2025-07-15T11:29:04.9011440Z #3      _MatchDetailScreenState.canManage (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:37:26)
+2025-07-15T11:29:04.9013013Z #4      _MatchDetailScreenState.build (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:64:15)
+2025-07-15T11:29:04.9014185Z #5      StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+2025-07-15T11:29:04.9015119Z #6      ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+2025-07-15T11:29:04.9016220Z #7      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+2025-07-15T11:29:04.9017236Z #8      StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9018162Z #9      Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9019391Z #10     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+2025-07-15T11:29:04.9020372Z #11     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+2025-07-15T11:29:04.9021406Z #12     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+2025-07-15T11:29:04.9022324Z ...     Normal element mounting (228 frames)
+2025-07-15T11:29:04.9023043Z #240    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9050398Z #241    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+2025-07-15T11:29:04.9051537Z #242    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+2025-07-15T11:29:04.9052478Z ...     Normal element mounting (463 frames)
+2025-07-15T11:29:04.9052953Z #705    _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+2025-07-15T11:29:04.9053426Z ...     Normal element mounting (9 frames)
+2025-07-15T11:29:04.9053950Z #714    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9054863Z #715    Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+2025-07-15T11:29:04.9055689Z #716    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9056507Z #717    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9057228Z #718    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9058170Z #719    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9059079Z #720    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9060359Z #721    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9061351Z #722    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9062662Z #723    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9063526Z #724    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9064759Z #725    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9065997Z #726    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9067056Z #727    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9067963Z #728    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9069348Z #729    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9070457Z #730    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9082721Z #731    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9084261Z #732    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9085279Z #733    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9086168Z #734    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9087186Z #735    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9088211Z #736    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9089351Z #737    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9102088Z #738    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9103037Z #739    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9145527Z #740    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9146862Z #741    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9147795Z #742    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9148593Z #743    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9149541Z #744    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9150517Z #745    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9151559Z #746    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9152800Z #747    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9162222Z #748    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9163192Z #749    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9164413Z #750    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9165365Z #751    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9173915Z #752    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9174928Z #753    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9175804Z #754    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9176619Z #755    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9177394Z #756    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9178119Z #757    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9178895Z #758    _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+2025-07-15T11:29:04.9179632Z #759    _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+2025-07-15T11:29:04.9180355Z #760    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9181180Z #761    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9182269Z #762    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9182999Z #763    StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+2025-07-15T11:29:04.9183795Z #764    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9184765Z #765    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9185704Z #766    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9186723Z #767    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9187542Z #768    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9188334Z #769    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9189022Z #770    RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+2025-07-15T11:29:04.9189747Z #771    RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+2025-07-15T11:29:04.9190560Z #772    RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+2025-07-15T11:29:04.9191386Z #773    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9192508Z #774    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+2025-07-15T11:29:04.9193433Z #775    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+2025-07-15T11:29:04.9194553Z #776    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+2025-07-15T11:29:04.9195782Z #777    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+2025-07-15T11:29:04.9196889Z #778    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+2025-07-15T11:29:04.9197963Z #779    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+2025-07-15T11:29:04.9198921Z #780    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+2025-07-15T11:29:04.9200130Z #781    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+2025-07-15T11:29:04.9201233Z #784    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9202517Z #785    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+2025-07-15T11:29:04.9203648Z #786    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+2025-07-15T11:29:04.9204812Z #789    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9205705Z #790    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+2025-07-15T11:29:04.9207016Z #791    main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:60:20)
+2025-07-15T11:29:04.9208439Z #792    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+2025-07-15T11:29:04.9209541Z #793    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+2025-07-15T11:29:04.9210499Z #795    ProviderElementBase.watch (package:riverpod/src/framework/element.dart:742:20)
+2025-07-15T11:29:04.9211561Z #796    userRoleProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:31:27)
+2025-07-15T11:29:04.9212904Z #797    ProviderContainer.listen (package:riverpod/src/framework/container.dart:280:21)
+2025-07-15T11:29:04.9213983Z #798    ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/consumer.dart:564:25)
+2025-07-15T11:29:04.9215087Z #799    _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:674:23)
+2025-07-15T11:29:04.9215916Z #800    ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:557:26)
+2025-07-15T11:29:04.9217076Z #801    _MatchDetailScreenState.canManage (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:37:26)
+2025-07-15T11:29:04.9218337Z #802    _MatchDetailScreenState.build (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:64:15)
+2025-07-15T11:29:04.9219364Z #803    StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+2025-07-15T11:29:04.9220239Z #804    ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+2025-07-15T11:29:04.9221470Z #805    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+2025-07-15T11:29:04.9222752Z #806    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9223585Z #807    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9224497Z #808    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+2025-07-15T11:29:04.9225402Z #809    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+2025-07-15T11:29:04.9226252Z #810    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+2025-07-15T11:29:04.9226870Z ...     Normal element mounting (228 frames)
+2025-07-15T11:29:04.9227435Z #1038   Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9228415Z #1039   MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+2025-07-15T11:29:04.9229548Z #1040   MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+2025-07-15T11:29:04.9230481Z ...     Normal element mounting (463 frames)
+2025-07-15T11:29:04.9231269Z #1503   _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+2025-07-15T11:29:04.9232265Z ...     Normal element mounting (9 frames)
+2025-07-15T11:29:04.9232991Z #1512   Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9233848Z #1513   Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+2025-07-15T11:29:04.9234895Z #1514   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9235776Z #1515   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9236556Z #1516   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9237511Z #1517   _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9238477Z #1518   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9239408Z #1519   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9240422Z #1520   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9241302Z #1521   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9242357Z #1522   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9243220Z #1523   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9244267Z #1524   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9245167Z #1525   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9245935Z #1526   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9246914Z #1527   _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9247878Z #1528   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9248763Z #1529   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9249746Z #1530   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9250591Z #1531   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9251431Z #1532   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9252532Z #1533   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9253457Z #1534   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9254604Z #1535   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9255676Z #1536   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9256520Z #1537   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9257342Z #1538   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9258255Z #1539   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9259156Z #1540   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9259946Z #1541   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9260788Z #1542   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9261975Z #1543   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9263034Z #1544   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9263908Z #1545   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9265268Z #1546   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9266089Z #1547   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9267015Z #1548   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9267905Z #1549   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9269487Z #1550   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9270250Z #1551   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9271066Z #1552   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9272198Z #1553   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9272918Z #1554   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9273669Z #1555   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9274910Z #1556   _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+2025-07-15T11:29:04.9275784Z #1557   _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+2025-07-15T11:29:04.9276553Z #1558   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9277521Z #1559   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9278450Z #1560   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9279248Z #1561   StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+2025-07-15T11:29:04.9280021Z #1562   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9280906Z #1563   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9282188Z #1564   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9283091Z #1565   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9283909Z #1566   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9285239Z #1567   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9286065Z #1568   RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+2025-07-15T11:29:04.9286846Z #1569   RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+2025-07-15T11:29:04.9287612Z #1570   RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+2025-07-15T11:29:04.9288348Z #1571   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9289030Z #1572   BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+2025-07-15T11:29:04.9290033Z #1573   BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+2025-07-15T11:29:04.9290876Z #1574   BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+2025-07-15T11:29:04.9292137Z #1575   AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+2025-07-15T11:29:04.9293361Z #1576   RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+2025-07-15T11:29:04.9294637Z #1577   SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+2025-07-15T11:29:04.9295912Z #1578   SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+2025-07-15T11:29:04.9297015Z #1579   AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+2025-07-15T11:29:04.9298049Z #1582   TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9299177Z #1583   AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+2025-07-15T11:29:04.9300233Z #1584   WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+2025-07-15T11:29:04.9301174Z #1587   TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9302278Z #1588   WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+2025-07-15T11:29:04.9303517Z #1589   main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:60:20)
+2025-07-15T11:29:04.9304967Z #1590   testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+2025-07-15T11:29:04.9305997Z #1591   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+2025-07-15T11:29:04.9307345Z #1595   Supabase.instance (package:supabase_flutter/src/supabase.dart:45:7)
+2025-07-15T11:29:04.9308098Z #1596   new AuthService (package:jo17_tactical_manager/services/auth_service.dart:7:40)
+2025-07-15T11:29:04.9309097Z #1597   authServiceProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:9:60)
+2025-07-15T11:29:04.9310105Z #1598   ProviderElementBase.watch (package:riverpod/src/framework/element.dart:714:12)
+2025-07-15T11:29:04.9311099Z #1599   userRoleProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:31:27)
+2025-07-15T11:29:04.9312514Z #1600   ProviderContainer.listen (package:riverpod/src/framework/container.dart:280:21)
+2025-07-15T11:29:04.9313523Z #1601   ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/consumer.dart:564:25)
+2025-07-15T11:29:04.9314608Z #1602   _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:674:23)
+2025-07-15T11:29:04.9315409Z #1603   ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:557:26)
+2025-07-15T11:29:04.9316586Z #1604   _MatchDetailScreenState.canManage (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:37:26)
+2025-07-15T11:29:04.9318615Z #1605   _MatchDetailScreenState.build (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:64:15)
+2025-07-15T11:29:04.9319708Z #1606   StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+2025-07-15T11:29:04.9320639Z #1607   ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+2025-07-15T11:29:04.9321878Z #1608   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+2025-07-15T11:29:04.9322916Z #1609   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9323785Z #1610   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9324767Z #1611   ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+2025-07-15T11:29:04.9325887Z #1612   StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+2025-07-15T11:29:04.9326824Z #1613   ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+2025-07-15T11:29:04.9327508Z ...     Normal element mounting (228 frames)
+2025-07-15T11:29:04.9328429Z #1841   Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9329478Z #1842   MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+2025-07-15T11:29:04.9330641Z #1843   MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+2025-07-15T11:29:04.9331410Z ...     Normal element mounting (463 frames)
+2025-07-15T11:29:04.9332457Z #2306   _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+2025-07-15T11:29:04.9333248Z ...     Normal element mounting (9 frames)
+2025-07-15T11:29:04.9333882Z #2315   Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9335044Z #2316   Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+2025-07-15T11:29:04.9335971Z #2317   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9336852Z #2318   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9337629Z #2319   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9338790Z #2320   _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9339752Z #2321   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9340636Z #2322   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9341549Z #2323   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9342638Z #2324   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9343467Z #2325   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9344437Z #2326   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9345361Z #2327   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9346247Z #2328   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9347038Z #2329   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9348010Z #2330   _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9348975Z #2331   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9350153Z #2332   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9351157Z #2333   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9352307Z #2334   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9353173Z #2335   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9354147Z #2336   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9355085Z #2337   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9356096Z #2338   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9356970Z #2339   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9357784Z #2340   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9358632Z #2341   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9359544Z #2342   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9360873Z #2343   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9361944Z #2344   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9362783Z #2345   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9363691Z #2346   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9364843Z #2347   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9365721Z #2348   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9366544Z #2349   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9367399Z #2350   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9368311Z #2351   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9369408Z #2352   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9370198Z #2353   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9371150Z #2354   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9372317Z #2355   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9373199Z #2356   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9373985Z #2357   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9374967Z #2358   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9375810Z #2359   _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+2025-07-15T11:29:04.9376643Z #2360   _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+2025-07-15T11:29:04.9377437Z #2361   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9378307Z #2362   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9379241Z #2363   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9380068Z #2364   StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+2025-07-15T11:29:04.9380934Z #2365   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9382161Z #2366   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9383071Z #2367   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9383851Z #2368   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9384756Z #2369   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9385590Z #2370   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9386379Z #2371   RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+2025-07-15T11:29:04.9387220Z #2372   RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+2025-07-15T11:29:04.9388101Z #2373   RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+2025-07-15T11:29:04.9388918Z #2374   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9389699Z #2375   BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+2025-07-15T11:29:04.9390593Z #2376   BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+2025-07-15T11:29:04.9391521Z #2377   BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+2025-07-15T11:29:04.9392884Z #2378   AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+2025-07-15T11:29:04.9394614Z #2379   RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+2025-07-15T11:29:04.9395829Z #2380   SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+2025-07-15T11:29:04.9396820Z #2381   SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+2025-07-15T11:29:04.9398037Z #2382   AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+2025-07-15T11:29:04.9399197Z #2385   TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9400214Z #2386   AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+2025-07-15T11:29:04.9401390Z #2387   WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+2025-07-15T11:29:04.9402738Z #2390   TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9403713Z #2391   WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+2025-07-15T11:29:04.9405403Z #2392   main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:60:20)
+2025-07-15T11:29:04.9406844Z #2393   testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+2025-07-15T11:29:04.9408018Z #2395   testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:190:25)
+2025-07-15T11:29:04.9409110Z #2396   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:19)
+2025-07-15T11:29:04.9410111Z #2398   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1053:5)
+2025-07-15T11:29:04.9411043Z #2401   TestWidgetsFlutterBinding._runTest (package:flutter_test/src/binding.dart:1038:10)
+2025-07-15T11:29:04.9412572Z #2402   AutomatedTestWidgetsFlutterBinding.runTest.<anonymous closure> (package:flutter_test/src/binding.dart:1573:24)
+2025-07-15T11:29:04.9413846Z #2403   FakeAsync.run.<anonymous closure>.<anonymous closure> (package:fake_async/fake_async.dart:182:47)
+2025-07-15T11:29:04.9420567Z #2408   withClock (package:clock/src/default.dart:52:10)
+2025-07-15T11:29:04.9421320Z #2409   FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:182:15)
+2025-07-15T11:29:04.9422418Z #2414   FakeAsync.run (package:fake_async/fake_async.dart:181:52)
+2025-07-15T11:29:04.9423336Z #2415   AutomatedTestWidgetsFlutterBinding.runTest (package:flutter_test/src/binding.dart:1570:15)
+2025-07-15T11:29:04.9424629Z #2416   testWidgets.<anonymous closure> (package:flutter_test/src/widget_tester.dart:185:24)
+2025-07-15T11:29:04.9425702Z #2417   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:229:19)
+2025-07-15T11:29:04.9426870Z #2419   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:228:9)
+2025-07-15T11:29:04.9427925Z #2424   Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:227:13)
+2025-07-15T11:29:04.9429047Z #2425   Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:17)
+2025-07-15T11:29:04.9430229Z #2430   Invoker._waitForOutstandingCallbacks (package:test_api/src/backend/invoker.dart:254:5)
+2025-07-15T11:29:04.9431458Z #2431   Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:394:17)
+2025-07-15T11:29:04.9433108Z #2433   Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:392:11)
+2025-07-15T11:29:04.9434526Z #2438   Invoker._onRun.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:383:9)
+2025-07-15T11:29:04.9435539Z #2439   Invoker._guardIfGuarded (package:test_api/src/backend/invoker.dart:426:15)
+2025-07-15T11:29:04.9436648Z #2440   Invoker._onRun.<anonymous closure> (package:test_api/src/backend/invoker.dart:382:7)
+2025-07-15T11:29:04.9437497Z #2447   Invoker._onRun (package:test_api/src/backend/invoker.dart:381:11)
+2025-07-15T11:29:04.9438349Z #2448   LiveTestController.run (package:test_api/src/backend/live_test_controller.dart:153:11)
+2025-07-15T11:29:04.9439457Z #2449   RemoteListener._runLiveTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:273:16)
+2025-07-15T11:29:04.9440557Z #2454   RemoteListener._runLiveTest (package:test_api/src/backend/remote_listener.dart:272:5)
+2025-07-15T11:29:04.9441922Z #2455   RemoteListener._serializeTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:220:7)
+2025-07-15T11:29:04.9443008Z #2473   _GuaranteeSink.add (package:stream_channel/src/guarantee_channel.dart:125:12)
+2025-07-15T11:29:04.9443963Z #2474   new _MultiChannel.<anonymous closure> (package:stream_channel/src/multi_channel.dart:159:31)
+2025-07-15T11:29:04.9445048Z #2476   CastStreamSubscription._onData (dart:_internal/async_cast.dart:96:11)
+2025-07-15T11:29:04.9446185Z #2502   new _WebSocketImpl._fromSocket.<anonymous closure> (dart:_http/websocket_impl.dart:1258:31)
+2025-07-15T11:29:04.9447233Z #2508   _WebSocketProtocolTransformer._messageFrameEnd (dart:_http/websocket_impl.dart:348:23)
+2025-07-15T11:29:04.9448202Z #2509   _WebSocketProtocolTransformer.add (dart:_http/websocket_impl.dart:238:46)
+2025-07-15T11:29:04.9448969Z #2517   _Socket._onData (dart:io-patch/socket_patch.dart:2907:41)
+2025-07-15T11:29:04.9449692Z #2524   new _RawSocket.<anonymous closure> (dart:io-patch/socket_patch.dart:2326:31)
+2025-07-15T11:29:04.9450562Z #2525   _NativeSocket.issueReadEvent.issue (dart:io-patch/socket_patch.dart:1649:14)
+2025-07-15T11:29:04.9451582Z #2529   testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:190:25)
+2025-07-15T11:29:04.9452917Z #2530   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:19)
+2025-07-15T11:29:04.9453922Z #2532   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1053:5)
+2025-07-15T11:29:04.9455049Z #2535   TestWidgetsFlutterBinding._runTest (package:flutter_test/src/binding.dart:1038:10)
+2025-07-15T11:29:04.9456204Z #2536   AutomatedTestWidgetsFlutterBinding.runTest.<anonymous closure> (package:flutter_test/src/binding.dart:1573:24)
+2025-07-15T11:29:04.9457463Z #2537   FakeAsync.run.<anonymous closure>.<anonymous closure> (package:fake_async/fake_async.dart:182:47)
+2025-07-15T11:29:04.9458302Z #2542   withClock (package:clock/src/default.dart:52:10)
+2025-07-15T11:29:04.9458978Z #2543   FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:182:15)
+2025-07-15T11:29:04.9459677Z #2548   FakeAsync.run (package:fake_async/fake_async.dart:181:52)
+2025-07-15T11:29:04.9460592Z #2549   AutomatedTestWidgetsFlutterBinding.runTest (package:flutter_test/src/binding.dart:1570:15)
+2025-07-15T11:29:04.9461970Z #2550   testWidgets.<anonymous closure> (package:flutter_test/src/widget_tester.dart:185:24)
+2025-07-15T11:29:04.9463098Z #2551   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:229:19)
+2025-07-15T11:29:04.9464429Z #2553   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:228:9)
+2025-07-15T11:29:04.9465504Z #2558   Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:227:13)
+2025-07-15T11:29:04.9466639Z #2559   Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:17)
+2025-07-15T11:29:04.9467809Z #2564   Invoker._waitForOutstandingCallbacks (package:test_api/src/backend/invoker.dart:254:5)
+2025-07-15T11:29:04.9469041Z #2565   Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:394:17)
+2025-07-15T11:29:04.9470426Z #2567   Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:392:11)
+2025-07-15T11:29:04.9472128Z #2572   Invoker._onRun.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:383:9)
+2025-07-15T11:29:04.9473171Z #2573   Invoker._guardIfGuarded (package:test_api/src/backend/invoker.dart:426:15)
+2025-07-15T11:29:04.9474199Z #2574   Invoker._onRun.<anonymous closure> (package:test_api/src/backend/invoker.dart:382:7)
+2025-07-15T11:29:04.9474962Z #2581   Invoker._onRun (package:test_api/src/backend/invoker.dart:381:11)
+2025-07-15T11:29:04.9475856Z #2582   LiveTestController.run (package:test_api/src/backend/live_test_controller.dart:153:11)
+2025-07-15T11:29:04.9476994Z #2583   RemoteListener._runLiveTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:273:16)
+2025-07-15T11:29:04.9478128Z #2588   RemoteListener._runLiveTest (package:test_api/src/backend/remote_listener.dart:272:5)
+2025-07-15T11:29:04.9479257Z #2589   RemoteListener._serializeTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:220:7)
+2025-07-15T11:29:04.9480350Z #2607   _GuaranteeSink.add (package:stream_channel/src/guarantee_channel.dart:125:12)
+2025-07-15T11:29:04.9481521Z #2608   new _MultiChannel.<anonymous closure> (package:stream_channel/src/multi_channel.dart:159:31)
+2025-07-15T11:29:04.9482751Z #2610   CastStreamSubscription._onData (dart:_internal/async_cast.dart:96:11)
+2025-07-15T11:29:04.9483681Z #2636   new _WebSocketImpl._fromSocket.<anonymous closure> (dart:_http/websocket_impl.dart:1258:31)
+2025-07-15T11:29:04.9484812Z #2642   _WebSocketProtocolTransformer._messageFrameEnd (dart:_http/websocket_impl.dart:348:23)
+2025-07-15T11:29:04.9485775Z #2643   _WebSocketProtocolTransformer.add (dart:_http/websocket_impl.dart:238:46)
+2025-07-15T11:29:04.9486529Z #2651   _Socket._onData (dart:io-patch/socket_patch.dart:2907:41)
+2025-07-15T11:29:04.9487255Z #2658   new _RawSocket.<anonymous closure> (dart:io-patch/socket_patch.dart:2326:31)
+2025-07-15T11:29:04.9488109Z #2659   _NativeSocket.issueReadEvent.issue (dart:io-patch/socket_patch.dart:1649:14)
+2025-07-15T11:29:04.9488974Z (elided 214 frames from class _AssertionError, dart:async, and package:stack_trace)
+2025-07-15T11:29:04.9489479Z 
+2025-07-15T11:29:04.9490162Z ════════════════════════════════════════════════════════════════════════════════════════════════════
+2025-07-15T11:29:04.9491108Z ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+2025-07-15T11:29:04.9492270Z The following assertion was thrown building MatchDetailScreen(dirty, dependencies:
+2025-07-15T11:29:04.9493121Z [UncontrolledProviderScope], state: _MatchDetailScreenState#d7d32):
+2025-07-15T11:29:04.9493891Z You must initialize the supabase instance before calling Supabase.instance
+2025-07-15T11:29:04.9494673Z 'package:supabase_flutter/src/supabase.dart':
+2025-07-15T11:29:04.9495203Z Failed assertion: line 45 pos 7: '_instance._initialized'
+2025-07-15T11:29:04.9495573Z 
+2025-07-15T11:29:04.9495721Z The relevant error-causing widget was:
+2025-07-15T11:29:04.9496188Z   MatchDetailScreen
+2025-07-15T11:29:04.9497009Z   MatchDetailScreen:file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:70:42
+2025-07-15T11:29:04.9497777Z 
+2025-07-15T11:29:04.9497967Z When the exception was thrown, this was the stack:
+2025-07-15T11:29:04.9498748Z #1      _ProviderStateSubscription.read (package:riverpod/src/framework/provider_base.dart:181:28)
+2025-07-15T11:29:04.9499749Z #2      ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:568:8)
+2025-07-15T11:29:04.9500870Z #3      _MatchDetailScreenState.canManage (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:37:26)
+2025-07-15T11:29:04.9502387Z #4      _MatchDetailScreenState.build (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:64:15)
+2025-07-15T11:29:04.9503434Z #5      StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+2025-07-15T11:29:04.9504459Z #6      ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+2025-07-15T11:29:04.9505689Z #7      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+2025-07-15T11:29:04.9506689Z #8      StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9507523Z #9      Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9508284Z #10     BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+2025-07-15T11:29:04.9509156Z #11     BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+2025-07-15T11:29:04.9510017Z #12     BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+2025-07-15T11:29:04.9510792Z #13     AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+2025-07-15T11:29:04.9511459Z #14     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+2025-07-15T11:29:04.9512398Z #15     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+2025-07-15T11:29:04.9513631Z #16     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+2025-07-15T11:29:04.9514926Z #17     AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+2025-07-15T11:29:04.9516001Z #20     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9516955Z #21     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+2025-07-15T11:29:04.9518046Z #22     WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:720:23)
+2025-07-15T11:29:04.9519012Z #25     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9519888Z #26     WidgetTester.pumpAndSettle (package:flutter_test/src/widget_tester.dart:713:27)
+2025-07-15T11:29:04.9521191Z #27     main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:74:20)
+2025-07-15T11:29:04.9522838Z #28     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+2025-07-15T11:29:04.9523874Z #29     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+2025-07-15T11:29:04.9524879Z #31     ProviderElementBase.watch (package:riverpod/src/framework/element.dart:742:20)
+2025-07-15T11:29:04.9525893Z #32     userRoleProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:31:27)
+2025-07-15T11:29:04.9526849Z #33     ProviderContainer.listen (package:riverpod/src/framework/container.dart:280:21)
+2025-07-15T11:29:04.9527812Z #34     ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/consumer.dart:564:25)
+2025-07-15T11:29:04.9528665Z #35     _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:674:23)
+2025-07-15T11:29:04.9529441Z #36     ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:557:26)
+2025-07-15T11:29:04.9530580Z #37     _MatchDetailScreenState.canManage (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:37:26)
+2025-07-15T11:29:04.9532086Z #38     _MatchDetailScreenState.build (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:64:15)
+2025-07-15T11:29:04.9533063Z #39     StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+2025-07-15T11:29:04.9533909Z #40     ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+2025-07-15T11:29:04.9535056Z #41     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+2025-07-15T11:29:04.9536078Z #42     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9537000Z #43     Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9537858Z #44     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+2025-07-15T11:29:04.9539022Z #45     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+2025-07-15T11:29:04.9539927Z #46     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+2025-07-15T11:29:04.9540595Z ...     Normal element mounting (228 frames)
+2025-07-15T11:29:04.9541240Z #274    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9542515Z #275    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+2025-07-15T11:29:04.9543612Z #276    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+2025-07-15T11:29:04.9544538Z ...     Normal element mounting (463 frames)
+2025-07-15T11:29:04.9545308Z #739    _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+2025-07-15T11:29:04.9546087Z ...     Normal element mounting (9 frames)
+2025-07-15T11:29:04.9546747Z #748    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9547893Z #749    Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+2025-07-15T11:29:04.9548866Z #750    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9549797Z #751    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9550634Z #752    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9551607Z #753    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9552888Z #754    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9553795Z #755    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9554975Z #756    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9555922Z #757    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9556829Z #758    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9557675Z #759    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9558596Z #760    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9559520Z #761    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9560326Z #762    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9561321Z #763    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9562645Z #764    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9563601Z #765    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9564862Z #766    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9565767Z #767    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9566507Z #768    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9567336Z #769    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9568278Z #770    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9569325Z #771    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9569832Z #772    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9570289Z #773    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9570752Z #774    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9571432Z #775    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9572252Z #776    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9572695Z #777    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9573149Z #778    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9573645Z #779    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9574527Z #780    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9575218Z #781    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9575662Z #782    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9576133Z #783    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9576628Z #784    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9577266Z #785    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9577697Z #786    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9578140Z #787    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9578630Z #788    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9579099Z #789    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9579524Z #790    ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9579963Z #791    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9580411Z #792    _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+2025-07-15T11:29:04.9580867Z #793    _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+2025-07-15T11:29:04.9581306Z #794    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9582052Z #795    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9582536Z #796    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9582995Z #797    StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+2025-07-15T11:29:04.9583460Z #798    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9583943Z #799    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9584587Z #800    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9585055Z #801    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9585495Z #802    StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9585951Z #803    Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9586381Z #804    RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+2025-07-15T11:29:04.9586815Z #805    RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+2025-07-15T11:29:04.9587270Z #806    RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+2025-07-15T11:29:04.9587717Z #807    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9588144Z #808    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+2025-07-15T11:29:04.9588636Z #809    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+2025-07-15T11:29:04.9589127Z #810    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+2025-07-15T11:29:04.9589795Z #811    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+2025-07-15T11:29:04.9590463Z #812    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+2025-07-15T11:29:04.9591077Z #813    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+2025-07-15T11:29:04.9591838Z #814    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+2025-07-15T11:29:04.9592501Z #815    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+2025-07-15T11:29:04.9593096Z #818    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9593633Z #819    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+2025-07-15T11:29:04.9594318Z #820    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+2025-07-15T11:29:04.9594852Z #823    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9595453Z #824    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+2025-07-15T11:29:04.9596162Z #825    main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:60:20)
+2025-07-15T11:29:04.9596933Z #826    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+2025-07-15T11:29:04.9597528Z #827    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+2025-07-15T11:29:04.9598032Z #831    Supabase.instance (package:supabase_flutter/src/supabase.dart:45:7)
+2025-07-15T11:29:04.9598493Z #832    new AuthService (package:jo17_tactical_manager/services/auth_service.dart:7:40)
+2025-07-15T11:29:04.9599062Z #833    authServiceProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:9:60)
+2025-07-15T11:29:04.9599645Z #834    ProviderElementBase.watch (package:riverpod/src/framework/element.dart:714:12)
+2025-07-15T11:29:04.9600216Z #835    userRoleProvider.<anonymous closure> (package:jo17_tactical_manager/providers/auth_provider.dart:31:27)
+2025-07-15T11:29:04.9600785Z #836    ProviderContainer.listen (package:riverpod/src/framework/container.dart:280:21)
+2025-07-15T11:29:04.9601364Z #837    ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/consumer.dart:564:25)
+2025-07-15T11:29:04.9602082Z #838    _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:674:23)
+2025-07-15T11:29:04.9602542Z #839    ConsumerStatefulElement.watch (package:flutter_riverpod/src/consumer.dart:557:26)
+2025-07-15T11:29:04.9603165Z #840    _MatchDetailScreenState.canManage (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:37:26)
+2025-07-15T11:29:04.9603862Z #841    _MatchDetailScreenState.build (package:jo17_tactical_manager/screens/matches/match_detail_screen.dart:64:15)
+2025-07-15T11:29:04.9604532Z #842    StatefulElement.build (package:flutter/src/widgets/framework.dart:5823:27)
+2025-07-15T11:29:04.9605027Z #843    ConsumerStatefulElement.build (package:flutter_riverpod/src/consumer.dart:539:20)
+2025-07-15T11:29:04.9605565Z #844    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5715:15)
+2025-07-15T11:29:04.9606100Z #845    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9606576Z #846    Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9607028Z #847    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5697:5)
+2025-07-15T11:29:04.9607551Z #848    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5865:11)
+2025-07-15T11:29:04.9608026Z #849    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5691:5)
+2025-07-15T11:29:04.9608390Z ...     Normal element mounting (228 frames)
+2025-07-15T11:29:04.9608752Z #1077   Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9609441Z #1078   MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7159:36)
+2025-07-15T11:29:04.9610073Z #1079   MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7175:32)
+2025-07-15T11:29:04.9610490Z ...     Normal element mounting (463 frames)
+2025-07-15T11:29:04.9610922Z #1542   _UncontrolledProviderScopeElement.mount (package:flutter_riverpod/src/framework.dart:315:11)
+2025-07-15T11:29:04.9611364Z ...     Normal element mounting (9 frames)
+2025-07-15T11:29:04.9611922Z #1551   Element.inflateWidget (package:flutter/src/widgets/framework.dart:4539:16)
+2025-07-15T11:29:04.9612407Z #1552   Element.updateChild (package:flutter/src/widgets/framework.dart:3998:20)
+2025-07-15T11:29:04.9612910Z #1553   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9613412Z #1554   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9613859Z #1555   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9615113Z #1556   _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9616132Z #1557   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9617077Z #1558   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9618116Z #1559   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9619024Z #1560   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9619868Z #1561   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9620752Z #1562   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9622028Z #1563   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9622975Z #1564   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9623790Z #1565   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9624971Z #1566   _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+2025-07-15T11:29:04.9625990Z #1567   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9626929Z #1568   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9627588Z #1569   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9628081Z #1570   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9628548Z #1571   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9629015Z #1572   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9629536Z #1573   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9630084Z #1574   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9630562Z #1575   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9631014Z #1576   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9631479Z #1577   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9632260Z #1578   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9632759Z #1579   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9633199Z #1580   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9633660Z #1581   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9634550Z #1582   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9635131Z #1583   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9635606Z #1584   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9636050Z #1585   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9636515Z #1586   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9637008Z #1587   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9637496Z #1588   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9637925Z #1589   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9638375Z #1590   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9638876Z #1591   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9639469Z #1592   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9639899Z #1593   ProxyElement.update (package:flutter/src/widgets/framework.dart:6041:5)
+2025-07-15T11:29:04.9640341Z #1594   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9640801Z #1595   _RawViewElement._updateChild (package:flutter/src/widgets/view.dart:481:16)
+2025-07-15T11:29:04.9641254Z #1596   _RawViewElement.update (package:flutter/src/widgets/view.dart:569:5)
+2025-07-15T11:29:04.9641937Z #1597   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9642440Z #1598   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9642920Z #1599   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9643377Z #1600   StatelessElement.update (package:flutter/src/widgets/framework.dart:5787:5)
+2025-07-15T11:29:04.9643845Z #1601   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9644455Z #1602   ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5738:16)
+2025-07-15T11:29:04.9644997Z #1603   StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5874:11)
+2025-07-15T11:29:04.9645473Z #1604   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9645919Z #1605   StatefulElement.update (package:flutter/src/widgets/framework.dart:5899:5)
+2025-07-15T11:29:04.9646374Z #1606   Element.updateChild (package:flutter/src/widgets/framework.dart:3982:15)
+2025-07-15T11:29:04.9646817Z #1607   RootElement._rebuild (package:flutter/src/widgets/binding.dart:1698:16)
+2025-07-15T11:29:04.9647253Z #1608   RootElement.update (package:flutter/src/widgets/binding.dart:1676:5)
+2025-07-15T11:29:04.9647722Z #1609   RootElement.performRebuild (package:flutter/src/widgets/binding.dart:1690:7)
+2025-07-15T11:29:04.9648187Z #1610   Element.rebuild (package:flutter/src/widgets/framework.dart:5427:7)
+2025-07-15T11:29:04.9648626Z #1611   BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2694:15)
+2025-07-15T11:29:04.9649122Z #1612   BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2752:11)
+2025-07-15T11:29:04.9649614Z #1613   BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3056:18)
+2025-07-15T11:29:04.9650186Z #1614   AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:1515:19)
+2025-07-15T11:29:04.9650845Z #1615   RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495:5)
+2025-07-15T11:29:04.9651462Z #1616   SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1438:15)
+2025-07-15T11:29:04.9652250Z #1617   SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1351:9)
+2025-07-15T11:29:04.9653023Z #1618   AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:1340:9)
+2025-07-15T11:29:04.9653627Z #1621   TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9654369Z #1622   AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:1329:27)
+2025-07-15T11:29:04.9654992Z #1623   WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:599:22)
+2025-07-15T11:29:04.9655532Z #1626   TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+2025-07-15T11:29:04.9656005Z #1627   WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:596:27)
+2025-07-15T11:29:04.9656716Z #1628   main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:60:20)
+2025-07-15T11:29:04.9657491Z #1629   testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+2025-07-15T11:29:04.9658293Z #1631   testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:190:25)
+2025-07-15T11:29:04.9658901Z #1632   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:19)
+2025-07-15T11:29:04.9659461Z #1634   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1053:5)
+2025-07-15T11:29:04.9660005Z #1637   TestWidgetsFlutterBinding._runTest (package:flutter_test/src/binding.dart:1038:10)
+2025-07-15T11:29:04.9660644Z #1638   AutomatedTestWidgetsFlutterBinding.runTest.<anonymous closure> (package:flutter_test/src/binding.dart:1573:24)
+2025-07-15T11:29:04.9661315Z #1639   FakeAsync.run.<anonymous closure>.<anonymous closure> (package:fake_async/fake_async.dart:182:47)
+2025-07-15T11:29:04.9661992Z #1644   withClock (package:clock/src/default.dart:52:10)
+2025-07-15T11:29:04.9662389Z #1645   FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:182:15)
+2025-07-15T11:29:04.9662826Z #1650   FakeAsync.run (package:fake_async/fake_async.dart:181:52)
+2025-07-15T11:29:04.9663317Z #1651   AutomatedTestWidgetsFlutterBinding.runTest (package:flutter_test/src/binding.dart:1570:15)
+2025-07-15T11:29:04.9663898Z #1652   testWidgets.<anonymous closure> (package:flutter_test/src/widget_tester.dart:185:24)
+2025-07-15T11:29:04.9664590Z #1653   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:229:19)
+2025-07-15T11:29:04.9665221Z #1655   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:228:9)
+2025-07-15T11:29:04.9665791Z #1660   Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:227:13)
+2025-07-15T11:29:04.9666390Z #1661   Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:17)
+2025-07-15T11:29:04.9667028Z #1666   Invoker._waitForOutstandingCallbacks (package:test_api/src/backend/invoker.dart:254:5)
+2025-07-15T11:29:04.9667701Z #1667   Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:394:17)
+2025-07-15T11:29:04.9668462Z #1669   Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:392:11)
+2025-07-15T11:29:04.9669151Z #1674   Invoker._onRun.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:383:9)
+2025-07-15T11:29:04.9669699Z #1675   Invoker._guardIfGuarded (package:test_api/src/backend/invoker.dart:426:15)
+2025-07-15T11:29:04.9670188Z #1676   Invoker._onRun.<anonymous closure> (package:test_api/src/backend/invoker.dart:382:7)
+2025-07-15T11:29:04.9670659Z #1683   Invoker._onRun (package:test_api/src/backend/invoker.dart:381:11)
+2025-07-15T11:29:04.9671128Z #1684   LiveTestController.run (package:test_api/src/backend/live_test_controller.dart:153:11)
+2025-07-15T11:29:04.9672071Z #1685   RemoteListener._runLiveTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:273:16)
+2025-07-15T11:29:04.9672689Z #1690   RemoteListener._runLiveTest (package:test_api/src/backend/remote_listener.dart:272:5)
+2025-07-15T11:29:04.9673294Z #1691   RemoteListener._serializeTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:220:7)
+2025-07-15T11:29:04.9674891Z #1709   _GuaranteeSink.add (package:stream_channel/src/guarantee_channel.dart:125:12)
+2025-07-15T11:29:04.9675777Z #1710   new _MultiChannel.<anonymous closure> (package:stream_channel/src/multi_channel.dart:159:31)
+2025-07-15T11:29:04.9676703Z #1712   CastStreamSubscription._onData (dart:_internal/async_cast.dart:96:11)
+2025-07-15T11:29:04.9677620Z #1738   new _WebSocketImpl._fromSocket.<anonymous closure> (dart:_http/websocket_impl.dart:1258:31)
+2025-07-15T11:29:04.9678660Z #1744   _WebSocketProtocolTransformer._messageFrameEnd (dart:_http/websocket_impl.dart:348:23)
+2025-07-15T11:29:04.9679627Z #1745   _WebSocketProtocolTransformer.add (dart:_http/websocket_impl.dart:238:46)
+2025-07-15T11:29:04.9680561Z #1753   _Socket._onData (dart:io-patch/socket_patch.dart:2907:41)
+2025-07-15T11:29:04.9681284Z #1760   new _RawSocket.<anonymous closure> (dart:io-patch/socket_patch.dart:2326:31)
+2025-07-15T11:29:04.9682341Z #1761   _NativeSocket.issueReadEvent.issue (dart:io-patch/socket_patch.dart:1649:14)
+2025-07-15T11:29:04.9683618Z #1765   main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:60:7)
+2025-07-15T11:29:04.9685151Z #1766   testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:29)
+2025-07-15T11:29:04.9686312Z #1768   testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:190:25)
+2025-07-15T11:29:04.9687415Z #1769   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:19)
+2025-07-15T11:29:04.9688451Z #1771   TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1053:5)
+2025-07-15T11:29:04.9689471Z #1774   TestWidgetsFlutterBinding._runTest (package:flutter_test/src/binding.dart:1038:10)
+2025-07-15T11:29:04.9690652Z #1775   AutomatedTestWidgetsFlutterBinding.runTest.<anonymous closure> (package:flutter_test/src/binding.dart:1573:24)
+2025-07-15T11:29:04.9692113Z #1776   FakeAsync.run.<anonymous closure>.<anonymous closure> (package:fake_async/fake_async.dart:182:47)
+2025-07-15T11:29:04.9692932Z #1781   withClock (package:clock/src/default.dart:52:10)
+2025-07-15T11:29:04.9693621Z #1782   FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:182:15)
+2025-07-15T11:29:04.9694509Z #1787   FakeAsync.run (package:fake_async/fake_async.dart:181:52)
+2025-07-15T11:29:04.9695396Z #1788   AutomatedTestWidgetsFlutterBinding.runTest (package:flutter_test/src/binding.dart:1570:15)
+2025-07-15T11:29:04.9696433Z #1789   testWidgets.<anonymous closure> (package:flutter_test/src/widget_tester.dart:185:24)
+2025-07-15T11:29:04.9697490Z #1790   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:229:19)
+2025-07-15T11:29:04.9698651Z #1792   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:228:9)
+2025-07-15T11:29:04.9699647Z #1797   Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:227:13)
+2025-07-15T11:29:04.9700684Z #1798   Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:17)
+2025-07-15T11:29:04.9702000Z #1803   Invoker._waitForOutstandingCallbacks (package:test_api/src/backend/invoker.dart:254:5)
+2025-07-15T11:29:04.9703144Z #1804   Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:394:17)
+2025-07-15T11:29:04.9704547Z #1806   Invoker._onRun.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:392:11)
+2025-07-15T11:29:04.9705871Z #1811   Invoker._onRun.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:383:9)
+2025-07-15T11:29:04.9706807Z #1812   Invoker._guardIfGuarded (package:test_api/src/backend/invoker.dart:426:15)
+2025-07-15T11:29:04.9707618Z #1813   Invoker._onRun.<anonymous closure> (package:test_api/src/backend/invoker.dart:382:7)
+2025-07-15T11:29:04.9708378Z #1820   Invoker._onRun (package:test_api/src/backend/invoker.dart:381:11)
+2025-07-15T11:29:04.9709188Z #1821   LiveTestController.run (package:test_api/src/backend/live_test_controller.dart:153:11)
+2025-07-15T11:29:04.9710177Z #1822   RemoteListener._runLiveTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:273:16)
+2025-07-15T11:29:04.9711153Z #1827   RemoteListener._runLiveTest (package:test_api/src/backend/remote_listener.dart:272:5)
+2025-07-15T11:29:04.9712388Z #1828   RemoteListener._serializeTest.<anonymous closure> (package:test_api/src/backend/remote_listener.dart:220:7)
+2025-07-15T11:29:04.9713370Z #1846   _GuaranteeSink.add (package:stream_channel/src/guarantee_channel.dart:125:12)
+2025-07-15T11:29:04.9714534Z #1847   new _MultiChannel.<anonymous closure> (package:stream_channel/src/multi_channel.dart:159:31)
+2025-07-15T11:29:04.9715404Z #1849   CastStreamSubscription._onData (dart:_internal/async_cast.dart:96:11)
+2025-07-15T11:29:04.9716273Z #1875   new _WebSocketImpl._fromSocket.<anonymous closure> (dart:_http/websocket_impl.dart:1258:31)
+2025-07-15T11:29:04.9717237Z #1881   _WebSocketProtocolTransformer._messageFrameEnd (dart:_http/websocket_impl.dart:348:23)
+2025-07-15T11:29:04.9718159Z #1882   _WebSocketProtocolTransformer.add (dart:_http/websocket_impl.dart:238:46)
+2025-07-15T11:29:04.9718915Z #1890   _Socket._onData (dart:io-patch/socket_patch.dart:2907:41)
+2025-07-15T11:29:04.9719634Z #1897   new _RawSocket.<anonymous closure> (dart:io-patch/socket_patch.dart:2326:31)
+2025-07-15T11:29:04.9720494Z #1898   _NativeSocket.issueReadEvent.issue (dart:io-patch/socket_patch.dart:1649:14)
+2025-07-15T11:29:04.9721378Z (elided 215 frames from class _AssertionError, dart:async, and package:stack_trace)
+2025-07-15T11:29:04.9722084Z 
+2025-07-15T11:29:04.9722681Z ════════════════════════════════════════════════════════════════════════════════════════════════════
+2025-07-15T11:29:04.9723692Z ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+2025-07-15T11:29:04.9724561Z The following TestFailure was thrown running a test:
+2025-07-15T11:29:04.9725057Z Expected: exactly one matching candidate
+2025-07-15T11:29:04.9725681Z   Actual: _TextWidgetFinder:<Found 0 widgets with text "Wedstrijd Details": []>
+2025-07-15T11:29:04.9726344Z    Which: means none were found but one was expected
+2025-07-15T11:29:04.9726678Z 
+2025-07-15T11:29:04.9726860Z When the exception was thrown, this was the stack:
+2025-07-15T11:29:04.9727931Z #4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart:76:7)
+2025-07-15T11:29:04.9728949Z <asynchronous suspension>
+2025-07-15T11:29:04.9729845Z #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+2025-07-15T11:29:04.9730627Z <asynchronous suspension>
+2025-07-15T11:29:04.9731264Z #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+2025-07-15T11:29:04.9732178Z <asynchronous suspension>
+2025-07-15T11:29:04.9732523Z <asynchronous suspension>
+2025-07-15T11:29:04.9732892Z (elided one frame from package:stack_trace)
+2025-07-15T11:29:04.9733196Z 
+2025-07-15T11:29:04.9733433Z This was caught by the test expectation on the following line:
+2025-07-15T11:29:04.9734448Z   file:///home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/match/match_detail_screen_test.dart line 76
+2025-07-15T11:29:04.9735216Z The test description was:
+2025-07-15T11:29:04.9735565Z   renders basic match information
+2025-07-15T11:29:04.9736292Z ════════════════════════════════════════════════════════════════════════════════════════════════════
+2025-07-15T11:29:04.9737422Z ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+2025-07-15T11:29:04.9738095Z The following message was thrown:
+2025-07-15T11:29:04.9738752Z Multiple exceptions (3) were detected during the running of the current test, and at least one was
+2025-07-15T11:29:04.9739408Z unexpected.
+2025-07-15T11:29:04.9739981Z ════════════════════════════════════════════════════════════════════════════════════════════════════
+2025-07-15T11:29:04.9740472Z Test failed. See exception logs above.
+2025-07-15T11:29:04.9740942Z The test description was: renders basic match information
+2025-07-15T11:29:04.9741296Z 
+2025-07-15T11:29:04.9742014Z ##[endgroup]
+2025-07-15T11:29:07.6685729Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps dashboard routes to index 0
+2025-07-15T11:29:07.6717644Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps season & annual planning routes to index 1
+2025-07-15T11:29:07.6746096Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps training related routes to index 2
+2025-07-15T11:29:07.6768464Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps matches related routes to index 3
+2025-07-15T11:29:07.6792799Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps players route to index 4
+2025-07-15T11:29:07.6815763Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex maps insights & legacy analytics routes to index 5
+2025-07-15T11:29:07.6851117Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/navigation_route_mapping_test.dart: MainScaffold.routeToNavIndex defaults to 0 for unknown routes
+2025-07-15T11:29:07.7438441Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/widget/training_attendance_screen_test.dart: TrainingAttendanceScreen renders basic UI with stubbed data
+2025-07-15T11:29:10.6278311Z ##[group]✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) (setUpAll)
+2025-07-15T11:29:10.6279867Z supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+2025-07-15T11:29:10.6280721Z ##[endgroup]
+2025-07-15T11:29:11.3649806Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration SupabaseConfig.getUserOrganizations returns stubbed data
+2025-07-15T11:29:11.3710010Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/stub_supabase_integration_test.dart: Supabase + StubHttpClient integration OrganizationService.createOrganization works with stubbed client
+2025-07-15T11:29:11.9274796Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/app_flow_login_demo_test.dart: Integration: Login → Dashboard → Player list (demo mode) navigates through core flow without auth
+2025-07-15T11:29:15.4376045Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/match_flow_test.dart: Integration – Match flow create match → lineup builder button visible → score dialog button visible
+2025-07-15T11:29:16.3370915Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/training_flow_test.dart: Integration – Training flow create training → mark attendance
+2025-07-15T11:29:17.9109540Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation fromOrg throws when no organization selected
+2025-07-15T11:29:17.9415627Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Query returns data only for selected organization
+2025-07-15T11:29:17.9518832Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/rls_isolation_test.dart: Row-Level-Security – organization isolation Switching organization returns isolated dataset
+2025-07-15T11:29:18.7124785Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/offline_flow_test.dart: Offline/online flow falls back to cache when remote fails
+2025-07-15T11:29:18.7178322Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/integration/offline_flow_test.dart: Offline/online flow returns remote when available and updates cache
+2025-07-15T11:29:20.4913154Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/telemetry_service_test.dart: TelemetryService trackEvent completes without error
+2025-07-15T11:29:20.4961020Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/telemetry_service_test.dart: TelemetryService monitorAsync returns value and completes span
+2025-07-15T11:29:21.7143666Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/auth_service_test.dart: AuthService signOut delegates to Supabase auth.signOut
+2025-07-15T11:29:21.7238095Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/auth_service_test.dart: AuthService getUserRole reads role from userMetadata
+2025-07-15T11:29:22.5331244Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/organization_service_test.dart: OrganizationService createOrganization returns Organization with provided values
+2025-07-15T11:29:22.5353239Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/organization_service_test.dart: OrganizationService isSlugAvailable detects unavailable slug
+2025-07-15T11:29:22.5371181Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/organization_service_test.dart: OrganizationService isSlugAvailable allows custom slug
+2025-07-15T11:29:22.5397164Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/organization_service_test.dart: OrganizationService updateOrganization updates updatedAt field
+2025-07-15T11:29:24.3412021Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/demo_data_service_test.dart: DemoDataService generateDemoData returns data for club admin
+2025-07-15T11:29:24.3783875Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/demo_data_service_test.dart: DemoDataService OrganizationService.isSlugAvailable rejects reserved slugs
+2025-07-15T11:29:25.3229293Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: PermissionService view-only helpers Players and parents are view-only users
+2025-07-15T11:29:25.3248328Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: PermissionService view-only helpers Coach is NOT view-only
+2025-07-15T11:29:25.3269755Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Field-diagram editor access Role "bestuurder" has access
+2025-07-15T11:29:25.3287413Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Field-diagram editor access Role "hoofdcoach" has access
+2025-07-15T11:29:25.3304950Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Field-diagram editor access Role "assistent" has access
+2025-07-15T11:29:25.3322230Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Field-diagram editor access Role "admin" has access
+2025-07-15T11:29:25.3339615Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Field-diagram editor access Role "speler" has NO access
+2025-07-15T11:29:25.3368004Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Field-diagram editor access Role "ouder" has NO access
+2025-07-15T11:29:25.3385987Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Field-diagram editor access Role "null" has NO access
+2025-07-15T11:29:25.3405857Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: SVS access per tier Basic tier never grants SVS
+2025-07-15T11:29:25.3425117Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: SVS access per tier Pro tier grants SVS for coach/admin roles
+2025-07-15T11:29:25.3475620Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Accessible routes Player gets only view routes
+2025-07-15T11:29:25.3498717Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/services/permission_service_test.dart: Accessible routes Admin gets admin route
+2025-07-15T11:29:27.1946931Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/match_repository_impl_test.dart: getUpcoming filters correctly
+2025-07-15T11:29:27.2006163Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/match_repository_impl_test.dart: getRecent filters correctly with cache fallback
+2025-07-15T11:29:27.2089376Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/match_repository_impl_test.dart: mutation clears cache
+2025-07-15T11:29:27.9887969Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl getCurrent returns remote data and writes to cache
+2025-07-15T11:29:27.9938965Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl getCurrent falls back to cache on error
+2025-07-15T11:29:28.0066976Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/profile_repository_impl_test.dart: ProfileRepositoryImpl watch emits cached then remote updates
+2025-07-15T11:29:28.7273783Z ##[group]❎ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/prediction_repository_test.dart: (suite) (skipped)
+2025-07-15T11:29:28.7276264Z Skip: PredictionRepository tests disabled – pending MatchRepository mock implementation
+2025-07-15T11:29:28.7277242Z ##[endgroup]
+2025-07-15T11:29:29.2244683Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/training_repository_impl_test.dart: getUpcoming filters upcoming trainings from remote list
+2025-07-15T11:29:29.2288526Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/training_repository_impl_test.dart: getByDateRange returns trainings within range
+2025-07-15T11:29:29.2372334Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/training_repository_impl_test.dart: fallback to cache uses cache on network failure
+2025-07-15T11:29:29.2416990Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/training_repository_impl_test.dart: mutations add clears cache on success
+2025-07-15T11:29:30.1156387Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/player_repository_impl_test.dart: getAll returns remote data & writes cache on success
+2025-07-15T11:29:30.1195868Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/player_repository_impl_test.dart: getAll falls back to cache when network fails
+2025-07-15T11:29:30.1228441Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/player_repository_impl_test.dart: getAll returns failure when network & cache both fail
+2025-07-15T11:29:30.1258275Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/player_repository_impl_test.dart: mutations add clears cache on success
+2025-07-15T11:29:30.1283199Z ✅ /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/test/repositories/player_repository_impl_test.dart: mutations update passes failure
+2025-07-15T11:29:30.6507434Z 
+2025-07-15T11:29:30.6538236Z ##[error]125 tests passed, 1 failed, 3 skipped.
+2025-07-15T11:29:30.7753083Z ##[error]Process completed with exit code 1.
+2025-07-15T11:29:30.7910293Z Post job cleanup.
+2025-07-15T11:29:30.7980864Z Post job cleanup.
+2025-07-15T11:29:30.8936785Z [command]/usr/bin/git version
+2025-07-15T11:29:30.8973235Z git version 2.50.1
+2025-07-15T11:29:30.9017946Z Temporarily overriding HOME='/home/runner/work/_temp/523ceb6a-6b12-41c0-8185-2738d99f5d94' before making global git config changes
+2025-07-15T11:29:30.9019261Z Adding repository directory to the temporary git global config as a safe directory
+2025-07-15T11:29:30.9030657Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T11:29:30.9065677Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-07-15T11:29:30.9098715Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-07-15T11:29:30.9331032Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-07-15T11:29:30.9352242Z http.https://github.com/.extraheader
+2025-07-15T11:29:30.9365526Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-07-15T11:29:30.9396908Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-07-15T11:29:30.9752558Z Cleaning up orphan processes

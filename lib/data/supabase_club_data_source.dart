@@ -7,17 +7,14 @@ import '../models/club/club.dart';
 /// Raw Supabase I/O for the `clubs` table.
 class SupabaseClubDataSource {
   SupabaseClubDataSource({SupabaseClient? client})
-    : _supabase = client ?? _tryGetClient();
+      : _supabase = client ?? _tryGetClient();
 
   final SupabaseClient _supabase;
   static const _table = 'clubs';
 
   Future<Club?> fetchById(String id) async {
-    final data = await _supabase
-        .from(_table)
-        .select()
-        .eq('id', id)
-        .maybeSingle();
+    final data =
+        await _supabase.from(_table).select().eq('id', id).maybeSingle();
     return data == null ? null : Club.fromJson(data);
   }
 

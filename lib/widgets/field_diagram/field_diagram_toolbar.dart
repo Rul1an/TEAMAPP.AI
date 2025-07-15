@@ -25,110 +25,110 @@ class FieldDiagramToolbar extends ConsumerStatefulWidget {
 class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
   @override
   Widget build(BuildContext context) => Row(
-    children: [
-      _buildToolButton(
-        icon: Icons.pan_tool,
-        tool: DiagramTool.select,
-        tooltip: 'Selecteren/Verplaatsen',
-        context: context,
-      ),
-      const SizedBox(width: 8),
-      _buildToolButton(
-        icon: Icons.person,
-        tool: DiagramTool.player,
-        tooltip: 'Speler Plaatsen',
-        context: context,
-      ),
-      const SizedBox(width: 8),
-      _buildToolButton(
-        icon: Icons.circle_outlined,
-        tool: DiagramTool.equipment,
-        tooltip: 'Equipment Plaatsen',
-        context: context,
-      ),
-      const SizedBox(width: 8),
-      _buildToolButton(
-        icon: Icons.arrow_forward,
-        tool: DiagramTool.line,
-        tooltip: 'Bewegingslijn Tekenen',
-        context: context,
-      ),
-      if (widget.selectedTool == DiagramTool.line) ...[
-        const SizedBox(width: 16),
-        Container(
-          height: 36,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey[300]!),
+        children: [
+          _buildToolButton(
+            icon: Icons.pan_tool,
+            tool: DiagramTool.select,
+            tooltip: 'Selecteren/Verplaatsen',
+            context: context,
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildLineTypeButton(
-                LineType.pass,
-                Colors.green,
-                Icons.arrow_forward,
-              ),
-              const SizedBox(width: 4),
-              _buildLineTypeButton(
-                LineType.run,
-                Colors.blue,
-                Icons.directions_run,
-              ),
-              const SizedBox(width: 4),
-              _buildLineTypeButton(
-                LineType.dribble,
-                Colors.orange,
-                Icons.sports_soccer,
-              ),
-              const SizedBox(width: 4),
-              _buildLineTypeButton(
-                LineType.shot,
-                Colors.red,
-                Icons.sports_hockey,
-              ),
-              const SizedBox(width: 4),
-              _buildLineTypeButton(
-                LineType.defensive,
-                Colors.purple,
-                Icons.shield,
-              ),
-            ],
+          const SizedBox(width: 8),
+          _buildToolButton(
+            icon: Icons.person,
+            tool: DiagramTool.player,
+            tooltip: 'Speler Plaatsen',
+            context: context,
           ),
-        ),
-      ],
-      const SizedBox(width: 8),
-      _buildToolButton(
-        icon: Icons.text_fields,
-        tool: DiagramTool.text,
-        tooltip: 'Tekst Toevoegen',
-        context: context,
-      ),
-      const SizedBox(width: 8),
-      _buildToolButton(
-        icon: Icons.crop_square,
-        tool: DiagramTool.area,
-        tooltip: 'Gebied Markeren',
-        context: context,
-      ),
-      const SizedBox(width: 8),
-      _buildFormationButton(context),
-      const SizedBox(width: 8),
-      _buildToolButton(
-        icon: Icons.delete,
-        tool: DiagramTool.delete,
-        tooltip: 'Verwijderen',
-        context: context,
-        color: Colors.red,
-      ),
-      const Spacer(),
-      _buildPlayerTypeSelector(),
-      const SizedBox(width: 8),
-      _buildEquipmentTypeSelector(),
-    ],
-  );
+          const SizedBox(width: 8),
+          _buildToolButton(
+            icon: Icons.circle_outlined,
+            tool: DiagramTool.equipment,
+            tooltip: 'Equipment Plaatsen',
+            context: context,
+          ),
+          const SizedBox(width: 8),
+          _buildToolButton(
+            icon: Icons.arrow_forward,
+            tool: DiagramTool.line,
+            tooltip: 'Bewegingslijn Tekenen',
+            context: context,
+          ),
+          if (widget.selectedTool == DiagramTool.line) ...[
+            const SizedBox(width: 16),
+            Container(
+              height: 36,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey[300]!),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildLineTypeButton(
+                    LineType.pass,
+                    Colors.green,
+                    Icons.arrow_forward,
+                  ),
+                  const SizedBox(width: 4),
+                  _buildLineTypeButton(
+                    LineType.run,
+                    Colors.blue,
+                    Icons.directions_run,
+                  ),
+                  const SizedBox(width: 4),
+                  _buildLineTypeButton(
+                    LineType.dribble,
+                    Colors.orange,
+                    Icons.sports_soccer,
+                  ),
+                  const SizedBox(width: 4),
+                  _buildLineTypeButton(
+                    LineType.shot,
+                    Colors.red,
+                    Icons.sports_hockey,
+                  ),
+                  const SizedBox(width: 4),
+                  _buildLineTypeButton(
+                    LineType.defensive,
+                    Colors.purple,
+                    Icons.shield,
+                  ),
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(width: 8),
+          _buildToolButton(
+            icon: Icons.text_fields,
+            tool: DiagramTool.text,
+            tooltip: 'Tekst Toevoegen',
+            context: context,
+          ),
+          const SizedBox(width: 8),
+          _buildToolButton(
+            icon: Icons.crop_square,
+            tool: DiagramTool.area,
+            tooltip: 'Gebied Markeren',
+            context: context,
+          ),
+          const SizedBox(width: 8),
+          _buildFormationButton(context),
+          const SizedBox(width: 8),
+          _buildToolButton(
+            icon: Icons.delete,
+            tool: DiagramTool.delete,
+            tooltip: 'Verwijderen',
+            context: context,
+            color: Colors.red,
+          ),
+          const Spacer(),
+          _buildPlayerTypeSelector(),
+          const SizedBox(width: 8),
+          _buildEquipmentTypeSelector(),
+        ],
+      );
 
   Widget _buildToolButton({
     required IconData icon,
@@ -149,9 +149,8 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            border: isSelected
-                ? Border.all(color: Colors.green, width: 2)
-                : null,
+            border:
+                isSelected ? Border.all(color: Colors.green, width: 2) : null,
           ),
           child: Icon(
             icon,

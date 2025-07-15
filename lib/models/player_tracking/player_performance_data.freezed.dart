@@ -12,12 +12,10 @@ part of 'player_performance_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PlayerPerformanceData _$PlayerPerformanceDataFromJson(
-  Map<String, dynamic> json,
-) {
+    Map<String, dynamic> json) {
   return _PlayerPerformanceData.fromJson(json);
 }
 
@@ -26,9 +24,10 @@ mixin _$PlayerPerformanceData {
   String get id => throw _privateConstructorUsedError;
   String get playerId => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
-  PerformanceType get type =>
+  PerformanceType get type => throw _privateConstructorUsedError; // Metadata
+  DateTime get createdAt =>
       throw _privateConstructorUsedError; // training, match, test
-  // Physical Performance Metrics
+// Physical Performance Metrics
   PhysicalMetrics? get physicalMetrics =>
       throw _privateConstructorUsedError; // Technical Performance Metrics
   TechnicalMetrics? get technicalMetrics =>
@@ -45,9 +44,7 @@ mixin _$PlayerPerformanceData {
       throw _privateConstructorUsedError; // Coach Evaluation
   CoachEvaluation? get coachEvaluation =>
       throw _privateConstructorUsedError; // AI-Generated Insights
-  List<PerformanceInsight>? get insights =>
-      throw _privateConstructorUsedError; // Metadata
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  List<PerformanceInsight>? get insights => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
 
@@ -59,29 +56,27 @@ mixin _$PlayerPerformanceData {
 
 /// @nodoc
 abstract class $PlayerPerformanceDataCopyWith<$Res> {
-  factory $PlayerPerformanceDataCopyWith(
-    PlayerPerformanceData value,
-    $Res Function(PlayerPerformanceData) then,
-  ) = _$PlayerPerformanceDataCopyWithImpl<$Res, PlayerPerformanceData>;
+  factory $PlayerPerformanceDataCopyWith(PlayerPerformanceData value,
+          $Res Function(PlayerPerformanceData) then) =
+      _$PlayerPerformanceDataCopyWithImpl<$Res, PlayerPerformanceData>;
   @useResult
-  $Res call({
-    String id,
-    String playerId,
-    DateTime date,
-    PerformanceType type,
-    PhysicalMetrics? physicalMetrics,
-    TechnicalMetrics? technicalMetrics,
-    TacticalMetrics? tacticalMetrics,
-    MentalMetrics? mentalMetrics,
-    MatchMetrics? matchMetrics,
-    TrainingLoadMetrics? trainingLoad,
-    WellnessMetrics? wellness,
-    CoachEvaluation? coachEvaluation,
-    List<PerformanceInsight>? insights,
-    DateTime createdAt,
-    DateTime? updatedAt,
-    String? notes,
-  });
+  $Res call(
+      {String id,
+      String playerId,
+      DateTime date,
+      PerformanceType type,
+      DateTime createdAt,
+      PhysicalMetrics? physicalMetrics,
+      TechnicalMetrics? technicalMetrics,
+      TacticalMetrics? tacticalMetrics,
+      MentalMetrics? mentalMetrics,
+      MatchMetrics? matchMetrics,
+      TrainingLoadMetrics? trainingLoad,
+      WellnessMetrics? wellness,
+      CoachEvaluation? coachEvaluation,
+      List<PerformanceInsight>? insights,
+      DateTime? updatedAt,
+      String? notes});
 
   $PhysicalMetricsCopyWith<$Res>? get physicalMetrics;
   $TechnicalMetricsCopyWith<$Res>? get technicalMetrics;
@@ -94,10 +89,8 @@ abstract class $PlayerPerformanceDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PlayerPerformanceDataCopyWithImpl<
-  $Res,
-  $Val extends PlayerPerformanceData
->
+class _$PlayerPerformanceDataCopyWithImpl<$Res,
+        $Val extends PlayerPerformanceData>
     implements $PlayerPerformanceDataCopyWith<$Res> {
   _$PlayerPerformanceDataCopyWithImpl(this._value, this._then);
 
@@ -113,6 +106,7 @@ class _$PlayerPerformanceDataCopyWithImpl<
     Object? playerId = null,
     Object? date = null,
     Object? type = null,
+    Object? createdAt = null,
     Object? physicalMetrics = freezed,
     Object? technicalMetrics = freezed,
     Object? tacticalMetrics = freezed,
@@ -122,79 +116,75 @@ class _$PlayerPerformanceDataCopyWithImpl<
     Object? wellness = freezed,
     Object? coachEvaluation = freezed,
     Object? insights = freezed,
-    Object? createdAt = null,
     Object? updatedAt = freezed,
     Object? notes = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            playerId: null == playerId
-                ? _value.playerId
-                : playerId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            date: null == date
-                ? _value.date
-                : date // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            type: null == type
-                ? _value.type
-                : type // ignore: cast_nullable_to_non_nullable
-                      as PerformanceType,
-            physicalMetrics: freezed == physicalMetrics
-                ? _value.physicalMetrics
-                : physicalMetrics // ignore: cast_nullable_to_non_nullable
-                      as PhysicalMetrics?,
-            technicalMetrics: freezed == technicalMetrics
-                ? _value.technicalMetrics
-                : technicalMetrics // ignore: cast_nullable_to_non_nullable
-                      as TechnicalMetrics?,
-            tacticalMetrics: freezed == tacticalMetrics
-                ? _value.tacticalMetrics
-                : tacticalMetrics // ignore: cast_nullable_to_non_nullable
-                      as TacticalMetrics?,
-            mentalMetrics: freezed == mentalMetrics
-                ? _value.mentalMetrics
-                : mentalMetrics // ignore: cast_nullable_to_non_nullable
-                      as MentalMetrics?,
-            matchMetrics: freezed == matchMetrics
-                ? _value.matchMetrics
-                : matchMetrics // ignore: cast_nullable_to_non_nullable
-                      as MatchMetrics?,
-            trainingLoad: freezed == trainingLoad
-                ? _value.trainingLoad
-                : trainingLoad // ignore: cast_nullable_to_non_nullable
-                      as TrainingLoadMetrics?,
-            wellness: freezed == wellness
-                ? _value.wellness
-                : wellness // ignore: cast_nullable_to_non_nullable
-                      as WellnessMetrics?,
-            coachEvaluation: freezed == coachEvaluation
-                ? _value.coachEvaluation
-                : coachEvaluation // ignore: cast_nullable_to_non_nullable
-                      as CoachEvaluation?,
-            insights: freezed == insights
-                ? _value.insights
-                : insights // ignore: cast_nullable_to_non_nullable
-                      as List<PerformanceInsight>?,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            updatedAt: freezed == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            notes: freezed == notes
-                ? _value.notes
-                : notes // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      playerId: null == playerId
+          ? _value.playerId
+          : playerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as PerformanceType,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      physicalMetrics: freezed == physicalMetrics
+          ? _value.physicalMetrics
+          : physicalMetrics // ignore: cast_nullable_to_non_nullable
+              as PhysicalMetrics?,
+      technicalMetrics: freezed == technicalMetrics
+          ? _value.technicalMetrics
+          : technicalMetrics // ignore: cast_nullable_to_non_nullable
+              as TechnicalMetrics?,
+      tacticalMetrics: freezed == tacticalMetrics
+          ? _value.tacticalMetrics
+          : tacticalMetrics // ignore: cast_nullable_to_non_nullable
+              as TacticalMetrics?,
+      mentalMetrics: freezed == mentalMetrics
+          ? _value.mentalMetrics
+          : mentalMetrics // ignore: cast_nullable_to_non_nullable
+              as MentalMetrics?,
+      matchMetrics: freezed == matchMetrics
+          ? _value.matchMetrics
+          : matchMetrics // ignore: cast_nullable_to_non_nullable
+              as MatchMetrics?,
+      trainingLoad: freezed == trainingLoad
+          ? _value.trainingLoad
+          : trainingLoad // ignore: cast_nullable_to_non_nullable
+              as TrainingLoadMetrics?,
+      wellness: freezed == wellness
+          ? _value.wellness
+          : wellness // ignore: cast_nullable_to_non_nullable
+              as WellnessMetrics?,
+      coachEvaluation: freezed == coachEvaluation
+          ? _value.coachEvaluation
+          : coachEvaluation // ignore: cast_nullable_to_non_nullable
+              as CoachEvaluation?,
+      insights: freezed == insights
+          ? _value.insights
+          : insights // ignore: cast_nullable_to_non_nullable
+              as List<PerformanceInsight>?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 
   @override
@@ -298,29 +288,28 @@ class _$PlayerPerformanceDataCopyWithImpl<
 abstract class _$$PlayerPerformanceDataImplCopyWith<$Res>
     implements $PlayerPerformanceDataCopyWith<$Res> {
   factory _$$PlayerPerformanceDataImplCopyWith(
-    _$PlayerPerformanceDataImpl value,
-    $Res Function(_$PlayerPerformanceDataImpl) then,
-  ) = __$$PlayerPerformanceDataImplCopyWithImpl<$Res>;
+          _$PlayerPerformanceDataImpl value,
+          $Res Function(_$PlayerPerformanceDataImpl) then) =
+      __$$PlayerPerformanceDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    String playerId,
-    DateTime date,
-    PerformanceType type,
-    PhysicalMetrics? physicalMetrics,
-    TechnicalMetrics? technicalMetrics,
-    TacticalMetrics? tacticalMetrics,
-    MentalMetrics? mentalMetrics,
-    MatchMetrics? matchMetrics,
-    TrainingLoadMetrics? trainingLoad,
-    WellnessMetrics? wellness,
-    CoachEvaluation? coachEvaluation,
-    List<PerformanceInsight>? insights,
-    DateTime createdAt,
-    DateTime? updatedAt,
-    String? notes,
-  });
+  $Res call(
+      {String id,
+      String playerId,
+      DateTime date,
+      PerformanceType type,
+      DateTime createdAt,
+      PhysicalMetrics? physicalMetrics,
+      TechnicalMetrics? technicalMetrics,
+      TacticalMetrics? tacticalMetrics,
+      MentalMetrics? mentalMetrics,
+      MatchMetrics? matchMetrics,
+      TrainingLoadMetrics? trainingLoad,
+      WellnessMetrics? wellness,
+      CoachEvaluation? coachEvaluation,
+      List<PerformanceInsight>? insights,
+      DateTime? updatedAt,
+      String? notes});
 
   @override
   $PhysicalMetricsCopyWith<$Res>? get physicalMetrics;
@@ -342,13 +331,12 @@ abstract class _$$PlayerPerformanceDataImplCopyWith<$Res>
 
 /// @nodoc
 class __$$PlayerPerformanceDataImplCopyWithImpl<$Res>
-    extends
-        _$PlayerPerformanceDataCopyWithImpl<$Res, _$PlayerPerformanceDataImpl>
+    extends _$PlayerPerformanceDataCopyWithImpl<$Res,
+        _$PlayerPerformanceDataImpl>
     implements _$$PlayerPerformanceDataImplCopyWith<$Res> {
-  __$$PlayerPerformanceDataImplCopyWithImpl(
-    _$PlayerPerformanceDataImpl _value,
-    $Res Function(_$PlayerPerformanceDataImpl) _then,
-  ) : super(_value, _then);
+  __$$PlayerPerformanceDataImplCopyWithImpl(_$PlayerPerformanceDataImpl _value,
+      $Res Function(_$PlayerPerformanceDataImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -357,6 +345,7 @@ class __$$PlayerPerformanceDataImplCopyWithImpl<$Res>
     Object? playerId = null,
     Object? date = null,
     Object? type = null,
+    Object? createdAt = null,
     Object? physicalMetrics = freezed,
     Object? technicalMetrics = freezed,
     Object? tacticalMetrics = freezed,
@@ -366,102 +355,99 @@ class __$$PlayerPerformanceDataImplCopyWithImpl<$Res>
     Object? wellness = freezed,
     Object? coachEvaluation = freezed,
     Object? insights = freezed,
-    Object? createdAt = null,
     Object? updatedAt = freezed,
     Object? notes = freezed,
   }) {
-    return _then(
-      _$PlayerPerformanceDataImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        playerId: null == playerId
-            ? _value.playerId
-            : playerId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        date: null == date
-            ? _value.date
-            : date // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        type: null == type
-            ? _value.type
-            : type // ignore: cast_nullable_to_non_nullable
-                  as PerformanceType,
-        physicalMetrics: freezed == physicalMetrics
-            ? _value.physicalMetrics
-            : physicalMetrics // ignore: cast_nullable_to_non_nullable
-                  as PhysicalMetrics?,
-        technicalMetrics: freezed == technicalMetrics
-            ? _value.technicalMetrics
-            : technicalMetrics // ignore: cast_nullable_to_non_nullable
-                  as TechnicalMetrics?,
-        tacticalMetrics: freezed == tacticalMetrics
-            ? _value.tacticalMetrics
-            : tacticalMetrics // ignore: cast_nullable_to_non_nullable
-                  as TacticalMetrics?,
-        mentalMetrics: freezed == mentalMetrics
-            ? _value.mentalMetrics
-            : mentalMetrics // ignore: cast_nullable_to_non_nullable
-                  as MentalMetrics?,
-        matchMetrics: freezed == matchMetrics
-            ? _value.matchMetrics
-            : matchMetrics // ignore: cast_nullable_to_non_nullable
-                  as MatchMetrics?,
-        trainingLoad: freezed == trainingLoad
-            ? _value.trainingLoad
-            : trainingLoad // ignore: cast_nullable_to_non_nullable
-                  as TrainingLoadMetrics?,
-        wellness: freezed == wellness
-            ? _value.wellness
-            : wellness // ignore: cast_nullable_to_non_nullable
-                  as WellnessMetrics?,
-        coachEvaluation: freezed == coachEvaluation
-            ? _value.coachEvaluation
-            : coachEvaluation // ignore: cast_nullable_to_non_nullable
-                  as CoachEvaluation?,
-        insights: freezed == insights
-            ? _value._insights
-            : insights // ignore: cast_nullable_to_non_nullable
-                  as List<PerformanceInsight>?,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        updatedAt: freezed == updatedAt
-            ? _value.updatedAt
-            : updatedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        notes: freezed == notes
-            ? _value.notes
-            : notes // ignore: cast_nullable_to_non_nullable
-                  as String?,
-      ),
-    );
+    return _then(_$PlayerPerformanceDataImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      playerId: null == playerId
+          ? _value.playerId
+          : playerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as PerformanceType,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      physicalMetrics: freezed == physicalMetrics
+          ? _value.physicalMetrics
+          : physicalMetrics // ignore: cast_nullable_to_non_nullable
+              as PhysicalMetrics?,
+      technicalMetrics: freezed == technicalMetrics
+          ? _value.technicalMetrics
+          : technicalMetrics // ignore: cast_nullable_to_non_nullable
+              as TechnicalMetrics?,
+      tacticalMetrics: freezed == tacticalMetrics
+          ? _value.tacticalMetrics
+          : tacticalMetrics // ignore: cast_nullable_to_non_nullable
+              as TacticalMetrics?,
+      mentalMetrics: freezed == mentalMetrics
+          ? _value.mentalMetrics
+          : mentalMetrics // ignore: cast_nullable_to_non_nullable
+              as MentalMetrics?,
+      matchMetrics: freezed == matchMetrics
+          ? _value.matchMetrics
+          : matchMetrics // ignore: cast_nullable_to_non_nullable
+              as MatchMetrics?,
+      trainingLoad: freezed == trainingLoad
+          ? _value.trainingLoad
+          : trainingLoad // ignore: cast_nullable_to_non_nullable
+              as TrainingLoadMetrics?,
+      wellness: freezed == wellness
+          ? _value.wellness
+          : wellness // ignore: cast_nullable_to_non_nullable
+              as WellnessMetrics?,
+      coachEvaluation: freezed == coachEvaluation
+          ? _value.coachEvaluation
+          : coachEvaluation // ignore: cast_nullable_to_non_nullable
+              as CoachEvaluation?,
+      insights: freezed == insights
+          ? _value._insights
+          : insights // ignore: cast_nullable_to_non_nullable
+              as List<PerformanceInsight>?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
-  const _$PlayerPerformanceDataImpl({
-    required this.id,
-    required this.playerId,
-    required this.date,
-    required this.type,
-    this.physicalMetrics,
-    this.technicalMetrics,
-    this.tacticalMetrics,
-    this.mentalMetrics,
-    this.matchMetrics,
-    this.trainingLoad,
-    this.wellness,
-    this.coachEvaluation,
-    final List<PerformanceInsight>? insights,
-    required this.createdAt,
-    this.updatedAt,
-    this.notes,
-  }) : _insights = insights;
+  const _$PlayerPerformanceDataImpl(
+      {required this.id,
+      required this.playerId,
+      required this.date,
+      required this.type,
+      required this.createdAt,
+      this.physicalMetrics,
+      this.technicalMetrics,
+      this.tacticalMetrics,
+      this.mentalMetrics,
+      this.matchMetrics,
+      this.trainingLoad,
+      this.wellness,
+      this.coachEvaluation,
+      final List<PerformanceInsight>? insights,
+      this.updatedAt,
+      this.notes})
+      : _insights = insights;
 
   factory _$PlayerPerformanceDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlayerPerformanceDataImplFromJson(json);
@@ -474,34 +460,37 @@ class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
   final DateTime date;
   @override
   final PerformanceType type;
-  // training, match, test
-  // Physical Performance Metrics
+// Metadata
+  @override
+  final DateTime createdAt;
+// training, match, test
+// Physical Performance Metrics
   @override
   final PhysicalMetrics? physicalMetrics;
-  // Technical Performance Metrics
+// Technical Performance Metrics
   @override
   final TechnicalMetrics? technicalMetrics;
-  // Tactical Performance Metrics
+// Tactical Performance Metrics
   @override
   final TacticalMetrics? tacticalMetrics;
-  // Mental/Psychological Metrics
+// Mental/Psychological Metrics
   @override
   final MentalMetrics? mentalMetrics;
-  // Match Specific Metrics
+// Match Specific Metrics
   @override
   final MatchMetrics? matchMetrics;
-  // Training Load & Recovery
+// Training Load & Recovery
   @override
   final TrainingLoadMetrics? trainingLoad;
-  // Wellness & Health
+// Wellness & Health
   @override
   final WellnessMetrics? wellness;
-  // Coach Evaluation
+// Coach Evaluation
   @override
   final CoachEvaluation? coachEvaluation;
-  // AI-Generated Insights
+// AI-Generated Insights
   final List<PerformanceInsight>? _insights;
-  // AI-Generated Insights
+// AI-Generated Insights
   @override
   List<PerformanceInsight>? get insights {
     final value = _insights;
@@ -511,9 +500,6 @@ class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
     return EqualUnmodifiableListView(value);
   }
 
-  // Metadata
-  @override
-  final DateTime createdAt;
   @override
   final DateTime? updatedAt;
   @override
@@ -521,7 +507,7 @@ class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
 
   @override
   String toString() {
-    return 'PlayerPerformanceData(id: $id, playerId: $playerId, date: $date, type: $type, physicalMetrics: $physicalMetrics, technicalMetrics: $technicalMetrics, tacticalMetrics: $tacticalMetrics, mentalMetrics: $mentalMetrics, matchMetrics: $matchMetrics, trainingLoad: $trainingLoad, wellness: $wellness, coachEvaluation: $coachEvaluation, insights: $insights, createdAt: $createdAt, updatedAt: $updatedAt, notes: $notes)';
+    return 'PlayerPerformanceData(id: $id, playerId: $playerId, date: $date, type: $type, createdAt: $createdAt, physicalMetrics: $physicalMetrics, technicalMetrics: $technicalMetrics, tacticalMetrics: $tacticalMetrics, mentalMetrics: $mentalMetrics, matchMetrics: $matchMetrics, trainingLoad: $trainingLoad, wellness: $wellness, coachEvaluation: $coachEvaluation, insights: $insights, updatedAt: $updatedAt, notes: $notes)';
   }
 
   @override
@@ -534,6 +520,8 @@ class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
                 other.playerId == playerId) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.type, type) || other.type == type) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.physicalMetrics, physicalMetrics) ||
                 other.physicalMetrics == physicalMetrics) &&
             (identical(other.technicalMetrics, technicalMetrics) ||
@@ -551,8 +539,6 @@ class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
             (identical(other.coachEvaluation, coachEvaluation) ||
                 other.coachEvaluation == coachEvaluation) &&
             const DeepCollectionEquality().equals(other._insights, _insights) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.notes, notes) || other.notes == notes));
@@ -561,60 +547,57 @@ class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    playerId,
-    date,
-    type,
-    physicalMetrics,
-    technicalMetrics,
-    tacticalMetrics,
-    mentalMetrics,
-    matchMetrics,
-    trainingLoad,
-    wellness,
-    coachEvaluation,
-    const DeepCollectionEquality().hash(_insights),
-    createdAt,
-    updatedAt,
-    notes,
-  );
+      runtimeType,
+      id,
+      playerId,
+      date,
+      type,
+      createdAt,
+      physicalMetrics,
+      technicalMetrics,
+      tacticalMetrics,
+      mentalMetrics,
+      matchMetrics,
+      trainingLoad,
+      wellness,
+      coachEvaluation,
+      const DeepCollectionEquality().hash(_insights),
+      updatedAt,
+      notes);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerPerformanceDataImplCopyWith<_$PlayerPerformanceDataImpl>
-  get copyWith =>
-      __$$PlayerPerformanceDataImplCopyWithImpl<_$PlayerPerformanceDataImpl>(
-        this,
-        _$identity,
-      );
+      get copyWith => __$$PlayerPerformanceDataImplCopyWithImpl<
+          _$PlayerPerformanceDataImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PlayerPerformanceDataImplToJson(this);
+    return _$$PlayerPerformanceDataImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _PlayerPerformanceData implements PlayerPerformanceData {
-  const factory _PlayerPerformanceData({
-    required final String id,
-    required final String playerId,
-    required final DateTime date,
-    required final PerformanceType type,
-    final PhysicalMetrics? physicalMetrics,
-    final TechnicalMetrics? technicalMetrics,
-    final TacticalMetrics? tacticalMetrics,
-    final MentalMetrics? mentalMetrics,
-    final MatchMetrics? matchMetrics,
-    final TrainingLoadMetrics? trainingLoad,
-    final WellnessMetrics? wellness,
-    final CoachEvaluation? coachEvaluation,
-    final List<PerformanceInsight>? insights,
-    required final DateTime createdAt,
-    final DateTime? updatedAt,
-    final String? notes,
-  }) = _$PlayerPerformanceDataImpl;
+  const factory _PlayerPerformanceData(
+      {required final String id,
+      required final String playerId,
+      required final DateTime date,
+      required final PerformanceType type,
+      required final DateTime createdAt,
+      final PhysicalMetrics? physicalMetrics,
+      final TechnicalMetrics? technicalMetrics,
+      final TacticalMetrics? tacticalMetrics,
+      final MentalMetrics? mentalMetrics,
+      final MatchMetrics? matchMetrics,
+      final TrainingLoadMetrics? trainingLoad,
+      final WellnessMetrics? wellness,
+      final CoachEvaluation? coachEvaluation,
+      final List<PerformanceInsight>? insights,
+      final DateTime? updatedAt,
+      final String? notes}) = _$PlayerPerformanceDataImpl;
 
   factory _PlayerPerformanceData.fromJson(Map<String, dynamic> json) =
       _$PlayerPerformanceDataImpl.fromJson;
@@ -627,8 +610,10 @@ abstract class _PlayerPerformanceData implements PlayerPerformanceData {
   DateTime get date;
   @override
   PerformanceType get type;
+  @override // Metadata
+  DateTime get createdAt;
   @override // training, match, test
-  // Physical Performance Metrics
+// Physical Performance Metrics
   PhysicalMetrics? get physicalMetrics;
   @override // Technical Performance Metrics
   TechnicalMetrics? get technicalMetrics;
@@ -646,8 +631,6 @@ abstract class _PlayerPerformanceData implements PlayerPerformanceData {
   CoachEvaluation? get coachEvaluation;
   @override // AI-Generated Insights
   List<PerformanceInsight>? get insights;
-  @override // Metadata
-  DateTime get createdAt;
   @override
   DateTime? get updatedAt;
   @override
@@ -655,7 +638,7 @@ abstract class _PlayerPerformanceData implements PlayerPerformanceData {
   @override
   @JsonKey(ignore: true)
   _$$PlayerPerformanceDataImplCopyWith<_$PlayerPerformanceDataImpl>
-  get copyWith => throw _privateConstructorUsedError;
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 PhysicalMetrics _$PhysicalMetricsFromJson(Map<String, dynamic> json) {
@@ -664,18 +647,18 @@ PhysicalMetrics _$PhysicalMetricsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PhysicalMetrics {
-  // Distance & Speed
+// Distance & Speed
   double? get totalDistance => throw _privateConstructorUsedError; // meters
   double? get highSpeedRunning =>
       throw _privateConstructorUsedError; // meters >19.8 km/h
   double? get sprints => throw _privateConstructorUsedError; // count >25.2 km/h
   double? get maxSpeed => throw _privateConstructorUsedError; // km/h
   double? get averageSpeed => throw _privateConstructorUsedError; // km/h
-  // Acceleration & Deceleration
+// Acceleration & Deceleration
   int? get accelerations => throw _privateConstructorUsedError; // count >3 m/s²
   int? get decelerations =>
       throw _privateConstructorUsedError; // count <-3 m/s²
-  // Heart Rate
+// Heart Rate
   int? get maxHeartRate => throw _privateConstructorUsedError; // bpm
   int? get averageHeartRate => throw _privateConstructorUsedError; // bpm
   int? get timeInZone1 =>
@@ -688,15 +671,15 @@ mixin _$PhysicalMetrics {
       throw _privateConstructorUsedError; // seconds (80-90% max HR)
   int? get timeInZone5 =>
       throw _privateConstructorUsedError; // seconds (90-100% max HR)
-  // Power & Explosiveness
+// Power & Explosiveness
   double? get jumpHeight => throw _privateConstructorUsedError; // cm
   double? get sprintTime10m => throw _privateConstructorUsedError; // seconds
   double? get sprintTime30m => throw _privateConstructorUsedError; // seconds
   double? get agility505 => throw _privateConstructorUsedError; // seconds
-  // Endurance
+// Endurance
   double? get yoyoTestDistance => throw _privateConstructorUsedError; // meters
   double? get vo2Max => throw _privateConstructorUsedError; // ml/kg/min
-  // Recovery Metrics
+// Recovery Metrics
   double? get hrvScore =>
       throw _privateConstructorUsedError; // Heart Rate Variability
   int? get restingHeartRate => throw _privateConstructorUsedError; // bpm
@@ -712,36 +695,34 @@ mixin _$PhysicalMetrics {
 /// @nodoc
 abstract class $PhysicalMetricsCopyWith<$Res> {
   factory $PhysicalMetricsCopyWith(
-    PhysicalMetrics value,
-    $Res Function(PhysicalMetrics) then,
-  ) = _$PhysicalMetricsCopyWithImpl<$Res, PhysicalMetrics>;
+          PhysicalMetrics value, $Res Function(PhysicalMetrics) then) =
+      _$PhysicalMetricsCopyWithImpl<$Res, PhysicalMetrics>;
   @useResult
-  $Res call({
-    double? totalDistance,
-    double? highSpeedRunning,
-    double? sprints,
-    double? maxSpeed,
-    double? averageSpeed,
-    int? accelerations,
-    int? decelerations,
-    int? maxHeartRate,
-    int? averageHeartRate,
-    int? timeInZone1,
-    int? timeInZone2,
-    int? timeInZone3,
-    int? timeInZone4,
-    int? timeInZone5,
-    double? jumpHeight,
-    double? sprintTime10m,
-    double? sprintTime30m,
-    double? agility505,
-    double? yoyoTestDistance,
-    double? vo2Max,
-    double? hrvScore,
-    int? restingHeartRate,
-    double? sleepQuality,
-    int? sleepHours,
-  });
+  $Res call(
+      {double? totalDistance,
+      double? highSpeedRunning,
+      double? sprints,
+      double? maxSpeed,
+      double? averageSpeed,
+      int? accelerations,
+      int? decelerations,
+      int? maxHeartRate,
+      int? averageHeartRate,
+      int? timeInZone1,
+      int? timeInZone2,
+      int? timeInZone3,
+      int? timeInZone4,
+      int? timeInZone5,
+      double? jumpHeight,
+      double? sprintTime10m,
+      double? sprintTime30m,
+      double? agility505,
+      double? yoyoTestDistance,
+      double? vo2Max,
+      double? hrvScore,
+      int? restingHeartRate,
+      double? sleepQuality,
+      int? sleepHours});
 }
 
 /// @nodoc
@@ -782,145 +763,140 @@ class _$PhysicalMetricsCopyWithImpl<$Res, $Val extends PhysicalMetrics>
     Object? sleepQuality = freezed,
     Object? sleepHours = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            totalDistance: freezed == totalDistance
-                ? _value.totalDistance
-                : totalDistance // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            highSpeedRunning: freezed == highSpeedRunning
-                ? _value.highSpeedRunning
-                : highSpeedRunning // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            sprints: freezed == sprints
-                ? _value.sprints
-                : sprints // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            maxSpeed: freezed == maxSpeed
-                ? _value.maxSpeed
-                : maxSpeed // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            averageSpeed: freezed == averageSpeed
-                ? _value.averageSpeed
-                : averageSpeed // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            accelerations: freezed == accelerations
-                ? _value.accelerations
-                : accelerations // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            decelerations: freezed == decelerations
-                ? _value.decelerations
-                : decelerations // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            maxHeartRate: freezed == maxHeartRate
-                ? _value.maxHeartRate
-                : maxHeartRate // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            averageHeartRate: freezed == averageHeartRate
-                ? _value.averageHeartRate
-                : averageHeartRate // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            timeInZone1: freezed == timeInZone1
-                ? _value.timeInZone1
-                : timeInZone1 // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            timeInZone2: freezed == timeInZone2
-                ? _value.timeInZone2
-                : timeInZone2 // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            timeInZone3: freezed == timeInZone3
-                ? _value.timeInZone3
-                : timeInZone3 // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            timeInZone4: freezed == timeInZone4
-                ? _value.timeInZone4
-                : timeInZone4 // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            timeInZone5: freezed == timeInZone5
-                ? _value.timeInZone5
-                : timeInZone5 // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            jumpHeight: freezed == jumpHeight
-                ? _value.jumpHeight
-                : jumpHeight // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            sprintTime10m: freezed == sprintTime10m
-                ? _value.sprintTime10m
-                : sprintTime10m // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            sprintTime30m: freezed == sprintTime30m
-                ? _value.sprintTime30m
-                : sprintTime30m // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            agility505: freezed == agility505
-                ? _value.agility505
-                : agility505 // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            yoyoTestDistance: freezed == yoyoTestDistance
-                ? _value.yoyoTestDistance
-                : yoyoTestDistance // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            vo2Max: freezed == vo2Max
-                ? _value.vo2Max
-                : vo2Max // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            hrvScore: freezed == hrvScore
-                ? _value.hrvScore
-                : hrvScore // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            restingHeartRate: freezed == restingHeartRate
-                ? _value.restingHeartRate
-                : restingHeartRate // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            sleepQuality: freezed == sleepQuality
-                ? _value.sleepQuality
-                : sleepQuality // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            sleepHours: freezed == sleepHours
-                ? _value.sleepHours
-                : sleepHours // ignore: cast_nullable_to_non_nullable
-                      as int?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      totalDistance: freezed == totalDistance
+          ? _value.totalDistance
+          : totalDistance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      highSpeedRunning: freezed == highSpeedRunning
+          ? _value.highSpeedRunning
+          : highSpeedRunning // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sprints: freezed == sprints
+          ? _value.sprints
+          : sprints // ignore: cast_nullable_to_non_nullable
+              as double?,
+      maxSpeed: freezed == maxSpeed
+          ? _value.maxSpeed
+          : maxSpeed // ignore: cast_nullable_to_non_nullable
+              as double?,
+      averageSpeed: freezed == averageSpeed
+          ? _value.averageSpeed
+          : averageSpeed // ignore: cast_nullable_to_non_nullable
+              as double?,
+      accelerations: freezed == accelerations
+          ? _value.accelerations
+          : accelerations // ignore: cast_nullable_to_non_nullable
+              as int?,
+      decelerations: freezed == decelerations
+          ? _value.decelerations
+          : decelerations // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxHeartRate: freezed == maxHeartRate
+          ? _value.maxHeartRate
+          : maxHeartRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+      averageHeartRate: freezed == averageHeartRate
+          ? _value.averageHeartRate
+          : averageHeartRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone1: freezed == timeInZone1
+          ? _value.timeInZone1
+          : timeInZone1 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone2: freezed == timeInZone2
+          ? _value.timeInZone2
+          : timeInZone2 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone3: freezed == timeInZone3
+          ? _value.timeInZone3
+          : timeInZone3 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone4: freezed == timeInZone4
+          ? _value.timeInZone4
+          : timeInZone4 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone5: freezed == timeInZone5
+          ? _value.timeInZone5
+          : timeInZone5 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      jumpHeight: freezed == jumpHeight
+          ? _value.jumpHeight
+          : jumpHeight // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sprintTime10m: freezed == sprintTime10m
+          ? _value.sprintTime10m
+          : sprintTime10m // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sprintTime30m: freezed == sprintTime30m
+          ? _value.sprintTime30m
+          : sprintTime30m // ignore: cast_nullable_to_non_nullable
+              as double?,
+      agility505: freezed == agility505
+          ? _value.agility505
+          : agility505 // ignore: cast_nullable_to_non_nullable
+              as double?,
+      yoyoTestDistance: freezed == yoyoTestDistance
+          ? _value.yoyoTestDistance
+          : yoyoTestDistance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vo2Max: freezed == vo2Max
+          ? _value.vo2Max
+          : vo2Max // ignore: cast_nullable_to_non_nullable
+              as double?,
+      hrvScore: freezed == hrvScore
+          ? _value.hrvScore
+          : hrvScore // ignore: cast_nullable_to_non_nullable
+              as double?,
+      restingHeartRate: freezed == restingHeartRate
+          ? _value.restingHeartRate
+          : restingHeartRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sleepQuality: freezed == sleepQuality
+          ? _value.sleepQuality
+          : sleepQuality // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sleepHours: freezed == sleepHours
+          ? _value.sleepHours
+          : sleepHours // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$PhysicalMetricsImplCopyWith<$Res>
     implements $PhysicalMetricsCopyWith<$Res> {
-  factory _$$PhysicalMetricsImplCopyWith(
-    _$PhysicalMetricsImpl value,
-    $Res Function(_$PhysicalMetricsImpl) then,
-  ) = __$$PhysicalMetricsImplCopyWithImpl<$Res>;
+  factory _$$PhysicalMetricsImplCopyWith(_$PhysicalMetricsImpl value,
+          $Res Function(_$PhysicalMetricsImpl) then) =
+      __$$PhysicalMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    double? totalDistance,
-    double? highSpeedRunning,
-    double? sprints,
-    double? maxSpeed,
-    double? averageSpeed,
-    int? accelerations,
-    int? decelerations,
-    int? maxHeartRate,
-    int? averageHeartRate,
-    int? timeInZone1,
-    int? timeInZone2,
-    int? timeInZone3,
-    int? timeInZone4,
-    int? timeInZone5,
-    double? jumpHeight,
-    double? sprintTime10m,
-    double? sprintTime30m,
-    double? agility505,
-    double? yoyoTestDistance,
-    double? vo2Max,
-    double? hrvScore,
-    int? restingHeartRate,
-    double? sleepQuality,
-    int? sleepHours,
-  });
+  $Res call(
+      {double? totalDistance,
+      double? highSpeedRunning,
+      double? sprints,
+      double? maxSpeed,
+      double? averageSpeed,
+      int? accelerations,
+      int? decelerations,
+      int? maxHeartRate,
+      int? averageHeartRate,
+      int? timeInZone1,
+      int? timeInZone2,
+      int? timeInZone3,
+      int? timeInZone4,
+      int? timeInZone5,
+      double? jumpHeight,
+      double? sprintTime10m,
+      double? sprintTime30m,
+      double? agility505,
+      double? yoyoTestDistance,
+      double? vo2Max,
+      double? hrvScore,
+      int? restingHeartRate,
+      double? sleepQuality,
+      int? sleepHours});
 }
 
 /// @nodoc
@@ -928,9 +904,8 @@ class __$$PhysicalMetricsImplCopyWithImpl<$Res>
     extends _$PhysicalMetricsCopyWithImpl<$Res, _$PhysicalMetricsImpl>
     implements _$$PhysicalMetricsImplCopyWith<$Res> {
   __$$PhysicalMetricsImplCopyWithImpl(
-    _$PhysicalMetricsImpl _value,
-    $Res Function(_$PhysicalMetricsImpl) _then,
-  ) : super(_value, _then);
+      _$PhysicalMetricsImpl _value, $Res Function(_$PhysicalMetricsImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -960,217 +935,214 @@ class __$$PhysicalMetricsImplCopyWithImpl<$Res>
     Object? sleepQuality = freezed,
     Object? sleepHours = freezed,
   }) {
-    return _then(
-      _$PhysicalMetricsImpl(
-        totalDistance: freezed == totalDistance
-            ? _value.totalDistance
-            : totalDistance // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        highSpeedRunning: freezed == highSpeedRunning
-            ? _value.highSpeedRunning
-            : highSpeedRunning // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        sprints: freezed == sprints
-            ? _value.sprints
-            : sprints // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        maxSpeed: freezed == maxSpeed
-            ? _value.maxSpeed
-            : maxSpeed // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        averageSpeed: freezed == averageSpeed
-            ? _value.averageSpeed
-            : averageSpeed // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        accelerations: freezed == accelerations
-            ? _value.accelerations
-            : accelerations // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        decelerations: freezed == decelerations
-            ? _value.decelerations
-            : decelerations // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        maxHeartRate: freezed == maxHeartRate
-            ? _value.maxHeartRate
-            : maxHeartRate // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        averageHeartRate: freezed == averageHeartRate
-            ? _value.averageHeartRate
-            : averageHeartRate // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        timeInZone1: freezed == timeInZone1
-            ? _value.timeInZone1
-            : timeInZone1 // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        timeInZone2: freezed == timeInZone2
-            ? _value.timeInZone2
-            : timeInZone2 // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        timeInZone3: freezed == timeInZone3
-            ? _value.timeInZone3
-            : timeInZone3 // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        timeInZone4: freezed == timeInZone4
-            ? _value.timeInZone4
-            : timeInZone4 // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        timeInZone5: freezed == timeInZone5
-            ? _value.timeInZone5
-            : timeInZone5 // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        jumpHeight: freezed == jumpHeight
-            ? _value.jumpHeight
-            : jumpHeight // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        sprintTime10m: freezed == sprintTime10m
-            ? _value.sprintTime10m
-            : sprintTime10m // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        sprintTime30m: freezed == sprintTime30m
-            ? _value.sprintTime30m
-            : sprintTime30m // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        agility505: freezed == agility505
-            ? _value.agility505
-            : agility505 // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        yoyoTestDistance: freezed == yoyoTestDistance
-            ? _value.yoyoTestDistance
-            : yoyoTestDistance // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        vo2Max: freezed == vo2Max
-            ? _value.vo2Max
-            : vo2Max // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        hrvScore: freezed == hrvScore
-            ? _value.hrvScore
-            : hrvScore // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        restingHeartRate: freezed == restingHeartRate
-            ? _value.restingHeartRate
-            : restingHeartRate // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        sleepQuality: freezed == sleepQuality
-            ? _value.sleepQuality
-            : sleepQuality // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        sleepHours: freezed == sleepHours
-            ? _value.sleepHours
-            : sleepHours // ignore: cast_nullable_to_non_nullable
-                  as int?,
-      ),
-    );
+    return _then(_$PhysicalMetricsImpl(
+      totalDistance: freezed == totalDistance
+          ? _value.totalDistance
+          : totalDistance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      highSpeedRunning: freezed == highSpeedRunning
+          ? _value.highSpeedRunning
+          : highSpeedRunning // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sprints: freezed == sprints
+          ? _value.sprints
+          : sprints // ignore: cast_nullable_to_non_nullable
+              as double?,
+      maxSpeed: freezed == maxSpeed
+          ? _value.maxSpeed
+          : maxSpeed // ignore: cast_nullable_to_non_nullable
+              as double?,
+      averageSpeed: freezed == averageSpeed
+          ? _value.averageSpeed
+          : averageSpeed // ignore: cast_nullable_to_non_nullable
+              as double?,
+      accelerations: freezed == accelerations
+          ? _value.accelerations
+          : accelerations // ignore: cast_nullable_to_non_nullable
+              as int?,
+      decelerations: freezed == decelerations
+          ? _value.decelerations
+          : decelerations // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxHeartRate: freezed == maxHeartRate
+          ? _value.maxHeartRate
+          : maxHeartRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+      averageHeartRate: freezed == averageHeartRate
+          ? _value.averageHeartRate
+          : averageHeartRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone1: freezed == timeInZone1
+          ? _value.timeInZone1
+          : timeInZone1 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone2: freezed == timeInZone2
+          ? _value.timeInZone2
+          : timeInZone2 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone3: freezed == timeInZone3
+          ? _value.timeInZone3
+          : timeInZone3 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone4: freezed == timeInZone4
+          ? _value.timeInZone4
+          : timeInZone4 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeInZone5: freezed == timeInZone5
+          ? _value.timeInZone5
+          : timeInZone5 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      jumpHeight: freezed == jumpHeight
+          ? _value.jumpHeight
+          : jumpHeight // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sprintTime10m: freezed == sprintTime10m
+          ? _value.sprintTime10m
+          : sprintTime10m // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sprintTime30m: freezed == sprintTime30m
+          ? _value.sprintTime30m
+          : sprintTime30m // ignore: cast_nullable_to_non_nullable
+              as double?,
+      agility505: freezed == agility505
+          ? _value.agility505
+          : agility505 // ignore: cast_nullable_to_non_nullable
+              as double?,
+      yoyoTestDistance: freezed == yoyoTestDistance
+          ? _value.yoyoTestDistance
+          : yoyoTestDistance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vo2Max: freezed == vo2Max
+          ? _value.vo2Max
+          : vo2Max // ignore: cast_nullable_to_non_nullable
+              as double?,
+      hrvScore: freezed == hrvScore
+          ? _value.hrvScore
+          : hrvScore // ignore: cast_nullable_to_non_nullable
+              as double?,
+      restingHeartRate: freezed == restingHeartRate
+          ? _value.restingHeartRate
+          : restingHeartRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sleepQuality: freezed == sleepQuality
+          ? _value.sleepQuality
+          : sleepQuality // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sleepHours: freezed == sleepHours
+          ? _value.sleepHours
+          : sleepHours // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$PhysicalMetricsImpl implements _PhysicalMetrics {
-  const _$PhysicalMetricsImpl({
-    this.totalDistance,
-    this.highSpeedRunning,
-    this.sprints,
-    this.maxSpeed,
-    this.averageSpeed,
-    this.accelerations,
-    this.decelerations,
-    this.maxHeartRate,
-    this.averageHeartRate,
-    this.timeInZone1,
-    this.timeInZone2,
-    this.timeInZone3,
-    this.timeInZone4,
-    this.timeInZone5,
-    this.jumpHeight,
-    this.sprintTime10m,
-    this.sprintTime30m,
-    this.agility505,
-    this.yoyoTestDistance,
-    this.vo2Max,
-    this.hrvScore,
-    this.restingHeartRate,
-    this.sleepQuality,
-    this.sleepHours,
-  });
+  const _$PhysicalMetricsImpl(
+      {this.totalDistance,
+      this.highSpeedRunning,
+      this.sprints,
+      this.maxSpeed,
+      this.averageSpeed,
+      this.accelerations,
+      this.decelerations,
+      this.maxHeartRate,
+      this.averageHeartRate,
+      this.timeInZone1,
+      this.timeInZone2,
+      this.timeInZone3,
+      this.timeInZone4,
+      this.timeInZone5,
+      this.jumpHeight,
+      this.sprintTime10m,
+      this.sprintTime30m,
+      this.agility505,
+      this.yoyoTestDistance,
+      this.vo2Max,
+      this.hrvScore,
+      this.restingHeartRate,
+      this.sleepQuality,
+      this.sleepHours});
 
   factory _$PhysicalMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PhysicalMetricsImplFromJson(json);
 
-  // Distance & Speed
+// Distance & Speed
   @override
   final double? totalDistance;
-  // meters
+// meters
   @override
   final double? highSpeedRunning;
-  // meters >19.8 km/h
+// meters >19.8 km/h
   @override
   final double? sprints;
-  // count >25.2 km/h
+// count >25.2 km/h
   @override
   final double? maxSpeed;
-  // km/h
+// km/h
   @override
   final double? averageSpeed;
-  // km/h
-  // Acceleration & Deceleration
+// km/h
+// Acceleration & Deceleration
   @override
   final int? accelerations;
-  // count >3 m/s²
+// count >3 m/s²
   @override
   final int? decelerations;
-  // count <-3 m/s²
-  // Heart Rate
+// count <-3 m/s²
+// Heart Rate
   @override
   final int? maxHeartRate;
-  // bpm
+// bpm
   @override
   final int? averageHeartRate;
-  // bpm
+// bpm
   @override
   final int? timeInZone1;
-  // seconds (50-60% max HR)
+// seconds (50-60% max HR)
   @override
   final int? timeInZone2;
-  // seconds (60-70% max HR)
+// seconds (60-70% max HR)
   @override
   final int? timeInZone3;
-  // seconds (70-80% max HR)
+// seconds (70-80% max HR)
   @override
   final int? timeInZone4;
-  // seconds (80-90% max HR)
+// seconds (80-90% max HR)
   @override
   final int? timeInZone5;
-  // seconds (90-100% max HR)
-  // Power & Explosiveness
+// seconds (90-100% max HR)
+// Power & Explosiveness
   @override
   final double? jumpHeight;
-  // cm
+// cm
   @override
   final double? sprintTime10m;
-  // seconds
+// seconds
   @override
   final double? sprintTime30m;
-  // seconds
+// seconds
   @override
   final double? agility505;
-  // seconds
-  // Endurance
+// seconds
+// Endurance
   @override
   final double? yoyoTestDistance;
-  // meters
+// meters
   @override
   final double? vo2Max;
-  // ml/kg/min
-  // Recovery Metrics
+// ml/kg/min
+// Recovery Metrics
   @override
   final double? hrvScore;
-  // Heart Rate Variability
+// Heart Rate Variability
   @override
   final int? restingHeartRate;
-  // bpm
+// bpm
   @override
   final double? sleepQuality;
-  // 0-10
+// 0-10
   @override
   final int? sleepHours;
 
@@ -1235,75 +1207,74 @@ class _$PhysicalMetricsImpl implements _PhysicalMetrics {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
-    runtimeType,
-    totalDistance,
-    highSpeedRunning,
-    sprints,
-    maxSpeed,
-    averageSpeed,
-    accelerations,
-    decelerations,
-    maxHeartRate,
-    averageHeartRate,
-    timeInZone1,
-    timeInZone2,
-    timeInZone3,
-    timeInZone4,
-    timeInZone5,
-    jumpHeight,
-    sprintTime10m,
-    sprintTime30m,
-    agility505,
-    yoyoTestDistance,
-    vo2Max,
-    hrvScore,
-    restingHeartRate,
-    sleepQuality,
-    sleepHours,
-  ]);
+        runtimeType,
+        totalDistance,
+        highSpeedRunning,
+        sprints,
+        maxSpeed,
+        averageSpeed,
+        accelerations,
+        decelerations,
+        maxHeartRate,
+        averageHeartRate,
+        timeInZone1,
+        timeInZone2,
+        timeInZone3,
+        timeInZone4,
+        timeInZone5,
+        jumpHeight,
+        sprintTime10m,
+        sprintTime30m,
+        agility505,
+        yoyoTestDistance,
+        vo2Max,
+        hrvScore,
+        restingHeartRate,
+        sleepQuality,
+        sleepHours
+      ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PhysicalMetricsImplCopyWith<_$PhysicalMetricsImpl> get copyWith =>
       __$$PhysicalMetricsImplCopyWithImpl<_$PhysicalMetricsImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PhysicalMetricsImplToJson(this);
+    return _$$PhysicalMetricsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _PhysicalMetrics implements PhysicalMetrics {
-  const factory _PhysicalMetrics({
-    final double? totalDistance,
-    final double? highSpeedRunning,
-    final double? sprints,
-    final double? maxSpeed,
-    final double? averageSpeed,
-    final int? accelerations,
-    final int? decelerations,
-    final int? maxHeartRate,
-    final int? averageHeartRate,
-    final int? timeInZone1,
-    final int? timeInZone2,
-    final int? timeInZone3,
-    final int? timeInZone4,
-    final int? timeInZone5,
-    final double? jumpHeight,
-    final double? sprintTime10m,
-    final double? sprintTime30m,
-    final double? agility505,
-    final double? yoyoTestDistance,
-    final double? vo2Max,
-    final double? hrvScore,
-    final int? restingHeartRate,
-    final double? sleepQuality,
-    final int? sleepHours,
-  }) = _$PhysicalMetricsImpl;
+  const factory _PhysicalMetrics(
+      {final double? totalDistance,
+      final double? highSpeedRunning,
+      final double? sprints,
+      final double? maxSpeed,
+      final double? averageSpeed,
+      final int? accelerations,
+      final int? decelerations,
+      final int? maxHeartRate,
+      final int? averageHeartRate,
+      final int? timeInZone1,
+      final int? timeInZone2,
+      final int? timeInZone3,
+      final int? timeInZone4,
+      final int? timeInZone5,
+      final double? jumpHeight,
+      final double? sprintTime10m,
+      final double? sprintTime30m,
+      final double? agility505,
+      final double? yoyoTestDistance,
+      final double? vo2Max,
+      final double? hrvScore,
+      final int? restingHeartRate,
+      final double? sleepQuality,
+      final int? sleepHours}) = _$PhysicalMetricsImpl;
 
   factory _PhysicalMetrics.fromJson(Map<String, dynamic> json) =
       _$PhysicalMetricsImpl.fromJson;
@@ -1319,12 +1290,12 @@ abstract class _PhysicalMetrics implements PhysicalMetrics {
   @override // km/h
   double? get averageSpeed;
   @override // km/h
-  // Acceleration & Deceleration
+// Acceleration & Deceleration
   int? get accelerations;
   @override // count >3 m/s²
   int? get decelerations;
   @override // count <-3 m/s²
-  // Heart Rate
+// Heart Rate
   int? get maxHeartRate;
   @override // bpm
   int? get averageHeartRate;
@@ -1339,7 +1310,7 @@ abstract class _PhysicalMetrics implements PhysicalMetrics {
   @override // seconds (80-90% max HR)
   int? get timeInZone5;
   @override // seconds (90-100% max HR)
-  // Power & Explosiveness
+// Power & Explosiveness
   double? get jumpHeight;
   @override // cm
   double? get sprintTime10m;
@@ -1348,12 +1319,12 @@ abstract class _PhysicalMetrics implements PhysicalMetrics {
   @override // seconds
   double? get agility505;
   @override // seconds
-  // Endurance
+// Endurance
   double? get yoyoTestDistance;
   @override // meters
   double? get vo2Max;
   @override // ml/kg/min
-  // Recovery Metrics
+// Recovery Metrics
   double? get hrvScore;
   @override // Heart Rate Variability
   int? get restingHeartRate;
@@ -1373,13 +1344,13 @@ TechnicalMetrics _$TechnicalMetricsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TechnicalMetrics {
-  // Ball Control
+// Ball Control
   int? get touches => throw _privateConstructorUsedError; // total touches
   int? get firstTouchSuccess =>
       throw _privateConstructorUsedError; // successful first touches
   int? get firstTouchTotal =>
       throw _privateConstructorUsedError; // total first touches
-  // Passing
+// Passing
   int? get passesCompleted => throw _privateConstructorUsedError;
   int? get passesAttempted => throw _privateConstructorUsedError;
   int? get keyPasses =>
@@ -1395,7 +1366,7 @@ mixin _$TechnicalMetrics {
   int? get shotsOnTarget => throw _privateConstructorUsedError;
   int? get goals => throw _privateConstructorUsedError;
   double? get xG => throw _privateConstructorUsedError; // expected goals
-  // Defending
+// Defending
   int? get tackles => throw _privateConstructorUsedError;
   int? get tacklesWon => throw _privateConstructorUsedError;
   int? get interceptions => throw _privateConstructorUsedError;
@@ -1417,38 +1388,36 @@ mixin _$TechnicalMetrics {
 /// @nodoc
 abstract class $TechnicalMetricsCopyWith<$Res> {
   factory $TechnicalMetricsCopyWith(
-    TechnicalMetrics value,
-    $Res Function(TechnicalMetrics) then,
-  ) = _$TechnicalMetricsCopyWithImpl<$Res, TechnicalMetrics>;
+          TechnicalMetrics value, $Res Function(TechnicalMetrics) then) =
+      _$TechnicalMetricsCopyWithImpl<$Res, TechnicalMetrics>;
   @useResult
-  $Res call({
-    int? touches,
-    int? firstTouchSuccess,
-    int? firstTouchTotal,
-    int? passesCompleted,
-    int? passesAttempted,
-    int? keyPasses,
-    int? throughBalls,
-    int? longBallsCompleted,
-    int? longBallsAttempted,
-    int? dribblesCompleted,
-    int? dribblesAttempted,
-    int? nutmegs,
-    int? shots,
-    int? shotsOnTarget,
-    int? goals,
-    double? xG,
-    int? tackles,
-    int? tacklesWon,
-    int? interceptions,
-    int? blocks,
-    int? clearances,
-    int? aerialDuelsWon,
-    int? aerialDuelsTotal,
-    int? saves,
-    int? savePercentage,
-    int? cleanSheets,
-  });
+  $Res call(
+      {int? touches,
+      int? firstTouchSuccess,
+      int? firstTouchTotal,
+      int? passesCompleted,
+      int? passesAttempted,
+      int? keyPasses,
+      int? throughBalls,
+      int? longBallsCompleted,
+      int? longBallsAttempted,
+      int? dribblesCompleted,
+      int? dribblesAttempted,
+      int? nutmegs,
+      int? shots,
+      int? shotsOnTarget,
+      int? goals,
+      double? xG,
+      int? tackles,
+      int? tacklesWon,
+      int? interceptions,
+      int? blocks,
+      int? clearances,
+      int? aerialDuelsWon,
+      int? aerialDuelsTotal,
+      int? saves,
+      int? savePercentage,
+      int? cleanSheets});
 }
 
 /// @nodoc
@@ -1491,165 +1460,159 @@ class _$TechnicalMetricsCopyWithImpl<$Res, $Val extends TechnicalMetrics>
     Object? savePercentage = freezed,
     Object? cleanSheets = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            touches: freezed == touches
-                ? _value.touches
-                : touches // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            firstTouchSuccess: freezed == firstTouchSuccess
-                ? _value.firstTouchSuccess
-                : firstTouchSuccess // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            firstTouchTotal: freezed == firstTouchTotal
-                ? _value.firstTouchTotal
-                : firstTouchTotal // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            passesCompleted: freezed == passesCompleted
-                ? _value.passesCompleted
-                : passesCompleted // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            passesAttempted: freezed == passesAttempted
-                ? _value.passesAttempted
-                : passesAttempted // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            keyPasses: freezed == keyPasses
-                ? _value.keyPasses
-                : keyPasses // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            throughBalls: freezed == throughBalls
-                ? _value.throughBalls
-                : throughBalls // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            longBallsCompleted: freezed == longBallsCompleted
-                ? _value.longBallsCompleted
-                : longBallsCompleted // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            longBallsAttempted: freezed == longBallsAttempted
-                ? _value.longBallsAttempted
-                : longBallsAttempted // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            dribblesCompleted: freezed == dribblesCompleted
-                ? _value.dribblesCompleted
-                : dribblesCompleted // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            dribblesAttempted: freezed == dribblesAttempted
-                ? _value.dribblesAttempted
-                : dribblesAttempted // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            nutmegs: freezed == nutmegs
-                ? _value.nutmegs
-                : nutmegs // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            shots: freezed == shots
-                ? _value.shots
-                : shots // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            shotsOnTarget: freezed == shotsOnTarget
-                ? _value.shotsOnTarget
-                : shotsOnTarget // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            goals: freezed == goals
-                ? _value.goals
-                : goals // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            xG: freezed == xG
-                ? _value.xG
-                : xG // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            tackles: freezed == tackles
-                ? _value.tackles
-                : tackles // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            tacklesWon: freezed == tacklesWon
-                ? _value.tacklesWon
-                : tacklesWon // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            interceptions: freezed == interceptions
-                ? _value.interceptions
-                : interceptions // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            blocks: freezed == blocks
-                ? _value.blocks
-                : blocks // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            clearances: freezed == clearances
-                ? _value.clearances
-                : clearances // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            aerialDuelsWon: freezed == aerialDuelsWon
-                ? _value.aerialDuelsWon
-                : aerialDuelsWon // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            aerialDuelsTotal: freezed == aerialDuelsTotal
-                ? _value.aerialDuelsTotal
-                : aerialDuelsTotal // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            saves: freezed == saves
-                ? _value.saves
-                : saves // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            savePercentage: freezed == savePercentage
-                ? _value.savePercentage
-                : savePercentage // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            cleanSheets: freezed == cleanSheets
-                ? _value.cleanSheets
-                : cleanSheets // ignore: cast_nullable_to_non_nullable
-                      as int?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      touches: freezed == touches
+          ? _value.touches
+          : touches // ignore: cast_nullable_to_non_nullable
+              as int?,
+      firstTouchSuccess: freezed == firstTouchSuccess
+          ? _value.firstTouchSuccess
+          : firstTouchSuccess // ignore: cast_nullable_to_non_nullable
+              as int?,
+      firstTouchTotal: freezed == firstTouchTotal
+          ? _value.firstTouchTotal
+          : firstTouchTotal // ignore: cast_nullable_to_non_nullable
+              as int?,
+      passesCompleted: freezed == passesCompleted
+          ? _value.passesCompleted
+          : passesCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      passesAttempted: freezed == passesAttempted
+          ? _value.passesAttempted
+          : passesAttempted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      keyPasses: freezed == keyPasses
+          ? _value.keyPasses
+          : keyPasses // ignore: cast_nullable_to_non_nullable
+              as int?,
+      throughBalls: freezed == throughBalls
+          ? _value.throughBalls
+          : throughBalls // ignore: cast_nullable_to_non_nullable
+              as int?,
+      longBallsCompleted: freezed == longBallsCompleted
+          ? _value.longBallsCompleted
+          : longBallsCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      longBallsAttempted: freezed == longBallsAttempted
+          ? _value.longBallsAttempted
+          : longBallsAttempted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dribblesCompleted: freezed == dribblesCompleted
+          ? _value.dribblesCompleted
+          : dribblesCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dribblesAttempted: freezed == dribblesAttempted
+          ? _value.dribblesAttempted
+          : dribblesAttempted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      nutmegs: freezed == nutmegs
+          ? _value.nutmegs
+          : nutmegs // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shots: freezed == shots
+          ? _value.shots
+          : shots // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shotsOnTarget: freezed == shotsOnTarget
+          ? _value.shotsOnTarget
+          : shotsOnTarget // ignore: cast_nullable_to_non_nullable
+              as int?,
+      goals: freezed == goals
+          ? _value.goals
+          : goals // ignore: cast_nullable_to_non_nullable
+              as int?,
+      xG: freezed == xG
+          ? _value.xG
+          : xG // ignore: cast_nullable_to_non_nullable
+              as double?,
+      tackles: freezed == tackles
+          ? _value.tackles
+          : tackles // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tacklesWon: freezed == tacklesWon
+          ? _value.tacklesWon
+          : tacklesWon // ignore: cast_nullable_to_non_nullable
+              as int?,
+      interceptions: freezed == interceptions
+          ? _value.interceptions
+          : interceptions // ignore: cast_nullable_to_non_nullable
+              as int?,
+      blocks: freezed == blocks
+          ? _value.blocks
+          : blocks // ignore: cast_nullable_to_non_nullable
+              as int?,
+      clearances: freezed == clearances
+          ? _value.clearances
+          : clearances // ignore: cast_nullable_to_non_nullable
+              as int?,
+      aerialDuelsWon: freezed == aerialDuelsWon
+          ? _value.aerialDuelsWon
+          : aerialDuelsWon // ignore: cast_nullable_to_non_nullable
+              as int?,
+      aerialDuelsTotal: freezed == aerialDuelsTotal
+          ? _value.aerialDuelsTotal
+          : aerialDuelsTotal // ignore: cast_nullable_to_non_nullable
+              as int?,
+      saves: freezed == saves
+          ? _value.saves
+          : saves // ignore: cast_nullable_to_non_nullable
+              as int?,
+      savePercentage: freezed == savePercentage
+          ? _value.savePercentage
+          : savePercentage // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cleanSheets: freezed == cleanSheets
+          ? _value.cleanSheets
+          : cleanSheets // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$TechnicalMetricsImplCopyWith<$Res>
     implements $TechnicalMetricsCopyWith<$Res> {
-  factory _$$TechnicalMetricsImplCopyWith(
-    _$TechnicalMetricsImpl value,
-    $Res Function(_$TechnicalMetricsImpl) then,
-  ) = __$$TechnicalMetricsImplCopyWithImpl<$Res>;
+  factory _$$TechnicalMetricsImplCopyWith(_$TechnicalMetricsImpl value,
+          $Res Function(_$TechnicalMetricsImpl) then) =
+      __$$TechnicalMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    int? touches,
-    int? firstTouchSuccess,
-    int? firstTouchTotal,
-    int? passesCompleted,
-    int? passesAttempted,
-    int? keyPasses,
-    int? throughBalls,
-    int? longBallsCompleted,
-    int? longBallsAttempted,
-    int? dribblesCompleted,
-    int? dribblesAttempted,
-    int? nutmegs,
-    int? shots,
-    int? shotsOnTarget,
-    int? goals,
-    double? xG,
-    int? tackles,
-    int? tacklesWon,
-    int? interceptions,
-    int? blocks,
-    int? clearances,
-    int? aerialDuelsWon,
-    int? aerialDuelsTotal,
-    int? saves,
-    int? savePercentage,
-    int? cleanSheets,
-  });
+  $Res call(
+      {int? touches,
+      int? firstTouchSuccess,
+      int? firstTouchTotal,
+      int? passesCompleted,
+      int? passesAttempted,
+      int? keyPasses,
+      int? throughBalls,
+      int? longBallsCompleted,
+      int? longBallsAttempted,
+      int? dribblesCompleted,
+      int? dribblesAttempted,
+      int? nutmegs,
+      int? shots,
+      int? shotsOnTarget,
+      int? goals,
+      double? xG,
+      int? tackles,
+      int? tacklesWon,
+      int? interceptions,
+      int? blocks,
+      int? clearances,
+      int? aerialDuelsWon,
+      int? aerialDuelsTotal,
+      int? saves,
+      int? savePercentage,
+      int? cleanSheets});
 }
 
 /// @nodoc
 class __$$TechnicalMetricsImplCopyWithImpl<$Res>
     extends _$TechnicalMetricsCopyWithImpl<$Res, _$TechnicalMetricsImpl>
     implements _$$TechnicalMetricsImplCopyWith<$Res> {
-  __$$TechnicalMetricsImplCopyWithImpl(
-    _$TechnicalMetricsImpl _value,
-    $Res Function(_$TechnicalMetricsImpl) _then,
-  ) : super(_value, _then);
+  __$$TechnicalMetricsImplCopyWithImpl(_$TechnicalMetricsImpl _value,
+      $Res Function(_$TechnicalMetricsImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1681,184 +1644,181 @@ class __$$TechnicalMetricsImplCopyWithImpl<$Res>
     Object? savePercentage = freezed,
     Object? cleanSheets = freezed,
   }) {
-    return _then(
-      _$TechnicalMetricsImpl(
-        touches: freezed == touches
-            ? _value.touches
-            : touches // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        firstTouchSuccess: freezed == firstTouchSuccess
-            ? _value.firstTouchSuccess
-            : firstTouchSuccess // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        firstTouchTotal: freezed == firstTouchTotal
-            ? _value.firstTouchTotal
-            : firstTouchTotal // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        passesCompleted: freezed == passesCompleted
-            ? _value.passesCompleted
-            : passesCompleted // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        passesAttempted: freezed == passesAttempted
-            ? _value.passesAttempted
-            : passesAttempted // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        keyPasses: freezed == keyPasses
-            ? _value.keyPasses
-            : keyPasses // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        throughBalls: freezed == throughBalls
-            ? _value.throughBalls
-            : throughBalls // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        longBallsCompleted: freezed == longBallsCompleted
-            ? _value.longBallsCompleted
-            : longBallsCompleted // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        longBallsAttempted: freezed == longBallsAttempted
-            ? _value.longBallsAttempted
-            : longBallsAttempted // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        dribblesCompleted: freezed == dribblesCompleted
-            ? _value.dribblesCompleted
-            : dribblesCompleted // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        dribblesAttempted: freezed == dribblesAttempted
-            ? _value.dribblesAttempted
-            : dribblesAttempted // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        nutmegs: freezed == nutmegs
-            ? _value.nutmegs
-            : nutmegs // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        shots: freezed == shots
-            ? _value.shots
-            : shots // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        shotsOnTarget: freezed == shotsOnTarget
-            ? _value.shotsOnTarget
-            : shotsOnTarget // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        goals: freezed == goals
-            ? _value.goals
-            : goals // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        xG: freezed == xG
-            ? _value.xG
-            : xG // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        tackles: freezed == tackles
-            ? _value.tackles
-            : tackles // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        tacklesWon: freezed == tacklesWon
-            ? _value.tacklesWon
-            : tacklesWon // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        interceptions: freezed == interceptions
-            ? _value.interceptions
-            : interceptions // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        blocks: freezed == blocks
-            ? _value.blocks
-            : blocks // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        clearances: freezed == clearances
-            ? _value.clearances
-            : clearances // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        aerialDuelsWon: freezed == aerialDuelsWon
-            ? _value.aerialDuelsWon
-            : aerialDuelsWon // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        aerialDuelsTotal: freezed == aerialDuelsTotal
-            ? _value.aerialDuelsTotal
-            : aerialDuelsTotal // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        saves: freezed == saves
-            ? _value.saves
-            : saves // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        savePercentage: freezed == savePercentage
-            ? _value.savePercentage
-            : savePercentage // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        cleanSheets: freezed == cleanSheets
-            ? _value.cleanSheets
-            : cleanSheets // ignore: cast_nullable_to_non_nullable
-                  as int?,
-      ),
-    );
+    return _then(_$TechnicalMetricsImpl(
+      touches: freezed == touches
+          ? _value.touches
+          : touches // ignore: cast_nullable_to_non_nullable
+              as int?,
+      firstTouchSuccess: freezed == firstTouchSuccess
+          ? _value.firstTouchSuccess
+          : firstTouchSuccess // ignore: cast_nullable_to_non_nullable
+              as int?,
+      firstTouchTotal: freezed == firstTouchTotal
+          ? _value.firstTouchTotal
+          : firstTouchTotal // ignore: cast_nullable_to_non_nullable
+              as int?,
+      passesCompleted: freezed == passesCompleted
+          ? _value.passesCompleted
+          : passesCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      passesAttempted: freezed == passesAttempted
+          ? _value.passesAttempted
+          : passesAttempted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      keyPasses: freezed == keyPasses
+          ? _value.keyPasses
+          : keyPasses // ignore: cast_nullable_to_non_nullable
+              as int?,
+      throughBalls: freezed == throughBalls
+          ? _value.throughBalls
+          : throughBalls // ignore: cast_nullable_to_non_nullable
+              as int?,
+      longBallsCompleted: freezed == longBallsCompleted
+          ? _value.longBallsCompleted
+          : longBallsCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      longBallsAttempted: freezed == longBallsAttempted
+          ? _value.longBallsAttempted
+          : longBallsAttempted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dribblesCompleted: freezed == dribblesCompleted
+          ? _value.dribblesCompleted
+          : dribblesCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dribblesAttempted: freezed == dribblesAttempted
+          ? _value.dribblesAttempted
+          : dribblesAttempted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      nutmegs: freezed == nutmegs
+          ? _value.nutmegs
+          : nutmegs // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shots: freezed == shots
+          ? _value.shots
+          : shots // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shotsOnTarget: freezed == shotsOnTarget
+          ? _value.shotsOnTarget
+          : shotsOnTarget // ignore: cast_nullable_to_non_nullable
+              as int?,
+      goals: freezed == goals
+          ? _value.goals
+          : goals // ignore: cast_nullable_to_non_nullable
+              as int?,
+      xG: freezed == xG
+          ? _value.xG
+          : xG // ignore: cast_nullable_to_non_nullable
+              as double?,
+      tackles: freezed == tackles
+          ? _value.tackles
+          : tackles // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tacklesWon: freezed == tacklesWon
+          ? _value.tacklesWon
+          : tacklesWon // ignore: cast_nullable_to_non_nullable
+              as int?,
+      interceptions: freezed == interceptions
+          ? _value.interceptions
+          : interceptions // ignore: cast_nullable_to_non_nullable
+              as int?,
+      blocks: freezed == blocks
+          ? _value.blocks
+          : blocks // ignore: cast_nullable_to_non_nullable
+              as int?,
+      clearances: freezed == clearances
+          ? _value.clearances
+          : clearances // ignore: cast_nullable_to_non_nullable
+              as int?,
+      aerialDuelsWon: freezed == aerialDuelsWon
+          ? _value.aerialDuelsWon
+          : aerialDuelsWon // ignore: cast_nullable_to_non_nullable
+              as int?,
+      aerialDuelsTotal: freezed == aerialDuelsTotal
+          ? _value.aerialDuelsTotal
+          : aerialDuelsTotal // ignore: cast_nullable_to_non_nullable
+              as int?,
+      saves: freezed == saves
+          ? _value.saves
+          : saves // ignore: cast_nullable_to_non_nullable
+              as int?,
+      savePercentage: freezed == savePercentage
+          ? _value.savePercentage
+          : savePercentage // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cleanSheets: freezed == cleanSheets
+          ? _value.cleanSheets
+          : cleanSheets // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$TechnicalMetricsImpl implements _TechnicalMetrics {
-  const _$TechnicalMetricsImpl({
-    this.touches,
-    this.firstTouchSuccess,
-    this.firstTouchTotal,
-    this.passesCompleted,
-    this.passesAttempted,
-    this.keyPasses,
-    this.throughBalls,
-    this.longBallsCompleted,
-    this.longBallsAttempted,
-    this.dribblesCompleted,
-    this.dribblesAttempted,
-    this.nutmegs,
-    this.shots,
-    this.shotsOnTarget,
-    this.goals,
-    this.xG,
-    this.tackles,
-    this.tacklesWon,
-    this.interceptions,
-    this.blocks,
-    this.clearances,
-    this.aerialDuelsWon,
-    this.aerialDuelsTotal,
-    this.saves,
-    this.savePercentage,
-    this.cleanSheets,
-  });
+  const _$TechnicalMetricsImpl(
+      {this.touches,
+      this.firstTouchSuccess,
+      this.firstTouchTotal,
+      this.passesCompleted,
+      this.passesAttempted,
+      this.keyPasses,
+      this.throughBalls,
+      this.longBallsCompleted,
+      this.longBallsAttempted,
+      this.dribblesCompleted,
+      this.dribblesAttempted,
+      this.nutmegs,
+      this.shots,
+      this.shotsOnTarget,
+      this.goals,
+      this.xG,
+      this.tackles,
+      this.tacklesWon,
+      this.interceptions,
+      this.blocks,
+      this.clearances,
+      this.aerialDuelsWon,
+      this.aerialDuelsTotal,
+      this.saves,
+      this.savePercentage,
+      this.cleanSheets});
 
   factory _$TechnicalMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$TechnicalMetricsImplFromJson(json);
 
-  // Ball Control
+// Ball Control
   @override
   final int? touches;
-  // total touches
+// total touches
   @override
   final int? firstTouchSuccess;
-  // successful first touches
+// successful first touches
   @override
   final int? firstTouchTotal;
-  // total first touches
-  // Passing
+// total first touches
+// Passing
   @override
   final int? passesCompleted;
   @override
   final int? passesAttempted;
   @override
   final int? keyPasses;
-  // passes leading to shot
+// passes leading to shot
   @override
   final int? throughBalls;
   @override
   final int? longBallsCompleted;
   @override
   final int? longBallsAttempted;
-  // Dribbling
+// Dribbling
   @override
   final int? dribblesCompleted;
   @override
   final int? dribblesAttempted;
   @override
   final int? nutmegs;
-  // Shooting
+// Shooting
   @override
   final int? shots;
   @override
@@ -1867,8 +1827,8 @@ class _$TechnicalMetricsImpl implements _TechnicalMetrics {
   final int? goals;
   @override
   final double? xG;
-  // expected goals
-  // Defending
+// expected goals
+// Defending
   @override
   final int? tackles;
   @override
@@ -1883,7 +1843,7 @@ class _$TechnicalMetricsImpl implements _TechnicalMetrics {
   final int? aerialDuelsWon;
   @override
   final int? aerialDuelsTotal;
-  // Goalkeeping (if applicable)
+// Goalkeeping (if applicable)
   @override
   final int? saves;
   @override
@@ -1950,79 +1910,78 @@ class _$TechnicalMetricsImpl implements _TechnicalMetrics {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
-    runtimeType,
-    touches,
-    firstTouchSuccess,
-    firstTouchTotal,
-    passesCompleted,
-    passesAttempted,
-    keyPasses,
-    throughBalls,
-    longBallsCompleted,
-    longBallsAttempted,
-    dribblesCompleted,
-    dribblesAttempted,
-    nutmegs,
-    shots,
-    shotsOnTarget,
-    goals,
-    xG,
-    tackles,
-    tacklesWon,
-    interceptions,
-    blocks,
-    clearances,
-    aerialDuelsWon,
-    aerialDuelsTotal,
-    saves,
-    savePercentage,
-    cleanSheets,
-  ]);
+        runtimeType,
+        touches,
+        firstTouchSuccess,
+        firstTouchTotal,
+        passesCompleted,
+        passesAttempted,
+        keyPasses,
+        throughBalls,
+        longBallsCompleted,
+        longBallsAttempted,
+        dribblesCompleted,
+        dribblesAttempted,
+        nutmegs,
+        shots,
+        shotsOnTarget,
+        goals,
+        xG,
+        tackles,
+        tacklesWon,
+        interceptions,
+        blocks,
+        clearances,
+        aerialDuelsWon,
+        aerialDuelsTotal,
+        saves,
+        savePercentage,
+        cleanSheets
+      ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TechnicalMetricsImplCopyWith<_$TechnicalMetricsImpl> get copyWith =>
       __$$TechnicalMetricsImplCopyWithImpl<_$TechnicalMetricsImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TechnicalMetricsImplToJson(this);
+    return _$$TechnicalMetricsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _TechnicalMetrics implements TechnicalMetrics {
-  const factory _TechnicalMetrics({
-    final int? touches,
-    final int? firstTouchSuccess,
-    final int? firstTouchTotal,
-    final int? passesCompleted,
-    final int? passesAttempted,
-    final int? keyPasses,
-    final int? throughBalls,
-    final int? longBallsCompleted,
-    final int? longBallsAttempted,
-    final int? dribblesCompleted,
-    final int? dribblesAttempted,
-    final int? nutmegs,
-    final int? shots,
-    final int? shotsOnTarget,
-    final int? goals,
-    final double? xG,
-    final int? tackles,
-    final int? tacklesWon,
-    final int? interceptions,
-    final int? blocks,
-    final int? clearances,
-    final int? aerialDuelsWon,
-    final int? aerialDuelsTotal,
-    final int? saves,
-    final int? savePercentage,
-    final int? cleanSheets,
-  }) = _$TechnicalMetricsImpl;
+  const factory _TechnicalMetrics(
+      {final int? touches,
+      final int? firstTouchSuccess,
+      final int? firstTouchTotal,
+      final int? passesCompleted,
+      final int? passesAttempted,
+      final int? keyPasses,
+      final int? throughBalls,
+      final int? longBallsCompleted,
+      final int? longBallsAttempted,
+      final int? dribblesCompleted,
+      final int? dribblesAttempted,
+      final int? nutmegs,
+      final int? shots,
+      final int? shotsOnTarget,
+      final int? goals,
+      final double? xG,
+      final int? tackles,
+      final int? tacklesWon,
+      final int? interceptions,
+      final int? blocks,
+      final int? clearances,
+      final int? aerialDuelsWon,
+      final int? aerialDuelsTotal,
+      final int? saves,
+      final int? savePercentage,
+      final int? cleanSheets}) = _$TechnicalMetricsImpl;
 
   factory _TechnicalMetrics.fromJson(Map<String, dynamic> json) =
       _$TechnicalMetricsImpl.fromJson;
@@ -2034,7 +1993,7 @@ abstract class _TechnicalMetrics implements TechnicalMetrics {
   @override // successful first touches
   int? get firstTouchTotal;
   @override // total first touches
-  // Passing
+// Passing
   int? get passesCompleted;
   @override
   int? get passesAttempted;
@@ -2061,7 +2020,7 @@ abstract class _TechnicalMetrics implements TechnicalMetrics {
   @override
   double? get xG;
   @override // expected goals
-  // Defending
+// Defending
   int? get tackles;
   @override
   int? get tacklesWon;
@@ -2093,19 +2052,19 @@ TacticalMetrics _$TacticalMetricsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TacticalMetrics {
-  // Positioning
+// Positioning
   double? get averagePositionX =>
       throw _privateConstructorUsedError; // field percentage 0-100
   double? get averagePositionY =>
       throw _privateConstructorUsedError; // field percentage 0-100
   double? get heatmapCoverage =>
       throw _privateConstructorUsedError; // percentage of field covered
-  // Team Play
+// Team Play
   int? get combinationPlays => throw _privateConstructorUsedError;
   int? get supportRuns => throw _privateConstructorUsedError;
   int? get defensiveActions => throw _privateConstructorUsedError;
   double? get pressingIntensity => throw _privateConstructorUsedError; // 0-10
-  // Decision Making
+// Decision Making
   double? get decisionAccuracy =>
       throw _privateConstructorUsedError; // percentage
   int? get correctDecisions => throw _privateConstructorUsedError;
@@ -2115,7 +2074,7 @@ mixin _$TacticalMetrics {
       throw _privateConstructorUsedError; // percentage
   double? get compactness =>
       throw _privateConstructorUsedError; // team shape metric
-  // Transition Play
+// Transition Play
   int? get counterAttacks => throw _privateConstructorUsedError;
   int? get recoveryRuns => throw _privateConstructorUsedError;
   double? get transitionSpeed => throw _privateConstructorUsedError;
@@ -2129,27 +2088,25 @@ mixin _$TacticalMetrics {
 /// @nodoc
 abstract class $TacticalMetricsCopyWith<$Res> {
   factory $TacticalMetricsCopyWith(
-    TacticalMetrics value,
-    $Res Function(TacticalMetrics) then,
-  ) = _$TacticalMetricsCopyWithImpl<$Res, TacticalMetrics>;
+          TacticalMetrics value, $Res Function(TacticalMetrics) then) =
+      _$TacticalMetricsCopyWithImpl<$Res, TacticalMetrics>;
   @useResult
-  $Res call({
-    double? averagePositionX,
-    double? averagePositionY,
-    double? heatmapCoverage,
-    int? combinationPlays,
-    int? supportRuns,
-    int? defensiveActions,
-    double? pressingIntensity,
-    double? decisionAccuracy,
-    int? correctDecisions,
-    int? poorDecisions,
-    double? positionAdherence,
-    double? compactness,
-    int? counterAttacks,
-    int? recoveryRuns,
-    double? transitionSpeed,
-  });
+  $Res call(
+      {double? averagePositionX,
+      double? averagePositionY,
+      double? heatmapCoverage,
+      int? combinationPlays,
+      int? supportRuns,
+      int? defensiveActions,
+      double? pressingIntensity,
+      double? decisionAccuracy,
+      int? correctDecisions,
+      int? poorDecisions,
+      double? positionAdherence,
+      double? compactness,
+      int? counterAttacks,
+      int? recoveryRuns,
+      double? transitionSpeed});
 }
 
 /// @nodoc
@@ -2181,100 +2138,95 @@ class _$TacticalMetricsCopyWithImpl<$Res, $Val extends TacticalMetrics>
     Object? recoveryRuns = freezed,
     Object? transitionSpeed = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            averagePositionX: freezed == averagePositionX
-                ? _value.averagePositionX
-                : averagePositionX // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            averagePositionY: freezed == averagePositionY
-                ? _value.averagePositionY
-                : averagePositionY // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            heatmapCoverage: freezed == heatmapCoverage
-                ? _value.heatmapCoverage
-                : heatmapCoverage // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            combinationPlays: freezed == combinationPlays
-                ? _value.combinationPlays
-                : combinationPlays // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            supportRuns: freezed == supportRuns
-                ? _value.supportRuns
-                : supportRuns // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            defensiveActions: freezed == defensiveActions
-                ? _value.defensiveActions
-                : defensiveActions // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            pressingIntensity: freezed == pressingIntensity
-                ? _value.pressingIntensity
-                : pressingIntensity // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            decisionAccuracy: freezed == decisionAccuracy
-                ? _value.decisionAccuracy
-                : decisionAccuracy // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            correctDecisions: freezed == correctDecisions
-                ? _value.correctDecisions
-                : correctDecisions // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            poorDecisions: freezed == poorDecisions
-                ? _value.poorDecisions
-                : poorDecisions // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            positionAdherence: freezed == positionAdherence
-                ? _value.positionAdherence
-                : positionAdherence // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            compactness: freezed == compactness
-                ? _value.compactness
-                : compactness // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            counterAttacks: freezed == counterAttacks
-                ? _value.counterAttacks
-                : counterAttacks // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            recoveryRuns: freezed == recoveryRuns
-                ? _value.recoveryRuns
-                : recoveryRuns // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            transitionSpeed: freezed == transitionSpeed
-                ? _value.transitionSpeed
-                : transitionSpeed // ignore: cast_nullable_to_non_nullable
-                      as double?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      averagePositionX: freezed == averagePositionX
+          ? _value.averagePositionX
+          : averagePositionX // ignore: cast_nullable_to_non_nullable
+              as double?,
+      averagePositionY: freezed == averagePositionY
+          ? _value.averagePositionY
+          : averagePositionY // ignore: cast_nullable_to_non_nullable
+              as double?,
+      heatmapCoverage: freezed == heatmapCoverage
+          ? _value.heatmapCoverage
+          : heatmapCoverage // ignore: cast_nullable_to_non_nullable
+              as double?,
+      combinationPlays: freezed == combinationPlays
+          ? _value.combinationPlays
+          : combinationPlays // ignore: cast_nullable_to_non_nullable
+              as int?,
+      supportRuns: freezed == supportRuns
+          ? _value.supportRuns
+          : supportRuns // ignore: cast_nullable_to_non_nullable
+              as int?,
+      defensiveActions: freezed == defensiveActions
+          ? _value.defensiveActions
+          : defensiveActions // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pressingIntensity: freezed == pressingIntensity
+          ? _value.pressingIntensity
+          : pressingIntensity // ignore: cast_nullable_to_non_nullable
+              as double?,
+      decisionAccuracy: freezed == decisionAccuracy
+          ? _value.decisionAccuracy
+          : decisionAccuracy // ignore: cast_nullable_to_non_nullable
+              as double?,
+      correctDecisions: freezed == correctDecisions
+          ? _value.correctDecisions
+          : correctDecisions // ignore: cast_nullable_to_non_nullable
+              as int?,
+      poorDecisions: freezed == poorDecisions
+          ? _value.poorDecisions
+          : poorDecisions // ignore: cast_nullable_to_non_nullable
+              as int?,
+      positionAdherence: freezed == positionAdherence
+          ? _value.positionAdherence
+          : positionAdherence // ignore: cast_nullable_to_non_nullable
+              as double?,
+      compactness: freezed == compactness
+          ? _value.compactness
+          : compactness // ignore: cast_nullable_to_non_nullable
+              as double?,
+      counterAttacks: freezed == counterAttacks
+          ? _value.counterAttacks
+          : counterAttacks // ignore: cast_nullable_to_non_nullable
+              as int?,
+      recoveryRuns: freezed == recoveryRuns
+          ? _value.recoveryRuns
+          : recoveryRuns // ignore: cast_nullable_to_non_nullable
+              as int?,
+      transitionSpeed: freezed == transitionSpeed
+          ? _value.transitionSpeed
+          : transitionSpeed // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$TacticalMetricsImplCopyWith<$Res>
     implements $TacticalMetricsCopyWith<$Res> {
-  factory _$$TacticalMetricsImplCopyWith(
-    _$TacticalMetricsImpl value,
-    $Res Function(_$TacticalMetricsImpl) then,
-  ) = __$$TacticalMetricsImplCopyWithImpl<$Res>;
+  factory _$$TacticalMetricsImplCopyWith(_$TacticalMetricsImpl value,
+          $Res Function(_$TacticalMetricsImpl) then) =
+      __$$TacticalMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    double? averagePositionX,
-    double? averagePositionY,
-    double? heatmapCoverage,
-    int? combinationPlays,
-    int? supportRuns,
-    int? defensiveActions,
-    double? pressingIntensity,
-    double? decisionAccuracy,
-    int? correctDecisions,
-    int? poorDecisions,
-    double? positionAdherence,
-    double? compactness,
-    int? counterAttacks,
-    int? recoveryRuns,
-    double? transitionSpeed,
-  });
+  $Res call(
+      {double? averagePositionX,
+      double? averagePositionY,
+      double? heatmapCoverage,
+      int? combinationPlays,
+      int? supportRuns,
+      int? defensiveActions,
+      double? pressingIntensity,
+      double? decisionAccuracy,
+      int? correctDecisions,
+      int? poorDecisions,
+      double? positionAdherence,
+      double? compactness,
+      int? counterAttacks,
+      int? recoveryRuns,
+      double? transitionSpeed});
 }
 
 /// @nodoc
@@ -2282,9 +2234,8 @@ class __$$TacticalMetricsImplCopyWithImpl<$Res>
     extends _$TacticalMetricsCopyWithImpl<$Res, _$TacticalMetricsImpl>
     implements _$$TacticalMetricsImplCopyWith<$Res> {
   __$$TacticalMetricsImplCopyWithImpl(
-    _$TacticalMetricsImpl _value,
-    $Res Function(_$TacticalMetricsImpl) _then,
-  ) : super(_value, _then);
+      _$TacticalMetricsImpl _value, $Res Function(_$TacticalMetricsImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -2305,108 +2256,105 @@ class __$$TacticalMetricsImplCopyWithImpl<$Res>
     Object? recoveryRuns = freezed,
     Object? transitionSpeed = freezed,
   }) {
-    return _then(
-      _$TacticalMetricsImpl(
-        averagePositionX: freezed == averagePositionX
-            ? _value.averagePositionX
-            : averagePositionX // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        averagePositionY: freezed == averagePositionY
-            ? _value.averagePositionY
-            : averagePositionY // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        heatmapCoverage: freezed == heatmapCoverage
-            ? _value.heatmapCoverage
-            : heatmapCoverage // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        combinationPlays: freezed == combinationPlays
-            ? _value.combinationPlays
-            : combinationPlays // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        supportRuns: freezed == supportRuns
-            ? _value.supportRuns
-            : supportRuns // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        defensiveActions: freezed == defensiveActions
-            ? _value.defensiveActions
-            : defensiveActions // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        pressingIntensity: freezed == pressingIntensity
-            ? _value.pressingIntensity
-            : pressingIntensity // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        decisionAccuracy: freezed == decisionAccuracy
-            ? _value.decisionAccuracy
-            : decisionAccuracy // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        correctDecisions: freezed == correctDecisions
-            ? _value.correctDecisions
-            : correctDecisions // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        poorDecisions: freezed == poorDecisions
-            ? _value.poorDecisions
-            : poorDecisions // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        positionAdherence: freezed == positionAdherence
-            ? _value.positionAdherence
-            : positionAdherence // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        compactness: freezed == compactness
-            ? _value.compactness
-            : compactness // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        counterAttacks: freezed == counterAttacks
-            ? _value.counterAttacks
-            : counterAttacks // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        recoveryRuns: freezed == recoveryRuns
-            ? _value.recoveryRuns
-            : recoveryRuns // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        transitionSpeed: freezed == transitionSpeed
-            ? _value.transitionSpeed
-            : transitionSpeed // ignore: cast_nullable_to_non_nullable
-                  as double?,
-      ),
-    );
+    return _then(_$TacticalMetricsImpl(
+      averagePositionX: freezed == averagePositionX
+          ? _value.averagePositionX
+          : averagePositionX // ignore: cast_nullable_to_non_nullable
+              as double?,
+      averagePositionY: freezed == averagePositionY
+          ? _value.averagePositionY
+          : averagePositionY // ignore: cast_nullable_to_non_nullable
+              as double?,
+      heatmapCoverage: freezed == heatmapCoverage
+          ? _value.heatmapCoverage
+          : heatmapCoverage // ignore: cast_nullable_to_non_nullable
+              as double?,
+      combinationPlays: freezed == combinationPlays
+          ? _value.combinationPlays
+          : combinationPlays // ignore: cast_nullable_to_non_nullable
+              as int?,
+      supportRuns: freezed == supportRuns
+          ? _value.supportRuns
+          : supportRuns // ignore: cast_nullable_to_non_nullable
+              as int?,
+      defensiveActions: freezed == defensiveActions
+          ? _value.defensiveActions
+          : defensiveActions // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pressingIntensity: freezed == pressingIntensity
+          ? _value.pressingIntensity
+          : pressingIntensity // ignore: cast_nullable_to_non_nullable
+              as double?,
+      decisionAccuracy: freezed == decisionAccuracy
+          ? _value.decisionAccuracy
+          : decisionAccuracy // ignore: cast_nullable_to_non_nullable
+              as double?,
+      correctDecisions: freezed == correctDecisions
+          ? _value.correctDecisions
+          : correctDecisions // ignore: cast_nullable_to_non_nullable
+              as int?,
+      poorDecisions: freezed == poorDecisions
+          ? _value.poorDecisions
+          : poorDecisions // ignore: cast_nullable_to_non_nullable
+              as int?,
+      positionAdherence: freezed == positionAdherence
+          ? _value.positionAdherence
+          : positionAdherence // ignore: cast_nullable_to_non_nullable
+              as double?,
+      compactness: freezed == compactness
+          ? _value.compactness
+          : compactness // ignore: cast_nullable_to_non_nullable
+              as double?,
+      counterAttacks: freezed == counterAttacks
+          ? _value.counterAttacks
+          : counterAttacks // ignore: cast_nullable_to_non_nullable
+              as int?,
+      recoveryRuns: freezed == recoveryRuns
+          ? _value.recoveryRuns
+          : recoveryRuns // ignore: cast_nullable_to_non_nullable
+              as int?,
+      transitionSpeed: freezed == transitionSpeed
+          ? _value.transitionSpeed
+          : transitionSpeed // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$TacticalMetricsImpl implements _TacticalMetrics {
-  const _$TacticalMetricsImpl({
-    this.averagePositionX,
-    this.averagePositionY,
-    this.heatmapCoverage,
-    this.combinationPlays,
-    this.supportRuns,
-    this.defensiveActions,
-    this.pressingIntensity,
-    this.decisionAccuracy,
-    this.correctDecisions,
-    this.poorDecisions,
-    this.positionAdherence,
-    this.compactness,
-    this.counterAttacks,
-    this.recoveryRuns,
-    this.transitionSpeed,
-  });
+  const _$TacticalMetricsImpl(
+      {this.averagePositionX,
+      this.averagePositionY,
+      this.heatmapCoverage,
+      this.combinationPlays,
+      this.supportRuns,
+      this.defensiveActions,
+      this.pressingIntensity,
+      this.decisionAccuracy,
+      this.correctDecisions,
+      this.poorDecisions,
+      this.positionAdherence,
+      this.compactness,
+      this.counterAttacks,
+      this.recoveryRuns,
+      this.transitionSpeed});
 
   factory _$TacticalMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$TacticalMetricsImplFromJson(json);
 
-  // Positioning
+// Positioning
   @override
   final double? averagePositionX;
-  // field percentage 0-100
+// field percentage 0-100
   @override
   final double? averagePositionY;
-  // field percentage 0-100
+// field percentage 0-100
   @override
   final double? heatmapCoverage;
-  // percentage of field covered
-  // Team Play
+// percentage of field covered
+// Team Play
   @override
   final int? combinationPlays;
   @override
@@ -2415,23 +2363,23 @@ class _$TacticalMetricsImpl implements _TacticalMetrics {
   final int? defensiveActions;
   @override
   final double? pressingIntensity;
-  // 0-10
-  // Decision Making
+// 0-10
+// Decision Making
   @override
   final double? decisionAccuracy;
-  // percentage
+// percentage
   @override
   final int? correctDecisions;
   @override
   final int? poorDecisions;
-  // Formation Discipline
+// Formation Discipline
   @override
   final double? positionAdherence;
-  // percentage
+// percentage
   @override
   final double? compactness;
-  // team shape metric
-  // Transition Play
+// team shape metric
+// Transition Play
   @override
   final int? counterAttacks;
   @override
@@ -2484,57 +2432,55 @@ class _$TacticalMetricsImpl implements _TacticalMetrics {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    averagePositionX,
-    averagePositionY,
-    heatmapCoverage,
-    combinationPlays,
-    supportRuns,
-    defensiveActions,
-    pressingIntensity,
-    decisionAccuracy,
-    correctDecisions,
-    poorDecisions,
-    positionAdherence,
-    compactness,
-    counterAttacks,
-    recoveryRuns,
-    transitionSpeed,
-  );
+      runtimeType,
+      averagePositionX,
+      averagePositionY,
+      heatmapCoverage,
+      combinationPlays,
+      supportRuns,
+      defensiveActions,
+      pressingIntensity,
+      decisionAccuracy,
+      correctDecisions,
+      poorDecisions,
+      positionAdherence,
+      compactness,
+      counterAttacks,
+      recoveryRuns,
+      transitionSpeed);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TacticalMetricsImplCopyWith<_$TacticalMetricsImpl> get copyWith =>
       __$$TacticalMetricsImplCopyWithImpl<_$TacticalMetricsImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TacticalMetricsImplToJson(this);
+    return _$$TacticalMetricsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _TacticalMetrics implements TacticalMetrics {
-  const factory _TacticalMetrics({
-    final double? averagePositionX,
-    final double? averagePositionY,
-    final double? heatmapCoverage,
-    final int? combinationPlays,
-    final int? supportRuns,
-    final int? defensiveActions,
-    final double? pressingIntensity,
-    final double? decisionAccuracy,
-    final int? correctDecisions,
-    final int? poorDecisions,
-    final double? positionAdherence,
-    final double? compactness,
-    final int? counterAttacks,
-    final int? recoveryRuns,
-    final double? transitionSpeed,
-  }) = _$TacticalMetricsImpl;
+  const factory _TacticalMetrics(
+      {final double? averagePositionX,
+      final double? averagePositionY,
+      final double? heatmapCoverage,
+      final int? combinationPlays,
+      final int? supportRuns,
+      final int? defensiveActions,
+      final double? pressingIntensity,
+      final double? decisionAccuracy,
+      final int? correctDecisions,
+      final int? poorDecisions,
+      final double? positionAdherence,
+      final double? compactness,
+      final int? counterAttacks,
+      final int? recoveryRuns,
+      final double? transitionSpeed}) = _$TacticalMetricsImpl;
 
   factory _TacticalMetrics.fromJson(Map<String, dynamic> json) =
       _$TacticalMetricsImpl.fromJson;
@@ -2546,7 +2492,7 @@ abstract class _TacticalMetrics implements TacticalMetrics {
   @override // field percentage 0-100
   double? get heatmapCoverage;
   @override // percentage of field covered
-  // Team Play
+// Team Play
   int? get combinationPlays;
   @override
   int? get supportRuns;
@@ -2555,7 +2501,7 @@ abstract class _TacticalMetrics implements TacticalMetrics {
   @override
   double? get pressingIntensity;
   @override // 0-10
-  // Decision Making
+// Decision Making
   double? get decisionAccuracy;
   @override // percentage
   int? get correctDecisions;
@@ -2566,7 +2512,7 @@ abstract class _TacticalMetrics implements TacticalMetrics {
   @override // percentage
   double? get compactness;
   @override // team shape metric
-  // Transition Play
+// Transition Play
   int? get counterAttacks;
   @override
   int? get recoveryRuns;
@@ -2584,18 +2530,18 @@ MentalMetrics _$MentalMetricsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MentalMetrics {
-  // Self Assessment
+// Self Assessment
   double? get confidence => throw _privateConstructorUsedError; // 0-10
   double? get motivation => throw _privateConstructorUsedError; // 0-10
   double? get focus => throw _privateConstructorUsedError; // 0-10
   double? get stressLevel => throw _privateConstructorUsedError; // 0-10
-  // Coach Assessment
+// Coach Assessment
   double? get leadership => throw _privateConstructorUsedError; // 0-10
   double? get communication => throw _privateConstructorUsedError; // 0-10
   double? get workRate => throw _privateConstructorUsedError; // 0-10
   double? get coachability => throw _privateConstructorUsedError; // 0-10
   double? get teamwork => throw _privateConstructorUsedError; // 0-10
-  // Performance Under Pressure
+// Performance Under Pressure
   double? get pressureHandling => throw _privateConstructorUsedError; // 0-10
   int? get mistakesUnderPressure =>
       throw _privateConstructorUsedError; // Learning & Development
@@ -2611,25 +2557,23 @@ mixin _$MentalMetrics {
 /// @nodoc
 abstract class $MentalMetricsCopyWith<$Res> {
   factory $MentalMetricsCopyWith(
-    MentalMetrics value,
-    $Res Function(MentalMetrics) then,
-  ) = _$MentalMetricsCopyWithImpl<$Res, MentalMetrics>;
+          MentalMetrics value, $Res Function(MentalMetrics) then) =
+      _$MentalMetricsCopyWithImpl<$Res, MentalMetrics>;
   @useResult
-  $Res call({
-    double? confidence,
-    double? motivation,
-    double? focus,
-    double? stressLevel,
-    double? leadership,
-    double? communication,
-    double? workRate,
-    double? coachability,
-    double? teamwork,
-    double? pressureHandling,
-    int? mistakesUnderPressure,
-    double? learningRate,
-    double? adaptability,
-  });
+  $Res call(
+      {double? confidence,
+      double? motivation,
+      double? focus,
+      double? stressLevel,
+      double? leadership,
+      double? communication,
+      double? workRate,
+      double? coachability,
+      double? teamwork,
+      double? pressureHandling,
+      int? mistakesUnderPressure,
+      double? learningRate,
+      double? adaptability});
 }
 
 /// @nodoc
@@ -2659,63 +2603,60 @@ class _$MentalMetricsCopyWithImpl<$Res, $Val extends MentalMetrics>
     Object? learningRate = freezed,
     Object? adaptability = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            confidence: freezed == confidence
-                ? _value.confidence
-                : confidence // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            motivation: freezed == motivation
-                ? _value.motivation
-                : motivation // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            focus: freezed == focus
-                ? _value.focus
-                : focus // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            stressLevel: freezed == stressLevel
-                ? _value.stressLevel
-                : stressLevel // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            leadership: freezed == leadership
-                ? _value.leadership
-                : leadership // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            communication: freezed == communication
-                ? _value.communication
-                : communication // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            workRate: freezed == workRate
-                ? _value.workRate
-                : workRate // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            coachability: freezed == coachability
-                ? _value.coachability
-                : coachability // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            teamwork: freezed == teamwork
-                ? _value.teamwork
-                : teamwork // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            pressureHandling: freezed == pressureHandling
-                ? _value.pressureHandling
-                : pressureHandling // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            mistakesUnderPressure: freezed == mistakesUnderPressure
-                ? _value.mistakesUnderPressure
-                : mistakesUnderPressure // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            learningRate: freezed == learningRate
-                ? _value.learningRate
-                : learningRate // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            adaptability: freezed == adaptability
-                ? _value.adaptability
-                : adaptability // ignore: cast_nullable_to_non_nullable
-                      as double?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      confidence: freezed == confidence
+          ? _value.confidence
+          : confidence // ignore: cast_nullable_to_non_nullable
+              as double?,
+      motivation: freezed == motivation
+          ? _value.motivation
+          : motivation // ignore: cast_nullable_to_non_nullable
+              as double?,
+      focus: freezed == focus
+          ? _value.focus
+          : focus // ignore: cast_nullable_to_non_nullable
+              as double?,
+      stressLevel: freezed == stressLevel
+          ? _value.stressLevel
+          : stressLevel // ignore: cast_nullable_to_non_nullable
+              as double?,
+      leadership: freezed == leadership
+          ? _value.leadership
+          : leadership // ignore: cast_nullable_to_non_nullable
+              as double?,
+      communication: freezed == communication
+          ? _value.communication
+          : communication // ignore: cast_nullable_to_non_nullable
+              as double?,
+      workRate: freezed == workRate
+          ? _value.workRate
+          : workRate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      coachability: freezed == coachability
+          ? _value.coachability
+          : coachability // ignore: cast_nullable_to_non_nullable
+              as double?,
+      teamwork: freezed == teamwork
+          ? _value.teamwork
+          : teamwork // ignore: cast_nullable_to_non_nullable
+              as double?,
+      pressureHandling: freezed == pressureHandling
+          ? _value.pressureHandling
+          : pressureHandling // ignore: cast_nullable_to_non_nullable
+              as double?,
+      mistakesUnderPressure: freezed == mistakesUnderPressure
+          ? _value.mistakesUnderPressure
+          : mistakesUnderPressure // ignore: cast_nullable_to_non_nullable
+              as int?,
+      learningRate: freezed == learningRate
+          ? _value.learningRate
+          : learningRate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      adaptability: freezed == adaptability
+          ? _value.adaptability
+          : adaptability // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
   }
 }
 
@@ -2723,26 +2664,24 @@ class _$MentalMetricsCopyWithImpl<$Res, $Val extends MentalMetrics>
 abstract class _$$MentalMetricsImplCopyWith<$Res>
     implements $MentalMetricsCopyWith<$Res> {
   factory _$$MentalMetricsImplCopyWith(
-    _$MentalMetricsImpl value,
-    $Res Function(_$MentalMetricsImpl) then,
-  ) = __$$MentalMetricsImplCopyWithImpl<$Res>;
+          _$MentalMetricsImpl value, $Res Function(_$MentalMetricsImpl) then) =
+      __$$MentalMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    double? confidence,
-    double? motivation,
-    double? focus,
-    double? stressLevel,
-    double? leadership,
-    double? communication,
-    double? workRate,
-    double? coachability,
-    double? teamwork,
-    double? pressureHandling,
-    int? mistakesUnderPressure,
-    double? learningRate,
-    double? adaptability,
-  });
+  $Res call(
+      {double? confidence,
+      double? motivation,
+      double? focus,
+      double? stressLevel,
+      double? leadership,
+      double? communication,
+      double? workRate,
+      double? coachability,
+      double? teamwork,
+      double? pressureHandling,
+      int? mistakesUnderPressure,
+      double? learningRate,
+      double? adaptability});
 }
 
 /// @nodoc
@@ -2750,9 +2689,8 @@ class __$$MentalMetricsImplCopyWithImpl<$Res>
     extends _$MentalMetricsCopyWithImpl<$Res, _$MentalMetricsImpl>
     implements _$$MentalMetricsImplCopyWith<$Res> {
   __$$MentalMetricsImplCopyWithImpl(
-    _$MentalMetricsImpl _value,
-    $Res Function(_$MentalMetricsImpl) _then,
-  ) : super(_value, _then);
+      _$MentalMetricsImpl _value, $Res Function(_$MentalMetricsImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -2771,126 +2709,123 @@ class __$$MentalMetricsImplCopyWithImpl<$Res>
     Object? learningRate = freezed,
     Object? adaptability = freezed,
   }) {
-    return _then(
-      _$MentalMetricsImpl(
-        confidence: freezed == confidence
-            ? _value.confidence
-            : confidence // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        motivation: freezed == motivation
-            ? _value.motivation
-            : motivation // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        focus: freezed == focus
-            ? _value.focus
-            : focus // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        stressLevel: freezed == stressLevel
-            ? _value.stressLevel
-            : stressLevel // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        leadership: freezed == leadership
-            ? _value.leadership
-            : leadership // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        communication: freezed == communication
-            ? _value.communication
-            : communication // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        workRate: freezed == workRate
-            ? _value.workRate
-            : workRate // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        coachability: freezed == coachability
-            ? _value.coachability
-            : coachability // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        teamwork: freezed == teamwork
-            ? _value.teamwork
-            : teamwork // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        pressureHandling: freezed == pressureHandling
-            ? _value.pressureHandling
-            : pressureHandling // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        mistakesUnderPressure: freezed == mistakesUnderPressure
-            ? _value.mistakesUnderPressure
-            : mistakesUnderPressure // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        learningRate: freezed == learningRate
-            ? _value.learningRate
-            : learningRate // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        adaptability: freezed == adaptability
-            ? _value.adaptability
-            : adaptability // ignore: cast_nullable_to_non_nullable
-                  as double?,
-      ),
-    );
+    return _then(_$MentalMetricsImpl(
+      confidence: freezed == confidence
+          ? _value.confidence
+          : confidence // ignore: cast_nullable_to_non_nullable
+              as double?,
+      motivation: freezed == motivation
+          ? _value.motivation
+          : motivation // ignore: cast_nullable_to_non_nullable
+              as double?,
+      focus: freezed == focus
+          ? _value.focus
+          : focus // ignore: cast_nullable_to_non_nullable
+              as double?,
+      stressLevel: freezed == stressLevel
+          ? _value.stressLevel
+          : stressLevel // ignore: cast_nullable_to_non_nullable
+              as double?,
+      leadership: freezed == leadership
+          ? _value.leadership
+          : leadership // ignore: cast_nullable_to_non_nullable
+              as double?,
+      communication: freezed == communication
+          ? _value.communication
+          : communication // ignore: cast_nullable_to_non_nullable
+              as double?,
+      workRate: freezed == workRate
+          ? _value.workRate
+          : workRate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      coachability: freezed == coachability
+          ? _value.coachability
+          : coachability // ignore: cast_nullable_to_non_nullable
+              as double?,
+      teamwork: freezed == teamwork
+          ? _value.teamwork
+          : teamwork // ignore: cast_nullable_to_non_nullable
+              as double?,
+      pressureHandling: freezed == pressureHandling
+          ? _value.pressureHandling
+          : pressureHandling // ignore: cast_nullable_to_non_nullable
+              as double?,
+      mistakesUnderPressure: freezed == mistakesUnderPressure
+          ? _value.mistakesUnderPressure
+          : mistakesUnderPressure // ignore: cast_nullable_to_non_nullable
+              as int?,
+      learningRate: freezed == learningRate
+          ? _value.learningRate
+          : learningRate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      adaptability: freezed == adaptability
+          ? _value.adaptability
+          : adaptability // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$MentalMetricsImpl implements _MentalMetrics {
-  const _$MentalMetricsImpl({
-    this.confidence,
-    this.motivation,
-    this.focus,
-    this.stressLevel,
-    this.leadership,
-    this.communication,
-    this.workRate,
-    this.coachability,
-    this.teamwork,
-    this.pressureHandling,
-    this.mistakesUnderPressure,
-    this.learningRate,
-    this.adaptability,
-  });
+  const _$MentalMetricsImpl(
+      {this.confidence,
+      this.motivation,
+      this.focus,
+      this.stressLevel,
+      this.leadership,
+      this.communication,
+      this.workRate,
+      this.coachability,
+      this.teamwork,
+      this.pressureHandling,
+      this.mistakesUnderPressure,
+      this.learningRate,
+      this.adaptability});
 
   factory _$MentalMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$MentalMetricsImplFromJson(json);
 
-  // Self Assessment
+// Self Assessment
   @override
   final double? confidence;
-  // 0-10
+// 0-10
   @override
   final double? motivation;
-  // 0-10
+// 0-10
   @override
   final double? focus;
-  // 0-10
+// 0-10
   @override
   final double? stressLevel;
-  // 0-10
-  // Coach Assessment
+// 0-10
+// Coach Assessment
   @override
   final double? leadership;
-  // 0-10
+// 0-10
   @override
   final double? communication;
-  // 0-10
+// 0-10
   @override
   final double? workRate;
-  // 0-10
+// 0-10
   @override
   final double? coachability;
-  // 0-10
+// 0-10
   @override
   final double? teamwork;
-  // 0-10
-  // Performance Under Pressure
+// 0-10
+// Performance Under Pressure
   @override
   final double? pressureHandling;
-  // 0-10
+// 0-10
   @override
   final int? mistakesUnderPressure;
-  // Learning & Development
+// Learning & Development
   @override
   final double? learningRate;
-  // 0-10
+// 0-10
   @override
   final double? adaptability;
 
@@ -2934,21 +2869,20 @@ class _$MentalMetricsImpl implements _MentalMetrics {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    confidence,
-    motivation,
-    focus,
-    stressLevel,
-    leadership,
-    communication,
-    workRate,
-    coachability,
-    teamwork,
-    pressureHandling,
-    mistakesUnderPressure,
-    learningRate,
-    adaptability,
-  );
+      runtimeType,
+      confidence,
+      motivation,
+      focus,
+      stressLevel,
+      leadership,
+      communication,
+      workRate,
+      coachability,
+      teamwork,
+      pressureHandling,
+      mistakesUnderPressure,
+      learningRate,
+      adaptability);
 
   @JsonKey(ignore: true)
   @override
@@ -2958,26 +2892,27 @@ class _$MentalMetricsImpl implements _MentalMetrics {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MentalMetricsImplToJson(this);
+    return _$$MentalMetricsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _MentalMetrics implements MentalMetrics {
-  const factory _MentalMetrics({
-    final double? confidence,
-    final double? motivation,
-    final double? focus,
-    final double? stressLevel,
-    final double? leadership,
-    final double? communication,
-    final double? workRate,
-    final double? coachability,
-    final double? teamwork,
-    final double? pressureHandling,
-    final int? mistakesUnderPressure,
-    final double? learningRate,
-    final double? adaptability,
-  }) = _$MentalMetricsImpl;
+  const factory _MentalMetrics(
+      {final double? confidence,
+      final double? motivation,
+      final double? focus,
+      final double? stressLevel,
+      final double? leadership,
+      final double? communication,
+      final double? workRate,
+      final double? coachability,
+      final double? teamwork,
+      final double? pressureHandling,
+      final int? mistakesUnderPressure,
+      final double? learningRate,
+      final double? adaptability}) = _$MentalMetricsImpl;
 
   factory _MentalMetrics.fromJson(Map<String, dynamic> json) =
       _$MentalMetricsImpl.fromJson;
@@ -2991,7 +2926,7 @@ abstract class _MentalMetrics implements MentalMetrics {
   @override // 0-10
   double? get stressLevel;
   @override // 0-10
-  // Coach Assessment
+// Coach Assessment
   double? get leadership;
   @override // 0-10
   double? get communication;
@@ -3002,7 +2937,7 @@ abstract class _MentalMetrics implements MentalMetrics {
   @override // 0-10
   double? get teamwork;
   @override // 0-10
-  // Performance Under Pressure
+// Performance Under Pressure
   double? get pressureHandling;
   @override // 0-10
   int? get mistakesUnderPressure;
@@ -3026,7 +2961,7 @@ mixin _$MatchMetrics {
   int? get minutesPlayed => throw _privateConstructorUsedError;
   String? get position => throw _privateConstructorUsedError;
   double? get rating => throw _privateConstructorUsedError; // 0-10
-  // Match Events
+// Match Events
   int? get goals => throw _privateConstructorUsedError;
   int? get assists => throw _privateConstructorUsedError;
   int? get yellowCards => throw _privateConstructorUsedError;
@@ -3046,24 +2981,22 @@ mixin _$MatchMetrics {
 /// @nodoc
 abstract class $MatchMetricsCopyWith<$Res> {
   factory $MatchMetricsCopyWith(
-    MatchMetrics value,
-    $Res Function(MatchMetrics) then,
-  ) = _$MatchMetricsCopyWithImpl<$Res, MatchMetrics>;
+          MatchMetrics value, $Res Function(MatchMetrics) then) =
+      _$MatchMetricsCopyWithImpl<$Res, MatchMetrics>;
   @useResult
-  $Res call({
-    String matchId,
-    int? minutesPlayed,
-    String? position,
-    double? rating,
-    int? goals,
-    int? assists,
-    int? yellowCards,
-    int? redCards,
-    double? xG,
-    double? xA,
-    double? xGChain,
-    double? xGBuildup,
-  });
+  $Res call(
+      {String matchId,
+      int? minutesPlayed,
+      String? position,
+      double? rating,
+      int? goals,
+      int? assists,
+      int? yellowCards,
+      int? redCards,
+      double? xG,
+      double? xA,
+      double? xGChain,
+      double? xGBuildup});
 }
 
 /// @nodoc
@@ -3092,59 +3025,56 @@ class _$MatchMetricsCopyWithImpl<$Res, $Val extends MatchMetrics>
     Object? xGChain = freezed,
     Object? xGBuildup = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            matchId: null == matchId
-                ? _value.matchId
-                : matchId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            minutesPlayed: freezed == minutesPlayed
-                ? _value.minutesPlayed
-                : minutesPlayed // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            position: freezed == position
-                ? _value.position
-                : position // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            rating: freezed == rating
-                ? _value.rating
-                : rating // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            goals: freezed == goals
-                ? _value.goals
-                : goals // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            assists: freezed == assists
-                ? _value.assists
-                : assists // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            yellowCards: freezed == yellowCards
-                ? _value.yellowCards
-                : yellowCards // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            redCards: freezed == redCards
-                ? _value.redCards
-                : redCards // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            xG: freezed == xG
-                ? _value.xG
-                : xG // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            xA: freezed == xA
-                ? _value.xA
-                : xA // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            xGChain: freezed == xGChain
-                ? _value.xGChain
-                : xGChain // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            xGBuildup: freezed == xGBuildup
-                ? _value.xGBuildup
-                : xGBuildup // ignore: cast_nullable_to_non_nullable
-                      as double?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      matchId: null == matchId
+          ? _value.matchId
+          : matchId // ignore: cast_nullable_to_non_nullable
+              as String,
+      minutesPlayed: freezed == minutesPlayed
+          ? _value.minutesPlayed
+          : minutesPlayed // ignore: cast_nullable_to_non_nullable
+              as int?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      goals: freezed == goals
+          ? _value.goals
+          : goals // ignore: cast_nullable_to_non_nullable
+              as int?,
+      assists: freezed == assists
+          ? _value.assists
+          : assists // ignore: cast_nullable_to_non_nullable
+              as int?,
+      yellowCards: freezed == yellowCards
+          ? _value.yellowCards
+          : yellowCards // ignore: cast_nullable_to_non_nullable
+              as int?,
+      redCards: freezed == redCards
+          ? _value.redCards
+          : redCards // ignore: cast_nullable_to_non_nullable
+              as int?,
+      xG: freezed == xG
+          ? _value.xG
+          : xG // ignore: cast_nullable_to_non_nullable
+              as double?,
+      xA: freezed == xA
+          ? _value.xA
+          : xA // ignore: cast_nullable_to_non_nullable
+              as double?,
+      xGChain: freezed == xGChain
+          ? _value.xGChain
+          : xGChain // ignore: cast_nullable_to_non_nullable
+              as double?,
+      xGBuildup: freezed == xGBuildup
+          ? _value.xGBuildup
+          : xGBuildup // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
   }
 }
 
@@ -3152,25 +3082,23 @@ class _$MatchMetricsCopyWithImpl<$Res, $Val extends MatchMetrics>
 abstract class _$$MatchMetricsImplCopyWith<$Res>
     implements $MatchMetricsCopyWith<$Res> {
   factory _$$MatchMetricsImplCopyWith(
-    _$MatchMetricsImpl value,
-    $Res Function(_$MatchMetricsImpl) then,
-  ) = __$$MatchMetricsImplCopyWithImpl<$Res>;
+          _$MatchMetricsImpl value, $Res Function(_$MatchMetricsImpl) then) =
+      __$$MatchMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String matchId,
-    int? minutesPlayed,
-    String? position,
-    double? rating,
-    int? goals,
-    int? assists,
-    int? yellowCards,
-    int? redCards,
-    double? xG,
-    double? xA,
-    double? xGChain,
-    double? xGBuildup,
-  });
+  $Res call(
+      {String matchId,
+      int? minutesPlayed,
+      String? position,
+      double? rating,
+      int? goals,
+      int? assists,
+      int? yellowCards,
+      int? redCards,
+      double? xG,
+      double? xA,
+      double? xGChain,
+      double? xGBuildup});
 }
 
 /// @nodoc
@@ -3178,9 +3106,8 @@ class __$$MatchMetricsImplCopyWithImpl<$Res>
     extends _$MatchMetricsCopyWithImpl<$Res, _$MatchMetricsImpl>
     implements _$$MatchMetricsImplCopyWith<$Res> {
   __$$MatchMetricsImplCopyWithImpl(
-    _$MatchMetricsImpl _value,
-    $Res Function(_$MatchMetricsImpl) _then,
-  ) : super(_value, _then);
+      _$MatchMetricsImpl _value, $Res Function(_$MatchMetricsImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -3198,78 +3125,75 @@ class __$$MatchMetricsImplCopyWithImpl<$Res>
     Object? xGChain = freezed,
     Object? xGBuildup = freezed,
   }) {
-    return _then(
-      _$MatchMetricsImpl(
-        matchId: null == matchId
-            ? _value.matchId
-            : matchId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        minutesPlayed: freezed == minutesPlayed
-            ? _value.minutesPlayed
-            : minutesPlayed // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        position: freezed == position
-            ? _value.position
-            : position // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        rating: freezed == rating
-            ? _value.rating
-            : rating // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        goals: freezed == goals
-            ? _value.goals
-            : goals // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        assists: freezed == assists
-            ? _value.assists
-            : assists // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        yellowCards: freezed == yellowCards
-            ? _value.yellowCards
-            : yellowCards // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        redCards: freezed == redCards
-            ? _value.redCards
-            : redCards // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        xG: freezed == xG
-            ? _value.xG
-            : xG // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        xA: freezed == xA
-            ? _value.xA
-            : xA // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        xGChain: freezed == xGChain
-            ? _value.xGChain
-            : xGChain // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        xGBuildup: freezed == xGBuildup
-            ? _value.xGBuildup
-            : xGBuildup // ignore: cast_nullable_to_non_nullable
-                  as double?,
-      ),
-    );
+    return _then(_$MatchMetricsImpl(
+      matchId: null == matchId
+          ? _value.matchId
+          : matchId // ignore: cast_nullable_to_non_nullable
+              as String,
+      minutesPlayed: freezed == minutesPlayed
+          ? _value.minutesPlayed
+          : minutesPlayed // ignore: cast_nullable_to_non_nullable
+              as int?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      goals: freezed == goals
+          ? _value.goals
+          : goals // ignore: cast_nullable_to_non_nullable
+              as int?,
+      assists: freezed == assists
+          ? _value.assists
+          : assists // ignore: cast_nullable_to_non_nullable
+              as int?,
+      yellowCards: freezed == yellowCards
+          ? _value.yellowCards
+          : yellowCards // ignore: cast_nullable_to_non_nullable
+              as int?,
+      redCards: freezed == redCards
+          ? _value.redCards
+          : redCards // ignore: cast_nullable_to_non_nullable
+              as int?,
+      xG: freezed == xG
+          ? _value.xG
+          : xG // ignore: cast_nullable_to_non_nullable
+              as double?,
+      xA: freezed == xA
+          ? _value.xA
+          : xA // ignore: cast_nullable_to_non_nullable
+              as double?,
+      xGChain: freezed == xGChain
+          ? _value.xGChain
+          : xGChain // ignore: cast_nullable_to_non_nullable
+              as double?,
+      xGBuildup: freezed == xGBuildup
+          ? _value.xGBuildup
+          : xGBuildup // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$MatchMetricsImpl implements _MatchMetrics {
-  const _$MatchMetricsImpl({
-    required this.matchId,
-    this.minutesPlayed,
-    this.position,
-    this.rating,
-    this.goals,
-    this.assists,
-    this.yellowCards,
-    this.redCards,
-    this.xG,
-    this.xA,
-    this.xGChain,
-    this.xGBuildup,
-  });
+  const _$MatchMetricsImpl(
+      {required this.matchId,
+      this.minutesPlayed,
+      this.position,
+      this.rating,
+      this.goals,
+      this.assists,
+      this.yellowCards,
+      this.redCards,
+      this.xG,
+      this.xA,
+      this.xGChain,
+      this.xGBuildup});
 
   factory _$MatchMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$MatchMetricsImplFromJson(json);
@@ -3282,8 +3206,8 @@ class _$MatchMetricsImpl implements _MatchMetrics {
   final String? position;
   @override
   final double? rating;
-  // 0-10
-  // Match Events
+// 0-10
+// Match Events
   @override
   final int? goals;
   @override
@@ -3292,16 +3216,16 @@ class _$MatchMetricsImpl implements _MatchMetrics {
   final int? yellowCards;
   @override
   final int? redCards;
-  // Advanced Stats
+// Advanced Stats
   @override
   final double? xG;
-  // expected goals
+// expected goals
   @override
   final double? xA;
-  // expected assists
+// expected assists
   @override
   final double? xGChain;
-  // expected goals from moves involved in
+// expected goals from moves involved in
   @override
   final double? xGBuildup;
 
@@ -3337,20 +3261,19 @@ class _$MatchMetricsImpl implements _MatchMetrics {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    matchId,
-    minutesPlayed,
-    position,
-    rating,
-    goals,
-    assists,
-    yellowCards,
-    redCards,
-    xG,
-    xA,
-    xGChain,
-    xGBuildup,
-  );
+      runtimeType,
+      matchId,
+      minutesPlayed,
+      position,
+      rating,
+      goals,
+      assists,
+      yellowCards,
+      redCards,
+      xG,
+      xA,
+      xGChain,
+      xGBuildup);
 
   @JsonKey(ignore: true)
   @override
@@ -3360,25 +3283,26 @@ class _$MatchMetricsImpl implements _MatchMetrics {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MatchMetricsImplToJson(this);
+    return _$$MatchMetricsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _MatchMetrics implements MatchMetrics {
-  const factory _MatchMetrics({
-    required final String matchId,
-    final int? minutesPlayed,
-    final String? position,
-    final double? rating,
-    final int? goals,
-    final int? assists,
-    final int? yellowCards,
-    final int? redCards,
-    final double? xG,
-    final double? xA,
-    final double? xGChain,
-    final double? xGBuildup,
-  }) = _$MatchMetricsImpl;
+  const factory _MatchMetrics(
+      {required final String matchId,
+      final int? minutesPlayed,
+      final String? position,
+      final double? rating,
+      final int? goals,
+      final int? assists,
+      final int? yellowCards,
+      final int? redCards,
+      final double? xG,
+      final double? xA,
+      final double? xGChain,
+      final double? xGBuildup}) = _$MatchMetricsImpl;
 
   factory _MatchMetrics.fromJson(Map<String, dynamic> json) =
       _$MatchMetricsImpl.fromJson;
@@ -3392,7 +3316,7 @@ abstract class _MatchMetrics implements MatchMetrics {
   @override
   double? get rating;
   @override // 0-10
-  // Match Events
+// Match Events
   int? get goals;
   @override
   int? get assists;
@@ -3420,7 +3344,7 @@ TrainingLoadMetrics _$TrainingLoadMetricsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TrainingLoadMetrics {
-  // Acute:Chronic Workload Ratio
+// Acute:Chronic Workload Ratio
   double? get acwr => throw _privateConstructorUsedError; // optimal: 0.8-1.3
   double? get weeklyLoad => throw _privateConstructorUsedError;
   double? get monthlyLoad =>
@@ -3429,14 +3353,14 @@ mixin _$TrainingLoadMetrics {
       throw _privateConstructorUsedError; // Rate of Perceived Exertion 0-10
   double? get trainingLoad =>
       throw _privateConstructorUsedError; // RPE * duration
-  // Monotony & Strain
+// Monotony & Strain
   double? get trainingMonotony => throw _privateConstructorUsedError;
   double? get trainingStrain =>
       throw _privateConstructorUsedError; // Recovery Status
   double? get recoveryScore => throw _privateConstructorUsedError; // 0-100
   String? get fatigueLevel =>
       throw _privateConstructorUsedError; // low, moderate, high
-  // Injury Risk
+// Injury Risk
   double? get injuryRiskScore => throw _privateConstructorUsedError; // 0-100
   List<String>? get riskFactors => throw _privateConstructorUsedError;
 
@@ -3449,23 +3373,21 @@ mixin _$TrainingLoadMetrics {
 /// @nodoc
 abstract class $TrainingLoadMetricsCopyWith<$Res> {
   factory $TrainingLoadMetricsCopyWith(
-    TrainingLoadMetrics value,
-    $Res Function(TrainingLoadMetrics) then,
-  ) = _$TrainingLoadMetricsCopyWithImpl<$Res, TrainingLoadMetrics>;
+          TrainingLoadMetrics value, $Res Function(TrainingLoadMetrics) then) =
+      _$TrainingLoadMetricsCopyWithImpl<$Res, TrainingLoadMetrics>;
   @useResult
-  $Res call({
-    double? acwr,
-    double? weeklyLoad,
-    double? monthlyLoad,
-    double? sessionRPE,
-    double? trainingLoad,
-    double? trainingMonotony,
-    double? trainingStrain,
-    double? recoveryScore,
-    String? fatigueLevel,
-    double? injuryRiskScore,
-    List<String>? riskFactors,
-  });
+  $Res call(
+      {double? acwr,
+      double? weeklyLoad,
+      double? monthlyLoad,
+      double? sessionRPE,
+      double? trainingLoad,
+      double? trainingMonotony,
+      double? trainingStrain,
+      double? recoveryScore,
+      String? fatigueLevel,
+      double? injuryRiskScore,
+      List<String>? riskFactors});
 }
 
 /// @nodoc
@@ -3493,90 +3415,84 @@ class _$TrainingLoadMetricsCopyWithImpl<$Res, $Val extends TrainingLoadMetrics>
     Object? injuryRiskScore = freezed,
     Object? riskFactors = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            acwr: freezed == acwr
-                ? _value.acwr
-                : acwr // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            weeklyLoad: freezed == weeklyLoad
-                ? _value.weeklyLoad
-                : weeklyLoad // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            monthlyLoad: freezed == monthlyLoad
-                ? _value.monthlyLoad
-                : monthlyLoad // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            sessionRPE: freezed == sessionRPE
-                ? _value.sessionRPE
-                : sessionRPE // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            trainingLoad: freezed == trainingLoad
-                ? _value.trainingLoad
-                : trainingLoad // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            trainingMonotony: freezed == trainingMonotony
-                ? _value.trainingMonotony
-                : trainingMonotony // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            trainingStrain: freezed == trainingStrain
-                ? _value.trainingStrain
-                : trainingStrain // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            recoveryScore: freezed == recoveryScore
-                ? _value.recoveryScore
-                : recoveryScore // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            fatigueLevel: freezed == fatigueLevel
-                ? _value.fatigueLevel
-                : fatigueLevel // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            injuryRiskScore: freezed == injuryRiskScore
-                ? _value.injuryRiskScore
-                : injuryRiskScore // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            riskFactors: freezed == riskFactors
-                ? _value.riskFactors
-                : riskFactors // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      acwr: freezed == acwr
+          ? _value.acwr
+          : acwr // ignore: cast_nullable_to_non_nullable
+              as double?,
+      weeklyLoad: freezed == weeklyLoad
+          ? _value.weeklyLoad
+          : weeklyLoad // ignore: cast_nullable_to_non_nullable
+              as double?,
+      monthlyLoad: freezed == monthlyLoad
+          ? _value.monthlyLoad
+          : monthlyLoad // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sessionRPE: freezed == sessionRPE
+          ? _value.sessionRPE
+          : sessionRPE // ignore: cast_nullable_to_non_nullable
+              as double?,
+      trainingLoad: freezed == trainingLoad
+          ? _value.trainingLoad
+          : trainingLoad // ignore: cast_nullable_to_non_nullable
+              as double?,
+      trainingMonotony: freezed == trainingMonotony
+          ? _value.trainingMonotony
+          : trainingMonotony // ignore: cast_nullable_to_non_nullable
+              as double?,
+      trainingStrain: freezed == trainingStrain
+          ? _value.trainingStrain
+          : trainingStrain // ignore: cast_nullable_to_non_nullable
+              as double?,
+      recoveryScore: freezed == recoveryScore
+          ? _value.recoveryScore
+          : recoveryScore // ignore: cast_nullable_to_non_nullable
+              as double?,
+      fatigueLevel: freezed == fatigueLevel
+          ? _value.fatigueLevel
+          : fatigueLevel // ignore: cast_nullable_to_non_nullable
+              as String?,
+      injuryRiskScore: freezed == injuryRiskScore
+          ? _value.injuryRiskScore
+          : injuryRiskScore // ignore: cast_nullable_to_non_nullable
+              as double?,
+      riskFactors: freezed == riskFactors
+          ? _value.riskFactors
+          : riskFactors // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$TrainingLoadMetricsImplCopyWith<$Res>
     implements $TrainingLoadMetricsCopyWith<$Res> {
-  factory _$$TrainingLoadMetricsImplCopyWith(
-    _$TrainingLoadMetricsImpl value,
-    $Res Function(_$TrainingLoadMetricsImpl) then,
-  ) = __$$TrainingLoadMetricsImplCopyWithImpl<$Res>;
+  factory _$$TrainingLoadMetricsImplCopyWith(_$TrainingLoadMetricsImpl value,
+          $Res Function(_$TrainingLoadMetricsImpl) then) =
+      __$$TrainingLoadMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    double? acwr,
-    double? weeklyLoad,
-    double? monthlyLoad,
-    double? sessionRPE,
-    double? trainingLoad,
-    double? trainingMonotony,
-    double? trainingStrain,
-    double? recoveryScore,
-    String? fatigueLevel,
-    double? injuryRiskScore,
-    List<String>? riskFactors,
-  });
+  $Res call(
+      {double? acwr,
+      double? weeklyLoad,
+      double? monthlyLoad,
+      double? sessionRPE,
+      double? trainingLoad,
+      double? trainingMonotony,
+      double? trainingStrain,
+      double? recoveryScore,
+      String? fatigueLevel,
+      double? injuryRiskScore,
+      List<String>? riskFactors});
 }
 
 /// @nodoc
 class __$$TrainingLoadMetricsImplCopyWithImpl<$Res>
     extends _$TrainingLoadMetricsCopyWithImpl<$Res, _$TrainingLoadMetricsImpl>
     implements _$$TrainingLoadMetricsImplCopyWith<$Res> {
-  __$$TrainingLoadMetricsImplCopyWithImpl(
-    _$TrainingLoadMetricsImpl _value,
-    $Res Function(_$TrainingLoadMetricsImpl) _then,
-  ) : super(_value, _then);
+  __$$TrainingLoadMetricsImplCopyWithImpl(_$TrainingLoadMetricsImpl _value,
+      $Res Function(_$TrainingLoadMetricsImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -3593,110 +3509,108 @@ class __$$TrainingLoadMetricsImplCopyWithImpl<$Res>
     Object? injuryRiskScore = freezed,
     Object? riskFactors = freezed,
   }) {
-    return _then(
-      _$TrainingLoadMetricsImpl(
-        acwr: freezed == acwr
-            ? _value.acwr
-            : acwr // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        weeklyLoad: freezed == weeklyLoad
-            ? _value.weeklyLoad
-            : weeklyLoad // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        monthlyLoad: freezed == monthlyLoad
-            ? _value.monthlyLoad
-            : monthlyLoad // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        sessionRPE: freezed == sessionRPE
-            ? _value.sessionRPE
-            : sessionRPE // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        trainingLoad: freezed == trainingLoad
-            ? _value.trainingLoad
-            : trainingLoad // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        trainingMonotony: freezed == trainingMonotony
-            ? _value.trainingMonotony
-            : trainingMonotony // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        trainingStrain: freezed == trainingStrain
-            ? _value.trainingStrain
-            : trainingStrain // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        recoveryScore: freezed == recoveryScore
-            ? _value.recoveryScore
-            : recoveryScore // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        fatigueLevel: freezed == fatigueLevel
-            ? _value.fatigueLevel
-            : fatigueLevel // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        injuryRiskScore: freezed == injuryRiskScore
-            ? _value.injuryRiskScore
-            : injuryRiskScore // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        riskFactors: freezed == riskFactors
-            ? _value._riskFactors
-            : riskFactors // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-      ),
-    );
+    return _then(_$TrainingLoadMetricsImpl(
+      acwr: freezed == acwr
+          ? _value.acwr
+          : acwr // ignore: cast_nullable_to_non_nullable
+              as double?,
+      weeklyLoad: freezed == weeklyLoad
+          ? _value.weeklyLoad
+          : weeklyLoad // ignore: cast_nullable_to_non_nullable
+              as double?,
+      monthlyLoad: freezed == monthlyLoad
+          ? _value.monthlyLoad
+          : monthlyLoad // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sessionRPE: freezed == sessionRPE
+          ? _value.sessionRPE
+          : sessionRPE // ignore: cast_nullable_to_non_nullable
+              as double?,
+      trainingLoad: freezed == trainingLoad
+          ? _value.trainingLoad
+          : trainingLoad // ignore: cast_nullable_to_non_nullable
+              as double?,
+      trainingMonotony: freezed == trainingMonotony
+          ? _value.trainingMonotony
+          : trainingMonotony // ignore: cast_nullable_to_non_nullable
+              as double?,
+      trainingStrain: freezed == trainingStrain
+          ? _value.trainingStrain
+          : trainingStrain // ignore: cast_nullable_to_non_nullable
+              as double?,
+      recoveryScore: freezed == recoveryScore
+          ? _value.recoveryScore
+          : recoveryScore // ignore: cast_nullable_to_non_nullable
+              as double?,
+      fatigueLevel: freezed == fatigueLevel
+          ? _value.fatigueLevel
+          : fatigueLevel // ignore: cast_nullable_to_non_nullable
+              as String?,
+      injuryRiskScore: freezed == injuryRiskScore
+          ? _value.injuryRiskScore
+          : injuryRiskScore // ignore: cast_nullable_to_non_nullable
+              as double?,
+      riskFactors: freezed == riskFactors
+          ? _value._riskFactors
+          : riskFactors // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$TrainingLoadMetricsImpl implements _TrainingLoadMetrics {
-  const _$TrainingLoadMetricsImpl({
-    this.acwr,
-    this.weeklyLoad,
-    this.monthlyLoad,
-    this.sessionRPE,
-    this.trainingLoad,
-    this.trainingMonotony,
-    this.trainingStrain,
-    this.recoveryScore,
-    this.fatigueLevel,
-    this.injuryRiskScore,
-    final List<String>? riskFactors,
-  }) : _riskFactors = riskFactors;
+  const _$TrainingLoadMetricsImpl(
+      {this.acwr,
+      this.weeklyLoad,
+      this.monthlyLoad,
+      this.sessionRPE,
+      this.trainingLoad,
+      this.trainingMonotony,
+      this.trainingStrain,
+      this.recoveryScore,
+      this.fatigueLevel,
+      this.injuryRiskScore,
+      final List<String>? riskFactors})
+      : _riskFactors = riskFactors;
 
   factory _$TrainingLoadMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$TrainingLoadMetricsImplFromJson(json);
 
-  // Acute:Chronic Workload Ratio
+// Acute:Chronic Workload Ratio
   @override
   final double? acwr;
-  // optimal: 0.8-1.3
+// optimal: 0.8-1.3
   @override
   final double? weeklyLoad;
   @override
   final double? monthlyLoad;
-  // Training Intensity
+// Training Intensity
   @override
   final double? sessionRPE;
-  // Rate of Perceived Exertion 0-10
+// Rate of Perceived Exertion 0-10
   @override
   final double? trainingLoad;
-  // RPE * duration
-  // Monotony & Strain
+// RPE * duration
+// Monotony & Strain
   @override
   final double? trainingMonotony;
   @override
   final double? trainingStrain;
-  // Recovery Status
+// Recovery Status
   @override
   final double? recoveryScore;
-  // 0-100
+// 0-100
   @override
   final String? fatigueLevel;
-  // low, moderate, high
-  // Injury Risk
+// low, moderate, high
+// Injury Risk
   @override
   final double? injuryRiskScore;
-  // 0-100
+// 0-100
   final List<String>? _riskFactors;
-  // 0-100
+// 0-100
   @override
   List<String>? get riskFactors {
     final value = _riskFactors;
@@ -3735,58 +3649,54 @@ class _$TrainingLoadMetricsImpl implements _TrainingLoadMetrics {
                 other.fatigueLevel == fatigueLevel) &&
             (identical(other.injuryRiskScore, injuryRiskScore) ||
                 other.injuryRiskScore == injuryRiskScore) &&
-            const DeepCollectionEquality().equals(
-              other._riskFactors,
-              _riskFactors,
-            ));
+            const DeepCollectionEquality()
+                .equals(other._riskFactors, _riskFactors));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    acwr,
-    weeklyLoad,
-    monthlyLoad,
-    sessionRPE,
-    trainingLoad,
-    trainingMonotony,
-    trainingStrain,
-    recoveryScore,
-    fatigueLevel,
-    injuryRiskScore,
-    const DeepCollectionEquality().hash(_riskFactors),
-  );
+      runtimeType,
+      acwr,
+      weeklyLoad,
+      monthlyLoad,
+      sessionRPE,
+      trainingLoad,
+      trainingMonotony,
+      trainingStrain,
+      recoveryScore,
+      fatigueLevel,
+      injuryRiskScore,
+      const DeepCollectionEquality().hash(_riskFactors));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TrainingLoadMetricsImplCopyWith<_$TrainingLoadMetricsImpl> get copyWith =>
       __$$TrainingLoadMetricsImplCopyWithImpl<_$TrainingLoadMetricsImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TrainingLoadMetricsImplToJson(this);
+    return _$$TrainingLoadMetricsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _TrainingLoadMetrics implements TrainingLoadMetrics {
-  const factory _TrainingLoadMetrics({
-    final double? acwr,
-    final double? weeklyLoad,
-    final double? monthlyLoad,
-    final double? sessionRPE,
-    final double? trainingLoad,
-    final double? trainingMonotony,
-    final double? trainingStrain,
-    final double? recoveryScore,
-    final String? fatigueLevel,
-    final double? injuryRiskScore,
-    final List<String>? riskFactors,
-  }) = _$TrainingLoadMetricsImpl;
+  const factory _TrainingLoadMetrics(
+      {final double? acwr,
+      final double? weeklyLoad,
+      final double? monthlyLoad,
+      final double? sessionRPE,
+      final double? trainingLoad,
+      final double? trainingMonotony,
+      final double? trainingStrain,
+      final double? recoveryScore,
+      final String? fatigueLevel,
+      final double? injuryRiskScore,
+      final List<String>? riskFactors}) = _$TrainingLoadMetricsImpl;
 
   factory _TrainingLoadMetrics.fromJson(Map<String, dynamic> json) =
       _$TrainingLoadMetricsImpl.fromJson;
@@ -3802,7 +3712,7 @@ abstract class _TrainingLoadMetrics implements TrainingLoadMetrics {
   @override // Rate of Perceived Exertion 0-10
   double? get trainingLoad;
   @override // RPE * duration
-  // Monotony & Strain
+// Monotony & Strain
   double? get trainingMonotony;
   @override
   double? get trainingStrain;
@@ -3811,7 +3721,7 @@ abstract class _TrainingLoadMetrics implements TrainingLoadMetrics {
   @override // 0-100
   String? get fatigueLevel;
   @override // low, moderate, high
-  // Injury Risk
+// Injury Risk
   double? get injuryRiskScore;
   @override // 0-100
   List<String>? get riskFactors;
@@ -3827,21 +3737,21 @@ WellnessMetrics _$WellnessMetricsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$WellnessMetrics {
-  // Daily Wellness
+// Daily Wellness
   double? get sleepQuality => throw _privateConstructorUsedError; // 0-10
   double? get sleepHours => throw _privateConstructorUsedError;
   double? get fatigue => throw _privateConstructorUsedError; // 0-10
   double? get soreness => throw _privateConstructorUsedError; // 0-10
   double? get stress => throw _privateConstructorUsedError; // 0-10
   double? get mood => throw _privateConstructorUsedError; // 0-10
-  // Nutrition & Hydration
+// Nutrition & Hydration
   double? get hydrationLevel => throw _privateConstructorUsedError; // 0-10
   double? get nutritionQuality => throw _privateConstructorUsedError; // 0-10
-  // Health Indicators
+// Health Indicators
   double? get bodyWeight => throw _privateConstructorUsedError; // kg
   double? get bodyFat => throw _privateConstructorUsedError; // percentage
   double? get muscleMass => throw _privateConstructorUsedError; // kg
-  // Injury Status
+// Injury Status
   bool? get isInjured => throw _privateConstructorUsedError;
   String? get injuryType => throw _privateConstructorUsedError;
   int? get daysUntilReturn => throw _privateConstructorUsedError;
@@ -3855,26 +3765,24 @@ mixin _$WellnessMetrics {
 /// @nodoc
 abstract class $WellnessMetricsCopyWith<$Res> {
   factory $WellnessMetricsCopyWith(
-    WellnessMetrics value,
-    $Res Function(WellnessMetrics) then,
-  ) = _$WellnessMetricsCopyWithImpl<$Res, WellnessMetrics>;
+          WellnessMetrics value, $Res Function(WellnessMetrics) then) =
+      _$WellnessMetricsCopyWithImpl<$Res, WellnessMetrics>;
   @useResult
-  $Res call({
-    double? sleepQuality,
-    double? sleepHours,
-    double? fatigue,
-    double? soreness,
-    double? stress,
-    double? mood,
-    double? hydrationLevel,
-    double? nutritionQuality,
-    double? bodyWeight,
-    double? bodyFat,
-    double? muscleMass,
-    bool? isInjured,
-    String? injuryType,
-    int? daysUntilReturn,
-  });
+  $Res call(
+      {double? sleepQuality,
+      double? sleepHours,
+      double? fatigue,
+      double? soreness,
+      double? stress,
+      double? mood,
+      double? hydrationLevel,
+      double? nutritionQuality,
+      double? bodyWeight,
+      double? bodyFat,
+      double? muscleMass,
+      bool? isInjured,
+      String? injuryType,
+      int? daysUntilReturn});
 }
 
 /// @nodoc
@@ -3905,95 +3813,90 @@ class _$WellnessMetricsCopyWithImpl<$Res, $Val extends WellnessMetrics>
     Object? injuryType = freezed,
     Object? daysUntilReturn = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            sleepQuality: freezed == sleepQuality
-                ? _value.sleepQuality
-                : sleepQuality // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            sleepHours: freezed == sleepHours
-                ? _value.sleepHours
-                : sleepHours // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            fatigue: freezed == fatigue
-                ? _value.fatigue
-                : fatigue // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            soreness: freezed == soreness
-                ? _value.soreness
-                : soreness // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            stress: freezed == stress
-                ? _value.stress
-                : stress // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            mood: freezed == mood
-                ? _value.mood
-                : mood // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            hydrationLevel: freezed == hydrationLevel
-                ? _value.hydrationLevel
-                : hydrationLevel // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            nutritionQuality: freezed == nutritionQuality
-                ? _value.nutritionQuality
-                : nutritionQuality // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            bodyWeight: freezed == bodyWeight
-                ? _value.bodyWeight
-                : bodyWeight // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            bodyFat: freezed == bodyFat
-                ? _value.bodyFat
-                : bodyFat // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            muscleMass: freezed == muscleMass
-                ? _value.muscleMass
-                : muscleMass // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            isInjured: freezed == isInjured
-                ? _value.isInjured
-                : isInjured // ignore: cast_nullable_to_non_nullable
-                      as bool?,
-            injuryType: freezed == injuryType
-                ? _value.injuryType
-                : injuryType // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            daysUntilReturn: freezed == daysUntilReturn
-                ? _value.daysUntilReturn
-                : daysUntilReturn // ignore: cast_nullable_to_non_nullable
-                      as int?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      sleepQuality: freezed == sleepQuality
+          ? _value.sleepQuality
+          : sleepQuality // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sleepHours: freezed == sleepHours
+          ? _value.sleepHours
+          : sleepHours // ignore: cast_nullable_to_non_nullable
+              as double?,
+      fatigue: freezed == fatigue
+          ? _value.fatigue
+          : fatigue // ignore: cast_nullable_to_non_nullable
+              as double?,
+      soreness: freezed == soreness
+          ? _value.soreness
+          : soreness // ignore: cast_nullable_to_non_nullable
+              as double?,
+      stress: freezed == stress
+          ? _value.stress
+          : stress // ignore: cast_nullable_to_non_nullable
+              as double?,
+      mood: freezed == mood
+          ? _value.mood
+          : mood // ignore: cast_nullable_to_non_nullable
+              as double?,
+      hydrationLevel: freezed == hydrationLevel
+          ? _value.hydrationLevel
+          : hydrationLevel // ignore: cast_nullable_to_non_nullable
+              as double?,
+      nutritionQuality: freezed == nutritionQuality
+          ? _value.nutritionQuality
+          : nutritionQuality // ignore: cast_nullable_to_non_nullable
+              as double?,
+      bodyWeight: freezed == bodyWeight
+          ? _value.bodyWeight
+          : bodyWeight // ignore: cast_nullable_to_non_nullable
+              as double?,
+      bodyFat: freezed == bodyFat
+          ? _value.bodyFat
+          : bodyFat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      muscleMass: freezed == muscleMass
+          ? _value.muscleMass
+          : muscleMass // ignore: cast_nullable_to_non_nullable
+              as double?,
+      isInjured: freezed == isInjured
+          ? _value.isInjured
+          : isInjured // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      injuryType: freezed == injuryType
+          ? _value.injuryType
+          : injuryType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      daysUntilReturn: freezed == daysUntilReturn
+          ? _value.daysUntilReturn
+          : daysUntilReturn // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$WellnessMetricsImplCopyWith<$Res>
     implements $WellnessMetricsCopyWith<$Res> {
-  factory _$$WellnessMetricsImplCopyWith(
-    _$WellnessMetricsImpl value,
-    $Res Function(_$WellnessMetricsImpl) then,
-  ) = __$$WellnessMetricsImplCopyWithImpl<$Res>;
+  factory _$$WellnessMetricsImplCopyWith(_$WellnessMetricsImpl value,
+          $Res Function(_$WellnessMetricsImpl) then) =
+      __$$WellnessMetricsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    double? sleepQuality,
-    double? sleepHours,
-    double? fatigue,
-    double? soreness,
-    double? stress,
-    double? mood,
-    double? hydrationLevel,
-    double? nutritionQuality,
-    double? bodyWeight,
-    double? bodyFat,
-    double? muscleMass,
-    bool? isInjured,
-    String? injuryType,
-    int? daysUntilReturn,
-  });
+  $Res call(
+      {double? sleepQuality,
+      double? sleepHours,
+      double? fatigue,
+      double? soreness,
+      double? stress,
+      double? mood,
+      double? hydrationLevel,
+      double? nutritionQuality,
+      double? bodyWeight,
+      double? bodyFat,
+      double? muscleMass,
+      bool? isInjured,
+      String? injuryType,
+      int? daysUntilReturn});
 }
 
 /// @nodoc
@@ -4001,9 +3904,8 @@ class __$$WellnessMetricsImplCopyWithImpl<$Res>
     extends _$WellnessMetricsCopyWithImpl<$Res, _$WellnessMetricsImpl>
     implements _$$WellnessMetricsImplCopyWith<$Res> {
   __$$WellnessMetricsImplCopyWithImpl(
-    _$WellnessMetricsImpl _value,
-    $Res Function(_$WellnessMetricsImpl) _then,
-  ) : super(_value, _then);
+      _$WellnessMetricsImpl _value, $Res Function(_$WellnessMetricsImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -4023,128 +3925,125 @@ class __$$WellnessMetricsImplCopyWithImpl<$Res>
     Object? injuryType = freezed,
     Object? daysUntilReturn = freezed,
   }) {
-    return _then(
-      _$WellnessMetricsImpl(
-        sleepQuality: freezed == sleepQuality
-            ? _value.sleepQuality
-            : sleepQuality // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        sleepHours: freezed == sleepHours
-            ? _value.sleepHours
-            : sleepHours // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        fatigue: freezed == fatigue
-            ? _value.fatigue
-            : fatigue // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        soreness: freezed == soreness
-            ? _value.soreness
-            : soreness // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        stress: freezed == stress
-            ? _value.stress
-            : stress // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        mood: freezed == mood
-            ? _value.mood
-            : mood // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        hydrationLevel: freezed == hydrationLevel
-            ? _value.hydrationLevel
-            : hydrationLevel // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        nutritionQuality: freezed == nutritionQuality
-            ? _value.nutritionQuality
-            : nutritionQuality // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        bodyWeight: freezed == bodyWeight
-            ? _value.bodyWeight
-            : bodyWeight // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        bodyFat: freezed == bodyFat
-            ? _value.bodyFat
-            : bodyFat // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        muscleMass: freezed == muscleMass
-            ? _value.muscleMass
-            : muscleMass // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        isInjured: freezed == isInjured
-            ? _value.isInjured
-            : isInjured // ignore: cast_nullable_to_non_nullable
-                  as bool?,
-        injuryType: freezed == injuryType
-            ? _value.injuryType
-            : injuryType // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        daysUntilReturn: freezed == daysUntilReturn
-            ? _value.daysUntilReturn
-            : daysUntilReturn // ignore: cast_nullable_to_non_nullable
-                  as int?,
-      ),
-    );
+    return _then(_$WellnessMetricsImpl(
+      sleepQuality: freezed == sleepQuality
+          ? _value.sleepQuality
+          : sleepQuality // ignore: cast_nullable_to_non_nullable
+              as double?,
+      sleepHours: freezed == sleepHours
+          ? _value.sleepHours
+          : sleepHours // ignore: cast_nullable_to_non_nullable
+              as double?,
+      fatigue: freezed == fatigue
+          ? _value.fatigue
+          : fatigue // ignore: cast_nullable_to_non_nullable
+              as double?,
+      soreness: freezed == soreness
+          ? _value.soreness
+          : soreness // ignore: cast_nullable_to_non_nullable
+              as double?,
+      stress: freezed == stress
+          ? _value.stress
+          : stress // ignore: cast_nullable_to_non_nullable
+              as double?,
+      mood: freezed == mood
+          ? _value.mood
+          : mood // ignore: cast_nullable_to_non_nullable
+              as double?,
+      hydrationLevel: freezed == hydrationLevel
+          ? _value.hydrationLevel
+          : hydrationLevel // ignore: cast_nullable_to_non_nullable
+              as double?,
+      nutritionQuality: freezed == nutritionQuality
+          ? _value.nutritionQuality
+          : nutritionQuality // ignore: cast_nullable_to_non_nullable
+              as double?,
+      bodyWeight: freezed == bodyWeight
+          ? _value.bodyWeight
+          : bodyWeight // ignore: cast_nullable_to_non_nullable
+              as double?,
+      bodyFat: freezed == bodyFat
+          ? _value.bodyFat
+          : bodyFat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      muscleMass: freezed == muscleMass
+          ? _value.muscleMass
+          : muscleMass // ignore: cast_nullable_to_non_nullable
+              as double?,
+      isInjured: freezed == isInjured
+          ? _value.isInjured
+          : isInjured // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      injuryType: freezed == injuryType
+          ? _value.injuryType
+          : injuryType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      daysUntilReturn: freezed == daysUntilReturn
+          ? _value.daysUntilReturn
+          : daysUntilReturn // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$WellnessMetricsImpl implements _WellnessMetrics {
-  const _$WellnessMetricsImpl({
-    this.sleepQuality,
-    this.sleepHours,
-    this.fatigue,
-    this.soreness,
-    this.stress,
-    this.mood,
-    this.hydrationLevel,
-    this.nutritionQuality,
-    this.bodyWeight,
-    this.bodyFat,
-    this.muscleMass,
-    this.isInjured,
-    this.injuryType,
-    this.daysUntilReturn,
-  });
+  const _$WellnessMetricsImpl(
+      {this.sleepQuality,
+      this.sleepHours,
+      this.fatigue,
+      this.soreness,
+      this.stress,
+      this.mood,
+      this.hydrationLevel,
+      this.nutritionQuality,
+      this.bodyWeight,
+      this.bodyFat,
+      this.muscleMass,
+      this.isInjured,
+      this.injuryType,
+      this.daysUntilReturn});
 
   factory _$WellnessMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$WellnessMetricsImplFromJson(json);
 
-  // Daily Wellness
+// Daily Wellness
   @override
   final double? sleepQuality;
-  // 0-10
+// 0-10
   @override
   final double? sleepHours;
   @override
   final double? fatigue;
-  // 0-10
+// 0-10
   @override
   final double? soreness;
-  // 0-10
+// 0-10
   @override
   final double? stress;
-  // 0-10
+// 0-10
   @override
   final double? mood;
-  // 0-10
-  // Nutrition & Hydration
+// 0-10
+// Nutrition & Hydration
   @override
   final double? hydrationLevel;
-  // 0-10
+// 0-10
   @override
   final double? nutritionQuality;
-  // 0-10
-  // Health Indicators
+// 0-10
+// Health Indicators
   @override
   final double? bodyWeight;
-  // kg
+// kg
   @override
   final double? bodyFat;
-  // percentage
+// percentage
   @override
   final double? muscleMass;
-  // kg
-  // Injury Status
+// kg
+// Injury Status
   @override
   final bool? isInjured;
   @override
@@ -4191,55 +4090,53 @@ class _$WellnessMetricsImpl implements _WellnessMetrics {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    sleepQuality,
-    sleepHours,
-    fatigue,
-    soreness,
-    stress,
-    mood,
-    hydrationLevel,
-    nutritionQuality,
-    bodyWeight,
-    bodyFat,
-    muscleMass,
-    isInjured,
-    injuryType,
-    daysUntilReturn,
-  );
+      runtimeType,
+      sleepQuality,
+      sleepHours,
+      fatigue,
+      soreness,
+      stress,
+      mood,
+      hydrationLevel,
+      nutritionQuality,
+      bodyWeight,
+      bodyFat,
+      muscleMass,
+      isInjured,
+      injuryType,
+      daysUntilReturn);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$WellnessMetricsImplCopyWith<_$WellnessMetricsImpl> get copyWith =>
       __$$WellnessMetricsImplCopyWithImpl<_$WellnessMetricsImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$WellnessMetricsImplToJson(this);
+    return _$$WellnessMetricsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _WellnessMetrics implements WellnessMetrics {
-  const factory _WellnessMetrics({
-    final double? sleepQuality,
-    final double? sleepHours,
-    final double? fatigue,
-    final double? soreness,
-    final double? stress,
-    final double? mood,
-    final double? hydrationLevel,
-    final double? nutritionQuality,
-    final double? bodyWeight,
-    final double? bodyFat,
-    final double? muscleMass,
-    final bool? isInjured,
-    final String? injuryType,
-    final int? daysUntilReturn,
-  }) = _$WellnessMetricsImpl;
+  const factory _WellnessMetrics(
+      {final double? sleepQuality,
+      final double? sleepHours,
+      final double? fatigue,
+      final double? soreness,
+      final double? stress,
+      final double? mood,
+      final double? hydrationLevel,
+      final double? nutritionQuality,
+      final double? bodyWeight,
+      final double? bodyFat,
+      final double? muscleMass,
+      final bool? isInjured,
+      final String? injuryType,
+      final int? daysUntilReturn}) = _$WellnessMetricsImpl;
 
   factory _WellnessMetrics.fromJson(Map<String, dynamic> json) =
       _$WellnessMetricsImpl.fromJson;
@@ -4257,19 +4154,19 @@ abstract class _WellnessMetrics implements WellnessMetrics {
   @override // 0-10
   double? get mood;
   @override // 0-10
-  // Nutrition & Hydration
+// Nutrition & Hydration
   double? get hydrationLevel;
   @override // 0-10
   double? get nutritionQuality;
   @override // 0-10
-  // Health Indicators
+// Health Indicators
   double? get bodyWeight;
   @override // kg
   double? get bodyFat;
   @override // percentage
   double? get muscleMass;
   @override // kg
-  // Injury Status
+// Injury Status
   bool? get isInjured;
   @override
   String? get injuryType;
@@ -4295,7 +4192,7 @@ mixin _$CoachEvaluation {
   double? get tacticalRating => throw _privateConstructorUsedError; // 0-10
   double? get physicalRating => throw _privateConstructorUsedError; // 0-10
   double? get mentalRating => throw _privateConstructorUsedError; // 0-10
-  // Development Areas
+// Development Areas
   List<String>? get strengths => throw _privateConstructorUsedError;
   List<String>? get weaknesses => throw _privateConstructorUsedError;
   List<String>? get developmentGoals =>
@@ -4312,24 +4209,22 @@ mixin _$CoachEvaluation {
 /// @nodoc
 abstract class $CoachEvaluationCopyWith<$Res> {
   factory $CoachEvaluationCopyWith(
-    CoachEvaluation value,
-    $Res Function(CoachEvaluation) then,
-  ) = _$CoachEvaluationCopyWithImpl<$Res, CoachEvaluation>;
+          CoachEvaluation value, $Res Function(CoachEvaluation) then) =
+      _$CoachEvaluationCopyWithImpl<$Res, CoachEvaluation>;
   @useResult
-  $Res call({
-    String coachId,
-    DateTime evaluationDate,
-    double? overallRating,
-    double? technicalRating,
-    double? tacticalRating,
-    double? physicalRating,
-    double? mentalRating,
-    List<String>? strengths,
-    List<String>? weaknesses,
-    List<String>? developmentGoals,
-    String? generalComments,
-    String? improvementAdvice,
-  });
+  $Res call(
+      {String coachId,
+      DateTime evaluationDate,
+      double? overallRating,
+      double? technicalRating,
+      double? tacticalRating,
+      double? physicalRating,
+      double? mentalRating,
+      List<String>? strengths,
+      List<String>? weaknesses,
+      List<String>? developmentGoals,
+      String? generalComments,
+      String? improvementAdvice});
 }
 
 /// @nodoc
@@ -4358,85 +4253,80 @@ class _$CoachEvaluationCopyWithImpl<$Res, $Val extends CoachEvaluation>
     Object? generalComments = freezed,
     Object? improvementAdvice = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            coachId: null == coachId
-                ? _value.coachId
-                : coachId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            evaluationDate: null == evaluationDate
-                ? _value.evaluationDate
-                : evaluationDate // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            overallRating: freezed == overallRating
-                ? _value.overallRating
-                : overallRating // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            technicalRating: freezed == technicalRating
-                ? _value.technicalRating
-                : technicalRating // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            tacticalRating: freezed == tacticalRating
-                ? _value.tacticalRating
-                : tacticalRating // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            physicalRating: freezed == physicalRating
-                ? _value.physicalRating
-                : physicalRating // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            mentalRating: freezed == mentalRating
-                ? _value.mentalRating
-                : mentalRating // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            strengths: freezed == strengths
-                ? _value.strengths
-                : strengths // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            weaknesses: freezed == weaknesses
-                ? _value.weaknesses
-                : weaknesses // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            developmentGoals: freezed == developmentGoals
-                ? _value.developmentGoals
-                : developmentGoals // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            generalComments: freezed == generalComments
-                ? _value.generalComments
-                : generalComments // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            improvementAdvice: freezed == improvementAdvice
-                ? _value.improvementAdvice
-                : improvementAdvice // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      coachId: null == coachId
+          ? _value.coachId
+          : coachId // ignore: cast_nullable_to_non_nullable
+              as String,
+      evaluationDate: null == evaluationDate
+          ? _value.evaluationDate
+          : evaluationDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      overallRating: freezed == overallRating
+          ? _value.overallRating
+          : overallRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      technicalRating: freezed == technicalRating
+          ? _value.technicalRating
+          : technicalRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      tacticalRating: freezed == tacticalRating
+          ? _value.tacticalRating
+          : tacticalRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      physicalRating: freezed == physicalRating
+          ? _value.physicalRating
+          : physicalRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      mentalRating: freezed == mentalRating
+          ? _value.mentalRating
+          : mentalRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      strengths: freezed == strengths
+          ? _value.strengths
+          : strengths // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      weaknesses: freezed == weaknesses
+          ? _value.weaknesses
+          : weaknesses // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      developmentGoals: freezed == developmentGoals
+          ? _value.developmentGoals
+          : developmentGoals // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      generalComments: freezed == generalComments
+          ? _value.generalComments
+          : generalComments // ignore: cast_nullable_to_non_nullable
+              as String?,
+      improvementAdvice: freezed == improvementAdvice
+          ? _value.improvementAdvice
+          : improvementAdvice // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$CoachEvaluationImplCopyWith<$Res>
     implements $CoachEvaluationCopyWith<$Res> {
-  factory _$$CoachEvaluationImplCopyWith(
-    _$CoachEvaluationImpl value,
-    $Res Function(_$CoachEvaluationImpl) then,
-  ) = __$$CoachEvaluationImplCopyWithImpl<$Res>;
+  factory _$$CoachEvaluationImplCopyWith(_$CoachEvaluationImpl value,
+          $Res Function(_$CoachEvaluationImpl) then) =
+      __$$CoachEvaluationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String coachId,
-    DateTime evaluationDate,
-    double? overallRating,
-    double? technicalRating,
-    double? tacticalRating,
-    double? physicalRating,
-    double? mentalRating,
-    List<String>? strengths,
-    List<String>? weaknesses,
-    List<String>? developmentGoals,
-    String? generalComments,
-    String? improvementAdvice,
-  });
+  $Res call(
+      {String coachId,
+      DateTime evaluationDate,
+      double? overallRating,
+      double? technicalRating,
+      double? tacticalRating,
+      double? physicalRating,
+      double? mentalRating,
+      List<String>? strengths,
+      List<String>? weaknesses,
+      List<String>? developmentGoals,
+      String? generalComments,
+      String? improvementAdvice});
 }
 
 /// @nodoc
@@ -4444,9 +4334,8 @@ class __$$CoachEvaluationImplCopyWithImpl<$Res>
     extends _$CoachEvaluationCopyWithImpl<$Res, _$CoachEvaluationImpl>
     implements _$$CoachEvaluationImplCopyWith<$Res> {
   __$$CoachEvaluationImplCopyWithImpl(
-    _$CoachEvaluationImpl _value,
-    $Res Function(_$CoachEvaluationImpl) _then,
-  ) : super(_value, _then);
+      _$CoachEvaluationImpl _value, $Res Function(_$CoachEvaluationImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -4464,80 +4353,78 @@ class __$$CoachEvaluationImplCopyWithImpl<$Res>
     Object? generalComments = freezed,
     Object? improvementAdvice = freezed,
   }) {
-    return _then(
-      _$CoachEvaluationImpl(
-        coachId: null == coachId
-            ? _value.coachId
-            : coachId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        evaluationDate: null == evaluationDate
-            ? _value.evaluationDate
-            : evaluationDate // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        overallRating: freezed == overallRating
-            ? _value.overallRating
-            : overallRating // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        technicalRating: freezed == technicalRating
-            ? _value.technicalRating
-            : technicalRating // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        tacticalRating: freezed == tacticalRating
-            ? _value.tacticalRating
-            : tacticalRating // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        physicalRating: freezed == physicalRating
-            ? _value.physicalRating
-            : physicalRating // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        mentalRating: freezed == mentalRating
-            ? _value.mentalRating
-            : mentalRating // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        strengths: freezed == strengths
-            ? _value._strengths
-            : strengths // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        weaknesses: freezed == weaknesses
-            ? _value._weaknesses
-            : weaknesses // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        developmentGoals: freezed == developmentGoals
-            ? _value._developmentGoals
-            : developmentGoals // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        generalComments: freezed == generalComments
-            ? _value.generalComments
-            : generalComments // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        improvementAdvice: freezed == improvementAdvice
-            ? _value.improvementAdvice
-            : improvementAdvice // ignore: cast_nullable_to_non_nullable
-                  as String?,
-      ),
-    );
+    return _then(_$CoachEvaluationImpl(
+      coachId: null == coachId
+          ? _value.coachId
+          : coachId // ignore: cast_nullable_to_non_nullable
+              as String,
+      evaluationDate: null == evaluationDate
+          ? _value.evaluationDate
+          : evaluationDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      overallRating: freezed == overallRating
+          ? _value.overallRating
+          : overallRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      technicalRating: freezed == technicalRating
+          ? _value.technicalRating
+          : technicalRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      tacticalRating: freezed == tacticalRating
+          ? _value.tacticalRating
+          : tacticalRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      physicalRating: freezed == physicalRating
+          ? _value.physicalRating
+          : physicalRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      mentalRating: freezed == mentalRating
+          ? _value.mentalRating
+          : mentalRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      strengths: freezed == strengths
+          ? _value._strengths
+          : strengths // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      weaknesses: freezed == weaknesses
+          ? _value._weaknesses
+          : weaknesses // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      developmentGoals: freezed == developmentGoals
+          ? _value._developmentGoals
+          : developmentGoals // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      generalComments: freezed == generalComments
+          ? _value.generalComments
+          : generalComments // ignore: cast_nullable_to_non_nullable
+              as String?,
+      improvementAdvice: freezed == improvementAdvice
+          ? _value.improvementAdvice
+          : improvementAdvice // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CoachEvaluationImpl implements _CoachEvaluation {
-  const _$CoachEvaluationImpl({
-    required this.coachId,
-    required this.evaluationDate,
-    this.overallRating,
-    this.technicalRating,
-    this.tacticalRating,
-    this.physicalRating,
-    this.mentalRating,
-    final List<String>? strengths,
-    final List<String>? weaknesses,
-    final List<String>? developmentGoals,
-    this.generalComments,
-    this.improvementAdvice,
-  }) : _strengths = strengths,
-       _weaknesses = weaknesses,
-       _developmentGoals = developmentGoals;
+  const _$CoachEvaluationImpl(
+      {required this.coachId,
+      required this.evaluationDate,
+      this.overallRating,
+      this.technicalRating,
+      this.tacticalRating,
+      this.physicalRating,
+      this.mentalRating,
+      final List<String>? strengths,
+      final List<String>? weaknesses,
+      final List<String>? developmentGoals,
+      this.generalComments,
+      this.improvementAdvice})
+      : _strengths = strengths,
+        _weaknesses = weaknesses,
+        _developmentGoals = developmentGoals;
 
   factory _$CoachEvaluationImpl.fromJson(Map<String, dynamic> json) =>
       _$$CoachEvaluationImplFromJson(json);
@@ -4546,26 +4433,26 @@ class _$CoachEvaluationImpl implements _CoachEvaluation {
   final String coachId;
   @override
   final DateTime evaluationDate;
-  // Performance Rating
+// Performance Rating
   @override
   final double? overallRating;
-  // 0-10
+// 0-10
   @override
   final double? technicalRating;
-  // 0-10
+// 0-10
   @override
   final double? tacticalRating;
-  // 0-10
+// 0-10
   @override
   final double? physicalRating;
-  // 0-10
+// 0-10
   @override
   final double? mentalRating;
-  // 0-10
-  // Development Areas
+// 0-10
+// Development Areas
   final List<String>? _strengths;
-  // 0-10
-  // Development Areas
+// 0-10
+// Development Areas
   @override
   List<String>? get strengths {
     final value = _strengths;
@@ -4596,7 +4483,7 @@ class _$CoachEvaluationImpl implements _CoachEvaluation {
     return EqualUnmodifiableListView(value);
   }
 
-  // Comments
+// Comments
   @override
   final String? generalComments;
   @override
@@ -4625,18 +4512,12 @@ class _$CoachEvaluationImpl implements _CoachEvaluation {
                 other.physicalRating == physicalRating) &&
             (identical(other.mentalRating, mentalRating) ||
                 other.mentalRating == mentalRating) &&
-            const DeepCollectionEquality().equals(
-              other._strengths,
-              _strengths,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._weaknesses,
-              _weaknesses,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._developmentGoals,
-              _developmentGoals,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._strengths, _strengths) &&
+            const DeepCollectionEquality()
+                .equals(other._weaknesses, _weaknesses) &&
+            const DeepCollectionEquality()
+                .equals(other._developmentGoals, _developmentGoals) &&
             (identical(other.generalComments, generalComments) ||
                 other.generalComments == generalComments) &&
             (identical(other.improvementAdvice, improvementAdvice) ||
@@ -4646,51 +4527,49 @@ class _$CoachEvaluationImpl implements _CoachEvaluation {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    coachId,
-    evaluationDate,
-    overallRating,
-    technicalRating,
-    tacticalRating,
-    physicalRating,
-    mentalRating,
-    const DeepCollectionEquality().hash(_strengths),
-    const DeepCollectionEquality().hash(_weaknesses),
-    const DeepCollectionEquality().hash(_developmentGoals),
-    generalComments,
-    improvementAdvice,
-  );
+      runtimeType,
+      coachId,
+      evaluationDate,
+      overallRating,
+      technicalRating,
+      tacticalRating,
+      physicalRating,
+      mentalRating,
+      const DeepCollectionEquality().hash(_strengths),
+      const DeepCollectionEquality().hash(_weaknesses),
+      const DeepCollectionEquality().hash(_developmentGoals),
+      generalComments,
+      improvementAdvice);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CoachEvaluationImplCopyWith<_$CoachEvaluationImpl> get copyWith =>
       __$$CoachEvaluationImplCopyWithImpl<_$CoachEvaluationImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CoachEvaluationImplToJson(this);
+    return _$$CoachEvaluationImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _CoachEvaluation implements CoachEvaluation {
-  const factory _CoachEvaluation({
-    required final String coachId,
-    required final DateTime evaluationDate,
-    final double? overallRating,
-    final double? technicalRating,
-    final double? tacticalRating,
-    final double? physicalRating,
-    final double? mentalRating,
-    final List<String>? strengths,
-    final List<String>? weaknesses,
-    final List<String>? developmentGoals,
-    final String? generalComments,
-    final String? improvementAdvice,
-  }) = _$CoachEvaluationImpl;
+  const factory _CoachEvaluation(
+      {required final String coachId,
+      required final DateTime evaluationDate,
+      final double? overallRating,
+      final double? technicalRating,
+      final double? tacticalRating,
+      final double? physicalRating,
+      final double? mentalRating,
+      final List<String>? strengths,
+      final List<String>? weaknesses,
+      final List<String>? developmentGoals,
+      final String? generalComments,
+      final String? improvementAdvice}) = _$CoachEvaluationImpl;
 
   factory _CoachEvaluation.fromJson(Map<String, dynamic> json) =
       _$CoachEvaluationImpl.fromJson;
@@ -4710,7 +4589,7 @@ abstract class _CoachEvaluation implements CoachEvaluation {
   @override // 0-10
   double? get mentalRating;
   @override // 0-10
-  // Development Areas
+// Development Areas
   List<String>? get strengths;
   @override
   List<String>? get weaknesses;
@@ -4756,22 +4635,20 @@ mixin _$PerformanceInsight {
 /// @nodoc
 abstract class $PerformanceInsightCopyWith<$Res> {
   factory $PerformanceInsightCopyWith(
-    PerformanceInsight value,
-    $Res Function(PerformanceInsight) then,
-  ) = _$PerformanceInsightCopyWithImpl<$Res, PerformanceInsight>;
+          PerformanceInsight value, $Res Function(PerformanceInsight) then) =
+      _$PerformanceInsightCopyWithImpl<$Res, PerformanceInsight>;
   @useResult
-  $Res call({
-    String id,
-    InsightType type,
-    String title,
-    String description,
-    InsightPriority priority,
-    DateTime generatedAt,
-    List<String>? recommendations,
-    Map<String, dynamic>? relatedData,
-    String? trend,
-    double? changePercentage,
-  });
+  $Res call(
+      {String id,
+      InsightType type,
+      String title,
+      String description,
+      InsightPriority priority,
+      DateTime generatedAt,
+      List<String>? recommendations,
+      Map<String, dynamic>? relatedData,
+      String? trend,
+      double? changePercentage});
 }
 
 /// @nodoc
@@ -4798,85 +4675,79 @@ class _$PerformanceInsightCopyWithImpl<$Res, $Val extends PerformanceInsight>
     Object? trend = freezed,
     Object? changePercentage = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            type: null == type
-                ? _value.type
-                : type // ignore: cast_nullable_to_non_nullable
-                      as InsightType,
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
-            description: null == description
-                ? _value.description
-                : description // ignore: cast_nullable_to_non_nullable
-                      as String,
-            priority: null == priority
-                ? _value.priority
-                : priority // ignore: cast_nullable_to_non_nullable
-                      as InsightPriority,
-            generatedAt: null == generatedAt
-                ? _value.generatedAt
-                : generatedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            recommendations: freezed == recommendations
-                ? _value.recommendations
-                : recommendations // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            relatedData: freezed == relatedData
-                ? _value.relatedData
-                : relatedData // ignore: cast_nullable_to_non_nullable
-                      as Map<String, dynamic>?,
-            trend: freezed == trend
-                ? _value.trend
-                : trend // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            changePercentage: freezed == changePercentage
-                ? _value.changePercentage
-                : changePercentage // ignore: cast_nullable_to_non_nullable
-                      as double?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as InsightType,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      priority: null == priority
+          ? _value.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as InsightPriority,
+      generatedAt: null == generatedAt
+          ? _value.generatedAt
+          : generatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      recommendations: freezed == recommendations
+          ? _value.recommendations
+          : recommendations // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      relatedData: freezed == relatedData
+          ? _value.relatedData
+          : relatedData // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      trend: freezed == trend
+          ? _value.trend
+          : trend // ignore: cast_nullable_to_non_nullable
+              as String?,
+      changePercentage: freezed == changePercentage
+          ? _value.changePercentage
+          : changePercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$PerformanceInsightImplCopyWith<$Res>
     implements $PerformanceInsightCopyWith<$Res> {
-  factory _$$PerformanceInsightImplCopyWith(
-    _$PerformanceInsightImpl value,
-    $Res Function(_$PerformanceInsightImpl) then,
-  ) = __$$PerformanceInsightImplCopyWithImpl<$Res>;
+  factory _$$PerformanceInsightImplCopyWith(_$PerformanceInsightImpl value,
+          $Res Function(_$PerformanceInsightImpl) then) =
+      __$$PerformanceInsightImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    InsightType type,
-    String title,
-    String description,
-    InsightPriority priority,
-    DateTime generatedAt,
-    List<String>? recommendations,
-    Map<String, dynamic>? relatedData,
-    String? trend,
-    double? changePercentage,
-  });
+  $Res call(
+      {String id,
+      InsightType type,
+      String title,
+      String description,
+      InsightPriority priority,
+      DateTime generatedAt,
+      List<String>? recommendations,
+      Map<String, dynamic>? relatedData,
+      String? trend,
+      double? changePercentage});
 }
 
 /// @nodoc
 class __$$PerformanceInsightImplCopyWithImpl<$Res>
     extends _$PerformanceInsightCopyWithImpl<$Res, _$PerformanceInsightImpl>
     implements _$$PerformanceInsightImplCopyWith<$Res> {
-  __$$PerformanceInsightImplCopyWithImpl(
-    _$PerformanceInsightImpl _value,
-    $Res Function(_$PerformanceInsightImpl) _then,
-  ) : super(_value, _then);
+  __$$PerformanceInsightImplCopyWithImpl(_$PerformanceInsightImpl _value,
+      $Res Function(_$PerformanceInsightImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -4892,69 +4763,67 @@ class __$$PerformanceInsightImplCopyWithImpl<$Res>
     Object? trend = freezed,
     Object? changePercentage = freezed,
   }) {
-    return _then(
-      _$PerformanceInsightImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        type: null == type
-            ? _value.type
-            : type // ignore: cast_nullable_to_non_nullable
-                  as InsightType,
-        title: null == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                  as String,
-        description: null == description
-            ? _value.description
-            : description // ignore: cast_nullable_to_non_nullable
-                  as String,
-        priority: null == priority
-            ? _value.priority
-            : priority // ignore: cast_nullable_to_non_nullable
-                  as InsightPriority,
-        generatedAt: null == generatedAt
-            ? _value.generatedAt
-            : generatedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        recommendations: freezed == recommendations
-            ? _value._recommendations
-            : recommendations // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        relatedData: freezed == relatedData
-            ? _value._relatedData
-            : relatedData // ignore: cast_nullable_to_non_nullable
-                  as Map<String, dynamic>?,
-        trend: freezed == trend
-            ? _value.trend
-            : trend // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        changePercentage: freezed == changePercentage
-            ? _value.changePercentage
-            : changePercentage // ignore: cast_nullable_to_non_nullable
-                  as double?,
-      ),
-    );
+    return _then(_$PerformanceInsightImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as InsightType,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      priority: null == priority
+          ? _value.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as InsightPriority,
+      generatedAt: null == generatedAt
+          ? _value.generatedAt
+          : generatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      recommendations: freezed == recommendations
+          ? _value._recommendations
+          : recommendations // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      relatedData: freezed == relatedData
+          ? _value._relatedData
+          : relatedData // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      trend: freezed == trend
+          ? _value.trend
+          : trend // ignore: cast_nullable_to_non_nullable
+              as String?,
+      changePercentage: freezed == changePercentage
+          ? _value.changePercentage
+          : changePercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$PerformanceInsightImpl implements _PerformanceInsight {
-  const _$PerformanceInsightImpl({
-    required this.id,
-    required this.type,
-    required this.title,
-    required this.description,
-    required this.priority,
-    required this.generatedAt,
-    final List<String>? recommendations,
-    final Map<String, dynamic>? relatedData,
-    this.trend,
-    this.changePercentage,
-  }) : _recommendations = recommendations,
-       _relatedData = relatedData;
+  const _$PerformanceInsightImpl(
+      {required this.id,
+      required this.type,
+      required this.title,
+      required this.description,
+      required this.priority,
+      required this.generatedAt,
+      final List<String>? recommendations,
+      final Map<String, dynamic>? relatedData,
+      this.trend,
+      this.changePercentage})
+      : _recommendations = recommendations,
+        _relatedData = relatedData;
 
   factory _$PerformanceInsightImpl.fromJson(Map<String, dynamic> json) =>
       _$$PerformanceInsightImplFromJson(json);
@@ -4971,9 +4840,9 @@ class _$PerformanceInsightImpl implements _PerformanceInsight {
   final InsightPriority priority;
   @override
   final DateTime generatedAt;
-  // Actionable Recommendations
+// Actionable Recommendations
   final List<String>? _recommendations;
-  // Actionable Recommendations
+// Actionable Recommendations
   @override
   List<String>? get recommendations {
     final value = _recommendations;
@@ -4983,9 +4852,9 @@ class _$PerformanceInsightImpl implements _PerformanceInsight {
     return EqualUnmodifiableListView(value);
   }
 
-  // Related Metrics
+// Related Metrics
   final Map<String, dynamic>? _relatedData;
-  // Related Metrics
+// Related Metrics
   @override
   Map<String, dynamic>? get relatedData {
     final value = _relatedData;
@@ -4995,10 +4864,10 @@ class _$PerformanceInsightImpl implements _PerformanceInsight {
     return EqualUnmodifiableMapView(value);
   }
 
-  // Trend Analysis
+// Trend Analysis
   @override
   final String? trend;
-  // improving, stable, declining
+// improving, stable, declining
   @override
   final double? changePercentage;
 
@@ -5021,14 +4890,10 @@ class _$PerformanceInsightImpl implements _PerformanceInsight {
                 other.priority == priority) &&
             (identical(other.generatedAt, generatedAt) ||
                 other.generatedAt == generatedAt) &&
-            const DeepCollectionEquality().equals(
-              other._recommendations,
-              _recommendations,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._relatedData,
-              _relatedData,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._recommendations, _recommendations) &&
+            const DeepCollectionEquality()
+                .equals(other._relatedData, _relatedData) &&
             (identical(other.trend, trend) || other.trend == trend) &&
             (identical(other.changePercentage, changePercentage) ||
                 other.changePercentage == changePercentage));
@@ -5037,47 +4902,45 @@ class _$PerformanceInsightImpl implements _PerformanceInsight {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    type,
-    title,
-    description,
-    priority,
-    generatedAt,
-    const DeepCollectionEquality().hash(_recommendations),
-    const DeepCollectionEquality().hash(_relatedData),
-    trend,
-    changePercentage,
-  );
+      runtimeType,
+      id,
+      type,
+      title,
+      description,
+      priority,
+      generatedAt,
+      const DeepCollectionEquality().hash(_recommendations),
+      const DeepCollectionEquality().hash(_relatedData),
+      trend,
+      changePercentage);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PerformanceInsightImplCopyWith<_$PerformanceInsightImpl> get copyWith =>
       __$$PerformanceInsightImplCopyWithImpl<_$PerformanceInsightImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PerformanceInsightImplToJson(this);
+    return _$$PerformanceInsightImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _PerformanceInsight implements PerformanceInsight {
-  const factory _PerformanceInsight({
-    required final String id,
-    required final InsightType type,
-    required final String title,
-    required final String description,
-    required final InsightPriority priority,
-    required final DateTime generatedAt,
-    final List<String>? recommendations,
-    final Map<String, dynamic>? relatedData,
-    final String? trend,
-    final double? changePercentage,
-  }) = _$PerformanceInsightImpl;
+  const factory _PerformanceInsight(
+      {required final String id,
+      required final InsightType type,
+      required final String title,
+      required final String description,
+      required final InsightPriority priority,
+      required final DateTime generatedAt,
+      final List<String>? recommendations,
+      final Map<String, dynamic>? relatedData,
+      final String? trend,
+      final double? changePercentage}) = _$PerformanceInsightImpl;
 
   factory _PerformanceInsight.fromJson(Map<String, dynamic> json) =
       _$PerformanceInsightImpl.fromJson;

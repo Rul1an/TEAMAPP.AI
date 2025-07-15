@@ -221,9 +221,8 @@ class RBACDemoWidget extends ConsumerWidget {
                 backgroundColor: action.isEnabled
                     ? Colors.blue.shade100
                     : Colors.grey.shade200,
-                foregroundColor: action.isEnabled
-                    ? Colors.blue.shade800
-                    : Colors.grey,
+                foregroundColor:
+                    action.isEnabled ? Colors.blue.shade800 : Colors.grey,
               ),
             ),
           )
@@ -232,114 +231,116 @@ class RBACDemoWidget extends ConsumerWidget {
   }
 
   List<PermissionInfo> _getPermissionsForRole(String? role) => [
-    const PermissionInfo('Dashboard bekijken', hasAccess: true), // Everyone
-    const PermissionInfo('Spelers bekijken', hasAccess: true), // Everyone
-    const PermissionInfo('Training bekijken', hasAccess: true), // Everyone
-    const PermissionInfo('Wedstrijden bekijken', hasAccess: true), // Everyone
-    const PermissionInfo('---MANAGEMENT---', hasAccess: false), // Separator
-    PermissionInfo(
-      'Spelers beheren',
-      hasAccess: PermissionService.canManagePlayers(role),
-    ),
-    PermissionInfo(
-      'Spelers bewerken',
-      hasAccess: PermissionService.canEditPlayers(role),
-    ),
-    PermissionInfo(
-      'Training beheren',
-      hasAccess: PermissionService.canManageTraining(role),
-    ),
-    PermissionInfo(
-      'Training aanmaken',
-      hasAccess: PermissionService.canCreateTraining(role),
-    ),
-    PermissionInfo(
-      'Wedstrijden beheren',
-      hasAccess: PermissionService.canManageMatches(role),
-    ),
-    PermissionInfo(
-      'Exercise Library',
-      hasAccess: PermissionService.canManageExerciseLibrary(role),
-    ),
-    PermissionInfo(
-      'Field Diagram Editor',
-      hasAccess: PermissionService.canAccessFieldDiagramEditor(role),
-    ),
-    PermissionInfo(
-      'Exercise Designer',
-      hasAccess: PermissionService.canAccessExerciseDesigner(role),
-    ),
-    const PermissionInfo('---ADVANCED---', hasAccess: false), // Separator
-    PermissionInfo(
-      'Analytics bekijken',
-      hasAccess: PermissionService.canViewAnalytics(role),
-    ),
-    PermissionInfo(
-      'SVS toegang',
-      hasAccess: PermissionService.canAccessSVS(role, OrganizationTier.pro),
-    ),
-    PermissionInfo(
-      'Jaarplanning',
-      hasAccess: PermissionService.canAccessAnnualPlanning(role),
-    ),
-    PermissionInfo(
-      'Admin functies',
-      hasAccess: PermissionService.canAccessAdmin(role),
-    ),
-    const PermissionInfo('---STATUS---', hasAccess: false), // Separator
-    PermissionInfo(
-      '🔒 Alleen bekijken',
-      hasAccess: PermissionService.isViewOnlyUser(role),
-    ),
-  ];
+        const PermissionInfo('Dashboard bekijken', hasAccess: true), // Everyone
+        const PermissionInfo('Spelers bekijken', hasAccess: true), // Everyone
+        const PermissionInfo('Training bekijken', hasAccess: true), // Everyone
+        const PermissionInfo('Wedstrijden bekijken',
+            hasAccess: true,), // Everyone
+        const PermissionInfo('---MANAGEMENT---', hasAccess: false), // Separator
+        PermissionInfo(
+          'Spelers beheren',
+          hasAccess: PermissionService.canManagePlayers(role),
+        ),
+        PermissionInfo(
+          'Spelers bewerken',
+          hasAccess: PermissionService.canEditPlayers(role),
+        ),
+        PermissionInfo(
+          'Training beheren',
+          hasAccess: PermissionService.canManageTraining(role),
+        ),
+        PermissionInfo(
+          'Training aanmaken',
+          hasAccess: PermissionService.canCreateTraining(role),
+        ),
+        PermissionInfo(
+          'Wedstrijden beheren',
+          hasAccess: PermissionService.canManageMatches(role),
+        ),
+        PermissionInfo(
+          'Exercise Library',
+          hasAccess: PermissionService.canManageExerciseLibrary(role),
+        ),
+        PermissionInfo(
+          'Field Diagram Editor',
+          hasAccess: PermissionService.canAccessFieldDiagramEditor(role),
+        ),
+        PermissionInfo(
+          'Exercise Designer',
+          hasAccess: PermissionService.canAccessExerciseDesigner(role),
+        ),
+        const PermissionInfo('---ADVANCED---', hasAccess: false), // Separator
+        PermissionInfo(
+          'Analytics bekijken',
+          hasAccess: PermissionService.canViewAnalytics(role),
+        ),
+        PermissionInfo(
+          'SVS toegang',
+          hasAccess: PermissionService.canAccessSVS(role, OrganizationTier.pro),
+        ),
+        PermissionInfo(
+          'Jaarplanning',
+          hasAccess: PermissionService.canAccessAnnualPlanning(role),
+        ),
+        PermissionInfo(
+          'Admin functies',
+          hasAccess: PermissionService.canAccessAdmin(role),
+        ),
+        const PermissionInfo('---STATUS---', hasAccess: false), // Separator
+        PermissionInfo(
+          '🔒 Alleen bekijken',
+          hasAccess: PermissionService.isViewOnlyUser(role),
+        ),
+      ];
 
   List<QuickActionInfo> _getQuickActionsForRole(
     BuildContext context,
     String? role,
-  ) => [
-    QuickActionInfo(
-      'Dashboard',
-      Icons.dashboard,
-      isEnabled: true,
-      onPressed: () => context.go('/dashboard'),
-    ),
-    QuickActionInfo(
-      'Spelers',
-      Icons.people,
-      isEnabled: true,
-      onPressed: () => context.go('/players'),
-    ),
-    QuickActionInfo(
-      'Training',
-      Icons.fitness_center,
-      isEnabled: true,
-      onPressed: () => context.go('/training'),
-    ),
-    QuickActionInfo(
-      'Wedstrijden',
-      Icons.sports_soccer,
-      isEnabled: true,
-      onPressed: () => context.go('/matches'),
-    ),
-    QuickActionInfo(
-      'Analytics',
-      Icons.analytics,
-      isEnabled: PermissionService.canViewAnalytics(role),
-      onPressed: () => context.go('/analytics'),
-    ),
-    QuickActionInfo(
-      'SVS Dashboard',
-      Icons.track_changes,
-      isEnabled: PermissionService.canAccessSVS(role, OrganizationTier.pro),
-      onPressed: () => context.go('/svs'),
-    ),
-    QuickActionInfo(
-      'Admin Panel',
-      Icons.admin_panel_settings,
-      isEnabled: PermissionService.canAccessAdmin(role),
-      onPressed: () => context.go('/admin'),
-    ),
-  ];
+  ) =>
+      [
+        QuickActionInfo(
+          'Dashboard',
+          Icons.dashboard,
+          isEnabled: true,
+          onPressed: () => context.go('/dashboard'),
+        ),
+        QuickActionInfo(
+          'Spelers',
+          Icons.people,
+          isEnabled: true,
+          onPressed: () => context.go('/players'),
+        ),
+        QuickActionInfo(
+          'Training',
+          Icons.fitness_center,
+          isEnabled: true,
+          onPressed: () => context.go('/training'),
+        ),
+        QuickActionInfo(
+          'Wedstrijden',
+          Icons.sports_soccer,
+          isEnabled: true,
+          onPressed: () => context.go('/matches'),
+        ),
+        QuickActionInfo(
+          'Analytics',
+          Icons.analytics,
+          isEnabled: PermissionService.canViewAnalytics(role),
+          onPressed: () => context.go('/analytics'),
+        ),
+        QuickActionInfo(
+          'SVS Dashboard',
+          Icons.track_changes,
+          isEnabled: PermissionService.canAccessSVS(role, OrganizationTier.pro),
+          onPressed: () => context.go('/svs'),
+        ),
+        QuickActionInfo(
+          'Admin Panel',
+          Icons.admin_panel_settings,
+          isEnabled: PermissionService.canAccessAdmin(role),
+          onPressed: () => context.go('/admin'),
+        ),
+      ];
 
   String _getRoleDisplayName(String? role) {
     switch (role) {

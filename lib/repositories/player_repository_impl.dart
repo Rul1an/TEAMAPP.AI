@@ -20,8 +20,8 @@ class PlayerRepositoryImpl implements PlayerRepository {
   PlayerRepositoryImpl({
     required SupabasePlayerDataSource remote,
     required HivePlayerCache cache,
-  }) : _remote = remote,
-       _cache = cache;
+  })  : _remote = remote,
+        _cache = cache;
 
   final SupabasePlayerDataSource _remote;
   final HivePlayerCache _cache;
