@@ -598,7 +598,7 @@ class _TrainingAttendanceScreenState
         players,
       ),
     );
-    if (!context.mounted) return;
+    if (!mounted) return;
     await SharePdfUtils.sharePdf(bytes, 'training_${training.id}.pdf', context);
   }
 }

@@ -22,4 +22,9 @@ jobs:
           npm install --global lefthook # ensure binary present
           # Lefthook requires at least one file argument in CI
           FILES=$(git ls-files '*.dart' '*.yaml' '*.yml')
-          npx lefthook run pre-commit --files $FILES
+          # Build command with repeated --file flags (lefthook >=1.12)
+          CMD="npx lefthook run pre-commit"
+          for f in $FILES; do
+            CMD="$CMD --file $f"
+          done
+          eval "$CMD"

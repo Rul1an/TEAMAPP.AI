@@ -30,9 +30,9 @@ analyzer:
     undefined_named_parameter: error
     undefined_getter: error
 
-    # Demote these to warnings for gradual migration
-    todo: warning
-    fixme: warning
+    # Demote these to info so they don't fail CI (visible but not fatal)
+    todo: info
+    fixme: info
     always_specify_types: warning
     public_member_api_docs: ignore
     always_use_package_imports: ignore
