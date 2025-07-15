@@ -20,4 +20,6 @@ jobs:
       - name: Run Lefthook hooks
         run: |
           npm install --global lefthook # ensure binary present
-          npx lefthook run pre-commit
+          # Lefthook requires at least one file argument in CI
+          FILES=$(git ls-files '*.dart' '*.yaml' '*.yml')
+          npx lefthook run pre-commit --files $FILES
