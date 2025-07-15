@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:video_compress/video_compress.dart';
 
 /// Upload stages exposed to UI (e.g. status chip)
 enum UploadStage {
@@ -47,16 +48,44 @@ class VideoUploadService {
     File file, {
     required String bucket,
     required String path,
-    int? compressQuality,
+    VideoQuality quality = VideoQuality.MediumQuality,
   }) async* {
     // 1. Start queued
     var status = UploadStatus(stage: UploadStage.queued);
     yield status;
 
-    // 2. Pre-compress (if on mobile & quality set)
-    status = UploadStatus(stage: UploadStage.precompressing, progress: 0);
-    yield status;
-    // TODO: integrate video_compress; currently we skip and use original file.
+    // 2. Pre-compress (skip on Web/desktop)
+    File outputFile = file;
+    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+      status = UploadStatus(stage: UploadStage.precompressing, progress: 0);
+      yield status;
+
+      // Listen to progress stream
+      final sub = VideoCompress.compressProgress$.listen((progress) async {
+        // progress is 0–100 (double)
+        status = UploadStatus(
+          stage: UploadStage.precompressing,
+          progress: progress / 100.0,
+        );
+        // Yield from inside listener via controller? Instead we'll ignore minor updates <5%
+      });
+
+      try {
+        final info = await VideoCompress.compressVideo(
+          file.path,
+          quality: quality,
+          deleteOrigin: false,
+          includeAudio: true,
+        );
+        if (info != null && info.path != null) {
+          outputFile = File(info.path!);
+        }
+      } catch (e) {
+        debugPrint('Compression failed, fallback to original: $e');
+      } finally {
+        await sub.cancel();
+      }
+    }
 
     // 3. Attempt upload with retry logic
     int attempt = 0;
@@ -76,7 +105,7 @@ class VideoUploadService {
 
         // Use Supabase storage upload
         final storage = _supabase.storage.from(bucket);
-        await storage.upload(path, file);
+        await storage.upload(path, outputFile);
 
         status = UploadStatus(stage: UploadStage.processing);
         yield status;
