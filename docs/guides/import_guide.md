@@ -12,7 +12,7 @@ Deze gids beschrijft hoe je als admin bulk wedstrijdroosters kunt importeren via
 2. **Preview** – Controleer de gemarkeerde rijen (groen = nieuw, geel = duplicate, rood = fout).
 3. **Bevestigen** – Sla de nieuwe wedstrijden op en download optioneel een error-rapport.
 
-> Demo-video: [Loom (2 min)](https://loom.com/share/PLACEHOLDER) – laat zien hoe je in <120 s een volledig seizoens­rooster importeert.
+> Demo-video: [Loom (2 min)](LOOM_URL_PLACEHOLDER) – laat zien hoe je in <120 s een volledig seizoens­rooster importeert.
 
 ---
 

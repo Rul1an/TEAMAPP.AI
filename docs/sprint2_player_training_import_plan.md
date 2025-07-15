@@ -16,7 +16,7 @@
 | 4 | Import services | `PlayerRosterImportService`, `TrainingSessionImportService` | ✅ Completed |
 | 5 | UI Wizard integration | Re-usable Wizard step (file → preview → confirm) | ✅ Completed |
 | 6 | Widget & integration tests | `integration_test/import_players_flow_test.dart` | ✅ Completed |
-| 7 | Docs & Demo | Update `import_guide.md` + Loom demo | ⏳ In Progress |
+| 7 | Docs & Demo | Update `import_guide.md` + Loom demo | ✅ Completed |
 
 Legend: ✅ = Done, ⏳ = In Progress, 🔲 = Not started
 
