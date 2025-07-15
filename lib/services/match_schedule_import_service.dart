@@ -14,7 +14,7 @@ import '../utils/duplicate_detector.dart';
 import '../core/result.dart';
 import '../parsers/match_schedule_csv_parser.dart';
 import '../models/dto/match_schedule_dto.dart';
-import '../utils/streaming_csv_parser.dart';
+import '../utils/streaming_csv_parser.dart' as sp;
 
 /// State of a row during preview – used by the wizard UI to colour-code rows.
 enum ImportRowState { newRecord, duplicate, error }
@@ -60,13 +60,13 @@ class MatchScheduleImportService {
     final csvString = utf8.decode(bytes);
 
     final parser = MatchScheduleCsvParser();
-    ParseResult<MatchScheduleDto> parseResult;
+    var parseResult;
 
     final lineCount = '\n'.allMatches(csvString).length + 1;
     if (lineCount > 5000) {
       // Use streaming parser for large files to avoid UI jank.
-      parseResult = await StreamingCsvParser.parse(bytes,
-          mapper: parser.mapRow as MatchScheduleDto? Function(Map<String,String>),
+      parseResult = await sp.StreamingCsvParser.parse<MatchScheduleDto>(bytes,
+          mapper: (m) => parser.mapRow(m),
           notifyEveryLines: 1000);
     } else {
       parseResult = parser.parse(csvString);
