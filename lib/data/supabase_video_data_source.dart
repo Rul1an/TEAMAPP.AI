@@ -55,6 +55,8 @@ class SupabaseVideoDataSource {
       'file_size': await file.length(),
       'duration': 0, // will be updated later by metadata extractor
       'status': ProcessingStatus.ready.name,
+      'visibility': VideoVisibility.org.name,
+      'allowed_roles': ['bestuurder', 'hoofdcoach', 'assistent_coach'],
     }..removeWhere((_, v) => v == null);
 
     final inserted = await _supabase.from(_table).insert(row).select().single();

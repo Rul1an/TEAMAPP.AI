@@ -2,6 +2,8 @@ enum VideoType { match, training, highlight, tutorial }
 
 enum ProcessingStatus { uploading, ready, failed, transcoding }
 
+enum VideoVisibility { private, org, publicHighlight }
+
 /// Represents an uploaded video (match footage, training demo, etc.).
 ///
 /// Mirrors the `videos` table in Supabase (see docs/specs/video_module_spec.md).
@@ -22,6 +24,8 @@ class Video {
     this.metadata,
     this.matchId,
     this.trainingId,
+    this.visibility,
+    this.allowedRoles,
   });
 
   factory Video.fromJson(Map<String, dynamic> json) => Video(
@@ -40,6 +44,8 @@ class Video {
         metadata: json['metadata'] as Map<String, dynamic>?,
         matchId: json['match_id'] as String?,
         trainingId: json['training_id'] as String?,
+        visibility: _videoVisibilityFromString(json['visibility'] as String?),
+        allowedRoles: json['allowed_roles'] as List<String>?,
       );
 
   final String id;
@@ -64,6 +70,9 @@ class Video {
   final String? matchId;
   final String? trainingId;
 
+  final VideoVisibility? visibility;
+  final List<String>? allowedRoles;
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'org_id': orgId,
@@ -80,6 +89,8 @@ class Video {
         'metadata': metadata,
         'match_id': matchId,
         'training_id': trainingId,
+        'visibility': visibility?.name,
+        'allowed_roles': allowedRoles,
       };
 
   Video copyWith({
@@ -98,6 +109,8 @@ class Video {
     Map<String, dynamic>? metadata,
     String? matchId,
     String? trainingId,
+    VideoVisibility? visibility,
+    List<String>? allowedRoles,
   }) =>
       Video(
         id: id ?? this.id,
@@ -115,6 +128,8 @@ class Video {
         metadata: metadata ?? this.metadata,
         matchId: matchId ?? this.matchId,
         trainingId: trainingId ?? this.trainingId,
+        visibility: visibility ?? this.visibility,
+        allowedRoles: allowedRoles ?? this.allowedRoles,
       );
 
   static VideoType _videoTypeFromString(String? value) {
@@ -128,6 +143,13 @@ class Video {
     return ProcessingStatus.values.firstWhere(
       (e) => e.name == value,
       orElse: () => ProcessingStatus.ready,
+    );
+  }
+
+  static VideoVisibility _videoVisibilityFromString(String? value) {
+    return VideoVisibility.values.firstWhere(
+      (e) => e.name == value,
+      orElse: () => VideoVisibility.private,
     );
   }
 }
