@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 // Project imports:
 import '../models/player.dart';
 import '../repositories/player_repository.dart';
+import '../utils/duplicate_detector.dart';
 
 class ImportService {
   ImportService(this._playerRepository);
@@ -105,6 +106,20 @@ class ImportService {
     var skipped = 0;
     final errors = <String>[];
 
+    // Fetch existing players once to seed duplicate detection
+    final existingPlayersResult = await _playerRepository.getAll();
+    final existingPlayers = existingPlayersResult.when(
+      success: (players) => players,
+      failure: (_) => <Player>[],
+    );
+
+    final existingHashes = existingPlayers
+        .map((p) => _playerHash(p.firstName, p.lastName, p.birthDate))
+        .toSet();
+
+    final duplicateDetector =
+        DuplicateDetector<String>(initialHashes: existingHashes);
+
     for (var i = 0; i < rows.length; i++) {
       try {
         final row = rows[i];
@@ -116,11 +131,23 @@ class ImportService {
           continue;
         }
 
+        final firstName = row[0].toString().trim();
+        final lastName = row[1].toString().trim();
+        final birthDate = _parseDate(row[3].toString());
+
+        // Duplicate detection
+        final playerKey = _playerHash(firstName, lastName, birthDate);
+        if (duplicateDetector.isDuplicate(playerKey)) {
+          errors.add('Rij ${i + 2}: Dubbele speler – overgeslagen');
+          skipped++;
+          continue;
+        }
+
         final player = Player()
-          ..firstName = row[0].toString().trim()
-          ..lastName = row[1].toString().trim()
+          ..firstName = firstName
+          ..lastName = lastName
           ..jerseyNumber = int.tryParse(row[2].toString()) ?? 0
-          ..birthDate = _parseDate(row[3].toString())
+          ..birthDate = birthDate
           ..position = _parsePosition(row[4].toString())
           ..height = double.tryParse(row[5].toString()) ?? 0
           ..weight = double.tryParse(row[6].toString()) ?? 0
@@ -210,6 +237,10 @@ class ImportService {
     }
 
     return PreferredFoot.right; // Default
+  }
+
+  String _playerHash(String firstName, String lastName, DateTime birthDate) {
+    return '${firstName.trim().toLowerCase()}|${lastName.trim().toLowerCase()}|${DateFormat('yyyy-MM-dd').format(birthDate)}';
   }
 
   // Generate template for player import

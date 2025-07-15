@@ -31,7 +31,7 @@ _Last updated: 2025-07-16_
 | 1.3 | Predictive analytics PoC (form prediction) | AI Squad | Aug Wk 4 |
 | 1.4 | Import Match Schedules (CSV/XLS) | Import Guild | Sep Wk 1 |
 | 1.5 | Import Training Plans | Import Guild | Sep Wk 2 |
-| 1.6 | Bulk operations UI | Import Guild | Sep Wk 2 |
+| 1.6 | Bulk operations UI ([Sprint 3 plan](../sprint3_bulk_edit_merge_plan.md)) | Import Guild | Sep Wk 2 |
 | 1.7 | Duplicate-detection on import (complete) | Import Guild | Sep Wk 2 |
 
 Quality Gates: CI green; coverage ≥ 45 %; no file > 300 LOC.
