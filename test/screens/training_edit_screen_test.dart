@@ -58,14 +58,6 @@ final _dummy = () {
   return t;
 }();
 
-Widget _wrapWithRouter(Widget child) => ProviderScope(
-      child: MaterialApp.router(
-        routerConfig: GoRouter(
-          routes: [GoRoute(path: '/', builder: (_, __) => child)],
-        ),
-      ),
-    );
-
 void main() {
   late _MockTrainingRepo repo;
 

@@ -598,6 +598,7 @@ class _TrainingAttendanceScreenState
         players,
       ),
     );
+    // ignore: use_build_context_synchronously
     await SharePdfUtils.sharePdf(bytes, 'training_${training.id}.pdf', context);
   }
 }
