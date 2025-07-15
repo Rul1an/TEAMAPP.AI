@@ -44,6 +44,14 @@ jobs:
         dart pub global activate melos 2.9.0
         echo "${HOME}/.pub-cache/bin" >> $GITHUB_PATH
 
+    - name: Cache pub dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.pub-cache
+          ~/.dart_tool
+        key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+
     - name: Install dependencies
       run: |
         # Check if jo17_tactical_manager exists and contains a pubspec; prefer it over workspace-level pubspec.yaml
@@ -68,6 +76,15 @@ jobs:
           melos bootstrap
         else
           echo "No melos.yaml found – skipping bootstrap."
+        fi
+
+    - name: Generate code (build_runner)
+      run: |
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+          cd jo17_tactical_manager
+          flutter pub run build_runner build --delete-conflicting-outputs --verbose
+        elif [ -f "pubspec.yaml" ]; then
+          flutter pub run build_runner build --delete-conflicting-outputs --verbose
         fi
 
     - name: Run tests with coverage
@@ -109,6 +126,13 @@ jobs:
           exit 1
         fi
       continue-on-error: true
+
+    - name: Dart Code Metrics Analysis
+      run: |
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+          cd jo17_tactical_manager
+        fi
+        dart run dcm analyze lib --fatal-style --fatal-warnings
 
     - name: Build web
       run: |
