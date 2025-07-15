@@ -81,6 +81,10 @@ class PermissionService {
       userRole == 'assistent' ||
       userRole == 'admin';
 
+  /// Check if user can manage videos
+  static bool canManageVideos(String? userRole) =>
+      userRole == 'bestuurder' || userRole == 'hoofdcoach' || userRole == 'analist' || userRole == 'admin';
+
   /// Check if user is a player (view-only access)
   static bool isPlayer(String? userRole) => userRole == 'speler';
 

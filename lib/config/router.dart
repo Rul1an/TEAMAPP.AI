@@ -34,6 +34,8 @@ import '../screens/training_sessions/field_diagram_editor_screen.dart';
 import '../screens/training_sessions/session_builder/session_builder_view.dart';
 import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
+import '../screens/video/video_grid_screen.dart';
+import '../screens/video/video_detail_screen.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
       initialLocation: '/auth',
@@ -262,6 +264,21 @@ GoRouter createRouter(Ref ref) => GoRouter(
               name: 'admin-panel',
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: AdminPanelScreen()),
+            ),
+            GoRoute(
+              path: '/videos',
+              name: 'videos',
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: VideoGridScreen()),
+              routes: [
+                GoRoute(
+                  path: ':videoId',
+                  name: 'video-detail',
+                  builder: (context, state) => VideoDetailScreen(
+                    videoId: state.pathParameters['videoId'] ?? '',
+                  ),
+                ),
+              ],
             ),
           ],
         ),
