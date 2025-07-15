@@ -38,6 +38,12 @@ jobs:
         channel: 'stable'
         cache: true
 
+    # Install Melos CLI globally so that `melos bootstrap` is available
+    - name: Install Melos CLI
+      run: |
+        dart pub global activate melos 2.9.0
+        echo "${HOME}/.pub-cache/bin" >> $GITHUB_PATH
+
     - name: Install dependencies
       run: |
         # Check if jo17_tactical_manager exists and contains a pubspec; prefer it over workspace-level pubspec.yaml
