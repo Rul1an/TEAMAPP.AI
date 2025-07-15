@@ -80,7 +80,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
                 Expanded(
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: Colors.green[50],
+                      color: const Color(0xFFE8F5E9), // Colors.green.shade50
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(color: Colors.green[200]!),
                     ),
@@ -187,7 +187,7 @@ class FormationPreviewPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Draw field background
     final fieldPaint = Paint()
-      ..color = Colors.green[100]
+      ..color = const Color(0xFFC8E6C9) // Colors.green.shade100
       ..style = PaintingStyle.fill;
 
     final fieldRect = Rect.fromLTWH(0, 0, size.width, size.height);

@@ -88,6 +88,10 @@ class Match {
   }
   String id = '';
 
+  // Owning team identifier. Required for analytics & predictions.
+  // TODO(team): Populate with real value when integrating Supabase.
+  late String teamId;
+
   late DateTime date;
   late String opponent;
 

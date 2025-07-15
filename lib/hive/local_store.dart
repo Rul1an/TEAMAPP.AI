@@ -61,10 +61,8 @@ class LocalStore<T> {
 
     if (storedVersion == _schemaVersion) return;
 
-    // Run optional migration
-    if (_onUpgrade != null) {
-      await _onUpgrade(storedVersion, _schemaVersion);
-    }
+    // Execute custom migration logic if provided.
+    await _onUpgrade?.call(storedVersion, _schemaVersion);
 
     // Clear cached data for incompatible schema by default
     await _cache.clear();

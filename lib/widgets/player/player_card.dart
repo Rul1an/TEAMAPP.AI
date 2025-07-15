@@ -86,7 +86,7 @@ class PlayerCard extends ConsumerWidget {
                                 future: _getPerformanceData(ref, player.id),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    final data = snapshot.data;
+                                    final data = snapshot.data ?? <String, dynamic>{};
                                     return PerformanceBadge(
                                       averageRating:
                                           data['averageRating'] as double?,

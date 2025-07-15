@@ -132,8 +132,11 @@ class _EnhancedExerciseLibraryScreenState
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue[600], Colors.blue[400]],
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF1E88E5), // Colors.blue.shade600
+            Color(0xFF42A5F5), // Colors.blue.shade400
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -276,7 +279,7 @@ class _EnhancedExerciseLibraryScreenState
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.1),
+                    color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(icon, color: color, size: 24),

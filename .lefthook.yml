@@ -4,6 +4,7 @@ pre-commit:
   commands:
     format:
       description: "Dart formatter (staged)"
+      # Only format staged Dart source files
       run: dart format --line-length=100 {staged_files}
     import_sorter:
       description: "Sort Dart imports (staged)"
@@ -13,7 +14,8 @@ pre-commit:
       run: dart analyze --fatal-infos
     dcm:
       description: "Dart Code Metrics – style & performance"
-      run: dcm analyze --fatal-style --fatal-performance ./
+      # Run Dart Code Metrics on the staged Dart files
+      run: dart run dcm analyze --fatal-style --fatal-warnings {staged_files}
 
 commit-msg:
   scripts:
