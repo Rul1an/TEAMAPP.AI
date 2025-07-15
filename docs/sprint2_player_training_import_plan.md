@@ -10,11 +10,11 @@
 
 | # | Deliverable | Artefact | DoD criteria |
 |---:|-------------|----------|--------------|
-| 1 | Player CSV/XLSX parser | `PlayerRosterCsvParser` + unit-tests | ≥ 95 % parsing coverage; invalid rows flagged |
-| 2 | Training Session parser | `TrainingSessionCsvParser` + unit-tests | Supports split-day sessions; ≥ 95 % coverage |
-| 3 | Duplicate detection (players) | Configurable hash (`firstName+lastName+birthDate`) – reuse utility | ≤ 0.5 % false positives in test-dataset |
-| 4 | Import services | `PlayerRosterImportService`, `TrainingSessionImportService` | Preview DTO + persist; seeded with existing repos |
-| 5 | UI Wizard integration | Re-usable Wizard step (file → preview → confirm) | Visual parity with match-wizard; responsive mobile |
+| 1 | Player CSV/XLSX parser | `PlayerRosterCsvParser` + unit-tests | ✅ Completed |
+| 2 | Training Session parser | `TrainingSessionCsvParser` + unit-tests | ✅ Completed |
+| 3 | Duplicate detection (players) | Configurable hash (`firstName+lastName+birthDate`) – reuse utility | ✅ Completed |
+| 4 | Import services | `PlayerRosterImportService`, `TrainingSessionImportService` | ✅ Completed |
+| 5 | UI Wizard integration | Re-usable Wizard step (file → preview → confirm) | ✅ Completed |
 | 6 | Widget & integration tests | `integration_test/import_players_flow_test.dart` | CI green on first run |
 | 7 | Docs & Demo | Update `import_guide.md` + Loom demo | Docs published; demo link shared in Slack |
 
