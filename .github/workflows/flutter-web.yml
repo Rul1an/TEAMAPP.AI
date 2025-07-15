@@ -56,8 +56,10 @@ jobs:
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
+          flutter test --coverage
           ./coverage.sh
         elif [ -f "pubspec.yaml" ]; then
+          flutter test --coverage
           ./coverage.sh
         else
           echo "ERROR: Could not find pubspec.yaml"
