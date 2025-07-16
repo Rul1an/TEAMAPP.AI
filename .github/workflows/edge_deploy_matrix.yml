@@ -1,0 +1,71 @@
+name: 🌐 Edge Multi-Region Deploy
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'edge_middleware/**'
+      - '.github/workflows/edge_deploy_matrix.yml'
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  build:
+    name: 🛠️ Build Edge Bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies (if any)
+        run: |
+          if [ -f package.json ]; then
+            npm ci --ignore-scripts
+          else
+            echo "No package.json found – skipping npm install."
+          fi
+
+      - name: 🔧 Bundle Edge Code
+        run: |
+          mkdir -p dist
+          tar -czf dist/edge_middleware.tar.gz edge_middleware
+          echo "Created dist/edge_middleware.tar.gz"
+
+      - name: 📤 Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: edge-bundle
+          path: dist/edge_middleware.tar.gz
+
+  deploy:
+    name: 🚀 Deploy to ${{ matrix.region }}
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        region: [eu-west-1, us-east-1, ap-southeast-1]
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 📥 Download Edge Bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: edge-bundle
+          path: dist
+
+      - name: 🌐 Deploy
+        env:
+          REGION: ${{ matrix.region }}
+        run: |
+          echo "Deploying edge bundle to $REGION ..."
+          # TODO: Replace with real deployment CLI, e.g. `wrangler publish --env=$REGION`
+          sleep 3
+          echo "✅ Deployed to $REGION"
