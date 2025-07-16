@@ -24,9 +24,9 @@ Verhoog de **betrouwbaarheid** van het video-platform naar **≥ 99,95 % availab
 | **VEO-122** | 1 | 4 | RDS PITR (35 d) Terraform module | DB | ✅ Done |
 | **VEO-123** | 1 | 4 | Disaster-Recovery runbook | Platform | ✅ Done |
 | **VEO-124** | 1 | 5 | Security-scan PR-gate (`snyk`) | Security | ✅ Done |
-| **VEO-125** | 2 | 4 | **SLO-dashboard** (availability & latency) + _CloudWatch Synthetics_ | Observability | 🔄 In progress |
-| **VEO-126** | 2 | 3 | **Alerting-policy** (PagerDuty) – error budget burn | Observability | 🔄 In progress |
-| **VEO-127** | 2 | 5 | **Dependency chaos** – Kinesis outage simulator | SRE | 🔄 In progress |
+| **VEO-125** | 2 | 4 | **SLO-dashboard** (availability & latency) + _CloudWatch Synthetics_ | Observability | ✅ Done |
+| **VEO-126** | 2 | 3 | **Alerting-policy** (PagerDuty) – error budget burn | Observability | ✅ Done |
+| **VEO-127** | 2 | 5 | **Dependency chaos** – Kinesis outage simulator | SRE | ✅ Done |
 | **VEO-128** | 3 | 4 | **CPU/Memory stress** experiment (FIS) | SRE | ⏳ Planned |
 | **VEO-129** | 3 | 3 | **Auto-rollback** integ. in blue/green deploy (error budget) | Platform | ⏳ Planned |
 | **VEO-130** | 3 | 2 | **Chaos scorecard** in PR comment bot | DevEx | ⏳ Planned |
@@ -36,7 +36,7 @@ _Totaal story-punten: 38_
 ## 4. Tijdlijn
 ```
 Week 1 │■■■■■ Done (VEO-119 … 124)
-Week 2 │■■■□□ In-progress (VEO-125 … 127)
+Week 2 │■■■■■ Done (VEO-125 … 127)
 Week 3 │□□□□ Planned (VEO-128 … 130)
 ```
 
