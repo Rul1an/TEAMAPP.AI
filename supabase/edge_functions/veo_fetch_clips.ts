@@ -1,5 +1,7 @@
 import { serve } from "https://deno.land/x/supabase_functions@v1.0.3/mod.ts";
 import { veoGraphQL } from "./_shared/veo_client.ts";
+import { tracer } from "./_shared/tracing.ts";
+import { SpanStatusCode } from "npm:@opentelemetry/api@1";
 
 // Edge Function: VEO-101 – Fetch highlights/clip list from Veo GraphQL API.
 // 
@@ -26,39 +28,53 @@ interface Clip {
 }
 
 serve(async (req) => {
-  if (req.method !== "POST") {
-    return new Response("Method Not Allowed", { status: 405 });
-  }
-
-  let payload: RequestPayload;
-  try {
-    payload = await req.json();
-  } catch (_e) {
-    return new Response("Invalid JSON", { status: 400 });
-  }
-
-  const { matchId, teamId, seasonId } = payload;
-  if (!matchId && !teamId) {
-    return new Response("matchId or teamId required", { status: 400 });
-  }
-
-  try {
-    let clips: Clip[] = [];
-
-    if (matchId) {
-      clips = await fetchMatchHighlights(matchId);
-    } else if (teamId) {
-      clips = await fetchTeamHighlights(teamId, seasonId);
+  return await tracer.startActiveSpan("veo_fetch_clips", async (span) => {
+    if (req.method !== "POST") {
+      span.setStatus({ code: SpanStatusCode.ERROR, message: "405" });
+      span.end();
+      return new Response("Method Not Allowed", { status: 405 });
     }
 
-    return new Response(JSON.stringify({ clips }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (e) {
-    console.error("veo_fetch_clips error", e);
-    return new Response("Error fetching clips", { status: 500 });
-  }
+    let payload: RequestPayload;
+    try {
+      payload = await req.json();
+    } catch (_e) {
+      span.setStatus({ code: SpanStatusCode.ERROR, message: "Invalid JSON" });
+      span.end();
+      return new Response("Invalid JSON", { status: 400 });
+    }
+
+    const { matchId, teamId, seasonId } = payload;
+    if (!matchId && !teamId) {
+      span.setStatus({ code: SpanStatusCode.ERROR, message: "Missing params" });
+      span.end();
+      return new Response("matchId or teamId required", { status: 400 });
+    }
+
+    try {
+      let clips: Clip[] = [];
+
+      if (matchId) {
+        span.setAttribute("matchId", matchId);
+        clips = await fetchMatchHighlights(matchId);
+      } else if (teamId) {
+        span.setAttribute("teamId", teamId);
+        clips = await fetchTeamHighlights(teamId, seasonId);
+      }
+
+      span.end();
+      return new Response(JSON.stringify({ clips }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (e) {
+      span.setStatus({ code: SpanStatusCode.ERROR, message: String(e) });
+      span.recordException(e as Error);
+      span.end();
+      console.error("veo_fetch_clips error", e);
+      return new Response("Error fetching clips", { status: 500 });
+    }
+  });
 });
 
 async function fetchMatchHighlights(matchId: string): Promise<Clip[]> {
