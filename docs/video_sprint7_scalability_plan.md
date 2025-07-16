@@ -35,6 +35,7 @@
 * `billing_service/stripe_webhooks.ts`, `subscription_sync.ts`, `usage_collector.ts` (**in-progress – VEO-116**)
 * Terraform `storage_replication.tf` (multi-region + CMEK) (**✅ draft**) 
 * GDPR **SOP-document** (**✅ draft**)
+* `lib/services/feature_flag_service.dart` (**✅ implemented**)
 
 ---
 
@@ -51,7 +52,7 @@
 ## Best-Practices 2025 Checklist
 
 - [x] Latency-based routing met RUM-feedback
-- [ ] Feature-flags-as-data (zonder redeploy)
+- [x] Feature-flags-as-data (zonder redeploy)
 - [ ] Zero-trust mTLS tussen edge & storage
 - [ ] Publieke usage / SLA-dashboards
 
