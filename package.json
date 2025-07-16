@@ -10,6 +10,7 @@
   },
   "scripts": {
     "test": "vitest run",
-    "loadtest": "ts-node scripts/load_test_rate_limit.ts"
+    "loadtest": "ts-node scripts/load_test_rate_limit.ts",
+    "usage:collect": "ts-node billing_service/usage_collector.ts"
   }
 }

@@ -31,7 +31,8 @@
 * `edge_middleware/rate_limit.ts` — LRU cache + token-bucket (**✅ implemented**)
 * Workflow `edge_deploy_matrix.yml` — _build once, deploy per regio_ (**✅ implemented**)
 * Prometheus-alert `veo.rate_limited_total` (**✅ added**)
-* `billing_service/stripe_webhooks.ts` + subscription-sync worker (**⏳ worker WIP**) 
+* `scripts/load_test_rate_limit.ts` + workflow `edge-loadtest.yml` (**✅ implemented**)
+* `billing_service/stripe_webhooks.ts`, `subscription_sync.ts`, `usage_collector.ts` (**in-progress – VEO-116**)
 * Terraform `storage_replication.tf` (multi-region + CMEK) (**✅ draft**) 
 * GDPR **SOP-document** (**✅ draft**)
 
@@ -61,6 +62,6 @@
 | Week | Focus |
 |------|-------|
 | 1 | (✅) Stories **VEO-113**, **VEO-114** kick-off & rate-limit spike |
-| 2 | (in-progress) Story **VEO-115** implementatie + load-test |
-| 3 | Story **VEO-116** billing, start legal review |
+| 2 | (✅) Story **VEO-115** middleware, unit- & load-tests |
+| 3 | (in-progress) Story **VEO-116** billing, start legal review |
 | 4 | Stories **VEO-117**, **VEO-118**, hardening & pen-tests |
