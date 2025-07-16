@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: eu-west-1
-      FIS_TEMPLATE_ID: ${{ secrets.FIS_TEMPLATE_ID }}
+      FIS_TEMPLATE_IDS: ${{ secrets.FIS_TEMPLATE_IDS }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,18 +29,21 @@ jobs:
         id: fis
         run: |
           set -euo pipefail
-          echo "Starting FIS experiment $FIS_TEMPLATE_ID"
-          experiment_id=$(aws fis start-experiment --experiment-template-id "$FIS_TEMPLATE_ID" --query 'experiment.id' --output text)
-          echo "experiment_id=$experiment_id" >> $GITHUB_OUTPUT
+          IFS=',' read -ra templates <<< "$FIS_TEMPLATE_IDS"
+          for tpl in "${templates[@]}"; do
+            echo "Starting FIS experiment $tpl"
+            experiment_id=$(aws fis start-experiment --experiment-template-id "$tpl" --query 'experiment.id' --output text)
+            echo "experiment_id=$experiment_id" >> $GITHUB_OUTPUT
 
-          # Poll status (max 10 min)
-          for i in {1..60}; do
-            status=$(aws fis get-experiment --id "$experiment_id" --query 'experiment.state.status' --output text)
-            echo "[$i] status=$status"
-            [[ "$status" == "completed" ]] && break
-            [[ "$status" == "stopped" ]] && {
-              echo "Experiment stopped prematurely"; exit 1; }
-            sleep 10
+            # Poll status (max 10 min)
+            for i in {1..60}; do
+              status=$(aws fis get-experiment --id "$experiment_id" --query 'experiment.state.status' --output text)
+              echo "[$i][$tpl] status=$status"
+              [[ "$status" == "completed" ]] && break
+              [[ "$status" == "stopped" ]] && {
+                echo "Experiment stopped prematurely"; exit 1; }
+              sleep 10
+            done
           done
 
       - name: Post Slack report
