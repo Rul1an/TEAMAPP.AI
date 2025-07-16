@@ -8,7 +8,7 @@ final smartPlaylistServiceProvider = Provider<SmartPlaylistService>((ref) {
 });
 
 final smartPlaylistProvider = FutureProvider.family
-    .autoDispose<VideoPlaylist, (String matchId, TacticalPattern pattern)>(
+    .autoDispose<Result<VideoPlaylist>, (String matchId, TacticalPattern pattern)>(
   (ref, tuple) async {
     final (matchId, pattern) = tuple;
     final service = ref.read(smartPlaylistServiceProvider);
