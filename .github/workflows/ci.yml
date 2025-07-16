@@ -42,3 +42,14 @@ jobs:
           fail_ci_if_error: true
           flags: flutter
           verbose: true
+
+  zap_scan:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.11.0
+        with:
+          target: 'https://staging.jo17.app'  # staging url
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a -J zap_report.json'

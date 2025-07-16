@@ -56,6 +56,7 @@ class VideoListItem extends ConsumerWidget {
                       builder: (_) => VideoPlayerScreen(
                         url: status.signedUrl!,
                         title: p.basename(file.path),
+                        path: status.path ?? '',
                       ),
                     ),
                   );
