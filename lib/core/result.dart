@@ -60,3 +60,7 @@ class CacheFailure extends AppFailure {
 class UnauthorizedFailure extends AppFailure {
   const UnauthorizedFailure() : super('Unauthorized');
 }
+
+class PlaylistGenerationFailure extends AppFailure {
+  const PlaylistGenerationFailure(super.message);
+}

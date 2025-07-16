@@ -34,6 +34,7 @@ import '../screens/training_sessions/field_diagram_editor_screen.dart';
 import '../screens/training_sessions/session_builder/session_builder_view.dart';
 import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
+import '../screens/analysis/analysis_dashboard_screen.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
       initialLocation: '/auth',
@@ -242,6 +243,16 @@ GoRouter createRouter(Ref ref) => GoRouter(
               name: 'insights',
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: InsightsScreen()),
+            ),
+            GoRoute(
+              path: '/analysis-dashboard',
+              name: 'analysis-dashboard',
+              pageBuilder: (context, state) {
+                final matchId = state.uri.queryParameters['matchId'] ?? '';
+                return NoTransitionPage(
+                  child: AnalysisDashboardScreen(matchId: matchId),
+                );
+              },
             ),
 
             // Legacy deep-links – keep but hidden from nav
