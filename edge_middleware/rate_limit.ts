@@ -135,4 +135,4 @@ export async function rateLimitHandler(request: Request): Promise<Response> {
 }
 
 // Named export (useful for unit testing)
-export { TokenBucket, TIER_LIMITS, buckets };
+export { TokenBucket, TIER_LIMITS, buckets, LRUCache };
