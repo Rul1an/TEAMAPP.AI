@@ -4,6 +4,7 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.0"
+      configuration_aliases = [aws.us-east-1, aws.ap-southeast-1]
     }
   }
 }
@@ -33,52 +34,26 @@ resource "aws_s3_bucket" "primary" {
   bucket        = "veo-edge-storage-primary-${random_id.suffix.hex}"
   force_destroy = true
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm     = "aws:kms"
-        kms_master_key_id = aws_kms_key.edge_storage.arn
-      }
-    }
-  }
-
-  versioning {
-    enabled = true
-  }
-
-  # Replication configuration filled later by for_each loop
+  # SSE and versioning are defined in separate resources (provider v5+)
 }
 
 resource "random_id" "suffix" {
   byte_length = 4
 }
 
-locals {
-  replica_map = { for idx, reg in var.replica_regions : reg => idx }
-}
+# locals block removed – we iterate directly over `var.replica_regions`
 
 resource "aws_s3_bucket" "replica" {
-  for_each = local.replica_map
-  bucket   = "veo-edge-storage-${each.key}-${random_id.suffix.hex}"
-  provider = aws
+  for_each = toset(var.replica_regions)
 
-  lifecycle_rule {
-    enabled = true
-    abort_incomplete_multipart_upload_days = 7
+  bucket        = "veo-edge-storage-${each.key}-${random_id.suffix.hex}"
+  force_destroy = true
+
+  providers = {
+    aws = aws[each.key]
   }
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm     = "aws:kms"
-        kms_master_key_id = aws_kms_key.edge_storage.arn
-      }
-    }
-  }
-
-  versioning {
-    enabled = true
-  }
+  # SSE, versioning and lifecycle are defined in dedicated resources (provider v5+)
 }
 
 resource "aws_iam_role" "replication_role" {
@@ -160,3 +135,91 @@ resource "aws_s3_bucket_replication_configuration" "primary_replication" {
     }
   }
 }
+
+################################################################################
+#  NEW RESOURCES – provider v5-compatible bucket configuration
+################################################################################
+
+# Primary bucket configuration
+resource "aws_s3_bucket_server_side_encryption_configuration" "primary" {
+  bucket = aws_s3_bucket.primary.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.edge_storage.arn
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "primary" {
+  bucket = aws_s3_bucket.primary.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# Per-region KMS keys for replica buckets
+resource "aws_kms_key" "edge_storage_replica" {
+  for_each = toset(var.replica_regions)
+
+  description         = "KMS key for edge storage in ${each.key}"
+  enable_key_rotation = true
+
+  providers = {
+    aws = aws[each.key]
+  }
+}
+
+# Replica bucket configuration – SSE
+resource "aws_s3_bucket_server_side_encryption_configuration" "replica" {
+  for_each = aws_s3_bucket.replica
+
+  providers = {
+    aws = aws[each.key]
+  }
+
+  bucket = each.value.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.edge_storage_replica[each.key].arn
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "replica" {
+  for_each = aws_s3_bucket.replica
+
+  providers = {
+    aws = aws[each.key]
+  }
+
+  bucket = each.value.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "replica" {
+  for_each = aws_s3_bucket.replica
+
+  providers = {
+    aws = aws[each.key]
+  }
+
+  bucket = each.value.id
+
+  rule {
+    id     = "abort-multipart-uploads"
+    status = "Enabled"
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
+################################################################################

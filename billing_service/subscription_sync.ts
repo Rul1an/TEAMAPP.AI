@@ -5,7 +5,12 @@
  */
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET ?? '', {
+const STRIPE_SECRET = process.env.STRIPE_SECRET;
+if (!STRIPE_SECRET) {
+  throw new Error('Missing STRIPE_SECRET environment variable');
+}
+
+const stripe = new Stripe(STRIPE_SECRET, {
   apiVersion: '2023-10-16',
   typescript: true,
 });
