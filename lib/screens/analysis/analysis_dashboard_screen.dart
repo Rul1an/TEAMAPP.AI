@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
+import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 
 // Project imports:
 import '../../models/video_event.dart';
@@ -11,7 +12,6 @@ import '../../providers/video_event_cache_provider.dart';
 import '../../providers/video_event_detector_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/player_movement_analytics_provider.dart';
-import '../../widgets/heat_map_grid.dart';
 import '../../widgets/distance_bar_chart.dart';
 
 /// Displays the tactical events (goals, corners, fouls …) of a match in real
@@ -222,7 +222,19 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
                         const Text('Heat-map',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         const SizedBox(height: 8),
-                        HeatMapGrid(matrix: analytics.heatmap),
+                        HeatMap(
+                          datasets: _matrixToDataset(analytics.heatmap),
+                          colorMode: ColorMode.opacity,
+                          showColorTip: false,
+                          size: 16,
+                          defaultColor: Colors.grey.shade200,
+                          colorsets: const {
+                            1: Color(0xFF9be9a8),
+                            3: Color(0xFF40c463),
+                            6: Color(0xFF30a14e),
+                            9: Color(0xFF216e39),
+                          },
+                        ),
                         const SizedBox(height: 24),
                         const Text('Distance covered',
                             style: TextStyle(fontWeight: FontWeight.bold)),
@@ -243,4 +255,16 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
       },
     );
   }
+}
+
+Map<DateTime, int> _matrixToDataset(List<List<int>> matrix) {
+  final map = <DateTime, int>{};
+  var dayOffset = 0;
+  for (final row in matrix) {
+    for (final value in row) {
+      map[DateTime(2000).add(Duration(days: dayOffset))] = value;
+      dayOffset++;
+    }
+  }
+  return map;
 }
