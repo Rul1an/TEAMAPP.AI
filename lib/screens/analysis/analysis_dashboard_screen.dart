@@ -289,7 +289,7 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
                 data: (analytics) {
                   return SingleChildScrollView(
                     padding: const EdgeInsets.all(16),
-                    child: Column(
+                    child: FocusTraversalGroup(child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Heat-map',
@@ -312,13 +312,16 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
                         const Text('Distance covered',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         const SizedBox(height: 8),
-                        Center(
-                          child: DistanceBarChart(
-                            distanceMeters: analytics.distanceMeters,
+                        Semantics(
+                          label: 'Distance covered chart',
+                          child: Center(
+                            child: DistanceBarChart(
+                              distanceMeters: analytics.distanceMeters,
+                            ),
                           ),
                         ),
                       ],
-                    ),
+                    )),
                   );
                 },
               ),
