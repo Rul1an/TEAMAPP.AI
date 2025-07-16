@@ -1,0 +1,14 @@
+groups:
+  - name: stripe-billing
+    rules:
+      - alert: BillingDriftDetected
+        expr: abs(stripe_estimated_mrr_usd - prom_estimated_mrr_usd) > 50
+        for: 30m
+        labels:
+          severity: critical
+          team: billing
+        annotations:
+          summary: "Billing drift > $50 between Stripe and Prom metering"
+          description: |
+            Stripe reports MRR {{ $value }} USD different from Prom usage export.
+            Investigate UsageCollector and stripe-sync worker.
