@@ -1,5 +1,13 @@
 name: "🔎 CI Monitor"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  issues: write
+
 on:
   workflow_run:
     # Monitor all workflows in this repo; filter for completed events

@@ -1,5 +1,12 @@
 name: "👤 Profiles Migration & Tests"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main, develop]
@@ -55,18 +62,11 @@ jobs:
             echo "❌ profiles table missing after migrations" && exit 1
           fi
 
-      - name: 🎯 Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: ⚙️ Standard Flutter Setup (composite)
+        uses: ./.github/actions/setup-flutter
         with:
           flutter-version: "3.32.2"
-          channel: stable
-
-      - name: 📦 Install dependencies
-        working-directory: .
-        run: flutter pub get
-
-      - name: 🔄 Run Code Generation
-        run: flutter pub run build_runner build --delete-conflicting-outputs
+          project-path: .
 
       - name: 🧪 Run integration tests (profiles)
         working-directory: .
