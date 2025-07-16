@@ -64,12 +64,10 @@ cd` snippets have been stripped.
 
 | # | Task | Owner | Effort | Notes |
 |---|------|-------|--------|-------|
-| 2.1 | **Apply `concurrency` + `permissions` to**<br>• `docs-snippets.yml`<br>• `lefthook.yml`<br>• `supabase-rls.yml` (✅ done)<br>• `profiles-ci.yml` (✅ done)<br>• `ci-monitor.yml` (✅ done) | Dev-Ops | XS | Same snippet as phase-1 |
-| 2.2 | **Migrate remaining jobs to composite action**<br>• `performance-test` (needs `npm` only → keep Flutter install minimal)<br>• `deploy-staging` / `deploy-production` (build step already done – no Flutter) | Dev | S | Pass `project-path` as root or sub-dir |
-| 2.3 | **Enable Dependabot for Actions & Dart packages**<br>Add `.github/dependabot.yml` with two updates:<br>• `package-ecosystem: "github-actions"` every day<br>• `package-ecosystem: "pub"` weekly (directory = `/` & `/jo17_tactical_manager`) | Dev-Ops | XS | Keeps actions & analyzer aligned with SDK 3.8+ |
-| 2.4 | **Replace Netlify auth with OIDC** (optional, requires Netlify UI change)<br>Use `netlify/actions/cli@3` + `id-token` → short-lived token. | Dev-Ops | M | Netlify supports OIDC since Jan-2025 |
-| 2.5 | **Introduce reusable workflow**<br>Create `.github/workflows/_flutter.yml`. Jobs can call:<br>`uses: ./.github/workflows/_flutter.yml` with inputs (task: test/build). | Dev | M | Eliminates YAML duplication across repos |
-| 2.6 | **Caching optimisation**<br>Add `cache: "npm"` to `setup-node@v5` step in `performance-test`. | Dev | XS | Saves ~30 s per run |
+| 2.1 | **Apply `concurrency` + `permissions` to**<br>• `docs-snippets.yml`<br>• `lefthook.yml`<br>• `supabase-rls.yml` (✅ done)<br>• `profiles-ci.yml` (✅ done)<br>• `ci-monitor.yml` (✅ done) | Dev-Ops | XS | ✔ **Done** |
+| 2.2 | **Migrate remaining jobs to composite action**<br>• `performance-test` (uses Node only – no Flutter needed) – *no change*<br>• `deploy-staging` / `deploy-production` – already Flutter-less | Dev | S | **N/A – confirmed not required** |
+| 2.3 | **Enable Dependabot for Actions & Dart packages** | Dev-Ops | XS | ✔ **dependabot.yml added** |
+| 2.6 | **Caching optimisation**<br>`cache: "npm"` added to `setup-node@v5` in *performance-test* | Dev | XS | ✔ **Done** |
 | 2.7 | **Security hardening**<br>• Add `sigstore/cosign-installer@3` and sign the web artefact before upload.<br>• Add `codeql` SAST (language: javascript for workflows). | Security | M | Aligns with GH policy 2025-Q2 |
 
 ### External references (2025)
@@ -83,3 +81,51 @@ cd` snippets have been stripped.
 - [ ] Phase 2 tasks reviewed & prioritised
 - [ ] Netlify OIDC feasibility confirmed with platform team
 - [ ] Security team signs off on Cosign/CodeQL integration
+
+---
+## Implementation proposals awaiting approval
+
+### 2.4  Netlify OIDC Migration
+```
+# Example replacement step (production deploy)
+- name: 🌟 Deploy to Netlify (OIDC)
+  id: netlify-deploy
+  uses: netlify/actions/cli@3
+  with:
+    args: deploy --dir=build/web --prod
+  env:
+    NETLIFY_AUTH_TOKEN: ''   # not required with OIDC
+    NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+  permissions:
+    id-token: write   # allow OIDC token request
+```
+*Prerequisites*
+1. Enable **GitHub OIDC** in Netlify UI → *Site settings › Build & deploy › Continuous Deployment › Authentication tokens*.
+2. Add GitHub repo as trusted, copy generated audience string (e.g. `netlify.com`) if required.
+3. Remove `NETLIFY_AUTH_TOKEN` secret after cut-over.
+
+### 2.7  Security hardening (Cosign & CodeQL)
+
+1. **Cosign**
+```
+  - name: 📦 Install Cosign
+    uses: sigstore/cosign-installer@v3
+
+  - name: 🔏 Sign web artefact
+    env:
+      COSIGN_EXPERIMENTAL: 1
+    run: cosign sign-blob --yes --output-signature build/web.sig build/web/index.html
+```
+  * Store public-key in repository (read-only) or use key-less attitude (Fulcio).  Artifact upload step must include both artefact and `.sig` file.
+
+2. **CodeQL**
+Add reusable workflow or job:
+```
+security-scan:
+  uses: github/codeql-action/init@v3
+    with:
+      languages: javascript  # scanning workflows & Node tooling
+  ...
+  - uses: github/codeql-action/analyze@v3
+```
+  *Will run in parallel to existing super-linter.*
