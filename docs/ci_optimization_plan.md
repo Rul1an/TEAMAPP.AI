@@ -68,7 +68,7 @@ cd` snippets have been stripped.
 | 2.2 | **Migrate remaining jobs to composite action**<br>• `performance-test` (uses Node only – no Flutter needed) – *no change*<br>• `deploy-staging` / `deploy-production` – already Flutter-less | Dev | S | **N/A – confirmed not required** |
 | 2.3 | **Enable Dependabot for Actions & Dart packages** | Dev-Ops | XS | ✔ **dependabot.yml added** |
 | 2.6 | **Caching optimisation**<br>`cache: "npm"` added to `setup-node@v5` in *performance-test* | Dev | XS | ✔ **Done** |
-| 2.7 | **Security hardening**<br>• Add `sigstore/cosign-installer@3` and sign the web artefact before upload.<br>• Add `codeql` SAST (language: javascript for workflows). | Security | M | Aligns with GH policy 2025-Q2 |
+| 2.7 | **Security hardening**<br>Cosign signing + CodeQL SAST added | Security | M | ✔ **Implemented** |
 
 ### External references (2025)
 * GitHub Actions Concurrency docs (updated 2024-10)
@@ -80,7 +80,7 @@ cd` snippets have been stripped.
 ### Approval checklist
 - [ ] Phase 2 tasks reviewed & prioritised
 - [ ] Netlify OIDC feasibility confirmed with platform team
-- [ ] Security team signs off on Cosign/CodeQL integration
+- [ ] Security team signs off on Cosign/CodeQL reports after first run
 
 ---
 ## Implementation proposals awaiting approval

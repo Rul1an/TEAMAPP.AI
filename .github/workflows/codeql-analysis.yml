@@ -1,0 +1,35 @@
+name: "🛡️ CodeQL SAST"
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 4 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🛠 Initialise CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript  # analyse JS/Node + workflow files
+          config-file: .github/codeql/codeql-config.yml
+        continue-on-error: false
+
+      # No build step required – repo mainly Dart/JS scripts
+      - name: 🧮 Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:javascript
