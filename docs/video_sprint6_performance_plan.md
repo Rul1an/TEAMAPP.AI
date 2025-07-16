@@ -40,8 +40,8 @@
 
 ## Best Practices 2025 Checklist
 - [x] OTLP spans + exemplars voor performance metrics
-- [ ] Blue-green routed via cell-based architecture (Supabase Regions)
-- [ ] Zero-trust egress policy (GraphQL & OAuth hosts allow-list)
+- [x] Blue-green routed via cell-based architecture (Supabase Regions)
+- [x] Zero-trust egress policy (GraphQL & OAuth hosts allow-list)
 - [ ] SLA dashboards public via Grafana Cloud share-link
 
 ## Implementatie-details VEO-110

@@ -8,5 +8,6 @@ const httpClient = Deno.createHttpClient({
 });
 
 export function fetchWithClient(input: Request | URL | string, init?: RequestInit) {
+  assertHostAllowed(typeof input === "string" || input instanceof URL ? input : input.url);
   return fetch(input, { client: httpClient, ...init });
 }

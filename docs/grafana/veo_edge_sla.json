@@ -1,0 +1,17 @@
+{
+  "__dashboard": "Placeholder – import this into Grafana; edit via UI.",
+  "title": "Veo Edge SLA",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Cold Start P95 (ms)",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(deno_edge_cold_start_duration_bucket[1h]))",
+          "legendFormat": "95th %"
+        }
+      ]
+    }
+  ]
+}
