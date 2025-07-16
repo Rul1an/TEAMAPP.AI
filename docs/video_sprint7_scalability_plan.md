@@ -36,6 +36,7 @@
 * Terraform `storage_replication.tf` (multi-region + CMEK) (**✅ draft**) 
 * GDPR **SOP-document** (**✅ draft**)
 * `lib/services/feature_flag_service.dart` (**✅ implemented**)
+* Stripe Prometheus exporter `stripe_prom_exporter.ts` + alert `stripe_billing.yml` (**✅ implemented**)
 
 ---
 
