@@ -60,3 +60,16 @@ _Buffer 1 pd (stretch: auto-ABR renditions)_
 
 ---
 _Last updated: 15 Jul 2025_
+
+## ✔️ Sprint Status (na dag 5)
+
+| Story | Status |
+|-------|--------|
+| VID-201 | ✅ Edge-Function live (metadata + thumbs) |
+| VID-202 | ✅ Signed URL refresh endpoint + Flutter timer |
+| UI-090 | ✅ Thumbnail-selector UI implemented |
+| SEC-054 | ✅ OWASP ZAP scan in CI; URL rotation done |
+| OPS-072 | ✅ Cron cleanup function deployed |
+| TST-045 | ➡️ To be done (Day 6) |
+
+_Updated: 2025-08-03_
