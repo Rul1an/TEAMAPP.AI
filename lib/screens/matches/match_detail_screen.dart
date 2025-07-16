@@ -15,6 +15,7 @@ import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
+import '../../widgets/highlight_gallery.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({required this.matchId, super.key});
@@ -132,6 +133,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                     _buildLineupSection(players),
                     const SizedBox(height: 24),
                     _buildSubstitutesSection(players),
+                    const SizedBox(height: 24),
+                    _buildHighlightsSection(widget.matchId),
                     // Performance Ratings for completed matches
                     if (match.status == MatchStatus.completed) ...[
                       const SizedBox(height: 24),
@@ -415,6 +418,23 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
               const SizedBox(height: 16),
               // Show existing ratings or placeholder
               const Text('Klik op "Beoordeel" om spelers te beoordelen'),
+            ],
+          ),
+        ),
+      );
+
+  Widget _buildHighlightsSection(String matchId) => Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Highlights',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              HighlightGallery(matchId: matchId),
             ],
           ),
         ),
