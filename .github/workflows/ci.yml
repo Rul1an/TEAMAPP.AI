@@ -1,35 +1,40 @@
-name: Flutter CI
+name: CI
 
 on:
-  push:
-    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Flutter SDK
-        uses: subosito/flutter-action@v2
+      - uses: actions/setup-node@v4
         with:
-          flutter-version: '3.32.x'
-          channel: stable
-          cache: true
+          node-version: 20
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - run: npm ci
 
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Restore Edge build cache
+        uses: actions/cache@v4
+        with:
+          path: supabase/edge_functions/dist
+          key: edge-${{ hashFiles('supabase/edge_functions/**/*.ts', 'package.json') }}
 
-      - name: Melos bootstrap
-        if: ${{ hashFiles('melos.yaml') != '' }}
+      - name: Build Edge functions (if needed)
         run: |
-          dart pub global activate melos 2.9.0
-          melos bootstrap
+          if [ ! -d supabase/edge_functions/dist ]; then
+            npm run build:edge
+          fi
 
-      - name: Run tests (with coverage)
-        run: flutter test --coverage
+      - name: Save Edge cache
+        uses: actions/cache/save@v4
+        if: success()
+        with:
+          path: supabase/edge_functions/dist
+          key: edge-${{ hashFiles('supabase/edge_functions/**/*.ts', 'package.json') }}
 
-      - name: Static analysis
-        run: dart analyze
+      - name: Run unit + e2e tests
+        run: npm run test:e2e

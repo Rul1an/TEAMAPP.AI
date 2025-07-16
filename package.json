@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "edge:start": "supabase-edge-runtime serve --no-verify-jwt --port 8787 supabase/edge_functions",
-    "test:e2e": "deno task test:e2e"
+    "test:e2e": "deno task test:e2e",
+    "build:edge": "./scripts/build_edge.sh"
   },
   "devDependencies": {
     "supabase-edge-runtime": "^0.4.0"
