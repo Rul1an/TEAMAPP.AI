@@ -1,6 +1,7 @@
 import "https://deno.land/std@0.203.0/dotenv/load.ts";
 import { SpanStatusCode } from "npm:@opentelemetry/api@1";
 import { tracer } from "./tracing.ts";
+import { fetchWithClient } from "./http_client.ts";
 
 interface TokenCache {
   accessToken: string | null;
@@ -46,7 +47,7 @@ export async function getVeoAccessToken(): Promise<string> {
       audience: "https://api.veo.co",
     });
 
-    const resp = await fetch(tokenUrl, {
+    const resp = await fetchWithClient(tokenUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -85,7 +86,7 @@ export async function veoGraphQL<T>({ query, variables }: GraphQLRequestOptions)
     const token = await getVeoAccessToken();
     const gqlUrl = Deno.env.get("VEO_GRAPHQL_URL") ?? "https://graphql.veo.co";
 
-    const resp = await fetch(gqlUrl, {
+    const resp = await fetchWithClient(gqlUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
