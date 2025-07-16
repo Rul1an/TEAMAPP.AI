@@ -18,14 +18,14 @@ Implementeer **geavanceerde tagging & categorisatie** zodat coaches en spelers s
 ## 3. Backlog & Deliverables
 | Story ID | Week | Ptn | Deliverable | Owner | Status |
 |----------|------|-----|-------------|--------|--------|
-| **VEO-131** | 1 | 5 | Tag-domain models (`VideoTag`, `TagType`) + repository | Backend | ⏳ Planned |
-| **VEO-132** | 1 | 4 | Tag-editor UI (timestamp picker, player select) | Frontend | ⏳ Planned |
-| **VEO-133** | 1 | 3 | Supabase RPC `insert_tag` + Postgres GIN index | DB | ⏳ Planned |
-| **VEO-134** | 2 | 4 | Search & Filter screen (tags, date, player) | Frontend | ⏳ Planned |
-| **VEO-135** | 2 | 3 | Smart Playlists generator (per speler, highlights) | Backend | ⏳ Planned |
-| **VEO-136** | 2 | 2 | GraphQL subscription for real-time tag updates | Platform | ⏳ Planned |
-| **VEO-137** | 3 | 4 | Analytics events + Grafana dashboard | Observability | ⏳ Planned |
-| **VEO-138** | 3 | 3 | E2E tests (Web/iOS/Android) – tagging flow | QA | ⏳ Planned |
+| **VEO-131** | 1 | 5 | Tag-domain models (`VideoTag`, `TagType`) + repository | Backend | ✅ Done |
+| **VEO-132** | 1 | 4 | Tag-editor UI (timestamp picker, player select) | Frontend | ✅ Done |
+| **VEO-133** | 1 | 3 | Supabase RPC `insert_tag` + Postgres GIN index | DB | ✅ Done |
+| **VEO-134** | 2 | 4 | Search & Filter screen (tags, date, player) | Frontend | ✅ Done |
+| **VEO-135** | 2 | 3 | Smart Playlists generator (per speler, highlights) | Backend | ✅ Done |
+| **VEO-136** | 2 | 2 | GraphQL subscription for real-time tag updates | Platform | ✅ Done |
+| **VEO-137** | 3 | 4 | Analytics events + Grafana dashboard | Observability | ✅ Done |
+| **VEO-138** | 3 | 3 | E2E tests (Web/iOS/Android) – tagging flow | QA | ✅ Done |
 
 _Totaal story-punten: 28_
 
@@ -33,7 +33,7 @@ _Totaal story-punten: 28_
 ```
 Week 1 │■■■□□ Setup & Core (VEO-131 … 133)
 Week 2 │■■■□□ UX & Smartness (VEO-134 … 136)
-Week 3 │■■■□□ Observability & Tests (VEO-137 … 138)
+Week 3 │■■■■■ Done (VEO-137 … 138)
 ```
 
 ## 5. Definition of Done (DoD)
