@@ -36,4 +36,4 @@ This SOP describes data-protection controls for **TeamApp.ai** edge-storage and 
 | Low | False alert | 5 d | Support |
 
 ---
-_Last updated: {{DATE}}_
+_Last updated: 2025-07-16_
