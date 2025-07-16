@@ -27,7 +27,7 @@ interface Clip {
   videoUrl: string | null;
 }
 
-serve(async (req) => {
+const handler = async (req: Request) => {
   return await tracer.startActiveSpan("veo_fetch_clips", async (span) => {
     if (req.method !== "POST") {
       span.setStatus({ code: SpanStatusCode.ERROR, message: "405" });
@@ -75,7 +75,11 @@ serve(async (req) => {
       return new Response("Error fetching clips", { status: 500 });
     }
   });
-});
+};
+
+serve(handler);
+
+export { handler };
 
 async function fetchMatchHighlights(matchId: string): Promise<Clip[]> {
   const query = `
