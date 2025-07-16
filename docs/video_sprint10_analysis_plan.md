@@ -57,5 +57,20 @@ _Total committed capacity_: 37 SP (team velocity avg = 38).
 | Flutter PWA offline cache corruption | L | M | Progressive rollouts + Sentry crashlytics alerts. |
 | Team velocity drop due to holidays | M | M | Pair-program rotation, buffer 1 SP unallocated. |
 
+## 7. Mid-Sprint Progress Update (May 16 2025)
+
+| # | Story | Status | Notes |
+|---|-------|--------|-------|
+| VEO-139 | Real-time VideoEventDetectorService (v1) | ✅ Done | Supabase Realtime stream operational, SLA < 80 ms p95. |
+| VEO-140 | PlayerMovementAnalytics MVP | ✅ Done | Heat-map & distance covered available through RPC + UI tab. |
+| VEO-141 | SmartPlaylistService v2 | ✅ Done | Pattern detection (high-press, counter-attack), SLA 200 ms validated, telemetry & tests. |
+| VEO-142 | AnalysisDashboard Screen | ✅ Done | Responsive UI, offline cache, movement tab & export FAB. |
+| VEO-143 | Data Export (CSV/Excel) | ✅ Done | Playlist export with OpenTelemetry span, downloads < 3 s. |
+| VEO-144 | Observability & SLIs | ⚙️ In Progress | OpenTelemetry spans live; Grafana dashboard 80 % complete. |
+| VEO-145 | E2E integration test `analysis_flow_test.dart` | 🟡 Blocked | Waiting on Firebase Test Lab device quota (ETA 24 h). |
+| VEO-146 | UX polish & a11y improvements | 🟢 On Track | Remaining: focus order in Movement tab. |
+
+Burn-down indicates 24 / 37 SP completed (65 %). Velocity trending +2 SP above average.
+
 ---
 © 2025 Video Engineering Org (VEO) – _Built with best practices & latest techniques 2025_
