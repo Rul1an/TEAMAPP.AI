@@ -38,6 +38,7 @@
 * `lib/services/feature_flag_service.dart` (**✅ implemented**)
 * Stripe Prometheus exporter `stripe_prom_exporter.ts` + alert `stripe_billing.yml` (**✅ implemented**)
 * `lib/services/secure_storage_client.dart` (mTLS client) (**✅ implemented**)
+* Grafana dashboard `public_sla_overview.json` + docs/status (**✅ implemented**)
 
 ---
 
@@ -56,7 +57,7 @@
 - [x] Latency-based routing met RUM-feedback
 - [x] Feature-flags-as-data (zonder redeploy)
 - [x] Zero-trust mTLS tussen edge & storage
-- [ ] Publieke usage / SLA-dashboards
+- [x] Publieke usage / SLA-dashboards
 
 ---
 

@@ -1,0 +1,55 @@
+{
+  "title": "Public SLA Overview",
+  "description": "Read-only dashboard for customers showing uptime and usage KPIs.",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Active Subscriptions",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "stripe_active_subscriptions_total",
+          "legendFormat": "Active subs"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        }
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 }
+    },
+    {
+      "type": "stat",
+      "title": "Estimated MRR (USD)",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "stripe_estimated_mrr_usd",
+          "legendFormat": "MRR"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 0
+        }
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Rate Limited Requests (per 5m)",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "increase(veo_rate_limited_total[5m])" }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 }
+    }
+  ],
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-6h", "to": "now" }
+}
