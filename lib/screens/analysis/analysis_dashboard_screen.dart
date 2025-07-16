@@ -9,6 +9,10 @@ import 'dart:async';
 import '../../models/video_event.dart';
 import '../../providers/video_event_cache_provider.dart';
 import '../../providers/video_event_detector_provider.dart';
+import '../../providers/players_provider.dart';
+import '../../providers/player_movement_analytics_provider.dart';
+import '../../widgets/heat_map_grid.dart';
+import '../../widgets/distance_bar_chart.dart';
 
 /// Displays the tactical events (goals, corners, fouls …) of a match in real
 /// time, backed by an encrypted offline cache so that coaches can review the
@@ -29,6 +33,7 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
   final List<VideoEvent> _events = [];
   StreamSubscription<VideoEvent>? _subscription;
   bool _isLoading = true;
+  String? _selectedPlayerId;
 
   @override
   void initState() {
@@ -171,15 +176,71 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
   }
 
   Widget _buildMovementTab() {
-    // For now we fetch analytics for the first player in list via provider.
-    if (_events.isEmpty) {
-      return const Center(child: Text('No events yet'));
-    }
+    final playersAsync = ref.watch(playersProvider);
 
-    // TODO: Add player selector – default to first event's matchId, but we need playerId; skipping for now.
-    // Placeholder message.
-    return const Center(
-      child: Text('Movement analytics coming soon 🚧'),
+    return playersAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (err, st) => Center(child: Text('Error: $err')),
+      data: (players) {
+        if (players.isEmpty) {
+          return const Center(child: Text('No players'));
+        }
+
+        _selectedPlayerId ??= players.first.id;
+
+        final analyticsAsync = ref.watch(
+          playerMovementAnalyticsProvider((_selectedPlayerId!, widget.matchId)),
+        );
+
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: DropdownButton<String>(
+                value: _selectedPlayerId,
+                onChanged: (val) => setState(() => _selectedPlayerId = val),
+                items: players
+                    .map(
+                      (p) => DropdownMenuItem(
+                        value: p.id,
+                        child: Text(p.name),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            Expanded(
+              child: analyticsAsync.when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (err, st) => Center(child: Text('Error: $err')),
+                data: (analytics) {
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Heat-map',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 8),
+                        HeatMapGrid(matrix: analytics.heatmap),
+                        const SizedBox(height: 24),
+                        const Text('Distance covered',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 8),
+                        Center(
+                          child: DistanceBarChart(
+                            distanceMeters: analytics.distanceMeters,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
