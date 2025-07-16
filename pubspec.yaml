@@ -74,6 +74,12 @@ dependencies:
   # Networking
   http: ^0.13.6
 
+  # Added dependencies to fix missing imports
+  firebase_analytics: ^10.8.0
+  graphql_flutter: ^5.1.2
+  equatable: ^2.0.5
+  collection: ^1.18.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -97,6 +103,10 @@ dev_dependencies:
 
   # New dev dependency
   hive_test: ^1.0.1
+
+  # Added dev dependency for integration tests
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
