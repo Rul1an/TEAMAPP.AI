@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/tag_type.dart';
 import '../models/video_tag.dart';
 import '../providers/tag_providers.dart';
+import 'package:uuid/uuid.dart';
+import '../../../analytics/tagging_analytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class TagEditor extends ConsumerStatefulWidget {
   const TagEditor({super.key, required this.videoId, required this.initialTimestamp});
@@ -33,6 +36,7 @@ class _TagEditorState extends ConsumerState<TagEditor> {
 
   Future<void> _save() async {
     final repo = ref.read(tagRepositoryProvider);
+    final analytics = TaggingAnalytics(FirebaseAnalytics.instance);
     final tag = VideoTag(
       id: const Uuid().v4(),
       videoId: widget.videoId,
@@ -41,6 +45,7 @@ class _TagEditorState extends ConsumerState<TagEditor> {
       type: _type,
     );
     await repo.create(tag);
+    await analytics.logTagAdded(tag);
     Navigator.pop(context);
   }
 
