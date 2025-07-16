@@ -58,5 +58,28 @@ _Totaal: 3 pd – in Sprint 5._
 2. **Licentievoorwaarden** – check Veo ToS > redistribution of clips.  
 3. **Bandwidth costs** – monitor CDN egress; limit auto-ingest to highlights.  
 
+## 7. Relevante API-endpoints (v2025‐05)
+
+| Purpose | Method & Endpoint |
+|---------|------------------|
+| OAuth2 Token | `POST /oauth2/token` (client_credentials) |
+| List matches | `GET /videos/v3/get-all?pageSize=20&pageNumber=1` |
+| List clips / highlights | `GET /videos/{videoId}/highlights` |
+| Raw clip asset | `GET /videos/{videoId}/assets/{assetId}` (returns MP4/HLS) |
+| Transcript / tags | `GET /videos/{videoId}/transcript` |
+
+Swagger docs: `https://api.veo.co.uk/api/swagger/index.html`
+
+## 8. Best Practices 2025 – Zero-trust & Cost-efficiënt
+
+1. **Short-lived Access Tokens** – Use client_credentials flow; cache for 30 min via KV; rotate automatically.  
+2. **Edge-Side Caching** – Store GraphQL/match list in KV with SWR (stale-while-revalidate) 5 min.  
+3. **Bandwidth Guard Rails** – Only ingest clips < 300 MB; use `Content-Length` header to early-abort big downloads.  
+4. **Zero-Trust Fetch** – Requests from Edge Function with IP allow-list; tokens never exposed to client.  
+5. **Backoff & Circuit Breaker** – 429 & 5xx responses trigger exponential back-off (max 15 min).  
+6. **GDPR Erasure Hook** – If player opts-out, delete clip via `DELETE /videos/{id}` (requires elevated scope).  
+7. **Observability** – OTEL traces `veo_ingest` spans (`fetch`, `store`, `broadcast`) for latency budget (<2s P95).  
+8. **Cost Tracking** – Tag all Veo-origin objects in `video_assets.source` for monthly cost attribution.
+
 ---
 _Last updated: 15 Jul 2025_
