@@ -1,0 +1,25 @@
+name: 📊 Stripe Prometheus Exporter
+
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  export-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci --ignore-scripts
+      - name: Run exporter
+        run: npm run prom:export & sleep 30
+      - name: Curl metrics for sanity
+        run: |
+          curl -sf http://localhost:9400/metrics | head -20

@@ -1,0 +1,15 @@
+groups:
+  - name: edge-rate-limit
+    rules:
+      - alert: HighRateLimitViolation
+        expr: increase(veo_rate_limited_total[5m]) > 100
+        for: 10m
+        labels:
+          severity: warning
+          team: edge
+        annotations:
+          summary: "Excessive rate-limited requests (>100 per 5m)"
+          description: |
+            The edge rate-limiter has blocked over 100 requests in the last 5 minutes.
+            This could indicate abuse or an overly strict configuration.
+            Investigate logs and adjust tier limits if necessary.
