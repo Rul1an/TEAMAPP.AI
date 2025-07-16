@@ -13,6 +13,9 @@ import '../../providers/video_event_detector_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/player_movement_analytics_provider.dart';
 import '../../widgets/distance_bar_chart.dart';
+import '../../providers/smart_playlist_service_provider.dart';
+import '../../providers/export_service_provider.dart';
+import '../../models/video_playlist.dart';
 
 /// Displays the tactical events (goals, corners, fouls …) of a match in real
 /// time, backed by an encrypted offline cache so that coaches can review the
@@ -34,6 +37,7 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
   StreamSubscription<VideoEvent>? _subscription;
   bool _isLoading = true;
   String? _selectedPlayerId;
+  TacticalPattern _selectedPattern = TacticalPattern.highPress;
 
   @override
   void initState() {
@@ -87,6 +91,11 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: _onExportPressed,
+          icon: const Icon(Icons.download),
+          label: const Text('Export playlist'),
+        ),
         body: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : TabBarView(
@@ -101,6 +110,70 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
                 ],
               ),
       ),
+    );
+  }
+
+  Future<void> _onExportPressed() async {
+    final format = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Export format'),
+        content: StatefulBuilder(
+          builder: (ctx, setState) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DropdownButton<TacticalPattern>(
+                value: _selectedPattern,
+                items: TacticalPattern.values
+                    .map((p) => DropdownMenuItem(
+                          value: p,
+                          child: Text(p.displayName),
+                        ))
+                    .toList(),
+                onChanged: (val) => setState(() => _selectedPattern = val!),
+              ),
+              const SizedBox(height: 16),
+              const Text('Kies export type'),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('CSV')),
+                  ElevatedButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Excel')),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (format == null) return; // dialog dismissed
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Generating playlist…')),
+    );
+
+    final playlistResult = await ref.read(smartPlaylistServiceProvider).generatePlaylist(
+      matchId: widget.matchId,
+      pattern: _selectedPattern,
+    );
+
+    if (!playlistResult.isSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${playlistResult.errorOrNull!.message}')),
+      );
+      return;
+    }
+
+    final playlist = playlistResult.dataOrNull!;
+    await ref.read(exportServiceProvider).exportPlaylist(
+      playlist: playlist,
+      asExcel: format,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Export completed')),
     );
   }
 
