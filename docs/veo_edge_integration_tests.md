@@ -4,11 +4,14 @@ Deze handleiding beschrijft **stap voor stap** hoe je lokaal (of in CI) end-to-e
 Het doel is om automatisch te verifiëren dat de drie Edge-functions samenwerken én dat OTLP-traces & ‑metrics correct worden weggeschreven.
 
 ## TL;DR
-```
-# Eénmalig (lokaal):
-./scripts/dev/start_otel_stack.sh   # Tempo + Prometheus + Loki (poort 4318)
-./scripts/dev/start_supabase.sh     # Postgres + Storage in Docker
-npm run test:e2e                    # Start edge-runtime + run Deno tests
+```bash
+# Eénmalig (lokaal) – **volledig geautomatiseerd**
+./scripts/dev/start_otel_stack.sh   # start OTEL collector (Docker)
+./scripts/dev/start_supabase.sh     # start Postgres+Storage (Docker)
+
+# Edge-runtime + tests (package.json script aanwezig)
+npm run edge:start &                # ↳ edge runtime (port 8787) – stop met Ctrl-C
+npm run test:e2e                    # ↳ Deno test suite met OTEL enabled
 ```
 
 > ℹ️  Alle Docker-containers worden automatisch gestopt door `docker compose down`.
@@ -94,15 +97,17 @@ Elke test importeert de handlers direct voor unit-niveau checks èn voert een **
 
 ### 5.2 Start tests
 ```bash
+# Alles-in-één helper (package.json)
+npm run test:e2e
+```
+Als je handmatig wilt draaien:
+```bash
 OTEL_DENO=true OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 \
   deno test -A supabase/edge_functions/_tests --unstable-otel
 ```
 
-De suite doet onder andere:
-1. **Mock Veo GraphQL** met `std/http/mock.ts` → voorspelbare highlight-payload.
-2. **Call** `/veo_fetch_clips` → `/veo_ingest_highlights` → `/veo_get_clip_url`.
-3. **Query Tempo** API om te checken of er een trace bestaat met ≥ 5 spans.
-4. **Query Prometheus** om te verifiëren dat `veo_ingest_inserted_total` is toegenomen.
+> ⚠️  **Ingest & DB-verificatie**: de huidige test-suite dekt enkel `veo_fetch_clips` (happy path).  
+> Uitbreiding naar `veo_ingest_highlights` + Prometheus queries staat open als TODO – zie sectie *Nog te doen* onderaan.
 
 ## 6. CI-setup (GitHub Actions-fragment)
 
@@ -146,3 +151,11 @@ jobs:
 
 > **Resultaat**: bij elke Pull Request draait een volledige ingest-flow, inclusief observability-verificaties.  
 > Developers kunnen lokaal dezelfde workflow draaien met `npm run test:e2e` en de grafana UI live bekijken op `http://localhost:3000`.
+
+---
+
+### Nog te doen
+
+* 🟡  E2E-tests voor `veo_ingest_highlights` en `veo_get_clip_url` – vereisen Mock Supabase API of test-database seeding.
+* 🟡  Tempo API-queries in tests (verifiëren traces) – voorbeeldstub in `supabase/edge_functions/_tests/otel_assert.ts` **(nog aan te maken)**.
+* 🟡  Dashboard-import automatiseren via Grafana API.
