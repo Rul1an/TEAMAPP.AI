@@ -7,14 +7,18 @@ import 'package:file_saver/file_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:csv/csv.dart';
+import 'dart:io';
 
 // Project imports:
 import '../models/match.dart';
 import '../models/player.dart';
 import '../models/training.dart';
+import '../models/video_playlist.dart';
 import '../repositories/match_repository.dart';
 import '../repositories/player_repository.dart';
 import '../repositories/training_repository.dart';
+import '../services/telemetry_service.dart';
 
 class ExportService {
   ExportService({
@@ -297,6 +301,70 @@ class ExportService {
       ..appendRow([TextCellValue('L = Te laat')]);
 
     await _saveExcel(excel, 'training_aanwezigheid');
+  }
+
+  // --- NEW: Export playlist (Video clips + metrics) ------------------------
+  Future<void> exportPlaylist({
+    required VideoPlaylist playlist,
+    required bool asExcel,
+  }) async {
+    final telemetry = TelemetryService();
+    await telemetry.monitorAsync('export_playlist', () async {
+      final filename = 'playlist_${playlist.pattern.dbName}_${DateTime.now().millisecondsSinceEpoch}';
+      if (asExcel) {
+        await _exportPlaylistToExcel(playlist, filename);
+      } else {
+        await _exportPlaylistToCsv(playlist, filename);
+      }
+    }, attributes: {
+      'pattern': playlist.pattern.dbName,
+      'clips': playlist.clips.length,
+      'format': asExcel ? 'excel' : 'csv',
+    });
+  }
+
+  Future<void> _exportPlaylistToCsv(VideoPlaylist playlist, String filename) async {
+    final stopwatch = Stopwatch()..start();
+    final rows = <List<dynamic>>[
+      ['Clip ID', 'Start (ms)', 'End (ms)'],
+      ...playlist.clips.map((c) => [c.id, c.startMs, c.endMs]),
+    ];
+    final csvStr = const ListToCsvConverter().convert(rows);
+    await FileSaver.instance.saveFile(
+      name: filename,
+      bytes: Uint8List.fromList(csvStr.codeUnits),
+      ext: 'csv',
+      mimeType: MimeType.csv,
+    );
+    _assertSla(stopwatch.elapsedMilliseconds);
+  }
+
+  Future<void> _exportPlaylistToExcel(VideoPlaylist playlist, String filename) async {
+    final stopwatch = Stopwatch()..start();
+    final excel = Excel.createExcel();
+    final sheet = excel['Playlist']
+      ..appendRow([
+        TextCellValue('Clip ID'),
+        TextCellValue('Start (ms)'),
+        TextCellValue('End (ms)'),
+      ]);
+    for (final clip in playlist.clips) {
+      sheet.appendRow([
+        TextCellValue(clip.id),
+        IntCellValue(clip.startMs),
+        IntCellValue(clip.endMs),
+      ]);
+    }
+    await _saveExcel(excel, filename);
+    _assertSla(stopwatch.elapsedMilliseconds);
+  }
+
+  void _assertSla(int elapsedMs) {
+    if (elapsedMs > 5000) {
+      TelemetryService().trackEvent('export_sla_breach', attributes: {
+        'duration_ms': elapsedMs,
+      });
+    }
   }
 
   // Helper methods - Web compatible

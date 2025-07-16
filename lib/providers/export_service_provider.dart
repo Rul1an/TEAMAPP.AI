@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import '../services/export_service.dart';
-import 'matches_provider.dart';
-import 'players_provider.dart';
-import 'trainings_provider.dart';
+import 'player_repository_provider.dart';
+import 'match_repository_provider.dart';
+import 'training_repository_provider.dart';
 
 final exportServiceProvider = Provider<ExportService>((ref) {
   return ExportService(
