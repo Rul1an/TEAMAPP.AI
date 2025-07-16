@@ -7,6 +7,8 @@
  * NOTE: Designed for Edge runtimes like Cloudflare Workers / Vercel Edge / Next.js Middleware.
  */
 
+import { incCounter, metricsText } from './metrics';
+
 interface TierConfig {
   capacity: number;          // max tokens in bucket
   refillPerSec: number;      // tokens added per second
@@ -102,6 +104,12 @@ function getTierFromJwt(jwt: string | null): Tier {
  * ```
  */
 export async function rateLimitHandler(request: Request): Promise<Response> {
+  const url = new URL(request.url);
+  if (url.pathname === '/metrics') {
+    return new Response(metricsText(), {
+      headers: { 'Content-Type': 'text/plain; version=0.0.4' },
+    });
+  }
   const authHeader = request.headers.get('Authorization');
   const jwt = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
   const tier = getTierFromJwt(jwt);
@@ -113,6 +121,7 @@ export async function rateLimitHandler(request: Request): Promise<Response> {
     buckets.set(userKey, bucket);
   }
   if (!bucket.consume()) {
+    incCounter('veo_rate_limited_total');
     return new Response('Rate limit exceeded', {
       status: 429,
       headers: {

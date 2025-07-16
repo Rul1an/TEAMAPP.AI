@@ -47,6 +47,8 @@ export async function handleStripeWebhook(request: Request): Promise<Response> {
   return new Response('ok', { status: 200 });
 }
 
+export default { fetch: handleStripeWebhook };
+
 async function onUsageSummary(evt: Stripe.Event & { data: { object: Stripe.UsageRecordSummary } }) {
   // TODO: Persist usage metrics to analytics DB for reconciliation
   console.log('Usage summary', evt.data.object.id);
