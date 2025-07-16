@@ -19,7 +19,7 @@ interface Req {
   highlightId: string;
 }
 
-serve(async (req) => {
+const handler = async (req: Request) => {
   return await tracer.startActiveSpan("veo_get_clip_url", async (span) => {
     if (req.method !== "POST") {
       span.setStatus({ code: SpanStatusCode.ERROR, message: "405" });
@@ -157,4 +157,9 @@ serve(async (req) => {
       return new Response("Error syncing asset", { status: 500 });
     }
   });
-});
+
+};
+
+serve(handler);
+
+export { handler };
