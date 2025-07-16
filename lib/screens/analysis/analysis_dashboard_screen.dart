@@ -70,20 +70,32 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
     // Sort events by timestamp asc for presentation.
     _events.sort((a, b) => a.timestampMs.compareTo(b.timestampMs));
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Analysis Dashboard'),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Analysis Dashboard'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Events'),
+              Tab(text: 'Movement'),
+            ],
+          ),
+        ),
+        body: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : TabBarView(
+                children: [
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isWide = constraints.maxWidth > 600;
+                      return isWide ? _buildDataTable() : _buildListView();
+                    },
+                  ),
+                  _buildMovementTab(),
+                ],
+              ),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : LayoutBuilder(
-              builder: (context, constraints) {
-                final isWide = constraints.maxWidth > 600;
-                return isWide
-                    ? _buildDataTable()
-                    : _buildListView();
-              },
-            ),
     );
   }
 
@@ -156,5 +168,18 @@ class _AnalysisDashboardState extends ConsumerState<AnalysisDashboardScreen> {
       case VideoEventType.foul:
         return const Icon(Icons.warning, color: Colors.red);
     }
+  }
+
+  Widget _buildMovementTab() {
+    // For now we fetch analytics for the first player in list via provider.
+    if (_events.isEmpty) {
+      return const Center(child: Text('No events yet'));
+    }
+
+    // TODO: Add player selector – default to first event's matchId, but we need playerId; skipping for now.
+    // Placeholder message.
+    return const Center(
+      child: Text('Movement analytics coming soon 🚧'),
+    );
   }
 }
