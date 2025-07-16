@@ -1,0 +1,32 @@
+name: 🧪 Edge Rate-Limiter Load Test
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'edge_middleware/**'
+      - 'scripts/load_test_rate_limit.ts'
+      - '.github/workflows/edge-loadtest.yml'
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  load-test:
+    name: 🚀 Load Test (VEO-115)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
+        run: npm ci --ignore-scripts
+
+      - name: 🧪 Run Load Test
+        run: npm run loadtest

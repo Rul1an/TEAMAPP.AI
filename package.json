@@ -9,6 +9,7 @@
     "vitest": "^1.5.2"
   },
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "loadtest": "ts-node scripts/load_test_rate_limit.ts"
   }
 }
