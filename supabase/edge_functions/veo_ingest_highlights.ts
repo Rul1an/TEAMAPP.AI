@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { veoGraphQL } from "./_shared/veo_client.ts";
 import { tracer } from "./_shared/tracing.ts";
 import { SpanStatusCode } from "npm:@opentelemetry/api@1";
+import { ingestDurationHist, highlightsInsertedCounter } from "./_shared/metrics.ts";
 
 // Edge Function: VEO-102 – Ingest Veo highlights for a given match into the
 // tenant’s database. This reuses the fetch logic from VEO-101 but additionally
@@ -43,6 +44,7 @@ serve(async (req) => {
 
     span.setAttributes({ matchId: body.matchId, organizationId: body.organizationId });
 
+    const start = Date.now();
     try {
       const clips = await fetchHighlights(body.matchId);
 
@@ -80,6 +82,12 @@ serve(async (req) => {
         return new Response("DB error", { status: 500 });
       }
 
+      highlightsInsertedCounter.add(rows.length, {
+        organization_id: body.organizationId,
+      });
+      ingestDurationHist.record(Date.now() - start, {
+        organization_id: body.organizationId,
+      });
       span.end();
       return new Response(JSON.stringify({ inserted: rows.length }), {
         status: 200,
