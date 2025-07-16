@@ -8,10 +8,10 @@
 ## Stories
 | ID | Omschrijving | Target | Owner |
 |----|--------------|--------|-------|
-| VEO-107 | Bundle-optimalisatie & treeshake deps (esbuild) | cold-start 100 ms | @core-edge |
-| VEO-108 | Pre-warm token cache via periodic cron (edge schedules) | <10 ms auth | @core-edge |
-| VEO-109 | HTTP/2 Keep-alive pool voor GraphQL fetch | −25 ms hop | @core-edge |
-| VEO-110 | CI artifacts cache (`edge-runtime build`) | 40 % faster | @dev-ex |
+| VEO-107 | Bundle-optimalisatie & treeshake deps (esbuild) | ✅ Done |
+| VEO-108 | Pre-warm token cache via periodic cron (edge schedules) | ✅ Done |
+| VEO-109 | HTTP/2 Keep-alive pool voor GraphQL fetch | ✅ Done |
+| VEO-110 | CI artifacts cache (`edge-runtime build`) | 🟡 In progress |
 | VEO-111 | Blue-green deploy + health-probe | zero-downtime | @dev-ops |
 | VEO-112 | Docs polish & public beta landing page | marketing | @docs |
 
@@ -43,3 +43,38 @@
 - [ ] Blue-green routed via cell-based architecture (Supabase Regions)
 - [ ] Zero-trust egress policy (GraphQL & OAuth hosts allow-list)
 - [ ] SLA dashboards public via Grafana Cloud share-link
+
+## Implementatie-details VEO-110
+
+Doel: versnel CI door build-artefacten (`supabase/edge_functions/dist/*`) te cachen.
+
+1. **build_cache.sh**  – berekent hash van Edge-SRC + package-lock; slaat tar.xz in `~/.cache/edge_build/`.
+2. **GitHub Actions**  – `actions/cache` key=`edge-${{ hashFiles('supabase/edge_functions/**/*.ts', 'package-lock.json') }}`
+3. Bij hit: skip `npm run build:edge`; anders uitvoeren en cache herstellen.
+4. Metrics: action step `save-cache` logt gereduceerde tijd (verwacht -40%).
+
+_Workflow-snippet_
+```yaml
+- name: Restore Edge build cache
+  uses: actions/cache@v4
+  with:
+    path: supabase/edge_functions/dist
+    key: edge-${{ hashFiles('supabase/edge_functions/**/*.ts', 'package-lock.json') }}
+
+- name: Build Edge functions (if needed)
+  run: |
+    if [ ! -d supabase/edge_functions/dist ]; then
+      npm run build:edge
+    fi
+
+- name: Save Edge cache
+  uses: actions/cache/save@v4
+  if: success()
+  with:
+    path: supabase/edge_functions/dist
+    key: edge-${{ hashFiles('supabase/edge_functions/**/*.ts', 'package-lock.json') }}
+```
+
+Nog te doen voor VEO-110:
+* Integratie in `.github/workflows/ci.yml`.
+* Documenteer _cache warming_ voor lokale dev (`npm run build:edge --cache`).
