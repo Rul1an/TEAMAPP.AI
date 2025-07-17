@@ -1,5 +1,13 @@
 name: 🚀 Advanced Flutter SaaS Deployment
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write # required for Netlify and future OIDC deployments
+
 on:
   push:
     branches: [main, develop]
@@ -18,30 +26,10 @@ jobs:
     name: 🔍 Quality Assurance
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: 🎯 Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: ⚙️ Standard Flutter Setup (composite)
+        uses: ./.github/actions/setup-flutter
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
-          cache: true
-
-      - name: 📦 Install Dependencies
-        run: |
-          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-            cd jo17_tactical_manager
-          fi
-          flutter pub get
-
-      - name: 🔄 Run Code Generation
-        run: |
-          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-            cd jo17_tactical_manager
-          fi
-          flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: 🔍 Static Analysis
         run: |
@@ -123,10 +111,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 🎯 Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: ./.github/actions/setup-flutter
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
-          cache: true
+          project-path: .
 
       - name: 🔍 Dependency Security Scan
         run: |
@@ -163,25 +151,19 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🎯 Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: ⚙️ Setup Flutter (root)
+        if: ${{ hashFiles('pubspec.yaml') != '' }}
+        uses: ./.github/actions/setup-flutter
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
-          cache: true
+          project-path: .
 
-      - name: 📦 Install Dependencies
-        run: |
-          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-            cd jo17_tactical_manager
-          fi
-          flutter pub get
-
-      - name: 🔄 Run Code Generation
-        run: |
-          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-            cd jo17_tactical_manager
-          fi
-          flutter pub run build_runner build --delete-conflicting-outputs
+      - name: ⚙️ Setup Flutter (sub project)
+        if: ${{ hashFiles('jo17_tactical_manager/pubspec.yaml') != '' }}
+        uses: ./.github/actions/setup-flutter
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          project-path: jo17_tactical_manager
 
       - name: 🏗️ Build ${{ matrix.platform }}
         run: |
@@ -202,7 +184,7 @@ jobs:
       # Upload Web build artefact
       - name: 📤 Upload Web Build Artifacts
         if: ${{ matrix.platform == 'web' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-web
           path: build/web
@@ -228,7 +210,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📥 Download Web Build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-web
           path: build/web
@@ -245,9 +227,10 @@ jobs:
           sudo apt-get update -y && sudo apt-get install -y jq bc
 
       - name: 🎯 Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
       - name: 📦 Install Lighthouse
         run: npm install -g lighthouse
@@ -320,7 +303,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📥 Download Web Build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-web
           path: build/web
@@ -360,10 +343,24 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📥 Download Web Build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-web
           path: build/web
+
+      # --- Security hardening: artefact signing --------------------------
+      - name: 📦 Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: 🔏 Sign web artefact (keyless)
+        env:
+          COSIGN_EXPERIMENTAL: '1'
+        run: |
+          # Sign main entry file – provides provenance; can be extended to SBOM
+          cosign sign-blob --yes \
+            --output-signature build/web/index.html.sig \
+            build/web/index.html
+          echo "Signature written to build/web/index.html.sig"
 
       - name: 🌟 Deploy to Netlify Production
         uses: South-Paw/action-netlify-cli@v2

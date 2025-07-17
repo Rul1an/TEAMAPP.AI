@@ -1,0 +1,39 @@
+name: Setup Flutter
+description: >-
+  Composite action that checks out the repository, installs Flutter and the
+  project dependencies, and runs build_runner code-generation.  Intended to
+  replace the duplicated setup steps in multiple workflows.
+
+inputs:
+  flutter-version:
+    description: Flutter version to install (e.g. '3.32.x' or 'stable').
+    required: false
+    default: 'stable'
+  project-path:
+    description: Path to the Flutter package relative to repo root ('.' for root).
+    required: false
+    default: '.'
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install Flutter SDK
+      uses: subosito/flutter-action@v3
+      with:
+        flutter-version: ${{ inputs.flutter-version }}
+        cache: true
+
+    - name: Install Dart/Flutter dependencies
+      run: flutter pub get
+      shell: bash
+      working-directory: ${{ inputs.project-path }}
+
+    - name: Run build_runner (code generation)
+      run: flutter pub run build_runner build --delete-conflicting-outputs
+      shell: bash
+      working-directory: ${{ inputs.project-path }}

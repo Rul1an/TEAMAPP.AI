@@ -97,6 +97,8 @@ dev_dependencies:
 
   # New dev dependency
   hive_test: ^1.0.1
+  # Align analyzer with Dart SDK 3.8.x
+  analyzer: ^7.7.0
 
 flutter:
   uses-material-design: true
