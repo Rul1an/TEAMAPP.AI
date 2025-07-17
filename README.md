@@ -1,5 +1,7 @@
 # JO17 Tactical Manager – SaaS Platform (Flutter 3.32 / Supabase)
 
+[![codecov](https://codecov.io/gh/your-org/jo17_tactical_manager/branch/main/graph/badge.svg?token=YOURTOKEN)](https://codecov.io/gh/your-org/jo17_tactical_manager)
+
 ![CI](https://github.com/<OWNER>/<REPO>/actions/workflows/ci.yml/badge.svg)
 ![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<OWNER>/<REPO>/gh-pages/coverage-badge.json)
 
