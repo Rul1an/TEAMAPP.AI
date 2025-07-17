@@ -55,7 +55,7 @@ dependencies:
   isar_flutter_libs: ^3.1.0+1
   dio: ^5.8.0+1
   sentry_flutter: ^9.2.0
-  opentelemetry: ^0.18.10
+  opentelemetry_exporter_otlp: ^0.18.10  # Exporteert traces/metrics via OTLP
   flutter_dotenv: ^5.1.0
   sentry_dio: ^9.2.0
   logger: ^2.0.2
