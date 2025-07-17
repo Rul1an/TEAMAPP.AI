@@ -1,0 +1,32 @@
+version: 2
+service:
+  name: drift-monitoring-live
+  kind: batch
+  source:
+    kafka:
+      servers: kafka-prod:9092
+      topic: ml_predictions
+  reference_data:
+    gcs_path: gs://ml-data/training/2025-07/reference.parquet
+  metrics:
+    data_drift:
+      numerical:
+        stat_test: hellinger
+      categorical:
+        stat_test: jensen_shannon
+    data_quality:
+      missing_values:
+        enabled: true
+    performance:
+      classification_quality:
+        metrics:
+          - roc_auc
+          - accuracy
+  dashboard:
+    grafana:
+      datasource: prometheus-ml
+      folder: "ML Drift"
+      refresh_interval: 30s
+  alerting:
+    pubsub_topic: projects/ml-platform/topics/drift-alerts
+    min_interval: 5m
