@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: mlops
+
+configMapGenerator:
+  - name: drift-policy
+    namespace: mlops
+    files:
+      - ../../policies/drift_policy.rego
+  - name: evidently-live-config
+    namespace: mlops
+    files:
+      - ../../evidently/live_service_config.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true

@@ -1,0 +1,51 @@
+name: "🤖 MLOps CI"
+
+on:
+  pull_request:
+    paths:
+      - "mlops/**"
+      - ".github/workflows/mlops-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "mlops/**"
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  policy-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install OPA CLI
+        run: |
+          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64 && \
+          chmod +x opa && sudo mv opa /usr/local/bin/opa
+
+      - name: 🔍 Run OPA unit tests
+        run: |
+          opa test mlops/policies -v
+
+  kustomize-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Install kubeconform
+        run: |
+          curl -L https://github.com/yannh/kubeconform/releases/download/v0.6.4/kubeconform-linux-amd64.tar.gz | tar xz
+          sudo mv kubeconform /usr/local/bin/
+
+      - name: 🧪 Validate manifests
+        run: |
+          kustomize build mlops/kustomize/base | kubeconform -strict -summary -ignore-missing-schemas
