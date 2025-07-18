@@ -158,25 +158,27 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
   }
 
   List<TrainingExercise> _filterExercises() => widget.availableExercises.where((
-    exercise,
-  ) {
-    // Search filter
-    if (searchQuery.isNotEmpty) {
-      if (!exercise.name.toLowerCase().contains(searchQuery.toLowerCase()) &&
-          !exercise.description.toLowerCase().contains(
-            searchQuery.toLowerCase(),
-          )) {
-        return false;
-      }
-    }
+        exercise,
+      ) {
+        // Search filter
+        if (searchQuery.isNotEmpty) {
+          if (!exercise.name
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase()) &&
+              !exercise.description.toLowerCase().contains(
+                    searchQuery.toLowerCase(),
+                  )) {
+            return false;
+          }
+        }
 
-    // Type filter
-    if (selectedType != null && exercise.type != selectedType) {
-      return false;
-    }
+        // Type filter
+        if (selectedType != null && exercise.type != selectedType) {
+          return false;
+        }
 
-    return true;
-  }).toList();
+        return true;
+      }).toList();
 
   String _getTypeDisplayName(ExerciseType type) {
     switch (type) {

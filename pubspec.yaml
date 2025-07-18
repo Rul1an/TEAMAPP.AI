@@ -1,7 +1,7 @@
 name: jo17_tactical_manager
 description: A tactical football team management app for JO17 teams
 publish_to: 'none'
-version: 1.0.0+1
+version: 0.9.0+0
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -73,6 +73,7 @@ dependencies:
 
   # Networking
   http: ^0.13.6
+  video_player: ^2.8.1
 
 dev_dependencies:
   flutter_test:
@@ -95,7 +96,7 @@ dev_dependencies:
   isar_generator: ^3.1.0+1
   hive_generator: ^2.0.1
 
-  # New dev dependencies
+  # New dev dependency
   hive_test: ^1.0.1
 
 flutter:

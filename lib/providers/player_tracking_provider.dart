@@ -10,52 +10,52 @@ import '../models/player_tracking/player_performance_data.dart';
 // Performance data for a specific player
 final playerPerformanceProvider =
     FutureProvider.family<List<PlayerPerformanceData>, String>((
-      ref,
-      playerId,
-    ) async {
-      try {
-        // TODO(author): Implement actual database query
-        // For now, return empty list
-        return [];
-      } catch (e) {
-        // AppLogger.error('Failed to load player performance data', e);
-        return [];
-      }
-    });
+  ref,
+  playerId,
+) async {
+  try {
+    // TODO(author): Implement actual database query
+    // For now, return empty list
+    return [];
+  } catch (e) {
+    // AppLogger.error('Failed to load player performance data', e);
+    return [];
+  }
+});
 
 // Latest performance data for all players
 final allPlayersLatestPerformanceProvider =
     FutureProvider<Map<String, PlayerPerformanceData>>((ref) async {
-      try {
-        // TODO(author): Implement actual database query
-        final performanceMap = <String, PlayerPerformanceData>{};
-        return performanceMap;
-      } catch (e) {
-        // AppLogger.error('Failed to load all players performance data', e);
-        return {};
-      }
-    });
+  try {
+    // TODO(author): Implement actual database query
+    final performanceMap = <String, PlayerPerformanceData>{};
+    return performanceMap;
+  } catch (e) {
+    // AppLogger.error('Failed to load all players performance data', e);
+    return {};
+  }
+});
 
 // Player development trends
 final playerDevelopmentTrendsProvider =
     FutureProvider.family<PlayerDevelopmentTrends, String>((
-      ref,
-      playerId,
-    ) async {
-      try {
-        final performanceData = await ref.watch(
-          playerPerformanceProvider(playerId).future,
-        );
-        if (performanceData.isEmpty) {
-          return PlayerDevelopmentTrends.empty();
-        }
-        // Calculate trends based on performance data
-        return _calculateDevelopmentTrends(performanceData);
-      } catch (e) {
-        // AppLogger.error('Failed to calculate player development trends', e);
-        return PlayerDevelopmentTrends.empty();
-      }
-    });
+  ref,
+  playerId,
+) async {
+  try {
+    final performanceData = await ref.watch(
+      playerPerformanceProvider(playerId).future,
+    );
+    if (performanceData.isEmpty) {
+      return PlayerDevelopmentTrends.empty();
+    }
+    // Calculate trends based on performance data
+    return _calculateDevelopmentTrends(performanceData);
+  } catch (e) {
+    // AppLogger.error('Failed to calculate player development trends', e);
+    return PlayerDevelopmentTrends.empty();
+  }
+});
 
 // Team performance overview
 final teamPerformanceOverviewProvider = FutureProvider<TeamPerformanceOverview>(
@@ -126,15 +126,15 @@ class PlayerDevelopmentTrends {
   /// // With cascade: PlayerDevelopmentTrends()..physicalTrend = value..etc
   /// ```
   factory PlayerDevelopmentTrends.empty() => PlayerDevelopmentTrends(
-    physicalTrend: TrendDirection.stable,
-    technicalTrend: TrendDirection.stable,
-    tacticalTrend: TrendDirection.stable,
-    mentalTrend: TrendDirection.stable,
-    overallProgress: 0,
-    strengths: [],
-    areasForImprovement: [],
-    recommendedFocus: [],
-  );
+        physicalTrend: TrendDirection.stable,
+        technicalTrend: TrendDirection.stable,
+        tacticalTrend: TrendDirection.stable,
+        mentalTrend: TrendDirection.stable,
+        overallProgress: 0,
+        strengths: [],
+        areasForImprovement: [],
+        recommendedFocus: [],
+      );
   final TrendDirection physicalTrend;
   final TrendDirection technicalTrend;
   final TrendDirection tacticalTrend;
@@ -160,15 +160,15 @@ class TeamPerformanceOverview {
   });
 
   factory TeamPerformanceOverview.empty() => TeamPerformanceOverview(
-    averagePhysicalScore: 0,
-    averageTechnicalScore: 0,
-    averageTacticalScore: 0,
-    averageMentalScore: 0,
-    teamStrengths: [],
-    teamWeaknesses: [],
-    topPerformers: [],
-    needsAttention: [],
-  );
+        averagePhysicalScore: 0,
+        averageTechnicalScore: 0,
+        averageTacticalScore: 0,
+        averageMentalScore: 0,
+        teamStrengths: [],
+        teamWeaknesses: [],
+        topPerformers: [],
+        needsAttention: [],
+      );
   final double averagePhysicalScore;
   final double averageTechnicalScore;
   final double averageTacticalScore;
@@ -213,5 +213,5 @@ class PlayerTrackingNotifier extends StateNotifier<AsyncValue<void>> {
 
 final playerTrackingNotifierProvider =
     StateNotifierProvider<PlayerTrackingNotifier, AsyncValue<void>>(
-      PlayerTrackingNotifier.new,
-    );
+  PlayerTrackingNotifier.new,
+);

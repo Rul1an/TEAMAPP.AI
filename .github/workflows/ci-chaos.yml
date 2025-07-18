@@ -1,0 +1,58 @@
+name: "☣️ Nightly Chaos Run"
+
+on:
+  schedule:
+    - cron: "0 3 * * *"  # 03:00 UTC nightly
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write  # OIDC deploy to AWS
+
+jobs:
+  chaos:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: eu-west-1
+      FIS_TEMPLATE_IDS: ${{ secrets.FIS_TEMPLATE_IDS }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.AWS_CHAOS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Run FIS experiment
+        id: fis
+        run: |
+          set -euo pipefail
+          IFS=',' read -ra templates <<< "$FIS_TEMPLATE_IDS"
+          for tpl in "${templates[@]}"; do
+            echo "Starting FIS experiment $tpl"
+            experiment_id=$(aws fis start-experiment --experiment-template-id "$tpl" --query 'experiment.id' --output text)
+            echo "experiment_id=$experiment_id" >> $GITHUB_OUTPUT
+
+            # Poll status (max 10 min)
+            for i in {1..60}; do
+              status=$(aws fis get-experiment --id "$experiment_id" --query 'experiment.state.status' --output text)
+              echo "[$i][$tpl] status=$status"
+              [[ "$status" == "completed" ]] && break
+              [[ "$status" == "stopped" ]] && {
+                echo "Experiment stopped prematurely"; exit 1; }
+              sleep 10
+            done
+          done
+
+      - name: Post Slack report
+        if: always()
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "Nightly Chaos Run – experiment *${{ steps.fis.outputs.experiment_id }}* finished with status *${{ job.status }}*"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_CHAOS }}

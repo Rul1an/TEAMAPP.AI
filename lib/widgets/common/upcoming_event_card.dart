@@ -63,8 +63,8 @@ class UpcomingEventCard extends StatelessWidget {
                   Text(
                     dateFormat.format(date),
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   Text(
                     timeFormat.format(date),

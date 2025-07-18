@@ -6,7 +6,7 @@ import 'training_session_repository.dart';
 
 class LocalTrainingSessionRepository implements TrainingSessionRepository {
   LocalTrainingSessionRepository({HiveTrainingSessionCache? cache})
-    : _cache = cache ?? HiveTrainingSessionCache();
+      : _cache = cache ?? HiveTrainingSessionCache();
 
   final HiveTrainingSessionCache _cache;
 

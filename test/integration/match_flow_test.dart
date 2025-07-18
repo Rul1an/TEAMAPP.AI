@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:test_utils/surface_utils.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/models/match.dart';
@@ -23,6 +25,17 @@ void main() {
   group('Integration – Match flow', () {
     setUpAll(() async {
       await initializeDateFormatting('nl_NL');
+
+      SharedPreferences.setMockInitialValues({});
+
+      // Initialise Supabase singleton (dummy) for provider dependencies.
+      try {
+        await Supabase.initialize(
+          url: 'https://dummy.supabase.co',
+          anonKey: 'public-anon-key',
+          debug: false,
+        );
+      } catch (_) {}
     });
 
     testWidgets(

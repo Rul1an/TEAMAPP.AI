@@ -36,8 +36,8 @@ class _WeeklyCalendarWidgetState extends State<WeeklyCalendarWidget> {
                 Text(
                   'Deze Week',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 const Spacer(),
                 IconButton(
@@ -166,88 +166,88 @@ class _DayTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-    onTap: onTap,
-    child: Container(
-      margin: const EdgeInsets.symmetric(horizontal: 2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: isToday
-            ? Border.all(color: Theme.of(context).primaryColor, width: 2)
-            : null,
-        color: isToday
-            ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
-            : null,
-      ),
-      child: Column(
-        children: [
-          // Day name
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Text(
-              DateFormat.E('nl').format(date),
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w500,
-                color: isToday
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey[600],
-              ),
-            ),
+        onTap: onTap,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: isToday
+                ? Border.all(color: Theme.of(context).primaryColor, width: 2)
+                : null,
+            color: isToday
+                ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
+                : null,
           ),
-
-          // Day number
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: isToday ? Theme.of(context).primaryColor : null,
-            ),
-            child: Center(
-              child: Text(
-                '${date.day}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: isToday ? Colors.white : null,
-                ),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 4),
-
-          // Event indicators
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
             children: [
-              if (hasTraining)
-                Container(
-                  width: 6,
-                  height: 6,
-                  margin: const EdgeInsets.symmetric(horizontal: 1),
-                  decoration: const BoxDecoration(
-                    color: Colors.green,
-                    shape: BoxShape.circle,
+              // Day name
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Text(
+                  DateFormat.E('nl').format(date),
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: isToday
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey[600],
                   ),
                 ),
-              if (hasMatch)
-                Container(
-                  width: 6,
-                  height: 6,
-                  margin: const EdgeInsets.symmetric(horizontal: 1),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
+              ),
+
+              // Day number
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isToday ? Theme.of(context).primaryColor : null,
+                ),
+                child: Center(
+                  child: Text(
+                    '${date.day}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isToday ? Colors.white : null,
+                    ),
                   ),
                 ),
+              ),
+
+              const SizedBox(height: 4),
+
+              // Event indicators
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (hasTraining)
+                    Container(
+                      width: 6,
+                      height: 6,
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      decoration: const BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  if (hasMatch)
+                    Container(
+                      width: 6,
+                      height: 6,
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                ],
+              ),
+
+              const SizedBox(height: 8),
             ],
           ),
-
-          const SizedBox(height: 8),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }
 
 class _LegendItem extends StatelessWidget {
@@ -262,20 +262,20 @@ class _LegendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Icon(icon, color: color, size: 16),
-      const SizedBox(width: 4),
-      Text(
-        label,
-        style: TextStyle(
-          fontSize: 12,
-          color: color,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    ],
-  );
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: color, size: 16),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: color,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      );
 }
 
 class _DayDetailsSheet extends StatelessWidget {

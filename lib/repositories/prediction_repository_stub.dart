@@ -13,23 +13,21 @@ class PredictionRepositoryStub implements PredictionRepository {
     // Fallback: use `getRecent()` and filter for team
     final matchesRes = await matchRepository.getRecent();
     if (!matchesRes.isSuccess) return Failure(matchesRes.errorOrNull!);
-    final allMatches = matchesRes.dataOrNull!
-        .where((m) => m.teamId == teamId)
-        .toList();
+    final allMatches =
+        matchesRes.dataOrNull!.where((m) => m.teamId == teamId).toList();
 
     // Take the last [n] played by date desc
     allMatches.sort((a, b) => b.date.compareTo(a.date));
     final matches = allMatches.take(3).toList();
     if (matches.isEmpty) return const Success(FormTrend.stable);
 
-    final avgPts =
-        matches
+    final avgPts = matches
             .map(
               (m) => m.result == MatchResult.win
                   ? 3
                   : m.result == MatchResult.draw
-                  ? 1
-                  : 0,
+                      ? 1
+                      : 0,
             )
             .reduce((a, b) => a + b) /
         matches.length;

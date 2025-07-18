@@ -97,10 +97,10 @@ class PerformanceChart extends StatelessWidget {
   }
 
   Widget _legendItem(String label, Color color, int value) => Row(
-    children: [
-      Container(width: 12, height: 12, color: color),
-      const SizedBox(width: 4),
-      Text('$label: $value'),
-    ],
-  );
+        children: [
+          Container(width: 12, height: 12, color: color),
+          const SizedBox(width: 4),
+          Text('$label: $value'),
+        ],
+      );
 }

@@ -39,5 +39,5 @@ class HeatMapController extends AsyncNotifier<List<ActionEvent>> {
 
 final heatMapControllerProvider =
     AsyncNotifierProvider<HeatMapController, List<ActionEvent>>(
-      HeatMapController.new,
-    );
+  HeatMapController.new,
+);
