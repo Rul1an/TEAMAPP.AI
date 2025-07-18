@@ -79,59 +79,59 @@ class DemoDataService {
   }
 
   static Club _createDemoClub() => Club(
-    id: 'demo-club-voab',
-    name: 'VOAB Utrecht',
-    shortName: 'VOAB',
-    logoUrl: 'https://placehold.co/200x200/1976d2/ffffff?text=VOAB',
-    colors: '#1976d2,#ffffff',
-    foundedDate: DateTime(1928),
-    street: 'Sportpark Overvecht',
-    city: 'Utrecht',
-    country: 'Nederland',
-    website: 'https://voab.nl',
-    settings: const ClubSettings(),
-    status: ClubStatus.active,
-    createdAt: DateTime.now().subtract(const Duration(days: 365)),
-    updatedAt: DateTime.now(),
-  );
+        id: 'demo-club-voab',
+        name: 'VOAB Utrecht',
+        shortName: 'VOAB',
+        logoUrl: 'https://placehold.co/200x200/1976d2/ffffff?text=VOAB',
+        colors: '#1976d2,#ffffff',
+        foundedDate: DateTime(1928),
+        street: 'Sportpark Overvecht',
+        city: 'Utrecht',
+        country: 'Nederland',
+        website: 'https://voab.nl',
+        settings: const ClubSettings(),
+        status: ClubStatus.active,
+        createdAt: DateTime.now().subtract(const Duration(days: 365)),
+        updatedAt: DateTime.now(),
+      );
 
   static List<Team> _createDemoTeams(String clubId) => [
-    Team(
-      id: _uuid.v4(),
-      clubId: clubId,
-      name: 'JO17-1',
-      shortName: 'JO17-1',
-      ageCategory: AgeCategory.jo17,
-      level: TeamLevel.competitive,
-      gender: TeamGender.male,
-      currentSeason: '2024-2025',
-      league: 'KNVB',
-      division: '1e klasse',
-      headCoachId: _uuid.v4(),
-      assistantCoachId: _uuid.v4(),
-      settings: const TeamSettings(),
-      status: TeamStatus.active,
-      createdAt: DateTime.now().subtract(const Duration(days: 180)),
-      updatedAt: DateTime.now(),
-    ),
-    Team(
-      id: _uuid.v4(),
-      clubId: clubId,
-      name: 'JO17-2',
-      shortName: 'JO17-2',
-      ageCategory: AgeCategory.jo17,
-      level: TeamLevel.recreational,
-      gender: TeamGender.male,
-      currentSeason: '2024-2025',
-      league: 'KNVB',
-      division: '3e klasse',
-      headCoachId: _uuid.v4(),
-      settings: const TeamSettings(),
-      status: TeamStatus.active,
-      createdAt: DateTime.now().subtract(const Duration(days: 180)),
-      updatedAt: DateTime.now(),
-    ),
-  ];
+        Team(
+          id: _uuid.v4(),
+          clubId: clubId,
+          name: 'JO17-1',
+          shortName: 'JO17-1',
+          ageCategory: AgeCategory.jo17,
+          level: TeamLevel.competitive,
+          gender: TeamGender.male,
+          currentSeason: '2024-2025',
+          league: 'KNVB',
+          division: '1e klasse',
+          headCoachId: _uuid.v4(),
+          assistantCoachId: _uuid.v4(),
+          settings: const TeamSettings(),
+          status: TeamStatus.active,
+          createdAt: DateTime.now().subtract(const Duration(days: 180)),
+          updatedAt: DateTime.now(),
+        ),
+        Team(
+          id: _uuid.v4(),
+          clubId: clubId,
+          name: 'JO17-2',
+          shortName: 'JO17-2',
+          ageCategory: AgeCategory.jo17,
+          level: TeamLevel.recreational,
+          gender: TeamGender.male,
+          currentSeason: '2024-2025',
+          league: 'KNVB',
+          division: '3e klasse',
+          headCoachId: _uuid.v4(),
+          settings: const TeamSettings(),
+          status: TeamStatus.active,
+          createdAt: DateTime.now().subtract(const Duration(days: 180)),
+          updatedAt: DateTime.now(),
+        ),
+      ];
 
   static Team _createDemoTeam({required String teamId, required String name}) =>
       Team(
@@ -311,38 +311,38 @@ class DemoDataService {
   }
 
   static List<Map<String, dynamic>> _createDemoCoaches() => [
-    {
-      'id': _uuid.v4(),
-      'name': 'Johan de Vries',
-      'role': 'Hoofdtrainer',
-      'email': 'johan.devries@voab.nl',
-      'phone': '06-11111111',
-      'licenseLevel': 'UEFA B',
-    },
-    {
-      'id': _uuid.v4(),
-      'name': 'Henk Jansen',
-      'role': 'Assistent Trainer',
-      'email': 'henk.jansen@voab.nl',
-      'phone': '06-22222222',
-      'licenseLevel': 'TC3',
-    },
-  ];
+        {
+          'id': _uuid.v4(),
+          'name': 'Johan de Vries',
+          'role': 'Hoofdtrainer',
+          'email': 'johan.devries@voab.nl',
+          'phone': '06-11111111',
+          'licenseLevel': 'UEFA B',
+        },
+        {
+          'id': _uuid.v4(),
+          'name': 'Henk Jansen',
+          'role': 'Assistent Trainer',
+          'email': 'henk.jansen@voab.nl',
+          'phone': '06-22222222',
+          'licenseLevel': 'TC3',
+        },
+      ];
 
   static List<Map<String, dynamic>> _createDemoAssessments() =>
       // Technical assessments data
       [];
   static Map<String, dynamic> _createDemoPlayerStats([String? playerId]) => {
-    'goals': 8,
-    'assists': 12,
-    'yellowCards': 2,
-    'redCards': 0,
-    'trainingsAttended': 28,
-    'trainingsTotal': 30,
-    'matchesPlayed': 14,
-    'matchesTotal': 15,
-    'averageRating': 7.5,
-  };
+        'goals': 8,
+        'assists': 12,
+        'yellowCards': 2,
+        'redCards': 0,
+        'trainingsAttended': 28,
+        'trainingsTotal': 30,
+        'matchesPlayed': 14,
+        'matchesTotal': 15,
+        'averageRating': 7.5,
+      };
 
   static String _generateDutchName() {
     final firstNames = [

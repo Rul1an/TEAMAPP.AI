@@ -19,7 +19,11 @@ void main() {
         '/exercise-library',
         '/training-sessions',
         '/exercise-designer',
+<<<<<<< HEAD
         '/field-diagram-editor'
+=======
+        '/field-diagram-editor',
+>>>>>>> origin/main
       ];
       for (final r in routes) {
         expect(MainScaffold.routeToNavIndex(r), 2, reason: 'route $r');
@@ -45,4 +49,8 @@ void main() {
       expect(MainScaffold.routeToNavIndex('/unknown'), 0);
     });
   });
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/main

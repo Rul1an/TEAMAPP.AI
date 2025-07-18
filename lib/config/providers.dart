@@ -65,8 +65,8 @@ final playerTrackingProvider = ChangeNotifierProvider<PlayerTrackingProvider>(
 // Organization repository deps
 final supabaseOrganizationDataSourceProvider =
     Provider<SupabaseOrganizationDataSource>(
-      (ref) => SupabaseOrganizationDataSource(),
-    );
+  (ref) => SupabaseOrganizationDataSource(),
+);
 
 final hiveOrganizationCacheProvider = Provider<HiveOrganizationCache>(
   (ref) => HiveOrganizationCache(),
@@ -81,8 +81,8 @@ final organizationRepositoryProvider = Provider<OrganizationRepository>((ref) {
 // Permission & Feature repository deps
 final supabasePermissionDataSourceProvider =
     Provider<SupabasePermissionDataSource>(
-      (ref) => SupabasePermissionDataSource(),
-    );
+  (ref) => SupabasePermissionDataSource(),
+);
 
 final hivePermissionCacheProvider = Provider<HivePermissionCache>(
   (ref) => HivePermissionCache(),

@@ -44,8 +44,8 @@ final matchByIdProvider = FutureProvider.family<Match?, String>((
 
 final matchesNotifierProvider =
     StateNotifierProvider<MatchesNotifier, AsyncValue<List<Match>>>(
-      MatchesNotifier.new,
-    );
+  MatchesNotifier.new,
+);
 
 class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
   MatchesNotifier(this._ref) : super(const AsyncValue.loading()) {

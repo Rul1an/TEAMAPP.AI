@@ -47,27 +47,29 @@ class MatchReportPdfGenerator extends PdfGenerator<Match> {
 
   // Header -------------------------------------------------------------------
   pw.Widget _buildHeader(Match match, pw.Font bold) => pw.Container(
-    width: double.infinity,
-    padding: const pw.EdgeInsets.all(12),
-    decoration: pw.BoxDecoration(
-      color: PdfTheme.primary,
-      borderRadius: pw.BorderRadius.circular(6),
-    ),
-    child: pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        pw.Text(
-          'Wedstrijd Rapport',
-          style: pw.TextStyle(font: bold, fontSize: 18, color: PdfColors.white),
+        width: double.infinity,
+        padding: const pw.EdgeInsets.all(12),
+        decoration: pw.BoxDecoration(
+          color: PdfTheme.primary,
+          borderRadius: pw.BorderRadius.circular(6),
         ),
-        pw.SizedBox(height: 4),
-        pw.Text(
-          '${match.opponent} – ${PdfUtils.formatDate(match.date)}',
-          style: pw.TextStyle(font: bold, fontSize: 12, color: PdfColors.white),
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(
+              'Wedstrijd Rapport',
+              style: pw.TextStyle(
+                  font: bold, fontSize: 18, color: PdfColors.white,),
+            ),
+            pw.SizedBox(height: 4),
+            pw.Text(
+              '${match.opponent} – ${PdfUtils.formatDate(match.date)}',
+              style: pw.TextStyle(
+                  font: bold, fontSize: 12, color: PdfColors.white,),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   // Match Info ----------------------------------------------------------------
   pw.Widget _buildMatchInfo(Match match, pw.Font regular, pw.Font bold) {
@@ -102,29 +104,30 @@ class MatchReportPdfGenerator extends PdfGenerator<Match> {
     String value,
     pw.Font regular,
     pw.Font bold,
-  ) => pw.Padding(
-    padding: const pw.EdgeInsets.symmetric(vertical: 2),
-    child: pw.Row(
-      children: [
-        pw.Expanded(
-          flex: 2,
-          child: pw.Text(
-            '$label:',
-            style: pw.TextStyle(
-              font: bold,
-              fontSize: 10,
-              color: PdfTheme.primary,
+  ) =>
+      pw.Padding(
+        padding: const pw.EdgeInsets.symmetric(vertical: 2),
+        child: pw.Row(
+          children: [
+            pw.Expanded(
+              flex: 2,
+              child: pw.Text(
+                '$label:',
+                style: pw.TextStyle(
+                  font: bold,
+                  fontSize: 10,
+                  color: PdfTheme.primary,
+                ),
+              ),
             ),
-          ),
+            pw.Expanded(
+              flex: 3,
+              child: pw.Text(
+                value,
+                style: pw.TextStyle(font: regular, fontSize: 10),
+              ),
+            ),
+          ],
         ),
-        pw.Expanded(
-          flex: 3,
-          child: pw.Text(
-            value,
-            style: pw.TextStyle(font: regular, fontSize: 10),
-          ),
-        ),
-      ],
-    ),
-  );
+      );
 }

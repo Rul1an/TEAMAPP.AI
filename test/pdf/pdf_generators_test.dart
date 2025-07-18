@@ -13,7 +13,7 @@ void main() {
   group('PDF Generators', () {
     test('MatchReportPdfGenerator produces valid PDF bytes', () async {
       final match = Match()
-        ..date = DateTime.utc(2025, 6, 1)
+        ..date = DateTime.utc(2025, 6)
         ..opponent = 'Ajax U17'
         ..location = Location.home
         ..competition = Competition.league
@@ -48,13 +48,15 @@ void main() {
       )
         ..id = 'ts1'
         ..durationMinutes = 120
-        ..startTime = DateTime.utc(2025, 4, 20, 18, 0)
-        ..endTime = DateTime.utc(2025, 4, 20, 20, 0);
+        ..startTime = DateTime.utc(2025, 4, 20, 18)
+        ..endTime = DateTime.utc(2025, 4, 20, 20);
 
-      final bytes = await const TrainingSessionPdfGenerator().generate((
-        session,
-        const [],
-      ));
+      final bytes = await const TrainingSessionPdfGenerator().generate(
+        (
+          session,
+          const [],
+        ),
+      );
       expect(bytes, isNotEmpty);
       expect(String.fromCharCodes(bytes.take(4)), equals('%PDF'));
     });

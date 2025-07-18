@@ -29,15 +29,15 @@ final upcomingTrainingsProvider = FutureProvider<List<Training>>((ref) async {
 
 final trainingsByDateRangeProvider =
     FutureProvider.family<List<Training>, DateRange>((ref, range) async {
-      final repo = ref.read(trainingRepositoryProvider);
-      final res = await repo.getByDateRange(range.start, range.end);
-      return res.dataOrNull ?? [];
-    });
+  final repo = ref.read(trainingRepositoryProvider);
+  final res = await repo.getByDateRange(range.start, range.end);
+  return res.dataOrNull ?? [];
+});
 
 final trainingsNotifierProvider =
     StateNotifierProvider<TrainingsNotifier, AsyncValue<List<Training>>>(
-      TrainingsNotifier.new,
-    );
+  TrainingsNotifier.new,
+);
 
 class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
   TrainingsNotifier(this._ref) : super(const AsyncValue.loading()) {

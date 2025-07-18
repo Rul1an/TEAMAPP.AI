@@ -177,7 +177,7 @@ class TrainingPeriod {
   late String description;
 
   late PeriodType
-  type; // preparation, competition_early, competition_peak, transition
+      type; // preparation, competition_early, competition_peak, transition
 
   // Sequence and timing
   late int orderIndex; // sequence in the plan (0, 1, 2, ...)
@@ -193,7 +193,7 @@ class TrainingPeriod {
 
   // Key objectives for this period
   late List<String>
-  keyObjectives; // ["build fitness", "technical skills", "team cohesion"]
+      keyObjectives; // ["build fitness", "technical skills", "team cohesion"]
 
   // Load management parameters
   late int sessionsPerWeek; // recommended sessions per week
@@ -308,25 +308,25 @@ class TrainingPeriod {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'periodizationPlanId': periodizationPlanId,
-    'name': name,
-    'description': description,
-    'type': type.name,
-    'orderIndex': orderIndex,
-    'durationWeeks': durationWeeks,
-    'startDate': startDate?.toIso8601String(),
-    'endDate': endDate?.toIso8601String(),
-    'intensityPercentage': intensityPercentage,
-    'contentFocusJson': contentFocusJson,
-    'keyObjectives': keyObjectives,
-    'sessionsPerWeek': sessionsPerWeek,
-    'averageSessionMinutes': averageSessionMinutes,
-    'restDaysBetweenSessions': restDaysBetweenSessions,
-    'status': status.name,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'periodizationPlanId': periodizationPlanId,
+        'name': name,
+        'description': description,
+        'type': type.name,
+        'orderIndex': orderIndex,
+        'durationWeeks': durationWeeks,
+        'startDate': startDate?.toIso8601String(),
+        'endDate': endDate?.toIso8601String(),
+        'intensityPercentage': intensityPercentage,
+        'contentFocusJson': contentFocusJson,
+        'keyObjectives': keyObjectives,
+        'sessionsPerWeek': sessionsPerWeek,
+        'averageSessionMinutes': averageSessionMinutes,
+        'restDaysBetweenSessions': restDaysBetweenSessions,
+        'status': status.name,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method for updates
   TrainingPeriod copyWith({
@@ -500,18 +500,18 @@ class ContentDistribution {
       ContentDistribution(technical: 20, tactical: 40, mental: 15);
 
   factory ContentDistribution.matchPrep() => ContentDistribution(
-    technical: 15,
-    tactical: 50,
-    physical: 20,
-    mental: 15,
-  );
+        technical: 15,
+        tactical: 50,
+        physical: 20,
+        mental: 15,
+      );
 
   factory ContentDistribution.recovery() => ContentDistribution(
-    technical: 30,
-    tactical: 10,
-    physical: 40,
-    mental: 20,
-  );
+        technical: 30,
+        tactical: 10,
+        physical: 40,
+        mental: 20,
+      );
 
   final double technical;
   final double tactical;
@@ -519,11 +519,11 @@ class ContentDistribution {
   final double mental;
 
   Map<String, dynamic> toJson() => {
-    'technical': technical,
-    'tactical': tactical,
-    'physical': physical,
-    'mental': mental,
-  };
+        'technical': technical,
+        'tactical': tactical,
+        'physical': physical,
+        'mental': mental,
+      };
 
   @override
   String toString() =>

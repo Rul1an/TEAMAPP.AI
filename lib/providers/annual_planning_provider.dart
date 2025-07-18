@@ -39,18 +39,19 @@ class AnnualPlanningState {
     PeriodizationPlan? selectedPeriodizationPlan,
     List<TrainingPeriod>? trainingPeriods,
     List<Morphocycle>? morphocycles,
-  }) => AnnualPlanningState(
-    weekSchedules: weekSchedules ?? this.weekSchedules,
-    selectedWeek: selectedWeek ?? this.selectedWeek,
-    seasonStartDate: seasonStartDate ?? this.seasonStartDate,
-    seasonEndDate: seasonEndDate ?? this.seasonEndDate,
-    isLoading: isLoading ?? this.isLoading,
-    error: error ?? this.error,
-    selectedPeriodizationPlan:
-        selectedPeriodizationPlan ?? this.selectedPeriodizationPlan,
-    trainingPeriods: trainingPeriods ?? this.trainingPeriods,
-    morphocycles: morphocycles ?? this.morphocycles,
-  );
+  }) =>
+      AnnualPlanningState(
+        weekSchedules: weekSchedules ?? this.weekSchedules,
+        selectedWeek: selectedWeek ?? this.selectedWeek,
+        seasonStartDate: seasonStartDate ?? this.seasonStartDate,
+        seasonEndDate: seasonEndDate ?? this.seasonEndDate,
+        isLoading: isLoading ?? this.isLoading,
+        error: error ?? this.error,
+        selectedPeriodizationPlan:
+            selectedPeriodizationPlan ?? this.selectedPeriodizationPlan,
+        trainingPeriods: trainingPeriods ?? this.trainingPeriods,
+        morphocycles: morphocycles ?? this.morphocycles,
+      );
 
   int get currentWeekNumber {
     final now = DateTime.now();
@@ -442,9 +443,8 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       final tuesday = weekStart.add(const Duration(days: 1));
       trainingSessions.add(
         WeeklyTraining(
-          name: trainingTypes.isNotEmpty
-              ? trainingTypes[0]
-              : 'Algemene Training',
+          name:
+              trainingTypes.isNotEmpty ? trainingTypes[0] : 'Algemene Training',
           dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
           location: _getTrainingLocation(weekNumber),
           notes: _getTrainingNotesWithPeriod(weekNumber, period),
@@ -455,9 +455,8 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       final thursday = weekStart.add(const Duration(days: 3));
       trainingSessions.add(
         WeeklyTraining(
-          name: trainingTypes.length > 1
-              ? trainingTypes[1]
-              : 'Algemene Training',
+          name:
+              trainingTypes.length > 1 ? trainingTypes[1] : 'Algemene Training',
           dateTime: DateTime(
             thursday.year,
             thursday.month,
@@ -861,5 +860,5 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
 
 final annualPlanningProvider =
     StateNotifierProvider<AnnualPlanningNotifier, AnnualPlanningState>(
-      (ref) => AnnualPlanningNotifier(),
-    );
+  (ref) => AnnualPlanningNotifier(),
+);

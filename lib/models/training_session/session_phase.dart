@@ -150,17 +150,17 @@ class SessionPhase {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'startTime': startTime.toIso8601String(),
-    'endTime': endTime.toIso8601String(),
-    'description': description,
-    'orderIndex': orderIndex,
-    'type': type.name,
-    'exerciseIds': exerciseIds,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'startTime': startTime.toIso8601String(),
+        'endTime': endTime.toIso8601String(),
+        'description': description,
+        'orderIndex': orderIndex,
+        'type': type.name,
+        'exerciseIds': exerciseIds,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method
   SessionPhase copyWith({

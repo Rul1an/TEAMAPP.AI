@@ -25,14 +25,15 @@ class FormationTemplate {
     required String description,
     required Formation formation,
     required Map<String, String> positionPreferences,
-  }) => FormationTemplate()
-    ..name = name
-    ..description = description
-    ..formation = formation
-    ..positionPreferences = positionPreferences
-    ..isDefault = true
-    ..isCustom = false
-    ..createdBy = 'system';
+  }) =>
+      FormationTemplate()
+        ..name = name
+        ..description = description
+        ..formation = formation
+        ..positionPreferences = positionPreferences
+        ..isDefault = true
+        ..isCustom = false
+        ..createdBy = 'system';
   String id = '';
 
   late String name;
@@ -43,7 +44,8 @@ class FormationTemplate {
 
   // Position mappings - position key to position preferences
   @Ignore()
-  late Map<String, String> positionPreferences; // e.g., {'GK': 'goalkeeper', 'CB1': 'defender'}
+  late Map<String, String>
+      positionPreferences; // e.g., {'GK': 'goalkeeper', 'CB1': 'defender'}
 
   // Template metadata
   late bool isDefault; // System-provided templates

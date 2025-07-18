@@ -10,7 +10,7 @@ import 'hive_key_manager.dart';
 
 class HiveProfileCache {
   HiveProfileCache({HiveKeyManager? keyManager})
-    : _keyManager = keyManager ?? HiveKeyManager();
+      : _keyManager = keyManager ?? HiveKeyManager();
 
   final HiveKeyManager _keyManager;
   static const _boxName = 'profiles_box';

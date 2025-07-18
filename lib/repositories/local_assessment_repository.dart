@@ -6,7 +6,7 @@ import 'assessment_repository.dart';
 
 class LocalAssessmentRepository implements AssessmentRepository {
   LocalAssessmentRepository({HiveAssessmentCache? cache})
-    : _cache = cache ?? HiveAssessmentCache();
+      : _cache = cache ?? HiveAssessmentCache();
 
   final HiveAssessmentCache _cache;
 

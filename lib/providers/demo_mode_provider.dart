@@ -36,14 +36,15 @@ class DemoModeState {
     String? userId,
     String? userName,
     DateTime? expiresAt,
-  }) => DemoModeState(
-    isActive: isActive ?? this.isActive,
-    role: role ?? this.role,
-    organizationId: organizationId ?? this.organizationId,
-    userId: userId ?? this.userId,
-    userName: userName ?? this.userName,
-    expiresAt: expiresAt ?? this.expiresAt,
-  );
+  }) =>
+      DemoModeState(
+        isActive: isActive ?? this.isActive,
+        role: role ?? this.role,
+        organizationId: organizationId ?? this.organizationId,
+        userId: userId ?? this.userId,
+        userName: userName ?? this.userName,
+        expiresAt: expiresAt ?? this.expiresAt,
+      );
 
   bool get isDemo => isActive;
   bool get isAdmin =>
@@ -108,9 +109,8 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
       state = state.copyWith(expiresAt: newExpiresAt);
 
       _expirationTimer?.cancel();
-      final remainingMinutes = newExpiresAt
-          .difference(DateTime.now())
-          .inMinutes;
+      final remainingMinutes =
+          newExpiresAt.difference(DateTime.now()).inMinutes;
       _startExpirationTimer(remainingMinutes);
     }
   }
@@ -197,8 +197,8 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
 // Provider (autoDispose to ensure Timer is cancelled when no listeners)
 final demoModeProvider =
     StateNotifierProvider.autoDispose<DemoModeNotifier, DemoModeState>(
-      (ref) => DemoModeNotifier(),
-    );
+  (ref) => DemoModeNotifier(),
+);
 
 // Helper providers
 final isDemoModeProvider = Provider<bool>(

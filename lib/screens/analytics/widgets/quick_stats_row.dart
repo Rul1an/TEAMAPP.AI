@@ -7,10 +7,10 @@ import '../../../models/training_session/training_session.dart';
 
 class QuickStatsRow extends StatelessWidget {
   const QuickStatsRow({
-    super.key,
     required this.playersAsync,
     required this.assessmentsAsync,
     required this.trainingsAsync,
+    super.key,
   });
 
   final AsyncValue<List<Player>> playersAsync;
@@ -79,8 +79,8 @@ class QuickStatsRow extends StatelessWidget {
               Text(
                 count != null ? '$count' : '...',
                 style: Theme.of(ctx).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               Text(label),
             ],

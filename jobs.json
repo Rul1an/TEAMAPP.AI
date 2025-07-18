@@ -1,0 +1,190 @@
+{
+  "total_count": 2,
+  "jobs": [
+    {
+      "id": 46003887526,
+      "run_id": 16291969021,
+      "workflow_name": "Flutter Web CI/CD",
+      "head_branch": "cursor/setup-flutter-sdk-bootstrap-and-run-tests-0089",
+      "run_url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/runs/16291969021",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOO6V-Bc8AAAAKtgudpg",
+      "head_sha": "761d4645dc7f133e4e777bd88ed7ef6194780ee5",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/jobs/46003887526",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/actions/runs/16291969021/job/46003887526",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2025-07-15T11:26:35Z",
+      "started_at": "2025-07-15T11:26:40Z",
+      "completed_at": "2025-07-15T11:29:32Z",
+      "name": "Test Flutter Web",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2025-07-15T11:26:41Z",
+          "completed_at": "2025-07-15T11:26:42Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2025-07-15T11:26:42Z",
+          "completed_at": "2025-07-15T11:26:42Z"
+        },
+        {
+          "name": "Debug - Show directory structure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2025-07-15T11:26:42Z",
+          "completed_at": "2025-07-15T11:26:42Z"
+        },
+        {
+          "name": "Setup Flutter",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2025-07-15T11:26:42Z",
+          "completed_at": "2025-07-15T11:27:38Z"
+        },
+        {
+          "name": "Install Melos CLI",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2025-07-15T11:27:38Z",
+          "completed_at": "2025-07-15T11:27:41Z"
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2025-07-15T11:27:41Z",
+          "completed_at": "2025-07-15T11:27:59Z"
+        },
+        {
+          "name": "Bootstrap (melos)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2025-07-15T11:27:59Z",
+          "completed_at": "2025-07-15T11:28:05Z"
+        },
+        {
+          "name": "Run tests with coverage",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 8,
+          "started_at": "2025-07-15T11:28:05Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        },
+        {
+          "name": "Check code formatting",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2025-07-15T11:29:30Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        },
+        {
+          "name": "Analyze code",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10,
+          "started_at": "2025-07-15T11:29:30Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        },
+        {
+          "name": "Build web",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 11,
+          "started_at": "2025-07-15T11:29:30Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        },
+        {
+          "name": "Upload artifacts",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12,
+          "started_at": "2025-07-15T11:29:30Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        },
+        {
+          "name": "Upload coverage artifact",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 13,
+          "started_at": "2025-07-15T11:29:30Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        },
+        {
+          "name": "Post Setup Flutter",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2025-07-15T11:29:30Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2025-07-15T11:29:30Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2025-07-15T11:29:30Z",
+          "completed_at": "2025-07-15T11:29:30Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/check-runs/46003887526",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000002776,
+      "runner_name": "GitHub Actions 1000002776",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 46004081028,
+      "run_id": 16291969021,
+      "workflow_name": "Flutter Web CI/CD",
+      "head_branch": "cursor/setup-flutter-sdk-bootstrap-and-run-tests-0089",
+      "run_url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/runs/16291969021",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOO6V-Bc8AAAAKtg6RhA",
+      "head_sha": "761d4645dc7f133e4e777bd88ed7ef6194780ee5",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/jobs/46004081028",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/actions/runs/16291969021/job/46004081028",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2025-07-15T11:29:32Z",
+      "started_at": "2025-07-15T11:29:32Z",
+      "completed_at": "2025-07-15T11:29:32Z",
+      "name": "Lighthouse CI",
+      "steps": [
+
+      ],
+      "check_run_url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/check-runs/46004081028",
+      "labels": [
+
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ]
+}

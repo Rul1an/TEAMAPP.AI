@@ -126,7 +126,6 @@ class PlayerDetailScreen extends ConsumerWidget {
         (p) => p.id == playerId,
         orElse: Player.new,
       );
-      if (player == null) return;
 
       // Placeholder minimal assessment for demo
       final assessmentGenerator = ref.read(
@@ -139,6 +138,7 @@ class PlayerDetailScreen extends ConsumerWidget {
 
       final bytes = await assessmentGenerator.generate(assessment);
       final filename = 'assessment_${player.id}.pdf';
+      if (!context.mounted) return;
       await SharePdfUtils.sharePdf(bytes, filename, context);
     });
   }

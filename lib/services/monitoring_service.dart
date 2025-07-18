@@ -58,10 +58,8 @@ class MonitoringService {
           ..dsn = _sentryDsn
           ..environment = kReleaseMode ? 'production' : 'staging'
           ..release = 'jo17-tactical-manager@1.0.0'
-          ..tracesSampleRate =
-              0.1 // 10% of transactions
-          ..profilesSampleRate =
-              0.1 // 10% for profiling
+          ..tracesSampleRate = 0.1 // 10% of transactions
+          ..profilesSampleRate = 0.1 // 10% for profiling
           ..beforeSend = (event, hint) {
             // Filter out development errors
             if (kDebugMode) return null;
@@ -81,8 +79,8 @@ class MonitoringService {
           ..beforeSendTransaction = (transaction, hint) {
             return transaction;
           }
-          ..beforeBreadcrumb = (Breadcrumb? breadcrumb, Hint? hint) =>
-              breadcrumb;
+          ..beforeBreadcrumb =
+              (Breadcrumb? breadcrumb, Hint? hint) => breadcrumb;
       });
     }
   }
@@ -194,10 +192,9 @@ class MonitoringService {
           ..setData('error_message', errorMessage)
           ..setData('metadata', metadata))
         .finish(
-          status: success
-              ? const SpanStatus.ok()
-              : const SpanStatus.internalError(),
-        );
+      status:
+          success ? const SpanStatus.ok() : const SpanStatus.internalError(),
+    );
   }
 
   /// Track business metrics
@@ -358,14 +355,16 @@ mixin MonitoringMixin {
     dynamic error, {
     StackTrace? stackTrace,
     String? context,
-  }) => MonitoringService.reportError(
-    error: error,
-    stackTrace: stackTrace,
-    context: context,
-  );
+  }) =>
+      MonitoringService.reportError(
+        error: error,
+        stackTrace: stackTrace,
+        context: context,
+      );
 
   Future<T> monitorOperation<T>(
     String operation,
     Future<T> Function() function,
-  ) => MonitoringService.monitorAsync(operation: operation, function: function);
+  ) =>
+      MonitoringService.monitorAsync(operation: operation, function: function);
 }

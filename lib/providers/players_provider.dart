@@ -50,8 +50,8 @@ final playersByPositionProvider = FutureProvider.family<List<Player>, Position>(
 
 final playersNotifierProvider =
     StateNotifierProvider<PlayersNotifier, AsyncValue<List<Player>>>(
-      PlayersNotifier.new,
-    );
+  PlayersNotifier.new,
+);
 
 class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
   PlayersNotifier(this._ref) : super(const AsyncValue.loading()) {

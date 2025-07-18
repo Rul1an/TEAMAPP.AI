@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class FeatureCard extends StatelessWidget {
   const FeatureCard({
-    super.key,
     required this.title,
     required this.subtitle,
     required this.icon,
     required this.color,
     required this.onTap,
+    super.key,
   });
 
   final String title;

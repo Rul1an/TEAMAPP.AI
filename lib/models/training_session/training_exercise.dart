@@ -60,30 +60,30 @@ class TrainingExercise {
     double primaryIntensity = 5.0,
   }) =>
       TrainingExercise(
-          name: name,
-          description: description,
-          durationMinutes: durationMinutes,
-          playerCount: playerCount,
-          equipment: equipment,
-          intensityLevel: intensityLevel,
-          type: type,
-          coachingPoints: coachingPoints ?? [],
-          trainingSessionId: trainingSessionId,
-          sessionPhaseId: sessionPhaseId,
-          orderIndex: orderIndex,
-          keyFocus: keyFocus,
-          objectives: objectives ?? [],
-          fieldDiagram: fieldDiagram,
-          minPlayers: minPlayers,
-          maxPlayers: maxPlayers,
-          category: category,
-          complexity: complexity,
-          spaceRequired: spaceRequired,
-          estimatedRPE: estimatedRPE,
-          averageRating: averageRating,
-          tacticalFocus: tacticalFocus,
-          primaryIntensity: primaryIntensity,
-        )
+        name: name,
+        description: description,
+        durationMinutes: durationMinutes,
+        playerCount: playerCount,
+        equipment: equipment,
+        intensityLevel: intensityLevel,
+        type: type,
+        coachingPoints: coachingPoints ?? [],
+        trainingSessionId: trainingSessionId,
+        sessionPhaseId: sessionPhaseId,
+        orderIndex: orderIndex,
+        keyFocus: keyFocus,
+        objectives: objectives ?? [],
+        fieldDiagram: fieldDiagram,
+        minPlayers: minPlayers,
+        maxPlayers: maxPlayers,
+        category: category,
+        complexity: complexity,
+        spaceRequired: spaceRequired,
+        estimatedRPE: estimatedRPE,
+        averageRating: averageRating,
+        tacticalFocus: tacticalFocus,
+        primaryIntensity: primaryIntensity,
+      )
         ..createdAt = DateTime.now()
         ..updatedAt = DateTime.now();
 
@@ -251,32 +251,32 @@ class TrainingExercise {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'description': description,
-    'durationMinutes': durationMinutes,
-    'playerCount': playerCount,
-    'equipment': equipment,
-    'intensityLevel': intensityLevel,
-    'type': type.name,
-    'coachingPoints': coachingPoints,
-    'trainingSessionId': trainingSessionId,
-    'sessionPhaseId': sessionPhaseId,
-    'orderIndex': orderIndex,
-    'keyFocus': keyFocus,
-    'objectives': objectives,
-    'minPlayers': minPlayers,
-    'maxPlayers': maxPlayers,
-    'category': category.name,
-    'complexity': complexity.name,
-    'spaceRequired': spaceRequired,
-    'estimatedRPE': estimatedRPE,
-    'averageRating': averageRating,
-    'tacticalFocus': tacticalFocus?.name,
-    'primaryIntensity': primaryIntensity,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'description': description,
+        'durationMinutes': durationMinutes,
+        'playerCount': playerCount,
+        'equipment': equipment,
+        'intensityLevel': intensityLevel,
+        'type': type.name,
+        'coachingPoints': coachingPoints,
+        'trainingSessionId': trainingSessionId,
+        'sessionPhaseId': sessionPhaseId,
+        'orderIndex': orderIndex,
+        'keyFocus': keyFocus,
+        'objectives': objectives,
+        'minPlayers': minPlayers,
+        'maxPlayers': maxPlayers,
+        'category': category.name,
+        'complexity': complexity.name,
+        'spaceRequired': spaceRequired,
+        'estimatedRPE': estimatedRPE,
+        'averageRating': averageRating,
+        'tacticalFocus': tacticalFocus?.name,
+        'primaryIntensity': primaryIntensity,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy method
   TrainingExercise copyWith({
@@ -306,30 +306,30 @@ class TrainingExercise {
     double? primaryIntensity,
   }) {
     return TrainingExercise.create(
-        name: name ?? this.name,
-        description: description ?? this.description,
-        durationMinutes: durationMinutes ?? this.durationMinutes,
-        playerCount: playerCount ?? this.playerCount,
-        equipment: equipment ?? this.equipment,
-        intensityLevel: intensityLevel ?? this.intensityLevel,
-        type: type ?? this.type,
-        coachingPoints: coachingPoints ?? this.coachingPoints,
-        trainingSessionId: trainingSessionId ?? this.trainingSessionId,
-        sessionPhaseId: sessionPhaseId ?? this.sessionPhaseId,
-        orderIndex: orderIndex ?? this.orderIndex,
-        keyFocus: keyFocus ?? this.keyFocus,
-        objectives: objectives ?? this.objectives,
-        fieldDiagram: fieldDiagram ?? this.fieldDiagram,
-        minPlayers: minPlayers ?? this.minPlayers,
-        maxPlayers: maxPlayers ?? this.maxPlayers,
-        category: category ?? this.category,
-        complexity: complexity ?? this.complexity,
-        spaceRequired: spaceRequired ?? this.spaceRequired,
-        estimatedRPE: estimatedRPE ?? this.estimatedRPE,
-        averageRating: averageRating ?? this.averageRating,
-        tacticalFocus: tacticalFocus ?? this.tacticalFocus,
-        primaryIntensity: primaryIntensity ?? this.primaryIntensity,
-      )
+      name: name ?? this.name,
+      description: description ?? this.description,
+      durationMinutes: durationMinutes ?? this.durationMinutes,
+      playerCount: playerCount ?? this.playerCount,
+      equipment: equipment ?? this.equipment,
+      intensityLevel: intensityLevel ?? this.intensityLevel,
+      type: type ?? this.type,
+      coachingPoints: coachingPoints ?? this.coachingPoints,
+      trainingSessionId: trainingSessionId ?? this.trainingSessionId,
+      sessionPhaseId: sessionPhaseId ?? this.sessionPhaseId,
+      orderIndex: orderIndex ?? this.orderIndex,
+      keyFocus: keyFocus ?? this.keyFocus,
+      objectives: objectives ?? this.objectives,
+      fieldDiagram: fieldDiagram ?? this.fieldDiagram,
+      minPlayers: minPlayers ?? this.minPlayers,
+      maxPlayers: maxPlayers ?? this.maxPlayers,
+      category: category ?? this.category,
+      complexity: complexity ?? this.complexity,
+      spaceRequired: spaceRequired ?? this.spaceRequired,
+      estimatedRPE: estimatedRPE ?? this.estimatedRPE,
+      averageRating: averageRating ?? this.averageRating,
+      tacticalFocus: tacticalFocus ?? this.tacticalFocus,
+      primaryIntensity: primaryIntensity ?? this.primaryIntensity,
+    )
       ..id = id ?? this.id
       ..createdAt = createdAt
       ..updatedAt = DateTime.now();
@@ -409,22 +409,24 @@ class TrainingExercise {
 // Extension methods for filtering exercises
 extension TrainingExerciseFilters on List<TrainingExercise> {
   List<TrainingExercise> forIntensity(TrainingIntensity intensity) => where((
-    exercise,
-  ) {
-    // Map TrainingIntensity enum to intensity level ranges
-    switch (intensity) {
-      case TrainingIntensity.recovery:
-        return exercise.intensityLevel <= 4.0;
-      case TrainingIntensity.activation:
-        return exercise.intensityLevel >= 4.0 && exercise.intensityLevel <= 6.0;
-      case TrainingIntensity.development:
-        return exercise.intensityLevel >= 6.0 && exercise.intensityLevel <= 8.0;
-      case TrainingIntensity.acquisition:
-        return exercise.intensityLevel >= 8.0;
-      case TrainingIntensity.competition:
-        return exercise.intensityLevel >= 9.0;
-    }
-  }).toList();
+        exercise,
+      ) {
+        // Map TrainingIntensity enum to intensity level ranges
+        switch (intensity) {
+          case TrainingIntensity.recovery:
+            return exercise.intensityLevel <= 4.0;
+          case TrainingIntensity.activation:
+            return exercise.intensityLevel >= 4.0 &&
+                exercise.intensityLevel <= 6.0;
+          case TrainingIntensity.development:
+            return exercise.intensityLevel >= 6.0 &&
+                exercise.intensityLevel <= 8.0;
+          case TrainingIntensity.acquisition:
+            return exercise.intensityLevel >= 8.0;
+          case TrainingIntensity.competition:
+            return exercise.intensityLevel >= 9.0;
+        }
+      }).toList();
 
   List<TrainingExercise> forTacticalFocus(TacticalFocus focus) =>
       where((exercise) => exercise.tacticalFocus == focus).toList();
@@ -448,10 +450,10 @@ extension TrainingExerciseFilters on List<TrainingExercise> {
       where((exercise) => exercise.complexity == complexity).toList();
 
   List<TrainingExercise> forDuration(int minMinutes, int maxMinutes) => where(
-    (exercise) =>
-        exercise.durationMinutes >= minMinutes &&
-        exercise.durationMinutes <= maxMinutes,
-  ).toList();
+        (exercise) =>
+            exercise.durationMinutes >= minMinutes &&
+            exercise.durationMinutes <= maxMinutes,
+      ).toList();
 
   List<TrainingExercise> forPlayerCount(int minPlayers, int maxPlayers) =>
       where(

@@ -1,0 +1,394 @@
+﻿2025-07-15T09:32:46.1068143Z Current runner version: '2.326.0'
+2025-07-15T09:32:46.1100613Z ##[group]Runner Image Provisioner
+2025-07-15T09:32:46.1101747Z Hosted Compute Agent
+2025-07-15T09:32:46.1102713Z Version: 20250711.363
+2025-07-15T09:32:46.1103683Z Commit: 6785254374ce925a23743850c1cb91912ce5c14c
+2025-07-15T09:32:46.1104675Z Build Date: 2025-07-11T20:04:25Z
+2025-07-15T09:32:46.1105755Z ##[endgroup]
+2025-07-15T09:32:46.1106555Z ##[group]Operating System
+2025-07-15T09:32:46.1107511Z Ubuntu
+2025-07-15T09:32:46.1108283Z 24.04.2
+2025-07-15T09:32:46.1109231Z LTS
+2025-07-15T09:32:46.1109946Z ##[endgroup]
+2025-07-15T09:32:46.1110801Z ##[group]Runner Image
+2025-07-15T09:32:46.1111695Z Image: ubuntu-24.04
+2025-07-15T09:32:46.1112459Z Version: 20250710.1.0
+2025-07-15T09:32:46.1114243Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250710.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-07-15T09:32:46.1116747Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250710.1
+2025-07-15T09:32:46.1118465Z ##[endgroup]
+2025-07-15T09:32:46.1120445Z ##[group]GITHUB_TOKEN Permissions
+2025-07-15T09:32:46.1122945Z Contents: read
+2025-07-15T09:32:46.1123760Z Metadata: read
+2025-07-15T09:32:46.1124512Z Packages: read
+2025-07-15T09:32:46.1125507Z ##[endgroup]
+2025-07-15T09:32:46.1128658Z Secret source: Actions
+2025-07-15T09:32:46.1129923Z Prepare workflow directory
+2025-07-15T09:32:46.1577045Z Prepare all required actions
+2025-07-15T09:32:46.1631855Z Getting action download info
+2025-07-15T09:32:46.5819533Z ##[group]Download immutable action package 'actions/checkout@v4'
+2025-07-15T09:32:46.5820741Z Version: 4.2.2
+2025-07-15T09:32:46.5821749Z Digest: sha256:ccb2698953eaebd21c7bf6268a94f9c26518a7e38e27e0b83c1fe1ad049819b1
+2025-07-15T09:32:46.5823028Z Source commit SHA: 11bd71901bbe5b1630ceea73d27597364c9af683
+2025-07-15T09:32:46.5823816Z ##[endgroup]
+2025-07-15T09:32:46.6653453Z Download action repository 'subosito/flutter-action@v2' (SHA:e938fdf56512cc96ef2f93601a5a40bde3801046)
+2025-07-15T09:32:46.8474059Z ##[group]Download immutable action package 'actions/upload-artifact@v4'
+2025-07-15T09:32:46.8475011Z Version: 4.6.2
+2025-07-15T09:32:46.8475766Z Digest: sha256:290722aa3281d5caf23d0acdc3dbeb3424786a1a01a9cc97e72f147225e37c38
+2025-07-15T09:32:46.8476800Z Source commit SHA: ea165f8d65b6e75b540449e92b4886f43607fa02
+2025-07-15T09:32:46.8477554Z ##[endgroup]
+2025-07-15T09:32:47.0402211Z Getting action download info
+2025-07-15T09:32:47.2038090Z ##[group]Download immutable action package 'actions/cache@v4'
+2025-07-15T09:32:47.2038779Z Version: 4.2.3
+2025-07-15T09:32:47.2039803Z Digest: sha256:c8a3bb963e1f1826d8fcc8d1354f0dd29d8ac1db1d4f6f20247055ae11b81ed9
+2025-07-15T09:32:47.2040719Z Source commit SHA: 5a3ec84eff668545956fd18022155c47e93e2684
+2025-07-15T09:32:47.2041346Z ##[endgroup]
+2025-07-15T09:32:47.3691476Z Complete job name: Test Flutter Web
+2025-07-15T09:32:47.4421735Z ##[group]Run actions/checkout@v4
+2025-07-15T09:32:47.4422682Z with:
+2025-07-15T09:32:47.4423115Z   repository: Rul1an/TEAMAPP.AI
+2025-07-15T09:32:47.4423945Z   token: ***
+2025-07-15T09:32:47.4424368Z   ssh-strict: true
+2025-07-15T09:32:47.4424831Z   ssh-user: git
+2025-07-15T09:32:47.4425290Z   persist-credentials: true
+2025-07-15T09:32:47.4425828Z   clean: true
+2025-07-15T09:32:47.4426296Z   sparse-checkout-cone-mode: true
+2025-07-15T09:32:47.4426904Z   fetch-depth: 1
+2025-07-15T09:32:47.4427357Z   fetch-tags: false
+2025-07-15T09:32:47.4427829Z   show-progress: true
+2025-07-15T09:32:47.4428317Z   lfs: false
+2025-07-15T09:32:47.4428727Z   submodules: false
+2025-07-15T09:32:47.4429446Z   set-safe-directory: true
+2025-07-15T09:32:47.4430232Z ##[endgroup]
+2025-07-15T09:32:47.5484233Z Syncing repository: Rul1an/TEAMAPP.AI
+2025-07-15T09:32:47.5486161Z ##[group]Getting Git version info
+2025-07-15T09:32:47.5487099Z Working directory is '/home/runner/work/TEAMAPP.AI/TEAMAPP.AI'
+2025-07-15T09:32:47.5488470Z [command]/usr/bin/git version
+2025-07-15T09:32:47.5532393Z git version 2.50.1
+2025-07-15T09:32:47.5557891Z ##[endgroup]
+2025-07-15T09:32:47.5571777Z Temporarily overriding HOME='/home/runner/work/_temp/0489e404-4da3-4da1-882d-9c558e032c9b' before making global git config changes
+2025-07-15T09:32:47.5574208Z Adding repository directory to the temporary git global config as a safe directory
+2025-07-15T09:32:47.5576442Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T09:32:47.5608820Z Deleting the contents of '/home/runner/work/TEAMAPP.AI/TEAMAPP.AI'
+2025-07-15T09:32:47.5612534Z ##[group]Initializing the repository
+2025-07-15T09:32:47.5616239Z [command]/usr/bin/git init /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T09:32:47.5685397Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-07-15T09:32:47.5687684Z hint: is subject to change. To configure the initial branch name to use in all
+2025-07-15T09:32:47.5689772Z hint: of your new repositories, which will suppress this warning, call:
+2025-07-15T09:32:47.5691539Z hint:
+2025-07-15T09:32:47.5692731Z hint: 	git config --global init.defaultBranch <name>
+2025-07-15T09:32:47.5694167Z hint:
+2025-07-15T09:32:47.5695466Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-07-15T09:32:47.5697824Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-07-15T09:32:47.5699846Z hint:
+2025-07-15T09:32:47.5700624Z hint: 	git branch -m <name>
+2025-07-15T09:32:47.5701625Z hint:
+2025-07-15T09:32:47.5703056Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-07-15T09:32:47.5705680Z Initialized empty Git repository in /home/runner/work/TEAMAPP.AI/TEAMAPP.AI/.git/
+2025-07-15T09:32:47.5708832Z [command]/usr/bin/git remote add origin https://github.com/Rul1an/TEAMAPP.AI
+2025-07-15T09:32:47.5735258Z ##[endgroup]
+2025-07-15T09:32:47.5736726Z ##[group]Disabling automatic garbage collection
+2025-07-15T09:32:47.5739613Z [command]/usr/bin/git config --local gc.auto 0
+2025-07-15T09:32:47.5768728Z ##[endgroup]
+2025-07-15T09:32:47.5770400Z ##[group]Setting up auth
+2025-07-15T09:32:47.5776849Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-07-15T09:32:47.5808320Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-07-15T09:32:47.6086030Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-07-15T09:32:47.6114243Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-07-15T09:32:47.6329472Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-07-15T09:32:47.6365806Z ##[endgroup]
+2025-07-15T09:32:47.6366696Z ##[group]Fetching the repository
+2025-07-15T09:32:47.6375968Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +51ad5899c8cae23edc8191f42a8029163cd8a571:refs/remotes/pull/74/merge
+2025-07-15T09:32:47.9857593Z From https://github.com/Rul1an/TEAMAPP.AI
+2025-07-15T09:32:47.9860837Z  * [new ref]         51ad5899c8cae23edc8191f42a8029163cd8a571 -> pull/74/merge
+2025-07-15T09:32:47.9882626Z ##[endgroup]
+2025-07-15T09:32:47.9884490Z ##[group]Determining the checkout info
+2025-07-15T09:32:47.9886595Z ##[endgroup]
+2025-07-15T09:32:47.9890706Z [command]/usr/bin/git sparse-checkout disable
+2025-07-15T09:32:47.9928157Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-07-15T09:32:47.9956790Z ##[group]Checking out the ref
+2025-07-15T09:32:47.9960538Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/74/merge
+2025-07-15T09:32:48.0517566Z Note: switching to 'refs/remotes/pull/74/merge'.
+2025-07-15T09:32:48.0518800Z 
+2025-07-15T09:32:48.0520023Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-07-15T09:32:48.0522875Z changes and commit them, and you can discard any commits you make in this
+2025-07-15T09:32:48.0525425Z state without impacting any branches by switching back to a branch.
+2025-07-15T09:32:48.0526560Z 
+2025-07-15T09:32:48.0527161Z If you want to create a new branch to retain commits you create, you may
+2025-07-15T09:32:48.0528699Z do so (now or later) by using -c with the switch command. Example:
+2025-07-15T09:32:48.0530077Z 
+2025-07-15T09:32:48.0530447Z   git switch -c <new-branch-name>
+2025-07-15T09:32:48.0531072Z 
+2025-07-15T09:32:48.0531452Z Or undo this operation with:
+2025-07-15T09:32:48.0597069Z 
+2025-07-15T09:32:48.0597630Z   git switch -
+2025-07-15T09:32:48.0598454Z 
+2025-07-15T09:32:48.0599895Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-07-15T09:32:48.0601636Z 
+2025-07-15T09:32:48.0602893Z HEAD is now at 51ad589 Merge 6ab331f03bff8bc3215df97d030fd799d5b2aa26 into 0f40832207d924d37e03b84bf3bc6b30faf02cc8
+2025-07-15T09:32:48.0607015Z ##[endgroup]
+2025-07-15T09:32:48.0609599Z [command]/usr/bin/git log -1 --format=%H
+2025-07-15T09:32:48.0611176Z 51ad5899c8cae23edc8191f42a8029163cd8a571
+2025-07-15T09:32:48.0850137Z ##[group]Run echo "=== Current directory ==="
+2025-07-15T09:32:48.0851463Z [36;1mecho "=== Current directory ==="[0m
+2025-07-15T09:32:48.0852561Z [36;1mpwd[0m
+2025-07-15T09:32:48.0853472Z [36;1mecho "=== Root directory contents ==="[0m
+2025-07-15T09:32:48.0854629Z [36;1mls -la[0m
+2025-07-15T09:32:48.0855680Z [36;1mecho "=== Check if jo17_tactical_manager exists ==="[0m
+2025-07-15T09:32:48.0857085Z [36;1mif [ -d "jo17_tactical_manager" ]; then[0m
+2025-07-15T09:32:48.0858383Z [36;1m  echo "jo17_tactical_manager directory exists"[0m
+2025-07-15T09:32:48.0859962Z [36;1m  echo "=== Contents of jo17_tactical_manager ==="[0m
+2025-07-15T09:32:48.0861348Z [36;1m  ls -la jo17_tactical_manager/[0m
+2025-07-15T09:32:48.0862399Z [36;1melse[0m
+2025-07-15T09:32:48.0863390Z [36;1m  echo "jo17_tactical_manager directory NOT found"[0m
+2025-07-15T09:32:48.0864901Z [36;1m  echo "=== Looking for pubspec.yaml ==="[0m
+2025-07-15T09:32:48.0866185Z [36;1m  find . -name "pubspec.yaml" -type f[0m
+2025-07-15T09:32:48.0867283Z [36;1mfi[0m
+2025-07-15T09:32:48.0900402Z shell: /usr/bin/bash -e {0}
+2025-07-15T09:32:48.0901403Z ##[endgroup]
+2025-07-15T09:32:48.0975025Z === Current directory ===
+2025-07-15T09:32:48.0976773Z /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T09:32:48.0978693Z === Root directory contents ===
+2025-07-15T09:32:48.0991978Z total 4100
+2025-07-15T09:32:48.0993573Z drwxr-xr-x 19 runner docker    4096 Jul 15 09:32 .
+2025-07-15T09:32:48.0995679Z drwxr-xr-x  3 runner docker    4096 Jul 15 09:32 ..
+2025-07-15T09:32:48.0997977Z -rw-r--r--  1 runner docker     389 Jul 15 09:32 .dart_code_metrics.yaml
+2025-07-15T09:32:48.1000717Z drwxr-xr-x  7 runner docker    4096 Jul 15 09:32 .git
+2025-07-15T09:32:48.1002876Z drwxr-xr-x  3 runner docker    4096 Jul 15 09:32 .github
+2025-07-15T09:32:48.1005026Z -rw-r--r--  1 runner docker     709 Jul 15 09:32 .gitignore
+2025-07-15T09:32:48.1007235Z drwxr-xr-x  2 runner docker    4096 Jul 15 09:32 .idx
+2025-07-15T09:32:48.1009626Z -rw-r--r--  1 runner docker     636 Jul 15 09:32 .lefthook.yml
+2025-07-15T09:32:48.1011855Z -rw-r--r--  1 runner docker     964 Jul 15 09:32 .metadata
+2025-07-15T09:32:48.1013956Z drwxr-xr-x  2 runner docker    4096 Jul 15 09:32 .vscode
+2025-07-15T09:32:48.1016227Z -rw-r--r--  1 runner docker     858 Jul 15 09:32 CHANGELOG.md
+2025-07-15T09:32:48.1018409Z -rw-r--r--  1 runner docker    2987 Jul 15 09:32 README.md
+2025-07-15T09:32:48.1020798Z -rw-r--r--  1 runner docker    3947 Jul 15 09:32 TODO.md
+2025-07-15T09:32:48.1023073Z -rw-r--r--  1 runner docker    7962 Jul 15 09:32 analysis_options.yaml
+2025-07-15T09:32:48.1025729Z -rw-r--r--  1 runner docker 1583565 Jul 15 09:32 analyze_complete_output.txt
+2025-07-15T09:32:48.1028376Z -rw-r--r--  1 runner docker  170310 Jul 15 09:32 analyze_full_output.txt
+2025-07-15T09:32:48.1031205Z -rw-r--r--  1 runner docker 1820862 Jul 15 09:32 analyze_output.txt
+2025-07-15T09:32:48.1033706Z drwxr-xr-x  5 runner docker    4096 Jul 15 09:32 android
+2025-07-15T09:32:48.1035799Z drwxr-xr-x  4 runner docker    4096 Jul 15 09:32 assets
+2025-07-15T09:32:48.1037895Z -rw-r--r--  1 runner docker    1098 Jul 15 09:32 build.yaml
+2025-07-15T09:32:48.1040372Z -rw-r--r--  1 runner docker      69 Jul 15 09:32 commitlint.config.js
+2025-07-15T09:32:48.1042682Z drwxr-xr-x  3 runner docker    4096 Jul 15 09:32 coverage
+2025-07-15T09:32:48.1044830Z -rwxr-xr-x  1 runner docker     409 Jul 15 09:32 coverage.sh
+2025-07-15T09:32:48.1047136Z -rw-r--r--  1 runner docker    1853 Jul 15 09:32 critical_errors.txt
+2025-07-15T09:32:48.1049722Z -rw-r--r--  1 runner docker     184 Jul 15 09:32 devtools_options.yaml
+2025-07-15T09:32:48.1052011Z drwxr-xr-x 10 runner docker    4096 Jul 15 09:32 docs
+2025-07-15T09:32:48.1054338Z -rwxr-xr-x  1 runner docker     892 Jul 15 09:32 error_triage_strategy.sh
+2025-07-15T09:32:48.1056984Z -rwxr-xr-x  1 runner docker    2572 Jul 15 09:32 final_error_cleanup.sh
+2025-07-15T09:32:48.1059629Z -rwxr-xr-x  1 runner docker    1888 Jul 15 09:32 fix_analysis_errors.sh
+2025-07-15T09:32:48.1061456Z -rwxr-xr-x  1 runner docker    2198 Jul 15 09:32 fix_critical_core_files.sh
+2025-07-15T09:32:48.1064223Z -rwxr-xr-x  1 runner docker     403 Jul 15 09:32 fix_critical_errors.sh
+2025-07-15T09:32:48.1066405Z -rwxr-xr-x  1 runner docker    3397 Jul 15 09:32 intelligent_dart_syntax_fix.sh
+2025-07-15T09:32:48.1067902Z drwxr-xr-x  7 runner docker    4096 Jul 15 09:32 ios
+2025-07-15T09:32:48.1070098Z -rw-r--r--  1 runner docker  364627 Jul 15 09:32 jo17_tactical_manager_with_performance_roadmap_20250607_005235.tar.gz
+2025-07-15T09:32:48.1071983Z drwxr-xr-x 15 runner docker    4096 Jul 15 09:32 lib
+2025-07-15T09:32:48.1073329Z -rw-r--r--  1 runner docker     614 Jul 15 09:32 lighthouserc.json
+2025-07-15T09:32:48.1074685Z drwxr-xr-x  7 runner docker    4096 Jul 15 09:32 macos
+2025-07-15T09:32:48.1075965Z -rw-r--r--  1 runner docker     855 Jul 15 09:32 melos.yaml
+2025-07-15T09:32:48.1077291Z -rw-r--r--  1 runner docker     903 Jul 15 09:32 netlify.toml
+2025-07-15T09:32:48.1078606Z drwxr-xr-x  3 runner docker    4096 Jul 15 09:32 packages
+2025-07-15T09:32:48.1080299Z -rw-r--r--  1 runner docker   48768 Jul 15 09:32 pubspec.lock
+2025-07-15T09:32:48.1081650Z -rw-r--r--  1 runner docker    1999 Jul 15 09:32 pubspec.yaml
+2025-07-15T09:32:48.1083116Z -rw-r--r--  1 runner docker     115 Jul 15 09:32 pubspec_overrides.yaml
+2025-07-15T09:32:48.1084646Z -rwxr-xr-x  1 runner docker    4607 Jul 15 09:32 restore_working_core.sh
+2025-07-15T09:32:48.1086093Z drwxr-xr-x  2 runner docker    4096 Jul 15 09:32 scripts
+2025-07-15T09:32:48.1087397Z drwxr-xr-x  4 runner docker    4096 Jul 15 09:32 supabase
+2025-07-15T09:32:48.1088802Z -rwxr-xr-x  1 runner docker    1683 Jul 15 09:32 surgical_syntax_fix.sh
+2025-07-15T09:32:48.1090423Z -rw-r--r--  1 runner docker       1 Jul 15 09:32 temp_db.dart
+2025-07-15T09:32:48.1091815Z -rw-r--r--  1 runner docker     519 Jul 15 09:32 temp_radar_fix.txt
+2025-07-15T09:32:48.1093161Z drwxr-xr-x 17 runner docker    4096 Jul 15 09:32 test
+2025-07-15T09:32:48.1094375Z drwxr-xr-x  2 runner docker    4096 Jul 15 09:32 tool
+2025-07-15T09:32:48.1095604Z drwxr-xr-x  3 runner docker    4096 Jul 15 09:32 web
+2025-07-15T09:32:48.1096752Z === Check if jo17_tactical_manager exists ===
+2025-07-15T09:32:48.1097832Z jo17_tactical_manager directory NOT found
+2025-07-15T09:32:48.1098871Z === Looking for pubspec.yaml ===
+2025-07-15T09:32:48.1099999Z ./pubspec.yaml
+2025-07-15T09:32:48.1100801Z ./packages/test_utils/pubspec.yaml
+2025-07-15T09:32:48.1416249Z ##[group]Run subosito/flutter-action@v2
+2025-07-15T09:32:48.1417235Z with:
+2025-07-15T09:32:48.1417914Z   flutter-version: 3.32.x
+2025-07-15T09:32:48.1418738Z   channel: stable
+2025-07-15T09:32:48.1419613Z   cache: true
+2025-07-15T09:32:48.1420296Z   architecture: X64
+2025-07-15T09:32:48.1421044Z   pub-cache-path: default
+2025-07-15T09:32:48.1421835Z   dry-run: false
+2025-07-15T09:32:48.1422696Z   git-source: https://github.com/flutter/flutter.git
+2025-07-15T09:32:48.1423939Z ##[endgroup]
+2025-07-15T09:32:48.1546376Z ##[group]Run chmod +x "$GITHUB_ACTION_PATH/setup.sh"
+2025-07-15T09:32:48.1547591Z [36;1mchmod +x "$GITHUB_ACTION_PATH/setup.sh"[0m
+2025-07-15T09:32:48.1578145Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2025-07-15T09:32:48.1579633Z ##[endgroup]
+2025-07-15T09:32:48.1734286Z ##[group]Run $GITHUB_ACTION_PATH/setup.sh -p \
+2025-07-15T09:32:48.1736263Z [36;1m$GITHUB_ACTION_PATH/setup.sh -p \[0m
+2025-07-15T09:32:48.1738015Z [36;1m  -n '3.32.x' \[0m
+2025-07-15T09:32:48.1739696Z [36;1m  -f '' \[0m
+2025-07-15T09:32:48.1741015Z [36;1m  -a 'X64' \[0m
+2025-07-15T09:32:48.1742346Z [36;1m  -k '' \[0m
+2025-07-15T09:32:48.1743648Z [36;1m  -c '' \[0m
+2025-07-15T09:32:48.1744937Z [36;1m  -l '' \[0m
+2025-07-15T09:32:48.1746245Z [36;1m  -d 'default' \[0m
+2025-07-15T09:32:48.1748073Z [36;1m  -g 'https://github.com/flutter/flutter.git' \[0m
+2025-07-15T09:32:48.1750209Z [36;1m  stable[0m
+2025-07-15T09:32:48.1792075Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2025-07-15T09:32:48.1794197Z ##[endgroup]
+2025-07-15T09:32:48.3683854Z ##[group]Run actions/cache@v4
+2025-07-15T09:32:48.3684729Z with:
+2025-07-15T09:32:48.3685562Z   path: /opt/hostedtoolcache/flutter/stable-3.32.6-x64
+2025-07-15T09:32:48.3687132Z   key: flutter-linux-stable-3.32.6-x64-077b4a4ce10a07b82caa6897f0c626f9c0a3ac90
+2025-07-15T09:32:48.3688589Z   enableCrossOsArchive: false
+2025-07-15T09:32:48.3689672Z   fail-on-cache-miss: false
+2025-07-15T09:32:48.3690545Z   lookup-only: false
+2025-07-15T09:32:48.3691314Z   save-always: false
+2025-07-15T09:32:48.3692073Z ##[endgroup]
+2025-07-15T09:32:48.6059632Z Cache not found for input keys: flutter-linux-stable-3.32.6-x64-077b4a4ce10a07b82caa6897f0c626f9c0a3ac90
+2025-07-15T09:32:48.7418314Z ##[group]Run actions/cache@v4
+2025-07-15T09:32:48.7419415Z with:
+2025-07-15T09:32:48.7420124Z   path: /home/runner/.pub-cache
+2025-07-15T09:32:48.7422476Z   key: flutter-pub-linux-stable-3.32.6-x64-077b4a4ce10a07b82caa6897f0c626f9c0a3ac90-334a48f799cfc0630fc02947041f6474e3b5133f0b83e8acdf38099c38c8341e
+2025-07-15T09:32:48.7424989Z   enableCrossOsArchive: false
+2025-07-15T09:32:48.7425870Z   fail-on-cache-miss: false
+2025-07-15T09:32:48.7426678Z   lookup-only: false
+2025-07-15T09:32:48.7427424Z   save-always: false
+2025-07-15T09:32:48.7428165Z ##[endgroup]
+2025-07-15T09:32:48.9531768Z Cache not found for input keys: flutter-pub-linux-stable-3.32.6-x64-077b4a4ce10a07b82caa6897f0c626f9c0a3ac90-334a48f799cfc0630fc02947041f6474e3b5133f0b83e8acdf38099c38c8341e
+2025-07-15T09:32:48.9642560Z ##[group]Run $GITHUB_ACTION_PATH/setup.sh \
+2025-07-15T09:32:48.9643608Z [36;1m$GITHUB_ACTION_PATH/setup.sh \[0m
+2025-07-15T09:32:48.9644542Z [36;1m  -n '3.32.6' \[0m
+2025-07-15T09:32:48.9645313Z [36;1m  -a 'x64' \[0m
+2025-07-15T09:32:48.9646285Z [36;1m  -c '/opt/hostedtoolcache/flutter/stable-3.32.6-x64' \[0m
+2025-07-15T09:32:48.9647480Z [36;1m  -d '/home/runner/.pub-cache' \[0m
+2025-07-15T09:32:48.9648412Z [36;1m  stable[0m
+2025-07-15T09:32:48.9679096Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2025-07-15T09:32:48.9680217Z ##[endgroup]
+2025-07-15T09:32:49.1185567Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2025-07-15T09:32:49.1187808Z                                  Dload  Upload   Total   Spent    Left  Speed
+2025-07-15T09:32:49.1188863Z 
+2025-07-15T09:32:50.0400980Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2025-07-15T09:32:51.0444275Z  15 1366M   15  210M    0     0   228M      0  0:00:05 --:--:--  0:00:05  228M
+2025-07-15T09:32:52.0423309Z  37 1366M   37  510M    0     0   265M      0  0:00:05  0:00:01  0:00:04  265M
+2025-07-15T09:32:53.0395690Z  58 1366M   58  802M    0     0   274M      0  0:00:04  0:00:02  0:00:02  274M
+2025-07-15T09:32:53.9555848Z  79 1366M   79 1088M    0     0   277M      0  0:00:04  0:00:03  0:00:01  277M
+2025-07-15T09:32:53.9556740Z 100 1366M  100 1366M    0     0   282M      0  0:00:04  0:00:04 --:--:--  282M
+2025-07-15T09:33:42.0038602Z ##[group]Run # Check if jo17_tactical_manager exists and contains a pubspec; prefer it over workspace-level pubspec.yaml
+2025-07-15T09:33:42.0039693Z [36;1m# Check if jo17_tactical_manager exists and contains a pubspec; prefer it over workspace-level pubspec.yaml[0m
+2025-07-15T09:33:42.0040232Z [36;1mif [ -f "jo17_tactical_manager/pubspec.yaml" ]; then[0m
+2025-07-15T09:33:42.0040684Z [36;1m  echo "Found pubspec.yaml in jo17_tactical_manager → using that as project root"[0m
+2025-07-15T09:33:42.0041068Z [36;1m  cd jo17_tactical_manager[0m
+2025-07-15T09:33:42.0041320Z [36;1m  flutter pub get[0m
+2025-07-15T09:33:42.0041564Z [36;1melif [ -f "pubspec.yaml" ]; then[0m
+2025-07-15T09:33:42.0041860Z [36;1m  echo "Using pubspec.yaml in workspace root"[0m
+2025-07-15T09:33:42.0042152Z [36;1m  flutter pub get[0m
+2025-07-15T09:33:42.0042397Z [36;1melse[0m
+2025-07-15T09:33:42.0042624Z [36;1m  echo "ERROR: Could not find pubspec.yaml"[0m
+2025-07-15T09:33:42.0042924Z [36;1m  exit 1[0m
+2025-07-15T09:33:42.0043117Z [36;1mfi[0m
+2025-07-15T09:33:42.0072626Z shell: /usr/bin/bash -e {0}
+2025-07-15T09:33:42.0072882Z env:
+2025-07-15T09:33:42.0073143Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.32.6-x64
+2025-07-15T09:33:42.0073484Z   PUB_CACHE: /home/runner/.pub-cache
+2025-07-15T09:33:42.0073732Z ##[endgroup]
+2025-07-15T09:33:42.0120641Z Using pubspec.yaml in workspace root
+2025-07-15T09:33:46.9345280Z Resolving dependencies...
+2025-07-15T09:33:48.4402420Z Downloading packages...
+2025-07-15T09:33:57.6622353Z   _fe_analyzer_shared 61.0.0 (85.0.0 available)
+2025-07-15T09:33:57.6622925Z   analyzer 5.13.0 (7.5.9 available)
+2025-07-15T09:33:57.6623834Z   analyzer_plugin 0.11.2 (0.13.4 available)
+2025-07-15T09:33:57.6624372Z   archive 3.6.1 (4.0.7 available)
+2025-07-15T09:33:57.6624825Z   build 2.4.1 (2.5.4 available)
+2025-07-15T09:33:57.6625616Z   build_resolvers 2.4.2 (2.5.4 available)
+2025-07-15T09:33:57.6627323Z   build_runner 2.4.13 (2.5.4 available)
+2025-07-15T09:33:57.6628042Z   build_runner_core 7.3.2 (9.1.2 available)
+2025-07-15T09:33:57.6628502Z   characters 1.4.0 (1.4.1 available)
+2025-07-15T09:33:57.6628925Z   checked_yaml 2.0.3 (2.0.4 available)
+2025-07-15T09:33:57.6629546Z   coverage 1.14.1 (1.15.0 available)
+2025-07-15T09:33:57.6629967Z   custom_lint_core 0.6.3 (0.7.5 available)
+2025-07-15T09:33:57.6630405Z   dart_code_metrics 5.7.6 (discontinued)
+2025-07-15T09:33:57.6630888Z   dart_code_metrics_presets 1.8.0 (2.24.0 available)
+2025-07-15T09:33:57.6631355Z   dart_style 2.3.2 (3.1.0 available)
+2025-07-15T09:33:57.6631759Z   file 6.1.4 (7.0.1 available)
+2025-07-15T09:33:57.6632308Z   file_picker 10.1.9 (10.2.0 available)
+2025-07-15T09:33:57.6632723Z   file_saver 0.2.14 (0.3.1 available)
+2025-07-15T09:33:57.6633130Z   fl_chart 0.68.0 (1.0.0 available)
+2025-07-15T09:33:57.6633579Z   flutter_form_builder 9.7.0 (10.1.0 available)
+2025-07-15T09:33:57.6634138Z   flutter_secure_storage_linux 1.2.3 (2.0.1 available)
+2025-07-15T09:33:57.6634583Z   flutter_secure_storage_macos 3.1.3 (4.0.0 available)
+2025-07-15T09:33:57.6634982Z   flutter_secure_storage_platform_interface 1.1.2 (2.0.1 available)
+2025-07-15T09:33:57.6635353Z   flutter_secure_storage_web 1.2.1 (2.0.0 available)
+2025-07-15T09:33:57.6635689Z   flutter_secure_storage_windows 3.1.2 (4.0.0 available)
+2025-07-15T09:33:57.6635971Z   freezed 2.5.2 (3.1.0 available)
+2025-07-15T09:33:57.6636217Z   freezed_annotation 2.4.4 (3.1.0 available)
+2025-07-15T09:33:57.6636473Z   go_router 14.8.1 (16.0.0 available)
+2025-07-15T09:33:57.6636721Z   google_fonts 4.0.4 (6.2.1 available)
+2025-07-15T09:33:57.6636957Z   http 0.13.6 (1.4.0 available)
+2025-07-15T09:33:57.6637179Z   image 4.3.0 (4.5.4 available)
+2025-07-15T09:33:57.6637392Z   intl 0.19.0 (0.20.2 available)
+2025-07-15T09:33:57.6637610Z   jni 0.14.1 (0.14.2 available)
+2025-07-15T09:33:57.6637815Z   js 0.6.7 (0.7.2 available)
+2025-07-15T09:33:57.6638048Z   json_serializable 6.8.0 (6.9.5 available)
+2025-07-15T09:33:57.6638308Z   leak_tracker 10.0.9 (11.0.1 available)
+2025-07-15T09:33:57.6638855Z   leak_tracker_flutter_testing 3.0.9 (3.0.10 available)
+2025-07-15T09:33:57.6639792Z   leak_tracker_testing 3.0.1 (3.0.2 available)
+2025-07-15T09:33:57.6640290Z   material_color_utilities 0.11.1 (0.13.0 available)
+2025-07-15T09:33:57.6640754Z   meta 1.16.0 (1.17.0 available)
+2025-07-15T09:33:57.6641121Z   mime 1.0.6 (2.0.0 available)
+2025-07-15T09:33:57.6641507Z   petitparser 6.1.0 (7.0.0 available)
+2025-07-15T09:33:57.6641914Z   process 4.2.4 (5.0.4 available)
+2025-07-15T09:33:57.6642309Z   protobuf 3.1.0 (4.1.0 available)
+2025-07-15T09:33:57.6642716Z   pub_updater 0.3.0 (0.5.0 available)
+2025-07-15T09:33:57.6642996Z   riverpod_analyzer_utils 0.5.1 (0.5.10 available)
+2025-07-15T09:33:57.6643291Z   riverpod_generator 2.4.0 (2.6.5 available)
+2025-07-15T09:33:57.6643541Z   sentry 9.2.0 (9.4.1 available)
+2025-07-15T09:33:57.6643769Z   sentry_dio 9.2.0 (9.4.1 available)
+2025-07-15T09:33:57.6644003Z   sentry_flutter 9.2.0 (9.4.1 available)
+2025-07-15T09:33:57.6644250Z   share_plus 7.2.2 (11.0.0 available)
+2025-07-15T09:33:57.6644558Z   share_plus_platform_interface 3.4.0 (6.0.0 available)
+2025-07-15T09:33:57.6644849Z   shelf_web_socket 2.0.1 (3.0.0 available)
+2025-07-15T09:33:57.6645101Z   source_gen 1.5.0 (2.0.0 available)
+2025-07-15T09:33:57.6645335Z   source_helper 1.3.5 (1.3.6 available)
+2025-07-15T09:33:57.6645583Z   table_calendar 3.1.3 (3.2.0 available)
+2025-07-15T09:33:57.6645821Z   test_api 0.7.4 (0.7.6 available)
+2025-07-15T09:33:57.6646212Z ! test_utils 0.0.1 from path packages/test_utils (overridden in ./pubspec_overrides.yaml)
+2025-07-15T09:33:57.6646620Z   url_launcher 6.3.1 (6.3.2 available)
+2025-07-15T09:33:57.6646862Z   uuid 3.0.7 (4.5.1 available)
+2025-07-15T09:33:57.6647081Z   vector_math 2.1.4 (2.2.0 available)
+2025-07-15T09:33:57.6647336Z   very_good_analysis 5.1.0 (9.0.0 available)
+2025-07-15T09:33:57.6647595Z   vm_service 15.0.0 (15.0.2 available)
+2025-07-15T09:33:57.6647834Z   watcher 1.1.1 (1.1.2 available)
+2025-07-15T09:33:57.6648059Z   win32 5.13.0 (5.14.0 available)
+2025-07-15T09:33:57.6648285Z   xml 6.5.0 (6.6.0 available)
+2025-07-15T09:33:57.6648554Z Got dependencies!
+2025-07-15T09:33:57.6655222Z 1 package is discontinued.
+2025-07-15T09:33:57.6672702Z 64 packages have newer versions incompatible with dependency constraints.
+2025-07-15T09:33:57.6673528Z Try `flutter pub outdated` for more information.
+2025-07-15T09:33:59.5602781Z ##[group]Run if [ -f "melos.yaml" ]; then
+2025-07-15T09:33:59.5603137Z [36;1mif [ -f "melos.yaml" ]; then[0m
+2025-07-15T09:33:59.5603390Z [36;1m  melos bootstrap[0m
+2025-07-15T09:33:59.5603660Z [36;1melif [ -f "jo17_tactical_manager/melos.yaml" ]; then[0m
+2025-07-15T09:33:59.5603961Z [36;1m  cd jo17_tactical_manager[0m
+2025-07-15T09:33:59.5604192Z [36;1m  melos bootstrap[0m
+2025-07-15T09:33:59.5604394Z [36;1melse[0m
+2025-07-15T09:33:59.5604636Z [36;1m  echo "No melos.yaml found – skipping bootstrap."[0m
+2025-07-15T09:33:59.5604912Z [36;1mfi[0m
+2025-07-15T09:33:59.5632348Z shell: /usr/bin/bash -e {0}
+2025-07-15T09:33:59.5632605Z env:
+2025-07-15T09:33:59.5632877Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.32.6-x64
+2025-07-15T09:33:59.5633212Z   PUB_CACHE: /home/runner/.pub-cache
+2025-07-15T09:33:59.5633449Z ##[endgroup]
+2025-07-15T09:33:59.5682199Z /home/runner/work/_temp/c43356b2-f5a0-494f-a5db-c8023e2aad13.sh: line 2: melos: command not found
+2025-07-15T09:33:59.5694965Z ##[error]Process completed with exit code 127.
+2025-07-15T09:33:59.5840745Z Post job cleanup.
+2025-07-15T09:33:59.5910490Z Post job cleanup.
+2025-07-15T09:33:59.6842792Z [command]/usr/bin/git version
+2025-07-15T09:33:59.6877692Z git version 2.50.1
+2025-07-15T09:33:59.6918560Z Temporarily overriding HOME='/home/runner/work/_temp/b803bf5c-807b-4d09-8094-d5555237c4e3' before making global git config changes
+2025-07-15T09:33:59.6919838Z Adding repository directory to the temporary git global config as a safe directory
+2025-07-15T09:33:59.6930405Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/TEAMAPP.AI/TEAMAPP.AI
+2025-07-15T09:33:59.6964102Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-07-15T09:33:59.6995379Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-07-15T09:33:59.7217223Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-07-15T09:33:59.7237124Z http.https://github.com/.extraheader
+2025-07-15T09:33:59.7249564Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-07-15T09:33:59.7277883Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-07-15T09:33:59.7594348Z Cleaning up orphan processes

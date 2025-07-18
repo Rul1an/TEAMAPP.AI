@@ -12,8 +12,8 @@ class MatchRepositoryImpl implements MatchRepository {
   MatchRepositoryImpl({
     required SupabaseMatchDataSource remote,
     required HiveMatchCache cache,
-  }) : _remote = remote,
-       _cache = cache;
+  })  : _remote = remote,
+        _cache = cache;
 
   final SupabaseMatchDataSource _remote;
   final HiveMatchCache _cache;

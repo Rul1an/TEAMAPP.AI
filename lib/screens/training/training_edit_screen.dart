@@ -41,7 +41,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
     super.initState();
 
     // Ensure Dutch locale date symbols are available during tests.
-    initializeDateFormatting('nl_NL', null).catchError((_) {});
+    initializeDateFormatting('nl_NL').catchError((_) {});
   }
 
   @override
