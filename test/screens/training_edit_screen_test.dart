@@ -8,6 +8,7 @@ import 'package:jo17_tactical_manager/repositories/training_repository.dart';
 import 'package:jo17_tactical_manager/providers/trainings_provider.dart';
 import 'package:jo17_tactical_manager/core/result.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class _MockTrainingRepo implements TrainingRepository {
   _MockTrainingRepo();
