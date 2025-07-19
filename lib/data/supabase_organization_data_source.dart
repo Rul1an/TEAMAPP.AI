@@ -6,17 +6,14 @@ import '../models/organization.dart';
 
 class SupabaseOrganizationDataSource {
   SupabaseOrganizationDataSource({SupabaseClient? client})
-    : _supabase = client ?? _tryClient();
+      : _supabase = client ?? _tryClient();
 
   final SupabaseClient _supabase;
   static const _table = 'organizations';
 
   Future<Organization?> fetchById(String id) async {
-    final data = await _supabase
-        .from(_table)
-        .select()
-        .eq('id', id)
-        .maybeSingle();
+    final data =
+        await _supabase.from(_table).select().eq('id', id).maybeSingle();
     return data == null ? null : Organization.fromJson(data);
   }
 

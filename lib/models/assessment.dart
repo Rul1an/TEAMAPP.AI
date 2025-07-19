@@ -107,39 +107,39 @@ class PlayerAssessment {
 
   @ignore
   Map<String, int> get technicalSkills => {
-    'Balbeheersing': ballControl,
-    'Passen': passing,
-    'Schieten': shooting,
-    'Dribbelen': dribbling,
-    'Verdedigen': defending,
-  };
+        'Balbeheersing': ballControl,
+        'Passen': passing,
+        'Schieten': shooting,
+        'Dribbelen': dribbling,
+        'Verdedigen': defending,
+      };
 
   @ignore
   Map<String, int> get tacticalSkills => {
-    'Positiespel': positioning,
-    'Spellezing': gameReading,
-    'Besluitvorming': decisionMaking,
-    'Communicatie': communication,
-    'Teamwork': teamwork,
-  };
+        'Positiespel': positioning,
+        'Spellezing': gameReading,
+        'Besluitvorming': decisionMaking,
+        'Communicatie': communication,
+        'Teamwork': teamwork,
+      };
 
   @ignore
   Map<String, int> get physicalAttributes => {
-    'Snelheid': speed,
-    'Conditie': stamina,
-    'Kracht': strength,
-    'Beweeglijkheid': agility,
-    'Coördinatie': coordination,
-  };
+        'Snelheid': speed,
+        'Conditie': stamina,
+        'Kracht': strength,
+        'Beweeglijkheid': agility,
+        'Coördinatie': coordination,
+      };
 
   @ignore
   Map<String, int> get mentalAttributes => {
-    'Zelfvertrouwen': confidence,
-    'Concentratie': concentration,
-    'Leiderschap': leadership,
-    'Coachbaarheid': coachability,
-    'Motivatie': motivation,
-  };
+        'Zelfvertrouwen': confidence,
+        'Concentratie': concentration,
+        'Leiderschap': leadership,
+        'Coachbaarheid': coachability,
+        'Motivatie': motivation,
+      };
 }
 
 class DevelopmentGoal {

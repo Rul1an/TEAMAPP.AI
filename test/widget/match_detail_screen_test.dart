@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/models/match.dart';
@@ -40,6 +42,21 @@ void main() {
         ..height = 178
         ..weight = 68;
       players = [player];
+    });
+
+    setUpAll(() async {
+      SharedPreferences.setMockInitialValues({});
+      try {
+        // Initialize Supabase with a dummy URL/anon key for widget tests so that
+        // providers depending on Supabase.instance don’t throw assertion errors.
+        await Supabase.initialize(
+          url: 'https://dummy.supabase.co',
+          anonKey: 'public-anon-key',
+          debug: false,
+        );
+      } catch (_) {
+        // Ignore if already initialised by another test group.
+      }
     });
 
     testWidgets('renders basic match information', (tester) async {

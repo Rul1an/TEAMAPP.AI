@@ -8,8 +8,8 @@ import '../repositories/local_formation_template_repository.dart';
 
 final formationTemplateRepositoryProvider =
     Provider<FormationTemplateRepository>((ref) {
-      return LocalFormationTemplateRepository();
-    });
+  return LocalFormationTemplateRepository();
+});
 
 final formationTemplatesProvider = FutureProvider<List<FormationTemplate>>((
   ref,

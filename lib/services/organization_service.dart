@@ -9,7 +9,7 @@ import '../models/organization.dart';
 
 class OrganizationService {
   OrganizationService({SupabaseClient? client})
-    : _supabase = client ?? _tryGetSupabaseInstance();
+      : _supabase = client ?? _tryGetSupabaseInstance();
 
   // ignore: unused_field
   final SupabaseClient _supabase;

@@ -48,28 +48,28 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
 
   @override
   Widget build(BuildContext context) => Stack(
-    children: [
-      widget.child,
-      if (widget.isDrawingMode)
-        Positioned.fill(
-          child: GestureDetector(
-            onPanStart: _onPanStart,
-            onPanUpdate: _onPanUpdate,
-            onPanEnd: _onPanEnd,
-            onTapUp: _onTap,
-            child: CustomPaint(
-              painter: TacticalDrawingPainter(
-                drawings: widget.drawings,
-                currentPoints: _currentPoints,
-                currentTool: widget.selectedTool,
-                currentColor: widget.selectedColor,
-                isDrawing: _isDrawing,
+        children: [
+          widget.child,
+          if (widget.isDrawingMode)
+            Positioned.fill(
+              child: GestureDetector(
+                onPanStart: _onPanStart,
+                onPanUpdate: _onPanUpdate,
+                onPanEnd: _onPanEnd,
+                onTapUp: _onTap,
+                child: CustomPaint(
+                  painter: TacticalDrawingPainter(
+                    drawings: widget.drawings,
+                    currentPoints: _currentPoints,
+                    currentTool: widget.selectedTool,
+                    currentColor: widget.selectedColor,
+                    isDrawing: _isDrawing,
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-    ],
-  );
+        ],
+      );
 
   void _onPanStart(DragStartDetails details) {
     if (!widget.isDrawingMode) return;

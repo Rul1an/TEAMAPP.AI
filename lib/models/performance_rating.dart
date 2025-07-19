@@ -24,16 +24,16 @@ class PerformanceRating {
     this.teamworkRating,
     this.notes,
     DateTime? createdAt,
-  }) : id = id ?? const Uuid().v4(),
-       createdAt = createdAt ?? DateTime.now(),
-       assert(
-         overallRating >= 1 && overallRating <= 5,
-         'Overall rating must be between 1 and 5',
-       ),
-       assert(
-         type == RatingType.match ? matchId != null : trainingId != null,
-         'Match ratings require matchId, training ratings require trainingId',
-       );
+  })  : id = id ?? const Uuid().v4(),
+        createdAt = createdAt ?? DateTime.now(),
+        assert(
+          overallRating >= 1 && overallRating <= 5,
+          'Overall rating must be between 1 and 5',
+        ),
+        assert(
+          type == RatingType.match ? matchId != null : trainingId != null,
+          'Match ratings require matchId, training ratings require trainingId',
+        );
 
   factory PerformanceRating.fromJson(Map<String, dynamic> json) =>
       PerformanceRating(
@@ -94,14 +94,12 @@ class PerformanceRating {
 
     // Calculate average of first half vs second half
     final midPoint = ratingsToConsider.length ~/ 2;
-    final recentAvg =
-        ratingsToConsider
+    final recentAvg = ratingsToConsider
             .take(midPoint)
             .map((r) => r.overallRating)
             .reduce((a, b) => a + b) /
         midPoint;
-    final olderAvg =
-        ratingsToConsider
+    final olderAvg = ratingsToConsider
             .skip(midPoint)
             .map((r) => r.overallRating)
             .reduce((a, b) => a + b) /
@@ -113,24 +111,24 @@ class PerformanceRating {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'playerId': playerId,
-    'matchId': matchId,
-    'trainingId': trainingId,
-    'date': date.toIso8601String(),
-    'type': type.name,
-    'overallRating': overallRating,
-    'attackingRating': attackingRating,
-    'defendingRating': defendingRating,
-    'tacticalRating': tacticalRating,
-    'workRateRating': workRateRating,
-    'technicalRating': technicalRating,
-    'coachabilityRating': coachabilityRating,
-    'teamworkRating': teamworkRating,
-    'notes': notes,
-    'coachId': coachId,
-    'createdAt': createdAt.toIso8601String(),
-  };
+        'id': id,
+        'playerId': playerId,
+        'matchId': matchId,
+        'trainingId': trainingId,
+        'date': date.toIso8601String(),
+        'type': type.name,
+        'overallRating': overallRating,
+        'attackingRating': attackingRating,
+        'defendingRating': defendingRating,
+        'tacticalRating': tacticalRating,
+        'workRateRating': workRateRating,
+        'technicalRating': technicalRating,
+        'coachabilityRating': coachabilityRating,
+        'teamworkRating': teamworkRating,
+        'notes': notes,
+        'coachId': coachId,
+        'createdAt': createdAt.toIso8601String(),
+      };
 
   PerformanceRating copyWith({
     String? id,
@@ -150,23 +148,24 @@ class PerformanceRating {
     String? notes,
     String? coachId,
     DateTime? createdAt,
-  }) => PerformanceRating(
-    id: id ?? this.id,
-    playerId: playerId ?? this.playerId,
-    matchId: matchId ?? this.matchId,
-    trainingId: trainingId ?? this.trainingId,
-    date: date ?? this.date,
-    type: type ?? this.type,
-    overallRating: overallRating ?? this.overallRating,
-    attackingRating: attackingRating ?? this.attackingRating,
-    defendingRating: defendingRating ?? this.defendingRating,
-    tacticalRating: tacticalRating ?? this.tacticalRating,
-    workRateRating: workRateRating ?? this.workRateRating,
-    technicalRating: technicalRating ?? this.technicalRating,
-    coachabilityRating: coachabilityRating ?? this.coachabilityRating,
-    teamworkRating: teamworkRating ?? this.teamworkRating,
-    notes: notes ?? this.notes,
-    coachId: coachId ?? this.coachId,
-    createdAt: createdAt ?? this.createdAt,
-  );
+  }) =>
+      PerformanceRating(
+        id: id ?? this.id,
+        playerId: playerId ?? this.playerId,
+        matchId: matchId ?? this.matchId,
+        trainingId: trainingId ?? this.trainingId,
+        date: date ?? this.date,
+        type: type ?? this.type,
+        overallRating: overallRating ?? this.overallRating,
+        attackingRating: attackingRating ?? this.attackingRating,
+        defendingRating: defendingRating ?? this.defendingRating,
+        tacticalRating: tacticalRating ?? this.tacticalRating,
+        workRateRating: workRateRating ?? this.workRateRating,
+        technicalRating: technicalRating ?? this.technicalRating,
+        coachabilityRating: coachabilityRating ?? this.coachabilityRating,
+        teamworkRating: teamworkRating ?? this.teamworkRating,
+        notes: notes ?? this.notes,
+        coachId: coachId ?? this.coachId,
+        createdAt: createdAt ?? this.createdAt,
+      );
 }

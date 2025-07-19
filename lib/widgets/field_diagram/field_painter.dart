@@ -222,11 +222,14 @@ class FieldPainter extends CustomPainter {
   void _drawCone(Canvas canvas, Offset position, Paint paint, bool isSelected) {
     final size = isSelected ? 14.0 : 12.0;
     final path = Path()
-      ..addPolygon([
-        Offset(position.dx, position.dy - size),
-        Offset(position.dx - size / 2, position.dy + size / 2),
-        Offset(position.dx + size / 2, position.dy + size / 2),
-      ], true);
+      ..addPolygon(
+        [
+          Offset(position.dx, position.dy - size),
+          Offset(position.dx - size / 2, position.dy + size / 2),
+          Offset(position.dx + size / 2, position.dy + size / 2),
+        ],
+        true,
+      );
 
     final borderPaint = Paint()
       ..color = Colors.black

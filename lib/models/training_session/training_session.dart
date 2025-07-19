@@ -225,32 +225,32 @@ class TrainingSession {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'teamId': teamId,
-    'date': date.toIso8601String(),
-    'trainingNumber': trainingNumber,
-    'type': type.name,
-    'sessionObjective': sessionObjective,
-    'teamFunction': teamFunction,
-    'coachingAccent': coachingAccent,
-    'technicalTacticalGoal': technicalTacticalGoal,
-    'phasesJson': phasesJson,
-    'warmupActivitiesJson': warmupActivitiesJson,
-    'playerAttendanceJson': playerAttendanceJson,
-    'expectedPlayers': expectedPlayers,
-    'actualPlayers': actualPlayers,
-    'notes': notes,
-    'postSessionEvaluation': postSessionEvaluation,
-    'periodizationPhaseId': periodizationPhaseId,
-    'contentFocusJson': contentFocusJson,
-    'targetIntensity': targetIntensity,
-    'startTime': startTime?.toIso8601String(),
-    'endTime': endTime?.toIso8601String(),
-    'durationMinutes': durationMinutes,
-    'status': status.name,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'teamId': teamId,
+        'date': date.toIso8601String(),
+        'trainingNumber': trainingNumber,
+        'type': type.name,
+        'sessionObjective': sessionObjective,
+        'teamFunction': teamFunction,
+        'coachingAccent': coachingAccent,
+        'technicalTacticalGoal': technicalTacticalGoal,
+        'phasesJson': phasesJson,
+        'warmupActivitiesJson': warmupActivitiesJson,
+        'playerAttendanceJson': playerAttendanceJson,
+        'expectedPlayers': expectedPlayers,
+        'actualPlayers': actualPlayers,
+        'notes': notes,
+        'postSessionEvaluation': postSessionEvaluation,
+        'periodizationPhaseId': periodizationPhaseId,
+        'contentFocusJson': contentFocusJson,
+        'targetIntensity': targetIntensity,
+        'startTime': startTime?.toIso8601String(),
+        'endTime': endTime?.toIso8601String(),
+        'durationMinutes': durationMinutes,
+        'status': status.name,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex Model CopyWith Method
   // This copyWith method demonstrates a pattern where cascade notation could
@@ -323,8 +323,7 @@ class TrainingSession {
   }
 
   @override
-  String toString() =>
-      'TrainingSession(id: $id, date: $date, type: $type, '
+  String toString() => 'TrainingSession(id: $id, date: $date, type: $type, '
       'objective: $sessionObjective, players: $actualPlayers/$expectedPlayers)';
 
   @override

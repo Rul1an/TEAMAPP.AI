@@ -24,196 +24,196 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: const Text('Wedstrijd Toevoegen'),
-      leading: IconButton(
-        icon: const Icon(Icons.close),
-        onPressed: () => context.pop(),
-      ),
-    ),
-    body: SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: FormBuilder(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Match Information Section
-            _buildSectionHeader('Wedstrijd Informatie'),
-            const SizedBox(height: 16),
-
-            FormBuilderTextField(
-              name: 'opponent',
-              decoration: const InputDecoration(
-                labelText: 'Tegenstander',
-                prefixIcon: Icon(Icons.sports_soccer),
-                hintText: 'bijv. Ajax JO17',
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Tegenstander is verplicht';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-
-            Row(
-              children: [
-                Expanded(
-                  child: FormBuilderDateTimePicker(
-                    name: 'date',
-                    decoration: const InputDecoration(
-                      labelText: 'Datum',
-                      prefixIcon: Icon(Icons.calendar_today),
-                    ),
-                    inputType: InputType.date,
-                    format: DateFormat('dd-MM-yyyy'),
-                    initialValue: DateTime.now(),
-                    firstDate: DateTime.now().subtract(
-                      const Duration(days: 365),
-                    ),
-                    lastDate: DateTime.now().add(const Duration(days: 365)),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Datum is verplicht';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: FormBuilderDateTimePicker(
-                    name: 'time',
-                    decoration: const InputDecoration(
-                      labelText: 'Tijd',
-                      prefixIcon: Icon(Icons.access_time),
-                    ),
-                    inputType: InputType.time,
-                    format: DateFormat('HH:mm'),
-                    initialValue: DateTime.now(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Tijd is verplicht';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-
-            // Location and Competition Section
-            _buildSectionHeader('Locatie & Competitie'),
-            const SizedBox(height: 16),
-
-            Row(
-              children: [
-                Expanded(
-                  child: FormBuilderDropdown<Location>(
-                    name: 'location',
-                    decoration: const InputDecoration(
-                      labelText: 'Thuis/Uit',
-                      prefixIcon: Icon(Icons.location_on),
-                    ),
-                    items: Location.values
-                        .map(
-                          (location) => DropdownMenuItem(
-                            value: location,
-                            child: Text(_getLocationText(location)),
-                          ),
-                        )
-                        .toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Locatie is verplicht';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: FormBuilderDropdown<Competition>(
-                    name: 'competition',
-                    decoration: const InputDecoration(
-                      labelText: 'Competitie',
-                      prefixIcon: Icon(Icons.emoji_events),
-                    ),
-                    items: Competition.values
-                        .map(
-                          (competition) => DropdownMenuItem(
-                            value: competition,
-                            child: Text(_getCompetitionText(competition)),
-                          ),
-                        )
-                        .toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Competitie is verplicht';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            FormBuilderTextField(
-              name: 'venue',
-              decoration: const InputDecoration(
-                labelText: 'Stadion/Veld',
-                prefixIcon: Icon(Icons.stadium),
-                hintText: 'bijv. Sportpark De Toekomst',
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Stadion/Veld is verplicht';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-
-            FormBuilderTextField(
-              name: 'referee',
-              decoration: const InputDecoration(
-                labelText: 'Scheidsrechter (optioneel)',
-                prefixIcon: Icon(Icons.sports),
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // Submit Button
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: _isSubmitting ? null : _submitForm,
-                child: _isSubmitting
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Text('Wedstrijd Toevoegen'),
-              ),
-            ),
-          ],
+        appBar: AppBar(
+          title: const Text('Wedstrijd Toevoegen'),
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => context.pop(),
+          ),
         ),
-      ),
-    ),
-  );
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Match Information Section
+                _buildSectionHeader('Wedstrijd Informatie'),
+                const SizedBox(height: 16),
+
+                FormBuilderTextField(
+                  name: 'opponent',
+                  decoration: const InputDecoration(
+                    labelText: 'Tegenstander',
+                    prefixIcon: Icon(Icons.sports_soccer),
+                    hintText: 'bijv. Ajax JO17',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Tegenstander is verplicht';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormBuilderDateTimePicker(
+                        name: 'date',
+                        decoration: const InputDecoration(
+                          labelText: 'Datum',
+                          prefixIcon: Icon(Icons.calendar_today),
+                        ),
+                        inputType: InputType.date,
+                        format: DateFormat('dd-MM-yyyy'),
+                        initialValue: DateTime.now(),
+                        firstDate: DateTime.now().subtract(
+                          const Duration(days: 365),
+                        ),
+                        lastDate: DateTime.now().add(const Duration(days: 365)),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Datum is verplicht';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FormBuilderDateTimePicker(
+                        name: 'time',
+                        decoration: const InputDecoration(
+                          labelText: 'Tijd',
+                          prefixIcon: Icon(Icons.access_time),
+                        ),
+                        inputType: InputType.time,
+                        format: DateFormat('HH:mm'),
+                        initialValue: DateTime.now(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Tijd is verplicht';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+
+                // Location and Competition Section
+                _buildSectionHeader('Locatie & Competitie'),
+                const SizedBox(height: 16),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormBuilderDropdown<Location>(
+                        name: 'location',
+                        decoration: const InputDecoration(
+                          labelText: 'Thuis/Uit',
+                          prefixIcon: Icon(Icons.location_on),
+                        ),
+                        items: Location.values
+                            .map(
+                              (location) => DropdownMenuItem(
+                                value: location,
+                                child: Text(_getLocationText(location)),
+                              ),
+                            )
+                            .toList(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Locatie is verplicht';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FormBuilderDropdown<Competition>(
+                        name: 'competition',
+                        decoration: const InputDecoration(
+                          labelText: 'Competitie',
+                          prefixIcon: Icon(Icons.emoji_events),
+                        ),
+                        items: Competition.values
+                            .map(
+                              (competition) => DropdownMenuItem(
+                                value: competition,
+                                child: Text(_getCompetitionText(competition)),
+                              ),
+                            )
+                            .toList(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Competitie is verplicht';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                FormBuilderTextField(
+                  name: 'venue',
+                  decoration: const InputDecoration(
+                    labelText: 'Stadion/Veld',
+                    prefixIcon: Icon(Icons.stadium),
+                    hintText: 'bijv. Sportpark De Toekomst',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Stadion/Veld is verplicht';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                FormBuilderTextField(
+                  name: 'referee',
+                  decoration: const InputDecoration(
+                    labelText: 'Scheidsrechter (optioneel)',
+                    prefixIcon: Icon(Icons.sports),
+                  ),
+                ),
+                const SizedBox(height: 32),
+
+                // Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: _isSubmitting ? null : _submitForm,
+                    child: _isSubmitting
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Text('Wedstrijd Toevoegen'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 
   Widget _buildSectionHeader(String title) => Text(
-    title,
-    style: Theme.of(
-      context,
-    ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-  );
+        title,
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+      );
 
   Future<void> _submitForm() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {

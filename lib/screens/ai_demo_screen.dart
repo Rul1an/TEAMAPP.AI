@@ -26,259 +26,269 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: const Text('AI Assistant Demo'),
-      backgroundColor: Colors.purple.shade700,
-      foregroundColor: Colors.white,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.info_outline),
-          onPressed: _showInfoDialog,
+        appBar: AppBar(
+          title: const Text('AI Assistant Demo'),
+          backgroundColor: Colors.purple.shade700,
+          foregroundColor: Colors.white,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: _showInfoDialog,
+            ),
+          ],
         ),
-      ],
-    ),
-    body: SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header Card
-          Card(
-            color: Colors.purple.shade50,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header Card
+              Card(
+                color: Colors.purple.shade50,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.auto_awesome,
-                        color: Colors.purple.shade700,
-                        size: 32,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.auto_awesome,
+                            color: Colors.purple.shade700,
+                            size: 32,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'AI-Powered Training Assistant',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.purple.shade700,
+                                      ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Roadmap 2025 - Phase 1 Preview',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        color: Colors.purple.shade600,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'AI-Powered Training Assistant',
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.purple.shade700,
-                                  ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Roadmap 2025 - Phase 1 Preview',
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(
-                                    color: Colors.purple.shade600,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                            ),
-                          ],
-                        ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Deze demo toont de toekomstige AI-mogelijkheden van de JO17 Tactical Manager. '
+                        'In de volledige implementatie zal AI helpen bij het genereren van trainingen, '
+                        'tactische analyses en spelersbeoordelingen.',
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Deze demo toont de toekomstige AI-mogelijkheden van de JO17 Tactical Manager. '
-                    'In de volledige implementatie zal AI helpen bij het genereren van trainingen, '
-                    'tactische analyses en spelersbeoordelingen.',
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
 
-          const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-          // Features Overview
-          Text(
-            'Geplande AI Features (2025)',
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
+              // Features Overview
+              Text(
+                'Geplande AI Features (2025)',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-          _buildFeatureCard(
-            icon: Icons.fitness_center,
-            title: 'AI Training Generator',
-            description:
-                'Automatische generatie van trainingen op basis van spelersstatistieken, '
-                'weersverwachtingen en komende wedstrijden.',
-            status: 'Ontwikkeling Q3 2025',
-            color: Colors.blue,
-          ),
+              _buildFeatureCard(
+                icon: Icons.fitness_center,
+                title: 'AI Training Generator',
+                description:
+                    'Automatische generatie van trainingen op basis van spelersstatistieken, '
+                    'weersverwachtingen en komende wedstrijden.',
+                status: 'Ontwikkeling Q3 2025',
+                color: Colors.blue,
+              ),
 
-          const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-          _buildFeatureCard(
-            icon: Icons.psychology,
-            title: 'Tactische AI Assistent',
-            description:
-                'Real-time tactische suggesties, formatie-optimalisatie en '
-                'spelerswissel adviezen tijdens wedstrijden.',
-            status: 'Ontwikkeling Q3 2025',
-            color: Colors.green,
-          ),
+              _buildFeatureCard(
+                icon: Icons.psychology,
+                title: 'Tactische AI Assistent',
+                description:
+                    'Real-time tactische suggesties, formatie-optimalisatie en '
+                    'spelerswissel adviezen tijdens wedstrijden.',
+                status: 'Ontwikkeling Q3 2025',
+                color: Colors.green,
+              ),
 
-          const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-          _buildFeatureCard(
-            icon: Icons.mic,
-            title: 'Voice Commands',
-            description:
-                'Spraakgestuurde bediening voor snelle acties tijdens trainingen '
-                'en wedstrijden.',
-            status: 'Prototype Q4 2025',
-            color: Colors.orange,
-          ),
+              _buildFeatureCard(
+                icon: Icons.mic,
+                title: 'Voice Commands',
+                description:
+                    'Spraakgestuurde bediening voor snelle acties tijdens trainingen '
+                    'en wedstrijden.',
+                status: 'Prototype Q4 2025',
+                color: Colors.orange,
+              ),
 
-          const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-          _buildFeatureCard(
-            icon: Icons.analytics,
-            title: 'Speler Performance AI',
-            description:
-                'Geautomatiseerde analyse van spelersprestaties met '
-                'gepersonaliseerde verbeteringsuggesties.',
-            status: 'Planning Q4 2025',
-            color: Colors.red,
-          ),
+              _buildFeatureCard(
+                icon: Icons.analytics,
+                title: 'Speler Performance AI',
+                description:
+                    'Geautomatiseerde analyse van spelersprestaties met '
+                    'gepersonaliseerde verbeteringsuggesties.',
+                status: 'Planning Q4 2025',
+                color: Colors.red,
+              ),
 
-          const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-          // Demo Section
-          Text(
-            'Interactive Demo',
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
+              // Demo Section
+              Text(
+                'Interactive Demo',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'AI Prompt Simulator',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _promptController,
-                    decoration: const InputDecoration(
-                      labelText: 'Vraag aan de AI',
-                      hintText:
-                          'Bijvoorbeeld: "Maak een verdedigende training voor JO17"',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.chat),
-                    ),
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: _isGenerating ? null : _generateDemoResponse,
-                      icon: _isGenerating
-                          ? const SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Icon(Icons.auto_awesome),
-                      label: Text(
-                        _isGenerating ? 'Genereren...' : 'Genereer AI Response',
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple.shade700,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                      ),
-                    ),
-                  ),
-                  if (_generatedContent != null) ...[
-                    const SizedBox(height: 24),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade50,
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.smart_toy,
-                                color: Colors.purple.shade700,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'AI Response',
-                                style: TextStyle(
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'AI Prompt Simulator',
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple.shade700,
                                 ),
+                      ),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: _promptController,
+                        decoration: const InputDecoration(
+                          labelText: 'Vraag aan de AI',
+                          hintText:
+                              'Bijvoorbeeld: "Maak een verdedigende training voor JO17"',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.chat),
+                        ),
+                        maxLines: 3,
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          onPressed:
+                              _isGenerating ? null : _generateDemoResponse,
+                          icon: _isGenerating
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child:
+                                      CircularProgressIndicator(strokeWidth: 2),
+                                )
+                              : const Icon(Icons.auto_awesome),
+                          label: Text(
+                            _isGenerating
+                                ? 'Genereren...'
+                                : 'Genereer AI Response',
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.purple.shade700,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          ),
+                        ),
+                      ),
+                      if (_generatedContent != null) ...[
+                        const SizedBox(height: 24),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.smart_toy,
+                                    color: Colors.purple.shade700,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    'AI Response',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.purple.shade700,
+                                    ),
+                                  ),
+                                ],
                               ),
+                              const SizedBox(height: 12),
+                              Text(_generatedContent!),
                             ],
                           ),
-                          const SizedBox(height: 12),
-                          Text(_generatedContent!),
-                        ],
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // Technical Specs
-          Card(
-            color: Colors.grey.shade50,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Technische Specificaties',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                        ),
+                      ],
+                    ],
                   ),
-                  const SizedBox(height: 12),
-                  _buildTechSpec('AI Model', 'Google Gemini 1.5 Flash'),
-                  _buildTechSpec('Framework', 'Flutter 3.32 + Dart 3.8'),
-                  _buildTechSpec('State Management', 'Riverpod 2.6'),
-                  _buildTechSpec('Backend', 'Supabase + Microservices'),
-                  _buildTechSpec('Deployment', 'Progressive Web App'),
-                ],
+                ),
               ),
-            ),
+
+              const SizedBox(height: 24),
+
+              // Technical Specs
+              Card(
+                color: Colors.grey.shade50,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Technische Specificaties',
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      const SizedBox(height: 12),
+                      _buildTechSpec('AI Model', 'Google Gemini 1.5 Flash'),
+                      _buildTechSpec('Framework', 'Flutter 3.32 + Dart 3.8'),
+                      _buildTechSpec('State Management', 'Riverpod 2.6'),
+                      _buildTechSpec('Backend', 'Supabase + Microservices'),
+                      _buildTechSpec('Deployment', 'Progressive Web App'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildFeatureCard({
     required IconData icon,
@@ -286,78 +296,79 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
     required String description,
     required String status,
     required Color color,
-  }) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, color: color, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+  }) =>
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    status,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: color,
+                child: Icon(icon, color: color, size: 24),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                  ),
+                    const SizedBox(height: 4),
+                    Text(
+                      description,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        status,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: color,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-
-  Widget _buildTechSpec(String label, String value) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 4),
-    child: Row(
-      children: [
-        SizedBox(
-          width: 120,
-          child: Text(
-            '$label:',
-            style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ],
           ),
         ),
-        Expanded(child: Text(value)),
-      ],
-    ),
-  );
+      );
+
+  Widget _buildTechSpec(String label, String value) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 120,
+              child: Text(
+                '$label:',
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+            Expanded(child: Text(value)),
+          ],
+        ),
+      );
 
   Future<void> _generateDemoResponse() async {
     if (_promptController.text.trim().isEmpty) {

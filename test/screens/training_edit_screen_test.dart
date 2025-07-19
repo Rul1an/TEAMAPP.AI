@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:jo17_tactical_manager/models/training.dart';
 import 'package:jo17_tactical_manager/screens/training/training_edit_screen.dart';
@@ -30,7 +29,8 @@ class _MockTrainingRepo implements TrainingRepository {
   Future<Result<List<Training>>> getByDateRange(
     DateTime start,
     DateTime end,
-  ) async => const Success([]);
+  ) async =>
+      const Success([]);
 
   @override
   Future<Result<List<Training>>> getUpcoming() async => const Success([]);
@@ -57,15 +57,6 @@ final _dummy = () {
   return t;
 }();
 
-Widget _wrapWithRouter(Widget child) => ProviderScope(
-  overrides: [],
-  child: MaterialApp.router(
-    routerConfig: GoRouter(
-      routes: [GoRoute(path: '/', builder: (_, __) => child)],
-    ),
-  ),
-);
-
 void main() {
   late _MockTrainingRepo repo;
 
@@ -77,7 +68,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
-        child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
+        child: const MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
     await tester.pumpAndSettle();
@@ -92,7 +83,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
-        child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
+        child: const MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
     await tester.pumpAndSettle();
@@ -109,7 +100,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [trainingRepositoryProvider.overrideWithValue(repo)],
-        child: MaterialApp(home: TrainingEditScreen(trainingId: '1')),
+        child: const MaterialApp(home: TrainingEditScreen(trainingId: '1')),
       ),
     );
     await tester.pumpAndSettle();

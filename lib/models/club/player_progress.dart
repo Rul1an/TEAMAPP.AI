@@ -18,9 +18,9 @@ class PlayerProgress with _$PlayerProgress {
     required DateTime startDate,
     // Technical Skills (1-10 scale)
     required TechnicalSkills
-    technicalSkills, // Physical Attributes (1-10 scale)
+        technicalSkills, // Physical Attributes (1-10 scale)
     required PhysicalAttributes
-    physicalAttributes, // Tactical Understanding (1-10 scale)
+        physicalAttributes, // Tactical Understanding (1-10 scale)
     required TacticalSkills tacticalSkills, // Mental Attributes (1-10 scale)
     required MentalAttributes mentalAttributes, // Performance Metrics
     required PerformanceMetrics performanceMetrics, // Overall Ratings

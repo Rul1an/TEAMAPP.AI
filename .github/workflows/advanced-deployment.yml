@@ -53,12 +53,13 @@ jobs:
         continue-on-error: true
 
       - name: 🎨 Format Check
+        continue-on-error: true
         run: |
           if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
             cd jo17_tactical_manager
           fi
-          dart format .
-          echo "✅ Code formatted (not enforced to fail pipeline)"
+          dart format --set-exit-if-changed .
+          echo "✅ Code formatting is correct (or auto-formatting applied)"
 
       - name:  Unit Tests
         run: |
@@ -366,31 +367,22 @@ jobs:
           path: build/web
 
       - name: 🌟 Deploy to Netlify Production
+        id: netlify_deploy
         uses: South-Paw/action-netlify-cli@v2
         with:
-          args: deploy --dir=build/web --prod
+          args: deploy --dir=build/web --prod --json
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
-      - name: 📊 Send Deployment Metrics
+      - name: 🔖 Capture deploy ID
+        id: capture
         run: |
-          # Send metrics to monitoring service
-          curl -X POST "https://api.sentry.io/api/0/organizations/${{ secrets.SENTRY_ORG }}/releases/" \
-            -H "Authorization: Bearer ${{ secrets.SENTRY_AUTH_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "version": "${{ github.sha }}",
-              "projects": ["jo17-tactical-manager"],
-              "dateCreated": "'$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)'"
-            }'
+          DEPLOY_ID=$(jq -r '.deploy_id' <<< "${{ steps.netlify_deploy.outputs.stdout }}")
+          echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
 
-      - name: 🎉 Notify Success (Slack)
-        if: ${{ success() && env.SLACK_WEBHOOK_URL != '' }}
-        uses: 8398a7/action-slack@v3
-        with:
-          status: success
-          text: "🎉 Production deployment successful! Live at: https://teamappai.netlify.app"
+    outputs:
+      deploy_id: ${{ steps.capture.outputs.deploy_id }}
 
   # Post-deployment Health Check
   health-check:
@@ -464,3 +456,28 @@ jobs:
                 console.log(`Deleted old artifact: ${artifact.name}`);
               }
             }
+
+  auto-rollback:
+    name: 🔄 Auto Rollback
+    needs: [deploy-production]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install jq & AWS CLI deps
+        run: sudo apt-get update -y && sudo apt-get install -y jq
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.AWS_CHAOS_ROLE_ARN }}
+          aws-region: eu-west-1
+
+      - name: Run auto rollback script
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          CURRENT_DEPLOY_ID: ${{ needs.deploy-production.outputs.deploy_id }}
+        run: bash scripts/auto_rollback.sh

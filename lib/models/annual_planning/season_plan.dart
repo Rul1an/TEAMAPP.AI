@@ -203,9 +203,9 @@ class SeasonPlan {
 
   // Season goals and objectives
   late List<String>
-  seasonObjectives; // ["Top 3 finish", "Youth development", "Style of play"]
+      seasonObjectives; // ["Top 3 finish", "Youth development", "Style of play"]
   late List<String>
-  keyPerformanceIndicators; // ["Goals scored", "Clean sheets", "Pass accuracy"]
+      keyPerformanceIndicators; // ["Goals scored", "Clean sheets", "Pass accuracy"]
 
   // Template and tracking
   late bool isTemplate; // true for reusable season templates
@@ -272,14 +272,14 @@ class SeasonPlan {
       [];
   // Season statistics
   Map<String, dynamic> getSeasonStatistics() => {
-    'totalWeeks': totalWeeks,
-    'completedWeeks': currentWeek - 1,
-    'remainingWeeks': remainingWeeks,
-    'progressPercentage': progressPercentage,
-    'currentPhase': getCurrentPhase().displayName,
-    'isActive': isActive,
-    'isCompleted': isCompleted,
-  };
+        'totalWeeks': totalWeeks,
+        'completedWeeks': currentWeek - 1,
+        'remainingWeeks': remainingWeeks,
+        'progressPercentage': progressPercentage,
+        'currentPhase': getCurrentPhase().displayName,
+        'isActive': isActive,
+        'isCompleted': isCompleted,
+      };
 
   // Update progress
   void updateProgress() {
@@ -332,35 +332,35 @@ class SeasonPlan {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'description': description,
-    'season': season,
-    'ageGroup': ageGroup.name,
-    'teamName': teamName,
-    'seasonStartDate': seasonStartDate.toIso8601String(),
-    'seasonEndDate': seasonEndDate.toIso8601String(),
-    'holidayPeriods': holidayPeriods,
-    'periodizationPlanId': periodizationPlanId,
-    'totalWeeks': totalWeeks,
-    'trainingWeeks': trainingWeeks,
-    'competitionWeeks': competitionWeeks,
-    'primaryCompetition': primaryCompetition,
-    'additionalCompetitions': additionalCompetitions,
-    'firstMatchDate': firstMatchDate?.toIso8601String(),
-    'lastMatchDate': lastMatchDate?.toIso8601String(),
-    'midSeasonBreakStart': midSeasonBreakStart?.toIso8601String(),
-    'midSeasonBreakEnd': midSeasonBreakEnd?.toIso8601String(),
-    'seasonObjectives': seasonObjectives,
-    'keyPerformanceIndicators': keyPerformanceIndicators,
-    'isTemplate': isTemplate,
-    'status': status.name,
-    'currentWeek': currentWeek,
-    'progressPercentage': progressPercentage,
-    'createdBy': createdBy,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'description': description,
+        'season': season,
+        'ageGroup': ageGroup.name,
+        'teamName': teamName,
+        'seasonStartDate': seasonStartDate.toIso8601String(),
+        'seasonEndDate': seasonEndDate.toIso8601String(),
+        'holidayPeriods': holidayPeriods,
+        'periodizationPlanId': periodizationPlanId,
+        'totalWeeks': totalWeeks,
+        'trainingWeeks': trainingWeeks,
+        'competitionWeeks': competitionWeeks,
+        'primaryCompetition': primaryCompetition,
+        'additionalCompetitions': additionalCompetitions,
+        'firstMatchDate': firstMatchDate?.toIso8601String(),
+        'lastMatchDate': lastMatchDate?.toIso8601String(),
+        'midSeasonBreakStart': midSeasonBreakStart?.toIso8601String(),
+        'midSeasonBreakEnd': midSeasonBreakEnd?.toIso8601String(),
+        'seasonObjectives': seasonObjectives,
+        'keyPerformanceIndicators': keyPerformanceIndicators,
+        'isTemplate': isTemplate,
+        'status': status.name,
+        'currentWeek': currentWeek,
+        'progressPercentage': progressPercentage,
+        'createdBy': createdBy,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method for updates
   SeasonPlan copyWith({
@@ -425,8 +425,7 @@ class SeasonPlan {
   }
 
   @override
-  String toString() =>
-      'SeasonPlan(id: $id, name: $name, season: $season, '
+  String toString() => 'SeasonPlan(id: $id, name: $name, season: $season, '
       'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '
       'progress: ${progressPercentage.toStringAsFixed(1)}%)';
 

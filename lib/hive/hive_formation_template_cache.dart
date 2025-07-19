@@ -5,12 +5,12 @@ import 'base_hive_cache.dart';
 
 class HiveFormationTemplateCache {
   HiveFormationTemplateCache()
-    : _cache = BaseHiveCache<List<FormationTemplate>>(
-        boxName: _box,
-        valueKey: _key,
-        fromJson: _fromJson,
-        toJson: _toJson,
-      );
+      : _cache = BaseHiveCache<List<FormationTemplate>>(
+          boxName: _box,
+          valueKey: _key,
+          fromJson: _fromJson,
+          toJson: _toJson,
+        );
 
   static const _box = 'formation_templates_box';
   static const _key = 'formation_templates_json';
@@ -23,28 +23,28 @@ class HiveFormationTemplateCache {
   Future<void> clear() => _cache.clear();
 
   static List<FormationTemplate> _fromJson(Map<String, dynamic> map) {
-    final raw = (map['templates'] as List<dynamic>? ?? [])
-        .cast<Map<String, dynamic>>();
+    final raw =
+        (map['templates'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
     return raw.map(_templateFromMap).toList();
   }
 
   static Map<String, dynamic> _toJson(List<FormationTemplate> list) => {
-    'templates': list.map(_templateToMap).toList(),
-  };
+        'templates': list.map(_templateToMap).toList(),
+      };
 
   // Helper serialization
   static Map<String, dynamic> _templateToMap(FormationTemplate t) => {
-    'id': t.id,
-    'name': t.name,
-    'description': t.description,
-    'formation': t.formation.name,
-    'positionPreferences': t.positionPreferences,
-    'isDefault': t.isDefault,
-    'isCustom': t.isCustom,
-    'createdBy': t.createdBy,
-    'createdAt': t.createdAt.toIso8601String(),
-    'updatedAt': t.updatedAt.toIso8601String(),
-  };
+        'id': t.id,
+        'name': t.name,
+        'description': t.description,
+        'formation': t.formation.name,
+        'positionPreferences': t.positionPreferences,
+        'isDefault': t.isDefault,
+        'isCustom': t.isCustom,
+        'createdBy': t.createdBy,
+        'createdAt': t.createdAt.toIso8601String(),
+        'updatedAt': t.updatedAt.toIso8601String(),
+      };
 
   static FormationTemplate _templateFromMap(Map<String, dynamic> json) {
     return FormationTemplate()

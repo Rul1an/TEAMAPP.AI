@@ -17,12 +17,12 @@ class BaseHiveCache<T> {
     required T Function(Map<String, dynamic>) fromJson,
     required Map<String, dynamic> Function(T) toJson,
     Duration defaultTtl = const Duration(minutes: 10),
-  }) : _boxName = boxName,
-       _valueKey = valueKey,
-       _fromJson = fromJson,
-       _toJson = toJson,
-       _defaultTtl = defaultTtl,
-       _tsKey = '${valueKey}_ts';
+  })  : _boxName = boxName,
+        _valueKey = valueKey,
+        _fromJson = fromJson,
+        _toJson = toJson,
+        _defaultTtl = defaultTtl,
+        _tsKey = '${valueKey}_ts';
 
   final String _boxName;
   final String _valueKey;

@@ -17,24 +17,24 @@ class Organization {
   }) : settings = settings ?? {};
 
   factory Organization.fromJson(Map<String, dynamic> json) => Organization(
-    id: json['id'] as String,
-    name: json['name'] as String,
-    slug: json['slug'] as String,
-    tier: OrganizationTier.values.firstWhere(
-      (e) => e.name == json['tier'],
-      orElse: () => OrganizationTier.basic,
-    ),
-    logoUrl: json['logoUrl'] as String?,
-    primaryColor: json['primaryColor'] as String? ?? '#1976D2',
-    secondaryColor: json['secondaryColor'] as String? ?? '#FFC107',
-    settings: json['settings'] as Map<String, dynamic>? ?? {},
-    subscriptionStatus: json['subscriptionStatus'] as String? ?? 'trial',
-    subscriptionEndDate: json['subscriptionEndDate'] != null
-        ? DateTime.parse(json['subscriptionEndDate'] as String)
-        : null,
-    createdAt: DateTime.parse(json['createdAt'] as String),
-    updatedAt: DateTime.parse(json['updatedAt'] as String),
-  );
+        id: json['id'] as String,
+        name: json['name'] as String,
+        slug: json['slug'] as String,
+        tier: OrganizationTier.values.firstWhere(
+          (e) => e.name == json['tier'],
+          orElse: () => OrganizationTier.basic,
+        ),
+        logoUrl: json['logoUrl'] as String?,
+        primaryColor: json['primaryColor'] as String? ?? '#1976D2',
+        secondaryColor: json['secondaryColor'] as String? ?? '#FFC107',
+        settings: json['settings'] as Map<String, dynamic>? ?? {},
+        subscriptionStatus: json['subscriptionStatus'] as String? ?? 'trial',
+        subscriptionEndDate: json['subscriptionEndDate'] != null
+            ? DateTime.parse(json['subscriptionEndDate'] as String)
+            : null,
+        createdAt: DateTime.parse(json['createdAt'] as String),
+        updatedAt: DateTime.parse(json['updatedAt'] as String),
+      );
   final String id;
   final String name;
   final String slug;
@@ -61,35 +61,36 @@ class Organization {
     DateTime? subscriptionEndDate,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) => Organization(
-    id: id ?? this.id,
-    name: name ?? this.name,
-    slug: slug ?? this.slug,
-    tier: tier ?? this.tier,
-    logoUrl: logoUrl ?? this.logoUrl,
-    primaryColor: primaryColor ?? this.primaryColor,
-    secondaryColor: secondaryColor ?? this.secondaryColor,
-    settings: settings ?? this.settings,
-    subscriptionStatus: subscriptionStatus ?? this.subscriptionStatus,
-    subscriptionEndDate: subscriptionEndDate ?? this.subscriptionEndDate,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-  );
+  }) =>
+      Organization(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        slug: slug ?? this.slug,
+        tier: tier ?? this.tier,
+        logoUrl: logoUrl ?? this.logoUrl,
+        primaryColor: primaryColor ?? this.primaryColor,
+        secondaryColor: secondaryColor ?? this.secondaryColor,
+        settings: settings ?? this.settings,
+        subscriptionStatus: subscriptionStatus ?? this.subscriptionStatus,
+        subscriptionEndDate: subscriptionEndDate ?? this.subscriptionEndDate,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'slug': slug,
-    'tier': tier.name,
-    'logoUrl': logoUrl,
-    'primaryColor': primaryColor,
-    'secondaryColor': secondaryColor,
-    'settings': settings,
-    'subscriptionStatus': subscriptionStatus,
-    'subscriptionEndDate': subscriptionEndDate?.toIso8601String(),
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'slug': slug,
+        'tier': tier.name,
+        'logoUrl': logoUrl,
+        'primaryColor': primaryColor,
+        'secondaryColor': secondaryColor,
+        'settings': settings,
+        'subscriptionStatus': subscriptionStatus,
+        'subscriptionEndDate': subscriptionEndDate?.toIso8601String(),
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 }
 
 class OrganizationSettings {
@@ -119,13 +120,13 @@ class OrganizationSettings {
   final bool apiAccess;
 
   Map<String, dynamic> toJson() => {
-    'maxPlayers': maxPlayers,
-    'maxTeams': maxTeams,
-    'maxCoaches': maxCoaches,
-    'svsEnabled': svsEnabled,
-    'analyticsEnabled': analyticsEnabled,
-    'apiAccess': apiAccess,
-  };
+        'maxPlayers': maxPlayers,
+        'maxTeams': maxTeams,
+        'maxCoaches': maxCoaches,
+        'svsEnabled': svsEnabled,
+        'analyticsEnabled': analyticsEnabled,
+        'apiAccess': apiAccess,
+      };
 }
 
 // Helper extension for tier features

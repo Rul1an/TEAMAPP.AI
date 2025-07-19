@@ -220,15 +220,16 @@ class FeatureService {
 
   // Feature descriptions for upgrade prompts
   Map<String, String> getFeatureDescriptions() => {
-    'player_tracking_svs': 'Geavanceerd speler volg systeem met GPS integratie',
-    'performance_analytics': 'Uitgebreide prestatie analyses en rapporten',
-    'annual_planning': 'Volledige jaarplanning en periodisering',
-    'video_analysis': 'Video analyse tools en integratie',
-    'gps_integration': 'GPS tracking en fysieke data analyse',
-    'injury_prediction': 'AI-gedreven blessure voorspelling',
-    'custom_reports': 'Aangepaste rapporten en dashboards',
-    'api_access': 'API toegang voor externe integraties',
-    'multi_team_management': 'Beheer meerdere teams binnen één club',
-    'coach_collaboration': 'Samenwerking tussen coaches en staff',
-  };
+        'player_tracking_svs':
+            'Geavanceerd speler volg systeem met GPS integratie',
+        'performance_analytics': 'Uitgebreide prestatie analyses en rapporten',
+        'annual_planning': 'Volledige jaarplanning en periodisering',
+        'video_analysis': 'Video analyse tools en integratie',
+        'gps_integration': 'GPS tracking en fysieke data analyse',
+        'injury_prediction': 'AI-gedreven blessure voorspelling',
+        'custom_reports': 'Aangepaste rapporten en dashboards',
+        'api_access': 'API toegang voor externe integraties',
+        'multi_team_management': 'Beheer meerdere teams binnen één club',
+        'coach_collaboration': 'Samenwerking tussen coaches en staff',
+      };
 }

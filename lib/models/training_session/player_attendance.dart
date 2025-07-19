@@ -183,17 +183,17 @@ class PlayerAttendance {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'playerId': playerId,
-    'playerName': playerName,
-    'playerNumber': playerNumber,
-    'position': position.name,
-    'status': status.name,
-    'notes': notes,
-    'arrivalTime': arrivalTime?.toIso8601String(),
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'playerId': playerId,
+        'playerName': playerName,
+        'playerNumber': playerNumber,
+        'position': position.name,
+        'status': status.name,
+        'notes': notes,
+        'arrivalTime': arrivalTime?.toIso8601String(),
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method
   PlayerAttendance copyWith({

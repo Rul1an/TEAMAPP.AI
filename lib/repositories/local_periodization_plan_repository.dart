@@ -6,7 +6,7 @@ import 'periodization_plan_repository.dart';
 
 class LocalPeriodizationPlanRepository implements PeriodizationPlanRepository {
   LocalPeriodizationPlanRepository({HivePeriodizationCache? cache})
-    : _cache = cache ?? HivePeriodizationCache();
+      : _cache = cache ?? HivePeriodizationCache();
 
   final HivePeriodizationCache _cache;
 

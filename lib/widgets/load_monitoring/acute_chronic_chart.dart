@@ -109,13 +109,13 @@ class AcuteChronicChart extends StatelessWidget {
                             dotData: FlDotData(
                               getDotPainter: (spot, _, __, ___) =>
                                   FlDotCirclePainter(
-                                    radius: 4,
-                                    color: LoadMonitoringService.acrColor(
-                                      spot.y,
-                                    ),
-                                    strokeWidth: 2,
-                                    strokeColor: Colors.white,
-                                  ),
+                                radius: 4,
+                                color: LoadMonitoringService.acrColor(
+                                  spot.y,
+                                ),
+                                strokeWidth: 2,
+                                strokeColor: Colors.white,
+                              ),
                             ),
                           ),
                         ],

@@ -1,0 +1,101 @@
+{
+  "total_count": 8,
+  "workflows": [
+    {
+      "id": 171350605,
+      "node_id": "W_kwDOO6V-Bc4KNppN",
+      "name": "🚀 Advanced Flutter SaaS Deployment",
+      "path": ".github/workflows/advanced-deployment.yml",
+      "state": "active",
+      "created_at": "2025-06-29T00:07:47.000+02:00",
+      "updated_at": "2025-07-03T13:12:22.000+02:00",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/workflows/171350605",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/blob/main/.github/workflows/advanced-deployment.yml",
+      "badge_url": "https://github.com/Rul1an/TEAMAPP.AI/workflows/%F0%9F%9A%80%20Advanced%20Flutter%20SaaS%20Deployment/badge.svg"
+    },
+    {
+      "id": 174533840,
+      "node_id": "W_kwDOO6V-Bc4KZyzQ",
+      "name": "Fan & Family CI",
+      "path": ".github/workflows/build_fan.yml",
+      "state": "active",
+      "created_at": "2025-07-14T16:07:05.000+02:00",
+      "updated_at": "2025-07-14T16:07:05.000+02:00",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/workflows/174533840",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/blob/main/.github/workflows/build_fan.yml",
+      "badge_url": "https://github.com/Rul1an/TEAMAPP.AI/workflows/Fan%20&%20Family%20CI/badge.svg"
+    },
+    {
+      "id": 172913287,
+      "node_id": "W_kwDOO6V-Bc4KTnKH",
+      "name": "🔎 CI Monitor",
+      "path": ".github/workflows/ci-monitor.yml",
+      "state": "active",
+      "created_at": "2025-07-06T22:51:27.000+02:00",
+      "updated_at": "2025-07-14T00:29:58.000+02:00",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/workflows/172913287",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/blob/main/.github/workflows/ci-monitor.yml",
+      "badge_url": "https://github.com/Rul1an/TEAMAPP.AI/workflows/%F0%9F%94%8E%20CI%20Monitor/badge.svg"
+    },
+    {
+      "id": 172335890,
+      "node_id": "W_kwDOO6V-Bc4KRaMS",
+      "name": "docs-snippets",
+      "path": ".github/workflows/docs-snippets.yml",
+      "state": "active",
+      "created_at": "2025-07-03T15:53:16.000+02:00",
+      "updated_at": "2025-07-03T15:53:16.000+02:00",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/workflows/172335890",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/blob/main/.github/workflows/docs-snippets.yml",
+      "badge_url": "https://github.com/Rul1an/TEAMAPP.AI/workflows/docs-snippets/badge.svg"
+    },
+    {
+      "id": 171274745,
+      "node_id": "W_kwDOO6V-Bc4KNXH5",
+      "name": "Flutter Web CI/CD",
+      "path": ".github/workflows/flutter-web.yml",
+      "state": "active",
+      "created_at": "2025-06-28T09:41:20.000+02:00",
+      "updated_at": "2025-06-28T09:41:20.000+02:00",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/workflows/171274745",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/blob/main/.github/workflows/flutter-web.yml",
+      "badge_url": "https://github.com/Rul1an/TEAMAPP.AI/workflows/Flutter%20Web%20CI/CD/badge.svg"
+    },
+    {
+      "id": 174621351,
+      "node_id": "W_kwDOO6V-Bc4KaIKn",
+      "name": "🧹 Lefthook Quality Gate",
+      "path": ".github/workflows/lefthook.yml",
+      "state": "active",
+      "created_at": "2025-07-14T23:29:16.000+02:00",
+      "updated_at": "2025-07-14T23:50:15.000+02:00",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/workflows/174621351",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/blob/main/.github/workflows/lefthook.yml",
+      "badge_url": "https://github.com/Rul1an/TEAMAPP.AI/workflows/%F0%9F%A7%B9%20Lefthook%20Quality%20Gate/badge.svg"
+    },
+    {
+      "id": 172188426,
+      "node_id": "W_kwDOO6V-Bc4KQ2MK",
+      "name": "👤 Profiles Migration & Tests",
+      "path": ".github/workflows/profiles-ci.yml",
+      "state": "active",
+      "created_at": "2025-07-02T23:53:17.000+02:00",
+      "updated_at": "2025-07-02T23:53:17.000+02:00",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/workflows/172188426",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/blob/main/.github/workflows/profiles-ci.yml",
+      "badge_url": "https://github.com/Rul1an/TEAMAPP.AI/workflows/%F0%9F%91%A4%20Profiles%20Migration%20&%20Tests/badge.svg"
+    },
+    {
+      "id": 172188427,
+      "node_id": "W_kwDOO6V-Bc4KQ2ML",
+      "name": "🔐 Supabase RLS Migration",
+      "path": ".github/workflows/supabase-rls.yml",
+      "state": "active",
+      "created_at": "2025-07-02T23:53:17.000+02:00",
+      "updated_at": "2025-07-02T23:53:17.000+02:00",
+      "url": "https://api.github.com/repos/Rul1an/TEAMAPP.AI/actions/workflows/172188427",
+      "html_url": "https://github.com/Rul1an/TEAMAPP.AI/blob/main/.github/workflows/supabase-rls.yml",
+      "badge_url": "https://github.com/Rul1an/TEAMAPP.AI/workflows/%F0%9F%94%90%20Supabase%20RLS%20Migration/badge.svg"
+    }
+  ]
+}
