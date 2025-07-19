@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, flutter_style_todos
+// ignore_for_file: deprecated_member_use, flutter_style_todos, dead_code
 
 // Dart imports:
 import 'dart:io';
@@ -25,7 +25,8 @@ void main() {
   // Skip golden assertions on CI (Linux) as font rendering causes diff.
   final isCi = Platform.environment['CI'] == 'true';
 
-  const skipGolden = true; // TODO(team): update golden files
+  // Toggle to generate/update golden files locally.
+  bool skipGolden = true; // TODO(team): set to false after updating goldens
 
   group('FieldDiagramToolbar golden tests', () {
     const testSize = Size(800, 80);
