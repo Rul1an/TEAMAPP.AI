@@ -10,6 +10,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Additional core dependencies added to satisfy new analytics & tagging modules
+  firebase_analytics: ^11.5.2
+  equatable: ^2.0.5
+  collection: ^1.17.2
+  graphql_flutter: ^5.1.3
+
   # Core UI
   cupertino_icons: ^1.0.6
   google_fonts: ^4.0.4
@@ -78,6 +84,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # Integration testing framework
+  integration_test:
+    sdk: flutter
   test_utils:
     path: packages/test_utils
   mocktail: ^1.0.1
@@ -85,7 +94,6 @@ dev_dependencies:
   # Replaced by very_good_analysis for stricter lint set
   very_good_analysis: ^5.1.0
   import_sorter: ^4.6.0
-  dart_code_metrics: ^5.7.3
   build_runner: ^2.4.9
   riverpod_generator: ^2.4.0
   shared_preferences: ^2.2.2

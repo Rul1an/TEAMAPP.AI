@@ -7,6 +7,7 @@ targets:
         generate_for:
           include:
             - lib/models/**/*.dart
+            - lib/features/**/*.dart
             - lib/providers/**/*_provider.dart
           exclude:
             - lib/models/training_session/training_exercise.dart
@@ -21,6 +22,7 @@ targets:
         generate_for:
           include:
             - lib/models/**/*.dart
+            - lib/features/**/*.dart
           exclude:
             - lib/models/**/*.freezed.dart
 
@@ -30,6 +32,7 @@ targets:
         generate_for:
           include:
             - lib/providers/**/*_provider.dart
+            - lib/features/**/*.dart
 
       # Disable Isar generator since we migrated to Hive CE
       isar_generator|isar_generator:
