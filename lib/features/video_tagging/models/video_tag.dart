@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 import 'tag_type.dart';
 
 part 'video_tag.g.dart';
@@ -24,7 +25,8 @@ class VideoTag extends Equatable {
   final String? playerId;
   final String? description;
 
-  factory VideoTag.fromJson(Map<String, dynamic> json) => _$VideoTagFromJson(json);
+  factory VideoTag.fromJson(Map<String, dynamic> json) =>
+      _$VideoTagFromJson(json);
   Map<String, dynamic> toJson() => _$VideoTagToJson(this);
 
   @override

@@ -8,7 +8,8 @@ import '../../../analytics/tagging_analytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 class TagEditor extends ConsumerStatefulWidget {
-  const TagEditor({super.key, required this.videoId, required this.initialTimestamp});
+  const TagEditor(
+      {required this.videoId, required this.initialTimestamp, super.key,});
 
   final String videoId;
   final int initialTimestamp;
@@ -69,7 +70,7 @@ class _TagEditorState extends ConsumerState<TagEditor> {
           ),
           Slider(
             min: 0,
-            max: widget.initialTimestamp.toDouble() + 600,
+            max: (_timestamp + 600).toDouble(),
             value: _timestamp.toDouble(),
             onChanged: (v) => setState(() => _timestamp = v.round()),
             label: '$_timestamp s',
@@ -77,7 +78,9 @@ class _TagEditorState extends ConsumerState<TagEditor> {
         ],
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),),
         ElevatedButton(onPressed: _save, child: const Text('Save')),
       ],
     );
