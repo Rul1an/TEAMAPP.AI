@@ -11,14 +11,14 @@ class PermissionService {
   /// Check if user can manage players (add, edit, delete)
   static bool canManagePlayers(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can edit players
   static bool canEditPlayers(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can manage training sessions (create, edit, delete)
   static bool canManageTraining(String? userRole) =>
@@ -30,35 +30,35 @@ class PermissionService {
   /// Check if user can create/edit training sessions
   static bool canCreateTraining(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can manage matches (create, edit, delete)
   static bool canManageMatches(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can view analytics
   static bool canViewAnalytics(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can access SVS (Pro/Enterprise only)
   static bool canAccessSVS(String? userRole, OrganizationTier? tier) {
     if (tier == OrganizationTier.basic) return false;
 
     return userRole == 'bestuurder' ||
-        userRole == 'hoofdcoach' ||
-        userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
   }
 
   /// Check if user can access annual planning
   static bool canAccessAnnualPlanning(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can access exercise library management
   static bool canManageExerciseLibrary(String? userRole) =>

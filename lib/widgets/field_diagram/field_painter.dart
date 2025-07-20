@@ -190,9 +190,9 @@ class FieldPainter extends CustomPainter {
       textPainter
         ..layout()
         ..paint(
-          canvas,
-          position - Offset(textPainter.width / 2, textPainter.height / 2),
-        );
+        canvas,
+        position - Offset(textPainter.width / 2, textPainter.height / 2),
+      );
     }
 
     // Highlight for selected player circle is already handled by outer ring.
@@ -263,10 +263,10 @@ class FieldPainter extends CustomPainter {
       ..drawCircle(position, radius, paint)
       ..drawCircle(position, radius, patternPaint)
       ..drawLine(
-        Offset(position.dx - radius * 0.7, position.dy),
-        Offset(position.dx + radius * 0.7, position.dy),
-        patternPaint,
-      );
+      Offset(position.dx - radius * 0.7, position.dy),
+      Offset(position.dx + radius * 0.7, position.dy),
+      patternPaint,
+    );
 
     if (isSelected) {
       final selectionPaint = Paint()
@@ -296,8 +296,8 @@ class FieldPainter extends CustomPainter {
           paint,
         )
         ..drawRect(
-          Rect.fromCenter(center: position, width: size + 4, height: size + 4),
-          selectionPaint,
+        Rect.fromCenter(center: position, width: size + 4, height: size + 4),
+        selectionPaint,
         );
     } else {
       // Only the equipment rectangle when not selected
@@ -434,7 +434,7 @@ class FieldPainter extends CustomPainter {
 
       if (selectionPoints.length >= 2) {
         selectionPath.addPolygon(selectionPoints, false);
-        canvas.drawPath(selectionPath, selectionPaint);
+      canvas.drawPath(selectionPath, selectionPaint);
       }
     }
   }

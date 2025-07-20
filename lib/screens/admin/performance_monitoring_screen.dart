@@ -60,8 +60,8 @@ class _PerformanceMonitoringScreenState
   @override
   Widget build(BuildContext context) => MainScaffold(
         child: AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) => Opacity(
+        animation: _animation,
+        builder: (context, child) => Opacity(
             opacity: _animation.value,
             child: Transform.translate(
               offset: Offset(0, 20 * (1 - _animation.value)),
@@ -88,72 +88,72 @@ class _PerformanceMonitoringScreenState
               ),
             ),
           ),
-        ),
-      );
+      ),
+    );
 
   Widget _buildHeader() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
                   color: Colors.blue.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
                   Icons.monitor_heart,
                   size: 32,
                   color: Colors.blue,
                 ),
-              ),
-              const SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Performance Monitoring',
+            ),
+            const SizedBox(width: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Performance Monitoring',
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Real-time system health and performance metrics',
+                ),
+                Text(
+                  'Real-time system health and performance metrics',
                     style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              _buildStatusIndicator(),
-            ],
-          ),
-        ],
-      );
+                ),
+              ],
+            ),
+            const Spacer(),
+            _buildStatusIndicator(),
+          ],
+        ),
+      ],
+    );
 
   Widget _buildStatusIndicator() => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
           color: Colors.green.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Colors.green.withValues(alpha: 0.3)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 8,
-              height: 8,
-              decoration: const BoxDecoration(
-                color: Colors.green,
-                shape: BoxShape.circle,
-              ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 8,
+            height: 8,
+            decoration: const BoxDecoration(
+              color: Colors.green,
+              shape: BoxShape.circle,
             ),
-            const SizedBox(width: 8),
-            const Text(
-              'System Healthy',
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            'System Healthy',
               style:
                   TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
             ),
           ],
         ),
-      );
+    );
 }
