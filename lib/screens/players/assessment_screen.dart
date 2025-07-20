@@ -346,8 +346,10 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Evaluatie',
-                      style: Theme.of(context).textTheme.titleLarge,),
+                  Text(
+                    'Evaluatie',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _strengthsController,

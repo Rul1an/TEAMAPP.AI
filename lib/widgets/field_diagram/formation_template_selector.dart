@@ -74,7 +74,9 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
                 Text(
                   formation.name,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16,),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Expanded(

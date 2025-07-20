@@ -13,28 +13,34 @@ class VeoHighlightRepository {
 
   /// Fetch highlights for a given match using Edge Function `veo_fetch_clips`.
   Future<List<VeoHighlight>> fetchHighlightsByMatch(String matchId) async {
-    final response = await _client.functions.invoke('veo_fetch_clips', body: {
-      'matchId': matchId,
-    });
+    final response = await _client.functions.invoke(
+      'veo_fetch_clips',
+      body: {
+        'matchId': matchId,
+      },
+    );
 
     if (response.status >= 400) {
-      throw response.data ?? 'Edge function error';
+      throw Exception(response.data?.toString() ?? 'Edge function error');
     }
 
     final data = response.data as Map<String, dynamic>? ?? {};
     final clips = (data['clips'] as List<dynamic>? ?? [])
-        .map((e) => VeoHighlight.fromJson(Map<String, dynamic>.from(e)))
+        .map((e) => VeoHighlight.fromJson(e as Map<String, dynamic>))
         .toList();
     return clips;
   }
 
   /// Get presigned playback URL for highlight (lazy-load on demand)
   Future<String> getPlaybackUrl(String highlightId) async {
-    final response = await _client.functions.invoke('veo_get_clip_url', body: {
-      'highlightId': highlightId,
-    });
+    final response = await _client.functions.invoke(
+      'veo_get_clip_url',
+      body: {
+        'highlightId': highlightId,
+      },
+    );
     if (response.status >= 400) {
-      throw response.data ?? 'Edge function error';
+      throw Exception(response.data?.toString() ?? 'Edge function error');
     }
     return (response.data as Map<String, dynamic>)['url'] as String;
   }

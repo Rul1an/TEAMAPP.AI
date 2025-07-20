@@ -51,8 +51,10 @@ class RecentActivityCard extends StatelessWidget {
     AsyncValue<List<dynamic>> async,
   ) =>
       async.when(
-        data: (list) => Text('$caption: ${list.length}',
-            style: const TextStyle(fontSize: 14),),
+        data: (list) => Text(
+          '$caption: ${list.length}',
+          style: const TextStyle(fontSize: 14),
+        ),
         loading: () => const Text('Laden...'),
         error: (_, __) => const Text('Error'),
       );

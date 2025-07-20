@@ -159,7 +159,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: ElevatedButton.icon(
-                                onPressed: () => _showScoreDialog(context, match),
+                                onPressed: () =>
+                                    _showScoreDialog(context, match),
                                 icon: const Icon(Icons.sports_score),
                                 label: const Text('Score Invoeren'),
                               ),
@@ -198,7 +199,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                 match.location == Location.home ? 'Thuis' : 'Uit',
               ),
               _buildInfoRow(
-                  'Competitie', _getCompetitionName(match.competition),),
+                'Competitie',
+                _getCompetitionName(match.competition),
+              ),
               _buildInfoRow('Status', _getStatusName(match.status)),
             ],
           ),

@@ -30,5 +30,6 @@ class VideoTag extends Equatable {
   Map<String, dynamic> toJson() => _$VideoTagToJson(this);
 
   @override
-  List<Object?> get props => [id, videoId, timestamp, label, type, playerId, description];
+  List<Object?> get props =>
+      [id, videoId, timestamp, label, type, playerId, description];
 }

@@ -24,11 +24,12 @@ class SmartPlaylistService {
 
   /// Generate match highlights playlist based on goal/assist/save tags
   VideoPlaylist generateMatchHighlights(List<VideoTag> tags, String matchId) {
-    final highlightTags = tags.where((t) => {
-          TagType.goal,
-          TagType.assist,
-          TagType.save,
-        }.contains(t.type),
+    final highlightTags = tags.where(
+      (t) => {
+        TagType.goal,
+        TagType.assist,
+        TagType.save,
+      }.contains(t.type),
     );
     final vids = highlightTags.map((t) => t.videoId).toSet().toList();
     return VideoPlaylist(

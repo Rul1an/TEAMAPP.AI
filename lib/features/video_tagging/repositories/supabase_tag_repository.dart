@@ -11,11 +11,8 @@ class SupabaseTagRepository implements TagRepository {
 
   @override
   Future<VideoTag> create(VideoTag tag) async {
-    final data = await client
-        .from('video_tags')
-        .insert(tag.toJson())
-        .select()
-        .single();
+    final data =
+        await client.from('video_tags').insert(tag.toJson()).select().single();
     return VideoTag.fromJson(data as Map<String, dynamic>);
   }
 

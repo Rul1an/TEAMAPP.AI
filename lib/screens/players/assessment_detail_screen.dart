@@ -40,7 +40,9 @@ class AssessmentDetailScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       SizedBox(
-                          height: 300, child: _buildRadarChart(assessment),),
+                        height: 300,
+                        child: _buildRadarChart(assessment),
+                      ),
                     ],
                   ),
                 ),
