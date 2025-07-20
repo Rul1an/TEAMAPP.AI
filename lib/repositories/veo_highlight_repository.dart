@@ -17,11 +17,11 @@ class VeoHighlightRepository {
       'matchId': matchId,
     });
 
-    if (response.error != null) {
-      throw response.error!;
+    if (response.status >= 400) {
+      throw response.data ?? 'Edge function error';
     }
 
-    final data = response.data;
+    final data = response.data as Map<String, dynamic>? ?? {};
     final clips = (data['clips'] as List<dynamic>? ?? [])
         .map((e) => VeoHighlight.fromJson(Map<String, dynamic>.from(e)))
         .toList();
@@ -33,8 +33,8 @@ class VeoHighlightRepository {
     final response = await _client.functions.invoke('veo_get_clip_url', body: {
       'highlightId': highlightId,
     });
-    if (response.error != null) {
-      throw response.error!;
+    if (response.status >= 400) {
+      throw response.data ?? 'Edge function error';
     }
     return (response.data as Map<String, dynamic>)['url'] as String;
   }
