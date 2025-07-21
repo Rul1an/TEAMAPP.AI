@@ -15,6 +15,23 @@ import 'package:flutter_test/flutter_test.dart';
 // Package imports:
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
+
+// Mock the app_links plugin channel to avoid MissingPluginException in widget tests.
+void _registerMockAppLinks() {
+  const MethodChannel channel = MethodChannel('com.llfbandit.app_links/events');
+  channel.setMockMethodCallHandler((MethodCall methodCall) async {
+    // Return null or appropriate fake data for tests.
+    return null;
+  });
+}
+
+// Ensure binding initialised and register mocks at test startup (only once).
+void _initTestEnvironment() {
+  _registerMockAppLinks();
+}
+
+_initTestEnvironment();
 
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   // Ensures widgets binding is initialised before we call into any Flutter
