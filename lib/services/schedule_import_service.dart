@@ -23,7 +23,8 @@ class ScheduleImportState {
     ScheduleCsvParseResult? parseResult,
     DuplicateScheduleResult? duplicateResult,
     ImportStatus? status,
-  }) => ScheduleImportState(
+  }) =>
+      ScheduleImportState(
         parseResult: parseResult ?? this.parseResult,
         duplicateResult: duplicateResult ?? this.duplicateResult,
         status: status ?? this.status,
