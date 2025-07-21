@@ -32,6 +32,9 @@ void _initTestEnvironment() {
 }
 
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
+  _initTestEnvironment();
+  // Initialize date formatting for intl
+  await initializeDateFormatting('nl_NL', null);
   // Ensures widgets binding is initialised before we call into any Flutter
   // plugins (SupabaseFlutter registers a MethodChannel).
   TestWidgetsFlutterBinding.ensureInitialized();
