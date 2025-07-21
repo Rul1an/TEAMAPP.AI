@@ -323,9 +323,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                           _selectedStartingLineup.remove(playerId);
                         });
                       },
-                      backgroundColor: _getPositionColor(
-                        player.position,
-                      ).withValues(alpha: 0.2),
+                      backgroundColor: _getPositionColor(player.position).withAlpha(50),
                     );
                   }).toList(),
                 ),
@@ -389,7 +387,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                           _selectedSubstitutes.remove(playerId);
                         });
                       },
-                      backgroundColor: Colors.grey.withValues(alpha: 0.2),
+                      backgroundColor: Colors.grey.withAlpha(50),
                     );
                   }).toList(),
                 ),
