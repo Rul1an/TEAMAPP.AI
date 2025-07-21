@@ -631,7 +631,8 @@ class _EnhancedExerciseLibraryScreenState
                       ),
                       decoration: BoxDecoration(
                         color: _getIntensityColorFromLevel(
-                            exercise.intensityLevel,),
+                          exercise.intensityLevel,
+                        ),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
@@ -673,7 +674,9 @@ class _EnhancedExerciseLibraryScreenState
                 Text(
                   exercise.name,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14,),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

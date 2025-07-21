@@ -19,10 +19,13 @@ void main() {
 
     test('access SVS depends on tier and role', () {
       expect(
-          PermissionService.canAccessSVS('hoofdcoach', OrganizationTier.basic),
-          isFalse,);
-      expect(PermissionService.canAccessSVS('hoofdcoach', OrganizationTier.pro),
-          isTrue,);
+        PermissionService.canAccessSVS('hoofdcoach', OrganizationTier.basic),
+        isFalse,
+      );
+      expect(
+        PermissionService.canAccessSVS('hoofdcoach', OrganizationTier.pro),
+        isTrue,
+      );
     });
   });
 }

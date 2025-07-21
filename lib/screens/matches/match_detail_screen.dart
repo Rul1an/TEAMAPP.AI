@@ -57,6 +57,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
   Widget build(BuildContext context) {
     final matchesAsync = ref.watch(matchesProvider);
     final playersAsync = ref.watch(playersProvider);
+    final userRole = ref.watch(userRoleProvider);
+    final canManage = !PermissionService.isViewOnlyUser(userRole);
 
     return Scaffold(
       appBar: AppBar(
@@ -157,8 +159,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: ElevatedButton.icon(
-                                onPressed: () =>
-                                    _showScoreDialog(context, match),
+                                onPressed: () => _showScoreDialog(context, match),
                                 icon: const Icon(Icons.sports_score),
                                 label: const Text('Score Invoeren'),
                               ),
@@ -197,7 +198,9 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                 match.location == Location.home ? 'Thuis' : 'Uit',
               ),
               _buildInfoRow(
-                  'Competitie', _getCompetitionName(match.competition),),
+                'Competitie',
+                _getCompetitionName(match.competition),
+              ),
               _buildInfoRow('Status', _getStatusName(match.status)),
             ],
           ),
@@ -401,19 +404,14 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Speler Beoordelingen',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: canManage ? _showRatingOptions : null,
-                    icon: const Icon(Icons.star),
-                    label: const Text('Beoordeel'),
-                  ),
-                ],
+              Text(
+                'Speler Beoordelingen',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              ElevatedButton.icon(
+                onPressed: canManage ? _showRatingOptions : null,
+                icon: const Icon(Icons.star),
+                label: const Text('Beoordeel'),
               ),
               const SizedBox(height: 16),
               // Show existing ratings or placeholder
