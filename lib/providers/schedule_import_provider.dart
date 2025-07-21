@@ -11,17 +11,18 @@ final scheduleImportServiceProvider = Provider<ScheduleImportService>((ref) {
   );
 });
 
+// Provide notifier using Ref parameter (Riverpod v2+)
 final scheduleImportNotifierProvider =
     StateNotifierProvider<ScheduleImportNotifier, ScheduleImportState>(
-  (ref) => ScheduleImportNotifier(ref.read),
+  (ref) => ScheduleImportNotifier(ref),
 );
 
 class ScheduleImportNotifier extends StateNotifier<ScheduleImportState> {
-  ScheduleImportNotifier(this._read) : super(const ScheduleImportState());
+  ScheduleImportNotifier(this._ref) : super(const ScheduleImportState());
 
-  final Reader _read;
+  final Ref _ref;
 
-  ScheduleImportService get _svc => _read(scheduleImportServiceProvider);
+  ScheduleImportService get _svc => _ref.read(scheduleImportServiceProvider);
 
   Future<void> pickFileAndParse() async {
     state = state.copyWith(status: ImportStatus.parsing);

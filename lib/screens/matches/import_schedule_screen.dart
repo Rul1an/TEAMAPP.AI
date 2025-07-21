@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import '../../providers/schedule_import_provider.dart';
+import '../../services/schedule_import_service.dart';
 import '../../models/match_schedule.dart';
 import '../../models/match.dart';
 

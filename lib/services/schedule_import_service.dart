@@ -1,6 +1,9 @@
 // Package imports:
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
+// Flutter foundation not used anymore.
+
+// Model imports:
+import '../models/match_schedule.dart';
 
 // Project imports:
 import '../core/result.dart';
@@ -84,9 +87,9 @@ class ScheduleImportService {
     }
   }
 
-  Future<Result<void>> importSchedules(List schedules) async {
+  Future<Result<void>> importSchedules(List<MatchSchedule> schedules) async {
     try {
-      for (final s in schedules) {
+      for (final MatchSchedule s in schedules) {
         final res = await _repo.add(s);
         if (!res.isSuccess) {
           return Failure(res.errorOrNull!);
