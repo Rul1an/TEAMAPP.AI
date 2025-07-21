@@ -35,6 +35,7 @@ class ImportScheduleScreen extends ConsumerWidget {
     switch (state.status) {
       case ImportStatus.idle:
       case ImportStatus.error:
+      case ImportStatus.picking:
       case ImportStatus.parsing:
         return Center(
           child: ElevatedButton.icon(
