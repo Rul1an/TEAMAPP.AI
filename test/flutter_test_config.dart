@@ -20,15 +20,27 @@ import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 
 // Mock the app_links plugin channel to avoid MissingPluginException in widget tests.
 void _registerMockAppLinks() {
-  const MethodChannel channel = MethodChannel('com.llfbandit.app_links/events');
-  channel.setMockMethodCallHandler((MethodCall methodCall) async {
-    // Return null or appropriate fake data for tests.
-    return null;
-  });
+  const MethodChannel eventsChannel = MethodChannel('com.llfbandit.app_links/events');
+  const MethodChannel messagesChannel = MethodChannel('com.llfbandit.app_links/messages');
+
+  Future<dynamic> _handler(MethodCall call) async {
+    // Pretend the native plugin is registered and acknowledge the call.
+    switch (call.method) {
+      case 'listen':
+      case 'cancel':
+        return null; // No-op – just prevent MissingPluginException.
+      default:
+        return null;
+    }
+  }
+
+  eventsChannel.setMockMethodCallHandler(_handler);
+  messagesChannel.setMockMethodCallHandler(_handler);
 }
 
 // Ensure binding initialised and register mocks at test startup (only once).
 void _initTestEnvironment() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   _registerMockAppLinks();
 }
 
