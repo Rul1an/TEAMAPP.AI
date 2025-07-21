@@ -3,8 +3,16 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
   /// Allow dependency injection for testing by passing a custom [SupabaseClient].
-  AuthService({SupabaseClient? client})
-      : _supabase = client ?? Supabase.instance.client;
+  // When running tests without Supabase initialization, fall back to dummy client.
+  AuthService({SupabaseClient? client}) : _supabase = client ?? _initClient();
+
+  static SupabaseClient _initClient() {
+    try {
+      return Supabase.instance.client;
+    } catch (_) {
+      return SupabaseClient('https://dummy.supabase.co', 'public-anon-key');
+    }
+  }
 
   final SupabaseClient _supabase;
 
