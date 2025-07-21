@@ -41,15 +41,14 @@ class HiveMatchScheduleCache {
       ..opponent = json['opponent'] as String? ?? ''
       ..location = _locationFrom(json['location'] as String?)
       ..competition = _competitionFrom(json['competition'] as String?)
-      ..createdAt =
-          DateTime.tryParse(json['created_at'] as String? ?? '') ??
-              DateTime.now()
-      ..updatedAt =
-          DateTime.tryParse(json['updated_at'] as String? ?? '') ??
-              DateTime.now();
+      ..createdAt = DateTime.tryParse(json['created_at'] as String? ?? '') ??
+          DateTime.now()
+      ..updatedAt = DateTime.tryParse(json['updated_at'] as String? ?? '') ??
+          DateTime.now();
   }
 
-  static Map<String, dynamic> _scheduleToJson(MatchSchedule s) => <String, dynamic>{
+  static Map<String, dynamic> _scheduleToJson(MatchSchedule s) =>
+      <String, dynamic>{
         'id': s.id,
         'date_time': s.dateTime.toIso8601String(),
         'opponent': s.opponent,

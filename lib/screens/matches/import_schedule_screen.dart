@@ -87,7 +87,8 @@ class _PreviewStep extends StatelessWidget {
           child: ListView(
             children: [
               ...unique.map((s) => _ScheduleTile(schedule: s)),
-              ...dupes.map((s) => _ScheduleTile(schedule: s, isDuplicate: true)),
+              ...dupes
+                  .map((s) => _ScheduleTile(schedule: s, isDuplicate: true)),
             ],
           ),
         ),
