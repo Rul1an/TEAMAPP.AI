@@ -4,7 +4,6 @@ import 'package:mocktail/mocktail.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/hive/hive_match_schedule_cache.dart';
-import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/models/match_schedule.dart';
 import 'package:jo17_tactical_manager/repositories/local_match_schedule_repository.dart';
 
