@@ -31,8 +31,6 @@ void _initTestEnvironment() {
   _registerMockAppLinks();
 }
 
-_initTestEnvironment();
-
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   // Ensures widgets binding is initialised before we call into any Flutter
   // plugins (SupabaseFlutter registers a MethodChannel).
