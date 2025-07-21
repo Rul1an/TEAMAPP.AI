@@ -159,7 +159,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: ElevatedButton.icon(
-                                onPressed: () => _showScoreDialog(context, match),
+                                onPressed: () =>
+                                    _showScoreDialog(context, match),
                                 icon: const Icon(Icons.sports_score),
                                 label: const Text('Score Invoeren'),
                               ),
