@@ -32,7 +32,7 @@ class SecureStorageClient {
 
   Future<http.Response> get(Uri url, {Map<String, String>? headers}) async {
     final ioRequest = await _ioClient.getUrl(url);
-    headers?.forEach(ioRequest.headers.set);
+    headers?.forEach((key, value) => ioRequest.headers.set(key, value));
     final ioResponse = await ioRequest.close();
     final bytes = await ioResponse
         .fold<List<int>>([], (prev, elem) => prev..addAll(elem));
