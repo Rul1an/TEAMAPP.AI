@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 
 // Mock the app_links plugin channel to avoid MissingPluginException in widget tests.
 void _registerMockAppLinks() {
