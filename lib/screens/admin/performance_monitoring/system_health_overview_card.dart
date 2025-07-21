@@ -112,8 +112,10 @@ class _HealthMetric extends StatelessWidget {
               title,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
-            Text(period,
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),),
+            Text(
+              period,
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            ),
           ],
         ),
       );

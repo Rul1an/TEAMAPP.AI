@@ -223,8 +223,10 @@ class DashboardScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Mijn Acties',
-                  style: Theme.of(context).textTheme.titleLarge,),
+              Text(
+                'Mijn Acties',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 16),
               GridView.count(
                 shrinkWrap: true,

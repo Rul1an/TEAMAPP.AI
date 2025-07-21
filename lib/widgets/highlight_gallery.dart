@@ -51,7 +51,8 @@ class _HighlightThumbnail extends ConsumerStatefulWidget {
   final VeoHighlight highlight;
 
   @override
-  ConsumerState<_HighlightThumbnail> createState() => _HighlightThumbnailState();
+  ConsumerState<_HighlightThumbnail> createState() =>
+      _HighlightThumbnailState();
 }
 
 class _HighlightThumbnailState extends ConsumerState<_HighlightThumbnail> {
@@ -78,8 +79,9 @@ class _HighlightThumbnailState extends ConsumerState<_HighlightThumbnail> {
         .catchError((e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Error: $e')));
+      return '';
     });
-    if (!mounted || url == null) return;
+    if (!mounted || url.isEmpty) return;
 
     final controller = VideoPlayerController.networkUrl(Uri.parse(url));
     await controller.initialize();
@@ -111,9 +113,9 @@ class _HighlightThumbnailState extends ConsumerState<_HighlightThumbnail> {
                       ? const Center(child: CircularProgressIndicator())
                       : _controller != null && _controller!.value.isInitialized
                           ? VideoPlayer(_controller!)
-                          : Container(
+                          : const ColoredBox(
                               color: Colors.black12,
-                              child: const Icon(Icons.play_arrow, size: 48),
+                              child: Icon(Icons.play_arrow, size: 48),
                             ),
                 ),
               ),
