@@ -36,8 +36,15 @@ class SecureStorageClient {
     final ioResponse = await ioRequest.close();
     final bytes = await ioResponse
         .fold<List<int>>([], (prev, elem) => prev..addAll(elem));
+
+    // Convert HttpHeaders to simple String map.
+    final Map<String, String> respHeaders = {};
+    ioResponse.headers.forEach((name, values) {
+      respHeaders[name] = values.join(',');
+    });
+
     return http.Response.bytes(bytes, ioResponse.statusCode,
-        headers: ioResponse.headers);
+        headers: respHeaders);
   }
 
   // Similarly, POST/PUT can be implemented.
