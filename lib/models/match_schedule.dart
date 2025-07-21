@@ -60,8 +60,8 @@ class MatchSchedule {
 
   static MatchSchedule fromJson(Map<String, dynamic> json) => MatchSchedule()
     ..id = json['id'] as String? ?? ''
-    ..dateTime = DateTime.tryParse(json['date_time'] as String? ?? '') ??
-        DateTime.now()
+    ..dateTime =
+        DateTime.tryParse(json['date_time'] as String? ?? '') ?? DateTime.now()
     ..opponent = json['opponent'] as String? ?? ''
     ..location = Location.values.firstWhere(
       (e) => e.name == (json['location'] as String? ?? '').toLowerCase(),
@@ -71,8 +71,8 @@ class MatchSchedule {
       (e) => e.name == (json['competition'] as String? ?? '').toLowerCase(),
       orElse: () => Competition.league,
     )
-    ..createdAt = DateTime.tryParse(json['created_at'] as String? ?? '') ??
-        DateTime.now()
+    ..createdAt =
+        DateTime.tryParse(json['created_at'] as String? ?? '') ?? DateTime.now()
     ..updatedAt = DateTime.tryParse(json['updated_at'] as String? ?? '') ??
         DateTime.now();
 }

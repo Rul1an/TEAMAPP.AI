@@ -44,7 +44,8 @@ class ScheduleCsvParser {
         return Success(ScheduleCsvParseResult([], ['CSV is empty']));
       }
 
-      final header = rows.first.map((e) => e.toString().trim().toLowerCase()).toList();
+      final header =
+          rows.first.map((e) => e.toString().trim().toLowerCase()).toList();
       final idxDate = header.indexOf('date');
       final idxTime = header.indexOf('time');
       final idxOpp = header.indexOf('opponent');
@@ -56,7 +57,9 @@ class ScheduleCsvParser {
         return Success(
           ScheduleCsvParseResult(
             [],
-            ['Missing one or more required headers: date,time,opponent,competition'],
+            [
+              'Missing one or more required headers: date,time,opponent,competition'
+            ],
           ),
         );
       }
@@ -76,7 +79,8 @@ class ScheduleCsvParser {
           // Parse date & time.
           final date = _dateFmt.parseStrict(dateStr);
           final time = _timeFmt.parseStrict(timeStr);
-          final dateTime = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+          final dateTime =
+              DateTime(date.year, date.month, date.day, time.hour, time.minute);
 
           // Competition mapping.
           final competition = _competitionFrom(compStr);
