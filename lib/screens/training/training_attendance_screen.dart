@@ -106,6 +106,7 @@ class _TrainingAttendanceScreenState
               ? FloatingActionButton(
                   onPressed: () =>
                       context.go('/training/${widget.trainingId}/edit'),
+                  tooltip: 'Training bewerken',
                   child: const Icon(Icons.edit),
                 )
               : null,
