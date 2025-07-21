@@ -13,7 +13,7 @@ void main() {
       parser = ScheduleCsvParser();
     });
 
-    test('parses valid CSV into schedules', skip: true, () async {
+    test('parses valid CSV into schedules', () async {
       const csv = 'date,time,opponent,competition,location\n'
           '2025-09-12,19:30,FC Utrecht U17,league,Thuis\n'
           '2025-09-19,20:00,Ajax U17,cup,Uit';
@@ -29,7 +29,7 @@ void main() {
       expect(data.schedules.last.location, Location.away);
     });
 
-    test('reports header error when missing required columns', skip: true, () async {
+    test('reports header error when missing required columns', () async {
       const csv = 'date,time,opponent\n2025-09-12,19:30,FC Utrecht U17';
       final res = await parser.parse(csv);
       expect(res.isSuccess, true);
@@ -38,7 +38,7 @@ void main() {
       expect(data.errors, isNotEmpty);
     });
 
-    test('skips invalid rows and returns errors', skip: true, () async {
+    test('skips invalid rows and returns errors', () async {
       const csv = 'date,time,opponent,competition\n'
           '2025-09-12,19:30,FC Utrecht U17,league\n'
           'INVALID-DATE,19:30,PSV U17,league';
