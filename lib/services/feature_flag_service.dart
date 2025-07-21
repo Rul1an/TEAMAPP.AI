@@ -32,10 +32,11 @@ class FeatureFlagService {
   Future<void> _refreshFlags() async {
     final url = '${Environment.apiBaseUrl}/config/feature_flags.json';
     try {
-      final Response res = await HttpClient.instance.get(url,
-          options: Options(responseType: ResponseType.json));
+      final Response res = await HttpClient.instance
+          .get(url, options: Options(responseType: ResponseType.json));
       if (res.statusCode == 200 && res.data is Map<String, dynamic>) {
-        _cache = (res.data as Map<String, dynamic>).map((k, v) => MapEntry(k, v == true));
+        _cache = (res.data as Map<String, dynamic>)
+            .map((k, v) => MapEntry(k, v == true));
         _cacheExpiry = DateTime.now().add(const Duration(minutes: 5));
         return;
       }

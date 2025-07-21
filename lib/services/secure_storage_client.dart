@@ -22,7 +22,8 @@ class SecureStorageClient {
       ..setTrustedCertificatesBytes(caPem.codeUnits);
 
     _ioClient = HttpClient(context: context)
-      ..badCertificateCallback = (cert, host, port) => false; // rely on CA pinning
+      ..badCertificateCallback =
+          (cert, host, port) => false; // rely on CA pinning
   }
 
   static final SecureStorageClient instance = SecureStorageClient._internal();
@@ -33,8 +34,10 @@ class SecureStorageClient {
     final ioRequest = await _ioClient.getUrl(url);
     headers?.forEach(ioRequest.headers.set);
     final ioResponse = await ioRequest.close();
-    final bytes = await ioResponse.fold<List<int>>([], (prev, elem) => prev..addAll(elem));
-    return http.Response.bytes(bytes, ioResponse.statusCode, headers: ioResponse.headers);
+    final bytes = await ioResponse
+        .fold<List<int>>([], (prev, elem) => prev..addAll(elem));
+    return http.Response.bytes(bytes, ioResponse.statusCode,
+        headers: ioResponse.headers);
   }
 
   // Similarly, POST/PUT can be implemented.
