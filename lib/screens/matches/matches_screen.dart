@@ -47,11 +47,6 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             icon: const Icon(Icons.add),
             onPressed: () => context.go('/matches/add'),
           ),
-          IconButton(
-            icon: const Icon(Icons.upload_file),
-            tooltip: 'Importeer schema',
-            onPressed: () => context.go('/matches/import'),
-          ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.download),
             onSelected: (value) async {
