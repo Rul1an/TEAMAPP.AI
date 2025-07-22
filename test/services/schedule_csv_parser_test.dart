@@ -1,3 +1,4 @@
+// ignore_for_file: invalid_annotation_target
 @Skip('Flaky after CSV parser refactor – will be fixed')
 
 // Package imports:
