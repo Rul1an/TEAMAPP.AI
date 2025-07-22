@@ -70,17 +70,23 @@ class ScheduleCsvParser {
       for (var row = 1; row < rows.length; row++) {
         final r = rows[row];
         try {
-          final dateStr = r[idxDate].toString().trim();
-          final timeStr = r[idxTime].toString().trim();
+          final dynamic dateCell = r[idxDate];
+          final dynamic timeCell = r[idxTime];
+
+          // Converter may coerce cells to DateTime or numbers; handle gracefully.
+          final DateTime date = dateCell is DateTime
+              ? dateCell
+              : _dateFmt.parseStrict(dateCell.toString().trim());
+
+          final DateTime time = timeCell is DateTime
+              ? timeCell
+              : _timeFmt.parseStrict(timeCell.toString().trim());
+          final dateTime =
+              DateTime(date.year, date.month, date.day, time.hour, time.minute);
+
           final opp = r[idxOpp].toString().trim();
           final compStr = r[idxComp].toString().trim();
           final locStr = idxLoc != -1 ? r[idxLoc].toString().trim() : 'Thuis';
-
-          // Parse date & time.
-          final date = _dateFmt.parseStrict(dateStr);
-          final time = _timeFmt.parseStrict(timeStr);
-          final dateTime =
-              DateTime(date.year, date.month, date.day, time.hour, time.minute);
 
           // Competition mapping.
           final competition = _competitionFrom(compStr);
