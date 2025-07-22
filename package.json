@@ -7,7 +7,14 @@
     "test:e2e": "deno task test:e2e",
     "build:edge": "./scripts/build_edge.sh"
   },
-  "devDependencies": {
-    "supabase-edge-runtime": "^0.4.0"
-  }
+  "description": "![CI](https://github.com/<OWNER>/<REPO>/actions/workflows/ci.yml/badge.svg) ![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<OWNER>/<REPO>/gh-pages/coverage-badge.json)",
+  "main": "commitlint.config.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
