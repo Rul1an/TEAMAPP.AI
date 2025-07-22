@@ -15,6 +15,7 @@ import '../screens/matches/lineup_builder_screen.dart';
 import '../screens/matches/match_detail_screen.dart';
 import '../screens/matches/matches_screen.dart';
 import '../screens/insights/insights_screen.dart';
+import '../screens/player_tracking/svs_dashboard_screen.dart';
 import '../screens/players/add_player_screen.dart';
 import '../screens/players/assessment_screen.dart';
 import '../screens/players/edit_player_screen.dart';
@@ -249,6 +250,71 @@ GoRouter createRouter(Ref ref) => GoRouter(
 
             // Legacy deep-link routes removed (analytics, svs, admin) – replaced by unified Insights screen.
           ],
+        ),
+        GoRoute(
+          path: '/exercise-library',
+          name: 'exercise-library',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: ExerciseLibraryScreen()),
+        ),
+        GoRoute(
+          path: '/field-diagram-editor',
+          name: 'field-diagram-editor',
+          builder: (context, state) => const FieldDiagramEditorScreen(),
+        ),
+        GoRoute(
+          path: '/exercise-designer',
+          name: 'exercise-designer',
+          builder: (context, state) {
+            final sessionId = state.uri.queryParameters['sessionId'];
+            final typeString = state.uri.queryParameters['type'];
+            ExerciseType? type;
+
+            if (typeString != null) {
+              type = ExerciseType.values.firstWhere(
+                (e) => e.name == typeString,
+                orElse: () => ExerciseType.technical,
+              );
+            }
+
+            return ExerciseDesignerScreen(
+              sessionId: sessionId,
+              initialType: type,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/season',
+          name: 'season-hub',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: SeasonHubScreen()),
+        ),
+        // New combined insights route
+        GoRoute(
+          path: '/insights',
+          name: 'insights',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: InsightsScreen()),
+        ),
+
+        // Legacy deep-links – keep but hidden from nav
+        GoRoute(
+          path: '/analytics',
+          name: 'performance-analytics',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: PerformanceAnalyticsScreen()),
+        ),
+        GoRoute(
+          path: '/svs',
+          name: 'svs-dashboard',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: SVSDashboardScreen()),
+        ),
+        GoRoute(
+          path: '/admin',
+          name: 'admin-panel',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: AdminPanelScreen()),
         ),
       ],
     );

@@ -15,7 +15,6 @@ import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
-import '../../widgets/highlight_gallery.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({required this.matchId, super.key});
@@ -65,22 +64,22 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
         title: const Text('Wedstrijd Details'),
         actions: [
           if (canManage) ...[
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              context.go('/matches/${widget.matchId}/edit');
-            },
-          ),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                context.go('/matches/${widget.matchId}/edit');
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.picture_as_pdf),
               tooltip: 'Exporteer PDF',
               onPressed: _exportPdf,
             ),
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _saveMatch,
-            tooltip: 'Opslaan',
-          ),
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: _saveMatch,
+              tooltip: 'Opslaan',
+            ),
           ],
         ],
       ),
@@ -146,26 +145,26 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
                     if (match.status == MatchStatus.scheduled) ...[
                       const SizedBox(height: 24),
                       if (canManage)
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton.icon(
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton.icon(
                                 onPressed: () =>
                                     context.go('/lineup?matchId=${match.id}'),
-                              icon: const Icon(Icons.people),
-                              label: const Text('Opstelling Maken'),
+                                icon: const Icon(Icons.people),
+                                label: const Text('Opstelling Maken'),
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () => _showScoreDialog(context, match),
-                              icon: const Icon(Icons.sports_score),
-                              label: const Text('Score Invoeren'),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                onPressed: () => _showScoreDialog(context, match),
+                                icon: const Icon(Icons.sports_score),
+                                label: const Text('Score Invoeren'),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
                     ],
                   ],
                 ),
@@ -267,32 +266,65 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       );
 
   Widget _buildLineupSection(List<Player> players) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    'Basisopstelling',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                TextButton.icon(
-                    onPressed: canManage
-                        ? () => _showPlayerSelection(
-                              context,
-                              players,
-                              _selectedStartingLineup,
-                              'Basisopstelling',
-                              11,
-                            )
-                        : null,
-                  icon: const Icon(Icons.add),
-                  label: const Text('Selecteer'),
-                ),
-              ],
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Basisopstelling',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              TextButton.icon(
+                onPressed: canManage
+                    ? () => _showPlayerSelection(
+                          context,
+                          players,
+                          _selectedStartingLineup,
+                          'Basisopstelling',
+                          11,
+                        )
+                    : null,
+                icon: const Icon(Icons.add),
+                label: const Text('Selecteer'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          if (_selectedStartingLineup.isEmpty)
+            const Text('Geen spelers geselecteerd')
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _selectedStartingLineup.map((playerId) {
+                final player = players.firstWhere(
+                  (p) => p.id == playerId,
+                  orElse: () => Player()
+                    ..firstName = 'Onbekend'
+                    ..lastName = ''
+                    ..jerseyNumber = 0
+                    ..birthDate = DateTime.now()
+                    ..position = Position.midfielder
+                    ..preferredFoot = PreferredFoot.right
+                    ..height = 0
+                    ..weight = 0,
+                );
+                return Chip(
+                  label: Text('${player.jerseyNumber} - ${player.name}'),
+                  onDeleted: () {
+                    setState(() {
+                      _selectedStartingLineup.remove(playerId);
+                    });
+                  },
+                  backgroundColor: _getPositionColor(
+                    player.position,
+                  ).withValues(alpha: 0.2),
+                );
+              }).toList(),
             ),
               const SizedBox(height: 16),
             if (_selectedStartingLineup.isEmpty)
@@ -333,32 +365,63 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
     );
 
   Widget _buildSubstitutesSection(List<Player> players) => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    'Wisselspelers',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                TextButton.icon(
-                    onPressed: canManage
-                        ? () => _showPlayerSelection(
-                              context,
-                              players,
-                              _selectedSubstitutes,
-                              'Wisselspelers',
-                              7,
-                            )
-                        : null,
-                  icon: const Icon(Icons.add),
-                  label: const Text('Selecteer'),
-                ),
-              ],
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Wisselspelers',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              TextButton.icon(
+                onPressed: canManage
+                    ? () => _showPlayerSelection(
+                          context,
+                          players,
+                          _selectedSubstitutes,
+                          'Wisselspelers',
+                          7,
+                        )
+                    : null,
+                icon: const Icon(Icons.add),
+                label: const Text('Selecteer'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          if (_selectedSubstitutes.isEmpty)
+            const Text('Geen wisselspelers geselecteerd')
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _selectedSubstitutes.map((playerId) {
+                final player = players.firstWhere(
+                  (p) => p.id == playerId,
+                  orElse: () => Player()
+                    ..firstName = 'Onbekend'
+                    ..lastName = ''
+                    ..jerseyNumber = 0
+                    ..birthDate = DateTime.now()
+                    ..position = Position.midfielder
+                    ..preferredFoot = PreferredFoot.right
+                    ..height = 0
+                    ..weight = 0,
+                );
+                return Chip(
+                  label: Text('${player.jerseyNumber} - ${player.name}'),
+                  onDeleted: () {
+                    setState(() {
+                      _selectedSubstitutes.remove(playerId);
+                    });
+                  },
+                  backgroundColor: Colors.grey.withValues(alpha: 0.2),
+                );
+              }).toList(),
             ),
               const SizedBox(height: 16),
             if (_selectedSubstitutes.isEmpty)
