@@ -96,7 +96,7 @@ class Match {
   late String opponent;
 
   // Association
-  late String teamId;
+  // teamId already declared above – removed duplicate declaration.
 
   @Enumerated(EnumType.name)
   late Location location;
