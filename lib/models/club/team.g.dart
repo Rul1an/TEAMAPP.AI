@@ -7,42 +7,43 @@ part of 'team.dart';
 // **************************************************************************
 
 _$TeamImpl _$$TeamImplFromJson(Map<String, dynamic> json) => _$TeamImpl(
-  id: json['id'] as String,
-  clubId: json['clubId'] as String,
-  name: json['name'] as String,
-  shortName: json['shortName'] as String,
-  ageCategory: $enumDecode(_$AgeCategoryEnumMap, json['ageCategory']),
-  level: $enumDecode(_$TeamLevelEnumMap, json['level']),
-  gender: $enumDecode(_$TeamGenderEnumMap, json['gender']),
-  description: json['description'] as String?,
-  logoUrl: json['logoUrl'] as String?,
-  colors: json['colors'] as String?,
-  currentSeason: json['currentSeason'] as String,
-  league: json['league'] as String?,
-  division: json['division'] as String?,
-  settings: TeamSettings.fromJson(json['settings'] as Map<String, dynamic>),
-  staffIds:
-      (json['staffIds'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  headCoachId: json['headCoachId'] as String?,
-  assistantCoachId: json['assistantCoachId'] as String?,
-  teamManagerId: json['teamManagerId'] as String?,
-  playerIds:
-      (json['playerIds'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  captainIds:
-      (json['captainIds'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
-  status: $enumDecode(_$TeamStatusEnumMap, json['status']),
-  createdAt: DateTime.parse(json['createdAt'] as String),
-  updatedAt: json['updatedAt'] == null
-      ? null
-      : DateTime.parse(json['updatedAt'] as String),
-  createdBy: json['createdBy'] as String?,
-  updatedBy: json['updatedBy'] as String?,
-);
+      id: json['id'] as String,
+      clubId: json['clubId'] as String,
+      name: json['name'] as String,
+      shortName: json['shortName'] as String,
+      ageCategory: $enumDecode(_$AgeCategoryEnumMap, json['ageCategory']),
+      level: $enumDecode(_$TeamLevelEnumMap, json['level']),
+      gender: $enumDecode(_$TeamGenderEnumMap, json['gender']),
+      currentSeason: json['currentSeason'] as String,
+      settings: TeamSettings.fromJson(json['settings'] as Map<String, dynamic>),
+      status: $enumDecode(_$TeamStatusEnumMap, json['status']),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      description: json['description'] as String?,
+      logoUrl: json['logoUrl'] as String?,
+      colors: json['colors'] as String?,
+      league: json['league'] as String?,
+      division: json['division'] as String?,
+      staffIds: (json['staffIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      headCoachId: json['headCoachId'] as String?,
+      assistantCoachId: json['assistantCoachId'] as String?,
+      teamManagerId: json['teamManagerId'] as String?,
+      playerIds: (json['playerIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      captainIds: (json['captainIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
+      createdBy: json['createdBy'] as String?,
+      updatedBy: json['updatedBy'] as String?,
+    );
 
 Map<String, dynamic> _$$TeamImplToJson(_$TeamImpl instance) =>
     <String, dynamic>{
@@ -53,21 +54,21 @@ Map<String, dynamic> _$$TeamImplToJson(_$TeamImpl instance) =>
       'ageCategory': _$AgeCategoryEnumMap[instance.ageCategory]!,
       'level': _$TeamLevelEnumMap[instance.level]!,
       'gender': _$TeamGenderEnumMap[instance.gender]!,
+      'currentSeason': instance.currentSeason,
+      'settings': instance.settings,
+      'status': _$TeamStatusEnumMap[instance.status]!,
+      'createdAt': instance.createdAt.toIso8601String(),
       'description': instance.description,
       'logoUrl': instance.logoUrl,
       'colors': instance.colors,
-      'currentSeason': instance.currentSeason,
       'league': instance.league,
       'division': instance.division,
-      'settings': instance.settings,
       'staffIds': instance.staffIds,
       'headCoachId': instance.headCoachId,
       'assistantCoachId': instance.assistantCoachId,
       'teamManagerId': instance.teamManagerId,
       'playerIds': instance.playerIds,
       'captainIds': instance.captainIds,
-      'status': _$TeamStatusEnumMap[instance.status]!,
-      'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'createdBy': instance.createdBy,
       'updatedBy': instance.updatedBy,
@@ -113,29 +114,30 @@ const _$TeamStatusEnumMap = {
   TeamStatus.suspended: 'suspended',
 };
 
-_$TeamSettingsImpl _$$TeamSettingsImplFromJson(
-  Map<String, dynamic> json,
-) => _$TeamSettingsImpl(
-  trainingsPerWeek: (json['trainingsPerWeek'] as num?)?.toInt() ?? 2,
-  defaultTrainingDuration:
-      (json['defaultTrainingDuration'] as num?)?.toInt() ?? 90,
-  trainingDays:
-      (json['trainingDays'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const ['Tuesday', 'Thursday'],
-  matchDay: json['matchDay'] as String? ?? 'Saturday',
-  defaultMatchDuration: (json['defaultMatchDuration'] as num?)?.toInt() ?? 90,
-  allowParentCommunication: json['allowParentCommunication'] as bool? ?? true,
-  sendTrainingReminders: json['sendTrainingReminders'] as bool? ?? true,
-  sendMatchReminders: json['sendMatchReminders'] as bool? ?? true,
-  trackPlayerPerformance: json['trackPlayerPerformance'] as bool? ?? true,
-  enableVideoAnalysis: json['enableVideoAnalysis'] as bool? ?? true,
-  enableGPSTracking: json['enableGPSTracking'] as bool? ?? false,
-  requireMedicalCertificate: json['requireMedicalCertificate'] as bool? ?? true,
-  requireInsurance: json['requireInsurance'] as bool? ?? true,
-  requireVOG: json['requireVOG'] as bool? ?? false,
-);
+_$TeamSettingsImpl _$$TeamSettingsImplFromJson(Map<String, dynamic> json) =>
+    _$TeamSettingsImpl(
+      trainingsPerWeek: (json['trainingsPerWeek'] as num?)?.toInt() ?? 2,
+      defaultTrainingDuration:
+          (json['defaultTrainingDuration'] as num?)?.toInt() ?? 90,
+      trainingDays: (json['trainingDays'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const ['Tuesday', 'Thursday'],
+      matchDay: json['matchDay'] as String? ?? 'Saturday',
+      defaultMatchDuration:
+          (json['defaultMatchDuration'] as num?)?.toInt() ?? 90,
+      allowParentCommunication:
+          json['allowParentCommunication'] as bool? ?? true,
+      sendTrainingReminders: json['sendTrainingReminders'] as bool? ?? true,
+      sendMatchReminders: json['sendMatchReminders'] as bool? ?? true,
+      trackPlayerPerformance: json['trackPlayerPerformance'] as bool? ?? true,
+      enableVideoAnalysis: json['enableVideoAnalysis'] as bool? ?? true,
+      enableGPSTracking: json['enableGPSTracking'] as bool? ?? false,
+      requireMedicalCertificate:
+          json['requireMedicalCertificate'] as bool? ?? true,
+      requireInsurance: json['requireInsurance'] as bool? ?? true,
+      requireVOG: json['requireVOG'] as bool? ?? false,
+    );
 
 Map<String, dynamic> _$$TeamSettingsImplToJson(_$TeamSettingsImpl instance) =>
     <String, dynamic>{

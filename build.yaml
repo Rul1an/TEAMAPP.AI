@@ -21,6 +21,7 @@ targets:
         generate_for:
           include:
             - lib/models/**/*.dart
+            - lib/features/**/*.dart
           exclude:
             - lib/models/**/*.freezed.dart
 

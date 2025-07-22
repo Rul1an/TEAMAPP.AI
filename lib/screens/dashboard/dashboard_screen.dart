@@ -160,55 +160,55 @@ class DashboardScreen extends ConsumerWidget {
     } else {
       // Coach/Admin content (full access)
       content.addAll([
-        _buildSmartActions(context),
-        const SizedBox(height: 24),
-        const QuickActionsWidget(),
-        const SizedBox(height: 24),
+              _buildSmartActions(context),
+                                const SizedBox(height: 24),
+                  const QuickActionsWidget(),
+                  const SizedBox(height: 24),
         // ignore: unnecessary_cast
         DashboardStatsCards(statistics: statistics as Map<String, dynamic>),
-        const SizedBox(height: 24),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
+              const SizedBox(height: 24),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Aankomende Wedstrijden',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: 8),
-                  upcomingMatchesAsync.when(
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stack) => Text('Error: $error'),
-                    data: (matches) => _buildUpcomingMatches(context, matches),
-                  ),
-                ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+              Text(
+                'Aankomende Wedstrijden',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'VOAB Training Sessies',
-                    style: Theme.of(context).textTheme.headlineSmall,
+              const SizedBox(height: 8),
+              upcomingMatchesAsync.when(
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => Text('Error: $error'),
+                data: (matches) => _buildUpcomingMatches(context, matches),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  trainingSessionsAsync.when(
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stack) => const Text('Geen sessies'),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'VOAB Training Sessies',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        const SizedBox(height: 8),
+                        trainingSessionsAsync.when(
+                          loading: () => const CircularProgressIndicator(),
+                          error: (error, stack) => const Text('Geen sessies'),
                     data: (sessions) =>
                         _buildUpcomingTrainingSessions(context, sessions),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
+              const SizedBox(height: 24),
         // ignore: unnecessary_cast
         PerformanceChart(statistics: statistics as Map<String, dynamic>),
       ]);
@@ -218,238 +218,244 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   Widget _buildPlayerQuickActions(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Mijn Acties', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 16),
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            childAspectRatio: 2.5,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildActionCard(
-                context,
-                'Mijn Profiel',
-                Icons.person,
-                () => context.go('/players'),
+              Text(
+                'Mijn Acties',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              _buildActionCard(
-                context,
-                'Prestaties',
-                Icons.analytics,
-                () => context.go('/analytics'),
+              const SizedBox(height: 16),
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                childAspectRatio: 2.5,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                children: [
+                  _buildActionCard(
+                    context,
+                    'Mijn Profiel',
+                    Icons.person,
+                    () => context.go('/players'),
+                  ),
+                  _buildActionCard(
+                    context,
+                    'Prestaties',
+                    Icons.analytics,
+                    () => context.go('/analytics'),
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+        ),
       ),
-    ),
-  );
+    );
 
   Widget _buildPlayerStats(BuildContext context, dynamic statistics) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Mijn Statistieken',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 16),
-          Row(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: _buildStatCard(
-                  context,
-                  'Trainingen',
-                  '${statistics?.totalTrainingAttendance ?? 0}',
-                  Icons.sports,
-                  Colors.blue,
-                ),
+              Text(
+                'Mijn Statistieken',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _buildStatCard(
-                  context,
-                  'Wedstrijden',
-                  '${statistics?.totalMatches ?? 0}',
-                  Icons.stadium,
-                  Colors.green,
-                ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildStatCard(
+                      context,
+                      'Trainingen',
+                      '${statistics?.totalTrainingAttendance ?? 0}',
+                      Icons.sports,
+                      Colors.blue,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildStatCard(
+                      context,
+                      'Wedstrijden',
+                      '${statistics?.totalMatches ?? 0}',
+                      Icons.stadium,
+                      Colors.green,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildParentOverview(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Overzicht van uw kind',
-            style: Theme.of(context).textTheme.titleLarge,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+              Text(
+                'Overzicht van uw kind',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: const Text('Spelersinformatie'),
+                subtitle: const Text('Bekijk profiel en prestaties'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () => context.go('/players'),
+              ),
+            ],
           ),
-          const SizedBox(height: 16),
-          ListTile(
-            leading: const Icon(Icons.info_outline),
-            title: const Text('Spelersinformatie'),
-            subtitle: const Text('Bekijk profiel en prestaties'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => context.go('/players'),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildUpcomingEventsForPlayer(
     BuildContext context,
     AsyncValue<List<Match>> upcomingMatchesAsync,
     AsyncValue<List<TrainingSession>> trainingSessionsAsync,
-  ) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Aankomende Evenementen',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 16),
-          upcomingMatchesAsync.when(
-            loading: () => const CircularProgressIndicator(),
-            error: (error, stack) => const Text('Geen wedstrijden'),
-            data: (matches) => Column(
-              children: matches
-                  .take(3)
-                  .map(
-                    (match) => ListTile(
-                      leading: const Icon(Icons.stadium),
-                      title: Text(match.opponent),
-                      subtitle: Text(
-                        DateFormat('dd/MM/yyyy HH:mm').format(match.date),
-                      ),
-                    ),
-                  )
-                  .toList(),
+  ) =>
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                'Aankomende Evenementen',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              upcomingMatchesAsync.when(
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => const Text('Geen wedstrijden'),
+                data: (matches) => Column(
+                  children: matches
+                      .take(3)
+                      .map(
+                        (match) => ListTile(
+                          leading: const Icon(Icons.stadium),
+                          title: Text(match.opponent),
+                          subtitle: Text(
+                            DateFormat('dd/MM/yyyy HH:mm').format(match.date),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
 
   Widget _buildUpcomingEventsForParent(
     BuildContext context,
     AsyncValue<List<Match>> upcomingMatchesAsync,
     AsyncValue<List<TrainingSession>> trainingSessionsAsync,
-  ) => _buildUpcomingEventsForPlayer(
-    context,
-    upcomingMatchesAsync,
-    trainingSessionsAsync,
-  );
+  ) =>
+      _buildUpcomingEventsForPlayer(
+        context,
+        upcomingMatchesAsync,
+        trainingSessionsAsync,
+      );
 
   Widget _buildActionCard(
     BuildContext context,
     String title,
     IconData icon,
     VoidCallback onTap,
-  ) => Card(
-    child: InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(8),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
+  ) =>
+      Card(
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
           children: [
-            Icon(icon, size: 20),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                title,
-                style: const TextStyle(fontSize: 12),
-                overflow: TextOverflow.ellipsis,
-              ),
+                Icon(icon, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+        ),
+      ),
+    );
+
+  Widget _buildSmartActions(BuildContext context) => Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.flash_on, color: Theme.of(context).primaryColor),
+                const SizedBox(width: 8),
+                Text(
+                  'Snelle Acties',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildActionCard(
+                    context,
+                    'Nieuwe Training',
+                    Icons.add_circle,
+                    () => context.push('/session-builder'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildActionCard(
+                    context,
+                    'Seizoen Planning',
+                    Icons.calendar_today,
+                    () => context.push('/annual-planning'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildActionCard(
+                    context,
+                    'Alle Trainingen',
+                    Icons.list_alt,
+                    () => context.push('/training-sessions'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildActionCard(
+                    context,
+                    'Opstelling',
+                    Icons.sports_soccer,
+                    () => context.go('/lineup'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
       ),
-    ),
-  );
-
-  Widget _buildSmartActions(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.flash_on, color: Theme.of(context).primaryColor),
-              const SizedBox(width: 8),
-              Text(
-                'Snelle Acties',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: _buildActionCard(
-                  context,
-                  'Nieuwe Training',
-                  Icons.add_circle,
-                  () => context.push('/session-builder'),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildActionCard(
-                  context,
-                  'Seizoen Planning',
-                  Icons.calendar_today,
-                  () => context.push('/annual-planning'),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildActionCard(
-                  context,
-                  'Alle Trainingen',
-                  Icons.list_alt,
-                  () => context.push('/training-sessions'),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildActionCard(
-                  context,
-                  'Opstelling',
-                  Icons.sports_soccer,
-                  () => context.go('/lineup'),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ),
-  );
+    );
 
   Widget _buildUpcomingTrainingSessions(
     BuildContext context,
@@ -480,35 +486,35 @@ class DashboardScreen extends ConsumerWidget {
           .take(3)
           .map(
             (session) => Card(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: _getSessionTypeColor(session.type),
-                  child: Icon(
-                    _getSessionTypeIcon(session.type),
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                title: Text('Training ${session.trainingNumber}'),
-                subtitle: Text(
-                  '${session.date.day}/${session.date.month} | ${session.phases.length} fasen\n'
-                  '${session.sessionObjective ?? 'VOAB Standard'}',
-                ),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.schedule, color: Colors.orange, size: 16),
-                    Text(
-                      '${session.sessionDuration.inMinutes}m',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  // TODO(author): Navigate to session detail
-                },
+          margin: const EdgeInsets.only(bottom: 8),
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: _getSessionTypeColor(session.type),
+              child: Icon(
+                _getSessionTypeIcon(session.type),
+                color: Colors.white,
+                size: 18,
               ),
+            ),
+            title: Text('Training ${session.trainingNumber}'),
+            subtitle: Text(
+              '${session.date.day}/${session.date.month} | ${session.phases.length} fasen\n'
+              '${session.sessionObjective ?? 'VOAB Standard'}',
+            ),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.schedule, color: Colors.orange, size: 16),
+                Text(
+                  '${session.sessionDuration.inMinutes}m',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+            onTap: () {
+                  // TODO(author): Navigate to session detail
+            },
+          ),
             ),
           )
           .toList(),
@@ -568,25 +574,25 @@ class DashboardScreen extends ConsumerWidget {
           .take(3)
           .map(
             (match) => Card(
-              child: ListTile(
-                leading: CircleAvatar(
+          child: ListTile(
+            leading: CircleAvatar(
                   backgroundColor: match.location == Location.home
                       ? Colors.green
                       : Colors.blue,
-                  child: Text(
-                    match.location == Location.home ? 'T' : 'U',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-                title: Text(match.opponent),
-                subtitle: Text(
-                  '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
-                ),
-                trailing: Text(
-                  DateFormat('HH:mm').format(match.date),
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
+              child: Text(
+                match.location == Location.home ? 'T' : 'U',
+                style: const TextStyle(color: Colors.white),
               ),
+            ),
+            title: Text(match.opponent),
+            subtitle: Text(
+              '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
+            ),
+            trailing: Text(
+              DateFormat('HH:mm').format(match.date),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
             ),
           )
           .toList(),
@@ -599,29 +605,33 @@ class DashboardScreen extends ConsumerWidget {
     String value,
     IconData icon,
     Color color,
-  ) => Card(
-    elevation: 2,
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 32, color: color),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: Theme.of(
-              context,
-            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+  ) =>
+      Card(
+        elevation: 2,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 32, color: color),
+              const SizedBox(height: 8),
+              Text(
+                value,
+                style: Theme.of(
+                  context,
+                )
+                    .textTheme
+                    .headlineMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).textTheme.bodySmall?.color,
+                    ),
+              ),
+            ],
           ),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).textTheme.bodySmall?.color,
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }

@@ -39,22 +39,22 @@ class _InteractiveStarRatingState extends State<InteractiveStarRating> {
 
   @override
   Widget build(BuildContext context) => Row(
-    mainAxisSize: MainAxisSize.min,
-    children: List.generate(
-      widget.maxRating,
-      (index) => GestureDetector(
-        onTap: () {
-          setState(() {
-            _currentRating = index + 1;
-          });
-          widget.onRatingChanged(_currentRating);
-        },
-        child: Icon(
-          index < _currentRating ? Icons.star : Icons.star_border,
-          color: widget.color,
-          size: widget.size,
+        mainAxisSize: MainAxisSize.min,
+        children: List.generate(
+          widget.maxRating,
+          (index) => GestureDetector(
+            onTap: () {
+              setState(() {
+                _currentRating = index + 1;
+              });
+              widget.onRatingChanged(_currentRating);
+            },
+            child: Icon(
+              index < _currentRating ? Icons.star : Icons.star_border,
+              color: widget.color,
+              size: widget.size,
+            ),
+          ),
         ),
-      ),
-    ),
-  );
+      );
 }

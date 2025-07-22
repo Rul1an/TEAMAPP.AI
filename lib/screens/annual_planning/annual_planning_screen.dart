@@ -66,7 +66,9 @@ class AnnualPlanningScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Seizoen Overzicht',
-                          style: Theme.of(context).textTheme.titleMedium
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -395,7 +397,9 @@ class AnnualPlanningScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Planning Tips',
-                          style: Theme.of(context).textTheme.titleMedium
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                               ),

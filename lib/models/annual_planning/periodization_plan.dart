@@ -38,8 +38,7 @@ class PeriodizationPlan {
 
   PeriodizationPlan.blockPeriodization() {
     name = 'Block Periodization Model';
-    description =
-        'Moderne blok periodisering met 4-weken cycli. '
+    description = 'Moderne blok periodisering met 4-weken cycli. '
         'Intense focus op specifieke vaardigheden per blok.';
     modelType = PeriodizationModel.block;
     targetAgeGroup = AgeGroup.u17;
@@ -99,7 +98,7 @@ class PeriodizationPlan {
   late String description;
 
   late PeriodizationModel
-  modelType; // linear, block, conjugate, knvb_youth, custom
+      modelType; // linear, block, conjugate, knvb_youth, custom
 
   late AgeGroup targetAgeGroup; // u10, u12, u14, u16, u17, u19, senior
 
@@ -110,7 +109,7 @@ class PeriodizationPlan {
   // Default intensity and content targets
   String? defaultIntensityTargets; // JSON string of Map<String, double>
   String?
-  defaultContentDistribution; // JSON string of Map<String, ContentDistribution>
+      defaultContentDistribution; // JSON string of Map<String, ContentDistribution>
 
   // Template settings
   late bool isTemplate; // true for system templates, false for custom
@@ -278,8 +277,8 @@ class PeriodizationPlan {
   @override
   String toString() =>
       'PeriodizationPlan(id: $id, name: $name, model: ${modelType.name}, '
-      'ageGroup: ${targetAgeGroup.name}, weeks: $totalDurationWeeks, '
-      'periods: $numberOfPeriods, template: $isTemplate)';
+           'ageGroup: ${targetAgeGroup.name}, weeks: $totalDurationWeeks, '
+           'periods: $numberOfPeriods, template: $isTemplate)';
 
   @override
   bool operator ==(Object other) {
@@ -295,10 +294,10 @@ class PeriodizationPlan {
   @override
   int get hashCode =>
       name.hashCode ^
-      modelType.hashCode ^
-      targetAgeGroup.hashCode ^
-      totalDurationWeeks.hashCode ^
-      numberOfPeriods.hashCode;
+           modelType.hashCode ^
+           targetAgeGroup.hashCode ^
+           totalDurationWeeks.hashCode ^
+           numberOfPeriods.hashCode;
 }
 
 // Enums for periodization

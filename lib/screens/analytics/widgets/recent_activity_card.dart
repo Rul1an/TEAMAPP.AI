@@ -6,9 +6,9 @@ import '../../../models/training_session/training_session.dart';
 
 class RecentActivityCard extends StatelessWidget {
   const RecentActivityCard({
-    super.key,
     required this.assessmentsAsync,
     required this.trainingsAsync,
+    super.key,
   });
 
   final AsyncValue<List<PlayerAssessment>> assessmentsAsync;
@@ -49,10 +49,13 @@ class RecentActivityCard extends StatelessWidget {
     BuildContext ctx,
     String caption,
     AsyncValue<List<dynamic>> async,
-  ) => async.when(
-    data: (list) =>
-        Text('$caption: ${list.length}', style: const TextStyle(fontSize: 14)),
-    loading: () => const Text('Laden...'),
-    error: (_, __) => const Text('Error'),
-  );
+  ) =>
+      async.when(
+        data: (list) => Text(
+          '$caption: ${list.length}',
+          style: const TextStyle(fontSize: 14),
+        ),
+        loading: () => const Text('Laden...'),
+        error: (_, __) => const Text('Error'),
+      );
 }

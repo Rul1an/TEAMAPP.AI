@@ -132,8 +132,11 @@ class _EnhancedExerciseLibraryScreenState
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue[600], Colors.blue[400]],
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF1E88E5), // Colors.blue.shade600
+            Color(0xFF42A5F5), // Colors.blue.shade400
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -177,22 +180,22 @@ class _EnhancedExerciseLibraryScreenState
   }
 
   Widget _buildSearchBar() => Container(
-    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    child: TextField(
-      decoration: InputDecoration(
-        hintText: 'Search exercises...',
-        prefixIcon: const Icon(Icons.search),
-        suffixIcon: _searchQuery.isNotEmpty
-            ? IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: () => setState(() => _searchQuery = ''),
-              )
-            : null,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      onChanged: (value) => setState(() => _searchQuery = value),
-    ),
-  );
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: 'Search exercises...',
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: _searchQuery.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () => setState(() => _searchQuery = ''),
+                  )
+                : null,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+          onChanged: (value) => setState(() => _searchQuery = value),
+        ),
+      );
 
   Widget _buildRecommendedTab(
     List<TrainingExercise> exercises,
@@ -203,12 +206,10 @@ class _EnhancedExerciseLibraryScreenState
     }
 
     // Group exercises by intensity for morphocycle recommendations
-    final recoveryExercises = exercises
-        .where((e) => e.intensityLevel <= 3.0)
-        .toList();
-    final acquisitionExercises = exercises
-        .where((e) => e.intensityLevel >= 8.0)
-        .toList();
+    final recoveryExercises =
+        exercises.where((e) => e.intensityLevel <= 3.0).toList();
+    final acquisitionExercises =
+        exercises.where((e) => e.intensityLevel >= 8.0).toList();
     final developmentExercises = exercises
         .where((e) => e.intensityLevel >= 5.0 && e.intensityLevel <= 7.0)
         .toList();
@@ -267,109 +268,109 @@ class _EnhancedExerciseLibraryScreenState
     List<TrainingExercise> exercises,
     Color color,
     IconData icon,
-  ) => Container(
-    margin: const EdgeInsets.only(bottom: 24),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+  ) =>
+      Container(
+        margin: const EdgeInsets.only(bottom: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(icon, color: color, size: 24),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(icon, color: color, size: 24),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        description,
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '${exercises.length}',
                     style: const TextStyle(
-                      fontSize: 16,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 12,
                     ),
                   ),
-                  Text(
-                    description,
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                '${exercises.length}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
+            const SizedBox(height: 12),
+            if (exercises.isEmpty)
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey[300]!),
+                ),
+                child: const Center(
+                  child: Text(
+                    'No matching exercises found.',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              )
+            else
+              SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: exercises.length > 6 ? 6 : exercises.length,
+                  itemBuilder: (context, index) => Container(
+                    width: 160,
+                    margin: const EdgeInsets.only(right: 12),
+                    child: _buildExerciseCard(exercises[index]),
+                  ),
                 ),
               ),
-            ),
+            if (exercises.length > 6)
+              TextButton(
+                onPressed: () => _tabController.animateTo(3),
+                child: Text('View all ${exercises.length} exercises'),
+              ),
           ],
         ),
-        const SizedBox(height: 12),
-        if (exercises.isEmpty)
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey[300]!),
-            ),
-            child: const Center(
-              child: Text(
-                'No matching exercises found.',
-                style: TextStyle(color: Colors.grey),
-              ),
-            ),
-          )
-        else
-          SizedBox(
-            height: 200,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: exercises.length > 6 ? 6 : exercises.length,
-              itemBuilder: (context, index) => Container(
-                width: 160,
-                margin: const EdgeInsets.only(right: 12),
-                child: _buildExerciseCard(exercises[index]),
-              ),
-            ),
-          ),
-        if (exercises.length > 6)
-          TextButton(
-            onPressed: () => _tabController.animateTo(3),
-            child: Text('View all ${exercises.length} exercises'),
-          ),
-      ],
-    ),
-  );
+      );
 
   Widget _buildIntensityTab(List<TrainingExercise> exercises) {
     final intensityGroups = {
-      'Recovery (1-3)': exercises
-          .where((e) => e.intensityLevel <= 3.0)
-          .toList(),
+      'Recovery (1-3)':
+          exercises.where((e) => e.intensityLevel <= 3.0).toList(),
       'Activation (4-6)': exercises
           .where((e) => e.intensityLevel >= 4.0 && e.intensityLevel <= 6.0)
           .toList(),
       'Development (5-7)': exercises
           .where((e) => e.intensityLevel >= 5.0 && e.intensityLevel <= 7.0)
           .toList(),
-      'Acquisition (8-10)': exercises
-          .where((e) => e.intensityLevel >= 8.0)
-          .toList(),
+      'Acquisition (8-10)':
+          exercises.where((e) => e.intensityLevel >= 8.0).toList(),
     };
 
     return ListView(
@@ -460,15 +461,12 @@ class _EnhancedExerciseLibraryScreenState
 
   Widget _buildFocusTab(List<TrainingExercise> exercises) {
     final focusGroups = {
-      'Technical': exercises
-          .where((e) => e.type == ExerciseType.technical)
-          .toList(),
-      'Tactical': exercises
-          .where((e) => e.type == ExerciseType.tactical)
-          .toList(),
-      'Physical': exercises
-          .where((e) => e.type == ExerciseType.physical)
-          .toList(),
+      'Technical':
+          exercises.where((e) => e.type == ExerciseType.technical).toList(),
+      'Tactical':
+          exercises.where((e) => e.type == ExerciseType.tactical).toList(),
+      'Physical':
+          exercises.where((e) => e.type == ExerciseType.physical).toList(),
       'Small Sided Games': exercises
           .where((e) => e.type == ExerciseType.smallSidedGames)
           .toList(),
@@ -614,102 +612,107 @@ class _EnhancedExerciseLibraryScreenState
   }
 
   Widget _buildExerciseCard(TrainingExercise exercise) => Card(
-    elevation: 4,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    child: InkWell(
-      onTap: () => _showExerciseDetails(exercise),
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: InkWell(
+          onTap: () => _showExerciseDetails(exercise),
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _getIntensityColorFromLevel(exercise.intensityLevel),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    '${exercise.intensityLevel.toInt()}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _getIntensityColorFromLevel(
+                          exercise.intensityLevel,
+                        ),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        '${exercise.intensityLevel.toInt()}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _getTypeColor(exercise.type),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        exercise.type.name[0].toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${exercise.durationMinutes}m',
+                      style: const TextStyle(fontSize: 10, color: Colors.grey),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 4),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 2,
+                const SizedBox(height: 8),
+                Text(
+                  exercise.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
                   ),
-                  decoration: BoxDecoration(
-                    color: _getTypeColor(exercise.type),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    exercise.type.name[0].toUpperCase(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  exercise.description.isEmpty
+                      ? 'No description'
+                      : exercise.description,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const Spacer(),
-                Text(
-                  '${exercise.durationMinutes}m',
-                  style: const TextStyle(fontSize: 10, color: Colors.grey),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              exercise.name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              exercise.description.isEmpty
-                  ? 'No description'
-                  : exercise.description,
-              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${exercise.playerCount} players',
-                  style: const TextStyle(fontSize: 10, color: Colors.grey),
-                ),
-                const Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.star, size: 12, color: Colors.amber),
                     Text(
-                      '4.2',
-                      style: TextStyle(fontSize: 10, color: Colors.grey),
+                      '${exercise.playerCount} players',
+                      style: const TextStyle(fontSize: 10, color: Colors.grey),
+                    ),
+                    const Row(
+                      children: [
+                        Icon(Icons.star, size: 12, color: Colors.amber),
+                        Text(
+                          '4.2',
+                          style: TextStyle(fontSize: 10, color: Colors.grey),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   List<TrainingExercise> _applyFilters(List<TrainingExercise> exercises) =>
       exercises.where((exercise) {
@@ -847,21 +850,21 @@ class _EnhancedExerciseLibraryScreenState
   }
 
   Widget _buildDetailRow(String label, String value) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 2),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 80,
-          child: Text(
-            '$label:',
-            style: const TextStyle(fontWeight: FontWeight.w500),
-          ),
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 80,
+              child: Text(
+                '$label:',
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+            Expanded(child: Text(value)),
+          ],
         ),
-        Expanded(child: Text(value)),
-      ],
-    ),
-  );
+      );
 
   Color _getIntensityColorFromLevel(double level) {
     if (level <= 3.0) return Colors.green;

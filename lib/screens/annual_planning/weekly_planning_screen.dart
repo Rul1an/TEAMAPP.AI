@@ -77,66 +77,66 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
   }
 
   Widget _buildWeekSelector(AnnualPlanningState state) => Container(
-    height: 60,
-    padding: const EdgeInsets.symmetric(vertical: 8),
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      controller: _scrollController,
-      itemCount: state.totalWeeks,
-      itemBuilder: (context, index) {
-        final weekNumber = index + 1;
-        final isSelected = weekNumber == state.selectedWeek;
-        final isCurrent = weekNumber == state.currentWeekNumber;
-        final weekSchedule = state.weekSchedules
-            .where((w) => w.weekNumber == weekNumber)
-            .firstOrNull;
+      height: 60,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        controller: _scrollController,
+        itemCount: state.totalWeeks,
+        itemBuilder: (context, index) {
+          final weekNumber = index + 1;
+          final isSelected = weekNumber == state.selectedWeek;
+          final isCurrent = weekNumber == state.currentWeekNumber;
+          final weekSchedule = state.weekSchedules
+              .where((w) => w.weekNumber == weekNumber)
+              .firstOrNull;
 
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 2),
-          child: InkWell(
-            onTap: () => ref
-                .read(annualPlanningProvider.notifier)
-                .selectWeek(weekNumber),
-            child: Container(
-              width: 60,
-              decoration: BoxDecoration(
-                color: _getWeekColor(weekSchedule, isSelected, isCurrent),
-                borderRadius: BorderRadius.circular(8),
-                border: isCurrent
-                    ? Border.all(color: Colors.green, width: 2)
-                    : null,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'W$weekNumber',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: isSelected ? Colors.white : Colors.black87,
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 2),
+            child: InkWell(
+                onTap: () => ref
+                    .read(annualPlanningProvider.notifier)
+                    .selectWeek(weekNumber),
+              child: Container(
+                width: 60,
+                decoration: BoxDecoration(
+                  color: _getWeekColor(weekSchedule, isSelected, isCurrent),
+                  borderRadius: BorderRadius.circular(8),
+                  border: isCurrent
+                      ? Border.all(color: Colors.green, width: 2)
+                      : null,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'W$weekNumber',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: isSelected ? Colors.white : Colors.black87,
+                      ),
                     ),
-                  ),
-                  if (weekSchedule?.isVacation ?? false)
-                    const Icon(
-                      Icons.beach_access,
-                      size: 12,
-                      color: Colors.orange,
-                    )
-                  else if (weekSchedule?.hasActivities ?? false)
-                    const Icon(
-                      Icons.sports_soccer,
-                      size: 12,
-                      color: Colors.green,
-                    ),
-                ],
+                      if (weekSchedule?.isVacation ?? false)
+                      const Icon(
+                        Icons.beach_access,
+                        size: 12,
+                        color: Colors.orange,
+                      )
+                      else if (weekSchedule?.hasActivities ?? false)
+                      const Icon(
+                        Icons.sports_soccer,
+                        size: 12,
+                        color: Colors.green,
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    ),
-  );
+          );
+        },
+      ),
+    );
 
   Widget _buildWeeklyTable(AnnualPlanningState state) {
     final startWeek = ((state.selectedWeek - 1) ~/ 8) * 8 + 1;
@@ -160,31 +160,31 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
   }
 
   Widget _buildTableHeader() => DecoratedBox(
-    decoration: BoxDecoration(
-      color: Colors.green[100],
-      border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
-    ),
-    child: const Row(
-      children: [
-        _TableCell('Week', width: 60, isHeader: true),
-        _TableCell('Load', width: 50, isHeader: true),
-        _TableCell('Training', width: 180, isHeader: true),
-        _TableCell('Wedstrijd', width: 150, isHeader: true),
-        _TableCell('Datum', width: 100, isHeader: true),
-        _TableCell('Locatie', width: 120, isHeader: true),
-        _TableCell('Tijd', width: 80, isHeader: true),
-        _TableCell('Notities', isHeader: true),
-      ],
-    ),
-  );
+      decoration: BoxDecoration(
+        color: Colors.green[100],
+        border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+      ),
+      child: const Row(
+        children: [
+          _TableCell('Week', width: 60, isHeader: true),
+          _TableCell('Load', width: 50, isHeader: true),
+          _TableCell('Training', width: 180, isHeader: true),
+          _TableCell('Wedstrijd', width: 150, isHeader: true),
+          _TableCell('Datum', width: 100, isHeader: true),
+          _TableCell('Locatie', width: 120, isHeader: true),
+          _TableCell('Tijd', width: 80, isHeader: true),
+          _TableCell('Notities', isHeader: true),
+        ],
+      ),
+    );
 
   Widget _buildWeekRow(WeekSchedule week) {
     final isVacation = week.isVacation;
     final backgroundColor = isVacation
         ? Colors.orange[50]
         : week.weekNumber == ref.watch(annualPlanningProvider).currentWeekNumber
-        ? Colors.green[50]
-        : Colors.white;
+            ? Colors.green[50]
+            : Colors.white;
 
     if (isVacation) {
       return DecoratedBox(
@@ -204,8 +204,8 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
             _TableCell(
               week.notes ?? 'VAKANTIE',
               style: const TextStyle(
-                color: Colors.orange,
-                fontWeight: FontWeight.bold,
+              color: Colors.orange,
+              fontWeight: FontWeight.bold,
               ),
             ),
           ],
@@ -323,8 +323,8 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
             training != null
                 ? '${training.dayName} ${_formatDate(training.dateTime)}'
                 : match != null
-                ? '${match.dayName} ${_formatDate(match.dateTime)}'
-                : '',
+                    ? '${match.dayName} ${_formatDate(match.dateTime)}'
+                    : '',
             width: 100,
           ),
           _TableCell(
@@ -475,24 +475,23 @@ class _TableCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    width: width,
-    padding: const EdgeInsets.all(8),
-    decoration: BoxDecoration(
-      border: Border(right: BorderSide(color: Colors.grey[300]!)),
-    ),
-    child: Text(
-      text,
-      style:
-          style ??
-          TextStyle(
-            fontSize: isHeader ? 12 : 11,
-            fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-            color: isHeader ? Colors.green[800] : Colors.black87,
-          ),
-      overflow: TextOverflow.ellipsis,
-      maxLines: isHeader ? 1 : 2,
-    ),
-  );
+      width: width,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border(right: BorderSide(color: Colors.grey[300]!)),
+      ),
+      child: Text(
+        text,
+          style: style ??
+              TextStyle(
+          fontSize: isHeader ? 12 : 11,
+          fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+          color: isHeader ? Colors.green[800] : Colors.black87,
+        ),
+        overflow: TextOverflow.ellipsis,
+        maxLines: isHeader ? 1 : 2,
+      ),
+    );
 }
 
 class _MorphocycleLoadCell extends StatelessWidget {
@@ -591,202 +590,205 @@ class _WeekCustomizationDialogState extends State<_WeekCustomizationDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: Text(
-      'Week ${widget.weekSchedule.weekNumber} Bewerken',
-      style: TextStyle(color: Colors.green[800]),
-    ),
-    content: SizedBox(
-      width: double.maxFinite,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Week info
-            Card(
-              color: Colors.green[50],
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Icon(Icons.calendar_today, color: Colors.green[600]),
-                    const SizedBox(width: 8),
-                    Text(
-                      '${_formatWeekDate(widget.weekSchedule.weekStartDate)} • ${widget.weekSchedule.monthName}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.green[800],
+      title: Text(
+        'Week ${widget.weekSchedule.weekNumber} Bewerken',
+        style: TextStyle(color: Colors.green[800]),
+      ),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Week info
+              Card(
+                color: Colors.green[50],
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      Icon(Icons.calendar_today, color: Colors.green[600]),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${_formatWeekDate(widget.weekSchedule.weekStartDate)} • ${widget.weekSchedule.monthName}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.green[800],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Training Sessions
+              Row(
+                children: [
+                  Icon(Icons.sports_soccer, color: Colors.blue[600]),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Trainingen',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.add_circle, color: Colors.blue),
+                    onPressed: _addTraining,
+                    tooltip: 'Training toevoegen',
+                  ),
+                ],
+              ),
+              if (_trainingSessions.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    'Geen trainingen gepland',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                )
+              else
+                ..._trainingSessions.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final training = entry.value;
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    child: ListTile(
+                        leading: const Icon(
+                          Icons.fitness_center,
+                          color: Colors.blue,
+                        ),
+                      title: Text(training.name),
+                      subtitle: Text(
+                        '${training.dayName} ${training.timeString} • ${training.location}',
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.edit, size: 20),
+                            onPressed: () => _editTraining(index),
+                          ),
+                          IconButton(
+                              icon: const Icon(
+                                Icons.delete,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                            onPressed: () => _removeTraining(index),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
+                  );
+                }),
+              const SizedBox(height: 16),
 
-            // Training Sessions
-            Row(
-              children: [
-                Icon(Icons.sports_soccer, color: Colors.blue[600]),
-                const SizedBox(width: 8),
-                const Text(
-                  'Trainingen',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.add_circle, color: Colors.blue),
-                  onPressed: _addTraining,
-                  tooltip: 'Training toevoegen',
-                ),
-              ],
-            ),
-            if (_trainingSessions.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  'Geen trainingen gepland',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              )
-            else
-              ..._trainingSessions.asMap().entries.map((entry) {
-                final index = entry.key;
-                final training = entry.value;
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  child: ListTile(
-                    leading: const Icon(
-                      Icons.fitness_center,
-                      color: Colors.blue,
-                    ),
-                    title: Text(training.name),
-                    subtitle: Text(
-                      '${training.dayName} ${training.timeString} • ${training.location}',
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit, size: 20),
-                          onPressed: () => _editTraining(index),
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            size: 20,
-                            color: Colors.red,
-                          ),
-                          onPressed: () => _removeTraining(index),
-                        ),
-                      ],
-                    ),
+              // Matches
+              Row(
+                children: [
+                  Icon(Icons.sports, color: Colors.green[600]),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Wedstrijden',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                );
-              }),
-            const SizedBox(height: 16),
-
-            // Matches
-            Row(
-              children: [
-                Icon(Icons.sports, color: Colors.green[600]),
-                const SizedBox(width: 8),
-                const Text(
-                  'Wedstrijden',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.add_circle, color: Colors.green),
-                  onPressed: _addMatch,
-                  tooltip: 'Wedstrijd toevoegen',
-                ),
-              ],
-            ),
-            if (_matches.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  'Geen wedstrijden gepland',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              )
-            else
-              ..._matches.asMap().entries.map((entry) {
-                final index = entry.key;
-                final match = entry.value;
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  child: ListTile(
-                    leading: Icon(
-                      match.isHomeMatch ? Icons.home : Icons.directions_run,
-                      color: Colors.green,
-                    ),
-                    title: Text(match.opponent),
-                    subtitle: Text(
-                      '${match.dayName} ${match.timeString} • ${match.locationDisplay} • ${match.type.displayName}',
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit, size: 20),
-                          onPressed: () => _editMatch(index),
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            size: 20,
-                            color: Colors.red,
-                          ),
-                          onPressed: () => _removeMatch(index),
-                        ),
-                      ],
-                    ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.add_circle, color: Colors.green),
+                    onPressed: _addMatch,
+                    tooltip: 'Wedstrijd toevoegen',
                   ),
-                );
-              }),
-            const SizedBox(height: 16),
-
-            // Notes
-            Row(
-              children: [
-                Icon(Icons.note, color: Colors.orange[600]),
-                const SizedBox(width: 8),
-                const Text(
-                  'Notities',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _notesController,
-              decoration: const InputDecoration(
-                hintText: 'Week notities (optioneel)',
-                border: OutlineInputBorder(),
+                ],
               ),
-              maxLines: 3,
-            ),
-          ],
+              if (_matches.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    'Geen wedstrijden gepland',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                )
+              else
+                ..._matches.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final match = entry.value;
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    child: ListTile(
+                      leading: Icon(
+                        match.isHomeMatch ? Icons.home : Icons.directions_run,
+                        color: Colors.green,
+                      ),
+                      title: Text(match.opponent),
+                      subtitle: Text(
+                        '${match.dayName} ${match.timeString} • ${match.locationDisplay} • ${match.type.displayName}',
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.edit, size: 20),
+                            onPressed: () => _editMatch(index),
+                          ),
+                          IconButton(
+                              icon: const Icon(
+                                Icons.delete,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                            onPressed: () => _removeMatch(index),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              const SizedBox(height: 16),
+
+              // Notes
+              Row(
+                children: [
+                  Icon(Icons.note, color: Colors.orange[600]),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Notities',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _notesController,
+                decoration: const InputDecoration(
+                  hintText: 'Week notities (optioneel)',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-    actions: [
-      TextButton(
-        onPressed: () => Navigator.of(context).pop(),
-        child: const Text('Annuleren'),
-      ),
-      ElevatedButton(
-        onPressed: _saveWeek,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.green[600],
-          foregroundColor: Colors.white,
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Annuleren'),
         ),
-        child: const Text('Opslaan'),
-      ),
-    ],
-  );
+        ElevatedButton(
+          onPressed: _saveWeek,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green[600],
+            foregroundColor: Colors.white,
+          ),
+          child: const Text('Opslaan'),
+        ),
+      ],
+    );
 
   void _addTraining() {
     showDialog<void>(

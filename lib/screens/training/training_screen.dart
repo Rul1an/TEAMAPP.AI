@@ -224,8 +224,7 @@ class _TrainingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attendancePercentage =
-        training.presentPlayerIds.length /
+    final attendancePercentage = training.presentPlayerIds.length /
         (training.presentPlayerIds.length + training.absentPlayerIds.length) *
         100;
 
@@ -255,8 +254,8 @@ class _TrainingCard extends StatelessWidget {
                     Text(
                       DateFormat('HH:mm').format(training.date),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     Text(
                       '${training.duration} min',
@@ -313,11 +312,11 @@ class _TrainingCard extends StatelessWidget {
                       Text(
                         '${attendancePercentage.toStringAsFixed(0)}%',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: attendancePercentage >= 80
-                              ? Colors.green
-                              : Colors.orange,
-                        ),
+                              fontWeight: FontWeight.bold,
+                              color: attendancePercentage >= 80
+                                  ? Colors.green
+                                  : Colors.orange,
+                            ),
                       ),
                     ],
                   ),
@@ -361,20 +360,20 @@ class _TrainingCard extends StatelessWidget {
   }
 
   Widget _buildIntensityBadge(TrainingIntensity intensity) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-    decoration: BoxDecoration(
-      color: _getIntensityColor(intensity),
-      borderRadius: BorderRadius.circular(4),
-    ),
-    child: Text(
-      _getIntensityText(intensity),
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 10,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-  );
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: _getIntensityColor(intensity),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          _getIntensityText(intensity),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
 
   Widget _buildStatusBadge(TrainingStatus status) {
     Color color;

@@ -1,0 +1,43 @@
+name: Edge Blue-Green Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "supabase/edge_functions/**"
+      - "scripts/build_edge.sh"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Build Edge bundles
+        run: ./scripts/build_edge.sh
+
+      - name: Deploy canary functions
+        run: |
+          supabase functions deploy --project-ref $SUPABASE_PROJECT_ID \
+            --import-map supabase/import_map.json \
+            --branch main --verify-jwt false \
+            --func-dir supabase/edge_functions/dist \
+            --suffix -canary
+
+      - name: Health check canary
+        run: |
+          curl -f https://${{ env.SUPABASE_PROJECT_ID }}.functions.supabase.co/health || exit 1
+
+      - name: Promote canary to production
+        run: |
+          supabase functions promote --project-ref $SUPABASE_PROJECT_ID --suffix -canary --to-suffix ""
+
+      - name: Clean old functions
+        run: |
+          supabase functions prune --project-ref $SUPABASE_PROJECT_ID --retain 2

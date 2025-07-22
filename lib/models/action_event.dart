@@ -8,13 +8,6 @@ class ActionEvent {
     required this.timestamp,
   });
 
-  final String id;
-  final String matchId;
-  final double x; // 0-1 normalized pitch coordinates
-  final double y;
-  final ActionType type;
-  final DateTime timestamp;
-
   factory ActionEvent.fromJson(Map<String, dynamic> json) => ActionEvent(
         id: json['id'] as String,
         matchId: json['matchId'] as String,
@@ -26,6 +19,13 @@ class ActionEvent {
         ),
         timestamp: DateTime.parse(json['timestamp'] as String),
       );
+
+  final String id;
+  final String matchId;
+  final double x; // 0-1 normalized pitch coordinates
+  final double y;
+  final ActionType type;
+  final DateTime timestamp;
 
   Map<String, dynamic> toJson() => {
         'id': id,

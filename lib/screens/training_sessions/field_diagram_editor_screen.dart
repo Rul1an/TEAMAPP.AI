@@ -238,9 +238,7 @@ class _FieldDiagramEditorScreenState
             .read(fieldDiagramProvider.notifier)
             .saveDiagramToExercise(widget.exerciseId!, diagramState.diagram);
       } else {
-        await ref
-            .read(fieldDiagramProvider.notifier)
-            .saveDiagramTemplate(
+        await ref.read(fieldDiagramProvider.notifier).saveDiagramTemplate(
               diagramState.diagram,
               'Nieuwe diagram ${DateTime.now().toString().substring(0, 16)}',
             );

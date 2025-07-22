@@ -84,3 +84,19 @@ export SUPABASE_KEY=public-anon-key
 ---
 
 © 2025 TEAMAPP.AI – Released under MIT License
+
+## Developer Experience – Git Hooks & Linting (Sprint 0)
+
+1. Run the hook installer once after cloning:
+   ```bash
+   ./tool/install_hooks.sh
+   ```
+   This syncs Lefthook-based *pre-commit* and *commit-msg* hooks into `.git/hooks`.
+2. Ensure Node >= 18 is on your PATH (needed for `npx`).
+3. Commits now automatically run:
+   * `dart format` (only staged files)
+   * `import_sorter`
+   * `dart analyze --fatal-infos`
+   * `dcm analyze` (style & performance)
+   * `commitlint` (commit message validation)
+4. In CI the job `lefthook run --all` enforces the same checks.

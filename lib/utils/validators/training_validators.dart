@@ -1,5 +1,4 @@
 // Dart imports:
-import 'package:intl/intl.dart';
 
 // Model imports:
 

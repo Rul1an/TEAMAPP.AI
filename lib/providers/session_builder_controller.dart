@@ -26,11 +26,12 @@ class SessionBuilderState {
     TrainingSession? session,
     List<SessionPhase>? phases,
     bool? isLoading,
-  }) => SessionBuilderState(
-    session: session ?? this.session,
-    phases: phases ?? this.phases,
-    isLoading: isLoading ?? this.isLoading,
-  );
+  }) =>
+      SessionBuilderState(
+        session: session ?? this.session,
+        phases: phases ?? this.phases,
+        isLoading: isLoading ?? this.isLoading,
+      );
 
   static const initial = SessionBuilderState(
     session: null,
@@ -42,7 +43,7 @@ class SessionBuilderState {
 /// Controller handling loading/creation of [TrainingSession]s for the builder UI.
 class SessionBuilderController extends StateNotifier<SessionBuilderState> {
   SessionBuilderController(this._ref, {required this.sessionId})
-    : super(SessionBuilderState.initial) {
+      : super(SessionBuilderState.initial) {
     _init();
   }
 
@@ -115,5 +116,5 @@ class SessionBuilderController extends StateNotifier<SessionBuilderState> {
 /// Public provider (family) to access controller + state by [sessionId].
 final sessionBuilderControllerProvider = StateNotifierProvider.autoDispose
     .family<SessionBuilderController, SessionBuilderState, int?>(
-      (ref, sessionId) => SessionBuilderController(ref, sessionId: sessionId),
-    );
+  (ref, sessionId) => SessionBuilderController(ref, sessionId: sessionId),
+);

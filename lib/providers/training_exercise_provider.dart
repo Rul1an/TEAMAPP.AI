@@ -22,10 +22,10 @@ final allExercisesProvider = FutureProvider<List<TrainingExercise>>((
 
 final exercisesBySessionProvider =
     FutureProvider.family<List<TrainingExercise>, String>((
-      ref,
-      sessionId,
-    ) async {
-      final repo = ref.read(trainingExerciseRepositoryProvider);
-      final res = await repo.getBySession(sessionId);
-      return res.dataOrNull ?? [];
-    });
+  ref,
+  sessionId,
+) async {
+  final repo = ref.read(trainingExerciseRepositoryProvider);
+  final res = await repo.getBySession(sessionId);
+  return res.dataOrNull ?? [];
+});

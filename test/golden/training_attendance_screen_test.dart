@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:test_utils/surface_utils.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/models/player.dart';
@@ -27,13 +29,24 @@ void main() {
     setUpAll(() async {
       await initializeDateFormatting('nl_NL');
 
+      SharedPreferences.setMockInitialValues({});
+
+      try {
+        await Supabase.initialize(
+          url: 'https://dummy.supabase.co',
+          anonKey: 'public-anon-key',
+          debug: false,
+        );
+      } catch (_) {}
+
       training = Training()
         ..id = 't1'
         ..date = DateTime(2025, 7)
         ..duration = 90
         ..focus = TrainingFocus.technical
         ..intensity = TrainingIntensity.medium
-        ..status = TrainingStatus.planned;
+        ..status = TrainingStatus.planned
+        ..trainingNumber = 1;
 
       final player = Player()
         ..id = 'p1'
