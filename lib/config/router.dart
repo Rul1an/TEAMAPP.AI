@@ -15,7 +15,6 @@ import '../screens/matches/lineup_builder_screen.dart';
 import '../screens/matches/match_detail_screen.dart';
 import '../screens/matches/matches_screen.dart';
 import '../screens/insights/insights_screen.dart';
-import '../screens/player_tracking/svs_dashboard_screen.dart';
 import '../screens/players/add_player_screen.dart';
 import '../screens/players/assessment_screen.dart';
 import '../screens/players/edit_player_screen.dart';
@@ -297,25 +296,7 @@ GoRouter createRouter(Ref ref) => GoRouter(
               const NoTransitionPage(child: InsightsScreen()),
         ),
 
-        // Legacy deep-links – keep but hidden from nav
-        GoRoute(
-          path: '/analytics',
-          name: 'performance-analytics',
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: PerformanceAnalyticsScreen()),
-        ),
-        GoRoute(
-          path: '/svs',
-          name: 'svs-dashboard',
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: SVSDashboardScreen()),
-        ),
-        GoRoute(
-          path: '/admin',
-          name: 'admin-panel',
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: AdminPanelScreen()),
-        ),
+        // Legacy deep-links removed pending future implementation
       ],
     );
 

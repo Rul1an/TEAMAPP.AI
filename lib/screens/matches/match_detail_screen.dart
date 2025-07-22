@@ -15,6 +15,7 @@ import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
+import '../../widgets/highlight_gallery.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({required this.matchId, super.key});

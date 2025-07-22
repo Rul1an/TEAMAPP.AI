@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use, flutter_style_todos
+// ignore_for_file: dead_code
 
 // Dart imports:
 import 'dart:io';
