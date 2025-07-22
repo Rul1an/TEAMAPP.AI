@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1072,SC1073,SC1009
 # Bulk-update TEAMAPP.AI GitHub issues
 #
 # – Sluit zes afgeronde issues (#30, #29, #28, #7, #6, #5)
