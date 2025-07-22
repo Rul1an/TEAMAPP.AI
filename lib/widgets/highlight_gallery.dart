@@ -76,7 +76,7 @@ class _HighlightThumbnailState extends ConsumerState<_HighlightThumbnail> {
     setState(() => _loadingUrl = true);
     final url = await ref
         .read(highlightPlaybackUrlProvider(widget.highlight.id).future)
-        .catchError((e) {
+        .catchError((Object e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Error: $e')));
       return '';
