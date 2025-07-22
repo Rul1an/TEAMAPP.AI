@@ -15,7 +15,7 @@ import 'training_session_repository.dart';
 /// code-gen with `supabase_flutter` types later.
 class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
   SupabaseTrainingSessionRepository({SupabaseClient? client})
-    : _client = client ?? SupabaseConfig.client;
+      : _client = client ?? SupabaseConfig.client;
 
   final SupabaseClient _client;
 

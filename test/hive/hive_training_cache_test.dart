@@ -25,9 +25,9 @@ void main() {
   const pathProviderChannel = MethodChannel('plugins.flutter.io/path_provider');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(
-        pathProviderChannel,
-        (call) async => Directory.systemTemp.path,
-      );
+    pathProviderChannel,
+    (call) async => Directory.systemTemp.path,
+  );
 
   group('HiveTrainingCache', () {
     setUp(() {
@@ -41,7 +41,8 @@ void main() {
         ..duration = 90
         ..focus = TrainingFocus.technical
         ..intensity = TrainingIntensity.medium
-        ..status = TrainingStatus.planned;
+        ..status = TrainingStatus.planned
+        ..trainingNumber = 1;
     }
 
     test('write & read list', () async {

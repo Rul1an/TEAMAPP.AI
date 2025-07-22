@@ -76,24 +76,25 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
   // Header
   // --------------------------------------------------------------------------
   pw.Widget _buildHeader(PlayerAssessment a, pw.Font bold) => pw.Container(
-    width: double.infinity,
-    padding: const pw.EdgeInsets.all(12),
-    decoration: pw.BoxDecoration(
-      color: PdfTheme.primary,
-      borderRadius: pw.BorderRadius.circular(6),
-    ),
-    child: pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        pw.Text('Spelersbeoordeling', style: PdfTheme.header(bold)),
-        pw.SizedBox(height: 4),
-        pw.Text(
-          'Speler ID: ${a.playerId}',
-          style: pw.TextStyle(font: bold, fontSize: 12, color: PdfColors.white),
+        width: double.infinity,
+        padding: const pw.EdgeInsets.all(12),
+        decoration: pw.BoxDecoration(
+          color: PdfTheme.primary,
+          borderRadius: pw.BorderRadius.circular(6),
         ),
-      ],
-    ),
-  );
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('Spelersbeoordeling', style: PdfTheme.header(bold)),
+            pw.SizedBox(height: 4),
+            pw.Text(
+              'Speler ID: ${a.playerId}',
+              style: pw.TextStyle(
+                  font: bold, fontSize: 12, color: PdfColors.white),
+            ),
+          ],
+        ),
+      );
 
   // --------------------------------------------------------------------------
   // Overview block (date, type, averages)
@@ -179,8 +180,8 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
     pw.Font regular,
     pw.Font bold,
   ) {
-    pw.Widget _note(String heading, String? text) =>
-        text == null || text.isEmpty
+    pw.Widget _note(String heading, String? text) => text == null ||
+            text.isEmpty
         ? pw.Container()
         : pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -225,29 +226,30 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
     String value,
     pw.Font regular,
     pw.Font bold,
-  ) => pw.Padding(
-    padding: const pw.EdgeInsets.symmetric(vertical: 2),
-    child: pw.Row(
-      children: [
-        pw.Expanded(
-          flex: 2,
-          child: pw.Text(
-            '$label:',
-            style: pw.TextStyle(
-              font: bold,
-              fontSize: 10,
-              color: PdfTheme.primary,
+  ) =>
+      pw.Padding(
+        padding: const pw.EdgeInsets.symmetric(vertical: 2),
+        child: pw.Row(
+          children: [
+            pw.Expanded(
+              flex: 2,
+              child: pw.Text(
+                '$label:',
+                style: pw.TextStyle(
+                  font: bold,
+                  fontSize: 10,
+                  color: PdfTheme.primary,
+                ),
+              ),
             ),
-          ),
+            pw.Expanded(
+              flex: 3,
+              child: pw.Text(
+                value,
+                style: pw.TextStyle(font: regular, fontSize: 10),
+              ),
+            ),
+          ],
         ),
-        pw.Expanded(
-          flex: 3,
-          child: pw.Text(
-            value,
-            style: pw.TextStyle(font: regular, fontSize: 10),
-          ),
-        ),
-      ],
-    ),
-  );
+      );
 }

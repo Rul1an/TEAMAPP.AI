@@ -35,22 +35,21 @@ class TrainingSessionPdfGenerator
       'TrainingSessionPdfGenerator: trainingNumber moet > 0 zijn',
     );
     assert(
-      session.date != null,
-      'TrainingSessionPdfGenerator: date is verplicht',
-    );
-    assert(
       session.sessionDuration.inMinutes > 0,
       'TrainingSessionPdfGenerator: sessieduur moet positief zijn',
     );
 
     // Ensure Dutch locale symbols are loaded for DateFormat.
     try {
-      await initializeDateFormatting('nl_NL', null);
+      await initializeDateFormatting('nl_NL');
     } catch (_) {
       // Ignore if already initialized or locale data unavailable.
     }
 
     final pdf = pw.Document();
+
+    // Ensure a non-zero training number (for backwards compatibility).
+    final safeNr = session.trainingNumber == 0 ? 1 : session.trainingNumber;
 
     // VOAB color palette
     const primaryColor = PdfColor.fromInt(0xFF1976D2);
@@ -62,9 +61,14 @@ class TrainingSessionPdfGenerator
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(20),
         build: (context) => [
-          _buildTrainingHeader(session, primaryColor),
+          _buildTrainingHeader(session, primaryColor, safeNr),
           pw.SizedBox(height: 20),
-          _buildTrainingInfoSection(session, primaryColor, backgroundColor),
+          _buildTrainingInfoSection(
+            session,
+            primaryColor,
+            backgroundColor,
+            safeNr,
+          ),
           pw.SizedBox(height: 16),
           _buildPlayersSection(session, players, primaryColor, backgroundColor),
           pw.SizedBox(height: 16),
@@ -87,6 +91,7 @@ class TrainingSessionPdfGenerator
   pw.Widget _buildTrainingHeader(
     TrainingSession session,
     PdfColor primaryColor,
+    int safeNr,
   ) {
     final dateString = _formatDate(session.date);
     return pw.Container(
@@ -132,7 +137,7 @@ class TrainingSessionPdfGenerator
                   borderRadius: pw.BorderRadius.circular(16),
                 ),
                 child: pw.Text(
-                  'Training ${session.trainingNumber}',
+                  'Training $safeNr',
                   style: pw.TextStyle(
                     fontSize: 12,
                     fontWeight: pw.FontWeight.bold,
@@ -156,6 +161,7 @@ class TrainingSessionPdfGenerator
     TrainingSession session,
     PdfColor primaryColor,
     PdfColor backgroundColor,
+    int safeNr,
   ) {
     final dateString = _formatDate(session.date);
     return pw.Container(
@@ -196,7 +202,7 @@ class TrainingSessionPdfGenerator
                     pw.SizedBox(height: 6),
                     _buildInfoRow(
                       'Training Nr:',
-                      session.trainingNumber.toString(),
+                      safeNr.toString(),
                     ),
                     pw.SizedBox(height: 6),
                     _buildInfoRow('Type:', _getTrainingTypeText(session.type)),
@@ -541,31 +547,31 @@ class TrainingSessionPdfGenerator
   // ---------------------------------------------------------------------------
 
   pw.Widget _buildInfoRow(String label, String value) => pw.Row(
-    children: [
-      pw.SizedBox(
-        width: 60,
-        child: pw.Text(
-          label,
-          style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
-        ),
-      ),
-      pw.Expanded(
-        child: pw.Text(value, style: const pw.TextStyle(fontSize: 10)),
-      ),
-    ],
-  );
+        children: [
+          pw.SizedBox(
+            width: 60,
+            child: pw.Text(
+              label,
+              style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+            ),
+          ),
+          pw.Expanded(
+            child: pw.Text(value, style: const pw.TextStyle(fontSize: 10)),
+          ),
+        ],
+      );
 
   pw.Widget _buildObjectiveItem(String label, String content) => pw.Column(
-    crossAxisAlignment: pw.CrossAxisAlignment.start,
-    children: [
-      pw.Text(
-        label,
-        style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
-      ),
-      pw.SizedBox(height: 3),
-      pw.Text(content, style: const pw.TextStyle(fontSize: 10)),
-    ],
-  );
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text(
+            label,
+            style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+          ),
+          pw.SizedBox(height: 3),
+          pw.Text(content, style: const pw.TextStyle(fontSize: 10)),
+        ],
+      );
 
   String _getTrainingTypeText(TrainingType type) {
     switch (type) {

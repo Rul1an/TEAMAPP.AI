@@ -13,7 +13,7 @@ import 'package:flutter/foundation.dart';
 /// non-sensitive demo data). This utility is synchronous after first call.
 class HiveKeyManager {
   HiveKeyManager({FlutterSecureStorage? storage})
-    : _storage = storage ?? const FlutterSecureStorage();
+      : _storage = storage ?? const FlutterSecureStorage();
 
   /// Creates an in-memory key manager for unit tests, bypassing platform
   /// channels from `flutter_secure_storage`.
@@ -63,7 +63,8 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
     WebOptions? webOptions,
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
-  }) async => _store[key];
+  }) async =>
+      _store[key];
 
   @override
   Future<void> write({
@@ -122,7 +123,8 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
     WebOptions? webOptions,
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
-  }) async => Map.of(_store);
+  }) async =>
+      Map.of(_store);
 
   @override
   Future<bool> containsKey({
@@ -133,7 +135,8 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
     WebOptions? webOptions,
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
-  }) async => _store.containsKey(key);
+  }) async =>
+      _store.containsKey(key);
 
   // Listener management -------------------------------------------------
 

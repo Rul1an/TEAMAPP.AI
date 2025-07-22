@@ -11,14 +11,14 @@ class PermissionService {
   /// Check if user can manage players (add, edit, delete)
   static bool canManagePlayers(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can edit players
   static bool canEditPlayers(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can manage training sessions (create, edit, delete)
   static bool canManageTraining(String? userRole) =>
@@ -30,35 +30,35 @@ class PermissionService {
   /// Check if user can create/edit training sessions
   static bool canCreateTraining(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can manage matches (create, edit, delete)
   static bool canManageMatches(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can view analytics
   static bool canViewAnalytics(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can access SVS (Pro/Enterprise only)
   static bool canAccessSVS(String? userRole, OrganizationTier? tier) {
     if (tier == OrganizationTier.basic) return false;
 
     return userRole == 'bestuurder' ||
-        userRole == 'hoofdcoach' ||
-        userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
   }
 
   /// Check if user can access annual planning
   static bool canAccessAnnualPlanning(String? userRole) =>
       userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+           userRole == 'hoofdcoach' ||
+           userRole == 'admin';
 
   /// Check if user can access exercise library management
   static bool canManageExerciseLibrary(String? userRole) =>
@@ -236,25 +236,27 @@ class PermissionService {
   static Map<String, bool> getUserCapabilities(
     String? userRole,
     OrganizationTier? tier,
-  ) => {
-    'can_view_dashboard': true,
-    'can_view_players': true,
-    'can_manage_players': canManagePlayers(userRole),
-    'can_edit_players': canEditPlayers(userRole),
-    'can_view_training': true,
-    'can_manage_training': canManageTraining(userRole),
-    'can_create_training': canCreateTraining(userRole),
-    'can_view_matches': true,
-    'can_manage_matches': canManageMatches(userRole),
-    'can_view_analytics': canViewAnalytics(userRole),
-    'can_access_svs': canAccessSVS(userRole, tier),
-    'can_access_annual_planning': canAccessAnnualPlanning(userRole),
-    'can_manage_exercise_library': canManageExerciseLibrary(userRole),
-    'can_access_field_diagram_editor': canAccessFieldDiagramEditor(userRole),
-    'can_access_exercise_designer': canAccessExerciseDesigner(userRole),
-    'can_access_admin': canAccessAdmin(userRole),
-    'is_view_only': isViewOnlyUser(userRole),
-  };
+  ) =>
+      {
+        'can_view_dashboard': true,
+        'can_view_players': true,
+        'can_manage_players': canManagePlayers(userRole),
+        'can_edit_players': canEditPlayers(userRole),
+        'can_view_training': true,
+        'can_manage_training': canManageTraining(userRole),
+        'can_create_training': canCreateTraining(userRole),
+        'can_view_matches': true,
+        'can_manage_matches': canManageMatches(userRole),
+        'can_view_analytics': canViewAnalytics(userRole),
+        'can_access_svs': canAccessSVS(userRole, tier),
+        'can_access_annual_planning': canAccessAnnualPlanning(userRole),
+        'can_manage_exercise_library': canManageExerciseLibrary(userRole),
+        'can_access_field_diagram_editor':
+            canAccessFieldDiagramEditor(userRole),
+        'can_access_exercise_designer': canAccessExerciseDesigner(userRole),
+        'can_access_admin': canAccessAdmin(userRole),
+        'is_view_only': isViewOnlyUser(userRole),
+      };
 
   /// Get role display information
   static Map<String, dynamic> getRoleInfo(String? userRole) {

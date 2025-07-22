@@ -6,7 +6,7 @@ import 'training_period_repository.dart';
 
 class LocalTrainingPeriodRepository implements TrainingPeriodRepository {
   LocalTrainingPeriodRepository({HiveTrainingPeriodCache? cache})
-    : _cache = cache ?? HiveTrainingPeriodCache();
+      : _cache = cache ?? HiveTrainingPeriodCache();
 
   final HiveTrainingPeriodCache _cache;
 

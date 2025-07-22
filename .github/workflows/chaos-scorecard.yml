@@ -1,0 +1,74 @@
+name: "📊 Chaos Scorecard"
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  scorecard:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: eu-west-1
+      CLOUDWATCH_NS: VideoPlatform/GameDay
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.AWS_CHAOS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Fetch chaos metrics (24h)
+        id: metrics
+        run: |
+          end=$(date -u +%s)
+          start=$((end - 86400))
+          p95=$(aws cloudwatch get-metric-statistics \
+            --namespace "$CLOUDWATCH_NS" \
+            --metric-name LatencyMs \
+            --statistics p95 \
+            --period 86400 \
+            --start-time $(date -u -d @$start +%Y-%m-%dT%H:%M:%SZ) \
+            --end-time $(date -u -d @$end +%Y-%m-%dT%H:%M:%SZ) \
+            --query 'Datapoints[0].p95' --output text || echo "n/a")
+          successes=$(aws cloudwatch get-metric-statistics \
+            --namespace "$CLOUDWATCH_NS" \
+            --metric-name Success \
+            --statistics Sum \
+            --period 86400 \
+            --start-time $(date -u -d @$start +%Y-%m-%dT%H:%M:%SZ) \
+            --end-time $(date -u -d @$end +%Y-%m-%dT%H:%M:%SZ) \
+            --query 'Datapoints[0].Sum' --output text || echo "0")
+          rollbacks=$(aws cloudwatch get-metric-statistics \
+            --namespace "$CLOUDWATCH_NS" \
+            --metric-name Rollback \
+            --statistics Sum \
+            --period 86400 \
+            --start-time $(date -u -d @$start +%Y-%m-%dT%H:%M:%SZ) \
+            --end-time $(date -u -d @$end +%Y-%m-%dT%H:%M:%SZ) \
+            --query 'Datapoints[0].Sum' --output text || echo "0")
+          echo "p95=$p95" >> $GITHUB_OUTPUT
+          echo "successes=$successes" >> $GITHUB_OUTPUT
+          echo "rollbacks=$rollbacks" >> $GITHUB_OUTPUT
+
+      - name: Comment on PR with chaos scorecard
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const p95 = '${{ steps.metrics.outputs.p95 }}';
+            const succ = '${{ steps.metrics.outputs.successes }}';
+            const rb = '${{ steps.metrics.outputs.rollbacks }}';
+            const body = `### ☣️ Chaos Scorecard (last 24h)\n* p95 Latency: **${p95} ms**\n* Successful GameDays: **${succ}**\n* Rollbacks triggered: **${rb}**`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });

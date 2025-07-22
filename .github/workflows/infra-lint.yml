@@ -1,0 +1,81 @@
+name: "🛡️ Infra & Script Lint"
+
+on:
+  pull_request:
+    paths:
+      - '**/*.sh'
+      - '**/*.tf'
+      - '.github/workflows/**.yml'
+  push:
+    branches: [main]
+    paths:
+      - '**/*.sh'
+      - '**/*.tf'
+      - '.github/workflows/**.yml'
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # ---------------- Shell scripts ----------------
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: 🐚 ShellCheck
+        run: |
+          shellcheck_files=$(git ls-files '*.sh')
+          if [ -n "$shellcheck_files" ]; then
+            echo "$shellcheck_files" | xargs shellcheck -S style -a -x
+          else
+            echo "No shell scripts to lint."
+          fi
+
+      # ---------------- Terraform ----------------
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v1
+        with:
+          tflint_version: latest
+
+      - name: 🌎 TFLint
+        run: |
+          tf_dirs=$(git ls-files '*.tf' | awk -F/ '{print $1}' | sort -u)
+          if [ -n "$tf_dirs" ]; then
+            for dir in $tf_dirs; do
+              tflint --chdir "$dir" || exit 1
+            done
+          else
+            echo "No Terraform files to lint."
+          fi
+
+      - name: 🛡️ Checkov IaC Scan
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: .
+          framework: terraform
+          quiet: true
+
+      # ---------------- File length guard ----------------
+      - name: 📏 Enforce ≤ 300 LOC per file
+        shell: bash
+        run: |
+          violators=$(find . -type f \( -name '*.sh' -o -name '*.tf' \) -not -path './.git/*' -not -path './node_modules/*' -exec bash -c 'wc -l "$1"' _ {} \; | awk '$1>300 {print $2" ("$1" lines)"}')
+          if [ -n "$violators" ]; then
+            echo "::error ::The following files exceed 300 LOC:\n$violators";
+            exit 1;
+          else
+            echo "All infra/script files are within the 300 LOC limit.";
+          fi
+
+      # ---------------- Summary ----------------
+      - name: 📄 Publish summary
+        if: always()
+        run: |
+          echo '### Infra & Script lint results' >> $GITHUB_STEP_SUMMARY
+          echo 'All checks completed.' >> $GITHUB_STEP_SUMMARY

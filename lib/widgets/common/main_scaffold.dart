@@ -17,7 +17,9 @@ class MainScaffold extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoute = GoRouterState.of(context).uri.toString();
-    final isDesktop = MediaQuery.of(context).size.width > 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isDesktop = screenWidth > 600;
+    final compactLabels = screenWidth < 800;
     final demoMode = ref.watch(demoModeProvider);
     final currentUser = ref.watch(currentUserProvider);
 
@@ -43,8 +45,8 @@ class MainScaffold extends ConsumerWidget {
                     Text(
                       'JO17',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     const SizedBox(height: 16),
                     // Organization badge
@@ -121,31 +123,31 @@ class MainScaffold extends ConsumerWidget {
                   ],
                 ),
               ),
-              destinations: const [
+              destinations: [
                 NavigationRailDestination(
-                  icon: Icon(Icons.dashboard_outlined),
-                  selectedIcon: Icon(Icons.dashboard),
-                  label: Text('Overzicht'),
+                  icon: const Icon(Icons.dashboard_outlined),
+                  selectedIcon: const Icon(Icons.dashboard),
+                  label: Text(_navLabel('Overzicht', compactLabels)),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.sports_soccer_outlined),
-                  selectedIcon: Icon(Icons.sports_soccer),
-                  label: Text('Seizoen'),
+                  icon: const Icon(Icons.sports_soccer_outlined),
+                  selectedIcon: const Icon(Icons.sports_soccer),
+                  label: Text(_navLabel('Seizoen', compactLabels)),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.sports_outlined),
-                  selectedIcon: Icon(Icons.sports),
-                  label: Text('Trainingen'),
+                  icon: const Icon(Icons.sports_outlined),
+                  selectedIcon: const Icon(Icons.sports),
+                  label: Text(_navLabel('Training', compactLabels)),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.stadium_outlined),
-                  selectedIcon: Icon(Icons.stadium),
-                  label: Text('Wedstrijden'),
+                  icon: const Icon(Icons.stadium_outlined),
+                  selectedIcon: const Icon(Icons.stadium),
+                  label: Text(_navLabel('Wedstr', compactLabels)),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.people_outline),
-                  selectedIcon: Icon(Icons.people),
-                  label: Text('Spelers'),
+                  icon: const Icon(Icons.people_outline),
+                  selectedIcon: const Icon(Icons.people),
+                  label: Text(_navLabel('Spelers', compactLabels)),
                 ),
                 NavigationRailDestination(
                   icon: Icon(Icons.insights_outlined),
@@ -166,31 +168,31 @@ class MainScaffold extends ConsumerWidget {
         bottomNavigationBar: NavigationBar(
           selectedIndex: _getSelectedIndex(currentRoute),
           onDestinationSelected: (index) => _onItemTapped(context, index),
-          destinations: const [
+          destinations: [
             NavigationDestination(
-              icon: Icon(Icons.dashboard_outlined),
-              selectedIcon: Icon(Icons.dashboard),
-              label: 'Overzicht',
+              icon: const Icon(Icons.dashboard_outlined),
+              selectedIcon: const Icon(Icons.dashboard),
+              label: _navLabel('Overzicht', compactLabels),
             ),
             NavigationDestination(
-              icon: Icon(Icons.sports_soccer_outlined),
-              selectedIcon: Icon(Icons.sports_soccer),
-              label: 'Seizoen',
+              icon: const Icon(Icons.sports_soccer_outlined),
+              selectedIcon: const Icon(Icons.sports_soccer),
+              label: _navLabel('Seizoen', compactLabels),
             ),
             NavigationDestination(
-              icon: Icon(Icons.sports_outlined),
-              selectedIcon: Icon(Icons.sports),
-              label: 'Trainingen',
+              icon: const Icon(Icons.sports_outlined),
+              selectedIcon: const Icon(Icons.sports),
+              label: _navLabel('Training', compactLabels),
             ),
             NavigationDestination(
-              icon: Icon(Icons.stadium_outlined),
-              selectedIcon: Icon(Icons.stadium),
-              label: 'Wedstrijden',
+              icon: const Icon(Icons.stadium_outlined),
+              selectedIcon: const Icon(Icons.stadium),
+              label: _navLabel('Wedstr', compactLabels),
             ),
             NavigationDestination(
-              icon: Icon(Icons.people_outline),
-              selectedIcon: Icon(Icons.people),
-              label: 'Spelers',
+              icon: const Icon(Icons.people_outline),
+              selectedIcon: const Icon(Icons.people),
+              label: _navLabel('Spelers', compactLabels),
             ),
             NavigationDestination(
               icon: Icon(Icons.insights_outlined),
@@ -204,13 +206,23 @@ class MainScaffold extends ConsumerWidget {
   }
 
   int _getSelectedIndex(String currentRoute) {
+    return routeToNavIndex(currentRoute);
+  }
+
+  /// Public helper for testing: maps a route string to the nav index used
+  /// by both NavigationRail and NavigationBar.
+  static int routeToNavIndex(String currentRoute) {
     if (currentRoute.startsWith('/dashboard')) return 0;
     if (currentRoute.startsWith('/season') ||
         currentRoute.startsWith('/annual-planning')) {
       return 1;
     }
     if (currentRoute.startsWith('/training') ||
-        currentRoute.startsWith('/exercise')) {
+        currentRoute.startsWith('/exercise') ||
+        currentRoute.startsWith('/training-sessions') ||
+        currentRoute.startsWith('/exercise-library') ||
+        currentRoute.startsWith('/field-diagram-editor') ||
+        currentRoute.startsWith('/exercise-designer')) {
       return 2;
     }
     if (currentRoute.startsWith('/matches') ||
@@ -241,5 +253,13 @@ class MainScaffold extends ConsumerWidget {
       case 5:
         context.go('/insights');
     }
+  }
+
+  String _navLabel(String full, bool compact) {
+    if (!compact) return full;
+    // Truncate to 6 chars for compact mode, add ellipsis if longer
+    const maxLen = 6;
+    if (full.length <= maxLen) return full;
+    return '${full.substring(0, maxLen)}…';
   }
 }

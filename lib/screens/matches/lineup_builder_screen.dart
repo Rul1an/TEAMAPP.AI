@@ -53,7 +53,7 @@ class _LineupBuilderScreenState extends ConsumerState<LineupBuilderScreen> {
         ],
       ),
       body: Column(
-        children: [
+            children: [
           const FormationToolbar(),
           const Expanded(child: FieldCanvas()),
           const FieldPositionsWidget(),

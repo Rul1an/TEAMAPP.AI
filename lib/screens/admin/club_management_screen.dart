@@ -42,25 +42,25 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
       body: clubProviderInstance.isLoading
           ? const Center(child: CircularProgressIndicator())
           : clubProviderInstance.error != null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error, size: 64, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text('Error: ${clubProviderInstance.error}'),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () =>
-                        clubProviderInstance.loadClub('default-club'),
-                    child: const Text('Probeer Opnieuw'),
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error, size: 64, color: Colors.red),
+                      const SizedBox(height: 16),
+                      Text('Error: ${clubProviderInstance.error}'),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () =>
+                            clubProviderInstance.loadClub('default-club'),
+                        child: const Text('Probeer Opnieuw'),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
-          : club != null
-          ? _buildClubManagementContent(context, club, featureService)
-          : const Center(child: Text('Geen club gevonden')),
+                )
+              : club != null
+                  ? _buildClubManagementContent(context, club, featureService)
+                  : const Center(child: Text('Geen club gevonden')),
     );
   }
 
@@ -68,167 +68,174 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
     BuildContext context,
     Club club,
     FeatureService featureService,
-  ) => SingleChildScrollView(
-    padding: const EdgeInsets.all(16),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Club Info Card
-        _buildClubInfoCard(context, club),
-        const SizedBox(height: 24),
+  ) =>
+      SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Club Info Card
+            _buildClubInfoCard(context, club),
+            const SizedBox(height: 24),
 
-        // Subscription & Billing
-        Text(
-          'Abonnement & Facturering',
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+            // Subscription & Billing
+            Text(
+              'Abonnement & Facturering',
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            _buildSubscriptionCard(context, club, featureService),
+
+            const SizedBox(height: 24),
+
+            // Team Management
+            Text(
+              'Team Beheer',
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            _buildTeamManagementSection(context, club, featureService),
+
+            const SizedBox(height: 24),
+
+            // Staff Management
+            Text(
+              'Staff Beheer',
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            _buildStaffManagementSection(context, club, featureService),
+
+            const SizedBox(height: 24),
+
+            // Club Settings
+            Text(
+              'Club Instellingen',
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            _buildClubSettingsSection(context, club),
+          ],
         ),
-        const SizedBox(height: 16),
-        _buildSubscriptionCard(context, club, featureService),
-
-        const SizedBox(height: 24),
-
-        // Team Management
-        Text(
-          'Team Beheer',
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 16),
-        _buildTeamManagementSection(context, club, featureService),
-
-        const SizedBox(height: 24),
-
-        // Staff Management
-        Text(
-          'Staff Beheer',
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 16),
-        _buildStaffManagementSection(context, club, featureService),
-
-        const SizedBox(height: 24),
-
-        // Club Settings
-        Text(
-          'Club Instellingen',
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 16),
-        _buildClubSettingsSection(context, club),
-      ],
-    ),
-  );
+      );
 
   Widget _buildClubInfoCard(BuildContext context, Club club) => Card(
-    elevation: 4,
-    child: Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Theme.of(context).primaryColor,
-                child: Text(
-                  club.name.isNotEmpty ? club.name[0].toUpperCase() : 'C',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: Text(
+                      club.name.isNotEmpty ? club.name[0].toUpperCase() : 'C',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      club.name,
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(fontWeight: FontWeight.bold),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          club.name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Opgericht: ${club.foundedYear}',
+                          style: Theme.of(
+                            context,
+                          )
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey[600]),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Opgericht: ${club.foundedYear}',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
+                  ),
+                  TierBadge(tier: club.tier.name),
+                ],
               ),
-              TierBadge(tier: club.tier.name),
+              const SizedBox(height: 16),
+              const Divider(),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildStatItem(
+                      context,
+                      'Teams',
+                      '${club.teams.length}',
+                      Icons.groups,
+                    ),
+                  ),
+                  Expanded(
+                    child: _buildStatItem(
+                      context,
+                      'Spelers',
+                      '${club.teams.fold<int>(0, (sum, team) => sum + team.playerIds.length)}',
+                      Icons.person,
+                    ),
+                  ),
+                  Expanded(
+                    child: _buildStatItem(
+                      context,
+                      'Staff',
+                      '${club.staff.length}',
+                      Icons.work,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-          const SizedBox(height: 16),
-          const Divider(),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: _buildStatItem(
-                  context,
-                  'Teams',
-                  '${club.teams.length}',
-                  Icons.groups,
-                ),
-              ),
-              Expanded(
-                child: _buildStatItem(
-                  context,
-                  'Spelers',
-                  '${club.teams.fold<int>(0, (sum, team) => sum + team.playerIds.length)}',
-                  Icons.person,
-                ),
-              ),
-              Expanded(
-                child: _buildStatItem(
-                  context,
-                  'Staff',
-                  '${club.staff.length}',
-                  Icons.work,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildStatItem(
     BuildContext context,
     String label,
     String value,
     IconData icon,
-  ) => Column(
-    children: [
-      Icon(icon, size: 24, color: Theme.of(context).primaryColor),
-      const SizedBox(height: 8),
-      Text(
-        value,
-        style: Theme.of(
-          context,
-        ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-      ),
-      Text(
-        label,
-        style: Theme.of(
-          context,
-        ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
-      ),
-    ],
-  );
+  ) =>
+      Column(
+        children: [
+          Icon(icon, size: 24, color: Theme.of(context).primaryColor),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          Text(
+            label,
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+          ),
+        ],
+      );
 
   Widget _buildSubscriptionCard(
     BuildContext context,
@@ -254,19 +261,19 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
                     Text(
                       'Huidig Abonnement',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       featureService.getTierDisplayName(
                         club.tier.name.toLowerCase(),
                       ),
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                     ),
                   ],
                 ),
@@ -374,214 +381,224 @@ class _ClubManagementScreenState extends ConsumerState<ClubManagementScreen> {
     BuildContext context,
     Club club,
     FeatureService featureService,
-  ) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  ) =>
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Teams (${club.teams.length})',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Teams (${club.teams.length})',
+                    style: Theme.of(
+                      context,
+                    )
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () => _addTeam(context),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Team Toevoegen'),
+                  ),
+                ],
               ),
-              ElevatedButton.icon(
-                onPressed: () => _addTeam(context),
-                icon: const Icon(Icons.add),
-                label: const Text('Team Toevoegen'),
-              ),
+              const SizedBox(height: 16),
+              if (club.teams.isEmpty)
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(32),
+                    child: Text('Nog geen teams toegevoegd'),
+                  ),
+                )
+              else
+                ...club.teams.map(
+                  (team) => ListTile(
+                    leading:
+                        CircleAvatar(child: Text(team.name[0].toUpperCase())),
+                    title: Text(team.name),
+                    subtitle: Text('${team.playerIds.length} spelers'),
+                    trailing: PopupMenuButton(
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: 'edit',
+                          child: Row(
+                            children: [
+                              Icon(Icons.edit),
+                              SizedBox(width: 8),
+                              Text('Bewerken'),
+                            ],
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'delete',
+                          child: Row(
+                            children: [
+                              Icon(Icons.delete, color: Colors.red),
+                              SizedBox(width: 8),
+                              Text(
+                                'Verwijderen',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                      onSelected: (value) {
+                        if (value == 'edit') {
+                          _editTeam(context, team);
+                        } else if (value == 'delete') {
+                          _deleteTeam(context, team);
+                        }
+                      },
+                    ),
+                  ),
+                ),
             ],
           ),
-          const SizedBox(height: 16),
-          if (club.teams.isEmpty)
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(32),
-                child: Text('Nog geen teams toegevoegd'),
-              ),
-            )
-          else
-            ...club.teams.map(
-              (team) => ListTile(
-                leading: CircleAvatar(child: Text(team.name[0].toUpperCase())),
-                title: Text(team.name),
-                subtitle: Text('${team.playerIds.length} spelers'),
-                trailing: PopupMenuButton(
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 'edit',
-                      child: Row(
-                        children: [
-                          Icon(Icons.edit),
-                          SizedBox(width: 8),
-                          Text('Bewerken'),
-                        ],
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: 'delete',
-                      child: Row(
-                        children: [
-                          Icon(Icons.delete, color: Colors.red),
-                          SizedBox(width: 8),
-                          Text(
-                            'Verwijderen',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  onSelected: (value) {
-                    if (value == 'edit') {
-                      _editTeam(context, team);
-                    } else if (value == 'delete') {
-                      _deleteTeam(context, team);
-                    }
-                  },
-                ),
-              ),
-            ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildStaffManagementSection(
     BuildContext context,
     Club club,
     FeatureService featureService,
-  ) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  ) =>
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Staff (${club.staff.length})',
+                    style: Theme.of(
+                      context,
+                    )
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () => _addStaff(context),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Staff Toevoegen'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              if (club.staff.isEmpty)
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(32),
+                    child: Text('Nog geen staff toegevoegd'),
+                  ),
+                )
+              else
+                ...club.staff.map(
+                  (staff) => ListTile(
+                    leading: CircleAvatar(
+                      child: Text('${staff.firstName[0]}${staff.lastName[0]}'),
+                    ),
+                    title: Text('${staff.firstName} ${staff.lastName}'),
+                    subtitle: Text(_getStaffRoleDisplayName(staff.primaryRole)),
+                    trailing: PopupMenuButton(
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: 'edit',
+                          child: Row(
+                            children: [
+                              Icon(Icons.edit),
+                              SizedBox(width: 8),
+                              Text('Bewerken'),
+                            ],
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'delete',
+                          child: Row(
+                            children: [
+                              Icon(Icons.delete, color: Colors.red),
+                              SizedBox(width: 8),
+                              Text(
+                                'Verwijderen',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                      onSelected: (value) {
+                        if (value == 'edit') {
+                          _editStaff(context, staff);
+                        } else if (value == 'delete') {
+                          _deleteStaff(context, staff);
+                        }
+                      },
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+
+  Widget _buildClubSettingsSection(BuildContext context, Club club) => Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Staff (${club.staff.length})',
+                'Instellingen',
                 style: Theme.of(
                   context,
                 ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
-              ElevatedButton.icon(
-                onPressed: () => _addStaff(context),
-                icon: const Icon(Icons.add),
-                label: const Text('Staff Toevoegen'),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text('Club Gegevens Bewerken'),
+                subtitle: const Text('Naam, logo, contactgegevens'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () => _editClubInfo(context, club),
+              ),
+              ListTile(
+                leading: const Icon(Icons.color_lens),
+                title: const Text('Thema & Branding'),
+                subtitle: const Text('Kleuren, logo, huisstijl'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () => _editBranding(context),
+              ),
+              ListTile(
+                leading: const Icon(Icons.download),
+                title: const Text('Data Export'),
+                subtitle: const Text('Exporteer club data'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () => _exportData(context),
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete, color: Colors.red),
+                title: const Text(
+                  'Club Verwijderen',
+                  style: TextStyle(color: Colors.red),
+                ),
+                subtitle: const Text('Permanent verwijderen van alle data'),
+                trailing:
+                    const Icon(Icons.arrow_forward_ios, color: Colors.red),
+                onTap: () => _deleteClub(context, club),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          if (club.staff.isEmpty)
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(32),
-                child: Text('Nog geen staff toegevoegd'),
-              ),
-            )
-          else
-            ...club.staff.map(
-              (staff) => ListTile(
-                leading: CircleAvatar(
-                  child: Text('${staff.firstName[0]}${staff.lastName[0]}'),
-                ),
-                title: Text('${staff.firstName} ${staff.lastName}'),
-                subtitle: Text(_getStaffRoleDisplayName(staff.primaryRole)),
-                trailing: PopupMenuButton(
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 'edit',
-                      child: Row(
-                        children: [
-                          Icon(Icons.edit),
-                          SizedBox(width: 8),
-                          Text('Bewerken'),
-                        ],
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: 'delete',
-                      child: Row(
-                        children: [
-                          Icon(Icons.delete, color: Colors.red),
-                          SizedBox(width: 8),
-                          Text(
-                            'Verwijderen',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  onSelected: (value) {
-                    if (value == 'edit') {
-                      _editStaff(context, staff);
-                    } else if (value == 'delete') {
-                      _deleteStaff(context, staff);
-                    }
-                  },
-                ),
-              ),
-            ),
-        ],
-      ),
-    ),
-  );
-
-  Widget _buildClubSettingsSection(BuildContext context, Club club) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Instellingen',
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text('Club Gegevens Bewerken'),
-            subtitle: const Text('Naam, logo, contactgegevens'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => _editClubInfo(context, club),
-          ),
-          ListTile(
-            leading: const Icon(Icons.color_lens),
-            title: const Text('Thema & Branding'),
-            subtitle: const Text('Kleuren, logo, huisstijl'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => _editBranding(context),
-          ),
-          ListTile(
-            leading: const Icon(Icons.download),
-            title: const Text('Data Export'),
-            subtitle: const Text('Exporteer club data'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => _exportData(context),
-          ),
-          ListTile(
-            leading: const Icon(Icons.delete, color: Colors.red),
-            title: const Text(
-              'Club Verwijderen',
-              style: TextStyle(color: Colors.red),
-            ),
-            subtitle: const Text('Permanent verwijderen van alle data'),
-            trailing: const Icon(Icons.arrow_forward_ios, color: Colors.red),
-            onTap: () => _deleteClub(context, club),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   String _getStaffRoleDisplayName(StaffRole role) {
     switch (role) {

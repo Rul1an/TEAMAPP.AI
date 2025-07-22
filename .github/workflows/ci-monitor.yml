@@ -2,6 +2,13 @@ name: "🔎 CI Monitor"
 
 on:
   workflow_run:
+    # Monitor specific workflows in this repository
+    workflows:
+      - "Flutter Web CI/CD"
+      - "👤 Profiles Migration & Tests"
+      - "🔐 Supabase RLS Migration"
+      - "docs-snippets"
+      - "🚀 Advanced Flutter SaaS Deployment"
     # Monitor all workflows in this repo; filter for completed events
     workflows: ['**']
     types: [completed]
@@ -9,9 +16,13 @@ on:
     # Daily check at 03:00 UTC to catch runs older than 90 days (optional extension point)
     - cron: '0 3 * * *'
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   monitor:
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' }}
+    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && github.event.workflow_run.head_repository.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
       - name: 📣 Open or comment on CI failure issue

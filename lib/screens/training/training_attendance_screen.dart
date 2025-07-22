@@ -16,6 +16,8 @@ import '../../widgets/common/rating_dialog.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../utils/share_pdf_utils.dart';
 import '../../models/training_session/training_session.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
   const TrainingAttendanceScreen({required this.trainingId, super.key});
@@ -37,24 +39,29 @@ class _TrainingAttendanceScreenState
     final playersAsync = ref.watch(playersProvider);
     final isDesktop = MediaQuery.of(context).size.width > 900;
 
+    final userRole = ref.watch(userRoleProvider);
+    final canManage = !PermissionService.isViewOnlyUser(userRole);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Training Aanwezigheid'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.picture_as_pdf),
-            tooltip: 'Export PDF',
-            onPressed: () => _exportPdf(ref),
-          ),
-          IconButton(
-            icon: const Icon(Icons.star),
-            onPressed: _showRatingOptions,
-            tooltip: 'Beoordeel Spelers',
-          ),
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _isLoading ? null : _saveAttendance,
-          ),
+          if (canManage) ...[
+            IconButton(
+              icon: const Icon(Icons.picture_as_pdf),
+              tooltip: 'Export PDF',
+              onPressed: () => _exportPdf(ref),
+            ),
+            IconButton(
+              icon: const Icon(Icons.star),
+              onPressed: _showRatingOptions,
+              tooltip: 'Beoordeel Spelers',
+            ),
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: _isLoading ? null : _saveAttendance,
+            ),
+          ],
         ],
       ),
       body: trainingsAsync.when(
@@ -93,100 +100,109 @@ class _TrainingAttendanceScreenState
           );
         },
       ),
+      floatingActionButton: isDesktop
+          ? null
+          : canManage
+              ? FloatingActionButton(
+                  onPressed: () => context.go('/training/add'),
+                  child: const Icon(Icons.add),
+                )
+              : null,
     );
   }
 
   Widget _buildTrainingHeader(Training training) => Container(
-    padding: const EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.primaryContainer,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.1),
-          blurRadius: 4,
-          offset: const Offset(0, 2),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
-      ],
-    ),
-    child: Row(
-      children: [
-        Icon(
-          Icons.fitness_center,
-          size: 32,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                DateFormat('EEEE d MMMM yyyy', 'nl_NL').format(training.date),
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 4),
-              Row(
+        child: Row(
+          children: [
+            Icon(
+              Icons.fitness_center,
+              size: 32,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Chip(
-                    label: Text(_getFocusText(training.focus)),
-                    backgroundColor: _getFocusColor(
-                      training.focus,
-                    ).withValues(alpha: 0.2),
+                  Text(
+                    DateFormat('EEEE d MMMM yyyy', 'nl_NL')
+                        .format(training.date),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(width: 8),
-                  Chip(
-                    label: Text(_getIntensityText(training.intensity)),
-                    backgroundColor: _getIntensityColor(
-                      training.intensity,
-                    ).withValues(alpha: 0.2),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Chip(
+                        label: Text(_getFocusText(training.focus)),
+                        backgroundColor: _getFocusColor(
+                          training.focus,
+                        ).withValues(alpha: 0.2),
+                      ),
+                      const SizedBox(width: 8),
+                      Chip(
+                        label: Text(_getIntensityText(training.intensity)),
+                        backgroundColor: _getIntensityColor(
+                          training.intensity,
+                        ).withValues(alpha: 0.2),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-        Column(
-          children: [
-            Text(
-              '${_attendance.values.where((s) => s == AttendanceStatus.present).length}',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
             ),
-            const Text('Aanwezig'),
+            Column(
+              children: [
+                Text(
+                  '${_attendance.values.where((s) => s == AttendanceStatus.present).length}',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const Text('Aanwezig'),
+              ],
+            ),
           ],
         ),
-      ],
-    ),
-  );
+      );
 
   Widget _buildDesktopLayout(List<Player> players) => GridView.builder(
-    padding: const EdgeInsets.all(24),
-    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 300,
-      childAspectRatio: 3,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-    ),
-    itemCount: players.length,
-    itemBuilder: (context, index) {
-      final player = players[index];
-      return _buildPlayerAttendanceCard(player);
-    },
-  );
+        padding: const EdgeInsets.all(24),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 300,
+          childAspectRatio: 3,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+        ),
+        itemCount: players.length,
+        itemBuilder: (context, index) {
+          final player = players[index];
+          return _buildPlayerAttendanceCard(player);
+        },
+      );
 
   Widget _buildMobileLayout(List<Player> players) => ListView.builder(
-    padding: const EdgeInsets.all(16),
-    itemCount: players.length,
-    itemBuilder: (context, index) {
-      final player = players[index];
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: _buildPlayerAttendanceCard(player),
+        padding: const EdgeInsets.all(16),
+        itemCount: players.length,
+        itemBuilder: (context, index) {
+          final player = players[index];
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: _buildPlayerAttendanceCard(player),
+          );
+        },
       );
-    },
-  );
 
   Widget _buildPlayerAttendanceCard(Player player) {
     final status = _attendance[player.id] ?? AttendanceStatus.unknown;
@@ -518,8 +534,7 @@ class _TrainingAttendanceScreenState
 
         if (player.id != '') {
           // Update player training statistics using cascade
-          final wasPresent =
-              status == AttendanceStatus.present ||
+          final wasPresent = status == AttendanceStatus.present ||
               status == AttendanceStatus.late;
 
           player
@@ -540,7 +555,9 @@ class _TrainingAttendanceScreenState
             backgroundColor: Colors.green,
           ),
         );
-        context.pop();
+        // Remain on the current screen so the user can continue working.
+        // Navigating away immediately after saving caused integration tests to fail
+        // and disrupted the UX when users want to verify their changes.
       }
     } catch (e) {
       if (mounted) {
@@ -571,14 +588,17 @@ class _TrainingAttendanceScreenState
 
     final players = ref.read(playersProvider).value ?? [];
     final generator = ref.read(trainingSessionPdfGeneratorProvider);
-    final bytes = await generator.generate((
-      TrainingSession.create(
-        teamId: 'team',
-        date: training.date,
-        trainingNumber: 1,
+    final bytes = await generator.generate(
+      (
+        TrainingSession.create(
+          teamId: 'team',
+          date: training.date,
+          trainingNumber: 1,
+        ),
+        players,
       ),
-      players,
-    ));
+    );
+    if (!mounted) return;
     await SharePdfUtils.sharePdf(bytes, 'training_${training.id}.pdf', context);
   }
 }

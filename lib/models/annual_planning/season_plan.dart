@@ -203,9 +203,9 @@ class SeasonPlan {
 
   // Season goals and objectives
   late List<String>
-  seasonObjectives; // ["Top 3 finish", "Youth development", "Style of play"]
+      seasonObjectives; // ["Top 3 finish", "Youth development", "Style of play"]
   late List<String>
-  keyPerformanceIndicators; // ["Goals scored", "Clean sheets", "Pass accuracy"]
+      keyPerformanceIndicators; // ["Goals scored", "Clean sheets", "Pass accuracy"]
 
   // Template and tracking
   late bool isTemplate; // true for reusable season templates
@@ -263,23 +263,23 @@ class SeasonPlan {
 
   // Holiday checking
   bool isCurrentlyInHoliday() =>
-      // In a real implementation, this would check against specific holiday dates
-      // For now, return false as a placeholder
+    // In a real implementation, this would check against specific holiday dates
+    // For now, return false as a placeholder
       false;
   List<String> getHolidaysInPeriod(DateTime start, DateTime end) =>
-      // In a real implementation, this would return holidays within the date range
-      // For now, return empty list as a placeholder
+    // In a real implementation, this would return holidays within the date range
+    // For now, return empty list as a placeholder
       [];
   // Season statistics
   Map<String, dynamic> getSeasonStatistics() => {
-    'totalWeeks': totalWeeks,
-    'completedWeeks': currentWeek - 1,
-    'remainingWeeks': remainingWeeks,
-    'progressPercentage': progressPercentage,
-    'currentPhase': getCurrentPhase().displayName,
-    'isActive': isActive,
-    'isCompleted': isCompleted,
-  };
+      'totalWeeks': totalWeeks,
+      'completedWeeks': currentWeek - 1,
+      'remainingWeeks': remainingWeeks,
+      'progressPercentage': progressPercentage,
+      'currentPhase': getCurrentPhase().displayName,
+      'isActive': isActive,
+      'isCompleted': isCompleted,
+    };
 
   // Update progress
   void updateProgress() {
@@ -304,11 +304,11 @@ class SeasonPlan {
   // Validation
   bool isValid() =>
       name.isNotEmpty &&
-      season.isNotEmpty &&
-      teamName.isNotEmpty &&
-      seasonStartDate.isBefore(seasonEndDate) &&
-      totalWeeks > 0 &&
-      currentWeek >= 1 &&
+           season.isNotEmpty &&
+           teamName.isNotEmpty &&
+           seasonStartDate.isBefore(seasonEndDate) &&
+           totalWeeks > 0 &&
+           currentWeek >= 1 &&
       progressPercentage >= 0.0 &&
       progressPercentage <= 100.0;
 
@@ -425,10 +425,9 @@ class SeasonPlan {
   }
 
   @override
-  String toString() =>
-      'SeasonPlan(id: $id, name: $name, season: $season, '
-      'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '
-      'progress: ${progressPercentage.toStringAsFixed(1)}%)';
+  String toString() => 'SeasonPlan(id: $id, name: $name, season: $season, '
+           'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '
+           'progress: ${progressPercentage.toStringAsFixed(1)}%)';
 
   @override
   bool operator ==(Object other) {

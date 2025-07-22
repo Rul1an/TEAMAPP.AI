@@ -18,66 +18,69 @@ class _AdminPanelScreenState extends ConsumerState<AdminPanelScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: const Text('🎛️ Admin Panel'),
-      backgroundColor: Colors.red[600],
-      foregroundColor: Colors.white,
-    ),
-    body: const Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Current Status Card
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+        appBar: AppBar(
+          title: const Text('🎛️ Admin Panel'),
+          backgroundColor: Colors.red[600],
+          foregroundColor: Colors.white,
+        ),
+        body: const Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Current Status Card
+              Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.admin_panel_settings, color: Colors.red),
-                      SizedBox(width: 8),
+                      Row(
+                        children: [
+                          Icon(Icons.admin_panel_settings, color: Colors.red),
+                          SizedBox(width: 8),
+                          Text(
+                            'Admin Mode Actief',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Text('Admin panel is beschikbaar voor configuratie.'),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              // Info Card
+              Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        'Admin Mode Actief',
+                        '🎯 Admin Functies',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
                         ),
                       ),
+                      SizedBox(height: 12),
+                      Text('• Feature management'),
+                      Text('• Tier configuratie'),
+                      Text('• System monitoring'),
+                      Text('• User management'),
                     ],
                   ),
-                  SizedBox(height: 8),
-                  Text('Admin panel is beschikbaar voor configuratie.'),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-          SizedBox(height: 16),
-          // Info Card
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '🎯 Admin Functies',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 12),
-                  Text('• Feature management'),
-                  Text('• Tier configuratie'),
-                  Text('• System monitoring'),
-                  Text('• User management'),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }

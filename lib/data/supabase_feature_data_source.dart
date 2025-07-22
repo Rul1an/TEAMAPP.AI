@@ -6,7 +6,7 @@ import '../models/organization.dart';
 
 class SupabaseFeatureDataSource {
   SupabaseFeatureDataSource({SupabaseClient? client})
-    : _supabase = client ?? _tryClient();
+      : _supabase = client ?? _tryClient();
 
   final SupabaseClient _supabase;
   static const _table = 'tier_features'; // columns: tier, feature, enabled

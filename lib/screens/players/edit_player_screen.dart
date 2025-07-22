@@ -406,8 +406,7 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
   Future<void> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
-      initialDate:
-          _selectedDate ??
+      initialDate: _selectedDate ??
           DateTime.now().subtract(const Duration(days: 365 * 16)),
       firstDate: DateTime(1990),
       lastDate: DateTime.now(),
@@ -447,9 +446,8 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
       _player!.preferredFoot = _selectedFoot!;
       _player!.height = double.parse(_heightController.text);
       _player!.weight = double.parse(_weightController.text);
-      _player!.email = _emailController.text.isEmpty
-          ? null
-          : _emailController.text;
+      _player!.email =
+          _emailController.text.isEmpty ? null : _emailController.text;
 
       await ref.read(playersNotifierProvider.notifier).updatePlayer(_player!);
 

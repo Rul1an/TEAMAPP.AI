@@ -29,8 +29,8 @@ class QuickActionsWidget extends ConsumerWidget {
                 Text(
                   'Snelle Acties',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 if (isTrainingDay || isMatchDay) ...[
                   const SizedBox(width: 8),
@@ -322,47 +322,47 @@ class _QuickActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-    elevation: 1,
-    borderRadius: BorderRadius.circular(8),
-    child: InkWell(
-      onTap: action.onTap,
-      borderRadius: BorderRadius.circular(8),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
+        elevation: 1,
+        borderRadius: BorderRadius.circular(8),
+        child: InkWell(
+          onTap: action.onTap,
           borderRadius: BorderRadius.circular(8),
-          gradient: LinearGradient(
-            colors: [
-              action.color.withValues(alpha: 0.1),
-              action.color.withValues(alpha: 0.05),
-            ],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 16,
-                backgroundColor: action.color,
-                child: Icon(action.icon, color: Colors.white, size: 16),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              gradient: LinearGradient(
+                colors: [
+                  action.color.withValues(alpha: 0.1),
+                  action.color.withValues(alpha: 0.05),
+                ],
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  action.label,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12,
-                    color: action.color,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundColor: action.color,
+                    child: Icon(action.icon, color: Colors.white, size: 16),
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      action.label,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        color: action.color,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
-      ),
-    ),
-  );
+      );
 }
