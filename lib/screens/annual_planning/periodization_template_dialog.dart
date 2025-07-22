@@ -246,8 +246,10 @@ class _PeriodizationTemplateDialogState
           children: [
             Icon(icon, size: 14, color: Colors.grey[600]),
             const SizedBox(width: 4),
-            Text(label,
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),),
+            Text(
+              label,
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            ),
           ],
         ),
       );

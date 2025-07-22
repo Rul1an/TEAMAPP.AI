@@ -160,55 +160,55 @@ class DashboardScreen extends ConsumerWidget {
     } else {
       // Coach/Admin content (full access)
       content.addAll([
-        _buildSmartActions(context),
-        const SizedBox(height: 24),
-        const QuickActionsWidget(),
-        const SizedBox(height: 24),
+              _buildSmartActions(context),
+                                const SizedBox(height: 24),
+                  const QuickActionsWidget(),
+                  const SizedBox(height: 24),
         // ignore: unnecessary_cast
         DashboardStatsCards(statistics: statistics as Map<String, dynamic>),
-        const SizedBox(height: 24),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
+              const SizedBox(height: 24),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Aankomende Wedstrijden',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: 8),
-                  upcomingMatchesAsync.when(
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stack) => Text('Error: $error'),
-                    data: (matches) => _buildUpcomingMatches(context, matches),
-                  ),
-                ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+              Text(
+                'Aankomende Wedstrijden',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'VOAB Training Sessies',
-                    style: Theme.of(context).textTheme.headlineSmall,
+              const SizedBox(height: 8),
+              upcomingMatchesAsync.when(
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => Text('Error: $error'),
+                data: (matches) => _buildUpcomingMatches(context, matches),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  trainingSessionsAsync.when(
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stack) => const Text('Geen sessies'),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'VOAB Training Sessies',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        const SizedBox(height: 8),
+                        trainingSessionsAsync.when(
+                          loading: () => const CircularProgressIndicator(),
+                          error: (error, stack) => const Text('Geen sessies'),
                     data: (sessions) =>
                         _buildUpcomingTrainingSessions(context, sessions),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
+              const SizedBox(height: 24),
         // ignore: unnecessary_cast
         PerformanceChart(statistics: statistics as Map<String, dynamic>),
       ]);
@@ -223,8 +223,10 @@ class DashboardScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Mijn Acties',
-                  style: Theme.of(context).textTheme.titleLarge,),
+              Text(
+                'Mijn Acties',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 16),
               GridView.count(
                 shrinkWrap: true,
@@ -249,9 +251,9 @@ class DashboardScreen extends ConsumerWidget {
                 ],
               ),
             ],
-          ),
         ),
-      );
+      ),
+    );
 
   Widget _buildPlayerStats(BuildContext context, dynamic statistics) => Card(
         child: Padding(
@@ -295,9 +297,9 @@ class DashboardScreen extends ConsumerWidget {
   Widget _buildParentOverview(BuildContext context) => Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
               Text(
                 'Overzicht van uw kind',
                 style: Theme.of(context).textTheme.titleLarge,
@@ -323,10 +325,10 @@ class DashboardScreen extends ConsumerWidget {
       Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
                 'Aankomende Evenementen',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
@@ -348,11 +350,11 @@ class DashboardScreen extends ConsumerWidget {
                       )
                       .toList(),
                 ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
 
   Widget _buildUpcomingEventsForParent(
     BuildContext context,
@@ -378,7 +380,7 @@ class DashboardScreen extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
-              children: [
+          children: [
                 Icon(icon, size: 20),
                 const SizedBox(width: 8),
                 Expanded(
@@ -390,70 +392,70 @@ class DashboardScreen extends ConsumerWidget {
                 ),
               ],
             ),
-          ),
         ),
-      );
+      ),
+    );
 
   Widget _buildSmartActions(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.flash_on, color: Theme.of(context).primaryColor),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Snelle Acties',
-                    style: Theme.of(context).textTheme.titleMedium,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.flash_on, color: Theme.of(context).primaryColor),
+                const SizedBox(width: 8),
+                Text(
+                  'Snelle Acties',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildActionCard(
+                    context,
+                    'Nieuwe Training',
+                    Icons.add_circle,
+                    () => context.push('/session-builder'),
                   ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      'Nieuwe Training',
-                      Icons.add_circle,
-                      () => context.push('/session-builder'),
-                    ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildActionCard(
+                    context,
+                    'Seizoen Planning',
+                    Icons.calendar_today,
+                    () => context.push('/annual-planning'),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      'Seizoen Planning',
-                      Icons.calendar_today,
-                      () => context.push('/annual-planning'),
-                    ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildActionCard(
+                    context,
+                    'Alle Trainingen',
+                    Icons.list_alt,
+                    () => context.push('/training-sessions'),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      'Alle Trainingen',
-                      Icons.list_alt,
-                      () => context.push('/training-sessions'),
-                    ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildActionCard(
+                    context,
+                    'Opstelling',
+                    Icons.sports_soccer,
+                    () => context.go('/lineup'),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      'Opstelling',
-                      Icons.sports_soccer,
-                      () => context.go('/lineup'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
-      );
+      ),
+    );
 
   Widget _buildUpcomingTrainingSessions(
     BuildContext context,
@@ -484,35 +486,35 @@ class DashboardScreen extends ConsumerWidget {
           .take(3)
           .map(
             (session) => Card(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: _getSessionTypeColor(session.type),
-                  child: Icon(
-                    _getSessionTypeIcon(session.type),
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                title: Text('Training ${session.trainingNumber}'),
-                subtitle: Text(
-                  '${session.date.day}/${session.date.month} | ${session.phases.length} fasen\n'
-                  '${session.sessionObjective ?? 'VOAB Standard'}',
-                ),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.schedule, color: Colors.orange, size: 16),
-                    Text(
-                      '${session.sessionDuration.inMinutes}m',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  // TODO(author): Navigate to session detail
-                },
+          margin: const EdgeInsets.only(bottom: 8),
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: _getSessionTypeColor(session.type),
+              child: Icon(
+                _getSessionTypeIcon(session.type),
+                color: Colors.white,
+                size: 18,
               ),
+            ),
+            title: Text('Training ${session.trainingNumber}'),
+            subtitle: Text(
+              '${session.date.day}/${session.date.month} | ${session.phases.length} fasen\n'
+              '${session.sessionObjective ?? 'VOAB Standard'}',
+            ),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.schedule, color: Colors.orange, size: 16),
+                Text(
+                  '${session.sessionDuration.inMinutes}m',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+            onTap: () {
+                  // TODO(author): Navigate to session detail
+            },
+          ),
             ),
           )
           .toList(),
@@ -572,25 +574,25 @@ class DashboardScreen extends ConsumerWidget {
           .take(3)
           .map(
             (match) => Card(
-              child: ListTile(
-                leading: CircleAvatar(
+          child: ListTile(
+            leading: CircleAvatar(
                   backgroundColor: match.location == Location.home
                       ? Colors.green
                       : Colors.blue,
-                  child: Text(
-                    match.location == Location.home ? 'T' : 'U',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-                title: Text(match.opponent),
-                subtitle: Text(
-                  '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
-                ),
-                trailing: Text(
-                  DateFormat('HH:mm').format(match.date),
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
+              child: Text(
+                match.location == Location.home ? 'T' : 'U',
+                style: const TextStyle(color: Colors.white),
               ),
+            ),
+            title: Text(match.opponent),
+            subtitle: Text(
+              '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
+            ),
+            trailing: Text(
+              DateFormat('HH:mm').format(match.date),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
             ),
           )
           .toList(),

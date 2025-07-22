@@ -41,17 +41,17 @@ class AnnualPlanningState {
     List<Morphocycle>? morphocycles,
   }) =>
       AnnualPlanningState(
-        weekSchedules: weekSchedules ?? this.weekSchedules,
-        selectedWeek: selectedWeek ?? this.selectedWeek,
-        seasonStartDate: seasonStartDate ?? this.seasonStartDate,
-        seasonEndDate: seasonEndDate ?? this.seasonEndDate,
-        isLoading: isLoading ?? this.isLoading,
-        error: error ?? this.error,
+      weekSchedules: weekSchedules ?? this.weekSchedules,
+      selectedWeek: selectedWeek ?? this.selectedWeek,
+      seasonStartDate: seasonStartDate ?? this.seasonStartDate,
+      seasonEndDate: seasonEndDate ?? this.seasonEndDate,
+      isLoading: isLoading ?? this.isLoading,
+      error: error ?? this.error,
         selectedPeriodizationPlan:
             selectedPeriodizationPlan ?? this.selectedPeriodizationPlan,
-        trainingPeriods: trainingPeriods ?? this.trainingPeriods,
-        morphocycles: morphocycles ?? this.morphocycles,
-      );
+      trainingPeriods: trainingPeriods ?? this.trainingPeriods,
+      morphocycles: morphocycles ?? this.morphocycles,
+    );
 
   int get currentWeekNumber {
     final now = DateTime.now();
@@ -445,9 +445,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
         WeeklyTraining(
           name:
               trainingTypes.isNotEmpty ? trainingTypes[0] : 'Algemene Training',
-          dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
-          location: _getTrainingLocation(weekNumber),
-          notes: _getTrainingNotesWithPeriod(weekNumber, period),
+        dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
+        location: _getTrainingLocation(weekNumber),
+        notes: _getTrainingNotesWithPeriod(weekNumber, period),
         ),
       );
 
@@ -464,7 +464,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
             19,
             30,
           ),
-          location: _getTrainingLocation(weekNumber),
+        location: _getTrainingLocation(weekNumber),
         ),
       );
     }
@@ -477,7 +477,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       // Competition season
       matches.add(
         WeeklyMatch(
-          opponent: _getOpponent(weekNumber),
+        opponent: _getOpponent(weekNumber),
           dateTime: DateTime(
             saturday.year,
             saturday.month,
@@ -487,7 +487,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           ),
           location: weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
           isHomeMatch: weekNumber.isEven,
-          type: _getMatchType(weekNumber),
+        type: _getMatchType(weekNumber),
         ),
       );
     }
@@ -529,14 +529,14 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       final sunday = weekStart;
       sessions.add(
         WeeklyTraining(
-          name: 'Recovery Session - ${morphocycle.primaryGameModelFocus}',
+        name: 'Recovery Session - ${morphocycle.primaryGameModelFocus}',
           dateTime: DateTime(sunday.year, sunday.month, sunday.day, 10),
-          location: 'Indoor',
+        location: 'Indoor',
           notes:
               'Active recovery - ${morphocycle.tacticalFocusAreas.join(", ")}',
-          intensity: TrainingIntensity.recovery,
-          durationMinutes: 60,
-          rpe: 4,
+        intensity: TrainingIntensity.recovery,
+        durationMinutes: 60,
+        rpe: 4,
         ),
       );
     }
@@ -547,13 +547,13 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
       WeeklyTraining(
         name:
             'Acquisition Training - ${morphocycle.tacticalFocusAreas.isNotEmpty ? morphocycle.tacticalFocusAreas[0] : "Tactical"}',
-        dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
-        location: _getTrainingLocation(morphocycle.weekNumber),
+      dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
+      location: _getTrainingLocation(morphocycle.weekNumber),
         notes:
             'High-intensity tactical work - ${morphocycle.primaryGameModelFocus}',
-        intensity: TrainingIntensity.acquisition,
-        durationMinutes: 75,
-        rpe: 9,
+      intensity: TrainingIntensity.acquisition,
+      durationMinutes: 75,
+      rpe: 9,
       ),
     );
 
@@ -561,14 +561,14 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     final thursday = weekStart.add(const Duration(days: 4));
     sessions.add(
       WeeklyTraining(
-        name: 'Development Training - ${morphocycle.secondaryGameModelFocus}',
-        dateTime: DateTime(thursday.year, thursday.month, thursday.day, 19, 30),
-        location: _getTrainingLocation(morphocycle.weekNumber),
+      name: 'Development Training - ${morphocycle.secondaryGameModelFocus}',
+      dateTime: DateTime(thursday.year, thursday.month, thursday.day, 19, 30),
+      location: _getTrainingLocation(morphocycle.weekNumber),
         notes:
             'Technical-tactical development - Load: ${morphocycle.weeklyLoad.toInt()}',
-        intensity: TrainingIntensity.development,
-        durationMinutes: 75,
-        rpe: 7,
+      intensity: TrainingIntensity.development,
+      durationMinutes: 75,
+      rpe: 7,
       ),
     );
 
@@ -576,14 +576,14 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     final friday = weekStart.add(const Duration(days: 5));
     sessions.add(
       WeeklyTraining(
-        name: 'Activation Training - Set Pieces',
+      name: 'Activation Training - Set Pieces',
         dateTime: DateTime(friday.year, friday.month, friday.day, 18),
-        location: _getTrainingLocation(morphocycle.weekNumber),
+      location: _getTrainingLocation(morphocycle.weekNumber),
         notes:
             'Match preparation and activation - ${morphocycle.currentInjuryRisk.name} risk',
-        intensity: TrainingIntensity.activation,
-        durationMinutes: 60,
-        rpe: 5,
+      intensity: TrainingIntensity.activation,
+      durationMinutes: 60,
+      rpe: 5,
       ),
     );
 
@@ -671,9 +671,9 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     trainingSessions.add(
       WeeklyTraining(
         name: 'Verdedigende Organisatie ${weekNumber.isEven ? '1' : '2'}',
-        dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
-        location: _getTrainingLocation(weekNumber),
-        notes: _getTrainingNotes(weekNumber),
+      dateTime: DateTime(tuesday.year, tuesday.month, tuesday.day, 19, 30),
+      location: _getTrainingLocation(weekNumber),
+      notes: _getTrainingNotes(weekNumber),
       ),
     );
 
@@ -681,8 +681,8 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     trainingSessions.add(
       WeeklyTraining(
         name: 'Verdedigende Organisatie ${weekNumber.isEven ? '3' : '1'}',
-        dateTime: DateTime(thursday.year, thursday.month, thursday.day, 19, 30),
-        location: _getTrainingLocation(weekNumber),
+      dateTime: DateTime(thursday.year, thursday.month, thursday.day, 19, 30),
+      location: _getTrainingLocation(weekNumber),
       ),
     );
 
@@ -692,7 +692,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
     if (weekNumber >= 32 && weekNumber <= 48) {
       matches.add(
         WeeklyMatch(
-          opponent: _getOpponent(weekNumber),
+        opponent: _getOpponent(weekNumber),
           dateTime: DateTime(
             saturday.year,
             saturday.month,
@@ -702,7 +702,7 @@ class AnnualPlanningNotifier extends StateNotifier<AnnualPlanningState> {
           ),
           location: weekNumber.isEven ? 'Thuis' : _getAwayLocation(weekNumber),
           isHomeMatch: weekNumber.isEven,
-          type: _getMatchType(weekNumber),
+        type: _getMatchType(weekNumber),
         ),
       );
     }

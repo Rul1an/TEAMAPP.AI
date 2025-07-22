@@ -7,7 +7,10 @@ import '../models/video_playlist.dart';
 class SmartPlaylistService {
   /// Generate player highlight playlist – one playlist per player ID
   List<VideoPlaylist> generatePlayerPlaylists(List<VideoTag> tags) {
-    final byPlayer = groupBy(tags.where((t) => t.playerId != null), (VideoTag t) => t.playerId!);
+    final byPlayer = groupBy<VideoTag, String?>(
+      tags.where((t) => t.playerId != null),
+      (t) => t.playerId,
+    );
     return byPlayer.entries.map((e) {
       final vids = e.value.map((t) => t.videoId).toSet().toList();
       return VideoPlaylist(
@@ -21,11 +24,13 @@ class SmartPlaylistService {
 
   /// Generate match highlights playlist based on goal/assist/save tags
   VideoPlaylist generateMatchHighlights(List<VideoTag> tags, String matchId) {
-    final highlightTags = tags.where((t) => {
-          TagType.goal,
-          TagType.assist,
-          TagType.save,
-        }.contains(t.type));
+    final highlightTags = tags.where(
+      (t) => {
+        TagType.goal,
+        TagType.assist,
+        TagType.save,
+      }.contains(t.type),
+    );
     final vids = highlightTags.map((t) => t.videoId).toSet().toList();
     return VideoPlaylist(
       id: const Uuid().v4(),

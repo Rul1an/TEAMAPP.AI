@@ -38,6 +38,6 @@ class VeoHighlightRepository {
     if (response.error != null) {
       throw Exception(response.error);
     }
-    return (response.data as Map<String, dynamic>)['url'] as String;
+    return resp['url'] as String;
   }
 }

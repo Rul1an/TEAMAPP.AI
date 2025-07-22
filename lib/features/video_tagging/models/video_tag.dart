@@ -1,10 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'tag_type.dart';
 
-part 'video_tag.g.dart';
-
-@JsonSerializable()
 class VideoTag extends Equatable {
   const VideoTag({
     required this.id,
@@ -24,8 +20,25 @@ class VideoTag extends Equatable {
   final String? playerId;
   final String? description;
 
-  factory VideoTag.fromJson(Map<String, dynamic> json) => _$VideoTagFromJson(json);
-  Map<String, dynamic> toJson() => _$VideoTagToJson(this);
+  factory VideoTag.fromJson(Map<String, dynamic> json) => VideoTag(
+        id: json['id'] as String,
+        videoId: json['video_id'] as String,
+        timestamp: json['timestamp'] as int,
+        label: json['label'] as String,
+        type: TagType.values.firstWhere((e) => e.name == json['type']),
+        playerId: json['player_id'] as String?,
+        description: json['description'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'video_id': videoId,
+        'timestamp': timestamp,
+        'label': label,
+        'type': type.name,
+        if (playerId != null) 'player_id': playerId,
+        if (description != null) 'description': description,
+      };
 
   @override
   List<Object?> get props => [id, videoId, timestamp, label, type, playerId, description];

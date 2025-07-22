@@ -155,8 +155,10 @@ class _VacationRow extends StatelessWidget {
           children: [
             _TableCell('${weekSchedule.weekNumber}', width: 60),
             const _TableCell('', width: 50),
-            _TableCell(weekSchedule.vacationDescription ?? 'Vakantie',
-                width: 180,),
+            _TableCell(
+              weekSchedule.vacationDescription ?? 'Vakantie',
+              width: 180,
+            ),
             const _TableCell('', width: 150),
             _TableCell(_formatWeekDate(weekSchedule.weekStartDate), width: 100),
             const _TableCell('', width: 120),

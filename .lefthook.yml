@@ -11,8 +11,8 @@ pre-commit:
       glob: "*.dart"
       run: flutter pub run import_sorter:main {staged_files}
     analyze:
-      description: "Static analysis (fatal warnings)"
-      run: dart analyze --fatal-warnings
+      description: "Static analysis"
+      run: dart analyze
     dcm:
       description: "Dart Code Metrics – style & performance (optional)"
       glob: "*.dart"

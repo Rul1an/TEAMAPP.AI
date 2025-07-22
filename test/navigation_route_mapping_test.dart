@@ -19,7 +19,7 @@ void main() {
         '/exercise-library',
         '/training-sessions',
         '/exercise-designer',
-        '/field-diagram-editor',
+        '/field-diagram-editor'
       ];
       for (final r in routes) {
         expect(MainScaffold.routeToNavIndex(r), 2, reason: 'route $r');
