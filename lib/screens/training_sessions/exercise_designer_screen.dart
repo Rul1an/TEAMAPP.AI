@@ -68,88 +68,88 @@ class _ExerciseDesignerScreenState
 
   Widget _buildProgressIndicator(ExerciseDesignerState state) => Container(
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.green[50],
-          border: Border(bottom: BorderSide(color: Colors.green[200]!)),
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Stap ${state.currentStepIndex + 1} van ${state.totalSteps}',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green[700],
-                  ),
+      decoration: BoxDecoration(
+        color: Colors.green[50],
+        border: Border(bottom: BorderSide(color: Colors.green[200]!)),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Stap ${state.currentStepIndex + 1} van ${state.totalSteps}',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.green[700],
                 ),
-                Text(
-                  '${(state.progress * 100).toInt()}% voltooid',
+              ),
+              Text(
+                '${(state.progress * 100).toInt()}% voltooid',
                   style: TextStyle(fontSize: 14, color: Colors.green[600]),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            LinearProgressIndicator(
-              value: state.progress,
-              backgroundColor: Colors.green[100],
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.green[700]!),
-            ),
-          ],
-        ),
-      );
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          LinearProgressIndicator(
+            value: state.progress,
+            backgroundColor: Colors.green[100],
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.green[700]!),
+          ),
+        ],
+      ),
+    );
 
   Widget _buildStepHeader(ExerciseDesignerState state) => Container(
         padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.green[100],
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.green[100],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(
-                _getStepIcon(state.currentStepIndex),
-                color: Colors.green[700],
-                size: 28,
-              ),
+            child: Icon(
+              _getStepIcon(state.currentStepIndex),
+              color: Colors.green[700],
+              size: 28,
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    state.stepTitle,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  state.stepTitle,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    _getStepDescription(state.currentStepIndex),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  _getStepDescription(state.currentStepIndex),
                     style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
 
   Widget _buildStepContent(ExerciseDesignerState state) {
     switch (state.currentStepIndex) {
@@ -173,131 +173,131 @@ class _ExerciseDesignerScreenState
   ) =>
       SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Optie om bestaande oefening te selecteren
-            Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Optie om bestaande oefening te selecteren
+          Card(
               margin: const EdgeInsets.only(bottom: 20),
-              color: Colors.green[50],
-              child: Padding(
+            color: Colors.green[50],
+            child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.library_books, color: Colors.green[700]),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Bestaande oefening gebruiken',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green[800],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      'Je kunt een bestaande oefening selecteren als basis om aan te passen.',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () => _selectExistingExercise(context),
-                        icon: const Icon(Icons.search),
-                        label:
-                            const Text('Selecteer uit Oefeningen Bibliotheek'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green[700],
-                          foregroundColor: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.library_books, color: Colors.green[700]),
+                      const SizedBox(width: 12),
+                      Text(
+                        'Bestaande oefening gebruiken',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green[800],
                         ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Je kunt een bestaande oefening selecteren als basis om aan te passen.',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () => _selectExistingExercise(context),
+                      icon: const Icon(Icons.search),
+                        label:
+                            const Text('Selecteer uit Oefeningen Bibliotheek'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[700],
+                        foregroundColor: Colors.white,
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
+          ),
 
-            _buildFormSection(
-              title: 'Basis Informatie',
-              icon: Icons.info_outline,
-              children: [
-                TextFormField(
-                  initialValue: state.formData['name']?.toString() ?? '',
-                  decoration: const InputDecoration(
-                    labelText: 'Oefening Naam *',
-                    hintText: 'Naam van de oefening',
-                    border: OutlineInputBorder(),
-                  ),
-                  onChanged: (value) {
+          _buildFormSection(
+            title: 'Basis Informatie',
+            icon: Icons.info_outline,
+            children: [
+              TextFormField(
+                initialValue: state.formData['name']?.toString() ?? '',
+                decoration: const InputDecoration(
+                  labelText: 'Oefening Naam *',
+                  hintText: 'Naam van de oefening',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) {
                     ref
                         .read(exerciseDesignerProvider.notifier)
                         .updateFormData('name', value);
-                  },
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                initialValue: state.formData['description']?.toString() ?? '',
+                decoration: const InputDecoration(
+                  labelText: 'Beschrijving *',
+                  hintText: 'Korte uitleg van de oefening',
+                  border: OutlineInputBorder(),
                 ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  initialValue: state.formData['description']?.toString() ?? '',
-                  decoration: const InputDecoration(
-                    labelText: 'Beschrijving *',
-                    hintText: 'Korte uitleg van de oefening',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 3,
-                  onChanged: (value) {
+                maxLines: 3,
+                onChanged: (value) {
                     ref
                         .read(exerciseDesignerProvider.notifier)
                         .updateFormData('description', value);
-                  },
-                ),
-                const SizedBox(height: 16),
-                DropdownButtonFormField<ExerciseType>(
+                },
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<ExerciseType>(
                   value: state.formData['type'] as ExerciseType? ??
                       ExerciseType.technical,
-                  decoration: const InputDecoration(
-                    labelText: 'Type Oefening *',
-                    border: OutlineInputBorder(),
-                  ),
+                decoration: const InputDecoration(
+                  labelText: 'Type Oefening *',
+                  border: OutlineInputBorder(),
+                ),
                   items: ExerciseType.values
                       .map(
                         (type) => DropdownMenuItem(
-                          value: type,
-                          child: Text(_getExerciseTypeDisplayName(type)),
+                    value: type,
+                    child: Text(_getExerciseTypeDisplayName(type)),
                         ),
                       )
                       .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
+                onChanged: (value) {
+                  if (value != null) {
                       ref
                           .read(exerciseDesignerProvider.notifier)
                           .updateFormData('type', value);
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
 
-                // Load from Library Button
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: () => _selectExistingExercise(context),
-                    icon: const Icon(Icons.library_books),
-                    label: const Text('Selecteer Uit Bibliotheek'),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
+              // Load from Library Button
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => _selectExistingExercise(context),
+                  icon: const Icon(Icons.library_books),
+                  label: const Text('Selecteer Uit Bibliotheek'),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
-      );
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
 
   Widget _buildFieldDiagramStep(ExerciseDesignerState state) {
     final diagramState = ref.watch(fieldDiagramProvider);
@@ -350,101 +350,101 @@ class _ExerciseDesignerScreenState
   Widget _buildDetailsStep(ExerciseDesignerState state) =>
       SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildFormSection(
-              title: 'Oefening Details',
-              icon: Icons.settings,
-              children: [
-                TextFormField(
-                  initialValue: state.formData['duration']?.toString() ?? '15',
-                  decoration: const InputDecoration(
-                    labelText: 'Duur (minuten)',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildFormSection(
+            title: 'Oefening Details',
+            icon: Icons.settings,
+            children: [
+              TextFormField(
+                initialValue: state.formData['duration']?.toString() ?? '15',
+                decoration: const InputDecoration(
+                  labelText: 'Duur (minuten)',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
                     ref
                         .read(exerciseDesignerProvider.notifier)
                         .updateFormData('duration', int.tryParse(value) ?? 15);
-                  },
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                initialValue: state.formData['equipment']?.toString() ?? '',
+                decoration: const InputDecoration(
+                  labelText: 'Materialen',
+                  hintText: 'Benodigde materialen',
+                  border: OutlineInputBorder(),
                 ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  initialValue: state.formData['equipment']?.toString() ?? '',
-                  decoration: const InputDecoration(
-                    labelText: 'Materialen',
-                    hintText: 'Benodigde materialen',
-                    border: OutlineInputBorder(),
-                  ),
-                  onChanged: (value) {
+                onChanged: (value) {
                     ref
                         .read(exerciseDesignerProvider.notifier)
                         .updateFormData('equipment', value);
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
 
   Widget _buildObjectivesStep(ExerciseDesignerState state) =>
       SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildFormSection(
-              title: 'Doelstellingen',
-              icon: Icons.track_changes,
-              children: [
-                TextFormField(
-                  initialValue: state.formData['objectives']?.toString() ?? '',
-                  decoration: const InputDecoration(
-                    labelText: 'Hoofddoelstellingen',
-                    hintText: 'Doelen van deze oefening',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 3,
-                  onChanged: (value) {
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildFormSection(
+            title: 'Doelstellingen',
+            icon: Icons.track_changes,
+            children: [
+              TextFormField(
+                initialValue: state.formData['objectives']?.toString() ?? '',
+                decoration: const InputDecoration(
+                  labelText: 'Hoofddoelstellingen',
+                  hintText: 'Doelen van deze oefening',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+                onChanged: (value) {
                     ref
                         .read(exerciseDesignerProvider.notifier)
                         .updateFormData('objectives', value);
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
                   initialValue:
                       state.formData['coachingPoints']?.toString() ?? '',
-                  decoration: const InputDecoration(
-                    labelText: 'Coaching Punten',
-                    hintText: 'Belangrijke aandachtspunten',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 3,
-                  onChanged: (value) {
+                decoration: const InputDecoration(
+                  labelText: 'Coaching Punten',
+                  hintText: 'Belangrijke aandachtspunten',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+                onChanged: (value) {
                     ref
                         .read(exerciseDesignerProvider.notifier)
                         .updateFormData('coachingPoints', value);
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
 
   Widget _buildReviewStep(ExerciseDesignerState state) => SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildFormSection(
-              title: 'Overzicht',
-              icon: Icons.preview,
-              children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildFormSection(
+            title: 'Overzicht',
+            icon: Icons.preview,
+            children: [
                 _buildReviewItem(
                   'Naam',
                   state.formData['name']?.toString() ?? 'Niet ingevuld',
@@ -470,31 +470,31 @@ class _ExerciseDesignerScreenState
                   state.formData['coachingPoints']?.toString() ??
                       'Niet ingevuld',
                 ),
-              ],
-            ),
-          ],
-        ),
-      );
+            ],
+          ),
+        ],
+      ),
+    );
 
   Widget _buildReviewItem(String label, String value) => Padding(
         padding: const EdgeInsets.only(bottom: 12),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 120,
-              child: Text(
-                '$label:',
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 120,
+            child: Text(
+              '$label:',
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
+          ),
             Expanded(child: Text(value)),
-          ],
-        ),
-      );
+        ],
+      ),
+    );
 
   Widget _buildPlaceholderStep(ExerciseDesignerState state) =>
-      // All steps should be implemented - redirect to completion
+    // All steps should be implemented - redirect to completion
       _buildReviewStep(state);
   Widget _buildFormSection({
     required String title,
@@ -503,85 +503,83 @@ class _ExerciseDesignerScreenState
   }) =>
       Container(
         padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: Colors.green[700]),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            ...children,
-          ],
-        ),
-      );
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: Colors.green[700]),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w600,),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          ...children,
+        ],
+      ),
+    );
 
   Widget _buildNavigationBar(ExerciseDesignerState state) => Container(
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 4,
-              offset: const Offset(0, -2),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 4,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          if (!state.isFirstStep)
+            OutlinedButton(
+              onPressed: () {
+                ref.read(exerciseDesignerProvider.notifier).previousStep();
+              },
+              child: const Text('Vorige'),
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            if (!state.isFirstStep)
-              OutlinedButton(
-                onPressed: () {
-                  ref.read(exerciseDesignerProvider.notifier).previousStep();
-                },
-                child: const Text('Vorige'),
+          const Spacer(),
+          if (state.isLastStep)
+            ElevatedButton.icon(
+              onPressed: _saveExercise,
+              icon: const Icon(Icons.save),
+              label: const Text('Voltooien'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[700],
+                foregroundColor: Colors.white,
               ),
-            const Spacer(),
-            if (state.isLastStep)
-              ElevatedButton.icon(
-                onPressed: _saveExercise,
-                icon: const Icon(Icons.save),
-                label: const Text('Voltooien'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[700],
-                  foregroundColor: Colors.white,
-                ),
-              )
-            else
-              ElevatedButton(
-                onPressed: () {
-                  ref.read(exerciseDesignerProvider.notifier).nextStep();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[700],
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text('Volgende'),
+            )
+          else
+            ElevatedButton(
+              onPressed: () {
+                ref.read(exerciseDesignerProvider.notifier).nextStep();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[700],
+                foregroundColor: Colors.white,
               ),
-          ],
-        ),
-      );
+              child: const Text('Volgende'),
+            ),
+        ],
+      ),
+    );
 
   IconData _getStepIcon(int stepIndex) {
     switch (stepIndex) {
@@ -710,7 +708,7 @@ class _ExerciseDesignerScreenState
         if (selectedExercise.fieldDiagram is Map<String, dynamic>) {
           ref.read(fieldDiagramProvider.notifier).loadFromData(
                 selectedExercise.fieldDiagram! as Map<String, dynamic>,
-              );
+          );
         }
       }
 
@@ -719,13 +717,13 @@ class _ExerciseDesignerScreenState
 
       // Toon een snackbar om te bevestigen
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${selectedExercise.name} geladen om aan te passen'),
-            backgroundColor: Colors.green[700],
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${selectedExercise.name} geladen om aan te passen'),
+          backgroundColor: Colors.green[700],
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
       }
     }
   }

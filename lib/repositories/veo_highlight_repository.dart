@@ -13,35 +13,32 @@ class VeoHighlightRepository {
 
   /// Fetch highlights for a given match using Edge Function `veo_fetch_clips`.
   Future<List<VeoHighlight>> fetchHighlightsByMatch(String matchId) async {
-    final response = await _client.functions.invoke(
+    final dynamic response = await _client.functions.invoke(
       'veo_fetch_clips',
-      body: {
-        'matchId': matchId,
-      },
+      body: <String, dynamic>{'matchId': matchId},
     );
 
-    if (response.status >= 400) {
-      throw Exception(response.data?.toString() ?? 'Edge function error');
+    final resp = Map<String, dynamic>.from(response.data as Map);
+    if (resp['error'] != null) {
+      throw Exception(resp['error']);
     }
 
-    final data = response.data as Map<String, dynamic>? ?? {};
-    final clips = (data['clips'] as List<dynamic>? ?? [])
-        .map((e) => VeoHighlight.fromJson(e as Map<String, dynamic>))
+    final clips = (resp['clips'] as List<dynamic>? ?? [])
+        .map((e) => VeoHighlight.fromJson(Map<String, dynamic>.from(e as Map)))
         .toList();
     return clips;
   }
 
   /// Get presigned playback URL for highlight (lazy-load on demand)
   Future<String> getPlaybackUrl(String highlightId) async {
-    final response = await _client.functions.invoke(
+    final dynamic response = await _client.functions.invoke(
       'veo_get_clip_url',
-      body: {
-        'highlightId': highlightId,
-      },
+      body: <String, dynamic>{'highlightId': highlightId},
     );
-    if (response.status >= 400) {
-      throw Exception(response.data?.toString() ?? 'Edge function error');
+    final resp = Map<String, dynamic>.from(response.data as Map);
+    if (resp['error'] != null) {
+      throw Exception(resp['error']);
     }
-    return (response.data as Map<String, dynamic>)['url'] as String;
+    return resp['url'] as String;
   }
 }

@@ -135,152 +135,152 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
   }
 
   Widget _buildPlayerHeader() => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: _getPositionColor(_player!.position),
-                child: Text(
-                  _player!.jerseyNumber.toString(),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: _getPositionColor(_player!.position),
+              child: Text(
+                _player!.jerseyNumber.toString(),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _player!.name,
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    Text(
-                      '${_getPositionName(_player!.position)} • ${_player!.age} jaar',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget _buildAssessmentInfo() => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Assessment Informatie',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              Row(
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: DropdownButtonFormField<AssessmentType>(
-                      value: _assessment!.type,
-                      decoration: const InputDecoration(
-                        labelText: 'Type Assessment',
-                        border: OutlineInputBorder(),
-                      ),
-                      items: AssessmentType.values
-                          .map(
-                            (type) => DropdownMenuItem(
-                              value: type,
-                              child: Text(type.displayName),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) {
-                        if (value != null) {
-                          setState(() {
-                            _assessment!.type = value;
-                          });
-                        }
-                      },
-                    ),
+                  Text(
+                    _player!.name,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Datum',
-                        border: OutlineInputBorder(),
-                      ),
-                      readOnly: true,
-                      controller: TextEditingController(
-                        text: DateFormat(
-                          'dd-MM-yyyy',
-                        ).format(_assessment!.assessmentDate),
-                      ),
-                      onTap: () async {
-                        final date = await showDatePicker(
-                          context: context,
-                          initialDate: _assessment!.assessmentDate,
-                          firstDate: DateTime.now().subtract(
-                            const Duration(days: 365),
-                          ),
-                          lastDate: DateTime.now(),
-                        );
-                        if (date != null) {
-                          setState(() {
-                            _assessment!.assessmentDate = date;
-                          });
-                        }
-                      },
-                    ),
+                  Text(
+                    '${_getPositionName(_player!.position)} • ${_player!.age} jaar',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
+
+  Widget _buildAssessmentInfo() => Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Assessment Informatie',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<AssessmentType>(
+                    value: _assessment!.type,
+                    decoration: const InputDecoration(
+                      labelText: 'Type Assessment',
+                      border: OutlineInputBorder(),
+                    ),
+                      items: AssessmentType.values
+                          .map(
+                            (type) => DropdownMenuItem(
+                        value: type,
+                        child: Text(type.displayName),
+                            ),
+                          )
+                          .toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() {
+                          _assessment!.type = value;
+                        });
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Datum',
+                      border: OutlineInputBorder(),
+                    ),
+                    readOnly: true,
+                    controller: TextEditingController(
+                        text: DateFormat(
+                          'dd-MM-yyyy',
+                        ).format(_assessment!.assessmentDate),
+                    ),
+                    onTap: () async {
+                      final date = await showDatePicker(
+                        context: context,
+                        initialDate: _assessment!.assessmentDate,
+                          firstDate: DateTime.now().subtract(
+                            const Duration(days: 365),
+                          ),
+                        lastDate: DateTime.now(),
+                      );
+                      if (date != null) {
+                        setState(() {
+                          _assessment!.assessmentDate = date;
+                        });
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
 
   Widget _buildSkillsAssessment() => Column(
-        children: [
-          _buildSkillCategory(
-            'Technische Vaardigheden',
-            _assessment!.technicalSkills,
-            Icons.sports_soccer,
-            Colors.blue,
+      children: [
+        _buildSkillCategory(
+          'Technische Vaardigheden',
+          _assessment!.technicalSkills,
+          Icons.sports_soccer,
+          Colors.blue,
             _updateTechnicalSkill,
-          ),
-          const SizedBox(height: 16),
-          _buildSkillCategory(
-            'Tactische Vaardigheden',
-            _assessment!.tacticalSkills,
-            Icons.psychology,
-            Colors.green,
+        ),
+        const SizedBox(height: 16),
+        _buildSkillCategory(
+          'Tactische Vaardigheden',
+          _assessment!.tacticalSkills,
+          Icons.psychology,
+          Colors.green,
             _updateTacticalSkill,
-          ),
-          const SizedBox(height: 16),
-          _buildSkillCategory(
-            'Fysieke Eigenschappen',
-            _assessment!.physicalAttributes,
-            Icons.fitness_center,
-            Colors.orange,
+        ),
+        const SizedBox(height: 16),
+        _buildSkillCategory(
+          'Fysieke Eigenschappen',
+          _assessment!.physicalAttributes,
+          Icons.fitness_center,
+          Colors.orange,
             _updatePhysicalSkill,
-          ),
-          const SizedBox(height: 16),
-          _buildSkillCategory(
-            'Mentale Eigenschappen',
-            _assessment!.mentalAttributes,
-            Icons.lightbulb,
-            Colors.purple,
+        ),
+        const SizedBox(height: 16),
+        _buildSkillCategory(
+          'Mentale Eigenschappen',
+          _assessment!.mentalAttributes,
+          Icons.lightbulb,
+          Colors.purple,
             _updateMentalSkill,
-          ),
-        ],
-      );
+        ),
+      ],
+    );
 
   Widget _buildSkillCategory(
     String title,
@@ -290,126 +290,124 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
     void Function(String, int) onRatingChanged,
   ) =>
       Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(icon, color: color),
-                  const SizedBox(width: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: color),
+                const SizedBox(width: 8),
                   Text(title, style: Theme.of(context).textTheme.titleMedium),
-                ],
-              ),
-              const SizedBox(height: 16),
+              ],
+            ),
+            const SizedBox(height: 16),
               ...skills.entries.map(
                 (entry) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        entry.key,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          InteractiveStarRating(
-                            rating: entry.value,
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      entry.key,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        InteractiveStarRating(
+                          rating: entry.value,
                             onRatingChanged: (rating) =>
                                 onRatingChanged(entry.key, rating),
-                            size: 20,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            '${entry.value}/5',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${entry.value}/5',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
                 ),
               ),
-            ],
-          ),
+          ],
         ),
-      );
+      ),
+    );
 
   Widget _buildTextFields() => Column(
-        children: [
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Evaluatie',
-                    style: Theme.of(context).textTheme.titleLarge,
+      children: [
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                  Text('Evaluatie',
+                      style: Theme.of(context).textTheme.titleLarge,),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _strengthsController,
+                  decoration: const InputDecoration(
+                    labelText: 'Sterke Punten',
+                    border: OutlineInputBorder(),
+                    alignLabelWithHint: true,
                   ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _strengthsController,
-                    decoration: const InputDecoration(
-                      labelText: 'Sterke Punten',
-                      border: OutlineInputBorder(),
-                      alignLabelWithHint: true,
-                    ),
-                    maxLines: 3,
-                    onChanged: (value) {
-                      _assessment!.strengths = value.isEmpty ? null : value;
-                    },
+                  maxLines: 3,
+                  onChanged: (value) {
+                    _assessment!.strengths = value.isEmpty ? null : value;
+                  },
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _improvementController,
+                  decoration: const InputDecoration(
+                    labelText: 'Verbeterpunten',
+                    border: OutlineInputBorder(),
+                    alignLabelWithHint: true,
                   ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _improvementController,
-                    decoration: const InputDecoration(
-                      labelText: 'Verbeterpunten',
-                      border: OutlineInputBorder(),
-                      alignLabelWithHint: true,
-                    ),
-                    maxLines: 3,
-                    onChanged: (value) {
+                  maxLines: 3,
+                  onChanged: (value) {
                       _assessment!.areasForImprovement =
                           value.isEmpty ? null : value;
-                    },
+                  },
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _goalsController,
+                  decoration: const InputDecoration(
+                    labelText: 'Ontwikkelingsdoelen',
+                    border: OutlineInputBorder(),
+                    alignLabelWithHint: true,
                   ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _goalsController,
-                    decoration: const InputDecoration(
-                      labelText: 'Ontwikkelingsdoelen',
-                      border: OutlineInputBorder(),
-                      alignLabelWithHint: true,
-                    ),
-                    maxLines: 3,
-                    onChanged: (value) {
+                  maxLines: 3,
+                  onChanged: (value) {
                       _assessment!.developmentGoals =
                           value.isEmpty ? null : value;
-                    },
+                  },
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _notesController,
+                  decoration: const InputDecoration(
+                    labelText: 'Coach Notities',
+                    border: OutlineInputBorder(),
+                    alignLabelWithHint: true,
                   ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _notesController,
-                    decoration: const InputDecoration(
-                      labelText: 'Coach Notities',
-                      border: OutlineInputBorder(),
-                      alignLabelWithHint: true,
-                    ),
-                    maxLines: 4,
-                    onChanged: (value) {
-                      _assessment!.coachNotes = value.isEmpty ? null : value;
-                    },
-                  ),
-                ],
-              ),
+                  maxLines: 4,
+                  onChanged: (value) {
+                    _assessment!.coachNotes = value.isEmpty ? null : value;
+                  },
+                ),
+              ],
             ),
           ),
-        ],
-      );
+        ),
+      ],
+    );
 
   void _updateTechnicalSkill(String skill, int rating) {
     setState(() {
@@ -519,7 +517,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
     final filename =
         'assessment_${_player!.id}_${DateFormat('yyyy-MM-dd').format(_assessment!.assessmentDate)}.pdf';
 
-    if (mounted) {
+        if (mounted) {
       await SharePdfUtils.sharePdf(bytes, filename, context);
     }
   }
