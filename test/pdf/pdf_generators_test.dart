@@ -1,5 +1,7 @@
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/pdf/generators/match_report_pdf_generator.dart';
@@ -10,6 +12,11 @@ import 'package:jo17_tactical_manager/models/assessment.dart';
 import 'package:jo17_tactical_manager/models/training_session/training_session.dart';
 
 void main() {
+  setUpAll(() async {
+    // Needed for DateFormat with locale in PDF generators.
+    await initializeDateFormatting('nl_NL', null);
+    Intl.defaultLocale = 'nl_NL';
+  });
   group('PDF Generators', () {
     test('MatchReportPdfGenerator produces valid PDF bytes', () async {
       final match = Match()
