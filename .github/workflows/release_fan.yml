@@ -1,9 +1,7 @@
 name: Fan & Family Release
 
 on:
-  push:
-    tags:
-      - "fan-v*"
+  workflow_dispatch:
 
 jobs:
   build-release:
