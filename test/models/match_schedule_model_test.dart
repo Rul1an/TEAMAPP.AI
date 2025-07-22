@@ -24,7 +24,9 @@ void main() {
 
       expect(copy.id, schedule.id);
       expect(
-          copy.dateTime.toIso8601String(), schedule.dateTime.toIso8601String());
+        copy.dateTime.toIso8601String(),
+        schedule.dateTime.toIso8601String(),
+      );
       expect(copy.opponent, schedule.opponent);
       expect(copy.location, schedule.location);
       expect(copy.competition, schedule.competition);

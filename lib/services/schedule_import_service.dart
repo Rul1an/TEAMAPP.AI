@@ -56,7 +56,7 @@ class ScheduleImportService {
         allowedExtensions: ['csv'],
       );
       if (res == null || res.files.isEmpty) {
-        return const Success(ScheduleImportState(status: ImportStatus.idle));
+        return const Success(ScheduleImportState());
       }
       final file = res.files.first;
       final csvContent = file.bytes != null
@@ -89,7 +89,7 @@ class ScheduleImportService {
 
   Future<Result<void>> importSchedules(List<MatchSchedule> schedules) async {
     try {
-      for (final MatchSchedule s in schedules) {
+      for (final s in schedules) {
         final res = await _repo.add(s);
         if (!res.isSuccess) {
           return Failure(res.errorOrNull!);

@@ -201,21 +201,21 @@ class PeriodizationPlan {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'description': description,
-    'modelType': modelType.name,
-    'targetAgeGroup': targetAgeGroup.name,
-    'totalDurationWeeks': totalDurationWeeks,
-    'numberOfPeriods': numberOfPeriods,
-    'defaultIntensityTargets': defaultIntensityTargets,
-    'defaultContentDistribution': defaultContentDistribution,
-    'isTemplate': isTemplate,
-    'isDefault': isDefault,
-    'createdBy': createdBy,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'description': description,
+        'modelType': modelType.name,
+        'targetAgeGroup': targetAgeGroup.name,
+        'totalDurationWeeks': totalDurationWeeks,
+        'numberOfPeriods': numberOfPeriods,
+        'defaultIntensityTargets': defaultIntensityTargets,
+        'defaultContentDistribution': defaultContentDistribution,
+        'isTemplate': isTemplate,
+        'isDefault': isDefault,
+        'createdBy': createdBy,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   /// 🔧 CASCADE OPERATOR DOCUMENTATION - PERIODIZATION PLAN COPYWITH
   ///
@@ -277,8 +277,8 @@ class PeriodizationPlan {
   @override
   String toString() =>
       'PeriodizationPlan(id: $id, name: $name, model: ${modelType.name}, '
-           'ageGroup: ${targetAgeGroup.name}, weeks: $totalDurationWeeks, '
-           'periods: $numberOfPeriods, template: $isTemplate)';
+      'ageGroup: ${targetAgeGroup.name}, weeks: $totalDurationWeeks, '
+      'periods: $numberOfPeriods, template: $isTemplate)';
 
   @override
   bool operator ==(Object other) {
@@ -294,10 +294,10 @@ class PeriodizationPlan {
   @override
   int get hashCode =>
       name.hashCode ^
-           modelType.hashCode ^
-           targetAgeGroup.hashCode ^
-           totalDurationWeeks.hashCode ^
-           numberOfPeriods.hashCode;
+      modelType.hashCode ^
+      targetAgeGroup.hashCode ^
+      totalDurationWeeks.hashCode ^
+      numberOfPeriods.hashCode;
 }
 
 // Enums for periodization

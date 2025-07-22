@@ -82,8 +82,10 @@ class _PreviewStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Voorbeeld (${unique.length + dupes.length} records)',
-            style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          'Voorbeeld (${unique.length + dupes.length} records)',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         const SizedBox(height: 12),
         Expanded(
           child: ListView(

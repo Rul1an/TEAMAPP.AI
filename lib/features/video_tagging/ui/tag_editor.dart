@@ -72,7 +72,6 @@ class _TagEditorState extends ConsumerState<TagEditor> {
                 .toList(),
           ),
           Slider(
-            min: 0,
             max: (_timestamp + 600).toDouble(),
             value: _timestamp.toDouble(),
             onChanged: (v) => setState(() => _timestamp = v.round()),

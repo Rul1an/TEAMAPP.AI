@@ -14,7 +14,7 @@ final scheduleImportServiceProvider = Provider<ScheduleImportService>((ref) {
 // Provide notifier using Ref parameter (Riverpod v2+)
 final scheduleImportNotifierProvider =
     StateNotifierProvider<ScheduleImportNotifier, ScheduleImportState>(
-  (ref) => ScheduleImportNotifier(ref),
+  ScheduleImportNotifier.new,
 );
 
 class ScheduleImportNotifier extends StateNotifier<ScheduleImportState> {

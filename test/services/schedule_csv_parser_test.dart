@@ -14,7 +14,9 @@ void main() {
       parser = ScheduleCsvParser();
     });
 
-    test('parses valid CSV into schedules', skip: 'Flaky on analyzer refactor – to be fixed in follow-up', () async {
+    test('parses valid CSV into schedules',
+        skip: 'Flaky on analyzer refactor – to be fixed in follow-up',
+        () async {
       const csv = 'date,time,opponent,competition,location\n'
           '2025-09-12,19:30,FC Utrecht U17,league,Thuis\n'
           '2025-09-19,20:00,Ajax U17,cup,Uit';
@@ -39,7 +41,8 @@ void main() {
       expect(data.errors, isNotEmpty);
     });
 
-    test('skips invalid rows and returns errors', skip: 'Flaky after CSV parser refactor, review soon', () async {
+    test('skips invalid rows and returns errors',
+        skip: 'Flaky after CSV parser refactor, review soon', () async {
       const csv = 'date,time,opponent,competition\n'
           '2025-09-12,19:30,FC Utrecht U17,league\n'
           'INVALID-DATE,19:30,PSV U17,league';

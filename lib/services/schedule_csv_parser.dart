@@ -58,7 +58,7 @@ class ScheduleCsvParser {
           ScheduleCsvParseResult(
             [],
             [
-              'Missing one or more required headers: date,time,opponent,competition'
+              'Missing one or more required headers: date,time,opponent,competition',
             ],
           ),
         );
@@ -74,11 +74,11 @@ class ScheduleCsvParser {
           final dynamic timeCell = r[idxTime];
 
           // Converter may coerce cells to DateTime or numbers; handle gracefully.
-          final DateTime date = dateCell is DateTime
+          final date = dateCell is DateTime
               ? dateCell
               : _dateFmt.parseStrict(dateCell.toString().trim());
 
-          final DateTime time = timeCell is DateTime
+          final time = timeCell is DateTime
               ? timeCell
               : _timeFmt.parseStrict(timeCell.toString().trim());
           final dateTime =
@@ -102,7 +102,7 @@ class ScheduleCsvParser {
 
           schedules.add(schedule);
         } catch (e) {
-          errors.add('Row ${row + 1}: ${e.toString()}');
+          errors.add('Row ${row + 1}: $e');
         }
       }
 

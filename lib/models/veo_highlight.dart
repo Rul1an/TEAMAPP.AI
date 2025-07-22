@@ -8,13 +8,6 @@ class VeoHighlight {
     this.storagePath,
   });
 
-  final String id;
-  final int startMs;
-  final int endMs;
-  final String? title;
-  final String? videoUrl;
-  final String? storagePath;
-
   factory VeoHighlight.fromJson(Map<String, dynamic> json) => VeoHighlight(
         id: json['id'] as String,
         startMs: json['startMs'] as int? ?? 0,
@@ -23,6 +16,13 @@ class VeoHighlight {
         videoUrl: json['videoUrl'] as String?,
         storagePath: json['storagePath'] as String?,
       );
+
+  final String id;
+  final int startMs;
+  final int endMs;
+  final String? title;
+  final String? videoUrl;
+  final String? storagePath;
 
   Map<String, dynamic> toJson() => {
         'id': id,

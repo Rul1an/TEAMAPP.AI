@@ -64,7 +64,7 @@ void main() {
   late _MockTrainingRepo repo;
 
   setUpAll(() async {
-    await initializeDateFormatting('nl_NL', null);
+    await initializeDateFormatting('nl_NL');
     Intl.defaultLocale = 'nl_NL';
   });
 

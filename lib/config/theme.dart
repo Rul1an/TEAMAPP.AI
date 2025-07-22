@@ -33,9 +33,9 @@ class AppTheme {
   static const Color adminColor = Color(0xFFD32F2F); // Red
 
   static ThemeData get lightTheme => ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryColor,
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: primaryColor,
           primary: primaryColor,
           secondary: secondaryColor,
           error: errorColor,
@@ -86,15 +86,15 @@ class AppTheme {
             fontWeight: FontWeight.w600,
             color: textPrimaryColor,
           ),
-      ),
-      cardTheme: CardThemeData(
-        elevation: 2,
+        ),
+        cardTheme: CardThemeData(
+          elevation: 2,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           color: surfaceColor,
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
             backgroundColor: primaryColor,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -102,13 +102,13 @@ class AppTheme {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             textStyle:
                 GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
         ),
-      ),
-      inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: backgroundColor,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
@@ -180,8 +180,8 @@ class AppTheme {
   static Color getAdminColor() => adminColor;
 
   static TextStyle get tierBadgeTextStyle => const TextStyle(
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
-    fontSize: 12,
-  );
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 12,
+      );
 }
