@@ -3,6 +3,9 @@ name: "🔒 Security Scan"
 on:
   pull_request:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/**'
   push:
     branches: [main]
 

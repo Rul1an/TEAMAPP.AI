@@ -2,7 +2,11 @@ name: "📊 Chaos Scorecard"
 
 on:
   pull_request:
+    branches: [ main ]
     types: [opened, synchronize]
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/**'
 
 permissions:
   pull-requests: write

@@ -1,0 +1,41 @@
+name: Fan & Family CI
+
+on:
+  push:
+    branches:
+      - fan_family
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [ android, web ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.2'
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build
+        run: |
+          if [ "${{ matrix.platform }}" == "android" ]; then
+            flutter build apk --flavor fan_family -t lib/main_fan.dart --dart-define=FLAVOR=fan_family
+          else
+            flutter build web --release --dart-define=FLAVOR=fan_family -t lib/main_fan.dart --output build/web_fan_family
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fan-${{ matrix.platform }}-build
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+            build/web_fan_family/
+          if-no-files-found: error
