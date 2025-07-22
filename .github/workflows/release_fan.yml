@@ -1,0 +1,42 @@
+name: Fan & Family Release
+
+on:
+  push:
+    tags:
+      - "fan-v*"
+
+jobs:
+  build-release:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+      - run: gem install bundler:2.4.22 && bundle install || true
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.2'
+          channel: stable
+
+      - name: Set tag variables
+        id: vars
+        run: |
+          echo "TAG=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+          echo "CHANGELOG=$(git tag -l --format='%(contents)' ${{ github.ref }})" >> $GITHUB_OUTPUT
+
+      - name: iOS – TestFlight beta
+        env:
+          APP_STORE_CONNECT_API_KEY_PATH: ${{ secrets.IOS_API_KEY_JSON }}
+          CHANGELOG: ${{ steps.vars.outputs.CHANGELOG }}
+        run: |
+          bundle exec fastlane ios_fan_family_beta
+
+      - name: Android – Internal testing
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+          CHANGELOG: ${{ steps.vars.outputs.CHANGELOG }}
+        run: |
+          bundle exec fastlane android_fan_family_internal
