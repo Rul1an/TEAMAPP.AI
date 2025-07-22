@@ -22,11 +22,15 @@ class _TagSearchScreenState extends ConsumerState<TagSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final result = ref.watch(searchTagsProvider((
-      playerId: _playerCtrl.text.isEmpty ? null : _playerCtrl.text,
-      type: _selectedType,
-      videoId: null,
-    )));
+    final result = ref.watch(
+      searchTagsProvider(
+        (
+          playerId: _playerCtrl.text.isEmpty ? null : _playerCtrl.text,
+          type: _selectedType,
+          videoId: null,
+        ),
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(title: const Text('Search Tags')),
@@ -49,10 +53,12 @@ class _TagSearchScreenState extends ConsumerState<TagSearchScreen> {
                   hint: const Text('Type'),
                   onChanged: (t) => setState(() => _selectedType = t),
                   items: [null, ...TagType.values]
-                      .map((t) => DropdownMenuItem(
-                            value: t,
-                            child: Text(t?.name ?? 'Any'),
-                          ))
+                      .map(
+                        (t) => DropdownMenuItem<TagType?>(
+                          value: t,
+                          child: Text(t?.name ?? 'Any'),
+                        ),
+                      )
                       .toList(),
                 ),
               ],
@@ -64,7 +70,8 @@ class _TagSearchScreenState extends ConsumerState<TagSearchScreen> {
                   itemCount: tags.length,
                   itemBuilder: (c, i) => ListTile(
                     title: Text(tags[i].label),
-                    subtitle: Text('${tags[i].type.name} – ${tags[i].timestamp}s'),
+                    subtitle:
+                        Text('${tags[i].type.name} – ${tags[i].timestamp}s'),
                   ),
                 ),
                 loading: () => const Center(child: CircularProgressIndicator()),

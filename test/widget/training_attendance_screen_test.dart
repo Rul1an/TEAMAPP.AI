@@ -30,7 +30,8 @@ void main() {
         ..duration = 90
         ..focus = TrainingFocus.technical
         ..intensity = TrainingIntensity.medium
-        ..status = TrainingStatus.planned;
+        ..status = TrainingStatus.planned
+        ..trainingNumber = 1;
 
       final player = Player()
         ..id = 'p1'

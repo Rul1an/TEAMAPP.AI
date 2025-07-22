@@ -9,13 +9,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
-import 'package:jo17_tactical_manager/hive/hive_training_cache.dart';
-import 'package:jo17_tactical_manager/models/training.dart';
+import 'package:jo17_tactical_manager/hive/hive_match_schedule_cache.dart';
+import 'package:jo17_tactical_manager/models/match.dart';
+import 'package:jo17_tactical_manager/models/match_schedule.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  // Mock secure storage & path provider channels used by HiveFlutter
+  // Mock secure storage & path provider to avoid platform dependencies.
   const secureStorageChannel = MethodChannel(
     'plugins.it_nomads.com/flutter_secure_storage',
   );
@@ -29,34 +30,38 @@ void main() {
     (call) async => Directory.systemTemp.path,
   );
 
-  group('HiveTrainingCache', () {
+  group('HiveMatchScheduleCache', () {
     setUp(() {
       Hive.init(Directory.systemTemp.path);
     });
 
-    Training makeTraining(String id) {
-      return Training()
-        ..id = id
-        ..date = DateTime(2025)
-        ..duration = 90
-        ..focus = TrainingFocus.technical
-        ..intensity = TrainingIntensity.medium
-        ..status = TrainingStatus.planned
-        ..trainingNumber = 1;
-    }
-
     test('write & read list', () async {
-      final cache = HiveTrainingCache();
-      final trainings = [makeTraining('t1')];
-      await cache.write(trainings);
+      final cache = HiveMatchScheduleCache();
+      final schedules = [
+        MatchSchedule()
+          ..id = '1'
+          ..dateTime = DateTime.utc(2025, 9, 12, 19, 30)
+          ..opponent = 'Ajax U17'
+          ..location = Location.away
+          ..competition = Competition.league,
+      ];
+      await cache.write(schedules);
       final read = await cache.read();
-      expect(read?.first.id, 't1');
+      expect(read?.first.id, '1');
+      expect(read?.first.location, Location.away);
     });
 
     test('returns null after TTL expiry', () async {
-      final cache = HiveTrainingCache();
-      final trainings = [makeTraining('t2')];
-      await cache.write(trainings);
+      final cache = HiveMatchScheduleCache();
+      final schedules = [
+        MatchSchedule()
+          ..id = '2'
+          ..dateTime = DateTime.utc(2025, 10, 1, 18, 0)
+          ..opponent = 'PSV U17'
+          ..location = Location.home
+          ..competition = Competition.cup,
+      ];
+      await cache.write(schedules);
       expect(
         await cache.read(ttl: const Duration(milliseconds: 50)),
         isNotNull,

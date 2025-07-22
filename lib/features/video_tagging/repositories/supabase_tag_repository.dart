@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/tag_type.dart';
+
 import '../models/video_tag.dart';
+import '../models/tag_type.dart';
 import 'tag_repository.dart';
 
 class SupabaseTagRepository implements TagRepository {
@@ -10,12 +11,9 @@ class SupabaseTagRepository implements TagRepository {
 
   @override
   Future<VideoTag> create(VideoTag tag) async {
-    final data = await client
-        .from('video_tags')
-        .insert(tag.toJson())
-        .select()
-        .single();
-    return VideoTag.fromJson(data as Map<String, dynamic>);
+    final Map<String, dynamic> data =
+        await client.from('video_tags').insert(tag.toJson()).select().single();
+    return VideoTag.fromJson(data);
   }
 
   @override
@@ -30,21 +28,28 @@ class SupabaseTagRepository implements TagRepository {
 
   @override
   Stream<List<VideoTag>> watchByVideo(String videoId) {
-    final stream = client
+    return client
         .from('video_tags')
         .stream(primaryKey: ['id'])
-        .eq('video_id', videoId);
-    return stream.map((event) =>
-        event.map((e) => VideoTag.fromJson(e as Map<String, dynamic>)).toList());
+        .eq('video_id', videoId)
+        .map((rows) => rows
+            .map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e))
+            .map(VideoTag.fromJson)
+            .toList());
   }
 
   @override
-  Future<List<VideoTag>> search({String? playerId, TagType? type, String? videoId}) async {
+  Future<List<VideoTag>> search({
+    String? playerId,
+    TagType? type,
+    String? videoId,
+  }) async {
     var query = client.from('video_tags').select();
     if (playerId != null) query = query.eq('player_id', playerId);
     if (type != null) query = query.eq('type', type.name);
     if (videoId != null) query = query.eq('video_id', videoId);
-    final list = await query;
-    return (list as List<dynamic>).map((e) => VideoTag.fromJson(e as Map<String, dynamic>)).toList();
+    final List<Map<String, dynamic>> rows =
+        (await query).map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e)).toList();
+    return rows.map(VideoTag.fromJson).toList();
   }
 }
