@@ -1,12 +1,10 @@
 name: "📊 Chaos Scorecard"
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
-    types: [opened, synchronize]
-    paths-ignore:
-      - 'docs/**'
-      - '.github/workflows/**'
+  schedule:
+    - cron: '0 3 * * *'  # nightly at 03:00 UTC
 
 permissions:
   pull-requests: write
@@ -14,6 +12,7 @@ permissions:
 
 jobs:
   scorecard:
+    if: ${{ secrets.AWS_CHAOS_ROLE_ARN && secrets.AWS_CHAOS_ROLE_ARN != 'REPLACE_ME' }}
     runs-on: ubuntu-latest
     env:
       AWS_REGION: eu-west-1
