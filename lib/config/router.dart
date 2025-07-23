@@ -247,7 +247,6 @@ GoRouter createRouter(Ref ref) => GoRouter(
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: InsightsScreen()),
             ),
-
             // Legacy deep-link routes removed (analytics, svs, admin) – replaced by unified Insights screen.
           ],
         ),
