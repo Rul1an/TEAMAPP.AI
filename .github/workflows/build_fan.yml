@@ -2,9 +2,9 @@ name: Fan & Family CI
 
 on:
   push:
-    branches:
-      - fan_family
-  workflow_dispatch:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
