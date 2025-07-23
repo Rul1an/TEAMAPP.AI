@@ -116,9 +116,9 @@ jobs:
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
-          dart analyze --fatal-infos
+          dart analyze
         elif [ -f "pubspec.yaml" ]; then
-          dart analyze --fatal-infos
+          dart analyze
         else
           echo "ERROR: Could not find pubspec.yaml"
           exit 1

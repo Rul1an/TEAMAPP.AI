@@ -460,7 +460,7 @@ jobs:
     name: 🔄 Auto Rollback
     needs: [deploy-production]
     runs-on: ubuntu-latest
-    if: always()
+    if: ${{ secrets.AWS_CHAOS_ROLE_ARN && secrets.AWS_CHAOS_ROLE_ARN != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
