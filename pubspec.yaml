@@ -9,6 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_analytics: ^11.5.2
+  graphql_flutter: ^5.1.3
+  equatable: ^2.0.5
+  collection: ^1.17.2
 
   # Additional core dependencies added to satisfy new analytics & tagging modules
   firebase_analytics: ^11.5.2
@@ -86,7 +90,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  # Integration testing framework
   integration_test:
     sdk: flutter
   test_utils:
