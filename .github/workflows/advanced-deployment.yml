@@ -462,7 +462,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_ROLE: ${{ secrets.AWS_CHAOS_ROLE_ARN }}
-    if: ${{ env.AWS_ROLE != '' }}
+    if: ${{ secrets.AWS_CHAOS_ROLE_ARN != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
