@@ -6,6 +6,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'telemetry_service.dart';
+import 'alert_service.dart';
 
 /// Enhanced monitoring service for production-ready SaaS application
 /// Implements comprehensive error tracking, performance monitoring, and analytics
@@ -341,6 +342,34 @@ class MonitoringService {
         success: success,
         errorMessage: errorMessage,
         metadata: metadata,
+      );
+    }
+  }
+
+  static Future<void> trackSlaPerformance({
+    required String operation,
+    required Duration duration,
+    required Duration slaThreshold,
+    bool success = true,
+    String? errorMessage,
+    Map<String, dynamic>? metadata,
+  }) async {
+    // 1. Track the performance as usual.
+    await trackPerformance(
+      operation: operation,
+      duration: duration,
+      success: success,
+      errorMessage: errorMessage,
+      metadata: metadata,
+    );
+
+    // 2. Fire an alert when we breach SLA.
+    if (duration > slaThreshold) {
+      await AlertService().notifySlaBreach(
+        metric: operation,
+        value: duration.inMilliseconds.toDouble(),
+        threshold: slaThreshold.inMilliseconds.toDouble(),
+        context: metadata,
       );
     }
   }
