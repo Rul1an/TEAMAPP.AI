@@ -11,7 +11,7 @@ class SupabaseTagRepository implements TagRepository {
 
   @override
   Future<VideoTag> create(VideoTag tag) async {
-    final Map<String, dynamic> data =
+    final data =
         await client.from('video_tags').insert(tag.toJson()).select().single();
     return VideoTag.fromJson(data);
   }
@@ -32,10 +32,12 @@ class SupabaseTagRepository implements TagRepository {
         .from('video_tags')
         .stream(primaryKey: ['id'])
         .eq('video_id', videoId)
-        .map((rows) => rows
-            .map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e))
-            .map(VideoTag.fromJson)
-            .toList());
+        .map(
+          (rows) => rows
+              .map<Map<String, dynamic>>(Map<String, dynamic>.from)
+              .map(VideoTag.fromJson)
+              .toList(),
+        );
   }
 
   @override
@@ -48,8 +50,9 @@ class SupabaseTagRepository implements TagRepository {
     if (playerId != null) query = query.eq('player_id', playerId);
     if (type != null) query = query.eq('type', type.name);
     if (videoId != null) query = query.eq('video_id', videoId);
-    final List<Map<String, dynamic>> rows =
-        (await query).map<Map<String, dynamic>>((e) => Map<String, dynamic>.from(e)).toList();
+    final rows = (await query)
+        .map<Map<String, dynamic>>(Map<String, dynamic>.from)
+        .toList();
     return rows.map(VideoTag.fromJson).toList();
   }
 }

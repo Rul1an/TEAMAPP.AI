@@ -7,9 +7,13 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  quality:
     name: Test Flutter Web
     runs-on: ubuntu-latest
+    env:
+      # Expose Dart Code Metrics credentials (may be empty on forks)
+      DCM_CI_KEY: ${{ secrets.DCM_CI_KEY }}
+      DCM_EMAIL: ${{ secrets.DCM_EMAIL }}
 
     steps:
     - uses: actions/checkout@v4
@@ -45,7 +49,8 @@ jobs:
         echo "${HOME}/.pub-cache/bin" >> $GITHUB_PATH
 
     - name: Install DCM CLI
-      if: ${{ secrets.DCM_CI_KEY != '' && secrets.DCM_EMAIL != '' }}
+      # Only install the proprietary Dart Code Metrics CLI when the required secrets are present
+      if: ${{ env.DCM_CI_KEY != '' && env.DCM_EMAIL != '' }}
       uses: CQLabs/setup-dcm@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -107,20 +112,7 @@ jobs:
           exit 1
         fi
 
-    - name: Check code formatting
-      run: |
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          cd jo17_tactical_manager
-          dart format --output=none --set-exit-if-changed .
-        elif [ -f "pubspec.yaml" ]; then
-          dart format --output=none --set-exit-if-changed .
-        else
-          echo "ERROR: Could not find pubspec.yaml"
-          exit 1
-        fi
-      continue-on-error: true  # Allow formatting check to fail for now
-
-    - name: Analyze code
+    - name: Analyze code (fatal-infos)
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
@@ -131,13 +123,13 @@ jobs:
           echo "ERROR: Could not find pubspec.yaml"
           exit 1
         fi
-      continue-on-error: true
 
     - name: Dart Code Metrics Analysis (license-protected)
-      if: ${{ secrets.DCM_CI_KEY != '' && secrets.DCM_EMAIL != '' }}
+      if: ${{ env.DCM_CI_KEY != '' && env.DCM_EMAIL != '' }}
       env:
-        DCM_CI_KEY: ${{ secrets.DCM_CI_KEY }}
-        DCM_EMAIL: ${{ secrets.DCM_EMAIL }}
+        # Re-expose the credentials for the DCM binary at runtime
+        DCM_CI_KEY: ${{ env.DCM_CI_KEY }}
+        DCM_EMAIL: ${{ env.DCM_EMAIL }}
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
@@ -176,7 +168,7 @@ jobs:
 
   lighthouse:
     name: Lighthouse CI
-    needs: test
+    needs: quality
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
 

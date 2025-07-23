@@ -18,13 +18,13 @@ class VeoHighlightRepository {
       body: <String, dynamic>{'matchId': matchId},
     );
 
-    if (response.error != null) {
-      throw Exception(response.error);
+    final resp = Map<String, dynamic>.from(response.data as Map);
+    if (resp['error'] != null) {
+      throw Exception(resp['error']);
     }
 
-    final data = response.data as Map<String, dynamic>;
-    final clips = (data['clips'] as List<dynamic>? ?? [])
-        .map((e) => VeoHighlight.fromJson(Map<String, dynamic>.from(e as Map<String, dynamic>)))
+    final clips = (resp['clips'] as List<dynamic>? ?? [])
+        .map((e) => VeoHighlight.fromJson(Map<String, dynamic>.from(e as Map)))
         .toList();
     return clips;
   }
@@ -35,8 +35,9 @@ class VeoHighlightRepository {
       'veo_get_clip_url',
       body: <String, dynamic>{'highlightId': highlightId},
     );
-    if (response.error != null) {
-      throw Exception(response.error);
+    final resp = Map<String, dynamic>.from(response.data as Map);
+    if (resp['error'] != null) {
+      throw Exception(resp['error']);
     }
     return resp['url'] as String;
   }

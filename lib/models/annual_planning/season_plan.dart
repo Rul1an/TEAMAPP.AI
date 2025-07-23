@@ -263,23 +263,23 @@ class SeasonPlan {
 
   // Holiday checking
   bool isCurrentlyInHoliday() =>
-    // In a real implementation, this would check against specific holiday dates
-    // For now, return false as a placeholder
+      // In a real implementation, this would check against specific holiday dates
+      // For now, return false as a placeholder
       false;
   List<String> getHolidaysInPeriod(DateTime start, DateTime end) =>
-    // In a real implementation, this would return holidays within the date range
-    // For now, return empty list as a placeholder
+      // In a real implementation, this would return holidays within the date range
+      // For now, return empty list as a placeholder
       [];
   // Season statistics
   Map<String, dynamic> getSeasonStatistics() => {
-      'totalWeeks': totalWeeks,
-      'completedWeeks': currentWeek - 1,
-      'remainingWeeks': remainingWeeks,
-      'progressPercentage': progressPercentage,
-      'currentPhase': getCurrentPhase().displayName,
-      'isActive': isActive,
-      'isCompleted': isCompleted,
-    };
+        'totalWeeks': totalWeeks,
+        'completedWeeks': currentWeek - 1,
+        'remainingWeeks': remainingWeeks,
+        'progressPercentage': progressPercentage,
+        'currentPhase': getCurrentPhase().displayName,
+        'isActive': isActive,
+        'isCompleted': isCompleted,
+      };
 
   // Update progress
   void updateProgress() {
@@ -304,11 +304,11 @@ class SeasonPlan {
   // Validation
   bool isValid() =>
       name.isNotEmpty &&
-           season.isNotEmpty &&
-           teamName.isNotEmpty &&
-           seasonStartDate.isBefore(seasonEndDate) &&
-           totalWeeks > 0 &&
-           currentWeek >= 1 &&
+      season.isNotEmpty &&
+      teamName.isNotEmpty &&
+      seasonStartDate.isBefore(seasonEndDate) &&
+      totalWeeks > 0 &&
+      currentWeek >= 1 &&
       progressPercentage >= 0.0 &&
       progressPercentage <= 100.0;
 
@@ -332,35 +332,35 @@ class SeasonPlan {
 
   // JSON serialization
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'description': description,
-    'season': season,
-    'ageGroup': ageGroup.name,
-    'teamName': teamName,
-    'seasonStartDate': seasonStartDate.toIso8601String(),
-    'seasonEndDate': seasonEndDate.toIso8601String(),
-    'holidayPeriods': holidayPeriods,
-    'periodizationPlanId': periodizationPlanId,
-    'totalWeeks': totalWeeks,
-    'trainingWeeks': trainingWeeks,
-    'competitionWeeks': competitionWeeks,
-    'primaryCompetition': primaryCompetition,
-    'additionalCompetitions': additionalCompetitions,
-    'firstMatchDate': firstMatchDate?.toIso8601String(),
-    'lastMatchDate': lastMatchDate?.toIso8601String(),
-    'midSeasonBreakStart': midSeasonBreakStart?.toIso8601String(),
-    'midSeasonBreakEnd': midSeasonBreakEnd?.toIso8601String(),
-    'seasonObjectives': seasonObjectives,
-    'keyPerformanceIndicators': keyPerformanceIndicators,
-    'isTemplate': isTemplate,
-    'status': status.name,
-    'currentWeek': currentWeek,
-    'progressPercentage': progressPercentage,
-    'createdBy': createdBy,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
-  };
+        'id': id,
+        'name': name,
+        'description': description,
+        'season': season,
+        'ageGroup': ageGroup.name,
+        'teamName': teamName,
+        'seasonStartDate': seasonStartDate.toIso8601String(),
+        'seasonEndDate': seasonEndDate.toIso8601String(),
+        'holidayPeriods': holidayPeriods,
+        'periodizationPlanId': periodizationPlanId,
+        'totalWeeks': totalWeeks,
+        'trainingWeeks': trainingWeeks,
+        'competitionWeeks': competitionWeeks,
+        'primaryCompetition': primaryCompetition,
+        'additionalCompetitions': additionalCompetitions,
+        'firstMatchDate': firstMatchDate?.toIso8601String(),
+        'lastMatchDate': lastMatchDate?.toIso8601String(),
+        'midSeasonBreakStart': midSeasonBreakStart?.toIso8601String(),
+        'midSeasonBreakEnd': midSeasonBreakEnd?.toIso8601String(),
+        'seasonObjectives': seasonObjectives,
+        'keyPerformanceIndicators': keyPerformanceIndicators,
+        'isTemplate': isTemplate,
+        'status': status.name,
+        'currentWeek': currentWeek,
+        'progressPercentage': progressPercentage,
+        'createdBy': createdBy,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
+      };
 
   // Copy with method for updates
   SeasonPlan copyWith({
@@ -426,8 +426,8 @@ class SeasonPlan {
 
   @override
   String toString() => 'SeasonPlan(id: $id, name: $name, season: $season, '
-           'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '
-           'progress: ${progressPercentage.toStringAsFixed(1)}%)';
+      'team: $teamName, weeks: $totalWeeks, status: ${status.name}, '
+      'progress: ${progressPercentage.toStringAsFixed(1)}%)';
 
   @override
   bool operator ==(Object other) {

@@ -460,9 +460,14 @@ jobs:
     name: 🔄 Auto Rollback
     needs: [deploy-production]
     runs-on: ubuntu-latest
-    if: always()
+    env:
+      AWS_ROLE: ${{ secrets.AWS_CHAOS_ROLE_ARN }}
     steps:
+      - name: Skip if AWS_ROLE secret missing
+        if: ${{ env.AWS_ROLE == '' }}
+        run: echo "AWS_ROLE not configured, skipping auto-rollback job."
       - name: Checkout
+        if: ${{ env.AWS_ROLE != '' }}
         uses: actions/checkout@v4
 
       - name: Install jq & AWS CLI deps

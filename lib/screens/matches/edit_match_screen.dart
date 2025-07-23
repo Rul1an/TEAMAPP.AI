@@ -183,7 +183,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                   items: Location.values
                                       .map(
                                         (location) => DropdownMenuItem(
-                                      value: location,
+                                          value: location,
                                           child: Text(
                                             _getLocationText(location),
                                           ),
@@ -214,7 +214,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                                   items: Competition.values
                                       .map(
                                         (competition) => DropdownMenuItem(
-                                      value: competition,
+                                          value: competition,
                                           child: Text(
                                             _getCompetitionText(competition),
                                           ),
@@ -263,8 +263,8 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
                             items: MatchStatus.values
                                 .map(
                                   (status) => DropdownMenuItem(
-                                value: status,
-                                child: Text(_getStatusText(status)),
+                                    value: status,
+                                    child: Text(_getStatusText(status)),
                                   ),
                                 )
                                 .toList(),

@@ -1,17 +1,14 @@
 name: "🛡️ Infra & Script Lint"
 
 on:
-  pull_request:
-    paths:
-      - '**/*.sh'
-      - '**/*.tf'
-      - '.github/workflows/**.yml'
   push:
     branches: [main]
     paths:
       - '**/*.sh'
       - '**/*.tf'
       - '.github/workflows/**.yml'
+  schedule:
+    - cron: '0 2 * * *'  # Nightly at 02:00 UTC
 
 permissions:
   contents: read

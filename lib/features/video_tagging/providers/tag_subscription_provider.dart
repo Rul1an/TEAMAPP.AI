@@ -20,7 +20,7 @@ subscription VideoTagAdded(
 ''';
 
 final graphQLClientProvider = Provider<GraphQLClient>((ref) {
-  final wsUrl = const String.fromEnvironment(
+  const wsUrl = String.fromEnvironment(
     'GRAPHQL_WS_URL',
     defaultValue: 'wss://YOURPROJECT.supabase.co/graphql/v1',
   );

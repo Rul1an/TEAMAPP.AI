@@ -25,254 +25,254 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: const Text('Speler Toevoegen'),
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => context.pop(),
+        appBar: AppBar(
+          title: const Text('Speler Toevoegen'),
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => context.pop(),
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: FormBuilder(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Personal Information Section
-              _buildSectionHeader('Persoonlijke Informatie'),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: FormBuilderTextField(
-                      name: 'firstName',
-                      decoration: const InputDecoration(
-                        labelText: 'Voornaam',
-                        prefixIcon: Icon(Icons.person),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Personal Information Section
+                _buildSectionHeader('Persoonlijke Informatie'),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'firstName',
+                        decoration: const InputDecoration(
+                          labelText: 'Voornaam',
+                          prefixIcon: Icon(Icons.person),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Voornaam is verplicht';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Voornaam is verplicht';
-                        }
-                        return null;
-                      },
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: FormBuilderTextField(
-                      name: 'lastName',
-                      decoration: const InputDecoration(
-                        labelText: 'Achternaam',
-                        prefixIcon: Icon(Icons.person_outline),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'lastName',
+                        decoration: const InputDecoration(
+                          labelText: 'Achternaam',
+                          prefixIcon: Icon(Icons.person_outline),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Achternaam is verplicht';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Achternaam is verplicht';
-                        }
-                        return null;
-                      },
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: FormBuilderTextField(
-                      name: 'jerseyNumber',
-                      decoration: const InputDecoration(
-                        labelText: 'Rugnummer',
-                        prefixIcon: Icon(Icons.numbers),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'jerseyNumber',
+                        decoration: const InputDecoration(
+                          labelText: 'Rugnummer',
+                          prefixIcon: Icon(Icons.numbers),
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(2),
+                        ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Rugnummer is verplicht';
+                          }
+                          final number = int.tryParse(value);
+                          if (number == null || number < 1 || number > 99) {
+                            return 'Rugnummer moet tussen 1 en 99 zijn';
+                          }
+                          return null;
+                        },
                       ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(2),
-                      ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Rugnummer is verplicht';
-                        }
-                        final number = int.tryParse(value);
-                        if (number == null || number < 1 || number > 99) {
-                          return 'Rugnummer moet tussen 1 en 99 zijn';
-                        }
-                        return null;
-                      },
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: FormBuilderDateTimePicker(
-                      name: 'birthDate',
-                      decoration: const InputDecoration(
-                        labelText: 'Geboortedatum',
-                        prefixIcon: Icon(Icons.calendar_today),
-                      ),
-                      inputType: InputType.date,
-                      format: DateFormat('dd-MM-yyyy'),
-                      lastDate: DateTime.now(),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FormBuilderDateTimePicker(
+                        name: 'birthDate',
+                        decoration: const InputDecoration(
+                          labelText: 'Geboortedatum',
+                          prefixIcon: Icon(Icons.calendar_today),
+                        ),
+                        inputType: InputType.date,
+                        format: DateFormat('dd-MM-yyyy'),
+                        lastDate: DateTime.now(),
                         firstDate: DateTime.now().subtract(
                           const Duration(days: 365 * 20),
                         ),
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Geboortedatum is verplicht';
-                        }
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Geboortedatum is verplicht';
+                          }
                           final age =
                               DateTime.now().difference(value).inDays ~/ 365;
-                        if (age < 15 || age > 18) {
-                          return 'Speler moet tussen 15 en 18 jaar oud zijn';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              // Football Information Section
-              _buildSectionHeader('Voetbal Informatie'),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: FormBuilderDropdown<Position>(
-                      name: 'position',
-                      decoration: const InputDecoration(
-                        labelText: 'Positie',
-                        prefixIcon: Icon(Icons.sports_soccer),
+                          if (age < 15 || age > 18) {
+                            return 'Speler moet tussen 15 en 18 jaar oud zijn';
+                          }
+                          return null;
+                        },
                       ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+
+                // Football Information Section
+                _buildSectionHeader('Voetbal Informatie'),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormBuilderDropdown<Position>(
+                        name: 'position',
+                        decoration: const InputDecoration(
+                          labelText: 'Positie',
+                          prefixIcon: Icon(Icons.sports_soccer),
+                        ),
                         items: Position.values
                             .map(
                               (position) => DropdownMenuItem(
-                          value: position,
-                          child: Text(_getPositionText(position)),
+                                value: position,
+                                child: Text(_getPositionText(position)),
                               ),
                             )
                             .toList(),
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Positie is verplicht';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: FormBuilderDropdown<PreferredFoot>(
-                      name: 'preferredFoot',
-                      decoration: const InputDecoration(
-                        labelText: 'Voorkeursbeen',
-                        prefixIcon: Icon(Icons.directions_walk),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Positie is verplicht';
+                          }
+                          return null;
+                        },
                       ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FormBuilderDropdown<PreferredFoot>(
+                        name: 'preferredFoot',
+                        decoration: const InputDecoration(
+                          labelText: 'Voorkeursbeen',
+                          prefixIcon: Icon(Icons.directions_walk),
+                        ),
                         items: PreferredFoot.values
                             .map(
                               (foot) => DropdownMenuItem(
-                          value: foot,
-                          child: Text(_getPreferredFootText(foot)),
+                                value: foot,
+                                child: Text(_getPreferredFootText(foot)),
                               ),
                             )
                             .toList(),
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Voorkeursbeen is verplicht';
-                        }
-                        return null;
-                      },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Voorkeursbeen is verplicht';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
+                  ],
+                ),
+                const SizedBox(height: 24),
 
-              // Physical Information Section
-              _buildSectionHeader('Fysieke Informatie'),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: FormBuilderTextField(
-                      name: 'height',
-                      decoration: const InputDecoration(
-                        labelText: 'Lengte (cm)',
-                        prefixIcon: Icon(Icons.height),
+                // Physical Information Section
+                _buildSectionHeader('Fysieke Informatie'),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'height',
+                        decoration: const InputDecoration(
+                          labelText: 'Lengte (cm)',
+                          prefixIcon: Icon(Icons.height),
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(3),
+                        ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Lengte is verplicht';
+                          }
+                          final height = double.tryParse(value);
+                          if (height == null || height < 140 || height > 220) {
+                            return 'Lengte moet tussen 140 en 220 cm zijn';
+                          }
+                          return null;
+                        },
                       ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(3),
-                      ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Lengte is verplicht';
-                        }
-                        final height = double.tryParse(value);
-                        if (height == null || height < 140 || height > 220) {
-                          return 'Lengte moet tussen 140 en 220 cm zijn';
-                        }
-                        return null;
-                      },
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: FormBuilderTextField(
-                      name: 'weight',
-                      decoration: const InputDecoration(
-                        labelText: 'Gewicht (kg)',
-                        prefixIcon: Icon(Icons.monitor_weight),
-                      ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'weight',
+                        decoration: const InputDecoration(
+                          labelText: 'Gewicht (kg)',
+                          prefixIcon: Icon(Icons.monitor_weight),
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
                           FilteringTextInputFormatter.allow(
                             RegExp(r'^\d+\.?\d{0,1}'),
                           ),
-                      ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Gewicht is verplicht';
-                        }
-                        final weight = double.tryParse(value);
-                        if (weight == null || weight < 40 || weight > 120) {
-                          return 'Gewicht moet tussen 40 en 120 kg zijn';
-                        }
-                        return null;
-                      },
+                        ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Gewicht is verplicht';
+                          }
+                          final weight = double.tryParse(value);
+                          if (weight == null || weight < 40 || weight > 120) {
+                            return 'Gewicht moet tussen 40 en 120 kg zijn';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-
-              // Submit Button
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: _isSubmitting ? null : _submitForm,
-                  child: _isSubmitting
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : const Text('Speler Toevoegen'),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 32),
+
+                // Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: _isSubmitting ? null : _submitForm,
+                    child: _isSubmitting
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Text('Speler Toevoegen'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
 
   Widget _buildSectionHeader(String title) => Text(
-      title,
+        title,
         style: Theme.of(
           context,
         ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),

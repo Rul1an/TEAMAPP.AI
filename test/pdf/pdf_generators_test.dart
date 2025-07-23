@@ -14,7 +14,7 @@ import 'package:jo17_tactical_manager/models/training_session/training_session.d
 void main() {
   setUpAll(() async {
     // Needed for DateFormat with locale in PDF generators.
-    await initializeDateFormatting('nl_NL', null);
+    await initializeDateFormatting('nl_NL');
     Intl.defaultLocale = 'nl_NL';
   });
   group('PDF Generators', () {

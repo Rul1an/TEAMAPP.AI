@@ -12,14 +12,6 @@ class VideoTag extends Equatable {
     this.description,
   });
 
-  final String id;
-  final String videoId;
-  final int timestamp; // seconds
-  final String label;
-  final TagType type;
-  final String? playerId;
-  final String? description;
-
   factory VideoTag.fromJson(Map<String, dynamic> json) => VideoTag(
         id: json['id'] as String,
         videoId: json['video_id'] as String,
@@ -29,6 +21,14 @@ class VideoTag extends Equatable {
         playerId: json['player_id'] as String?,
         description: json['description'] as String?,
       );
+
+  final String id;
+  final String videoId;
+  final int timestamp; // seconds
+  final String label;
+  final TagType type;
+  final String? playerId;
+  final String? description;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -41,5 +41,6 @@ class VideoTag extends Equatable {
       };
 
   @override
-  List<Object?> get props => [id, videoId, timestamp, label, type, playerId, description];
+  List<Object?> get props =>
+      [id, videoId, timestamp, label, type, playerId, description];
 }

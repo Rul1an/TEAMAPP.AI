@@ -55,20 +55,20 @@ class PlayerDetailScreen extends ConsumerWidget {
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    player.name,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-            const SizedBox(height: 8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          player.name,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        const SizedBox(height: 8),
                         Text('Rugnummer: ${player.jerseyNumber}'),
                         Text('Leeftijd: ${player.age} jaar'),
                         Text('Positie: ${_getPositionName(player.position)}'),
@@ -78,12 +78,12 @@ class PlayerDetailScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           'Statistieken',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
@@ -93,10 +93,10 @@ class PlayerDetailScreen extends ConsumerWidget {
                         Text('Assists: ${player.assists}'),
                         Text(
                           'Trainingen bijgewoond: ${player.trainingsAttended}/${player.trainingsTotal}',
-                              ),
-                            ],
-                          ),
                         ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

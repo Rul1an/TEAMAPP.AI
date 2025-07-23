@@ -9,8 +9,8 @@ Future<int> migrateTrainingNumber(Isar isar) async {
   return isar.writeTxn(() async {
     final collection = isar.collection<Training>();
     final trainings = await collection.where().findAll();
-    final trainingsNeedingFix = trainings.where((t) => t.trainingNumber == 0)
-        .toList();
+    final trainingsNeedingFix =
+        trainings.where((t) => t.trainingNumber == 0).toList();
 
     for (final training in trainingsNeedingFix) {
       training.trainingNumber = 1;

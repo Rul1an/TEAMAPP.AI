@@ -2,6 +2,12 @@
 # Bundle & minify Edge functions via supabase-edge-runtime build (VEO-107)
 set -euo pipefail
 
+# Detect whether the edge runtime CLI is available; skip build gracefully otherwise (CI forks lack private registry access)
+if ! npx --yes supabase-edge-runtime --version >/dev/null 2>&1; then
+  echo "⚠️  supabase-edge-runtime CLI not available (404) – skipping edge bundle."
+  exit 0
+fi
+
 ROOT="$(dirname "$0")/.."
 SRC_DIR="$ROOT/supabase/edge_functions"
 DIST_DIR="$SRC_DIR/dist"

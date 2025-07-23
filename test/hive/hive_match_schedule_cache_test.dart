@@ -56,7 +56,7 @@ void main() {
       final schedules = [
         MatchSchedule()
           ..id = '2'
-          ..dateTime = DateTime.utc(2025, 10, 1, 18, 0)
+          ..dateTime = DateTime.utc(2025, 10, 1, 18)
           ..opponent = 'PSV U17'
           ..location = Location.home
           ..competition = Competition.cup,

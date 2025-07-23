@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use, flutter_style_todos
+// ignore_for_file: dead_code
 
 // Dart imports:
 import 'dart:io';
@@ -40,46 +41,54 @@ void main() {
       resetScreenSizeBinding(binding);
     });
 
-    testWidgets('default (select) tool', (tester) async {
-      // golden test skipped via skip param when skipGolden == true
-      await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
-            home: Material(
-              child: FieldDiagramToolbar(
-                selectedTool: DiagramTool.select,
-                onToolSelected: _noop,
+    testWidgets(
+      'default (select) tool',
+      (tester) async {
+        // golden test skipped via skip param when skipGolden == true
+        await tester.pumpWidget(
+          const ProviderScope(
+            child: MaterialApp(
+              home: Material(
+                child: FieldDiagramToolbar(
+                  selectedTool: DiagramTool.select,
+                  onToolSelected: _noop,
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
-      await expectLater(
-        find.byType(FieldDiagramToolbar),
-        matchesGoldenFile('goldens/field_diagram_toolbar_select.png'),
-      );
-    }, skip: skipGolden || isCi);
+        await expectLater(
+          find.byType(FieldDiagramToolbar),
+          matchesGoldenFile('goldens/field_diagram_toolbar_select.png'),
+        );
+      },
+      skip: skipGolden || isCi,
+    );
 
-    testWidgets('line tool expanded', (tester) async {
-      await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
-            home: Material(
-              child: FieldDiagramToolbar(
-                selectedTool: DiagramTool.line,
-                onToolSelected: _noop,
+    testWidgets(
+      'line tool expanded',
+      (tester) async {
+        await tester.pumpWidget(
+          const ProviderScope(
+            child: MaterialApp(
+              home: Material(
+                child: FieldDiagramToolbar(
+                  selectedTool: DiagramTool.line,
+                  onToolSelected: _noop,
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
-      await expectLater(
-        find.byType(FieldDiagramToolbar),
-        matchesGoldenFile('goldens/field_diagram_toolbar_line.png'),
-      );
-    }, skip: skipGolden || isCi);
+        await expectLater(
+          find.byType(FieldDiagramToolbar),
+          matchesGoldenFile('goldens/field_diagram_toolbar_line.png'),
+        );
+      },
+      skip: skipGolden || isCi,
+    );
   });
 }
 
