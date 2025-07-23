@@ -1,6 +1,6 @@
 {
   "importMap": "./import_map.json",
   "tasks": {
-    "test:e2e": "OTEL_DENO=true OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 deno test -A supabase/edge_functions/_tests --unstable-otel"
+    "test:e2e": "OTEL_DENO=true OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 deno test -A supabase/edge_functions/_tests"
   }
 }
