@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   scorecard:
-    if: ${{ secrets.AWS_CHAOS_ROLE_ARN && secrets.AWS_CHAOS_ROLE_ARN != 'REPLACE_ME' }}
+    if: ${{ secrets.AWS_CHAOS_ROLE_ARN != '' }}
     runs-on: ubuntu-latest
     env:
       AWS_REGION: eu-west-1
