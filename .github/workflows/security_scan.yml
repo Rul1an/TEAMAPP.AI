@@ -1,16 +1,14 @@
 name: "🔒 Security Scan"
 
 on:
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - 'docs/**'
-      - '.github/workflows/**'
   push:
     branches: [main]
+  schedule:
+    - cron: '0 2 * * *'  # Nightly at 02:00 UTC
 
 jobs:
   security-scan:
+    if: ${{ secrets.SNYK_TOKEN != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
