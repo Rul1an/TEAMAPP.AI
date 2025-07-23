@@ -13,7 +13,7 @@ import '../providers/demo_mode_provider.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/fan/fan_home_screen.dart';
 import '../widgets/common/main_scaffold.dart';
-import 'router.dart' as core; // for the rest of the screens
+// import 'config/router.dart' as core; // core routes not yet used in bootstrap
 import '../screens/fan/fan_stats_screen.dart';
 
 GoRouter createFanRouter(Ref ref) => GoRouter(
@@ -63,15 +63,9 @@ GoRouter createFanRouter(Ref ref) => GoRouter(
     );
 
 List<RouteBase> _cloneCoreRoutesExceptDashboard(Ref ref) {
-  final original = core.createRouter(ref);
-  // The first ShellRoute from original is MainScaffold; we want its children.
-  final shell = original.routes.whereType<ShellRoute>().first;
-  final List<RouteBase> others = [];
-  for (final r in shell.routes) {
-    if (r is GoRoute && r.path == '/dashboard') continue;
-    others.add(r);
-  }
-  return others;
+  // TODO: Reuse core routes dynamically once GoRouter exposes them.
+  // For bootstrap slice we keep the fan router minimal.
+  return [];
 }
 
 final routerFanProvider = Provider.autoDispose<GoRouter>(createFanRouter);
