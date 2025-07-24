@@ -10,6 +10,7 @@ import 'package:intl/date_symbol_data_local.dart';
 // Project imports:
 import '../../models/training.dart';
 import '../../providers/trainings_provider.dart';
+import '../../utils/validators/training_validators.dart';
 
 class TrainingEditScreen extends ConsumerStatefulWidget {
   const TrainingEditScreen({required this.trainingId, super.key});
@@ -76,7 +77,8 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
   }
 
   Future<void> _save() async {
-    if (!_formKey.currentState!.validate() || _selectedDate == null) {
+    if (validateDate(_selectedDate) != null ||
+        !_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Maak het formulier compleet')),
       );
@@ -169,13 +171,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                       suffixText: 'min',
                     ),
                     keyboardType: TextInputType.number,
-                    validator: (v) {
-                      final n = int.tryParse(v ?? '');
-                      if (n == null || n < 15 || n > 240) {
-                        return '15–240';
-                      }
-                      return null;
-                    },
+                    validator: validateDuration,
                   ),
                   const SizedBox(height: 16),
                   // Focus & Intensity
@@ -197,7 +193,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                               )
                               .toList(),
                           onChanged: (v) => setState(() => _focus = v),
-                          validator: (v) => v == null ? 'Verplicht' : null,
+                          validator: (v) => validateRequired(v, 'Focus'),
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -217,7 +213,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                               )
                               .toList(),
                           onChanged: (v) => setState(() => _intensity = v),
-                          validator: (v) => v == null ? 'Verplicht' : null,
+                          validator: (v) => validateRequired(v, 'Intensiteit'),
                         ),
                       ),
                     ],
@@ -236,7 +232,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
                         )
                         .toList(),
                     onChanged: (v) => setState(() => _status = v),
-                    validator: (v) => v == null ? 'Verplicht' : null,
+                    validator: (v) => validateRequired(v, 'Status'),
                   ),
                   const SizedBox(height: 24),
                   SizedBox(
