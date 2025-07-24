@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
 // Project imports:
 import '../../models/performance_rating.dart';
@@ -18,6 +19,8 @@ import '../../utils/share_pdf_utils.dart';
 import '../../models/training_session/training_session.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
+import '../../services/deep_link_service.dart';
+import '../../services/analytics_service.dart';
 
 class TrainingAttendanceScreen extends ConsumerStatefulWidget {
   const TrainingAttendanceScreen({required this.trainingId, super.key});
@@ -46,6 +49,12 @@ class _TrainingAttendanceScreenState
       appBar: AppBar(
         title: const Text('Training Aanwezigheid'),
         actions: [
+          // Share deep-link available for all roles
+          IconButton(
+            icon: const Icon(Icons.share),
+            tooltip: 'Deel training',
+            onPressed: () => _shareTraining(),
+          ),
           if (canManage) ...[
             IconButton(
               icon: const Icon(Icons.picture_as_pdf),
@@ -600,6 +609,13 @@ class _TrainingAttendanceScreenState
     );
     if (!mounted) return;
     await SharePdfUtils.sharePdf(bytes, 'training_${training.id}.pdf', context);
+  }
+
+  void _shareTraining() async {
+    final link = DeepLinkService.instance.createTrainingLink(widget.trainingId);
+    await AnalyticsService.instance.logEvent('share_training',
+        parameters: {'training_id': widget.trainingId});
+    await Share.share(link.toString());
   }
 }
 
