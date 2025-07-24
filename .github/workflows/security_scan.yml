@@ -22,9 +22,15 @@ jobs:
         if: ${{ env.SNYK_TOKEN != '' }}
         uses: actions/checkout@v4
 
+      - name: Setup Snyk
+        if: ${{ env.SNYK_TOKEN != '' }}
+        uses: snyk/actions/setup@v2
+        with:
+          version: latest
+
       - name: Run Snyk Open Source scan
         if: ${{ env.SNYK_TOKEN != '' }}
-        uses: snyk/actions@v3
+        run: snyk test --severity-threshold=high --sarif-file-output=snyk.sarif
         with:
           command: test
           args: --severity-threshold=high --sarif-file-output=snyk.sarif
