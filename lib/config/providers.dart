@@ -23,6 +23,7 @@ import '../repositories/organization_repository_impl.dart';
 import '../repositories/permission_repository.dart';
 import '../repositories/permission_repository_impl.dart';
 import '../services/feature_service.dart';
+import '../analytics/analytics_route_observer.dart';
 
 export '../providers/auth_provider.dart';
 export '../providers/demo_mode_provider.dart';
@@ -176,3 +177,7 @@ class PlayerPerformanceData {
   final DateTime date;
   final Map<String, double> metrics;
 }
+
+final analyticsRouteObserverProvider = Provider<AnalyticsRouteObserver>((ref) {
+  return AnalyticsRouteObserver();
+});

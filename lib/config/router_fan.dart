@@ -8,13 +8,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../providers/auth_provider.dart';
-import '../providers/demo_mode_provider.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/fan/fan_home_screen.dart';
 import '../widgets/common/main_scaffold.dart';
 // import 'config/router.dart' as core; // core routes not yet used in bootstrap
 import '../screens/fan/fan_stats_screen.dart';
+import '../config/providers.dart';
 
 GoRouter createFanRouter(Ref ref) => GoRouter(
       initialLocation: '/auth',
@@ -27,6 +26,7 @@ GoRouter createFanRouter(Ref ref) => GoRouter(
         if (!isLoggedIn && !isDemoMode) return '/auth';
         return null;
       },
+      observers: [ref.read(analyticsRouteObserverProvider)],
       routes: [
         // Auth (outside shell)
         GoRoute(

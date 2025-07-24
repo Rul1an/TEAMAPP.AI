@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../models/training_session/training_exercise.dart';
-import '../providers/auth_provider.dart';
-import '../providers/demo_mode_provider.dart';
 import '../screens/annual_planning/annual_planning_screen.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
@@ -32,6 +30,7 @@ import '../screens/training_sessions/session_builder/session_builder_view.dart';
 import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
 import '../screens/matches/import_schedule_screen.dart';
+import '../config/providers.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
       initialLocation: '/auth',
@@ -53,6 +52,7 @@ GoRouter createRouter(Ref ref) => GoRouter(
 
         return null;
       },
+      observers: [ref.read(analyticsRouteObserverProvider)],
       routes: [
         // Auth route (outside of shell)
         GoRoute(

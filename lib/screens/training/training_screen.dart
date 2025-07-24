@@ -11,6 +11,8 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../models/training.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/trainings_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class TrainingScreen extends ConsumerStatefulWidget {
   const TrainingScreen({super.key});
@@ -42,53 +44,57 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
   Widget build(BuildContext context) {
     final trainingsAsync = ref.watch(trainingsNotifierProvider);
     final isDesktop = MediaQuery.of(context).size.width > 900;
+    final userRole = ref.watch(userRoleProvider);
+    final isViewOnly = PermissionService.isViewOnlyUser(userRole);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Trainingen'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => context.go('/training/add'),
-          ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.download),
-            onSelected: (value) async {
-              try {
-                if (value == 'excel') {
-                  await ref
-                      .read(exportServiceProvider)
-                      .exportTrainingAttendanceToExcel();
+          if (!isViewOnly)
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => context.go('/training/add'),
+            ),
+          if (!isViewOnly)
+            PopupMenuButton<String>(
+              icon: const Icon(Icons.download),
+              onSelected: (value) async {
+                try {
+                  if (value == 'excel') {
+                    await ref
+                        .read(exportServiceProvider)
+                        .exportTrainingAttendanceToExcel();
+                    if (mounted && context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Export gestart'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
+                  }
+                } catch (e) {
                   if (mounted && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Export gestart'),
-                        backgroundColor: Colors.green,
+                      SnackBar(
+                        content: Text('Export mislukt: $e'),
+                        backgroundColor: Colors.red,
                       ),
                     );
                   }
                 }
-              } catch (e) {
-                if (mounted && context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Export mislukt: $e'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              }
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: 'excel',
-                child: ListTile(
-                  leading: Icon(Icons.table_chart),
-                  title: Text('Exporteer aanwezigheid naar Excel'),
+              },
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                  value: 'excel',
+                  child: ListTile(
+                    leading: Icon(Icons.table_chart),
+                    title: Text('Exporteer aanwezigheid naar Excel'),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
         ],
       ),
       body: trainingsAsync.when(
@@ -209,10 +215,12 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.go('/training/add'),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: isViewOnly
+          ? null
+          : FloatingActionButton(
+              onPressed: () => context.go('/training/add'),
+              child: const Icon(Icons.add),
+            ),
     );
   }
 }

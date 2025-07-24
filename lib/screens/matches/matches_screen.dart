@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import '../../models/match.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/matches_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../services/permission_service.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
   const MatchesScreen({super.key});
@@ -38,6 +40,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
   Widget build(BuildContext context) {
     final matchesAsync = ref.watch(matchesNotifierProvider);
     final isDesktop = MediaQuery.of(context).size.width > 900;
+    final userRole = ref.watch(userRoleProvider);
+    final isViewOnly = PermissionService.isViewOnlyUser(userRole);
 
     return Scaffold(
       appBar: AppBar(
@@ -120,18 +124,25 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
                 upcomingMatches,
                 isDesktop,
                 'Geen aankomende wedstrijden',
+                isViewOnly,
               ),
               _buildMatchList(
                 completedMatches,
                 isDesktop,
                 'Geen afgelopen wedstrijden',
+                isViewOnly,
               ),
-              _buildMatchList(allMatches, isDesktop, 'Geen wedstrijden'),
+              _buildMatchList(
+                allMatches,
+                isDesktop,
+                'Geen wedstrijden',
+                isViewOnly,
+              ),
             ],
           );
         },
       ),
-      floatingActionButton: isDesktop
+      floatingActionButton: (isDesktop || isViewOnly)
           ? null
           : FloatingActionButton(
               onPressed: () => context.go('/matches/add'),
@@ -144,6 +155,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
     List<Match> matches,
     bool isDesktop,
     String emptyMessage,
+    bool isViewOnly,
   ) {
     if (matches.isEmpty) {
       return Center(
@@ -154,11 +166,12 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             const SizedBox(height: 16),
             Text(emptyMessage, style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),
-            ElevatedButton.icon(
-              onPressed: () => context.go('/matches/add'),
-              icon: const Icon(Icons.add),
-              label: const Text('Voeg wedstrijd toe'),
-            ),
+            if (!isViewOnly)
+              ElevatedButton.icon(
+                onPressed: () => context.go('/matches/add'),
+                icon: const Icon(Icons.add),
+                label: const Text('Voeg wedstrijd toe'),
+              ),
           ],
         ),
       );
