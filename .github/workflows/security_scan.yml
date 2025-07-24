@@ -12,9 +12,11 @@ jobs:
     env:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     steps:
-      - name: Skip if SNYK_TOKEN not set
+      - name: Abort if token missing
         if: ${{ env.SNYK_TOKEN == '' }}
-        run: echo "SNYK_TOKEN not configured – skipping security scan."
+        run: |
+          echo "Skipping security scan due to missing SNYK_TOKEN"
+          exit 0
 
       - name: Checkout
         if: ${{ env.SNYK_TOKEN != '' }}
