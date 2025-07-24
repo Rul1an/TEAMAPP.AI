@@ -14,20 +14,25 @@ void main() {
       routes: [
         GoRoute(path: '/', builder: (c, s) => const FanHomeScreen()),
         GoRoute(
-            path: '/training',
-            builder: (c, s) => const Placeholder(key: Key('training')),),
+          path: '/training',
+          builder: (c, s) => const Placeholder(key: Key('training')),
+        ),
         GoRoute(
-            path: '/matches',
-            builder: (c, s) => const Placeholder(key: Key('matches')),),
+          path: '/matches',
+          builder: (c, s) => const Placeholder(key: Key('matches')),
+        ),
         GoRoute(
-            path: '/players',
-            builder: (c, s) => const Placeholder(key: Key('players')),),
+          path: '/players',
+          builder: (c, s) => const Placeholder(key: Key('players')),
+        ),
         GoRoute(
-            path: '/calendar',
-            builder: (c, s) => const Placeholder(key: Key('calendar')),),
+          path: '/calendar',
+          builder: (c, s) => const Placeholder(key: Key('calendar')),
+        ),
         GoRoute(
-            path: '/my-stats',
-            builder: (c, s) => const Placeholder(key: Key('stats')),),
+          path: '/my-stats',
+          builder: (c, s) => const Placeholder(key: Key('stats')),
+        ),
       ],
     );
   });
