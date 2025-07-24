@@ -81,7 +81,15 @@ class TrainingRepositoryImpl implements TrainingRepository {
   Future<Result<void>> update(Training training) async {
     try {
       await _remote.update(training);
-      await _cache.clear();
+      // write-through: update cached list if present.
+      final cached = await _cache.read();
+      if (cached != null) {
+        final idx = cached.indexWhere((t) => t.id == training.id);
+        if (idx != -1) {
+          cached[idx] = training;
+          await _cache.write(cached);
+        }
+      }
       return const Success(null);
     } catch (e) {
       return Failure(_mapError(e));
