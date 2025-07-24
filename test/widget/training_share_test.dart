@@ -11,9 +11,27 @@ import 'package:jo17_tactical_manager/providers/trainings_provider.dart'
     as trainings_provider;
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as players_provider;
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() async {
+    // Mock SharedPreferences to avoid platform channel errors.
+    SharedPreferences.setMockInitialValues({});
+
+    // Initialise Supabase singleton once for provider dependencies.
+    try {
+      await Supabase.initialize(
+        url: 'https://dummy.supabase.co',
+        anonKey: 'public-anon-key',
+        debug: false,
+      );
+    } catch (_) {
+      // Ignore if already initialised in other tests.
+    }
+  });
 
   const shareChannel = MethodChannel('plugins.flutter.io/share_plus');
   shareChannel.setMockMethodCallHandler((MethodCall methodCall) async {
