@@ -29,7 +29,7 @@ _Aligns with Fan & Family pilot and 2025 best-practice UX guidelines_
 | ~~S1~~ | View-only gating | _Implemented in Slice 5_ | Front-end | ✅ |
 | ~~S2~~ | Share (Match) | Implemented – Training share deferred | Front-end | ✅ |
 | ~~A1~~ | Analytics observer | Added `AnalyticsRouteObserver` | Front-end | ✅ |
-| T1 | Tests | Golden & widget tests for new navigation + view-only gating | QA | W3 D4 |
+| ~~T1~~ | Tests | Golden & widget tests for new navigation + view-only gating | QA | ✅ |
 
 ---
 
