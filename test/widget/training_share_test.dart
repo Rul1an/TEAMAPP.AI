@@ -60,7 +60,8 @@ void main() {
         ..id = 'pl1'
         ..firstName = 'Jan'
         ..lastName = 'Tester'
-        ..jerseyNumber = 10;
+        ..jerseyNumber = 10
+        ..position = Position.forward;
 
       await tester.pumpWidget(
         ProviderScope(
