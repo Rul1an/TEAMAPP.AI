@@ -35,7 +35,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fan-${{ matrix.platform }}-build
-          path: |
-            build/app/outputs/flutter-apk/*.apk
-            build/web_fan_family/
+          path: build/web_fan_family/
           if-no-files-found: error
