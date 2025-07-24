@@ -68,6 +68,8 @@ jobs:
         with:
           format: cyclonedx-json
           output-file: sbom.json
+          path: .
+          upload-artifact: false
 
       - name: Upload SBOM artifact
         if: always()
