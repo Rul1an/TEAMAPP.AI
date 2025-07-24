@@ -42,13 +42,14 @@ jobs:
           osv-scanner --format sarif --output osv.sarif ./
 
       - name: Set SARIF file path
+        if: ${{ (matrix.scanner == 'osv') || (matrix.scanner == 'snyk' && env.SNYK_TOKEN != '') }}
         id: sarif
         run: |
-          FILE=$(ls *.sarif | head -n1)
+          FILE=$(ls *.sarif | head -n1 || true)
           echo "file=$FILE" >> $GITHUB_OUTPUT
 
       - name: Upload SARIF to GitHub Security tab
-        if: always()
+        if: ${{ steps.sarif.outputs.file != '' }}
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ steps.sarif.outputs.file }}
