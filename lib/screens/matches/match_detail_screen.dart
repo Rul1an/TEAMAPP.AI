@@ -12,10 +12,13 @@ import '../../models/player.dart';
 import '../../providers/matches_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
-import '../../utils/share_pdf_utils.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 import '../../widgets/highlight_gallery.dart';
+import '../../services/deep_link_service.dart';
+import '../../services/analytics_service.dart';
+import '../../utils/share_pdf_utils.dart';
 
 class MatchDetailScreen extends ConsumerStatefulWidget {
   const MatchDetailScreen({required this.matchId, super.key});
@@ -64,6 +67,11 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       appBar: AppBar(
         title: const Text('Wedstrijd Details'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            tooltip: 'Deel',
+            onPressed: _shareMatch,
+          ),
           if (canManage) ...[
             IconButton(
               icon: const Icon(Icons.edit),
@@ -702,6 +710,27 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
       if (mounted) {
         await SharePdfUtils.sharePdf(bytes, filename, context);
       }
+    });
+  }
+
+  Future<void> _shareMatch() async {
+    final matchAsync = ref.read(matchesProvider);
+    matchAsync.whenData((matches) async {
+      final match = matches.firstWhere(
+        (m) => m.id == widget.matchId,
+        orElse: Match.new,
+      );
+      if (match.id.isEmpty) return;
+
+      final title = 'Wedstrijd ${match.opponent}';
+      final link = DeepLinkService.instance.createMatchLink(match.id);
+      await Share.share(link.toString(), subject: title);
+      await AnalyticsService.instance.logEvent(
+        'share_match',
+        parameters: {
+          'match_id': match.id,
+        },
+      );
     });
   }
 

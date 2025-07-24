@@ -2,6 +2,8 @@
 
 _Approved by product board • 17 Jul 2025_
 
+_Status: **Completed – flavour merged to main on 24 Jul 2025**, CI green._
+
 This document formalises the decision to introduce a **dedicated “Fan & Family” Flutter flavour** for **Parents (O)** and **Players (P)** while keeping the existing _Coach-Suite_ flavour for staff roles.
 
 Links:
@@ -69,7 +71,7 @@ Links:
 10. Configure CI → GitHub Actions `build_fan.yaml` (Android APK, Web PWA).
 
 ### Week 4 – Pilot & KPI Gate
-11. Closed beta install for Club X (TestFlight + Play Internal).  
+11. Closed beta install for Club X (TestFlight + Play Internal).
 12. Capture KPIs (MAU uplift, ticket reduction, performance) in Firebase dashboard.
 13. **Go/No-Go** review; if green → roadmap to public release Q2 2026, else rollback to _Focus-Mode_ strategy.
 

@@ -149,7 +149,7 @@ class MainScaffold extends ConsumerWidget {
                   selectedIcon: const Icon(Icons.people),
                   label: Text(_navLabel('Spelers', compactLabels)),
                 ),
-                NavigationRailDestination(
+                const NavigationRailDestination(
                   icon: Icon(Icons.insights_outlined),
                   selectedIcon: Icon(Icons.insights),
                   label: Text('Insights'),
@@ -194,7 +194,7 @@ class MainScaffold extends ConsumerWidget {
               selectedIcon: const Icon(Icons.people),
               label: _navLabel('Spelers', compactLabels),
             ),
-            NavigationDestination(
+            const NavigationDestination(
               icon: Icon(Icons.insights_outlined),
               selectedIcon: Icon(Icons.insights),
               label: 'Insights',

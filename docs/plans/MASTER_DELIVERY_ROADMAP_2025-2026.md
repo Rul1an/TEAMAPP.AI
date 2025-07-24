@@ -33,8 +33,9 @@ _Last updated: 2025-07-16_
 | 1.5 | Import Training Plans | Import Guild | Sep Wk 2 |
 | 1.6 | Bulk operations UI | Import Guild | Sep Wk 2 |
 | 1.7 | Duplicate-detection on import (complete) | Import Guild | Sep Wk 2 |
+| 1.8 | **UI Refinement (Slice 5)** – navigation merge, view-only gating, analytics observer | Front-end Guild | ✅ Completed Jul 24 |
 
-Quality Gates: CI green; coverage ≥ 45 %; no file > 300 LOC.
+Quality Gates: CI green; coverage ≥ 45 % (raised from 40 %); no file > 300 LOC.
 
 ---
 
