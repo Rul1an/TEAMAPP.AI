@@ -10,10 +10,11 @@ import 'package:test_utils/surface_utils.dart';
 
 import 'package:jo17_tactical_manager/models/training.dart';
 import 'package:jo17_tactical_manager/providers/trainings_provider.dart';
+import 'package:jo17_tactical_manager/repositories/training_repository.dart';
 import 'package:jo17_tactical_manager/screens/training/training_edit_screen.dart';
 import 'package:jo17_tactical_manager/core/result.dart';
 
-class _FakeTrainingRepo extends TrainingRepository {
+class _FakeTrainingRepo implements TrainingRepository {
   final Training _t;
   _FakeTrainingRepo(this._t);
 
@@ -21,7 +22,22 @@ class _FakeTrainingRepo extends TrainingRepository {
   Future<Result<Training?>> getById(String id) async => Success(_t);
   @override
   Future<Result<void>> update(Training training) async => const Success(null);
-  // ... existing code ...
+  @override
+  Future<Result<List<Training>>> getAll() async => const Success([]);
+
+  @override
+  Future<Result<void>> add(Training training) async => const Success(null);
+
+  @override
+  Future<Result<void>> delete(String id) async => const Success(null);
+
+  @override
+  Future<Result<List<Training>>> getUpcoming() async => const Success([]);
+
+  @override
+  Future<Result<List<Training>>> getByDateRange(
+          DateTime start, DateTime end) async =>
+      const Success([]);
 }
 
 void main() {
