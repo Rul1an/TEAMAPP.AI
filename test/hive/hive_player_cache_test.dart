@@ -52,10 +52,6 @@ void main() {
       expect(read?.first.id, '1');
     });
 
-    test('TTL expiry placeholder – skipped', () async {
-      // TODO(roel): Review TTL logic in HivePlayerCache.
-    });
-    /*
     test('returns null after TTL expiry', () async {
       final cache = HivePlayerCache();
       final players = [
@@ -78,6 +74,5 @@ void main() {
       await Future<void>.delayed(const Duration(milliseconds: 60));
       expect(await cache.read(ttl: const Duration(milliseconds: 50)), isNull);
     });
-    */
   });
 }
