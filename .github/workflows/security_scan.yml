@@ -8,41 +8,49 @@ on:
 
 jobs:
   security-scan:
-    continue-on-error: true
+    continue-on-error: false
     runs-on: ubuntu-latest
     env:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    strategy:
+      matrix:
+        scanner: [snyk, osv]
+        include:
+          - scanner: snyk
+            requires_token: true
+          - scanner: osv
+            requires_token: false
     steps:
-      - name: Abort if token missing
-        if: ${{ env.SNYK_TOKEN == '' }}
-        run: |
-          echo "Skipping security scan due to missing SNYK_TOKEN"
-          exit 0
-
       - name: Checkout
-        if: ${{ env.SNYK_TOKEN != '' }}
         uses: actions/checkout@v4
 
-      - name: Setup Snyk
-        if: ${{ env.SNYK_TOKEN != '' }}
+      - name: Setup scanners
+        if: ${{ matrix.scanner == 'snyk' && env.SNYK_TOKEN != '' }}
         uses: snyk/actions/setup@v2
         with:
           version: latest
 
-      - name: Run Snyk Open Source scan
-        if: ${{ env.SNYK_TOKEN != '' }}
+      - name: Run Snyk scan
+        if: ${{ matrix.scanner == 'snyk' && env.SNYK_TOKEN != '' }}
         run: snyk test --severity-threshold=high --sarif-file-output=snyk.sarif
+
+      - name: Run OSV scanner
+        if: ${{ matrix.scanner == 'osv' && env.SNYK_TOKEN == '' }}
+        uses: google/osv-scanner-action@v1
         with:
-          command: test
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
-        env:
-          SNYK_TOKEN: ${{ env.SNYK_TOKEN }}
+          scan-args: --format sarif --output osv.sarif ./
+
+      - name: Set SARIF file path
+        id: sarif
+        run: |
+          FILE=$(ls *.sarif | head -n1)
+          echo "file=$FILE" >> $GITHUB_OUTPUT
 
       - name: Upload SARIF to GitHub Security tab
-        if: ${{ env.SNYK_TOKEN != '' }}
+        if: always()
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: snyk.sarif
+          sarif_file: ${{ steps.sarif.outputs.file }}
 
       - name: Generate SBOM
         uses: anchore/sbom-action@v0.16.1
