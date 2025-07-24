@@ -367,21 +367,35 @@ jobs:
 
       - name: 🌟 Deploy to Netlify Production
         id: netlify_deploy
-        uses: South-Paw/action-netlify-cli@v2
-        with:
-          args: deploy --dir=build/web --prod --json
+        run: |
+          # Deploy build to Netlify with a descriptive message (commit SHA + run number)
+          echo "🚀 Deploying to Netlify..."
+          OUTPUT=$(npx netlify-cli deploy \
+            --dir=build/web \
+            --prod \
+            --json \
+            --message "${{ github.sha }}-${{ github.run_number }}")
+
+          echo "$OUTPUT" | tee netlify-output.json
+
+          # Extract useful fields for subsequent jobs
+          DEPLOY_ID=$(jq -r '.deploy_id' netlify-output.json)
+          DEPLOY_URL=$(jq -r '.deploy_url' netlify-output.json)
+
+          echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
+          echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+
+          if [ -z "$DEPLOY_ID" ]; then
+            echo "❌ Could not parse deploy_id from Netlify output" && exit 1
+          fi
+          echo "✅ Netlify deploy successful: $DEPLOY_URL (id: $DEPLOY_ID)"
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
-      - name: 🔖 Capture deploy ID
-        id: capture
-        run: |
-          DEPLOY_ID=$(jq -r '.deploy_id' <<< "${{ steps.netlify_deploy.outputs.stdout }}")
-          echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
-
     outputs:
-      deploy_id: ${{ steps.capture.outputs.deploy_id }}
+      deploy_id: ${{ steps.netlify_deploy.outputs.deploy_id }}
+      deploy_url: ${{ steps.netlify_deploy.outputs.deploy_url }}
 
   # Post-deployment Health Check
   health-check:
@@ -459,6 +473,7 @@ jobs:
   auto-rollback:
     name: 🔄 Auto Rollback
     needs: [deploy-production]
+    if: ${{ secrets.AWS_CHAOS_ROLE_ARN != '' }}
     runs-on: ubuntu-latest
     env:
       AWS_ROLE: ${{ secrets.AWS_CHAOS_ROLE_ARN }}
