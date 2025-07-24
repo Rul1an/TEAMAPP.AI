@@ -1,103 +1,85 @@
-// Package imports:
-import 'package:file_picker/file_picker.dart';
-// Flutter foundation not used anymore.
+import 'dart:convert';
+import 'dart:typed_data';
 
-// Model imports:
-import '../models/match_schedule.dart';
+import 'package:csv/csv.dart';
 
-// Project imports:
 import '../core/result.dart';
-import '../repositories/match_schedule_repository.dart';
-import 'duplicate_schedule_detector.dart';
-import 'schedule_csv_parser.dart';
-
-class ScheduleImportState {
-  const ScheduleImportState({
-    this.parseResult,
-    this.duplicateResult,
-    this.status = ImportStatus.idle,
-  });
-
-  final ScheduleCsvParseResult? parseResult;
-  final DuplicateScheduleResult? duplicateResult;
-  final ImportStatus status;
-
-  ScheduleImportState copyWith({
-    ScheduleCsvParseResult? parseResult,
-    DuplicateScheduleResult? duplicateResult,
-    ImportStatus? status,
-  }) =>
-      ScheduleImportState(
-        parseResult: parseResult ?? this.parseResult,
-        duplicateResult: duplicateResult ?? this.duplicateResult,
-        status: status ?? this.status,
-      );
-}
-
-enum ImportStatus { idle, picking, parsing, ready, importing, done, error }
+import '../models/match.dart';
+import '../models/import_report.dart';
+import '../repositories/match_repository.dart';
 
 class ScheduleImportService {
-  ScheduleImportService({
-    required MatchScheduleRepository repository,
-    ScheduleCsvParser? parser,
-    DuplicateScheduleDetector? detector,
-  })  : _repo = repository,
-        _parser = parser ?? ScheduleCsvParser(),
-        _detector = detector ?? DuplicateScheduleDetector();
+  ScheduleImportService(this._repo);
 
-  final MatchScheduleRepository _repo;
-  final ScheduleCsvParser _parser;
-  final DuplicateScheduleDetector _detector;
+  final MatchRepository _repo;
 
-  Future<Result<ScheduleImportState>> pickAndParse() async {
-    try {
-      final res = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['csv'],
-      );
-      if (res == null || res.files.isEmpty) {
-        return const Success(ScheduleImportState());
-      }
-      final file = res.files.first;
-      final csvContent = file.bytes != null
-          ? String.fromCharCodes(file.bytes!)
-          : String.fromCharCodes(
-              (await file.readStream!.toList()).expand((e) => e).toList(),
-            );
-
-      final parseRes = await _parser.parse(csvContent);
-      if (!parseRes.isSuccess) return Failure(parseRes.errorOrNull!);
-      final schedules = parseRes.dataOrNull!.schedules;
-
-      // existing schedules from repo
-      final existingRes = await _repo.getAll();
-      final existing = existingRes.dataOrNull ?? [];
-
-      final dupRes = _detector.detect(schedules, existing);
-
+  /// Imports match fixtures from raw CSV bytes.
+  /// Returns [ImportReport] with count & errors.
+  Future<Result<ImportReport>> importCsvBytes(Uint8List bytes) async {
+    final csvStr = utf8.decode(bytes);
+    final rows = const CsvToListConverter(eol: '\n').convert(csvStr);
+    if (rows.isEmpty) {
+      return const Success(ImportReport(imported: 0, errors: ['Leeg CSV']));
+    }
+    // Expect header row
+    final header =
+        rows.first.map((e) => e.toString().trim().toLowerCase()).toList();
+    final required = ['date', 'time', 'opponent', 'competition', 'location'];
+    if (!required.every(header.contains)) {
       return Success(
-        ScheduleImportState(
-          status: ImportStatus.ready,
-          parseResult: parseRes.dataOrNull,
-          duplicateResult: dupRes,
+        ImportReport(
+          imported: 0,
+          errors: [
+            'CSV mist verplichte kolommen: ${required.where((c) => !header.contains(c)).join(', ')}'
+          ],
         ),
       );
-    } catch (e) {
-      return Failure(CacheFailure(e.toString()));
     }
-  }
+    final dateIdx = header.indexOf('date');
+    final timeIdx = header.indexOf('time');
+    final oppIdx = header.indexOf('opponent');
+    final compIdx = header.indexOf('competition');
+    final locIdx = header.indexOf('location');
 
-  Future<Result<void>> importSchedules(List<MatchSchedule> schedules) async {
-    try {
-      for (final s in schedules) {
-        final res = await _repo.add(s);
-        if (!res.isSuccess) {
-          return Failure(res.errorOrNull!);
+    int imported = 0;
+    final errors = <String>[];
+    for (var i = 1; i < rows.length; i++) {
+      final row = rows[i];
+      try {
+        final dateStr = row[dateIdx]?.toString();
+        final timeStr = row[timeIdx]?.toString();
+        final dt = DateTime.parse('$dateStr $timeStr');
+        final locStr = row[locIdx].toString().toLowerCase();
+        final compStr = row[compIdx].toString().toLowerCase();
+
+        final location = switch (locStr) {
+          'uit' || 'away' => Location.away,
+          _ => Location.home,
+        };
+
+        final competition = switch (compStr) {
+          'cup' || 'beker' => Competition.cup,
+          'friendly' || 'vriendschappelijk' => Competition.friendly,
+          'tournament' || 'toernooi' => Competition.tournament,
+          _ => Competition.league,
+        };
+
+        final match = Match()
+          ..id = '${DateTime.now().millisecondsSinceEpoch}-$i'
+          ..date = dt
+          ..opponent = row[oppIdx].toString()
+          ..competition = competition
+          ..location = location;
+        final res = await _repo.add(match);
+        if (res.isSuccess) {
+          imported += 1;
+        } else {
+          errors.add('Rij $i: ${res.errorOrNull?.message ?? 'onbekende fout'}');
         }
+      } catch (e) {
+        errors.add('Rij $i: $e');
       }
-      return const Success(null);
-    } catch (e) {
-      return Failure(CacheFailure(e.toString()));
     }
+    return Success(ImportReport(imported: imported, errors: errors));
   }
 }
