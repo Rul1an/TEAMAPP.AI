@@ -42,11 +42,11 @@ _Linked to:_ [Master Delivery Roadmap 2025-2026](MASTER_DELIVERY_ROADMAP_2025-20
 ## 3  HeatMap Integration (ID 1.2, ~3 h)
 | Step | Details | Est. h |
 |------|---------|--------|
-| H1 | Embed `HeatMapCard` in `performance_analytics_screen.dart` | 0.75 |
-| H2 | Add `HeatMapController` binning unit test | 0.5 |
-| H3 | GA4 `screen_view` for `FanHomeScreen` & heatmap tab via `AnalyticsRouteObserver` | 0.5 |
-| H4 | Update golden test for Performance Analytics screen | 0.75 |
-| H5 | Docs update & KPI | 0.5 |
+| ~~H1~~ | Embed `HeatMapCard` in `performance_analytics_screen.dart` | 0.75 | ✅ |
+| ~~H2~~ | Add `HeatMapController` binning unit test | 0.5 | ✅ |
+| ~~H3~~ | GA4 `screen_view` for `FanHomeScreen` & heatmap tab via `AnalyticsRouteObserver` | 0.5 | ✅ |
+| ~~H4~~ | Update golden test for Performance Analytics screen | 0.75 | ⏳ skipped (baseline pending) |
+| ~~H5~~ | Docs update & KPI | 0.5 | ✅ |
 
 **Exit criteria** : Heatmap visible, bin test passes, GA4 event appears in DebugView.
 

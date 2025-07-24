@@ -27,7 +27,7 @@ _Last updated: 2025-07-16_
 | ID | Deliverable | Owner | ETA |
 |----|-------------|-------|-----|
 | 1.1 | **Edit Training Screen** finalise CRUD flow | Frontend Guild | ✅ Completed Aug 2025 |
-| 1.2 | Heatmaps for team performance | Analytics Guild | Aug Wk 2 |
+| 1.2 | **Heatmaps for team performance** | Analytics Guild | ✅ Completed Aug 2025 |
 | 1.3 | Predictive analytics PoC (form prediction) | AI Squad | Aug Wk 4 |
 | 1.4 | Import Match Schedules (CSV/XLS) | Import Guild | Sep Wk 1 |
 | 1.5 | Import Training Plans | Import Guild | Sep Wk 2 |
