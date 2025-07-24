@@ -12,6 +12,7 @@ import 'package:jo17_tactical_manager/providers/trainings_provider.dart'
 import 'package:jo17_tactical_manager/providers/players_provider.dart'
     as players_provider;
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -31,6 +32,9 @@ void main() {
     } catch (_) {
       // Ignore if already initialised in other tests.
     }
+
+    // Initialize date formatting for Dutch locale (used in widgets).
+    await initializeDateFormatting('nl_NL');
   });
 
   const shareChannel = MethodChannel('plugins.flutter.io/share_plus');
