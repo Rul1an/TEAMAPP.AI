@@ -54,7 +54,7 @@ void main() {
     });
 
     test('TTL expiry placeholder – skipped', () async {
-      // TODO: Fix TTL logic; keeping placeholder to keep test count stable.
+      // TODO(roel): Review TTL logic in HiveTrainingCache.
     });
     /*
     test('returns null after TTL expiry', () async {

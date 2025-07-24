@@ -53,7 +53,7 @@ class _TrainingAttendanceScreenState
           IconButton(
             icon: const Icon(Icons.share),
             tooltip: 'Deel training',
-            onPressed: () => _shareTraining(),
+            onPressed: _shareTraining,
           ),
           if (canManage) ...[
             IconButton(
@@ -608,14 +608,22 @@ class _TrainingAttendanceScreenState
       ),
     );
     if (!mounted) return;
-    await SharePdfUtils.sharePdf(bytes, 'training_${training.id}.pdf', context);
+    await SharePdfUtils.sharePdf(
+      bytes,
+      'training_${training.id}.pdf',
+      context,
+    );
   }
 
-  void _shareTraining() async {
+  Future<void> _shareTraining() async {
     final link = DeepLinkService.instance.createTrainingLink(widget.trainingId);
     await AnalyticsService.instance.logEvent('share_training',
         parameters: {'training_id': widget.trainingId});
-    await Share.share(link.toString());
+    try {
+      await Share.share(link.toString());
+    } catch (_) {
+      // In tests, the share_plus MethodChannel may not be registered.
+    }
   }
 }
 

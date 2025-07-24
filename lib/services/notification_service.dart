@@ -27,11 +27,7 @@ class NotificationService {
   }
 
   Future<void> requestPermission() async {
-    await _messaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    await _messaging.requestPermission();
   }
 
   Future<void> subscribeToTopic(String topic) async {
