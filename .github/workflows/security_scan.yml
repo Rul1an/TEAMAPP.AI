@@ -37,8 +37,9 @@ jobs:
       - name: Run OSV scanner
         if: ${{ matrix.scanner == 'osv' && env.SNYK_TOKEN == '' }}
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y osv-scanner
+          curl -sL https://github.com/google/osv-scanner/releases/latest/download/osv-scanner-linux-amd64 -o osv-scanner
+          chmod +x osv-scanner
+          sudo mv osv-scanner /usr/local/bin/
           osv-scanner --format sarif --output osv.sarif ./
 
       - name: Set SARIF file path
