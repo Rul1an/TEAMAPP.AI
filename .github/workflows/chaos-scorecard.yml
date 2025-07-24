@@ -12,14 +12,21 @@ permissions:
 
 jobs:
   scorecard:
-    if: ${{ secrets.AWS_CHAOS_ROLE_ARN != '' }}
+    continue-on-error: true
     runs-on: ubuntu-latest
     env:
+      AWS_CHAOS_ROLE_ARN: ${{ secrets.AWS_CHAOS_ROLE_ARN }}
       AWS_REGION: eu-west-1
       CLOUDWATCH_NS: VideoPlatform/GameDay
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Abort if ARN missing
+        if: ${{ env.AWS_CHAOS_ROLE_ARN == '' }}
+        run: |
+          echo "Skipping chaos scorecard, AWS role not configured"
+          exit 0
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
