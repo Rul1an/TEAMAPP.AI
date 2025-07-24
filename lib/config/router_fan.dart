@@ -14,6 +14,10 @@ import '../widgets/common/main_scaffold.dart';
 // import 'config/router.dart' as core; // core routes not yet used in bootstrap
 import '../screens/fan/fan_stats_screen.dart';
 import '../config/providers.dart';
+import '../screens/players/players_screen.dart';
+import '../screens/training/training_screen.dart';
+import '../screens/matches/matches_screen.dart';
+import '../screens/annual_planning/annual_planning_screen.dart';
 
 GoRouter createFanRouter(Ref ref) => GoRouter(
       initialLocation: '/auth',
@@ -63,9 +67,32 @@ GoRouter createFanRouter(Ref ref) => GoRouter(
     );
 
 List<RouteBase> _cloneCoreRoutesExceptDashboard(Ref ref) {
-  // TODO: Reuse core routes dynamically once GoRouter exposes them.
-  // For bootstrap slice we keep the fan router minimal.
-  return [];
+  return [
+    GoRoute(
+      path: '/players',
+      name: 'players',
+      pageBuilder: (context, state) =>
+          const NoTransitionPage(child: PlayersScreen()),
+    ),
+    GoRoute(
+      path: '/training',
+      name: 'training',
+      pageBuilder: (context, state) =>
+          const NoTransitionPage(child: TrainingScreen()),
+    ),
+    GoRoute(
+      path: '/matches',
+      name: 'matches',
+      pageBuilder: (context, state) =>
+          const NoTransitionPage(child: MatchesScreen()),
+    ),
+    GoRoute(
+      path: '/calendar',
+      name: 'calendar',
+      pageBuilder: (context, state) =>
+          const NoTransitionPage(child: AnnualPlanningScreen()),
+    ),
+  ];
 }
 
 final routerFanProvider = Provider.autoDispose<GoRouter>(createFanRouter);
