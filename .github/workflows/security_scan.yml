@@ -38,8 +38,8 @@ jobs:
         if: ${{ matrix.scanner == 'osv' && env.SNYK_TOKEN == '' }}
         run: |
           OSV_VER=1.7.3
-          curl -Ls "https://github.com/google/osv-scanner/releases/download/v${OSV_VER}/osv-scanner_${OSV_VER}_linux_amd64.deb" -o osv.deb
-          sudo dpkg -i osv.deb
+          curl -Ls "https://github.com/google/osv-scanner/releases/download/v${OSV_VER}/osv-scanner_${OSV_VER}_linux_amd64" -o osv-scanner
+          chmod +x osv-scanner && sudo mv osv-scanner /usr/local/bin/
           osv-scanner --format sarif --output osv.sarif ./
 
       - name: Set SARIF file path
