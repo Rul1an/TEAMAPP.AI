@@ -14,11 +14,11 @@ jobs:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     strategy:
       matrix:
-        scanner: [snyk, osv]
+        scanner: [snyk, trivy]
         include:
           - scanner: snyk
             requires_token: true
-          - scanner: osv
+          - scanner: trivy
             requires_token: false
     steps:
       - name: Checkout
@@ -34,17 +34,16 @@ jobs:
         if: ${{ matrix.scanner == 'snyk' && env.SNYK_TOKEN != '' }}
         run: snyk test --severity-threshold=high --sarif-file-output=snyk.sarif
 
-      - name: Run OSV scanner
-        if: ${{ matrix.scanner == 'osv' && env.SNYK_TOKEN == '' }}
-        run: |
-          OSV_VER=1.7.3
-          curl -Ls "https://github.com/google/osv-scanner/releases/download/v${OSV_VER}/osv-scanner_${OSV_VER}_linux_amd64.tar.gz" -o osv.tgz
-          tar -xzf osv.tgz
-          chmod +x osv-scanner && sudo mv osv-scanner /usr/local/bin/
-          if ! osv-scanner --format sarif --output osv.sarif ./; then
-            echo "OSV scan failed, generating empty report to pass pipeline"
-            echo '{"version": "2.1.0", "runs": []}' > osv.sarif
-          fi
+      - name: Run Trivy scanner (SCA)
+        if: ${{ matrix.scanner == 'trivy' && env.SNYK_TOKEN == '' }}
+        uses: aquasecurity/trivy-action@0.14.0
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+          format: 'sarif'
+          output: 'trivy.sarif'
+          skip-dirs: 'build,coverage,.git'
 
       - name: Set SARIF file path
         if: ${{ (matrix.scanner == 'osv') || (matrix.scanner == 'snyk' && env.SNYK_TOKEN != '') }}
