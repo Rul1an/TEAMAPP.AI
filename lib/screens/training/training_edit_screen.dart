@@ -9,7 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 
 // Project imports:
 import '../../models/training.dart';
-import '../../providers/trainings_provider.dart';
+import '../../providers/training_edit_viewmodel.dart';
 import '../../utils/validators/training_validators.dart';
 
 class TrainingEditScreen extends ConsumerStatefulWidget {
@@ -51,11 +51,8 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
     super.dispose();
   }
 
-  void _load(List<Training> list) {
-    _training = list.firstWhere(
-      (t) => t.id == widget.trainingId,
-      orElse: Training.new,
-    );
+  void _load(Training t) {
+    _training = t;
     if (_training != null && _training!.id.isNotEmpty) {
       _selectedDate = _training!.date;
       _durationCtrl.text = _training!.duration.toString();
@@ -86,33 +83,30 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
     }
     setState(() => _isSaving = true);
 
-    try {
-      _training!
-        ..date = _selectedDate!
-        ..duration = int.parse(_durationCtrl.text)
-        ..focus = _focus!
-        ..intensity = _intensity!
-        ..status = _status!
-        ..updatedAt = DateTime.now();
+    _training!
+      ..date = _selectedDate!
+      ..duration = int.parse(_durationCtrl.text)
+      ..focus = _focus!
+      ..intensity = _intensity!
+      ..status = _status!
+      ..updatedAt = DateTime.now();
 
-      final repo = ref.read(trainingRepositoryProvider);
-      final res = await repo.update(_training!);
-      if (!res.isSuccess) throw Exception(res.errorOrNull);
+    final vm =
+        ref.read(trainingEditViewModelProvider(widget.trainingId).notifier);
+    final success = await vm.save(_training!);
 
-      if (mounted) {
+    if (mounted) {
+      setState(() => _isSaving = false);
+      if (success) {
         context.pop();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Training bijgewerkt')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Training bijgewerkt')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Opslaan mislukt')),
+        );
       }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Fout: $e')));
-      }
-    } finally {
-      if (mounted) setState(() => _isSaving = false);
     }
   }
 
@@ -126,131 +120,134 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final async = ref.watch(trainingsProvider);
+    final vmState = ref.watch(trainingEditViewModelProvider(widget.trainingId));
 
     return Scaffold(
       appBar: AppBar(title: const Text('Training bewerken')),
-      body: async.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Fout: $e')),
-        data: (trainings) {
-          _load(trainings);
-          if (_training == null || _training!.id.isEmpty) {
-            return const Center(child: Text('Training niet gevonden'));
-          }
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Date picker
-                  InkWell(
-                    onTap: () => _pickDate(context),
-                    child: InputDecorator(
-                      decoration: const InputDecoration(
-                        labelText: 'Datum',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.calendar_today),
-                      ),
-                      child: Text(
-                        _selectedDate != null
-                            ? _formatDate(_selectedDate!)
-                            : 'Selecteer datum',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Duration
-                  TextFormField(
-                    controller: _durationCtrl,
+      body: () {
+        if (vmState.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (vmState.error != null) {
+          return Center(child: Text('Fout: ${vmState.error}'));
+        }
+        if (vmState.training == null) {
+          return const Center(child: Text('Training niet gevonden'));
+        }
+
+        _load(vmState.training!);
+
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Date picker
+                InkWell(
+                  onTap: () => _pickDate(context),
+                  child: InputDecorator(
                     decoration: const InputDecoration(
-                      labelText: 'Duur (minuten)',
+                      labelText: 'Datum',
                       border: OutlineInputBorder(),
-                      suffixText: 'min',
+                      prefixIcon: Icon(Icons.calendar_today),
                     ),
-                    keyboardType: TextInputType.number,
-                    validator: validateDuration,
+                    child: Text(
+                      _selectedDate != null
+                          ? _formatDate(_selectedDate!)
+                          : 'Selecteer datum',
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                  // Focus & Intensity
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DropdownButtonFormField<TrainingFocus>(
-                          value: _focus,
-                          decoration: const InputDecoration(
-                            labelText: 'Focus',
-                            border: OutlineInputBorder(),
-                          ),
-                          items: TrainingFocus.values
-                              .map(
-                                (f) => DropdownMenuItem(
-                                  value: f,
-                                  child: Text(f.name),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (v) => setState(() => _focus = v),
-                          validator: (v) => validateRequired(v, 'Focus'),
+                ),
+                const SizedBox(height: 16),
+                // Duration
+                TextFormField(
+                  controller: _durationCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'Duur (minuten)',
+                    border: OutlineInputBorder(),
+                    suffixText: 'min',
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: validateDuration,
+                ),
+                const SizedBox(height: 16),
+                // Focus & Intensity
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonFormField<TrainingFocus>(
+                        value: _focus,
+                        decoration: const InputDecoration(
+                          labelText: 'Focus',
+                          border: OutlineInputBorder(),
                         ),
+                        items: TrainingFocus.values
+                            .map(
+                              (f) => DropdownMenuItem(
+                                value: f,
+                                child: Text(f.name),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (v) => setState(() => _focus = v),
+                        validator: (v) => validateRequired(v, 'Focus'),
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: DropdownButtonFormField<TrainingIntensity>(
-                          value: _intensity,
-                          decoration: const InputDecoration(
-                            labelText: 'Intensiteit',
-                            border: OutlineInputBorder(),
-                          ),
-                          items: TrainingIntensity.values
-                              .map(
-                                (i) => DropdownMenuItem(
-                                  value: i,
-                                  child: Text(i.name),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (v) => setState(() => _intensity = v),
-                          validator: (v) => validateRequired(v, 'Intensiteit'),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: DropdownButtonFormField<TrainingIntensity>(
+                        value: _intensity,
+                        decoration: const InputDecoration(
+                          labelText: 'Intensiteit',
+                          border: OutlineInputBorder(),
                         ),
+                        items: TrainingIntensity.values
+                            .map(
+                              (i) => DropdownMenuItem(
+                                value: i,
+                                child: Text(i.name),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (v) => setState(() => _intensity = v),
+                        validator: (v) => validateRequired(v, 'Intensiteit'),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  DropdownButtonFormField<TrainingStatus>(
-                    value: _status,
-                    decoration: const InputDecoration(
-                      labelText: 'Status',
-                      border: OutlineInputBorder(),
                     ),
-                    items: TrainingStatus.values
-                        .map(
-                          (s) =>
-                              DropdownMenuItem(value: s, child: Text(s.name)),
-                        )
-                        .toList(),
-                    onChanged: (v) => setState(() => _status = v),
-                    validator: (v) => validateRequired(v, 'Status'),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                DropdownButtonFormField<TrainingStatus>(
+                  value: _status,
+                  decoration: const InputDecoration(
+                    labelText: 'Status',
+                    border: OutlineInputBorder(),
                   ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: _isSaving ? null : _save,
-                      child: _isSaving
-                          ? const CircularProgressIndicator()
-                          : const Text('Opslaan'),
-                    ),
+                  items: TrainingStatus.values
+                      .map(
+                        (s) => DropdownMenuItem(value: s, child: Text(s.name)),
+                      )
+                      .toList(),
+                  onChanged: (v) => setState(() => _status = v),
+                  validator: (v) => validateRequired(v, 'Status'),
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: _isSaving ? null : _save,
+                    child: _isSaving
+                        ? const CircularProgressIndicator()
+                        : const Text('Opslaan'),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      }(),
     );
   }
 }
