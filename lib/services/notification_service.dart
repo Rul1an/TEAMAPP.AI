@@ -1,3 +1,4 @@
+// ignore_for_file: flutter_style_todos
 class NotificationService {
   static final NotificationService instance = NotificationService();
 

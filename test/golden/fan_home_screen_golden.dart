@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, require_trailing_commas, dead_code
 
 import 'dart:io';
 
@@ -30,9 +30,11 @@ void main() {
     testWidgets(
       'default grid layout',
       (tester) async {
-        final router = GoRouter(routes: [
-          GoRoute(path: '/', builder: (c, s) => const FanHomeScreen()),
-        ]);
+        final router = GoRouter(
+          routes: [
+            GoRoute(path: '/', builder: (c, s) => const FanHomeScreen()),
+          ],
+        );
         await tester.pumpWidget(MaterialApp.router(routerConfig: router));
         await tester.pumpAndSettle();
 

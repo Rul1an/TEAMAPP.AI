@@ -67,8 +67,11 @@ class _DashboardCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon,
-                  size: 48, color: Theme.of(context).colorScheme.primary,),
+              Icon(
+                icon,
+                size: 48,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               const SizedBox(height: 8),
               Text(label, style: Theme.of(context).textTheme.titleMedium),
             ],

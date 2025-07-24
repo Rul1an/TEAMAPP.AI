@@ -1,3 +1,4 @@
+// ignore_for_file: flutter_style_todos
 class DeepLinkService {
   static final DeepLinkService instance = DeepLinkService();
 

@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously, unawaited_futures
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';

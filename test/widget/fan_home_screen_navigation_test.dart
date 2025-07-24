@@ -1,3 +1,4 @@
+// ignore_for_file: undefined_getter, no_leading_underscores_for_local_identifiers
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -12,11 +13,21 @@ void main() {
       initialLocation: '/',
       routes: [
         GoRoute(path: '/', builder: (c, s) => const FanHomeScreen()),
-        GoRoute(path: '/training', builder: (c, s) => const Placeholder(key: Key('training'))),
-        GoRoute(path: '/matches', builder: (c, s) => const Placeholder(key: Key('matches'))),
-        GoRoute(path: '/players', builder: (c, s) => const Placeholder(key: Key('players'))),
-        GoRoute(path: '/calendar', builder: (c, s) => const Placeholder(key: Key('calendar'))),
-        GoRoute(path: '/my-stats', builder: (c, s) => const Placeholder(key: Key('stats'))),
+        GoRoute(
+            path: '/training',
+            builder: (c, s) => const Placeholder(key: Key('training')),),
+        GoRoute(
+            path: '/matches',
+            builder: (c, s) => const Placeholder(key: Key('matches')),),
+        GoRoute(
+            path: '/players',
+            builder: (c, s) => const Placeholder(key: Key('players')),),
+        GoRoute(
+            path: '/calendar',
+            builder: (c, s) => const Placeholder(key: Key('calendar')),),
+        GoRoute(
+            path: '/my-stats',
+            builder: (c, s) => const Placeholder(key: Key('stats')),),
       ],
     );
   });

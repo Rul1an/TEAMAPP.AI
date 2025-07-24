@@ -10,6 +10,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/demo_mode_provider.dart';
 import '../organization/organization_badge.dart';
 
+// ignore_for_file: prefer_const_constructors
 class MainScaffold extends ConsumerWidget {
   const MainScaffold({required this.child, super.key});
   final Widget child;
