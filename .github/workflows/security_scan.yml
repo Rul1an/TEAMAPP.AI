@@ -6,6 +6,10 @@ on:
   schedule:
     - cron: '0 2 * * *'  # Nightly at 02:00 UTC
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   security-scan:
     continue-on-error: false
@@ -44,6 +48,7 @@ jobs:
           format: 'sarif'
           output: 'trivy.sarif'
           skip-dirs: 'build,coverage,.git'
+          exit-code: ${{ github.ref == 'refs/heads/main' && '1' || '0' }}
 
       - name: Set SARIF file path
         if: ${{ (matrix.scanner == 'osv') || (matrix.scanner == 'snyk' && env.SNYK_TOKEN != '') }}
