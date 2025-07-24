@@ -39,7 +39,12 @@ class ScheduleCsvParser {
 
   Future<Result<ScheduleCsvParseResult>> parse(String csvContent) async {
     try {
-      final rows = _converter.convert(csvContent.trim());
+      // Auto-detect line ending because the csv package defaults to \r\n.
+      // Many tools (e.g. Google Sheets) export with just \n, which previously
+      // caused the entire content to be parsed as a single row and therefore
+      // our tests failed (no schedules parsed).
+      final detectedEol = csvContent.contains('\r\n') ? '\r\n' : '\n';
+      final rows = _converter.convert(csvContent.trim(), eol: detectedEol);
       if (rows.isEmpty) {
         return Success(ScheduleCsvParseResult([], ['CSV is empty']));
       }

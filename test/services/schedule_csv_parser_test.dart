@@ -1,5 +1,4 @@
-@Skip('CSV parser returned unexpected results – skipping until parser fix')
-// Removed global Skip – parser now stable
+// Parser tests enabled after EOL auto-detection fix
 // ignore_for_file: library_annotations, invalid_annotation_target
 
 // Package imports:
