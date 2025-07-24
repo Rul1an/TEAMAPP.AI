@@ -98,7 +98,7 @@ class _TrainingEditScreenState extends ConsumerState<TrainingEditScreen> {
     if (mounted) {
       setState(() => _isSaving = false);
       if (success) {
-        context.pop();
+        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Training bijgewerkt')),
         );
