@@ -26,7 +26,7 @@ jobs:
 
       - name: Setup scanners
         if: ${{ matrix.scanner == 'snyk' && env.SNYK_TOKEN != '' }}
-        uses: snyk/actions/setup@v2
+        uses: snyk/actions/setup@0.4.0
         with:
           version: latest
 
@@ -36,7 +36,7 @@ jobs:
 
       - name: Run OSV scanner
         if: ${{ matrix.scanner == 'osv' && env.SNYK_TOKEN == '' }}
-        uses: google/osv-scanner-action@v1
+        uses: google/osv-scanner-action@v2
         with:
           scan-args: --format sarif --output osv.sarif ./
 
