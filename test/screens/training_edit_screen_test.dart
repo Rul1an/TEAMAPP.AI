@@ -101,7 +101,7 @@ void main() {
     await tester.tap(find.text('Opslaan'));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('15–240'), findsOneWidget);
+    expect(find.textContaining('Duur moet tussen'), findsOneWidget);
   });
 
   testWidgets('successful save calls repository update', (tester) async {
