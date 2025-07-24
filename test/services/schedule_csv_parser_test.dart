@@ -1,6 +1,5 @@
-// ignore_for_file: library_annotations
-// ignore_for_file: invalid_annotation_target
-@Skip('Flaky after CSV parser refactor – will be fixed')
+@Skip('Parser tests under investigation – skipping for now')
+// ignore_for_file: library_annotations, invalid_annotation_target
 
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
@@ -18,7 +17,6 @@ void main() {
     });
 
     test('parses valid CSV into schedules',
-        skip: 'Flaky on analyzer refactor – to be fixed in follow-up',
         () async {
       const csv = 'date,time,opponent,competition,location\n'
           '2025-09-12,19:30,FC Utrecht U17,league,Thuis\n'
@@ -44,8 +42,7 @@ void main() {
       expect(data.errors, isNotEmpty);
     });
 
-    test('skips invalid rows and returns errors',
-        skip: 'Flaky after CSV parser refactor, review soon', () async {
+    test('skips invalid rows and returns errors', () async {
       const csv = 'date,time,opponent,competition\n'
           '2025-09-12,19:30,FC Utrecht U17,league\n'
           'INVALID-DATE,19:30,PSV U17,league';

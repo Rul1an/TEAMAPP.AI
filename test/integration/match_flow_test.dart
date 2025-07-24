@@ -1,7 +1,5 @@
-// ignore_for_file: library_annotations
-// ignore_for_file: invalid_annotation_target
-
-@Skip('Flaky after video_tagging integration – to be fixed in slice cleanup')
+@Skip('Flaky integration test – will be fixed later')
+// ignore_for_file: library_annotations, invalid_annotation_target
 
 // Flutter imports:
 import 'package:flutter/material.dart';
