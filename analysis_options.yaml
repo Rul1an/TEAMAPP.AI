@@ -48,6 +48,14 @@ analyzer:
     prefer_int_literals: ignore
     no_default_cases: ignore
 
+    # Added temporary ignores to unblock Web build; remove after quality sprint
+    prefer_const_declarations: ignore
+    avoid_redundant_argument_values: ignore
+    sort_constructors_first: ignore
+    library_private_types_in_public_api: ignore
+    prefer_relative_imports: ignore
+    require_trailing_commas: ignore
+
     avoid_final_parameters: ignore
     comment_references: ignore
     avoid_equals_and_hash_code_on_mutable_classes: ignore
@@ -240,12 +248,3 @@ linter:
     # avoid_dynamic_calls: ignore
     # prefer_int_literals: ignore
     # no_default_cases: ignore
-
-analyzer:
-  errors:
-    prefer_const_declarations: ignore
-    avoid_redundant_argument_values: ignore
-    sort_constructors_first: ignore
-    library_private_types_in_public_api: ignore
-    prefer_relative_imports: ignore
-    require_trailing_commas: ignore
