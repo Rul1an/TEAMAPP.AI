@@ -112,3 +112,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+dependency_overrides:
+  file: 7.0.1
+  analyzer: 5.17.0
