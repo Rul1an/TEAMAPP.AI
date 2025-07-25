@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 
 // Project imports:
 import 'config/environment.dart';
@@ -28,6 +31,11 @@ void main() async {
     url: Environment.current.supabaseUrl,
     anonKey: Environment.current.supabaseAnonKey,
   );
+
+  // Initialize Firebase (Performance Monitoring)
+  await Firebase.initializeApp();
+  await FirebasePerformance.instance
+      .setPerformanceCollectionEnabled(!kDebugMode);
 
   // Initialize Sentry for crash & performance monitoring
   await SentryFlutter.init(
