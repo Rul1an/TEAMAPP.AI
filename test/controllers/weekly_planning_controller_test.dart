@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
 import 'package:jo17_tactical_manager/controllers/weekly_planning_controller.dart';
 
 void main() {
@@ -7,7 +6,6 @@ void main() {
     late WeeklyPlanningController controller;
 
     setUp(() {
-      // Initialize controller before each test
       controller = WeeklyPlanningController();
     });
 
@@ -16,11 +14,10 @@ void main() {
     });
 
     test('scrollToWeek does not throw for valid index', () {
-      expect(() => controller.scrollToWeek(3), returnsNormally);
+      expect(() => controller.scrollToWeek(2), returnsNormally);
     });
 
     tearDown(() {
-      // Dispose controller after each test
       controller.dispose();
     });
   });
