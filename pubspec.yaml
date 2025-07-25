@@ -108,7 +108,8 @@ dev_dependencies:
 
   # New dev dependency
   hive_test: ^1.0.1
-  # custom_lint temporarily removed due to analyzer incompatibility (upgrade pending)
+  custom_lint: ^0.6.3
+  custom_lint_core: ^0.6.3
   dart_code_metrics_presets: ^2.24.0
   leak_tracker: ^10.0.9
   leak_tracker_flutter_testing: ^3.0.9
@@ -118,4 +119,4 @@ flutter:
 
 dependency_overrides:
   file: 7.0.1
-  analyzer: 5.17.1
+  analyzer: 5.13.0
