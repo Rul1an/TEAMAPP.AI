@@ -193,6 +193,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.4"
+  ci:
+    dependency: transitive
+    description:
+      name: ci
+      sha256: "145d095ce05cddac4d797a158bc4cf3b6016d1fe63d8c3d2fbd7212590adca13"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   cli_config:
     dependency: transitive
     description:
@@ -201,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      sha256: ff6785f7e9e3c38ac98b2fb035701789de90154024a75b6cb926445e83197d1c
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.2"
   clock:
     dependency: transitive
     description:
@@ -297,6 +313,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  custom_lint:
+    dependency: "direct dev"
+    description:
+      name: custom_lint
+      sha256: "7c0aec12df22f9082146c354692056677f1e70bc43471644d1fdb36c6fdda799"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.4"
   custom_lint_core:
     dependency: transitive
     description:
@@ -305,6 +329,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.3"
+  dart_code_metrics_presets:
+    dependency: "direct dev"
+    description:
+      name: dart_code_metrics_presets
+      sha256: f1bab78d6e02e08948bef84d637e0d19ee7122ceb4b52b9ea77fe87ec5e9e588
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.24.0"
   dart_style:
     dependency: transitive
     description:
