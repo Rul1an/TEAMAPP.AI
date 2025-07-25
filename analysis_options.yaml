@@ -6,8 +6,9 @@ include: package:very_good_analysis/analysis_options.yaml
 
 # Custom Lint plugin for advanced rules
 analyzer:
-  plugins:
-    - custom_lint
+  # custom_lint plugin temporarily disabled (incompatible with analyzer 5)
+  # plugins:
+  #   - custom_lint
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
@@ -52,9 +53,9 @@ analyzer:
     avoid_equals_and_hash_code_on_mutable_classes: ignore
     one_member_abstracts: ignore
 
-custom_lint:
-  rules:
-    - dart_code_metrics_preset
+# custom_lint:
+#   rules:
+#     - dart_code_metrics_preset
 
 linter:
   rules:
