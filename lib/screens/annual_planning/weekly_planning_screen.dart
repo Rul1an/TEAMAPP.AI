@@ -13,8 +13,9 @@ import '../../providers/annual_planning_provider.dart';
 import 'periodization_template_dialog.dart';
 import 'training_dialog.dart';
 import 'weekly_planning/widgets/season_header.dart';
-import 'weekly_planning/widgets/week_selector.dart';
+import 'weekly_planning/widgets/weekly_week_selector.dart';
 import 'weekly_planning/widgets/weekly_table.dart';
+import 'package:jo17_tactical_manager/controllers/weekly_planning_controller.dart';
 
 class WeeklyPlanningScreen extends ConsumerStatefulWidget {
   const WeeklyPlanningScreen({super.key});
@@ -42,6 +43,7 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
   @override
   Widget build(BuildContext context) {
     final planningState = ref.watch(annualPlanningProvider);
+    final controller = ref.watch(weeklyPlanningControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,9 +68,9 @@ class _WeeklyPlanningScreenState extends ConsumerState<WeeklyPlanningScreen> {
           : Column(
               children: [
                 SeasonHeader(state: planningState),
-                WeekSelector(
+                WeeklyWeekSelector(
                   state: planningState,
-                  scrollController: _scrollController,
+                  scrollController: controller.scrollController,
                 ),
                 Expanded(child: WeeklyTable(state: planningState)),
               ],
