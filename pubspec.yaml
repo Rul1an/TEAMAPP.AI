@@ -118,4 +118,4 @@ flutter:
 
 dependency_overrides:
   file: 7.0.1
-  analyzer: 5.13.0
+  analyzer: 5.15.0
