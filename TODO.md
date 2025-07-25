@@ -34,6 +34,48 @@
 
 ---
 
+### Performance Monitoring Plan Q3 2025 (NEW)
+
+**PM1: Memory Leak Detection (✅ Completed)**
+- [X] **PM1.1** Create memory leak test harness in `test/memory/`
+- [X] **PM1.2** Add leak tracker to CI workflow
+- [X] **PM1.3** Configure dart_code_metrics memory-leak rule
+
+**PM2: Web-Vitals & Firebase Performance (✅ Completed)**
+- [x] **PM2.1** Web-vitals polyfill injected in build process
+- [x] **PM2.2** Firebase Performance initialized in `main.dart` and `main_fan.dart`
+- [x] **PM2.3** Edge function `web_vitals.ts` created for RUM collection
+- [x] **PM2.4** Netlify redirect configured for `/api/web-vitals`
+- [X] **PM2.5** Verify web-vitals data flow in production
+
+**PM3: PerformanceTracker Integration (✅ Completed)**
+- [x] **PM3.1** `PerformanceTracker` utility implemented
+- [x] **PM3.2** Integration with `AnalyticsRouteObserver` for route tracing
+- [x] **PM3.3** Provider configured in `config/providers.dart`
+- [ ] **PM3.4** Add performance tracking to heavy operations
+
+**PM4: Error Boundaries & Sentry (✅ Completed)**
+- [x] **PM4.1** `runAppWithGuards` function with `runZonedGuarded`
+- [x] **PM4.2** Sentry integration with environment-based initialization
+- [x] **PM4.3** FlutterError.onError wired to Sentry
+- [x] **PM4.4** Performance traces enabled (20% sampling)
+- [ ] **PM4.5** Add error boundary to specific screens
+
+**PM5: Lighthouse CI Integration (✅ Completed)**
+- [X] **PM5.1** Lighthouse CI workflow in `.github/workflows/flutter-web.yml`
+- [X] **PM5.2** `lighthouserc.json` configuration
+- [X] **PM5.3** Basic performance testing in `advanced-deployment.yml`
+- [X] **PM5.4** Create dedicated `performance.yml` workflow
+- [X] **PM5.5** Add performance regression thresholds
+- [X] **PM5.6** Add PWA budget enforcement
+
+**PM6: Documentation & Badges (✅ Completed)**
+- [X] **PM6.1** Add performance badge to README.md
+- [X] **PM6.2** Update performance monitoring documentation
+- [X] **PM6.3** Create performance dashboard documentation
+
+---
+
 ### Video Features (from `VIDEO_FEATURE_ROADMAP.md`) - NOT STARTED
 
 **Phase 1: Basic Video Upload & Playback (Sprint 1-2)**
@@ -94,4 +136,4 @@
 *   [X] refactor-performance-monitoring *(split charts & providers)*
 *   [ ] refactor-annual-planning-provider *(move helpers to services)*
 
-*Document laatst bijgewerkt: **16 July 2025***
+*Document laatst bijgewerkt: **25 July 2025***

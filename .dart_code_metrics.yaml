@@ -10,6 +10,8 @@ rules:
   style:
     - no-equal-then-else
     - prefer-trailing-comma
+  memory:
+    - memory-leak
 
 metrics:
   cyclomatic-complexity: 20

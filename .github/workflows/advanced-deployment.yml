@@ -68,6 +68,15 @@ jobs:
           flutter test --coverage
           echo "✅ Unit tests passed"
 
+      - name: 🧠 Memory Leak Detection
+        run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+            cd jo17_tactical_manager
+          fi
+          # Run memory leak detection tests
+          flutter test test/memory/ --dart-define=LEAK_TRACKER_ENABLED=true
+          echo "✅ Memory leak detection completed"
+
       - name: 🛡️ Coverage Gate (≥40%)
         run: |
           sudo apt-get update -y && sudo apt-get install -y bc jq
@@ -450,6 +459,49 @@ jobs:
       - name: 📊 Update Status Badge
         run: |
           echo "✅ All health checks passed - System operational"
+
+      - name: 🚀 Lighthouse Performance Gates
+        run: |
+          echo "Running Lighthouse performance audit..."
+
+          # Install Lighthouse CI
+          npm install -g @lhci/cli@0.12.x
+
+          # Create Lighthouse CI config
+          cat > lighthouserc.json << EOF
+          {
+            "ci": {
+              "collect": {
+                "url": ["https://teamappai.netlify.app"],
+                "numberOfRuns": 3
+              },
+              "assert": {
+                "assertions": {
+                  "categories:performance": ["warn", {"minScore": 0.85}],
+                  "categories:accessibility": ["error", {"minScore": 0.9}],
+                  "categories:best-practices": ["warn", {"minScore": 0.8}],
+                  "categories:seo": ["warn", {"minScore": 0.8}],
+                  "first-contentful-paint": ["warn", {"maxNumericValue": 2000}],
+                  "largest-contentful-paint": ["warn", {"maxNumericValue": 2500}],
+                  "cumulative-layout-shift": ["warn", {"maxNumericValue": 0.1}],
+                  "total-blocking-time": ["warn", {"maxNumericValue": 300}]
+                }
+              },
+              "upload": {
+                "target": "temporary-public-storage"
+              }
+            }
+          }
+          EOF
+
+          # Run Lighthouse CI
+          lhci autorun || {
+            echo "❌ Lighthouse performance gates failed"
+            echo "Check the detailed report above for specific issues"
+            exit 1
+          }
+
+          echo "✅ Lighthouse performance gates passed"
 
   # Cleanup
   cleanup:
