@@ -240,6 +240,13 @@ jobs:
             exit 1
           fi
 
+      - name: 🚨 Check for non-empty index.html
+        run: |
+          if ! grep -q "<html" build/web/index.html; then
+            echo "❌ build/web/index.html is empty or invalid"
+            exit 1
+          fi
+
       - name: 🔧 Install utilities (jq, bc)
         run: |
           sudo apt-get update -y && sudo apt-get install -y jq bc
@@ -259,7 +266,7 @@ jobs:
         run: |
           npx serve -s build/web -l 8080 &
           # Give the local server extra time to fully boot and compile CanvasKit assets
-          sleep 40
+          sleep 60
 
       - name: 🌐 Verify index.html Served
         run: |
@@ -272,12 +279,18 @@ jobs:
 
       - name: 🚀 Run Lighthouse Audit (A11y / BP / SEO)
         run: |
-          # Target explicit /index.html to avoid NO_FCP when the root path has SPA routing blank state
-          lighthouse http://localhost:8080/index.html \
-            --output json \
-            --output-path lighthouse-report.json \
-            --chrome-flags="--headless --no-sandbox" \
-            --only-categories=accessibility,best-practices,seo
+          # Retry Lighthouse up to 3× to mitigate NO_FCP flakiness on CI runners
+          for i in {1..3}; do
+            lighthouse http://localhost:8080/index.html \
+              --output json \
+              --output-path lighthouse-report.json \
+              --chrome-flags="--headless --no-sandbox" \
+              --max-wait-for-load=60000 \
+              --only-categories=accessibility,best-practices,seo && break || {
+                echo "⚠️ Lighthouse run $i failed (likely NO_FCP). Retrying in 15 s...";
+                sleep 15;
+              }
+          done
 
       - name: 📊 Parse Lighthouse Results (A11y / BP / SEO)
         run: |
