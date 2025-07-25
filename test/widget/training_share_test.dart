@@ -73,13 +73,15 @@ void main() {
                 .overrideWith((ref) async => [player]),
           ],
           child: MaterialApp.router(
-            routerConfig: GoRouter(routes: [
-              GoRoute(
-                path: '/',
-                builder: (context, _) =>
-                    const TrainingAttendanceScreen(trainingId: 'tr1'),
-              ),
-            ],),
+            routerConfig: GoRouter(
+              routes: [
+                GoRoute(
+                  path: '/',
+                  builder: (context, _) =>
+                      const TrainingAttendanceScreen(trainingId: 'tr1'),
+                ),
+              ],
+            ),
           ),
         ),
       );

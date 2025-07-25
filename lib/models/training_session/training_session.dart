@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 // Package imports:
-import 'package:isar/isar.dart';
+import 'package:jo17_tactical_manager/compat/isar_stub.dart';
 
 // Project imports:
 import '../annual_planning/training_period.dart';

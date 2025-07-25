@@ -1,5 +1,5 @@
 // Package imports:
-import 'package:isar/isar.dart';
+import 'package:jo17_tactical_manager/compat/isar_stub.dart';
 
 // part 'player.g.dart'; // Temporarily commented out
 

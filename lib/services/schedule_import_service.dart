@@ -45,10 +45,10 @@ class ScheduleImportService {
 
     // Preload existing matches to detect duplicates (date & opponent)
     final existingRes = await _repo.getAll();
-    final existing = existingRes.isSuccess ? existingRes.dataOrNull! : <Match>[];
-    final existingKeys = existing
-        .map((m) => _dupKey(m.date, m.opponent))
-        .toSet();
+    final existing =
+        existingRes.isSuccess ? existingRes.dataOrNull! : <Match>[];
+    final existingKeys =
+        existing.map((m) => _dupKey(m.date, m.opponent)).toSet();
 
     var imported = 0;
     final errors = <String>[];
@@ -75,7 +75,8 @@ class ScheduleImportService {
 
         final dupKey = _dupKey(dt, row[oppIdx].toString());
         if (existingKeys.contains(dupKey)) {
-          errors.add('Rij $i: duplicaat – ${row[oppIdx]} op ${dt.toIso8601String()}');
+          errors.add(
+              'Rij $i: duplicaat – ${row[oppIdx]} op ${dt.toIso8601String()}');
           continue;
         }
 

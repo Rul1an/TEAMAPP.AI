@@ -23,7 +23,8 @@ class _FakeMatchRepo implements MatchRepository {
   Future<Result<void>> delete(String id) async => const Success(null);
 
   @override
-  Future<Result<List<Match>>> getAll() async => Success(List.unmodifiable(_matches));
+  Future<Result<List<Match>>> getAll() async =>
+      Success(List.unmodifiable(_matches));
 
   @override
   Future<Result<Match?>> getById(String id) async => const Success(null);
@@ -86,12 +87,14 @@ void main() {
 
     test('detects duplicate rows and skips import', () async {
       // Pre-seed repo with an existing match on 2025-09-12 vs FC Utrecht U17
-      await repo.add(Match()
-        ..id = 'seed'
-        ..date = DateTime.parse('2025-09-12 19:30')
-        ..opponent = 'FC Utrecht U17'
-        ..competition = Competition.league
-        ..location = Location.home,);
+      await repo.add(
+        Match()
+          ..id = 'seed'
+          ..date = DateTime.parse('2025-09-12 19:30')
+          ..opponent = 'FC Utrecht U17'
+          ..competition = Competition.league
+          ..location = Location.home,
+      );
 
       // reset counter before import
       repo.addCalls = 0;

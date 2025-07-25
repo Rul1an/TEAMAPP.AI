@@ -45,6 +45,7 @@ Quality Gates: CI green; coverage ≥ 45 % (raised from 40 %); no file > 300 LOC
 | Task | ETA |
 |------|-----|
 | Adopt `very_good_analysis` + `dart_code_metrics` | Oct Wk 1-3 |
+| Enable `custom_lint` (requires Isar 4 generator → analyzer 6) | Oct Wk 2 |
 | Pre-commit hooks (`lefthook`) | Oct Wk 3 |
 | Refactor remaining > 300 LOC files | Oct Wk 4 |
 | `CODING_STANDARDS.md` workshop | Nov Wk 1 |

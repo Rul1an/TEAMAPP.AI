@@ -1,0 +1,63 @@
+name: Impeller Benchmark
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: "Build variants"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - impeller
+          - vanilla
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐦 Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: 📦 Install Android SDK tools
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          profile: Nexus 5X
+          script: echo "SDK installed"
+
+      - name: 🎯 Flutter Pub Get (app dir)
+        working-directory: jo17_tactical_manager
+        run: flutter pub get
+
+      - name: 🏗️ Build APK (Impeller ON)
+        if: ${{ inputs.build_type == 'impeller' || inputs.build_type == 'all' }}
+        working-directory: jo17_tactical_manager
+        run: flutter build apk --release --impeller --target lib/main.dart --dart-define=BUILD_VARIANT=impeller
+
+      - name: 📦 Upload APK (Impeller)
+        if: ${{ inputs.build_type == 'impeller' || inputs.build_type == 'all' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-impeller-apk
+          path: jo17_tactical_manager/build/app/outputs/flutter-apk/app-release.apk
+
+      - name: 🏗️ Build APK (Vanilla Skia)
+        if: ${{ inputs.build_type == 'vanilla' || inputs.build_type == 'all' }}
+        working-directory: jo17_tactical_manager
+        run: flutter build apk --release --target lib/main.dart --dart-define=BUILD_VARIANT=vanilla
+
+      - name: 📦 Upload APK (Vanilla)
+        if: ${{ inputs.build_type == 'vanilla' || inputs.build_type == 'all' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-vanilla-apk
+          path: jo17_tactical_manager/build/app/outputs/flutter-apk/app-release.apk

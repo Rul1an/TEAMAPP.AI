@@ -1,4 +1,4 @@
-import 'package:isar/isar.dart';
+import 'package:jo17_tactical_manager/compat/isar_stub.dart';
 import '../models/training.dart';
 
 /// Migration that ensures every [Training] in the Isar database has a

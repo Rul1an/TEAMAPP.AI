@@ -10,7 +10,8 @@ import 'package:file_picker/file_picker.dart';
 // Project imports:
 import '../../models/match.dart';
 import '../../providers/export_service_provider.dart';
-import '../../providers/matches_provider.dart' show matchRepositoryProvider, matchesNotifierProvider;
+import '../../providers/matches_provider.dart'
+    show matchRepositoryProvider, matchesNotifierProvider;
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 import '../../services/schedule_import_service.dart';
@@ -218,7 +219,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
     final report = res.dataOrNull;
     if (report == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Import mislukt'), backgroundColor: Colors.red),
+        const SnackBar(
+            content: Text('Import mislukt'), backgroundColor: Colors.red),
       );
       return;
     }

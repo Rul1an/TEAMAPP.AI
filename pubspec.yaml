@@ -58,9 +58,7 @@ dependencies:
   file_saver: ^0.2.14
   web: ^1.1.1
   flutter_heatmap_calendar: ^1.0.5
-  isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
-  dio: ^5.8.0+1
+  dio: ^5.8.0
   sentry_flutter: ^9.2.0
   opentelemetry: ^0.18.10
   flutter_dotenv: ^5.1.0
@@ -103,7 +101,6 @@ dev_dependencies:
   # Code generation
   freezed: ^2.5.2
   json_serializable: ^6.8.0
-  isar_generator: ^3.1.0+1
   hive_generator: ^2.0.1
 
   # New dev dependency
