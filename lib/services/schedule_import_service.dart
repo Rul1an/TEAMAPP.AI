@@ -1,5 +1,7 @@
 import 'dart:convert';
-import 'dart:typed_data';
+
+// Flutter imports:
+import 'package:flutter/foundation.dart';
 
 import 'package:csv/csv.dart';
 
@@ -16,8 +18,8 @@ class ScheduleImportService {
   /// Imports match fixtures from raw CSV bytes.
   /// Returns [ImportReport] with count & errors.
   Future<Result<ImportReport>> importCsvBytes(Uint8List bytes) async {
-    final csvStr = utf8.decode(bytes);
-    final rows = const CsvToListConverter(eol: '\n').convert(csvStr);
+    // Heavy CSV-decoding offloaded to background isolate.
+    final rows = await compute(_decodeCsvIsolate, bytes);
     if (rows.isEmpty) {
       return const Success(ImportReport(imported: 0, errors: ['Leeg CSV']));
     }
@@ -102,4 +104,10 @@ class ScheduleImportService {
     final d = DateTime(dateTime.year, dateTime.month, dateTime.day);
     return '${d.toIso8601String().substring(0, 10)}|${opponent.toLowerCase()}';
   }
+}
+
+// Top-level isolate entry point – must be a global/static function.
+List<List<dynamic>> _decodeCsvIsolate(Uint8List bytes) {
+  final csvStr = utf8.decode(bytes);
+  return const CsvToListConverter(eol: '\n').convert(csvStr);
 }
