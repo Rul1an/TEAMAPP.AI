@@ -246,51 +246,6 @@ GoRouter createRouter(Ref ref) => GoRouter(
             // Legacy deep-link routes removed (analytics, svs, admin) – replaced by unified Insights screen.
           ],
         ),
-        GoRoute(
-          path: '/exercise-library',
-          name: 'exercise-library',
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: ExerciseLibraryScreen()),
-        ),
-        GoRoute(
-          path: '/field-diagram-editor',
-          name: 'field-diagram-editor',
-          builder: (context, state) => const FieldDiagramEditorScreen(),
-        ),
-        GoRoute(
-          path: '/exercise-designer',
-          name: 'exercise-designer',
-          builder: (context, state) {
-            final sessionId = state.uri.queryParameters['sessionId'];
-            final typeString = state.uri.queryParameters['type'];
-            ExerciseType? type;
-
-            if (typeString != null) {
-              type = ExerciseType.values.firstWhere(
-                (e) => e.name == typeString,
-                orElse: () => ExerciseType.technical,
-              );
-            }
-
-            return ExerciseDesignerScreen(
-              sessionId: sessionId,
-              initialType: type,
-            );
-          },
-        ),
-        GoRoute(
-          path: '/season',
-          name: 'season-hub',
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: SeasonHubScreen()),
-        ),
-        // New combined insights route
-        GoRoute(
-          path: '/insights',
-          name: 'insights',
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: InsightsScreen()),
-        ),
 
         // Legacy deep-links removed pending future implementation
       ],
