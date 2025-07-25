@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
 
 // Project imports:
 import '../../models/match.dart';
 import '../../providers/export_service_provider.dart';
-import '../../providers/matches_provider.dart';
+import '../../providers/matches_provider.dart' show matchRepositoryProvider, matchesNotifierProvider;
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
+import '../../services/schedule_import_service.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
   const MatchesScreen({super.key});
@@ -51,11 +53,12 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             icon: const Icon(Icons.add),
             onPressed: () => context.go('/matches/add'),
           ),
-          IconButton(
-            icon: const Icon(Icons.upload_file),
-            tooltip: 'Importeer schema',
-            onPressed: () => context.go('/matches/import'),
-          ),
+          if (!isViewOnly)
+            IconButton(
+              icon: const Icon(Icons.upload_file),
+              tooltip: 'Importeer schema',
+              onPressed: _importCsv,
+            ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.download),
             onSelected: (value) async {
@@ -193,6 +196,42 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
         },
       ),
     );
+  }
+
+  Future<void> _importCsv() async {
+    final result = await FilePicker.platform.pickFiles(
+      withData: true,
+      type: FileType.custom,
+      allowedExtensions: ['csv'],
+    );
+    if (result == null || result.files.single.bytes == null) return;
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Importeren…')),
+    );
+
+    final service = ScheduleImportService(ref.read(matchRepositoryProvider));
+    final res = await service.importCsvBytes(result.files.single.bytes!);
+
+    if (!mounted) return;
+    final report = res.dataOrNull;
+    if (report == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Import mislukt'), backgroundColor: Colors.red),
+      );
+      return;
+    }
+
+    final color = report.hasErrors ? Colors.orange : Colors.green;
+    final msg =
+        'Geïmporteerd: ${report.imported}. Errors: ${report.errors.length}';
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), backgroundColor: color),
+    );
+
+    // Refresh match list
+    await ref.read(matchesNotifierProvider.notifier).loadMatches();
   }
 }
 

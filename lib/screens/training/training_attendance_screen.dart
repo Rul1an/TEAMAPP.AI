@@ -618,7 +618,7 @@ class _TrainingAttendanceScreenState
   Future<void> _shareTraining() async {
     final link = DeepLinkService.instance.createTrainingLink(widget.trainingId);
     await AnalyticsService.instance.logEvent('share_training',
-        parameters: {'training_id': widget.trainingId});
+        parameters: {'training_id': widget.trainingId},);
     try {
       await Share.share(link.toString());
     } catch (_) {

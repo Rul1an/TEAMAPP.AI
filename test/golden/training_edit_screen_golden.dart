@@ -15,8 +15,8 @@ import 'package:jo17_tactical_manager/screens/training/training_edit_screen.dart
 import 'package:jo17_tactical_manager/core/result.dart';
 
 class _FakeTrainingRepo implements TrainingRepository {
-  final Training _t;
   _FakeTrainingRepo(this._t);
+  final Training _t;
 
   @override
   Future<Result<Training?>> getById(String id) async => Success(_t);
@@ -49,7 +49,7 @@ void main() {
 
   final dummy = Training()
     ..id = '1'
-    ..date = DateTime(2025, 8, 1)
+    ..date = DateTime(2025, 8)
     ..duration = 60
     ..focus = TrainingFocus.technical
     ..intensity = TrainingIntensity.medium

@@ -29,7 +29,7 @@ import '../screens/training_sessions/field_diagram_editor_screen.dart';
 import '../screens/training_sessions/session_builder/session_builder_view.dart';
 import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
-import '../screens/matches/import_schedule_screen.dart';
+// import schedule import removed – feature postponed
 import '../config/providers.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
@@ -148,11 +148,7 @@ GoRouter createRouter(Ref ref) => GoRouter(
                   name: 'add-match',
                   builder: (context, state) => const AddMatchScreen(),
                 ),
-                GoRoute(
-                  path: 'import',
-                  name: 'import-match-schedule',
-                  builder: (context, state) => const ImportScheduleScreen(),
-                ),
+                // Import schedule route temporarily disabled pending new implementation
                 GoRoute(
                   path: ':matchId',
                   builder: (context, state) => MatchDetailScreen(

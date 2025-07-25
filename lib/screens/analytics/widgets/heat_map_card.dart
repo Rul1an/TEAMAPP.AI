@@ -7,6 +7,7 @@ import '../../../widgets/async_value_widget.dart';
 import '../../../widgets/analytics/heat_map_painter.dart';
 import '../../../models/action_category.dart';
 import '../../../models/action_event.dart';
+import '../../../services/analytics_service.dart';
 
 class HeatMapCard extends ConsumerStatefulWidget {
   const HeatMapCard({super.key});
@@ -18,6 +19,13 @@ class HeatMapCard extends ConsumerStatefulWidget {
 class _HeatMapCardState extends ConsumerState<HeatMapCard> {
   ActionCategory _category = ActionCategory.overall;
   _TimeFrame _frame = _TimeFrame.season;
+
+  @override
+  void initState() {
+    super.initState();
+    // Log screen view for analytics.
+    AnalyticsService.instance.logScreenView('HeatMap');
+  }
 
   @override
   Widget build(BuildContext context) {

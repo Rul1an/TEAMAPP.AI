@@ -30,7 +30,7 @@ class ScheduleImportService {
         ImportReport(
           imported: 0,
           errors: [
-            'CSV mist verplichte kolommen: ${required.where((c) => !header.contains(c)).join(', ')}'
+            'CSV mist verplichte kolommen: ${required.where((c) => !header.contains(c)).join(', ')}',
           ],
         ),
       );
@@ -41,7 +41,14 @@ class ScheduleImportService {
     final compIdx = header.indexOf('competition');
     final locIdx = header.indexOf('location');
 
-    int imported = 0;
+    // Preload existing matches to detect duplicates (date & opponent)
+    final existingRes = await _repo.getAll();
+    final existing = existingRes.isSuccess ? existingRes.dataOrNull! : <Match>[];
+    final existingKeys = existing
+        .map((m) => _dupKey(m.date, m.opponent))
+        .toSet();
+
+    var imported = 0;
     final errors = <String>[];
     for (var i = 1; i < rows.length; i++) {
       final row = rows[i];
@@ -64,6 +71,12 @@ class ScheduleImportService {
           _ => Competition.league,
         };
 
+        final dupKey = _dupKey(dt, row[oppIdx].toString());
+        if (existingKeys.contains(dupKey)) {
+          errors.add('Rij $i: duplicaat – ${row[oppIdx]} op ${dt.toIso8601String()}');
+          continue;
+        }
+
         final match = Match()
           ..id = '${DateTime.now().millisecondsSinceEpoch}-$i'
           ..date = dt
@@ -73,6 +86,7 @@ class ScheduleImportService {
         final res = await _repo.add(match);
         if (res.isSuccess) {
           imported += 1;
+          existingKeys.add(dupKey);
         } else {
           errors.add('Rij $i: ${res.errorOrNull?.message ?? 'onbekende fout'}');
         }
@@ -81,5 +95,11 @@ class ScheduleImportService {
       }
     }
     return Success(ImportReport(imported: imported, errors: errors));
+  }
+
+  String _dupKey(DateTime dateTime, String opponent) {
+    // Use YYYY-MM-DD + lowercase opponent as uniqueness key
+    final d = DateTime(dateTime.year, dateTime.month, dateTime.day);
+    return '${d.toIso8601String().substring(0, 10)}|${opponent.toLowerCase()}';
   }
 }

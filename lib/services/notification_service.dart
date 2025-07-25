@@ -42,7 +42,7 @@ class NotificationService {
   }
 
   static Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
+      RemoteMessage message,) async {
     // Handle background/terminated state messages.
     // Currently just logs; extend later with local_notif integration.
     debugPrint('Handling background message: ${message.messageId}');

@@ -14,7 +14,7 @@ void main() {
           x: 0.5,
           y: 0.5,
           type: ActionType.touch,
-          timestamp: DateTime(2025,1,1),
+          timestamp: DateTime(2025),
         ),
         // Near top-left corner
         ActionEvent(
@@ -23,7 +23,7 @@ void main() {
           x: 0.01,
           y: 0.02,
           type: ActionType.touch,
-          timestamp: DateTime(2025,1,1),
+          timestamp: DateTime(2025),
         ),
       ];
 

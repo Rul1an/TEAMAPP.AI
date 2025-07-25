@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -78,7 +79,7 @@ void main() {
                 builder: (context, _) =>
                     const TrainingAttendanceScreen(trainingId: 'tr1'),
               ),
-            ]),
+            ],),
           ),
         ),
       );
