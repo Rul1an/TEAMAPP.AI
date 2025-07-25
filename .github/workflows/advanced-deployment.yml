@@ -258,7 +258,8 @@ jobs:
       - name: 🌐 Start Local Server
         run: |
           npx serve -s build/web -l 8080 &
-          sleep 20
+          # Give the local server extra time to fully boot and compile CanvasKit assets
+          sleep 40
 
       - name: 🌐 Verify index.html Served
         run: |
@@ -271,7 +272,8 @@ jobs:
 
       - name: 🚀 Run Lighthouse Audit (A11y / BP / SEO)
         run: |
-          lighthouse http://localhost:8080 \
+          # Target explicit /index.html to avoid NO_FCP when the root path has SPA routing blank state
+          lighthouse http://localhost:8080/index.html \
             --output json \
             --output-path lighthouse-report.json \
             --chrome-flags="--headless --no-sandbox" \
