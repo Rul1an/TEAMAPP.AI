@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WeeklyPlanningController with ChangeNotifier {
   /// Controller for horizontal week selector scrolling
@@ -22,8 +21,3 @@ class WeeklyPlanningController with ChangeNotifier {
     super.dispose();
   }
 }
-
-/// Provider for [WeeklyPlanningController]
-final weeklyPlanningControllerProvider =
-    ChangeNotifierProvider<WeeklyPlanningController>(
-        (ref) => WeeklyPlanningController());
