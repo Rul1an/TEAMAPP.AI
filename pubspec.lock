@@ -537,6 +537,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.10.9"
+  firebase_performance:
+    dependency: "direct main"
+    description:
+      name: firebase_performance
+      sha256: "350d557986933ce92d30195f1b32c1745c585cd05852764a37baf8c7bd521eba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.1+9"
+  firebase_performance_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_performance_platform_interface
+      sha256: d8e03d779a3c4c1a41ee8cdd78f663c2462cff710418286abea78be21d0bad3f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5+9"
+  firebase_performance_web:
+    dependency: transitive
+    description:
+      name: firebase_performance_web
+      sha256: "5425240b81283588f3f37b4ddeb3b1e430e83f8bec560417e5e51d200cce298d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.7+15"
   fixnum:
     dependency: transitive
     description:
@@ -1056,7 +1080,7 @@ packages:
     source: hosted
     version: "0.3.1"
   leak_tracker:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: leak_tracker
       sha256: "6bb818ecbdffe216e81182c2f0714a2e62b593f4a4f13098713ff1685dfb6ab0"
@@ -1064,7 +1088,7 @@ packages:
     source: hosted
     version: "10.0.9"
   leak_tracker_flutter_testing:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: leak_tracker_flutter_testing
       sha256: f8b613e7e6a13ec79cfdc0e97638fddb3ab848452eff057653abd3edba760573
