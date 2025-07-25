@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_performance/firebase_performance.dart';
@@ -16,8 +15,9 @@ import 'config/environment.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
 import 'widgets/demo_mode_starter.dart';
+import 'app_runner.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load environment variables (contains SENTRY_DSN, etc.)
@@ -37,19 +37,9 @@ void main() async {
   await FirebasePerformance.instance
       .setPerformanceCollectionEnabled(!kDebugMode);
 
-  // Initialize Sentry for crash & performance monitoring
-  await SentryFlutter.init(
-    (options) {
-      options
-        ..dsn = dotenv.env['SENTRY_DSN'] ?? ''
-        ..tracesSampleRate = 0.2 // keep within free 100k tx/mo quota
-        ..profilesSampleRate = 0.2 // same as traces for consistency
-        // Session Replay is not yet GA for Flutter (SDK >= 9.2) – keep disabled for now.
-        ..environment = Environment.current.name;
-      // TODO(roel): Add app release / build version automatically
-    },
-    appRunner: () =>
-        runApp(const ProviderScope(child: JO17TacticalManagerApp())),
+  // Run the app inside error boundary & initialise Sentry (handled internally).
+  await runAppWithGuards(
+    const ProviderScope(child: JO17TacticalManagerApp()),
   );
 }
 
