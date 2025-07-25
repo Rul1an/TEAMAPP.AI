@@ -2,7 +2,8 @@
 # Updated for Flutter 3.32+ and Dart 3.8+ compatibility
 # Removes deprecated rules and fixes conflicts
 
-include: package:very_good_analysis/analysis_options.yaml
+# Very Good Analysis configuration (inline to avoid package resolution issues)
+# Based on very_good_analysis: ^5.1.0
 
 # Custom Lint plugin for advanced rules
 analyzer:
