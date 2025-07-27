@@ -26,6 +26,7 @@ import 'widgets/welcome_section.dart';
 import 'widgets/dashboard_stats_cards.dart';
 import 'widgets/performance_chart.dart';
 import 'widgets/player_quick_actions.dart';
+import 'widgets/player_stats_section.dart';
 
 final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
   return LocalSeasonRepository();
@@ -139,7 +140,11 @@ class DashboardScreen extends ConsumerWidget {
       content.addAll([
         const PlayerQuickActions(),
         const SizedBox(height: 24),
-        _buildPlayerStats(context, statistics),
+        PlayerStatsSection(
+          trainingCount:
+              (statistics?.totalTrainingAttendance ?? 0) as int,
+          matchCount: (statistics?.totalMatches ?? 0) as int,
+        ),
         const SizedBox(height: 24),
         _buildUpcomingEventsForPlayer(
           context,
@@ -219,45 +224,6 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   // _buildPlayerQuickActions removed – replaced by PlayerQuickActions widget
-
-  Widget _buildPlayerStats(BuildContext context, dynamic statistics) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Mijn Statistieken',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildStatCard(
-                      context,
-                      'Trainingen',
-                      '${statistics?.totalTrainingAttendance ?? 0}',
-                      Icons.sports,
-                      Colors.blue,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _buildStatCard(
-                      context,
-                      'Wedstrijden',
-                      '${statistics?.totalMatches ?? 0}',
-                      Icons.stadium,
-                      Colors.green,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
 
   Widget _buildParentOverview(BuildContext context) => Card(
         child: Padding(
@@ -564,39 +530,5 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatCard(
-    BuildContext context,
-    String title,
-    String value,
-    IconData icon,
-    Color color,
-  ) =>
-      Card(
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 32, color: color),
-              const SizedBox(height: 8),
-              Text(
-                value,
-                style: Theme.of(
-                  context,
-                )
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).textTheme.bodySmall?.color,
-                    ),
-              ),
-            ],
-          ),
-        ),
-      );
+  // _buildStatCard helper is no longer used and removed.
 }
