@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_unused_constructor_parameters
 import 'dart:typed_data';
 import 'dart:ui' show Rect;
 
