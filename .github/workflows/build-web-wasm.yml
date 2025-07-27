@@ -1,0 +1,46 @@
+name: Build Web (Wasm optional)
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+  workflow_dispatch:
+
+jobs:
+  build-web-wasm:
+    runs-on: ubuntu-latest
+    continue-on-error: true # allowed_to_fail matrix job
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: 📦 Install dependencies
+        run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then cd jo17_tactical_manager; fi
+          flutter pub get
+
+      - name: 🔄 Run code generation
+        run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then cd jo17_tactical_manager; fi
+          flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: 🏗️ Build Web (Wasm)
+        env:
+          CI: true
+        run: |
+          if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then cd jo17_tactical_manager; fi
+          flutter build web --wasm --release --dart-define=ENVIRONMENT=ci
+
+      - name: 📤 Upload Web Wasm build
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-web-wasm
+          path: jo17_tactical_manager/build/web
+          retention-days: 14

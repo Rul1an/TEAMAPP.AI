@@ -179,19 +179,35 @@ Exit criteria:
 - [ ] CI: Switch mandatory web build to CanvasKit (`flutter build web --release --web-renderer canvaskit`). *(Task id: ci-switch-canvaskit – in progress)*
 
 **Phase 1 – Dependency Audit**
-- [ ] List all direct & transitive packages that import `dart:html`, `dart:js`, or `dart:ffi` (e.g. `win32`, `ffi`, `flutter_secure_storage_web`, `share_plus`, `connectivity_plus`). *(Task id: wasm-dep-audit)*
-- [ ] Identify web-safe alternatives or create stub implementations.
+- [ ] (wasm-dep-audit) `flutter pub deps --json` → script: detect packages importing `dart:html`, `dart:js`, `dart:ffi`.
+- [ ] Tag each offending package with replacement/strategy:
+  - `flutter_secure_storage_web` → conditional import fallback to `universal_io` + `SharedPreferences` for Web.
+  - `share_plus` → Web Share API via `dart:js_interop`.
+  - `connectivity_plus` → `connectivity_plus_web` already ok but fails in Wasm – evaluate.
+  - `win32`, `ffi`, `isar_flutter_libs` → **exclude** from web build via conditional exports.
+- [ ] Document bundle impact & estimator script (`flutter build web --release --no-tree-shake-icons`).
 
 **Phase 2 – Conditional Imports & Stubs**
-- [ ] Introduce conditional imports (`if (dart.library.js_interop)` / `if (dart.library.ffi)` stubs).
-- [ ] Replace insecure packages with `package:web` + `dart:js_interop` where needed.
+- [ ] Create `platform_stub/` pattern per Milan-Meurrens 2025 guide (conditional exports).
+- [ ] Provide common interfaces + web/mobile implementations (see `StorageService` example).
+- [ ] Auto-generate bindings with `js_gen` for native FFI libs (future-proof).
 
-**Phase 3 – CI Workflow**
-- [ ] Add optional job `Build Web (wasm)` using `flutter build web --wasm` (allowed_to_fail until green). *(Task id: wasm-workflow-matrix)*
-- [ ] Configure Netlify/Cloud Run with COEP: `credentialless` and COOP: `same-origin` headers for multi-threading. *(Task id: wasm-server-headers)*
+**Phase 3 – Build Pipeline**
+- [ ] Add `build-web-wasm.yml` matrix job (allowed_to_fail) → `flutter build web --wasm --release --tree-shake-icons`.
+- [ ] Enable `--import-shared-memory` flag & set `node_options: "--experimental-wasm"` for CI.
+- [ ] Ensure CI uses Chrome >= 124 (WasmGC).
 
-**Exit Criteria**
-* CanvasKit build remains green.
-* Skwasm build compiles and passes smoke tests in Chrome 119+.
-* No `dart:ffi`, `dart:html`, or `dart:js` errors in Wasm job.
-* Performance benchmark ≥ CanvasKit.
+**Phase 4 – Runtime & Hosting**
+- [ ] Netlify / CloudRun headers: `Cross-Origin-Embedder-Policy: credentialless`, `Cross-Origin-Opener-Policy: same-origin`.
+- [ ] Extend `service_worker.js` → cache CanvasKit & Wasm, add versioning.
+- [ ] Add Lighthouse budget: LCP ≤ 2.5 s on 4G.
+
+**Phase 5 – Rollout**
+- [ ] Beta flag behind `FeatureFlagService.isFeatureEnabled('wasm')`.
+- [ ] A/B test CanvasKit vs Wasm – collect Web Vitals (`web-vitals-inline.js`).
+- [ ] Gradual rollout 10 % → 50 % → 100 % after stability.
+
+Exit Criteria
+* Wasm build passes in CI (no failing deps).
+* Page size ↓ 20 %, FID ↑ 15 % vs CanvasKit.
+* Safari fallback to CanvasKit verified.
