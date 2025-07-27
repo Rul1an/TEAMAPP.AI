@@ -24,6 +24,7 @@ import '../../widgets/training/session_wizard_stepper.dart';
 import 'exercise_library_screen.dart';
 import '../../services/training_session_builder_service.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
+import '../../controllers/session_builder_controller.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -79,11 +80,12 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
 
   void _initializeSession() {
     if (widget.sessionId != null) {
-      // Load existing session for editing
       _loadExistingSession();
     } else {
-      // Create new session with VOAB defaults
-      _createNewSession();
+      // Ask controller to create a fresh session skeleton
+      ref.read(sessionBuilderControllerProvider.notifier).createNew(
+            teamId: 'default',
+          );
     }
   }
 
@@ -95,30 +97,17 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         orElse: TrainingSession.new,
       );
       if (loadedSession != null && loadedSession.id.isNotEmpty) {
-        // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-        // This setState with multiple property assignments demonstrates where
-        // cascade notation could improve readability for complex state updates.
-        //
-        // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-        // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-        //
-        // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-        // ✅ Groups related property assignments visually
-        // ✅ Reduces repetitive object references
-        // ✅ Better readability for large state updates
-        // ✅ Maintains Flutter state management patterns
-        //
+        // Update global controller state – UI will rebuild via Provider.
+        await ref
+            .read(sessionBuilderControllerProvider.notifier)
+            .loadExisting(loadedSession);
+
+        // Local controllers text update for now (to be removed in next step)
         setState(() {
           session = loadedSession;
-          selectedDate = session!.date;
-          selectedType = session!.type;
-          sessionPhases = session!.phases;
-
-          // Vul de formuliervelden
-          _objectiveController.text = session!.sessionObjective ?? '';
-          _teamFunctionController.text = session!.teamFunction ?? '';
-          _coachingAccentController.text = session!.coachingAccent ?? '';
-          _notesController.text = session!.notes ?? '';
+          _objectiveController.text = loadedSession.sessionObjective ?? '';
+          _teamFunctionController.text = loadedSession.teamFunction ?? '';
+          _coachingAccentController.text = loadedSession.coachingAccent ?? '';
         });
       }
     } else {
