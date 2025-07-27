@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
@@ -19,12 +18,16 @@ import '../../providers/training_sessions_repo_provider.dart' as ts_repo;
 import '../../repositories/local_season_repository.dart';
 import '../../repositories/season_repository.dart';
 import '../../services/permission_service.dart';
-import '../../widgets/common/quick_actions_widget.dart';
 import '../../widgets/rbac_demo_widget.dart';
 import 'widgets/dashboard_app_bar_actions.dart';
 import 'widgets/welcome_section.dart';
 import 'widgets/dashboard_stats_cards.dart';
 import 'widgets/performance_chart.dart';
+import 'widgets/player_quick_actions.dart';
+import 'widgets/player_stats_section.dart';
+import 'widgets/upcoming_events_list.dart';
+import 'widgets/parent_overview_card.dart';
+import 'widgets/quick_actions_section.dart';
 
 final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
   return LocalSeasonRepository();
@@ -136,33 +139,134 @@ class DashboardScreen extends ConsumerWidget {
     if (PermissionService.isPlayer(userRole)) {
       // Player-specific content
       content.addAll([
-        _buildPlayerQuickActions(context),
+        const PlayerQuickActions(),
         const SizedBox(height: 24),
-        _buildPlayerStats(context, statistics),
+        PlayerStatsSection(
+          trainingCount: (statistics?.totalTrainingAttendance ?? 0) as int,
+          matchCount: (statistics?.totalMatches ?? 0) as int,
+        ),
         const SizedBox(height: 24),
-        _buildUpcomingEventsForPlayer(
-          context,
-          upcomingMatchesAsync,
-          trainingSessionsAsync,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Aankomende Wedstrijden',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 8),
+            upcomingMatchesAsync.when(
+              loading: () => const CircularProgressIndicator(),
+              error: (e, s) => const Text('Geen wedstrijden'),
+              data: (matches) => UpcomingEventsList<Match>(
+                events: matches,
+                emptyMessage: 'Geen wedstrijden',
+                cardBuilder: (ctx, match) => Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.stadium),
+                    title: Text(match.opponent),
+                    subtitle:
+                        Text(DateFormat('dd/MM/yyyy HH:mm').format(match.date)),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ]);
     } else if (PermissionService.isParent(userRole)) {
       // Parent-specific content
       content.addAll([
-        _buildParentOverview(context),
+        const ParentOverviewCard(),
         const SizedBox(height: 24),
-        _buildUpcomingEventsForParent(
-          context,
-          upcomingMatchesAsync,
-          trainingSessionsAsync,
+        SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Aankomende Wedstrijden',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 8),
+              upcomingMatchesAsync.when(
+                loading: () => const CircularProgressIndicator(),
+                error: (e, s) => const Text('Geen wedstrijden'),
+                data: (matches) => UpcomingEventsList<Match>(
+                  events: matches,
+                  emptyMessage: 'Geen wedstrijden',
+                  cardBuilder: (ctx, match) => Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: match.location == Location.home
+                            ? Colors.green
+                            : Colors.blue,
+                        child: Text(
+                          match.location == Location.home ? 'T' : 'U',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      title: Text(match.opponent),
+                      subtitle: Text(
+                        '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
+                      ),
+                      trailing: Text(
+                        DateFormat('HH:mm').format(match.date),
+                        style: Theme.of(ctx).textTheme.titleMedium,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'VOAB Training Sessies',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 8),
+              trainingSessionsAsync.when(
+                loading: () => const CircularProgressIndicator(),
+                error: (e, s) => const Text('Geen sessies'),
+                data: (sessions) => UpcomingEventsList<TrainingSession>(
+                  events: sessions,
+                  emptyMessage: 'Geen sessies',
+                  cardBuilder: (ctx, session) => Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: _trainingTypeColor(session.type),
+                        child: Icon(
+                          _trainingTypeIcon(session.type),
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                      ),
+                      title: Text('Training ${session.trainingNumber}'),
+                      subtitle: Text(
+                        '${session.date.day}/${session.date.month} | ${session.phases.length} fasen\n${session.sessionObjective ?? 'VOAB Standard'}',
+                      ),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.schedule,
+                              color: Colors.orange, size: 16),
+                          Text(
+                            '${session.sessionDuration.inMinutes}m',
+                            style: Theme.of(ctx).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ]);
     } else {
       // Coach/Admin content (full access)
       content.addAll([
-        _buildSmartActions(context),
-        const SizedBox(height: 24),
-        const QuickActionsWidget(),
+        const QuickActionsSection(),
         const SizedBox(height: 24),
         // ignore: unnecessary_cast
         DashboardStatsCards(statistics: statistics as Map<String, dynamic>),
@@ -182,7 +286,31 @@ class DashboardScreen extends ConsumerWidget {
                   upcomingMatchesAsync.when(
                     loading: () => const CircularProgressIndicator(),
                     error: (error, stack) => Text('Error: $error'),
-                    data: (matches) => _buildUpcomingMatches(context, matches),
+                    data: (matches) => UpcomingEventsList<Match>(
+                      events: matches,
+                      emptyMessage: 'Geen aankomende wedstrijden',
+                      cardBuilder: (ctx, match) => Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: match.location == Location.home
+                                ? Colors.green
+                                : Colors.blue,
+                            child: Text(
+                              match.location == Location.home ? 'T' : 'U',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          title: Text(match.opponent),
+                          subtitle: Text(
+                            '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
+                          ),
+                          trailing: Text(
+                            DateFormat('HH:mm').format(match.date),
+                            style: Theme.of(ctx).textTheme.titleMedium,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -200,8 +328,38 @@ class DashboardScreen extends ConsumerWidget {
                   trainingSessionsAsync.when(
                     loading: () => const CircularProgressIndicator(),
                     error: (error, stack) => const Text('Geen sessies'),
-                    data: (sessions) =>
-                        _buildUpcomingTrainingSessions(context, sessions),
+                    data: (sessions) => UpcomingEventsList<TrainingSession>(
+                      events: sessions,
+                      emptyMessage: 'Geen sessies',
+                      cardBuilder: (ctx, session) => Card(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: _trainingTypeColor(session.type),
+                            child: Icon(
+                              _trainingTypeIcon(session.type),
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                          title: Text('Training ${session.trainingNumber}'),
+                          subtitle: Text(
+                            '${session.date.day}/${session.date.month} | ${session.phases.length} fasen\n${session.sessionObjective ?? 'VOAB Standard'}',
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.schedule,
+                                  color: Colors.orange, size: 16),
+                              Text(
+                                '${session.sessionDuration.inMinutes}m',
+                                style: Theme.of(ctx).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -217,311 +375,13 @@ class DashboardScreen extends ConsumerWidget {
     return content;
   }
 
-  Widget _buildPlayerQuickActions(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Mijn Acties',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                childAspectRatio: 2.5,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                children: [
-                  _buildActionCard(
-                    context,
-                    'Mijn Profiel',
-                    Icons.person,
-                    () => context.go('/players'),
-                  ),
-                  _buildActionCard(
-                    context,
-                    'Prestaties',
-                    Icons.analytics,
-                    () => context.go('/analytics'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
+  // _buildActionCard & _buildSmartActions removed – replaced by QuickActionsSection widget
 
-  Widget _buildPlayerStats(BuildContext context, dynamic statistics) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Mijn Statistieken',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildStatCard(
-                      context,
-                      'Trainingen',
-                      '${statistics?.totalTrainingAttendance ?? 0}',
-                      Icons.sports,
-                      Colors.blue,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _buildStatCard(
-                      context,
-                      'Wedstrijden',
-                      '${statistics?.totalMatches ?? 0}',
-                      Icons.stadium,
-                      Colors.green,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
+  // _buildPlayerQuickActions removed – replaced by PlayerQuickActions widget
 
-  Widget _buildParentOverview(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Overzicht van uw kind',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: const Text('Spelersinformatie'),
-                subtitle: const Text('Bekijk profiel en prestaties'),
-                trailing: const Icon(Icons.arrow_forward_ios),
-                onTap: () => context.go('/players'),
-              ),
-            ],
-          ),
-        ),
-      );
+  // Removed old _buildParentOverview and _buildUpcoming... helpers – replaced by widgets
 
-  Widget _buildUpcomingEventsForPlayer(
-    BuildContext context,
-    AsyncValue<List<Match>> upcomingMatchesAsync,
-    AsyncValue<List<TrainingSession>> trainingSessionsAsync,
-  ) =>
-      Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Aankomende Evenementen',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              upcomingMatchesAsync.when(
-                loading: () => const CircularProgressIndicator(),
-                error: (error, stack) => const Text('Geen wedstrijden'),
-                data: (matches) => Column(
-                  children: matches
-                      .take(3)
-                      .map(
-                        (match) => ListTile(
-                          leading: const Icon(Icons.stadium),
-                          title: Text(match.opponent),
-                          subtitle: Text(
-                            DateFormat('dd/MM/yyyy HH:mm').format(match.date),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget _buildUpcomingEventsForParent(
-    BuildContext context,
-    AsyncValue<List<Match>> upcomingMatchesAsync,
-    AsyncValue<List<TrainingSession>> trainingSessionsAsync,
-  ) =>
-      _buildUpcomingEventsForPlayer(
-        context,
-        upcomingMatchesAsync,
-        trainingSessionsAsync,
-      );
-
-  Widget _buildActionCard(
-    BuildContext context,
-    String title,
-    IconData icon,
-    VoidCallback onTap,
-  ) =>
-      Card(
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(8),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Row(
-              children: [
-                Icon(icon, size: 20),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: const TextStyle(fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-  Widget _buildSmartActions(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.flash_on, color: Theme.of(context).primaryColor),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Snelle Acties',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      'Nieuwe Training',
-                      Icons.add_circle,
-                      () => context.push('/session-builder'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      'Seizoen Planning',
-                      Icons.calendar_today,
-                      () => context.push('/annual-planning'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      'Alle Trainingen',
-                      Icons.list_alt,
-                      () => context.push('/training-sessions'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      'Opstelling',
-                      Icons.sports_soccer,
-                      () => context.go('/lineup'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget _buildUpcomingTrainingSessions(
-    BuildContext context,
-    List<TrainingSession> sessions,
-  ) {
-    if (sessions.isEmpty) {
-      return Card(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Icon(Icons.info_outline, color: Colors.grey[400]),
-              const SizedBox(height: 8),
-              const Text('Geen geplande VOAB sessies'),
-              const SizedBox(height: 8),
-              TextButton(
-                onPressed: () => context.push('/session-builder'),
-                child: const Text('Plan Training'),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    return Column(
-      children: sessions
-          .take(3)
-          .map(
-            (session) => Card(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: _getSessionTypeColor(session.type),
-                  child: Icon(
-                    _getSessionTypeIcon(session.type),
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                title: Text('Training ${session.trainingNumber}'),
-                subtitle: Text(
-                  '${session.date.day}/${session.date.month} | ${session.phases.length} fasen\n'
-                  '${session.sessionObjective ?? 'VOAB Standard'}',
-                ),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.schedule, color: Colors.orange, size: 16),
-                    Text(
-                      '${session.sessionDuration.inMinutes}m',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  // TODO(author): Navigate to session detail
-                },
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  Color _getSessionTypeColor(TrainingType type) {
+  Color _trainingTypeColor(TrainingType type) {
     switch (type) {
       case TrainingType.regularTraining:
         return Colors.blue;
@@ -540,7 +400,7 @@ class DashboardScreen extends ConsumerWidget {
     }
   }
 
-  IconData _getSessionTypeIcon(TrainingType type) {
+  IconData _trainingTypeIcon(TrainingType type) {
     switch (type) {
       case TrainingType.regularTraining:
         return Icons.sports_soccer;
@@ -559,79 +419,5 @@ class DashboardScreen extends ConsumerWidget {
     }
   }
 
-  Widget _buildUpcomingMatches(BuildContext context, List<Match> matches) {
-    if (matches.isEmpty) {
-      return Card(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: const Text('Geen aankomende wedstrijden'),
-        ),
-      );
-    }
-
-    return Column(
-      children: matches
-          .take(3)
-          .map(
-            (match) => Card(
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: match.location == Location.home
-                      ? Colors.green
-                      : Colors.blue,
-                  child: Text(
-                    match.location == Location.home ? 'T' : 'U',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-                title: Text(match.opponent),
-                subtitle: Text(
-                  '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
-                ),
-                trailing: Text(
-                  DateFormat('HH:mm').format(match.date),
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  Widget _buildStatCard(
-    BuildContext context,
-    String title,
-    String value,
-    IconData icon,
-    Color color,
-  ) =>
-      Card(
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 32, color: color),
-              const SizedBox(height: 8),
-              Text(
-                value,
-                style: Theme.of(
-                  context,
-                )
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).textTheme.bodySmall?.color,
-                    ),
-              ),
-            ],
-          ),
-        ),
-      );
+  // Removed _buildUpcomingTrainingSessions and _buildUpcomingMatches – functionality now provided via UpcomingEventsList widget
 }

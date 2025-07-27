@@ -130,10 +130,68 @@
 
 *   [ ] refactor-session-builder *(split UI, controller, widgets)*
 *   [ ] refactor-pdf-service *(modularise PDF generation)*
-*   [ ] refactor-exercise-library *(widget-first split)*
-*   [ ] refactor-weekly-planning *(decompose tabs & charts)*
+*   [X] refactor-exercise-library *(widget-first split)*
+*   [X] refactor-weekly-planning *(week selector, table & controller extracted; screen <300 LOC – 2025-08-04)*
 *   [ ] refactor-dashboard-screen *(extract dashboard cards)*
 *   [X] refactor-performance-monitoring *(split charts & providers)*
 *   [ ] refactor-annual-planning-provider *(move helpers to services)*
 
 *Document laatst bijgewerkt: **25 July 2025***
+
+---
+
+### 🆕 In Progress – Exercise Library Screen Refactor (Q3 2025)
+
+ID: **refactor-exercise-library**
+
+Objective: Split `exercise_library_screen.dart` (≈ 1.1 k LOC) into a clean, testable structure following 2025 best-practices.
+
+Incremental Steps (TDD-based)
+1. **Unit tests – ExerciseLibraryController**
+   * Write tests for search filter, intensity filter, and reset behaviour.
+2. **Extract ExerciseLibraryController**
+   * Move filter/search logic from screen into `exercise_library_controller.dart` (ChangeNotifier + Riverpod provider).
+3. **Widget tests – SearchBar & FilterBar**
+   * Ensure chips/dropdowns update controller state.
+4. **Extract UI widgets**
+   * `search_bar.dart`, `filter_bar.dart`, `morphocycle_banner.dart`, `exercise_tab_view.dart`.
+5. **Refactor ExerciseLibraryScreen**
+   * Keep only Scaffold, TabBar, body composition; ensure < 300 LOC.
+6. **Golden/widget tests – main flows**
+   * Search + filter flow golden snapshot; list updates.
+7. **Cleanup & docs update**
+   * Remove obsolete providers, update `LARGE_FILE_REFACTOR_PLAN_Q3_2025.md`, ensure analyzer 0-issues.
+
+Exit criteria:
+* `exercise_library_screen.dart` < 300 LOC, widgets < 200 LOC each.
+* Controller unit-tests ≥ 90 % statement coverage.
+* All tests green; CI passes.
+
+---
+
+*Document laatst bijgewerkt: **04 Aug 2025***
+
+### WebAssembly (Skwasm) Compatibility Roadmap – Target Q4 2025
+
+> See Flutter docs: https://docs.flutter.dev/platform-integration/web/wasm
+
+**Step 0 – Unblock CI (DONE / In-progress)**
+- [ ] CI: Switch mandatory web build to CanvasKit (`flutter build web --release --web-renderer canvaskit`). *(Task id: ci-switch-canvaskit – in progress)*
+
+**Phase 1 – Dependency Audit**
+- [ ] List all direct & transitive packages that import `dart:html`, `dart:js`, or `dart:ffi` (e.g. `win32`, `ffi`, `flutter_secure_storage_web`, `share_plus`, `connectivity_plus`). *(Task id: wasm-dep-audit)*
+- [ ] Identify web-safe alternatives or create stub implementations.
+
+**Phase 2 – Conditional Imports & Stubs**
+- [ ] Introduce conditional imports (`if (dart.library.js_interop)` / `if (dart.library.ffi)` stubs).
+- [ ] Replace insecure packages with `package:web` + `dart:js_interop` where needed.
+
+**Phase 3 – CI Workflow**
+- [ ] Add optional job `Build Web (wasm)` using `flutter build web --wasm` (allowed_to_fail until green). *(Task id: wasm-workflow-matrix)*
+- [ ] Configure Netlify/Cloud Run with COEP: `credentialless` and COOP: `same-origin` headers for multi-threading. *(Task id: wasm-server-headers)*
+
+**Exit Criteria**
+* CanvasKit build remains green.
+* Skwasm build compiles and passes smoke tests in Chrome 119+.
+* No `dart:ffi`, `dart:html`, or `dart:js` errors in Wasm job.
+* Performance benchmark ≥ CanvasKit.
