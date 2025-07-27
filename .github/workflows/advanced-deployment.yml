@@ -196,15 +196,15 @@ jobs:
         run: |
           case "${{ matrix.platform }}" in
             web)
-              echo "🔧 Building Skia Wasm renderer (skwasm)"
-              flutter build web --release --wasm --dart-define=ENVIRONMENT=production
+              echo "🔧 Building CanvasKit web build (default renderer)"
+              flutter build web --release --dart-define=ENVIRONMENT=production
 
               # Inject web-vitals RUM snippet into build (works for Skwasm & CanvasKit)
               echo "import{onCLS,onFID,onLCP,onINP}from 'https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module';function send(metric){try{navigator.sendBeacon('/api/web-vitals',JSON.stringify({name:metric.name,value:metric.value,id:metric.id,url:location.href,ts:Date.now()}));}catch(e){console.error('web-vitals send error',e);}}onCLS(send);onFID(send);onLCP(send);onINP(send);" > build/web/web-vitals-inline.js
               # Add script tags before closing </head>
               sed -i "s#</head>#<script type=\"module\" src=\"web-vitals-inline.js\"></script></head>#" build/web/index.html
 
-              echo "✅ Web builds (CanvasKit) completed with RUM injection"
+              echo "✅ Web build completed with RUM injection"
               ;;
           esac
 
