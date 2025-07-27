@@ -52,7 +52,9 @@ class FlutterSecureStorage {
       dynamic wOptions}) async {
     _memory.clear();
     for (final list in _listeners.values) {
-      for (final l in list) l(null);
+      for (final l in list) {
+        l(null);
+      }
     }
   }
 
@@ -76,3 +78,17 @@ class FlutterSecureStorage {
     _listeners[key]?.remove(listener);
   }
 }
+
+// Empty platform option stubs to satisfy API references when compiling to
+// Wasm or other platforms where flutter_secure_storage is not available.
+class IOSOptions {}
+
+class AndroidOptions {}
+
+class LinuxOptions {}
+
+class WebOptions {}
+
+class MacOsOptions {}
+
+class WindowsOptions {}
