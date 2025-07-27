@@ -140,9 +140,9 @@ jobs:
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
-          flutter build web --release
+          flutter build web --release --web-renderer canvaskit
         elif [ -f "pubspec.yaml" ]; then
-          flutter build web --release
+          flutter build web --release --web-renderer canvaskit
         else
           echo "ERROR: Could not find pubspec.yaml"
           exit 1
