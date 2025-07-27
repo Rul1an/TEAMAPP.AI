@@ -129,6 +129,11 @@
 **Large File Refactor** (see `LARGE_FILE_REFACTOR_PLAN_Q3_2025.md`)
 
 *   [ ] refactor-session-builder *(split UI, controller, widgets)*
+    - [X] **sb-create-controller** – Add `SessionBuilderController` + state class.
+    - [ ] **sb-wire-controller** – Remove state vars from screen, use provider.
+    - [ ] **sb-extract-wizard** – Move wizard UI to `SessionBuilderWizard` widget.
+    - [ ] **sb-extract-phase-editor** – Split phase list & editor widgets.
+    - [ ] **sb-tests** – Controller unit tests + widget tests.
 *   [ ] refactor-pdf-service *(modularise PDF generation)*
 *   [X] refactor-exercise-library *(widget-first split)*
 *   [X] refactor-weekly-planning *(week selector, table & controller extracted; screen <300 LOC – 2025-08-04)*
