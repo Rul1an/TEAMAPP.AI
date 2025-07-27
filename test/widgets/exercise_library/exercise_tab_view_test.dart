@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jo17_tactical_manager/models/annual_planning/morphocycle.dart';
 import 'package:jo17_tactical_manager/models/training_session/training_exercise.dart';
 import 'package:jo17_tactical_manager/providers/exercise_designer_provider.dart';
-import 'package:jo17_tactical_manager/screens/training_sessions/exercise_library/exercise_library_controller.dart';
 import 'package:jo17_tactical_manager/screens/training_sessions/exercise_library/widgets/exercise_tab_view.dart';
 
 void main() {
