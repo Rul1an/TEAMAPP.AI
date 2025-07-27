@@ -132,11 +132,11 @@
 *   [ ] refactor-pdf-service *(modularise PDF generation)*
 *   [X] refactor-exercise-library *(widget-first split)*
 *   [X] refactor-weekly-planning *(week selector, table & controller extracted; screen <300 LOC – 2025-08-04)*
-*   [ ] refactor-dashboard-screen *(extract dashboard cards)*
+*   [X] refactor-dashboard-screen *(extract dashboard cards widgets & provider)*
 *   [X] refactor-performance-monitoring *(split charts & providers)*
 *   [ ] refactor-annual-planning-provider *(move helpers to services)*
 
-*Document laatst bijgewerkt: **25 July 2025***
+*Document laatst bijgewerkt: **26 July 2025***
 
 ### Code Quality Infrastructure – Analyzer 6 Migration (Phase 0)
 *Owner*: Quality Guild
