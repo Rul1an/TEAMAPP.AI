@@ -170,3 +170,28 @@ Exit criteria:
 ---
 
 *Document laatst bijgewerkt: **04 Aug 2025***
+
+### WebAssembly (Skwasm) Compatibility Roadmap – Target Q4 2025
+
+> See Flutter docs: https://docs.flutter.dev/platform-integration/web/wasm
+
+**Step 0 – Unblock CI (DONE / In-progress)**
+- [ ] CI: Switch mandatory web build to CanvasKit (`flutter build web --release --web-renderer canvaskit`). *(Task id: ci-switch-canvaskit – in progress)*
+
+**Phase 1 – Dependency Audit**
+- [ ] List all direct & transitive packages that import `dart:html`, `dart:js`, or `dart:ffi` (e.g. `win32`, `ffi`, `flutter_secure_storage_web`, `share_plus`, `connectivity_plus`). *(Task id: wasm-dep-audit)*
+- [ ] Identify web-safe alternatives or create stub implementations.
+
+**Phase 2 – Conditional Imports & Stubs**
+- [ ] Introduce conditional imports (`if (dart.library.js_interop)` / `if (dart.library.ffi)` stubs).
+- [ ] Replace insecure packages with `package:web` + `dart:js_interop` where needed.
+
+**Phase 3 – CI Workflow**
+- [ ] Add optional job `Build Web (wasm)` using `flutter build web --wasm` (allowed_to_fail until green). *(Task id: wasm-workflow-matrix)*
+- [ ] Configure Netlify/Cloud Run with COEP: `credentialless` and COOP: `same-origin` headers for multi-threading. *(Task id: wasm-server-headers)*
+
+**Exit Criteria**
+* CanvasKit build remains green.
+* Skwasm build compiles and passes smoke tests in Chrome 119+.
+* No `dart:ffi`, `dart:html`, or `dart:js` errors in Wasm job.
+* Performance benchmark ≥ CanvasKit.
