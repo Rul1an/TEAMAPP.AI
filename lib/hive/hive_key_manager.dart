@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 
 // Package imports:
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../compat/secure_storage_compat.dart';
 import 'package:flutter/foundation.dart';
 
 /// Handles creation and retrieval of the AES-256 encryption key for Hive boxes.
