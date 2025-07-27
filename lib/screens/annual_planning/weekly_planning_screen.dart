@@ -36,7 +36,7 @@ class WeeklyPlanningScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => showDialog<void>(
-      context: context,
+          context: context,
           builder: (_) => const PeriodizationTemplateDialog(),
         ),
         child: const Icon(Icons.add),

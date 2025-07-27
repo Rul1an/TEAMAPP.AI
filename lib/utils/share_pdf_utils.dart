@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
+import '../compat/share_plus_compat.dart';
 
 // No direct web API usage required with ShareXFiles.
 
