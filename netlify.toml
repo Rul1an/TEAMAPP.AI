@@ -15,12 +15,19 @@
   force = true
 
 [[headers]]
+  for = "/.well-known/*"
+  [headers.values]
+    # Reserved for future security files
+
+[[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Cross-Origin-Embedder-Policy = "credentialless"
+    Cross-Origin-Opener-Policy = "same-origin"
 
 [[headers]]
   for = "/assets/*"
