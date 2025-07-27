@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jo17_tactical_manager/screens/dashboard/widgets/upcoming_events_list.dart';
@@ -7,10 +8,12 @@ void main() {
   group('UpcomingEventsList', () {
     testWidgets('shows empty message when no events', (tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: UpcomingEventsList<String>(
-          events: [],
-          emptyMessage: 'Geen events',
-          cardBuilder: (_, __) => SizedBox(),
+        home: Scaffold(
+          body: UpcomingEventsList<String>(
+            events: [],
+            emptyMessage: 'Geen events',
+            cardBuilder: (_, __) => SizedBox(),
+          ),
         ),
       ));
 
@@ -19,10 +22,12 @@ void main() {
 
     testWidgets('renders event tiles', (tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: UpcomingEventsList<String>(
-          events: ['A'],
-          emptyMessage: 'Geen',
-          cardBuilder: (ctx, e) => ListTile(title: Text(e)),
+        home: Scaffold(
+          body: UpcomingEventsList<String>(
+            events: ['A'],
+            emptyMessage: 'Geen',
+            cardBuilder: (ctx, e) => ListTile(title: Text(e)),
+          ),
         ),
       ));
 

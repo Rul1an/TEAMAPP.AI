@@ -27,7 +27,9 @@ class UpcomingEventsList<T> extends StatelessWidget {
       );
     }
 
-    return Column(
+    return ListView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       children:
           events.take(maxItems).map((e) => cardBuilder(context, e)).toList(),
     );
