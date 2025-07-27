@@ -168,3 +168,23 @@ ExerciseLibraryScreen ──┐
 - [ ] Widget tests & docs update (tracking todos `refactor-exercise-library-widget-tests`, `refactor-exercise-library-docs-update`).
 
 > Decision 2025-07-13: All new screens must follow **widget-first modularisation** with a target file length <300 LOC.
+
+## WebAssembly Compatibility Initiative (Q3 2025)
+
+With Flutter 3.32 the HTML renderer is deprecated; our **default web renderer remains CanvasKit**, but we now run an **optional Skwasm (Wasm) build** in CI to prepare for 2026 performance targets.
+
+Key decisions:
+
+| Decision | Rationale |
+|----------|-----------|
+| CanvasKit as required build | Works with existing plugins that rely on `dart:html/js`, zero risk for production |
+| Skwasm CI job `build-web-wasm.yml` (`continue-on-error`) | Gives early signal on incompatible deps without breaking the pipeline |
+| Conditional stubs for platform-specific plugins (`flutter_secure_storage`, `share_plus`) | Removes `dart:html`, `dart:ffi` imports when compiling to Wasm |
+| COEP/COOP headers added in `netlify.toml` | Allows SharedArrayBuffer & multi-threaded Wasm once enabled |
+
+Next steps (tracked in `TODO.md`):
+1. Phase 2 – add conditional imports for any remaining problematic packages (e.g. `connectivity_plus`).
+2. Phase 3 – lighthouse budget + service-worker cache versioning.
+3. Phase 5 – feature-flag rollout & A/B Web Vitals collection.
+
+Exit criteria: Skwasm build passes locally & in CI, bundle size –20 %, FID +15 % vs CanvasKit.
