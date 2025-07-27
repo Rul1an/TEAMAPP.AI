@@ -124,6 +124,20 @@ jobs:
           exit 1
         fi
 
+    - name: Very Good Analysis
+      run: |
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+          cd jo17_tactical_manager
+        fi
+        very_good analyze --fatal-infos
+
+    - name: Custom Lint
+      run: |
+        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
+          cd jo17_tactical_manager
+        fi
+        dart run custom_lint
+
     - name: Dart Code Metrics Analysis (license-protected)
       if: ${{ env.DCM_CI_KEY != '' && env.DCM_EMAIL != '' }}
       env:

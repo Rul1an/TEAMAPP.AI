@@ -138,6 +138,21 @@
 
 *Document laatst bijgewerkt: **25 July 2025***
 
+### Code Quality Infrastructure – Analyzer 6 Migration (Phase 0)
+*Owner*: Quality Guild
+*Status*: pending (Aug 2025)
+
+- [ ] **cq-upgrade-analyzer6** – Remove `dependency_overrides` on `analyzer`, target `analyzer ^6`.
+- [ ] **cq-bump-vga-7** – Bump `very_good_analysis` → `^7.0.0`.
+- [ ] **cq-remove-dcm-presets** – Remove `dart_code_metrics_presets` (conflicts with VGA 7).
+- [ ] **cq-add-riverpod-lint** – Add `riverpod_lint ^2.6.5` + `custom_lint ^0.7.0`.
+- [ ] **cq-bump-riverpod-generator** – Upgrade `riverpod_generator ^2.6.5`.
+- [ ] **cq-run-pub-upgrade** – `flutter pub upgrade --major-versions` + `dart fix --apply`.
+- [ ] **cq-fix-lints** – Resolve new lint errors, commit in small batches.
+- [X] **cq-update-ci** – Add `custom_lint` + `very_good_analysis:verify` steps to CI.
+
+*Planned ETA*: Oct Wk 1 (aligns with Phase 2 quality roadmap).
+
 ---
 
 ### 🆕 In Progress – Exercise Library Screen Refactor (Q3 2025)

@@ -21,13 +21,11 @@ import '../../services/permission_service.dart';
 import '../../widgets/rbac_demo_widget.dart';
 import 'widgets/dashboard_app_bar_actions.dart';
 import 'widgets/welcome_section.dart';
-import 'widgets/dashboard_stats_cards.dart';
-import 'widgets/performance_chart.dart';
 import 'widgets/player_quick_actions.dart';
 import 'widgets/player_stats_section.dart';
 import 'widgets/upcoming_events_list.dart';
 import 'widgets/parent_overview_card.dart';
-import 'widgets/quick_actions_section.dart';
+import 'widgets/coach_dashboard_content.dart';
 
 final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
   return LocalSeasonRepository();
@@ -264,112 +262,14 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ]);
     } else {
-      // Coach/Admin content (full access)
-      content.addAll([
-        const QuickActionsSection(),
-        const SizedBox(height: 24),
-        // ignore: unnecessary_cast
-        DashboardStatsCards(statistics: statistics as Map<String, dynamic>),
-        const SizedBox(height: 24),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Aankomende Wedstrijden',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: 8),
-                  upcomingMatchesAsync.when(
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stack) => Text('Error: $error'),
-                    data: (matches) => UpcomingEventsList<Match>(
-                      events: matches,
-                      emptyMessage: 'Geen aankomende wedstrijden',
-                      cardBuilder: (ctx, match) => Card(
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: match.location == Location.home
-                                ? Colors.green
-                                : Colors.blue,
-                            child: Text(
-                              match.location == Location.home ? 'T' : 'U',
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          title: Text(match.opponent),
-                          subtitle: Text(
-                            '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
-                          ),
-                          trailing: Text(
-                            DateFormat('HH:mm').format(match.date),
-                            style: Theme.of(ctx).textTheme.titleMedium,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'VOAB Training Sessies',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: 8),
-                  trainingSessionsAsync.when(
-                    loading: () => const CircularProgressIndicator(),
-                    error: (error, stack) => const Text('Geen sessies'),
-                    data: (sessions) => UpcomingEventsList<TrainingSession>(
-                      events: sessions,
-                      emptyMessage: 'Geen sessies',
-                      cardBuilder: (ctx, session) => Card(
-                        margin: const EdgeInsets.only(bottom: 8),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: _trainingTypeColor(session.type),
-                            child: Icon(
-                              _trainingTypeIcon(session.type),
-                              color: Colors.white,
-                              size: 18,
-                            ),
-                          ),
-                          title: Text('Training ${session.trainingNumber}'),
-                          subtitle: Text(
-                            '${session.date.day}/${session.date.month} | ${session.phases.length} fasen\n${session.sessionObjective ?? 'VOAB Standard'}',
-                          ),
-                          trailing: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.schedule,
-                                  color: Colors.orange, size: 16),
-                              Text(
-                                '${session.sessionDuration.inMinutes}m',
-                                style: Theme.of(ctx).textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+      // Coach/Admin content (moved to dedicated widget)
+      content.add(
+        CoachDashboardContent(
+          statistics: statistics as Map<String, dynamic>,
+          upcomingMatchesAsync: upcomingMatchesAsync,
+          trainingSessionsAsync: trainingSessionsAsync,
         ),
-        const SizedBox(height: 24),
-        // ignore: unnecessary_cast
-        PerformanceChart(statistics: statistics as Map<String, dynamic>),
-      ]);
+      );
     }
 
     return content;
