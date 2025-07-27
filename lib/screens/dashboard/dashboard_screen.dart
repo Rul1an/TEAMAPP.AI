@@ -25,6 +25,7 @@ import 'widgets/dashboard_app_bar_actions.dart';
 import 'widgets/welcome_section.dart';
 import 'widgets/dashboard_stats_cards.dart';
 import 'widgets/performance_chart.dart';
+import 'widgets/player_quick_actions.dart';
 
 final seasonRepositoryProvider = Provider<SeasonRepository>((ref) {
   return LocalSeasonRepository();
@@ -136,7 +137,7 @@ class DashboardScreen extends ConsumerWidget {
     if (PermissionService.isPlayer(userRole)) {
       // Player-specific content
       content.addAll([
-        _buildPlayerQuickActions(context),
+        const PlayerQuickActions(),
         const SizedBox(height: 24),
         _buildPlayerStats(context, statistics),
         const SizedBox(height: 24),
@@ -217,43 +218,7 @@ class DashboardScreen extends ConsumerWidget {
     return content;
   }
 
-  Widget _buildPlayerQuickActions(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Mijn Acties',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                childAspectRatio: 2.5,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                children: [
-                  _buildActionCard(
-                    context,
-                    'Mijn Profiel',
-                    Icons.person,
-                    () => context.go('/players'),
-                  ),
-                  _buildActionCard(
-                    context,
-                    'Prestaties',
-                    Icons.analytics,
-                    () => context.go('/analytics'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
+  // _buildPlayerQuickActions removed – replaced by PlayerQuickActions widget
 
   Widget _buildPlayerStats(BuildContext context, dynamic statistics) => Card(
         child: Padding(
