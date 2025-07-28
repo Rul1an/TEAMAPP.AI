@@ -25,6 +25,7 @@ import 'exercise_library_screen.dart';
 import '../../services/training_session_builder_service.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../controllers/session_builder_controller.dart';
+import 'widgets/session_builder_wizard.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -162,78 +163,20 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
             const SizedBox(width: 16),
           ],
         ),
-        body: Column(
-          children: [
-            // Progress indicator
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: SessionWizardStepper(
-                currentStep: currentStep,
-                steps: const [
-                  'Basis Info',
-                  'Doelstellingen',
-                  'Fase Planning',
-                  'Evaluatie',
-                ],
-                onStepTapped: (step) {
-                  if (step <= currentStep) {
-                    // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-                    // This setState with multiple property assignments demonstrates where
-                    // cascade notation could improve readability for complex state updates.
-                    //
-                    // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-                    // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-                    //
-                    // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-                    // ✅ Groups related property assignments visually
-                    // ✅ Reduces repetitive object references
-                    // ✅ Better readability for large state updates
-                    // ✅ Maintains Flutter state management patterns
-                    //
-                    setState(() {
-                      currentStep = step;
-                    });
-                    _pageController.animateToPage(
-                      step,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  }
-                },
-              ),
-            ),
-
-            // Step content
-            Expanded(
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (page) {
-                  // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-                  // This setState with multiple property assignments demonstrates where
-                  // cascade notation could improve readability for complex state updates.
-                  //
-                  // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-                  // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-                  //
-                  // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-                  // ✅ Groups related property assignments visually
-                  // ✅ Reduces repetitive object references
-                  // ✅ Better readability for large state updates
-                  // ✅ Maintains Flutter state management patterns
-                  //
-                  setState(() {
-                    currentStep = page;
-                  });
-                },
-                children: [
-                  _buildBasicInfoStep(),
-                  _buildObjectivesStep(),
-                  _buildPhasePlanningStep(),
-                  _buildEvaluationStep(),
-                ],
-              ),
-            ),
+        body: SessionBuilderWizard(
+          stepTitles: const [
+            'Basis Info',
+            'Doelstellingen',
+            'Fase Planning',
+            'Evaluatie',
           ],
+          stepBuilders: [
+            _buildBasicInfoStep,
+            _buildObjectivesStep,
+            _buildPhasePlanningStep,
+            _buildEvaluationStep,
+          ],
+          onFinished: _saveSession,
         ),
       );
 
