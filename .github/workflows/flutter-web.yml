@@ -163,6 +163,7 @@ jobs:
       uses: treosh/lighthouse-ci-action@v10
       with:
         uploadArtifacts: true
+        artifactName: lighthouse_results
         temporaryPublicStorage: true
         configPath: ./lighthouserc.json
       continue-on-error: true
