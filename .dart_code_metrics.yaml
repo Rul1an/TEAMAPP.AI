@@ -1,4 +1,4 @@
-maak# Dart Code Metrics configuration
+# Dart Code Metrics configuration
 
 anti-patterns:
   - long-method
