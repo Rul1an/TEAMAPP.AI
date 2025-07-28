@@ -9,7 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_performance/firebase_performance.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+// kIsWeb accessible via existing flutter/foundation.dart import above
 
 // Project imports:
 import 'config/environment.dart';
