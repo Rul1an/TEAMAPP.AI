@@ -105,6 +105,7 @@ jobs:
 
     - name: Custom Lint
       run: |
+        cd jo17_tactical_manager
         dart run custom_lint
 
     - name: Dart Code Metrics Analysis (license-protected)
