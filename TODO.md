@@ -131,9 +131,13 @@
 *   [ ] refactor-session-builder *(split UI, controller, widgets)*
     - [X] **sb-create-controller** – Add `SessionBuilderController` + state class.
     - [ ] **sb-wire-controller** – Remove state vars from screen, use provider.
-    - [ ] **sb-extract-wizard** – Move wizard UI to `SessionBuilderWizard` widget.
+    - [X] **sb-extract-wizard** – Move wizard UI to `SessionBuilderWizard` widget. *(Done 04 Aug 2025 – commit 4282c2d)*
     - [ ] **sb-extract-phase-editor** – Split phase list & editor widgets.
-    - [ ] **sb-tests** – Controller unit tests + widget tests.
+    - [X] **sb-tests** – Controller unit tests + widget tests. *(Wizard test added 04 Aug 2025)*
+    - [ ] **sb-cleanup-screen-loc** – Reduce `session_builder_screen.dart` to ≤300 LOC (UI only).
+    - [ ] **sb-extract-helpers** – Move `_build*Step` helpers into separate widgets/services.
+    - [ ] **sb-update-tests** – Add widget tests for extracted widgets.
+    - [ ] **sb-update-docs** – Update refactor progress docs.
 *   [ ] refactor-pdf-service *(modularise PDF generation)*
 *   [X] refactor-exercise-library *(widget-first split)*
 *   [X] refactor-weekly-planning *(week selector, table & controller extracted; screen <300 LOC – 2025-08-04)*
