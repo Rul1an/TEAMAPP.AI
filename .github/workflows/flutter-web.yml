@@ -65,15 +65,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd jo17_tactical_manager
+        cd VOABTEAMAPP2/jo17_tactical_manager
         flutter pub get
 
     - name: Bootstrap (melos)
       run: |
         if [ -f "melos.yaml" ]; then
           melos bootstrap
-        elif [ -f "jo17_tactical_manager/melos.yaml" ]; then
-          cd jo17_tactical_manager
+        elif [ -f "VOABTEAMAPP2/jo17_tactical_manager/melos.yaml" ]; then
+          cd VOABTEAMAPP2/jo17_tactical_manager
           melos bootstrap
         else
           echo "No melos.yaml found – skipping bootstrap."
@@ -81,18 +81,18 @@ jobs:
 
     - name: Generate code (build_runner)
       run: |
-        cd jo17_tactical_manager
+        cd VOABTEAMAPP2/jo17_tactical_manager
         flutter pub run build_runner build --delete-conflicting-outputs --verbose
 
     - name: Run tests with coverage
       run: |
-        cd jo17_tactical_manager
+        cd VOABTEAMAPP2/jo17_tactical_manager
         flutter test --coverage
         ./coverage.sh
 
     - name: Analyze code
       run: |
-        cd jo17_tactical_manager
+        cd VOABTEAMAPP2/jo17_tactical_manager
         dart analyze
 
     # Install very_good_cli globally and add to PATH
@@ -105,12 +105,12 @@ jobs:
 
     - name: Very Good Analysis
       run: |
-        cd jo17_tactical_manager
+        cd VOABTEAMAPP2/jo17_tactical_manager
         very_good analyze
 
     - name: Custom Lint
       run: |
-        cd jo17_tactical_manager
+        cd VOABTEAMAPP2/jo17_tactical_manager
         dart run custom_lint
 
     - name: Dart Code Metrics Analysis (license-protected)
@@ -119,32 +119,32 @@ jobs:
         DCM_CI_KEY: ${{ env.DCM_CI_KEY }}
         DCM_EMAIL: ${{ env.DCM_EMAIL }}
       run: |
-        cd jo17_tactical_manager
+        cd VOABTEAMAPP2/jo17_tactical_manager
         dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
 
     - name: Build web
       run: |
-        cd jo17_tactical_manager
+        cd VOABTEAMAPP2/jo17_tactical_manager
         flutter build web --release
 
     - name: Upload web build artifact
       uses: actions/upload-artifact@v4
       with:
         name: web-build
-        path: build/web/**
+        path: VOABTEAMAPP2/jo17_tactical_manager/build/web/**
         if-no-files-found: error
 
     - name: Upload lcov coverage
       uses: actions/upload-artifact@v4
       with:
         name: lcov-report
-        path: coverage/lcov.info
+        path: VOABTEAMAPP2/jo17_tactical_manager/coverage/lcov.info
         if-no-files-found: warn
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
-        files: coverage/lcov.info
+        files: VOABTEAMAPP2/jo17_tactical_manager/coverage/lcov.info
         flags: unit
         verbose: true
 
