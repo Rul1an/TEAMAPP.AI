@@ -27,6 +27,7 @@ import 'widgets/basic_info_step.dart';
 import 'widgets/objectives_step.dart';
 import 'widgets/phase_planning_step.dart';
 import 'widgets/evaluation_step.dart';
+import 'widgets/edit_phase_dialog.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -613,130 +614,17 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     // TODO(author): Implement custom timing selection
   }
 
-  void _editPhase(int index) {
-    final phase = sessionPhases[index];
-    final nameController = TextEditingController(text: phase.name);
-    final descriptionController = TextEditingController(
-      text: phase.description,
-    );
-    final durationController = TextEditingController(
-      text: phase.durationMinutes.toString(),
-    );
-    var selectedType = phase.type;
-
-    showDialog<void>(
+  Future<void> _editPhase(int index) async {
+    final updated = await showDialog<SessionPhase>(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setDialogState) => AlertDialog(
-          title: Text('Bewerk Fase ${index + 1}'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Fase Naam',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                DropdownButtonFormField<PhaseType>(
-                  value: selectedType,
-                  decoration: const InputDecoration(
-                    labelText: 'Type',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: PhaseType.values
-                      .map(
-                        (type) => DropdownMenuItem(
-                          value: type,
-                          child: Row(
-                            children: [
-                              Icon(_getPhaseIcon(type), size: 20),
-                              const SizedBox(width: 8),
-                              Text(_getPhaseTypeName(type)),
-                            ],
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setDialogState(() {
-                        selectedType = value;
-                      });
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: durationController,
-                  decoration: const InputDecoration(
-                    labelText: 'Duur (minuten)',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Beschrijving',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 3,
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Annuleren'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final duration = int.tryParse(durationController.text) ??
-                    phase.durationMinutes;
-                final updatedPhase = sessionPhases[index].copyWith(
-                  name: nameController.text.trim().isEmpty
-                      ? phase.name
-                      : nameController.text.trim(),
-                  type: selectedType,
-                  description: descriptionController.text.trim(),
-                );
-
-                // Manually update the duration by setting new end time
-                updatedPhase.endTime = updatedPhase.startTime.add(
-                  Duration(minutes: duration),
-                );
-
-                // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-                // This setState with multiple property assignments demonstrates where
-                // cascade notation could improve readability for complex state updates.
-                //
-                // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-                // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-                //
-                // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-                // ✅ Groups related property assignments visually
-                // ✅ Reduces repetitive object references
-                // ✅ Better readability for large state updates
-                // ✅ Maintains Flutter state management patterns
-                //
-                setState(() {
-                  sessionPhases[index] = updatedPhase;
-                  _recalculatePhaseTimes();
-                });
-                Navigator.pop(context);
-              },
-              child: const Text('Opslaan'),
-            ),
-          ],
-        ),
-      ),
+      builder: (ctx) => EditPhaseDialog(phase: sessionPhases[index]),
     );
+    if (updated != null) {
+      setState(() {
+        sessionPhases[index] = updated;
+        _recalculatePhaseTimes();
+      });
+    }
   }
 
   void _addCustomPhase() {
