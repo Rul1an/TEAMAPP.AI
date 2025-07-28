@@ -26,6 +26,9 @@ import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../controllers/session_builder_controller.dart';
 import 'widgets/session_builder_wizard.dart';
 import 'widgets/basic_info_step.dart';
+import 'widgets/objectives_step.dart';
+import 'widgets/phase_planning_step.dart';
+import 'widgets/evaluation_step.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -177,9 +180,29 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                   trainingType: selectedType,
                   onSelectTrainingType: _selectTrainingType,
                 ),
-            (ctx) => _buildObjectivesStep(),
-            (ctx) => _buildPhasePlanningStep(),
-            (ctx) => _buildEvaluationStep(),
+            (ctx) => ObjectivesStep(
+                  objectiveController: _objectiveController,
+                  teamFunctionController: _teamFunctionController,
+                  coachingAccentController: _coachingAccentController,
+                ),
+            (ctx) => PhasePlanningStep(
+                  phases: sessionPhases,
+                  onReorder: _reorderPhases,
+                  onAddPhase: _addCustomPhase,
+                  onEditPhase: _editPhase,
+                  onDeletePhase: _deletePhase,
+                  totalDuration: _getTotalDuration(),
+                ),
+            (ctx) => EvaluationStep(
+                  selectedDate: selectedDate,
+                  trainingType: selectedType,
+                  objective: _objectiveController.text,
+                  totalDuration: _getTotalDuration(),
+                  phaseCount: sessionPhases.length,
+                  notesController: _notesController,
+                  onExportPdf: _exportToPDF,
+                  onSave: _saveSession,
+                ),
           ],
           onFinished: _saveSession,
         ),
@@ -1518,7 +1541,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     }
   }
 
-  // ignore: unused_element
   void _showPhaseExercises(SessionPhase phase) {
     showDialog<void>(
       context: context,
