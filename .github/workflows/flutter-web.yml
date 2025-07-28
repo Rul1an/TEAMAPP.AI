@@ -68,7 +68,7 @@ jobs:
         flutter pub get
 
     - name: Bootstrap (melos)
-      if: exists('melos.yaml')
+      if: ${{ hashFiles('melos.yaml') != '' }}
       run: melos bootstrap
 
     - name: Generate code (build_runner)
