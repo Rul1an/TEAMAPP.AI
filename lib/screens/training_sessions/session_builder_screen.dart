@@ -25,6 +25,7 @@ import '../../services/training_session_builder_service.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../controllers/session_builder_controller.dart';
 import 'widgets/session_builder_wizard.dart';
+import 'widgets/basic_info_step.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -170,7 +171,12 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
             'Evaluatie',
           ],
           stepBuilders: [
-            (ctx) => _buildBasicInfoStep(),
+            (ctx) => BasicInfoStep(
+                  selectedDate: selectedDate,
+                  onSelectDate: _selectDate,
+                  trainingType: selectedType,
+                  onSelectTrainingType: _selectTrainingType,
+                ),
             (ctx) => _buildObjectivesStep(),
             (ctx) => _buildPhasePlanningStep(),
             (ctx) => _buildEvaluationStep(),
