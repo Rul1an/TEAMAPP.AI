@@ -9,6 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_performance/firebase_performance.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 // Project imports:
 import 'config/environment.dart';
@@ -32,10 +33,14 @@ Future<void> main() async {
     anonKey: Environment.current.supabaseAnonKey,
   );
 
-  // Initialize Firebase (Performance Monitoring)
-  await Firebase.initializeApp();
-  await FirebasePerformance.instance
-      .setPerformanceCollectionEnabled(!kDebugMode);
+  // Initialize Firebase (Performance Monitoring) – skip on web until proper
+  // firebase_options.dart is generated and configured. Prevents runtime error
+  // causing infinite "Loading…" on Netlify.
+  if (!kIsWeb) {
+    await Firebase.initializeApp();
+    await FirebasePerformance.instance
+        .setPerformanceCollectionEnabled(!kDebugMode);
+  }
 
   // Run the app inside error boundary & initialise Sentry (handled internally).
   await runAppWithGuards(
