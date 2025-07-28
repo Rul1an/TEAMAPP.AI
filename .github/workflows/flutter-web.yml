@@ -65,7 +65,6 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd VOABTEAMAPP2/jo17_tactical_manager
         flutter pub get
 
     - name: Bootstrap (melos)
@@ -81,18 +80,15 @@ jobs:
 
     - name: Generate code (build_runner)
       run: |
-        cd VOABTEAMAPP2/jo17_tactical_manager
         flutter pub run build_runner build --delete-conflicting-outputs --verbose
 
     - name: Run tests with coverage
       run: |
-        cd VOABTEAMAPP2/jo17_tactical_manager
         flutter test --coverage
         ./coverage.sh
 
     - name: Analyze code
       run: |
-        cd VOABTEAMAPP2/jo17_tactical_manager
         dart analyze
 
     # Install very_good_cli globally and add to PATH
@@ -105,12 +101,10 @@ jobs:
 
     - name: Very Good Analysis
       run: |
-        cd VOABTEAMAPP2/jo17_tactical_manager
         very_good analyze
 
     - name: Custom Lint
       run: |
-        cd VOABTEAMAPP2/jo17_tactical_manager
         dart run custom_lint
 
     - name: Dart Code Metrics Analysis (license-protected)
@@ -119,32 +113,30 @@ jobs:
         DCM_CI_KEY: ${{ env.DCM_CI_KEY }}
         DCM_EMAIL: ${{ env.DCM_EMAIL }}
       run: |
-        cd VOABTEAMAPP2/jo17_tactical_manager
         dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
 
     - name: Build web
       run: |
-        cd VOABTEAMAPP2/jo17_tactical_manager
         flutter build web --release
 
     - name: Upload web build artifact
       uses: actions/upload-artifact@v4
       with:
         name: web-build
-        path: VOABTEAMAPP2/jo17_tactical_manager/build/web/**
+        path: build/web/**
         if-no-files-found: error
 
     - name: Upload lcov coverage
       uses: actions/upload-artifact@v4
       with:
         name: lcov-report
-        path: VOABTEAMAPP2/jo17_tactical_manager/coverage/lcov.info
+        path: coverage/lcov.info
         if-no-files-found: warn
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
-        files: VOABTEAMAPP2/jo17_tactical_manager/coverage/lcov.info
+        files: coverage/lcov.info
         flags: unit
         verbose: true
 
