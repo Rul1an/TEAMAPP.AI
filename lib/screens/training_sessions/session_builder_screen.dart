@@ -34,6 +34,7 @@ import 'widgets/evaluation_step.dart';
 // ignore: avoid_web_libraries_in_flutter
 // Web functionality removed - use notifications instead for 2025 compatibility
 
+// ignore_for_file: unused_element
 class SessionBuilderScreen extends ConsumerStatefulWidget {
   const SessionBuilderScreen({super.key, this.sessionId});
   final int? sessionId;
