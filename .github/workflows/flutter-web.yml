@@ -99,9 +99,9 @@ jobs:
     - name: Add Dart pub global bin to PATH
       run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
 
-    - name: Very Good Packages Analysis
+    - name: Very Good Packages Check
       run: |
-        very_good packages analyze --fatal-infos
+        very_good packages check --fatal-infos
 
     - name: Custom Lint
       run: |
