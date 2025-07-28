@@ -124,6 +124,14 @@ jobs:
           exit 1
         fi
 
+    # Install very_good_cli globally and add to PATH
+    - name: Install Very Good CLI
+      run: |
+        dart pub global activate very_good_cli
+
+    - name: Add Dart pub global bin to PATH
+      run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
     - name: Very Good Analysis
       run: |
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
