@@ -10,6 +10,9 @@ jobs:
   quality:
     name: Test Flutter Web
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: jo17_tactical_manager
     env:
       # Expose Dart Code Metrics credentials (may be empty on forks)
       DCM_CI_KEY: ${{ secrets.DCM_CI_KEY }}
@@ -64,19 +67,7 @@ jobs:
         key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
 
     - name: Install dependencies
-      run: |
-        # Check if jo17_tactical_manager exists and contains a pubspec; prefer it over workspace-level pubspec.yaml
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          echo "Found pubspec.yaml in jo17_tactical_manager → using that as project root"
-          cd jo17_tactical_manager
-          flutter pub get
-        elif [ -f "pubspec.yaml" ]; then
-          echo "Using pubspec.yaml in workspace root"
-          flutter pub get
-        else
-          echo "ERROR: Could not find pubspec.yaml"
-          exit 1
-        fi
+      run: flutter pub get
 
     - name: Bootstrap (melos)
       run: |
@@ -90,39 +81,15 @@ jobs:
         fi
 
     - name: Generate code (build_runner)
-      run: |
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          cd jo17_tactical_manager
-          flutter pub run build_runner build --delete-conflicting-outputs --verbose
-        elif [ -f "pubspec.yaml" ]; then
-          flutter pub run build_runner build --delete-conflicting-outputs --verbose
-        fi
+      run: flutter pub run build_runner build --delete-conflicting-outputs --verbose
 
     - name: Run tests with coverage
       run: |
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          cd jo17_tactical_manager
-          flutter test --coverage
-          ./coverage.sh
-        elif [ -f "pubspec.yaml" ]; then
-          flutter test --coverage
-          ./coverage.sh
-        else
-          echo "ERROR: Could not find pubspec.yaml"
-          exit 1
-        fi
+        flutter test --coverage
+        ./coverage.sh
 
-    - name: Analyze code (fatal-infos)
-      run: |
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          cd jo17_tactical_manager
-          dart analyze
-        elif [ -f "pubspec.yaml" ]; then
-          dart analyze
-        else
-          echo "ERROR: Could not find pubspec.yaml"
-          exit 1
-        fi
+    - name: Analyze code
+      run: dart analyze
 
     # Install very_good_cli globally and add to PATH
     - name: Install Very Good CLI
@@ -133,67 +100,39 @@ jobs:
       run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
 
     - name: Very Good Analysis
-      run: |
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          cd jo17_tactical_manager
-        fi
-        very_good analyze
+      run: very_good analyze
 
     - name: Custom Lint
-      run: |
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          cd jo17_tactical_manager
-        fi
-        dart run custom_lint
+      run: dart run custom_lint
 
     - name: Dart Code Metrics Analysis (license-protected)
       if: ${{ env.DCM_CI_KEY != '' && env.DCM_EMAIL != '' }}
       env:
-        # Re-expose the credentials for the DCM binary at runtime
         DCM_CI_KEY: ${{ env.DCM_CI_KEY }}
         DCM_EMAIL: ${{ env.DCM_EMAIL }}
-      run: |
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          cd jo17_tactical_manager
-        fi
-        dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
+      run: dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
 
     - name: Build web
-      run: |
-        if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
-          cd jo17_tactical_manager
-          flutter build web --release
-        elif [ -f "pubspec.yaml" ]; then
-          flutter build web --release
-        else
-          echo "ERROR: Could not find pubspec.yaml"
-          exit 1
-        fi
+      run: flutter build web --release
 
     - name: Upload web build artifact
       uses: actions/upload-artifact@v4
       with:
         name: web-build
-        path: |
-          build/web/**
-          jo17_tactical_manager/build/web/**
+        path: build/web/**
         if-no-files-found: error
 
     - name: Upload lcov coverage
       uses: actions/upload-artifact@v4
       with:
         name: lcov-report
-        path: |
-          coverage/lcov.info
-          jo17_tactical_manager/coverage/lcov.info
+        path: coverage/lcov.info
         if-no-files-found: warn
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
-        files: |
-          coverage/lcov.info
-          jo17_tactical_manager/coverage/lcov.info
+        files: coverage/lcov.info
         flags: unit
         verbose: true
 
