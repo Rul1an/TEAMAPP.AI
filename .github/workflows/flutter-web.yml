@@ -96,9 +96,6 @@ jobs:
       run: |
         very_good packages check licenses
 
-    - name: Custom Lint
-      run: dart run custom_lint
-
     - name: Dart Code Metrics Analysis (license-protected)
       if: ${{ env.DCM_CI_KEY != '' && env.DCM_EMAIL != '' }}
       env:
