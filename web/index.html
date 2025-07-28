@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,12 +28,34 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>jo17_tactical_manager</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
+  <!-- Minimal splash screen for Lighthouse / CI to avoid NO_FCP -->
+  <style>
+    /* Visible immediately so Lighthouse detects first paint */
+    .ci-splash {
+      background: #ffffff;
+      font: 20px sans-serif;
+      padding: 2rem;
+      color: #333;
+    }
+  </style>
+
+  <div id="splash" class="ci-splash">Loading…</div>
+
+  <script>
+    // Remove splash once Flutter renders its first frame.
+    window.addEventListener('flutter-first-frame', () => {
+      const splash = document.getElementById('splash');
+      splash?.remove();
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
+
 </html>
