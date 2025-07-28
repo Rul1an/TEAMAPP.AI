@@ -68,15 +68,8 @@ jobs:
         flutter pub get
 
     - name: Bootstrap (melos)
-      run: |
-        if [ -f "melos.yaml" ]; then
-          melos bootstrap
-        elif [ -f "VOABTEAMAPP2/jo17_tactical_manager/melos.yaml" ]; then
-          cd VOABTEAMAPP2/jo17_tactical_manager
-          melos bootstrap
-        else
-          echo "No melos.yaml found – skipping bootstrap."
-        fi
+      if: exists('melos.yaml')
+      run: melos bootstrap
 
     - name: Generate code (build_runner)
       run: |
@@ -104,9 +97,7 @@ jobs:
         very_good packages check licenses
 
     - name: Custom Lint
-      run: |
-        cd jo17_tactical_manager
-        dart run custom_lint
+      run: dart run custom_lint
 
     - name: Dart Code Metrics Analysis (license-protected)
       if: ${{ env.DCM_CI_KEY != '' && env.DCM_EMAIL != '' }}
