@@ -117,7 +117,7 @@ class _AddPhaseDialogState extends State<AddPhaseDialog> {
                     ? _typeName(selectedType)
                     : nameController.text
                 ..type = selectedType
-                ..orderIndex = 99
+                ..orderIndex = 0
                 ..startTime = widget.baseStart
                 ..endTime = widget.baseStart.add(Duration(minutes: dur))
                 ..description = descriptionController.text;

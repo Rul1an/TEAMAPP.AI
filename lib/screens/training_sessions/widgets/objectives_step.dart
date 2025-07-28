@@ -28,17 +28,20 @@ class ObjectivesStep extends StatelessWidget {
                   children: [
                     TextField(
                       controller: objectiveController,
-                      decoration: const InputDecoration(labelText: 'Trainingsdoel'),
+                      decoration:
+                          const InputDecoration(labelText: 'Trainingsdoel'),
                     ),
                     const SizedBox(height: 12),
                     TextField(
                       controller: teamFunctionController,
-                      decoration: const InputDecoration(labelText: 'Teamfunctie'),
+                      decoration:
+                          const InputDecoration(labelText: 'Teamfunctie'),
                     ),
                     const SizedBox(height: 12),
                     TextField(
                       controller: coachingAccentController,
-                      decoration: const InputDecoration(labelText: 'Coachingaccent'),
+                      decoration:
+                          const InputDecoration(labelText: 'Coachingaccent'),
                     ),
                   ],
                 ),

@@ -13,7 +13,7 @@ Keeping files under ±300 LOC improves comprehension, PR review time and hot-rel
 ## Inventory (non-generated > 300 LOC)
 | # | File | LOC | Category | Primary Concerns |
 |---|------|----:|----------|------------------|
-| 1 | lib/screens/training_sessions/session_builder_screen.dart | 1736 | Screen | Monolithic build method, impure business logic | **Completed** – helpers & steps extracted; file < 300 LOC |
+| 1 | lib/screens/training_sessions/session_builder_screen.dart | 1074 | Screen | Monolithic build method, dialogs & remaining helpers | **In Progress** – controller & major steps extracted; needs further split to ≤300 LOC |
 | 2 | lib/screens/annual_planning/load_monitoring_screen.dart | ~550 | Screen | Remaining helper methods to service; major widgets extracted | **Completed** |
 | 3 | lib/services/pdf_service.dart | 1288 | Service | Mixed IO, layout & aggregation logic |
 | 4 | lib/widgets/field_diagram/field_painter.dart | 1287 → **<300** | Widget | Split into 4 painter classes |

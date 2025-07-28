@@ -10,6 +10,7 @@ class PhasePlanningStep extends StatelessWidget {
     required this.onEditPhase,
     required this.onDeletePhase,
     required this.totalDuration,
+    this.onShowExercises = _noop,
   });
 
   final List<SessionPhase> phases;
@@ -18,6 +19,7 @@ class PhasePlanningStep extends StatelessWidget {
   final void Function(int index) onEditPhase;
   final void Function(int index) onDeletePhase;
   final int totalDuration;
+  final void Function(int index) onShowExercises;
 
   String _formatPhaseTime(SessionPhase phase) {
     final start = phase.startTime;
@@ -94,6 +96,12 @@ class PhasePlanningStep extends StatelessWidget {
                             onPressed: () => onEditPhase(index),
                           ),
                           IconButton(
+                            tooltip: 'Oefeningen',
+                            icon: const Icon(Icons.fitness_center,
+                                color: Colors.deepOrange),
+                            onPressed: () => onShowExercises(index),
+                          ),
+                          IconButton(
                             tooltip: 'Verwijder',
                             icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () => onDeletePhase(index),
@@ -128,3 +136,6 @@ class PhasePlanningStep extends StatelessWidget {
         ),
       );
 }
+
+// Default no-op callback for optional parameter
+void _noop(int _) {}

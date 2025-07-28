@@ -28,7 +28,8 @@ class SessionBuilderState {
 
   DateTime get selectedDate => session?.date ?? DateTime.now();
 
-  TrainingType get trainingType => session?.type ?? TrainingType.regularTraining;
+  TrainingType get trainingType =>
+      session?.type ?? TrainingType.regularTraining;
 
   List<SessionPhase> get phases => session?.phases ?? const [];
 }
