@@ -646,6 +646,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     );
     if (phase != null) {
       setState(() {
+        phase.orderIndex = sessionPhases.length;
         sessionPhases.add(phase);
         _recalculatePhaseTimes();
       });
