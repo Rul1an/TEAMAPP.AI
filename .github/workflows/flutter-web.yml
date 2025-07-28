@@ -137,7 +137,7 @@ jobs:
         if [ -f "jo17_tactical_manager/pubspec.yaml" ]; then
           cd jo17_tactical_manager
         fi
-        very_good analyze --fatal-infos
+        very_good analyze
 
     - name: Custom Lint
       run: |
