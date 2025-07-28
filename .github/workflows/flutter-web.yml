@@ -10,9 +10,6 @@ jobs:
   quality:
     name: Test Flutter Web
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: jo17_tactical_manager
     env:
       # Expose Dart Code Metrics credentials (may be empty on forks)
       DCM_CI_KEY: ${{ secrets.DCM_CI_KEY }}
@@ -68,6 +65,7 @@ jobs:
 
     - name: Install dependencies
       run: flutter pub get
+      working-directory: jo17_tactical_manager
 
     - name: Bootstrap (melos)
       run: |
@@ -82,14 +80,17 @@ jobs:
 
     - name: Generate code (build_runner)
       run: flutter pub run build_runner build --delete-conflicting-outputs --verbose
+      working-directory: jo17_tactical_manager
 
     - name: Run tests with coverage
       run: |
         flutter test --coverage
         ./coverage.sh
+      working-directory: jo17_tactical_manager
 
     - name: Analyze code
       run: dart analyze
+      working-directory: jo17_tactical_manager
 
     # Install very_good_cli globally and add to PATH
     - name: Install Very Good CLI
@@ -101,9 +102,11 @@ jobs:
 
     - name: Very Good Analysis
       run: very_good analyze
+      working-directory: jo17_tactical_manager
 
     - name: Custom Lint
       run: dart run custom_lint
+      working-directory: jo17_tactical_manager
 
     - name: Dart Code Metrics Analysis (license-protected)
       if: ${{ env.DCM_CI_KEY != '' && env.DCM_EMAIL != '' }}
@@ -111,28 +114,30 @@ jobs:
         DCM_CI_KEY: ${{ env.DCM_CI_KEY }}
         DCM_EMAIL: ${{ env.DCM_EMAIL }}
       run: dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
+      working-directory: jo17_tactical_manager
 
     - name: Build web
       run: flutter build web --release
+      working-directory: jo17_tactical_manager
 
     - name: Upload web build artifact
       uses: actions/upload-artifact@v4
       with:
         name: web-build
-        path: build/web/**
+        path: jo17_tactical_manager/build/web/**
         if-no-files-found: error
 
     - name: Upload lcov coverage
       uses: actions/upload-artifact@v4
       with:
         name: lcov-report
-        path: coverage/lcov.info
+        path: jo17_tactical_manager/coverage/lcov.info
         if-no-files-found: warn
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
-        files: coverage/lcov.info
+        files: jo17_tactical_manager/coverage/lcov.info
         flags: unit
         verbose: true
 
