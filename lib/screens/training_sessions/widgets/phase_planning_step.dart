@@ -28,6 +28,8 @@ class PhasePlanningStep extends StatelessWidget {
 
   Color _phaseColor(PhaseType t) {
     switch (t) {
+      case PhaseType.main:
+        return Colors.red.shade100;
       case PhaseType.warmup:
         return Colors.green.shade100;
       case PhaseType.technical:
@@ -39,7 +41,7 @@ class PhasePlanningStep extends StatelessWidget {
       case PhaseType.game:
         return Colors.teal.shade100;
       case PhaseType.cooldown:
-        return Colors.grey.shade200;
+        return Colors.grey.shade100;
       case PhaseType.discussion:
         return Colors.indigo.shade100;
       case PhaseType.evaluation:

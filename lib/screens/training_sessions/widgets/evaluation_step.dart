@@ -28,7 +28,15 @@ class EvaluationStep extends StatelessWidget {
       case TrainingType.regularTraining:
         return 'Reguliere Training';
       case TrainingType.matchPreparation:
-        return 'Match Voorbereiding';
+        return 'Wedstrijd Voorbereiding';
+      case TrainingType.tacticalSession:
+        return 'Tactische Sessie';
+      case TrainingType.technicalSession:
+        return 'Technische Sessie';
+      case TrainingType.fitnessSession:
+        return 'Fitness Sessie';
+      case TrainingType.recoverySession:
+        return 'Herstel Sessie';
       default:
         return t.name;
     }
