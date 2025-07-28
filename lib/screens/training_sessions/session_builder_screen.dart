@@ -28,6 +28,9 @@ import 'widgets/objectives_step.dart';
 import 'widgets/phase_planning_step.dart';
 import 'widgets/evaluation_step.dart';
 import 'widgets/edit_phase_dialog.dart';
+import 'widgets/add_phase_dialog.dart';
+import 'widgets/exercise_phase_dialog.dart';
+import 'utils/phase_planning_utils.dart';
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -191,7 +194,8 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
                   onAddPhase: _addCustomPhase,
                   onEditPhase: _editPhase,
                   onDeletePhase: _deletePhase,
-                  totalDuration: _getTotalDuration(),
+                  onShowExercises: _showPhaseExercises,
+                  totalDuration: calculateTotalDuration(sessionPhases),
                 ),
             (ctx) => EvaluationStep(
                   selectedDate: selectedDate,
@@ -287,17 +291,26 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     });
   }
 
-  void _recalculatePhaseTimes() {
-    final baseTime = DateTime(2024, 1, 1, 18); // 18:00 base time
-    var currentTime = baseTime;
+  void _recalculatePhaseTimes() => recalculatePhaseTimes(sessionPhases);
 
-    for (var i = 0; i < sessionPhases.length; i++) {
-      sessionPhases[i].startTime = currentTime;
-      sessionPhases[i].endTime = currentTime.add(
-        Duration(minutes: sessionPhases[i].durationMinutes),
-      );
-      currentTime = sessionPhases[i].endTime;
-    }
+  Future<void> _showPhaseExercises(int index) async {
+    final phase = sessionPhases[index];
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => ExercisePhaseDialog(
+        phase: phase,
+        onRemoveExercise: (exerciseId) {
+          setState(() {
+            phase.removeExercise(exerciseId);
+          });
+        },
+        onNavigateToLibrary: () {
+          Navigator.pop(ctx);
+          // Navigate to existing Exercise Library route (if any)
+          context.push('/exercise-library');
+        },
+      ),
+    );
   }
 
   void _deletePhase(int index) {
@@ -539,8 +552,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     }
   }
 
-  int _getTotalDuration() =>
-      sessionPhases.fold(0, (sum, phase) => sum + phase.durationMinutes);
+  int _getTotalDuration() => calculateTotalDuration(sessionPhases);
 
   Future<void> _selectDate() async {
     final date = await showDatePicker(
@@ -627,135 +639,17 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     }
   }
 
-  void _addCustomPhase() {
-    final nameController = TextEditingController();
-    final descriptionController = TextEditingController();
-    final durationController = TextEditingController(text: '15');
-    var selectedType = PhaseType.technical;
-
-    showDialog<void>(
+  Future<void> _addCustomPhase() async {
+    final phase = await showDialog<SessionPhase>(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Nieuwe Fase Toevoegen'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Fase Naam',
-                    hintText: 'Bijv: Extra Techniek',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                DropdownButtonFormField<PhaseType>(
-                  value: selectedType,
-                  decoration: const InputDecoration(
-                    labelText: 'Type',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: PhaseType.values
-                      .map(
-                        (type) => DropdownMenuItem(
-                          value: type,
-                          child: Row(
-                            children: [
-                              Icon(_getPhaseIcon(type), size: 20),
-                              const SizedBox(width: 8),
-                              Text(_getPhaseTypeName(type)),
-                            ],
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setDialogState(() {
-                        selectedType = value;
-                        descriptionController.text =
-                            _getDefaultPhaseDescription(value);
-                      });
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: durationController,
-                  decoration: const InputDecoration(
-                    labelText: 'Duur (minuten)',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Beschrijving',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 3,
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Annuleren'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (nameController.text.trim().isEmpty) {
-                  if (mounted && context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Vul een naam in voor de fase'),
-                        backgroundColor: Colors.orange,
-                      ),
-                    );
-                  }
-                  return;
-                }
-
-                final duration = int.tryParse(durationController.text) ?? 15;
-                final baseTime = DateTime(2024, 1, 1, 18);
-                final newPhase = SessionPhase()
-                  ..name = nameController.text.trim()
-                  ..type = selectedType
-                  ..orderIndex = sessionPhases.length
-                  ..startTime = baseTime
-                  ..endTime = baseTime.add(Duration(minutes: duration))
-                  ..description = descriptionController.text.trim();
-
-                // 🔧 CASCADE OPERATOR DOCUMENTATION: Complex State Update Pattern
-                // This setState with multiple property assignments demonstrates where
-                // cascade notation could improve readability for complex state updates.
-                //
-                // **CURRENT PATTERN**: setState(() { prop1 = val1; prop2 = val2; }) (block)
-                // **RECOMMENDED**: setState(() { object..prop1 = val1..prop2 = val2; }) (cascade)
-                //
-                // **CASCADE BENEFITS FOR COMPLEX STATE UPDATES**:
-                // ✅ Groups related property assignments visually
-                // ✅ Reduces repetitive object references
-                // ✅ Better readability for large state updates
-                // ✅ Maintains Flutter state management patterns
-                //
-                setState(() {
-                  sessionPhases.add(newPhase);
-                  _recalculatePhaseTimes();
-                });
-                Navigator.pop(context);
-              },
-              child: const Text('Toevoegen'),
-            ),
-          ],
-        ),
-      ),
+      builder: (ctx) => AddPhaseDialog(baseStart: DateTime(2024, 1, 1, 18)),
     );
+    if (phase != null) {
+      setState(() {
+        sessionPhases.add(phase);
+        _recalculatePhaseTimes();
+      });
+    }
   }
 
   String _getPhaseTypeName(PhaseType type) {
