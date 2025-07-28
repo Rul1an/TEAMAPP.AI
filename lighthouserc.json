@@ -4,7 +4,8 @@
       "staticDistDir": "build/web",
       "numberOfRuns": 3,
       "settings": {
-        "preset": "desktop"
+        "preset": "desktop",
+        "chromeFlags": "--no-sandbox --disable-dev-shm-usage --disable-gpu"
       }
     },
     "assert": {

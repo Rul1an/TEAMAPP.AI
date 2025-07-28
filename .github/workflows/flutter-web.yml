@@ -212,6 +212,21 @@ jobs:
         name: web-build
         path: build/web/
 
+    - name: 🚨 Validate index.html exists and non-empty
+      run: |
+        if [ ! -f "build/web/index.html" ]; then
+          echo "❌ build/web/index.html not found"
+          exit 1
+        fi
+        if ! grep -q "<html" build/web/index.html; then
+          echo "❌ build/web/index.html is empty or invalid"
+          head -20 build/web/index.html || true
+          exit 1
+        fi
+
+    - name: 🐛 Debug Web Build Output
+      run: head -20 build/web/index.html
+
     - name: Run Lighthouse CI
       uses: treosh/lighthouse-ci-action@v10
       with:
