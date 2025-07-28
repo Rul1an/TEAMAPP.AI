@@ -64,8 +64,9 @@ jobs:
         key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
 
     - name: Install dependencies
-      run: flutter pub get
-      working-directory: jo17_tactical_manager
+      run: |
+        cd jo17_tactical_manager
+        flutter pub get
 
     - name: Bootstrap (melos)
       run: |
@@ -79,18 +80,20 @@ jobs:
         fi
 
     - name: Generate code (build_runner)
-      run: flutter pub run build_runner build --delete-conflicting-outputs --verbose
-      working-directory: jo17_tactical_manager
+      run: |
+        cd jo17_tactical_manager
+        flutter pub run build_runner build --delete-conflicting-outputs --verbose
 
     - name: Run tests with coverage
       run: |
+        cd jo17_tactical_manager
         flutter test --coverage
         ./coverage.sh
-      working-directory: jo17_tactical_manager
 
     - name: Analyze code
-      run: dart analyze
-      working-directory: jo17_tactical_manager
+      run: |
+        cd jo17_tactical_manager
+        dart analyze
 
     # Install very_good_cli globally and add to PATH
     - name: Install Very Good CLI
@@ -101,43 +104,47 @@ jobs:
       run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
 
     - name: Very Good Analysis
-      run: very_good analyze
-      working-directory: jo17_tactical_manager
+      run: |
+        cd jo17_tactical_manager
+        very_good analyze
 
     - name: Custom Lint
-      run: dart run custom_lint
-      working-directory: jo17_tactical_manager
+      run: |
+        cd jo17_tactical_manager
+        dart run custom_lint
 
     - name: Dart Code Metrics Analysis (license-protected)
       if: ${{ env.DCM_CI_KEY != '' && env.DCM_EMAIL != '' }}
       env:
         DCM_CI_KEY: ${{ env.DCM_CI_KEY }}
         DCM_EMAIL: ${{ env.DCM_EMAIL }}
-      run: dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
-      working-directory: jo17_tactical_manager
+      run: |
+        cd jo17_tactical_manager
+        dcm analyze lib --fatal-style --fatal-warnings --ci-key "$DCM_CI_KEY" --email "$DCM_EMAIL"
 
     - name: Build web
-      run: flutter build web --release
-      working-directory: jo17_tactical_manager
+      run: |
+        cd jo17_tactical_manager
+        flutter build web --release
 
     - name: Upload web build artifact
       uses: actions/upload-artifact@v4
       with:
         name: web-build
-        path: jo17_tactical_manager/build/web/**
+        path: build/web/**
         if-no-files-found: error
 
     - name: Upload lcov coverage
       uses: actions/upload-artifact@v4
       with:
         name: lcov-report
-        path: jo17_tactical_manager/coverage/lcov.info
+        path: coverage/lcov.info
         if-no-files-found: warn
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
-        files: jo17_tactical_manager/coverage/lcov.info
+        files: coverage/lcov.info
         flags: unit
         verbose: true
 
