@@ -10,10 +10,10 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: SessionBuilderWizard(
-            stepTitles: ['A', 'B'],
+            stepTitles: const ['A', 'B'],
             stepBuilders: [
-              (_) => Center(child: Text('StepA')),
-              (_) => Center(child: Text('StepB')),
+              (_) => const Center(child: Text('StepA')),
+              (_) => const Center(child: Text('StepB')),
             ],
             onFinished: () => finished = true,
           ),

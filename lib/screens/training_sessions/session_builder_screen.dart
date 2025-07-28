@@ -20,7 +20,6 @@ import '../../providers/players_provider.dart';
 import '../../providers/training_sessions_repo_provider.dart';
 import '../../repositories/player_repository.dart';
 import '../../repositories/training_session_repository.dart';
-import '../../widgets/training/session_wizard_stepper.dart';
 import 'exercise_library_screen.dart';
 import '../../services/training_session_builder_service.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
@@ -171,10 +170,10 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
             'Evaluatie',
           ],
           stepBuilders: [
-            _buildBasicInfoStep,
-            _buildObjectivesStep,
-            _buildPhasePlanningStep,
-            _buildEvaluationStep,
+            (ctx) => _buildBasicInfoStep(),
+            (ctx) => _buildObjectivesStep(),
+            (ctx) => _buildPhasePlanningStep(),
+            (ctx) => _buildEvaluationStep(),
           ],
           onFinished: _saveSession,
         ),
