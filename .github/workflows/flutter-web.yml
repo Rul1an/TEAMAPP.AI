@@ -89,7 +89,7 @@ jobs:
 
     - name: Analyze code
       run: |
-        dart analyze
+        dart analyze --fatal-infos
 
     # Install very_good_cli globally and add to PATH
     - name: Install Very Good CLI
@@ -99,9 +99,9 @@ jobs:
     - name: Add Dart pub global bin to PATH
       run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
 
-    - name: Very Good Packages Check
+    - name: Very Good License Check
       run: |
-        very_good packages check --fatal-infos
+        very_good packages check licenses
 
     - name: Custom Lint
       run: |
