@@ -27,11 +27,19 @@ Future<void> main() async {
   // Initialize date formatting for Dutch locale
   await initializeDateFormatting('nl');
 
-  // Initialize Supabase
-  await Supabase.initialize(
-    url: Environment.current.supabaseUrl,
-    anonKey: Environment.current.supabaseAnonKey,
-  );
+  // Initialize Supabase with error handling
+  try {
+    await Supabase.initialize(
+      url: Environment.current.supabaseUrl,
+      anonKey: Environment.current.supabaseAnonKey,
+    );
+  } catch (e) {
+    // Log error but don't crash - app can work offline
+    if (kDebugMode) {
+      print('⚠️ Supabase initialization failed: $e');
+      print('📱 App will run in offline mode');
+    }
+  }
 
   // Initialize Firebase (Performance Monitoring) – skip on web until proper
   // firebase_options.dart is generated and configured. Prevents runtime error

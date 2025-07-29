@@ -32,8 +32,21 @@ class SupabaseConfig {
     _setupAuthListener();
   }
 
-  /// Get the Supabase client instance
-  static SupabaseClient get client => _client!;
+  /// Get the Supabase client instance - with null safety
+  static SupabaseClient get client {
+    if (_client == null) {
+      throw StateError(
+        'Supabase client not initialized. Call SupabaseConfig.initialize() first.',
+      );
+    }
+    return _client!;
+  }
+
+  /// Safe getter that returns null if not initialized
+  static SupabaseClient? get clientOrNull => _client;
+
+  /// Check if Supabase is properly initialized
+  static bool get isInitialized => _client != null;
 
   /// Testing hook – allows injecting a fake client without running full initialization.
   @visibleForTesting
@@ -78,15 +91,23 @@ class SupabaseConfig {
     required String email,
     required String password,
     Map<String, dynamic>? data,
-  }) async =>
-      _client!.auth.signUp(email: email, password: password, data: data);
+  }) async {
+    if (!isInitialized) {
+      throw StateError('Supabase client not initialized');
+    }
+    return _client!.auth.signUp(email: email, password: password, data: data);
+  }
 
   /// Sign in user
   static Future<AuthResponse> signIn({
     required String email,
     required String password,
-  }) async =>
-      _client!.auth.signInWithPassword(email: email, password: password);
+  }) async {
+    if (!isInitialized) {
+      throw StateError('Supabase client not initialized');
+    }
+    return _client!.auth.signInWithPassword(email: email, password: password);
+  }
 
   /// Sign out user
   static Future<void> signOut() async {
@@ -100,26 +121,31 @@ class SupabaseConfig {
 
   /// Get user's organizations
   static Future<List<Map<String, dynamic>>> getUserOrganizations() async {
-    if (!isAuthenticated) return [];
+    if (!isAuthenticated || !isInitialized) return [];
 
-    final response = await _client!.from('organization_members').select('''
-          organization_id,
-          role,
-          organizations (
-            id,
-            name,
-            slug,
-            subscription_tier,
-            subscription_status,
-            max_players,
-            max_teams,
-            max_coaches,
-            settings,
-            branding
-          )
-        ''').eq('user_id', currentUserId!);
+    try {
+      final response = await client.from('organization_members').select('''
+            organization_id,
+            role,
+            organizations (
+              id,
+              name,
+              slug,
+              subscription_tier,
+              subscription_status,
+              max_players,
+              max_teams,
+              max_coaches,
+              settings,
+              branding
+            )
+          ''').eq('user_id', currentUserId!);
 
-    return List<Map<String, dynamic>>.from(response);
+      return List<Map<String, dynamic>>.from(response);
+    } catch (e) {
+      AppLogger.e('Error fetching user organizations: $e');
+      return [];
+    }
   }
 
   /// Get user's current organization (first one for now)
