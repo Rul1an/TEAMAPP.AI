@@ -54,6 +54,9 @@ class ExerciseLibraryState {
   final bool showMorphocycleRecommendations;
   final int selectedTabIndex;
 
+  // Convenience getters for backward compatibility
+  String get searchQuery => filterCriteria.searchQuery;
+
   ExerciseLibraryState copyWith({
     ExerciseFilterCriteria? filterCriteria,
     bool? showMorphocycleRecommendations,
