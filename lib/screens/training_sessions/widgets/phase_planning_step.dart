@@ -19,7 +19,7 @@ class PhasePlanningStep extends StatelessWidget {
   final void Function(int index) onEditPhase;
   final void Function(int index) onDeletePhase;
   final int totalDuration;
-  final void Function(int index) onShowExercises;
+  final void Function(SessionPhase phase) onShowExercises;
 
   String _formatPhaseTime(SessionPhase phase) {
     final start = phase.startTime;
@@ -30,8 +30,6 @@ class PhasePlanningStep extends StatelessWidget {
 
   Color _phaseColor(PhaseType t) {
     switch (t) {
-      case PhaseType.main:
-        return Colors.red.shade100;
       case PhaseType.warmup:
         return Colors.green.shade100;
       case PhaseType.technical:
@@ -43,7 +41,7 @@ class PhasePlanningStep extends StatelessWidget {
       case PhaseType.game:
         return Colors.teal.shade100;
       case PhaseType.cooldown:
-        return Colors.grey.shade100;
+        return Colors.grey.shade200;
       case PhaseType.discussion:
         return Colors.indigo.shade100;
       case PhaseType.evaluation:
@@ -99,7 +97,7 @@ class PhasePlanningStep extends StatelessWidget {
                             tooltip: 'Oefeningen',
                             icon: const Icon(Icons.fitness_center,
                                 color: Colors.deepOrange),
-                            onPressed: () => onShowExercises(index),
+                            onPressed: () => onShowExercises(phase),
                           ),
                           IconButton(
                             tooltip: 'Verwijder',
@@ -138,4 +136,4 @@ class PhasePlanningStep extends StatelessWidget {
 }
 
 // Default no-op callback for optional parameter
-void _noop(int _) {}
+void _noop(SessionPhase _) {}

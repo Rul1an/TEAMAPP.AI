@@ -18,30 +18,44 @@ class ObjectivesStep extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Doelstellingen & Focus',
-                style: Theme.of(context).textTheme.headlineSmall),
+            Text(
+              'Doelstellingen & Focus',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
             const SizedBox(height: 16),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
                       controller: objectiveController,
-                      decoration:
-                          const InputDecoration(labelText: 'Trainingsdoel'),
+                      decoration: const InputDecoration(
+                        labelText: 'Sessie Doelstelling',
+                        hintText: 'Bijv: Verbeteren van passing onder druk',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 2,
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     TextField(
                       controller: teamFunctionController,
-                      decoration:
-                          const InputDecoration(labelText: 'Teamfunctie'),
+                      decoration: const InputDecoration(
+                        labelText: 'Team Functie Focus',
+                        hintText: 'Bijv: Balbezit, Omschakeling, Verdedigen',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     TextField(
                       controller: coachingAccentController,
-                      decoration:
-                          const InputDecoration(labelText: 'Coachingaccent'),
+                      decoration: const InputDecoration(
+                        labelText: 'Coaching Accent',
+                        hintText:
+                            'Bijv: Communicatie, Positiespel, Druk zetten',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ],
                 ),
