@@ -13,6 +13,7 @@ import 'package:firebase_performance/firebase_performance.dart';
 
 // Project imports:
 import 'config/environment.dart';
+import 'config/supabase_config.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
 import 'widgets/demo_mode_starter.dart';
@@ -33,6 +34,10 @@ Future<void> main() async {
       url: Environment.current.supabaseUrl,
       anonKey: Environment.current.supabaseAnonKey,
     );
+
+    // CRITICAL FIX: Initialize SupabaseConfig after Supabase.initialize()
+    // This prevents the null check operator error
+    await SupabaseConfig.initialize();
   } catch (e) {
     // Log error but don't crash - app can work offline
     if (kDebugMode) {
