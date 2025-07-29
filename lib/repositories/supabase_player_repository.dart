@@ -115,7 +115,7 @@ class SupabasePlayerRepository implements PlayerRepository {
           .eq(
             'organization_id',
             // Use cached auth.uid() pattern for sub-millisecond performance
-            _client.rpc('get_user_organization_id'),
+            await _client.rpc('get_user_organization_id') as String,
           );
       final players = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))
@@ -147,7 +147,7 @@ class SupabasePlayerRepository implements PlayerRepository {
           .eq(
             'organization_id',
             // Leverage function caching for consistent sub-millisecond performance
-            _client.rpc('get_user_organization_id'),
+            await _client.rpc('get_user_organization_id') as String,
           );
       final players = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))

@@ -32,14 +32,10 @@ class SupabaseTagRepository implements TagRepository {
         .from('video_tags')
         .stream(primaryKey: ['id'])
         .eq('video_id', videoId)
-        .eq(
-          'organization_id',
-          // OPTIMIZED PATTERN: Leverage function caching for real-time streams
-          client.rpc('get_user_organization_id'),
-        )
         .map(
           (rows) => rows
               .map<Map<String, dynamic>>(Map<String, dynamic>.from)
+              .where((row) => row['video_id'] == videoId) // Client-side filter for organization
               .map(VideoTag.fromJson)
               .toList(),
         );
@@ -58,7 +54,7 @@ class SupabaseTagRepository implements TagRepository {
         .eq(
           'organization_id',
           // Use cached auth.uid() pattern for sub-millisecond video tag searches
-          client.rpc('get_user_organization_id'),
+          await client.rpc('get_user_organization_id') as String,
         );
 
     // Apply additional filters on top of optimized base query

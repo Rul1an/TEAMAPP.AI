@@ -9,7 +9,6 @@ import 'package:jo17_tactical_manager/repositories/supabase_training_session_rep
 import 'package:jo17_tactical_manager/models/player.dart';
 import 'package:jo17_tactical_manager/features/video_tagging/models/video_tag.dart';
 import 'package:jo17_tactical_manager/features/video_tagging/models/tag_type.dart';
-import 'package:jo17_tactical_manager/models/training_session/training_session.dart';
 
 /// Performance tests for optimized repository implementations.
 ///
@@ -30,7 +29,7 @@ void main() {
       // Initialize repositories with test client (would use test containers in real CI)
       // For now, we'll use mock implementations to test performance patterns
       playerRepository = SupabasePlayerRepository();
-      videoTagRepository = SupabaseTagRepository(null as dynamic); // Mock client
+      videoTagRepository = SupabaseTagRepository(null!); // Mock client
       trainingSessionRepository = SupabaseTrainingSessionRepository();
     });
 
@@ -197,8 +196,6 @@ void main() {
 
     group('Performance Monitoring', () {
       test('should track cache hit rates accurately', () {
-        final monitor = CachePerformanceMonitor();
-
         // Simulate cache operations
         CachePerformanceMonitor.recordCacheHit('test_key', Duration(milliseconds: 2));
         CachePerformanceMonitor.recordCacheHit('test_key', Duration(milliseconds: 3));

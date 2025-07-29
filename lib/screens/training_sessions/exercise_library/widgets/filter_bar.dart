@@ -97,8 +97,9 @@ class ExerciseFilterBar extends ConsumerWidget {
     BuildContext context,
     ExerciseLibraryController controller,
   ) async {
-    // FIXED: Initialize with current filter values from controller
-    final currentCriteria = controller.state.filterCriteria;
+    // FIXED: Initialize with current filter values from controller state
+    final state = ref.read(exerciseLibraryControllerProvider);
+    final currentCriteria = state.filterCriteria;
     ExerciseType? typeFilter = currentCriteria.typeFilter;
     TrainingIntensity? intensityFilter = currentCriteria.intensityFilter;
     var minDuration = currentCriteria.minDuration;

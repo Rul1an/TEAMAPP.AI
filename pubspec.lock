@@ -1048,7 +1048,7 @@ packages:
     source: hosted
     version: "10.0.9"
   leak_tracker_flutter_testing:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       name: leak_tracker_flutter_testing
       sha256: f8b613e7e6a13ec79cfdc0e97638fddb3ab848452eff057653abd3edba760573

@@ -104,13 +104,13 @@ class CachePerformanceMonitor {
   static CacheMetrics? getMetrics(String cacheKey) => _metrics[cacheKey];
 
   static Map<String, double> getCacheHitRates() {
-    return _metrics.map((key, metrics) => MapEntry(key, metrics.hitRate));
+    return _metrics.map<String, double>((key, metrics) => MapEntry(key, metrics.hitRate));
   }
 
   static List<String> getUnderperformingCaches() {
     return _metrics.entries
         .where((entry) => entry.value.hitRate < OptimizedCacheConfig.targetCacheHitRate)
-        .map((entry) => entry.key)
+        .map<String>((entry) => entry.key)
         .toList();
   }
 }
