@@ -17,23 +17,20 @@ void main() {
         description: 'Recovery passing',
         durationMinutes: 10,
         playerCount: 8,
-        primaryIntensity: 2,
+        intensityLevel: 2,
       ),
       TrainingExercise.create(
         name: 'High Pass Drill',
         description: 'Intense passing sequence',
         durationMinutes: 20,
         playerCount: 12,
-        primaryIntensity: 8,
+        intensityLevel: 8,
       ),
     ];
 
     setUp(() async {
-      container = ProviderContainer(overrides: [
-        exerciseLibraryProvider.overrideWith((ref) async => exercises),
-      ]);
+      container = ProviderContainer();
       controller = container.read(exerciseLibraryControllerProvider.notifier);
-      // StateNotifier initializes automatically
     });
 
     tearDown(() {
@@ -52,7 +49,7 @@ void main() {
       controller.updateIntensityFilter(TrainingIntensity.recovery);
       final result = controller.getFilteredExercises(exercises);
       expect(result.length, 1);
-      expect(result.first.primaryIntensity, lessThanOrEqualTo(3));
+      expect(result.first.intensityLevel, lessThanOrEqualTo(3));
     });
 
     test('resetFilters clears all filters', () {
