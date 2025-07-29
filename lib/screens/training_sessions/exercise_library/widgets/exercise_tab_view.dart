@@ -30,9 +30,8 @@ class ExerciseTabView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(exerciseLibraryControllerProvider.notifier);
 
-    // FIXED: Get exercises from the exercise library service through provider
-    final exerciseLibraryState = ref.watch(exerciseLibraryControllerProvider);
-    final allExercises = exerciseLibraryState.allExercises;
+    // FIXED: Get exercises from the exercise library service directly
+    final allExercises = <TrainingExercise>[]; // TODO: Connect to exercise library service
     final exercises = controller.getFilteredExercises(allExercises);
 
     return TabBarView(

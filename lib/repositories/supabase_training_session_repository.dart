@@ -28,10 +28,11 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
       final data = await _client
           .from(_table)
           .select()
-          .inFilter('organization_id', [
+          .eq(
+            'organization_id',
             // Use cached auth.uid() pattern for sub-millisecond training session queries
-            '(SELECT organization_id FROM organization_members WHERE user_id = (SELECT auth.uid()))'
-          ]);
+            _client.rpc('get_user_organization_id'),
+          );
       final sessions = (data as List<dynamic>)
           .map((e) => TrainingSession.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -49,10 +50,11 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
       final data = await _client
           .from(_table)
           .select()
-          .inFilter('organization_id', [
+          .eq(
+            'organization_id',
             // Leverage function caching for consistent sub-millisecond performance
-            '(SELECT organization_id FROM organization_members WHERE user_id = (SELECT auth.uid()))'
-          ])
+            _client.rpc('get_user_organization_id'),
+          )
           .gte('date', nowIso)
           .order('date')
           .limit(20);

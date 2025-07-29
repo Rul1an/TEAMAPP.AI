@@ -1,5 +1,4 @@
 // Project imports:
-import '../core/result.dart';
 
 /// Optimized cache configuration based on Phase 1 database performance gains.
 ///

@@ -2,13 +2,14 @@
 import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:
-import '../../lib/core/optimized_cache_config.dart';
-import '../../lib/repositories/supabase_player_repository.dart';
-import '../../lib/features/video_tagging/repositories/supabase_tag_repository.dart';
-import '../../lib/repositories/supabase_training_session_repository.dart';
-import '../../lib/models/player.dart';
-import '../../lib/features/video_tagging/models/video_tag.dart';
-import '../../lib/models/training_session/training_session.dart';
+import 'package:jo17_tactical_manager/core/optimized_cache_config.dart';
+import 'package:jo17_tactical_manager/repositories/supabase_player_repository.dart';
+import 'package:jo17_tactical_manager/features/video_tagging/repositories/supabase_tag_repository.dart';
+import 'package:jo17_tactical_manager/repositories/supabase_training_session_repository.dart';
+import 'package:jo17_tactical_manager/models/player.dart';
+import 'package:jo17_tactical_manager/features/video_tagging/models/video_tag.dart';
+import 'package:jo17_tactical_manager/features/video_tagging/models/tag_type.dart';
+import 'package:jo17_tactical_manager/models/training_session/training_session.dart';
 
 /// Performance tests for optimized repository implementations.
 ///
@@ -28,6 +29,9 @@ void main() {
     setUpAll(() async {
       // Initialize repositories with test client (would use test containers in real CI)
       // For now, we'll use mock implementations to test performance patterns
+      playerRepository = SupabasePlayerRepository();
+      videoTagRepository = SupabaseTagRepository(null as dynamic); // Mock client
+      trainingSessionRepository = SupabaseTrainingSessionRepository();
     });
 
     group('PlayerRepository Performance', () {
@@ -93,7 +97,7 @@ void main() {
           // More aggressive target due to 0.161ms database performance
           expect(stopwatch.elapsedMilliseconds, lessThan(3),
               reason: 'VideoTag search() should complete under 3ms with JSONB optimization');
-          expect(result, isNotEmpty.or(isEmpty)); // Either result is valid
+          expect(result, anyOf([isNotEmpty, isEmpty])); // Either result is valid
 
         } catch (e) {
           stopwatch.stop();

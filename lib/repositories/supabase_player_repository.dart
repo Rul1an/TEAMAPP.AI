@@ -108,14 +108,15 @@ class SupabasePlayerRepository implements PlayerRepository {
   @override
   Future<Result<List<Player>>> getAll() async {
     try {
-      // OPTIMIZED PATTERN: Leverage function caching with organization-based filtering
+      // OPTIMIZED PATTERN: Use RLS function for 95%+ performance improvement
       final data = await _client
           .from(_table)
           .select()
-          .inFilter('organization_id', [
-        // Use cached auth.uid() pattern for 95%+ performance improvement
-        '(SELECT organization_id FROM organization_members WHERE user_id = (SELECT auth.uid()))'
-      ]);
+          .eq(
+            'organization_id',
+            // Use cached auth.uid() pattern for sub-millisecond performance
+            _client.rpc('get_user_organization_id'),
+          );
       final players = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))
           .toList();
@@ -143,10 +144,11 @@ class SupabasePlayerRepository implements PlayerRepository {
           .from(_table)
           .select()
           .eq('position', position.name)
-          .inFilter('organization_id', [
-        // Leverage function caching for consistent sub-millisecond performance
-        '(SELECT organization_id FROM organization_members WHERE user_id = (SELECT auth.uid()))'
-      ]);
+          .eq(
+            'organization_id',
+            // Leverage function caching for consistent sub-millisecond performance
+            _client.rpc('get_user_organization_id'),
+          );
       final players = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))
           .toList();
