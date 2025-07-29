@@ -1,155 +1,232 @@
-import 'package:flutter/material.dart';
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../models/training_session/training_exercise.dart';
-import '../../../../models/annual_planning/morphocycle.dart';
-import '../../../../providers/exercise_designer_provider.dart';
+// Project imports:
+import '../../../models/annual_planning/morphocycle.dart';
+import '../../../models/training_session/training_exercise.dart';
 
-/// Holds UI state & filtering logic for ExerciseLibraryScreen.
-class ExerciseLibraryController extends ChangeNotifier {
-  ExerciseLibraryController(this._ref);
+/// Filter criteria for exercise library
+class ExerciseFilterCriteria {
+  const ExerciseFilterCriteria({
+    this.searchQuery = '',
+    this.minDuration = 0,
+    this.maxDuration = 120,
+    this.playerCount = 18,
+    this.intensityFilter,
+    this.typeFilter,
+  });
 
-  final Ref _ref;
+  final String searchQuery;
+  final int minDuration;
+  final int maxDuration;
+  final int playerCount;
+  final TrainingIntensity? intensityFilter;
+  final ExerciseType? typeFilter;
 
-  // Raw list exposed via provider (fetched remotely + cache).
-  List<TrainingExercise> _rawExercises = [];
-
-  // --- Filters -------------------------------------------------------------
-  String _search = '';
-  ExerciseCategory? _category;
-  ExerciseComplexity? _complexity;
-  TrainingIntensity? _intensity;
-  TacticalFocus? _tacticalFocus;
-  int? _minDuration;
-  int? _maxDuration;
-  int? _playerCount;
-  bool _showMorphocycleBanner = true;
-
-  // Public getters ---------------------------------------------------------
-  List<TrainingExercise> get filteredExercises {
-    var list = _rawExercises;
-    if (_search.isNotEmpty) {
-      list = list
-          .where((e) => e.name.toLowerCase().contains(_search.toLowerCase()))
-          .toList();
-    }
-    if (_category != null) {
-      list = list.where((e) => e.category == _category).toList();
-    }
-    if (_complexity != null) {
-      list = list.where((e) => e.complexity == _complexity).toList();
-    }
-    if (_intensity != null) {
-      list = list.where((e) {
-        switch (_intensity!) {
-          case TrainingIntensity.recovery:
-            return e.primaryIntensity <= 3;
-          case TrainingIntensity.acquisition:
-            return e.primaryIntensity >= 8;
-          case TrainingIntensity.development:
-            return e.primaryIntensity >= 5 && e.primaryIntensity <= 7;
-          case TrainingIntensity.activation:
-            return e.primaryIntensity >= 4 && e.primaryIntensity <= 6;
-          case TrainingIntensity.competition:
-            return e.primaryIntensity >= 9;
-        }
-      }).toList();
-    }
-    if (_tacticalFocus != null) {
-      list = list.where((e) => e.tacticalFocus == _tacticalFocus).toList();
-    }
-    if (_minDuration != null) {
-      list = list.where((e) => e.durationMinutes >= _minDuration!).toList();
-    }
-    if (_maxDuration != null) {
-      list = list.where((e) => e.durationMinutes <= _maxDuration!).toList();
-    }
-    if (_playerCount != null) {
-      list = list.where((e) => e.minPlayers <= _playerCount!).toList();
-    }
-    return list;
-  }
-
-  bool get showMorphocycleBanner => _showMorphocycleBanner;
-
-  // Expose current filter values for UI widgets
-  String get search => _search;
-  ExerciseCategory? get category => _category;
-  ExerciseComplexity? get complexity => _complexity;
-  TrainingIntensity? get intensity => _intensity;
-  TacticalFocus? get tacticalFocus => _tacticalFocus;
-  int? get minDuration => _minDuration;
-  int? get maxDuration => _maxDuration;
-  int? get playerCount => _playerCount;
-
-  // --- Mutations -----------------------------------------------------------
-  void setSearch(String value) {
-    _search = value;
-    notifyListeners();
-  }
-
-  void setCategory(ExerciseCategory? value) {
-    _category = value;
-    notifyListeners();
-  }
-
-  void setComplexity(ExerciseComplexity? value) {
-    _complexity = value;
-    notifyListeners();
-  }
-
-  void setIntensity(TrainingIntensity? value) {
-    _intensity = value;
-    notifyListeners();
-  }
-
-  void setTacticalFocus(TacticalFocus? value) {
-    _tacticalFocus = value;
-    notifyListeners();
-  }
-
-  void setDurationRange(int? min, int? max) {
-    _minDuration = min;
-    _maxDuration = max;
-    notifyListeners();
-  }
-
-  void setPlayerCount(int? players) {
-    _playerCount = players;
-    notifyListeners();
-  }
-
-  void resetFilters() {
-    _search = '';
-    _category = null;
-    _complexity = null;
-    _intensity = null;
-    _tacticalFocus = null;
-    _minDuration = null;
-    _maxDuration = null;
-    _playerCount = null;
-    notifyListeners();
-  }
-
-  /// Toggle morphocycle recommendation banner visibility.
-  void toggleMorphocycleBanner() {
-    _showMorphocycleBanner = !_showMorphocycleBanner;
-    notifyListeners();
-  }
-
-  // --- Data loading --------------------------------------------------------
-  Future<void> loadExercises() async {
-    final asyncVal = await _ref.read(exerciseLibraryProvider.future);
-    _rawExercises = asyncVal;
-    notifyListeners();
+  ExerciseFilterCriteria copyWith({
+    String? searchQuery,
+    int? minDuration,
+    int? maxDuration,
+    int? playerCount,
+    TrainingIntensity? intensityFilter,
+    ExerciseType? typeFilter,
+  }) {
+    return ExerciseFilterCriteria(
+      searchQuery: searchQuery ?? this.searchQuery,
+      minDuration: minDuration ?? this.minDuration,
+      maxDuration: maxDuration ?? this.maxDuration,
+      playerCount: playerCount ?? this.playerCount,
+      intensityFilter: intensityFilter ?? this.intensityFilter,
+      typeFilter: typeFilter ?? this.typeFilter,
+    );
   }
 }
 
-/// Riverpod provider wrapping above controller.
+/// State for exercise library screen
+class ExerciseLibraryState {
+  const ExerciseLibraryState({
+    this.filterCriteria = const ExerciseFilterCriteria(),
+    this.showMorphocycleRecommendations = true,
+    this.selectedTabIndex = 0,
+  });
+
+  final ExerciseFilterCriteria filterCriteria;
+  final bool showMorphocycleRecommendations;
+  final int selectedTabIndex;
+
+  // Convenience getters for backward compatibility
+  String get searchQuery => filterCriteria.searchQuery;
+
+  ExerciseLibraryState copyWith({
+    ExerciseFilterCriteria? filterCriteria,
+    bool? showMorphocycleRecommendations,
+    int? selectedTabIndex,
+  }) {
+    return ExerciseLibraryState(
+      filterCriteria: filterCriteria ?? this.filterCriteria,
+      showMorphocycleRecommendations: showMorphocycleRecommendations ?? this.showMorphocycleRecommendations,
+      selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,
+    );
+  }
+}
+
+/// Controller for exercise library screen state management
+class ExerciseLibraryController extends StateNotifier<ExerciseLibraryState> {
+  ExerciseLibraryController() : super(const ExerciseLibraryState());
+
+  /// Update search query filter
+  void updateSearchQuery(String query) {
+    state = state.copyWith(
+      filterCriteria: state.filterCriteria.copyWith(searchQuery: query),
+    );
+  }
+
+  /// Update player count filter
+  void updatePlayerCount(int count) {
+    state = state.copyWith(
+      filterCriteria: state.filterCriteria.copyWith(playerCount: count),
+    );
+  }
+
+  /// Update duration range filter
+  void updateDurationRange(int minDuration, int maxDuration) {
+    state = state.copyWith(
+      filterCriteria: state.filterCriteria.copyWith(
+        minDuration: minDuration,
+        maxDuration: maxDuration,
+      ),
+    );
+  }
+
+  /// Update intensity filter
+  void updateIntensityFilter(TrainingIntensity? intensity) {
+    state = state.copyWith(
+      filterCriteria: state.filterCriteria.copyWith(intensityFilter: intensity),
+    );
+  }
+
+  /// Update exercise type filter
+  void updateTypeFilter(ExerciseType? type) {
+    state = state.copyWith(
+      filterCriteria: state.filterCriteria.copyWith(typeFilter: type),
+    );
+  }
+
+  /// Toggle morphocycle recommendations visibility
+  void toggleMorphocycleRecommendations() {
+    state = state.copyWith(
+      showMorphocycleRecommendations: !state.showMorphocycleRecommendations,
+    );
+  }
+
+  /// Update selected tab index
+  void updateSelectedTab(int index) {
+    state = state.copyWith(selectedTabIndex: index);
+  }
+
+  /// Reset all filters to default values
+  void resetFilters() {
+    state = state.copyWith(
+      filterCriteria: const ExerciseFilterCriteria(),
+    );
+  }
+
+  /// Get exercises filtered by current criteria
+  List<TrainingExercise> getFilteredExercises(List<TrainingExercise> exercises) {
+    return exercises.where((exercise) {
+      final criteria = state.filterCriteria;
+
+      // Search query filter
+      if (criteria.searchQuery.isNotEmpty) {
+        final searchLower = criteria.searchQuery.toLowerCase();
+        if (!exercise.name.toLowerCase().contains(searchLower) &&
+            !exercise.description.toLowerCase().contains(searchLower)) {
+          return false;
+        }
+      }
+
+      // Duration filter
+      if (exercise.durationMinutes < criteria.minDuration ||
+          exercise.durationMinutes > criteria.maxDuration) {
+        return false;
+      }
+
+      // Player count filter
+      if (exercise.playerCount > criteria.playerCount) {
+        return false;
+      }
+
+      // Intensity filter
+      if (criteria.intensityFilter != null) {
+        // Convert TrainingIntensity to intensity level range
+        final intensityRange = _getIntensityRangeForFilter(criteria.intensityFilter!);
+        if (exercise.intensityLevel < intensityRange.$1 ||
+            exercise.intensityLevel > intensityRange.$2) {
+          return false;
+        }
+      }
+
+      // Type filter
+      if (criteria.typeFilter != null && exercise.type != criteria.typeFilter) {
+        return false;
+      }
+
+      return true;
+    }).toList();
+  }
+
+  /// Get exercises recommended for specific morphocycle
+  List<TrainingExercise> getRecommendedForMorphocycle(
+    List<TrainingExercise> exercises,
+    Morphocycle? morphocycle,
+  ) {
+    if (morphocycle == null) return [];
+
+    // Group exercises by intensity for morphocycle recommendations
+    final recommendations = <String, List<TrainingExercise>>{
+      'Recovery': exercises.where((e) => e.intensityLevel <= 3.0).toList(),
+      'Acquisition': exercises.where((e) => e.intensityLevel >= 8.0).toList(),
+      'Development': exercises
+          .where((e) => e.intensityLevel >= 5.0 && e.intensityLevel <= 7.0)
+          .toList(),
+      'Activation': exercises
+          .where((e) => e.intensityLevel >= 4.0 && e.intensityLevel <= 6.0)
+          .toList(),
+    };
+
+    // Apply current filters to recommendations
+    final filtered = <String, List<TrainingExercise>>{};
+    for (final entry in recommendations.entries) {
+      filtered[entry.key] = getFilteredExercises(entry.value);
+    }
+
+    return filtered.values.expand((list) => list).toList();
+  }
+
+  /// Calculate total duration of exercises
+  int calculateTotalDuration(List<TrainingExercise> exercises) {
+    return exercises.fold(0, (sum, exercise) => sum + exercise.durationMinutes.round());
+  }
+
+  /// Get intensity range for filter
+  (double, double) _getIntensityRangeForFilter(TrainingIntensity intensity) {
+    switch (intensity) {
+      case TrainingIntensity.recovery:
+        return (0.0, 3.0);
+      case TrainingIntensity.activation:
+        return (4.0, 6.0);
+      case TrainingIntensity.development:
+        return (5.0, 7.0);
+      case TrainingIntensity.acquisition:
+        return (8.0, 10.0);
+      case TrainingIntensity.competition:
+        return (9.0, 10.0);
+    }
+  }
+}
+
+/// Provider for exercise library controller
 final exerciseLibraryControllerProvider =
-    ChangeNotifierProvider.autoDispose<ExerciseLibraryController>((ref) {
-  final ctrl = ExerciseLibraryController(ref);
-  // Kick off initial load (fire-and-forget)
-  ctrl.loadExercises();
-  return ctrl;
-});
+    StateNotifierProvider<ExerciseLibraryController, ExerciseLibraryState>(
+  (ref) => ExerciseLibraryController(),
+);
