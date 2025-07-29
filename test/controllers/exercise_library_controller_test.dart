@@ -32,8 +32,8 @@ void main() {
       container = ProviderContainer(overrides: [
         exerciseLibraryProvider.overrideWith((ref) async => exercises),
       ]);
-      controller = container.read(exerciseLibraryControllerProvider);
-      await controller.loadExercises();
+      controller = container.read(exerciseLibraryControllerProvider.notifier);
+      // StateNotifier initializes automatically
     });
 
     tearDown(() {
@@ -41,27 +41,28 @@ void main() {
     });
 
     test('search filter returns matching results', () {
-      controller.setSearch('pass');
-      final result = controller.filteredExercises;
+      controller.updateSearchQuery('pass');
+      final result = controller.getFilteredExercises(exercises);
       expect(result.length, 1);
       expect(result.first.name, contains('Pass'));
     });
 
     test('intensity filter returns low intensity exercise', () {
       controller.resetFilters();
-      controller.setIntensity(TrainingIntensity.recovery);
-      final result = controller.filteredExercises;
+      controller.updateIntensityFilter(TrainingIntensity.recovery);
+      final result = controller.getFilteredExercises(exercises);
       expect(result.length, 1);
       expect(result.first.primaryIntensity, lessThanOrEqualTo(3));
     });
 
     test('resetFilters clears all filters', () {
-      controller.setSearch('Low');
-      controller.setIntensity(TrainingIntensity.development);
+      controller.updateSearchQuery('Low');
+      controller.updateIntensityFilter(TrainingIntensity.development);
       controller.resetFilters();
-      expect(controller.search, isEmpty);
-      expect(controller.intensity, isNull);
-      expect(controller.filteredExercises.length, exercises.length);
+      final state = container.read(exerciseLibraryControllerProvider);
+      expect(state.searchQuery, isEmpty);
+      expect(state.filterCriteria.intensityFilter, isNull);
+      expect(controller.getFilteredExercises(exercises).length, exercises.length);
     });
   });
 }
