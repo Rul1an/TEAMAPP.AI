@@ -21,14 +21,12 @@ import '../../providers/training_sessions_repo_provider.dart';
 import '../../repositories/player_repository.dart';
 import '../../repositories/training_session_repository.dart';
 import 'exercise_library_screen.dart';
+import 'session_builder_view.dart';
 import '../../services/training_session_builder_service.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
 import '../../controllers/session_builder_controller.dart';
-import 'widgets/session_builder_wizard.dart';
-import 'widgets/basic_info_step.dart';
-import 'widgets/objectives_step.dart';
-import 'widgets/phase_planning_step.dart';
-import 'widgets/evaluation_step.dart';
+
+// ignore_for_file: unused_element
 
 // Import voor web support
 // ignore: avoid_web_libraries_in_flutter
@@ -137,75 +135,26 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
       TrainingSessionBuilderService.createDefaultVOABPhases();
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget.sessionId == null
-                ? 'Nieuwe Training Sessie'
-                : 'Bewerk Training Sessie',
-          ),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => context.pop(),
-          ),
-          actions: [
-            if (currentStep > 0)
-              TextButton(onPressed: _previousStep, child: const Text('Vorige')),
-            const SizedBox(width: 8),
-            if (currentStep < _stepCount - 1)
-              ElevatedButton(
-                onPressed: _nextStep,
-                child: const Text('Volgende'),
-              )
-            else
-              ElevatedButton(
-                onPressed: _saveSession,
-                child: const Text('Opslaan'),
-              ),
-            const SizedBox(width: 16),
-          ],
-        ),
-        body: SessionBuilderWizard(
-          stepTitles: const [
-            'Basis Info',
-            'Doelstellingen',
-            'Fase Planning',
-            'Evaluatie',
-          ],
-          stepBuilders: [
-            (ctx) => BasicInfoStep(
-                  selectedDate: selectedDate,
-                  onSelectDate: _selectDate,
-                  trainingType: selectedType,
-                  onSelectTrainingType: _selectTrainingType,
-                ),
-            (ctx) => ObjectivesStep(
-                  objectiveController: _objectiveController,
-                  teamFunctionController: _teamFunctionController,
-                  coachingAccentController: _coachingAccentController,
-                ),
-            (ctx) => PhasePlanningStep(
-                  phases: sessionPhases,
-                  onReorder: _reorderPhases,
-                  onAddPhase: _addCustomPhase,
-                  onEditPhase: _editPhase,
-                  onDeletePhase: _deletePhase,
-                  totalDuration: _getTotalDuration(),
-                ),
-            (ctx) => EvaluationStep(
-                  selectedDate: selectedDate,
-                  trainingType: selectedType,
-                  objective: _objectiveController.text,
-                  totalDuration: _getTotalDuration(),
-                  phaseCount: sessionPhases.length,
-                  notesController: _notesController,
-                  onExportPdf: _exportToPDF,
-                  onSave: _saveSession,
-                ),
-          ],
-          onFinished: _saveSession,
-        ),
+  Widget build(BuildContext context) => SessionBuilderView(
+        currentStep: currentStep,
+        onNext: _nextStep,
+        onPrev: _previousStep,
+        onSave: _saveSession,
+        onSelectDate: _selectDate,
+        onSelectTrainingType: _selectTrainingType,
+        onAddPhase: _addCustomPhase,
+        onEditPhase: _editPhase,
+        onDeletePhase: _deletePhase,
+        onReorderPhases: _reorderPhases,
+        onExportPdf: _exportToPDF,
+        selectedDate: selectedDate,
+        selectedType: selectedType,
+        objectiveController: _objectiveController,
+        teamFunctionController: _teamFunctionController,
+        coachingAccentController: _coachingAccentController,
+        notesController: _notesController,
+        sessionPhases: sessionPhases,
+        totalDuration: _getTotalDuration(),
       );
 
   int get _stepCount => 4;
