@@ -10,11 +10,13 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../models/training_session/session_phase.dart';
+import '../../models/training_session/training_exercise.dart';
 import '../../models/training_session/training_session.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/training_sessions_repo_provider.dart';
 import '../../repositories/player_repository.dart';
 import '../../repositories/training_session_repository.dart';
+import 'exercise_library_screen.dart';
 import 'session_builder_view.dart';
 import '../../services/training_session_builder_service.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
@@ -224,6 +226,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
               Text('${phase.exerciseIds.length} oefeningen in ${phase.name}')),
     );
   }
+
 
   Future<void> _saveSession() async {
     try {
