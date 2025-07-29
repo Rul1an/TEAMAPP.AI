@@ -22,6 +22,7 @@ class SessionBuilderView extends StatelessWidget {
     required this.onDeletePhase,
     required this.onReorderPhases,
     required this.onExportPdf,
+    this.onShowExercises = _noop,
     required this.selectedDate,
     required this.selectedType,
     required this.objectiveController,
@@ -42,6 +43,7 @@ class SessionBuilderView extends StatelessWidget {
   final void Function(int) onEditPhase;
   final void Function(int) onDeletePhase;
   final void Function(int, int) onReorderPhases;
+  final void Function(SessionPhase) onShowExercises;
   final VoidCallback onExportPdf;
 
   final DateTime selectedDate;
@@ -99,6 +101,7 @@ class SessionBuilderView extends StatelessWidget {
                   onAddPhase: onAddPhase,
                   onEditPhase: onEditPhase,
                   onDeletePhase: onDeletePhase,
+                  onShowExercises: onShowExercises,
                   totalDuration: totalDuration,
                 ),
             (_) => EvaluationStep(
@@ -116,3 +119,6 @@ class SessionBuilderView extends StatelessWidget {
         ),
       );
 }
+
+// ignore: prefer_function_declarations_over_variables
+void _noop(SessionPhase _) {}

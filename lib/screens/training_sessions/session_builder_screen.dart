@@ -146,6 +146,7 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
         onEditPhase: _editPhase,
         onDeletePhase: _deletePhase,
         onReorderPhases: _reorderPhases,
+        onShowExercises: _showPhaseExercises,
         onExportPdf: _exportToPDF,
         selectedDate: selectedDate,
         selectedType: selectedType,
