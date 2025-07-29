@@ -185,6 +185,8 @@ class ExerciseLibraryService {
         return (5.0, 7.0);
       case TrainingIntensity.acquisition:
         return (8.0, 10.0);
+      case TrainingIntensity.competition:
+        return (9.0, 10.0);
     }
   }
 }

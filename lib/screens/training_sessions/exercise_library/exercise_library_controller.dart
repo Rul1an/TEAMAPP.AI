@@ -1,6 +1,3 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -219,6 +216,8 @@ class ExerciseLibraryController extends StateNotifier<ExerciseLibraryState> {
         return (5.0, 7.0);
       case TrainingIntensity.acquisition:
         return (8.0, 10.0);
+      case TrainingIntensity.competition:
+        return (9.0, 10.0);
     }
   }
 }
