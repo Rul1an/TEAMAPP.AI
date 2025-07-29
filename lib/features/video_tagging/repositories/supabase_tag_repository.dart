@@ -35,7 +35,9 @@ class SupabaseTagRepository implements TagRepository {
         .map(
           (rows) => rows
               .map<Map<String, dynamic>>(Map<String, dynamic>.from)
-              .where((row) => row['video_id'] == videoId) // Client-side filter for organization
+              .where((row) =>
+                  row['video_id'] ==
+                  videoId) // Client-side filter for organization
               .map(VideoTag.fromJson)
               .toList(),
         );
@@ -48,10 +50,7 @@ class SupabaseTagRepository implements TagRepository {
     String? videoId,
   }) async {
     // OPTIMIZED PATTERN: Start with organization-based filtering for 0.161ms performance
-    var query = client
-        .from('video_tags')
-        .select()
-        .eq(
+    var query = client.from('video_tags').select().eq(
           'organization_id',
           // Use cached auth.uid() pattern for sub-millisecond video tag searches
           await client.rpc<String>('get_user_organization_id'),

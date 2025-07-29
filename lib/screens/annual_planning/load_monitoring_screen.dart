@@ -43,10 +43,9 @@ class _LoadMonitoringScreenState extends ConsumerState<LoadMonitoringScreen>
       selectedWeekRange: _selectedWeekRange,
       showProjections: _showProjections,
       onWeekRangeChanged: (value) => setState(() => _selectedWeekRange = value),
-      onToggleProjections: () => setState(() => _showProjections = !_showProjections),
+      onToggleProjections: () =>
+          setState(() => _showProjections = !_showProjections),
       planningState: planningState,
     );
   }
-
-
 }

@@ -32,7 +32,8 @@ void main() {
       // For now, we'll use mock implementations to test performance patterns
       playerRepository = SupabasePlayerRepository();
       // Mock client for video tag repository - skip in tests
-      videoTagRepository = SupabaseTagRepository(SupabaseClient('mock', 'mock'));
+      videoTagRepository =
+          SupabaseTagRepository(SupabaseClient('mock', 'mock'));
       trainingSessionRepository = SupabaseTrainingSessionRepository();
     });
 
@@ -46,7 +47,8 @@ void main() {
 
           // Validate performance target
           expect(stopwatch.elapsedMilliseconds, lessThan(5),
-              reason: 'Player getAll() should complete under 5ms with optimized queries');
+              reason:
+                  'Player getAll() should complete under 5ms with optimized queries');
 
           // Validate functional correctness
           expect(result.isSuccess, true, reason: 'Query should succeed');
@@ -56,7 +58,6 @@ void main() {
             'player_getAll',
             Duration(milliseconds: stopwatch.elapsedMilliseconds),
           );
-
         } catch (e) {
           stopwatch.stop();
           CachePerformanceMonitor.recordCacheMiss(
@@ -71,16 +72,18 @@ void main() {
         final stopwatch = Stopwatch()..start();
 
         try {
-          final result = await playerRepository.getByPosition(Position.midfielder);
+          final result =
+              await playerRepository.getByPosition(Position.midfielder);
           stopwatch.stop();
 
           expect(stopwatch.elapsedMilliseconds, lessThan(5),
-              reason: 'Player getByPosition() should complete under 5ms with combined filters');
+              reason:
+                  'Player getByPosition() should complete under 5ms with combined filters');
           expect(result.isSuccess, true);
-
         } catch (e) {
           stopwatch.stop();
-          fail('getByPosition() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
+          fail(
+              'getByPosition() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
         }
       });
     });
@@ -98,12 +101,14 @@ void main() {
 
           // More aggressive target due to 0.161ms database performance
           expect(stopwatch.elapsedMilliseconds, lessThan(3),
-              reason: 'VideoTag search() should complete under 3ms with JSONB optimization');
-          expect(result, anyOf([isNotEmpty, isEmpty])); // Either result is valid
-
+              reason:
+                  'VideoTag search() should complete under 3ms with JSONB optimization');
+          expect(
+              result, anyOf([isNotEmpty, isEmpty])); // Either result is valid
         } catch (e) {
           stopwatch.stop();
-          fail('VideoTag search() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
+          fail(
+              'VideoTag search() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
         }
       });
 
@@ -119,10 +124,10 @@ void main() {
 
           expect(stopwatch.elapsedMilliseconds, lessThan(2),
               reason: 'VideoTag watchByVideo() should setup stream under 2ms');
-
         } catch (e) {
           stopwatch.stop();
-          fail('VideoTag watchByVideo() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
+          fail(
+              'VideoTag watchByVideo() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
         }
       });
     });
@@ -138,14 +143,16 @@ void main() {
           expect(stopwatch.elapsedMilliseconds, lessThan(5),
               reason: 'TrainingSession getAll() should complete under 5ms');
           expect(result.isSuccess, true);
-
         } catch (e) {
           stopwatch.stop();
-          fail('TrainingSession getAll() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
+          fail(
+              'TrainingSession getAll() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
         }
       });
 
-      test('should execute getUpcoming() with date filtering under target time (5ms)', () async {
+      test(
+          'should execute getUpcoming() with date filtering under target time (5ms)',
+          () async {
         final stopwatch = Stopwatch()..start();
 
         try {
@@ -153,12 +160,13 @@ void main() {
           stopwatch.stop();
 
           expect(stopwatch.elapsedMilliseconds, lessThan(5),
-              reason: 'TrainingSession getUpcoming() should complete under 5ms with date filtering');
+              reason:
+                  'TrainingSession getUpcoming() should complete under 5ms with date filtering');
           expect(result.isSuccess, true);
-
         } catch (e) {
           stopwatch.stop();
-          fail('TrainingSession getUpcoming() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
+          fail(
+              'TrainingSession getUpcoming() failed: $e (${stopwatch.elapsedMilliseconds}ms)');
         }
       });
     });
@@ -166,30 +174,37 @@ void main() {
     group('Cache Strategy Validation', () {
       test('should use correct cache strategy for each data type', () {
         expect(OptimizedCacheConfig.getCacheStrategy('profile'),
-               equals(CacheStrategy.databaseFirst),
-               reason: 'Profile queries (0.122ms) should prefer database over cache');
+            equals(CacheStrategy.databaseFirst),
+            reason:
+                'Profile queries (0.122ms) should prefer database over cache');
 
         expect(OptimizedCacheConfig.getCacheStrategy('video_tag'),
-               equals(CacheStrategy.databaseFirst),
-               reason: 'Video tag queries (0.161ms) should prefer database over cache');
+            equals(CacheStrategy.databaseFirst),
+            reason:
+                'Video tag queries (0.161ms) should prefer database over cache');
 
         expect(OptimizedCacheConfig.getCacheStrategy('player'),
-               equals(CacheStrategy.cacheFirst),
-               reason: 'Player queries (0.941ms) should still use cache for batch operations');
+            equals(CacheStrategy.cacheFirst),
+            reason:
+                'Player queries (0.941ms) should still use cache for batch operations');
 
         expect(OptimizedCacheConfig.getCacheStrategy('training_session'),
-               equals(CacheStrategy.hybrid),
-               reason: 'Training sessions should use hybrid strategy for offline capability');
+            equals(CacheStrategy.hybrid),
+            reason:
+                'Training sessions should use hybrid strategy for offline capability');
       });
 
-      test('should have appropriate TTL values for optimized database performance', () {
+      test(
+          'should have appropriate TTL values for optimized database performance',
+          () {
         // Short TTL for ultra-fast database queries
         expect(OptimizedCacheConfig.profileCacheTTL.inMinutes, equals(5));
         expect(OptimizedCacheConfig.videoTagCacheTTL.inMinutes, equals(2));
 
         // Medium TTL for moderate performance queries
         expect(OptimizedCacheConfig.playerCacheTTL.inMinutes, equals(15));
-        expect(OptimizedCacheConfig.trainingSessionCacheTTL.inMinutes, equals(10));
+        expect(
+            OptimizedCacheConfig.trainingSessionCacheTTL.inMinutes, equals(10));
 
         // Long TTL for rarely changing data
         expect(OptimizedCacheConfig.organizationCacheTTL.inHours, equals(1));
@@ -200,9 +215,12 @@ void main() {
     group('Performance Monitoring', () {
       test('should track cache hit rates accurately', () {
         // Simulate cache operations
-        CachePerformanceMonitor.recordCacheHit('test_key', const Duration(milliseconds: 2));
-        CachePerformanceMonitor.recordCacheHit('test_key', const Duration(milliseconds: 3));
-        CachePerformanceMonitor.recordCacheMiss('test_key', const Duration(milliseconds: 10));
+        CachePerformanceMonitor.recordCacheHit(
+            'test_key', const Duration(milliseconds: 2));
+        CachePerformanceMonitor.recordCacheHit(
+            'test_key', const Duration(milliseconds: 3));
+        CachePerformanceMonitor.recordCacheMiss(
+            'test_key', const Duration(milliseconds: 10));
 
         final metrics = CachePerformanceMonitor.getMetrics('test_key');
         expect(metrics, isNotNull);
@@ -212,18 +230,23 @@ void main() {
 
       test('should identify underperforming caches', () {
         // Simulate poor cache performance
-        CachePerformanceMonitor.recordCacheMiss('poor_cache', const Duration(milliseconds: 50));
-        CachePerformanceMonitor.recordCacheMiss('poor_cache', const Duration(milliseconds: 45));
-        CachePerformanceMonitor.recordCacheHit('poor_cache', const Duration(milliseconds: 2));
+        CachePerformanceMonitor.recordCacheMiss(
+            'poor_cache', const Duration(milliseconds: 50));
+        CachePerformanceMonitor.recordCacheMiss(
+            'poor_cache', const Duration(milliseconds: 45));
+        CachePerformanceMonitor.recordCacheHit(
+            'poor_cache', const Duration(milliseconds: 2));
 
-        final underperforming = CachePerformanceMonitor.getUnderperformingCaches();
+        final underperforming =
+            CachePerformanceMonitor.getUnderperformingCaches();
         expect(underperforming, contains('poor_cache'),
-               reason: 'Should identify caches with hit rate below 80%');
+            reason: 'Should identify caches with hit rate below 80%');
       });
     });
 
     group('Integration Performance Tests', () {
-      test('should handle concurrent repository operations efficiently', () async {
+      test('should handle concurrent repository operations efficiently',
+          () async {
         final stopwatch = Stopwatch()..start();
 
         try {
@@ -239,17 +262,18 @@ void main() {
 
           // All operations should complete quickly even when concurrent
           expect(stopwatch.elapsedMilliseconds, lessThan(15),
-                 reason: 'Concurrent repository operations should complete under 15ms');
+              reason:
+                  'Concurrent repository operations should complete under 15ms');
 
           // All should succeed
           for (final result in results) {
             expect(result.toString(), isNot(contains('Failure')),
-                   reason: 'All concurrent operations should succeed');
+                reason: 'All concurrent operations should succeed');
           }
-
         } catch (e) {
           stopwatch.stop();
-          fail('Concurrent operations failed: $e (${stopwatch.elapsedMilliseconds}ms)');
+          fail(
+              'Concurrent operations failed: $e (${stopwatch.elapsedMilliseconds}ms)');
         }
       });
 
@@ -271,17 +295,19 @@ void main() {
         }
 
         // Calculate average performance
-        final avgMs = results
-            .map((d) => d.inMilliseconds)
-            .reduce((a, b) => a + b) / results.length;
+        final avgMs =
+            results.map((d) => d.inMilliseconds).reduce((a, b) => a + b) /
+                results.length;
 
         expect(avgMs, lessThan(5),
-               reason: 'Average performance under load should remain under 5ms');
+            reason: 'Average performance under load should remain under 5ms');
 
         // Check for performance consistency (no operation should be >2x average)
-        final maxMs = results.map((d) => d.inMilliseconds).reduce((a, b) => a > b ? a : b);
+        final maxMs = results
+            .map((d) => d.inMilliseconds)
+            .reduce((a, b) => a > b ? a : b);
         expect(maxMs, lessThan(avgMs * 2),
-               reason: 'Performance should be consistent (max < 2x average)');
+            reason: 'Performance should be consistent (max < 2x average)');
       });
     });
 
@@ -290,10 +316,12 @@ void main() {
       debugPrint('\n=== Performance Test Summary ===');
       final hitRates = CachePerformanceMonitor.getCacheHitRates();
       for (final entry in hitRates.entries) {
-        debugPrint('${entry.key}: ${(entry.value * 100).toStringAsFixed(1)}% hit rate');
+        debugPrint(
+            '${entry.key}: ${(entry.value * 100).toStringAsFixed(1)}% hit rate');
       }
 
-      final underperforming = CachePerformanceMonitor.getUnderperformingCaches();
+      final underperforming =
+          CachePerformanceMonitor.getUnderperformingCaches();
       if (underperforming.isNotEmpty) {
         debugPrint('Underperforming caches: ${underperforming.join(', ')}');
       }

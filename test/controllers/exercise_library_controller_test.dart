@@ -58,7 +58,8 @@ void main() {
       final state = container.read(exerciseLibraryControllerProvider);
       expect(state.searchQuery, isEmpty);
       expect(state.filterCriteria.intensityFilter, isNull);
-      expect(controller.getFilteredExercises(exercises).length, exercises.length);
+      expect(
+          controller.getFilteredExercises(exercises).length, exercises.length);
     });
   });
 }

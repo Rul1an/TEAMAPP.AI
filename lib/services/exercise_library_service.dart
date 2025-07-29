@@ -36,7 +36,8 @@ class ExerciseLibraryService {
 
       // Intensity filter
       if (criteria.intensityFilter != null) {
-        final intensityRange = _getIntensityRangeForFilter(criteria.intensityFilter!);
+        final intensityRange =
+            _getIntensityRangeForFilter(criteria.intensityFilter!);
         if (exercise.intensityLevel < intensityRange.$1 ||
             exercise.intensityLevel > intensityRange.$2) {
           return false;
@@ -57,14 +58,16 @@ class ExerciseLibraryService {
     List<TrainingExercise> exercises,
   ) {
     return {
-      'Recovery (1-3)': exercises.where((e) => e.intensityLevel <= 3.0).toList(),
+      'Recovery (1-3)':
+          exercises.where((e) => e.intensityLevel <= 3.0).toList(),
       'Activation (4-6)': exercises
           .where((e) => e.intensityLevel >= 4.0 && e.intensityLevel <= 6.0)
           .toList(),
       'Development (5-7)': exercises
           .where((e) => e.intensityLevel >= 5.0 && e.intensityLevel <= 7.0)
           .toList(),
-      'Acquisition (8-10)': exercises.where((e) => e.intensityLevel >= 8.0).toList(),
+      'Acquisition (8-10)':
+          exercises.where((e) => e.intensityLevel >= 8.0).toList(),
     };
   }
 
@@ -73,9 +76,12 @@ class ExerciseLibraryService {
     List<TrainingExercise> exercises,
   ) {
     return {
-      'Technical': exercises.where((e) => e.type == ExerciseType.technical).toList(),
-      'Tactical': exercises.where((e) => e.type == ExerciseType.tactical).toList(),
-      'Physical': exercises.where((e) => e.type == ExerciseType.physical).toList(),
+      'Technical':
+          exercises.where((e) => e.type == ExerciseType.technical).toList(),
+      'Tactical':
+          exercises.where((e) => e.type == ExerciseType.tactical).toList(),
+      'Physical':
+          exercises.where((e) => e.type == ExerciseType.physical).toList(),
       'Small Sided Games': exercises
           .where((e) => e.type == ExerciseType.smallSidedGames)
           .toList(),
@@ -88,8 +94,10 @@ class ExerciseLibraryService {
     Morphocycle morphocycle,
   ) {
     return {
-      'Recovery Day (Day +1)': exercises.where((e) => e.intensityLevel <= 3.0).toList(),
-      'Acquisition Day (Day +2)': exercises.where((e) => e.intensityLevel >= 8.0).toList(),
+      'Recovery Day (Day +1)':
+          exercises.where((e) => e.intensityLevel <= 3.0).toList(),
+      'Acquisition Day (Day +2)':
+          exercises.where((e) => e.intensityLevel >= 8.0).toList(),
       'Development Day (Day +3)': exercises
           .where((e) => e.intensityLevel >= 5.0 && e.intensityLevel <= 7.0)
           .toList(),
@@ -101,7 +109,8 @@ class ExerciseLibraryService {
 
   /// Calculate total duration of exercises
   static int calculateTotalDuration(List<TrainingExercise> exercises) {
-    return exercises.fold(0, (sum, exercise) => sum + exercise.durationMinutes.round());
+    return exercises.fold(
+        0, (sum, exercise) => sum + exercise.durationMinutes.round());
   }
 
   /// Get color for intensity level
@@ -175,7 +184,8 @@ class ExerciseLibraryService {
   }
 
   /// Get intensity range for filter
-  static (double, double) _getIntensityRangeForFilter(TrainingIntensity intensity) {
+  static (double, double) _getIntensityRangeForFilter(
+      TrainingIntensity intensity) {
     switch (intensity) {
       case TrainingIntensity.recovery:
         return (0.0, 3.0);

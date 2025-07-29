@@ -12,7 +12,8 @@ class ExerciseFilterDialog extends ConsumerStatefulWidget {
   const ExerciseFilterDialog({super.key});
 
   @override
-  ConsumerState<ExerciseFilterDialog> createState() => _ExerciseFilterDialogState();
+  ConsumerState<ExerciseFilterDialog> createState() =>
+      _ExerciseFilterDialogState();
 }
 
 class _ExerciseFilterDialogState extends ConsumerState<ExerciseFilterDialog> {

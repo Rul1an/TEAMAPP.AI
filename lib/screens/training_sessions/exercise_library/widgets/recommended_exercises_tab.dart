@@ -33,7 +33,8 @@ class RecommendedExercisesTab extends ConsumerWidget {
     }
 
     final state = ref.watch(exerciseLibraryControllerProvider);
-    final recommendations = ExerciseLibraryService.getRecommendationsForMorphocycle(
+    final recommendations =
+        ExerciseLibraryService.getRecommendationsForMorphocycle(
       exercises,
       morphocycle!,
     );
@@ -49,7 +50,8 @@ class RecommendedExercisesTab extends ConsumerWidget {
             (entry) => _buildRecommendationSection(
               context,
               entry.key,
-              ExerciseLibraryService.filterExercises(entry.value, state.filterCriteria),
+              ExerciseLibraryService.filterExercises(
+                  entry.value, state.filterCriteria),
             ),
           ),
         ],
@@ -61,8 +63,8 @@ class RecommendedExercisesTab extends ConsumerWidget {
     return Text(
       'Morphocycle-Based Recommendations',
       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-        fontWeight: FontWeight.bold,
-      ),
+            fontWeight: FontWeight.bold,
+          ),
     );
   }
 
@@ -80,7 +82,8 @@ class RecommendedExercisesTab extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionHeader(title, description, exercises.length, color, icon),
+          _buildSectionHeader(
+              title, description, exercises.length, color, icon),
           const SizedBox(height: 12),
           _buildExerciseList(exercises),
           if (exercises.length > 6) _buildViewAllButton(),

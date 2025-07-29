@@ -54,7 +54,8 @@ class AllExercisesTab extends ConsumerWidget {
   }
 
   Widget _buildHeader(List<TrainingExercise> filteredExercises) {
-    final totalDuration = ExerciseLibraryService.calculateTotalDuration(filteredExercises);
+    final totalDuration =
+        ExerciseLibraryService.calculateTotalDuration(filteredExercises);
 
     return Container(
       padding: const EdgeInsets.all(16),

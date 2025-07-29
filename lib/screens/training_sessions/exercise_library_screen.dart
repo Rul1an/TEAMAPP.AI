@@ -78,24 +78,24 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
         ),
       ),
       body: Column(
-              children: [
-                if (morphocycle != null)
-                  MorphocycleBanner(
-                    morphocycle: morphocycle,
-                    weekNumber: widget.weekNumber,
-                  ),
-                const ExerciseSearchBar(),
-                const ExerciseFilterBar(),
-                Expanded(
-                  child: ExerciseTabView(
-                    tabController: _tabController,
-                    morphocycle: morphocycle,
-                    isSelectMode: widget.isSelectMode,
-                    onExerciseSelected: widget.onExerciseSelected,
-                  ),
-                ),
-              ],
+        children: [
+          if (morphocycle != null)
+            MorphocycleBanner(
+              morphocycle: morphocycle,
+              weekNumber: widget.weekNumber,
             ),
+          const ExerciseSearchBar(),
+          const ExerciseFilterBar(),
+          Expanded(
+            child: ExerciseTabView(
+              tabController: _tabController,
+              morphocycle: morphocycle,
+              isSelectMode: widget.isSelectMode,
+              onExerciseSelected: widget.onExerciseSelected,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -24,7 +24,8 @@ void main() {
     // Update controller intensity.
     final container = ProviderScope.containerOf(
         tester.element(find.byType(ExerciseFilterBar)));
-    final controller = container.read(exerciseLibraryControllerProvider.notifier);
+    final controller =
+        container.read(exerciseLibraryControllerProvider.notifier);
     controller.updateIntensityFilter(TrainingIntensity.recovery);
 
     await tester.pumpAndSettle();

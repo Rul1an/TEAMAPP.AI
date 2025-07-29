@@ -33,7 +33,8 @@ class FocusExercisesTab extends ConsumerWidget {
             (entry) => _buildFocusSection(
               context,
               entry.key,
-              ExerciseLibraryService.filterExercises(entry.value, state.filterCriteria),
+              ExerciseLibraryService.filterExercises(
+                  entry.value, state.filterCriteria),
             ),
           )
           .toList(),

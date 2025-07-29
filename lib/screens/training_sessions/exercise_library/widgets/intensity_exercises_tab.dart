@@ -33,7 +33,8 @@ class IntensityExercisesTab extends ConsumerWidget {
             (entry) => _buildIntensitySection(
               context,
               entry.key,
-              ExerciseLibraryService.filterExercises(entry.value, state.filterCriteria),
+              ExerciseLibraryService.filterExercises(
+                  entry.value, state.filterCriteria),
             ),
           )
           .toList(),
@@ -45,7 +46,8 @@ class IntensityExercisesTab extends ConsumerWidget {
     String intensityName,
     List<TrainingExercise> exercises,
   ) {
-    final color = ExerciseLibraryService.getIntensityColorFromName(intensityName);
+    final color =
+        ExerciseLibraryService.getIntensityColorFromName(intensityName);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 24),

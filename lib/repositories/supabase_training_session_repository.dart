@@ -25,10 +25,7 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
   Future<Result<List<TrainingSession>>> getAll() async {
     try {
       // OPTIMIZED PATTERN: Apply organization-based filtering for consistent performance
-      final data = await _client
-          .from(_table)
-          .select()
-          .eq(
+      final data = await _client.from(_table).select().eq(
             'organization_id',
             // Use cached auth.uid() pattern for sub-millisecond training session queries
             await _client.rpc<String>('get_user_organization_id'),

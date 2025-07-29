@@ -114,7 +114,8 @@ class LoadTrendsTab extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: LoadMonitoringService.loadColor(morphocycle.weeklyLoad),
+                  color:
+                      LoadMonitoringService.loadColor(morphocycle.weeklyLoad),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(

@@ -50,17 +50,17 @@ class ErrorBoundary extends StatelessWidget {
               Text(
                 'Offline Mode',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue[700],
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[700],
+                    ),
               ),
               const SizedBox(height: 16),
               Text(
                 'Unable to connect to the server. Some features may be limited.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.blue[600],
-                ),
+                      color: Colors.blue[600],
+                    ),
               ),
               const SizedBox(height: 32),
               ElevatedButton.icon(
@@ -177,8 +177,8 @@ class DatabaseErrorBoundary extends StatelessWidget {
               Text(
                 'This feature requires an internet connection.',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                      color: Colors.grey[600],
+                    ),
                 textAlign: TextAlign.center,
               ),
             ],

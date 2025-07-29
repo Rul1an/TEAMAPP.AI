@@ -33,8 +33,10 @@ class OptimizedCacheConfig {
 
   /// Cache performance monitoring thresholds
   static const double targetCacheHitRate = 0.80; // 80% cache hit rate target
-  static const Duration maxAcceptableCacheRetrievalTime = Duration(milliseconds: 5);
-  static const Duration maxAcceptableDatabaseFallbackTime = Duration(milliseconds: 10);
+  static const Duration maxAcceptableCacheRetrievalTime =
+      Duration(milliseconds: 5);
+  static const Duration maxAcceptableDatabaseFallbackTime =
+      Duration(milliseconds: 10);
 
   /// Cache invalidation strategies based on data criticality
   static bool shouldInvalidateOnUpdate(String cacheKey) {
@@ -104,12 +106,14 @@ class CachePerformanceMonitor {
   static CacheMetrics? getMetrics(String cacheKey) => _metrics[cacheKey];
 
   static Map<String, double> getCacheHitRates() {
-    return _metrics.map<String, double>((key, metrics) => MapEntry(key, metrics.hitRate));
+    return _metrics
+        .map<String, double>((key, metrics) => MapEntry(key, metrics.hitRate));
   }
 
   static List<String> getUnderperformingCaches() {
     return _metrics.entries
-        .where((entry) => entry.value.hitRate < OptimizedCacheConfig.targetCacheHitRate)
+        .where((entry) =>
+            entry.value.hitRate < OptimizedCacheConfig.targetCacheHitRate)
         .map<String>((entry) => entry.key)
         .toList();
   }
@@ -134,14 +138,17 @@ class CacheMetrics {
 
   double get hitRate => _hits + _misses == 0 ? 0.0 : _hits / (_hits + _misses);
 
-  Duration get averageHitTime => _hits == 0 ? Duration.zero :
-      Duration(microseconds: _totalHitTime.inMicroseconds ~/ _hits);
+  Duration get averageHitTime => _hits == 0
+      ? Duration.zero
+      : Duration(microseconds: _totalHitTime.inMicroseconds ~/ _hits);
 
-  Duration get averageMissTime => _misses == 0 ? Duration.zero :
-      Duration(microseconds: _totalMissTime.inMicroseconds ~/ _misses);
+  Duration get averageMissTime => _misses == 0
+      ? Duration.zero
+      : Duration(microseconds: _totalMissTime.inMicroseconds ~/ _misses);
 
   int get totalRequests => _hits + _misses;
 
-  bool get isPerforming => hitRate >= OptimizedCacheConfig.targetCacheHitRate &&
+  bool get isPerforming =>
+      hitRate >= OptimizedCacheConfig.targetCacheHitRate &&
       averageHitTime <= OptimizedCacheConfig.maxAcceptableCacheRetrievalTime;
 }

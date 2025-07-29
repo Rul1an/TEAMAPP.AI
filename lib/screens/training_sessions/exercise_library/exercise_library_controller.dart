@@ -64,7 +64,8 @@ class ExerciseLibraryState {
   }) {
     return ExerciseLibraryState(
       filterCriteria: filterCriteria ?? this.filterCriteria,
-      showMorphocycleRecommendations: showMorphocycleRecommendations ?? this.showMorphocycleRecommendations,
+      showMorphocycleRecommendations:
+          showMorphocycleRecommendations ?? this.showMorphocycleRecommendations,
       selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,
     );
   }
@@ -132,7 +133,8 @@ class ExerciseLibraryController extends StateNotifier<ExerciseLibraryState> {
   }
 
   /// Get exercises filtered by current criteria
-  List<TrainingExercise> getFilteredExercises(List<TrainingExercise> exercises) {
+  List<TrainingExercise> getFilteredExercises(
+      List<TrainingExercise> exercises) {
     return exercises.where((exercise) {
       final criteria = state.filterCriteria;
 
@@ -159,7 +161,8 @@ class ExerciseLibraryController extends StateNotifier<ExerciseLibraryState> {
       // Intensity filter
       if (criteria.intensityFilter != null) {
         // Convert TrainingIntensity to intensity level range
-        final intensityRange = _getIntensityRangeForFilter(criteria.intensityFilter!);
+        final intensityRange =
+            _getIntensityRangeForFilter(criteria.intensityFilter!);
         if (exercise.intensityLevel < intensityRange.$1 ||
             exercise.intensityLevel > intensityRange.$2) {
           return false;
@@ -205,7 +208,8 @@ class ExerciseLibraryController extends StateNotifier<ExerciseLibraryState> {
 
   /// Calculate total duration of exercises
   int calculateTotalDuration(List<TrainingExercise> exercises) {
-    return exercises.fold(0, (sum, exercise) => sum + exercise.durationMinutes.round());
+    return exercises.fold(
+        0, (sum, exercise) => sum + exercise.durationMinutes.round());
   }
 
   /// Get intensity range for filter

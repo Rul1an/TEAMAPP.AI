@@ -31,7 +31,8 @@ class ExerciseLibraryView extends ConsumerStatefulWidget {
   final int weekNumber;
 
   @override
-  ConsumerState<ExerciseLibraryView> createState() => _ExerciseLibraryViewState();
+  ConsumerState<ExerciseLibraryView> createState() =>
+      _ExerciseLibraryViewState();
 }
 
 class _ExerciseLibraryViewState extends ConsumerState<ExerciseLibraryView>
@@ -54,7 +55,8 @@ class _ExerciseLibraryViewState extends ConsumerState<ExerciseLibraryView>
 
   void _onTabChanged() {
     if (_tabController.indexIsChanging) {
-      ref.read(exerciseLibraryControllerProvider.notifier)
+      ref
+          .read(exerciseLibraryControllerProvider.notifier)
           .updateSelectedTab(_tabController.index);
     }
   }
@@ -121,7 +123,8 @@ class _ExerciseLibraryViewState extends ConsumerState<ExerciseLibraryView>
   ) {
     return Column(
       children: [
-        if (currentMorphocycle != null && controllerState.showMorphocycleRecommendations)
+        if (currentMorphocycle != null &&
+            controllerState.showMorphocycleRecommendations)
           MorphocycleBanner(
             morphocycle: currentMorphocycle,
             weekNumber: widget.weekNumber,
