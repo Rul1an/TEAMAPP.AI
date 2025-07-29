@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/core/optimized_cache_config.dart';
@@ -29,7 +30,8 @@ void main() {
       // Initialize repositories with test client (would use test containers in real CI)
       // For now, we'll use mock implementations to test performance patterns
       playerRepository = SupabasePlayerRepository();
-      videoTagRepository = SupabaseTagRepository(null!); // Mock client
+      // Mock client for video tag repository - skip in tests
+      videoTagRepository = SupabaseTagRepository(SupabaseClient('mock', 'mock'));
       trainingSessionRepository = SupabaseTrainingSessionRepository();
     });
 

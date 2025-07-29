@@ -94,11 +94,11 @@ class CachePerformanceMonitor {
   static final Map<String, CacheMetrics> _metrics = {};
 
   static void recordCacheHit(String cacheKey, Duration retrievalTime) {
-    _metrics.putIfAbsent(cacheKey, () => CacheMetrics()).recordHit(retrievalTime);
+    _metrics.putIfAbsent(cacheKey, CacheMetrics.new).recordHit(retrievalTime);
   }
 
   static void recordCacheMiss(String cacheKey, Duration fallbackTime) {
-    _metrics.putIfAbsent(cacheKey, () => CacheMetrics()).recordMiss(fallbackTime);
+    _metrics.putIfAbsent(cacheKey, CacheMetrics.new).recordMiss(fallbackTime);
   }
 
   static CacheMetrics? getMetrics(String cacheKey) => _metrics[cacheKey];

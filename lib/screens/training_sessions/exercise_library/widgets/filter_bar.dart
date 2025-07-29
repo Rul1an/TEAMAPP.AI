@@ -63,7 +63,7 @@ class ExerciseFilterBar extends ConsumerWidget {
         children: [
           ElevatedButton.icon(
             key: const Key('open_filter_dialog_button'),
-            onPressed: () => _openFilterDialog(context, controller),
+            onPressed: () => _openFilterDialog(context, controller, ref),
             icon: const Icon(Icons.filter_list),
             label: const Text('Filters'),
             style: ElevatedButton.styleFrom(
@@ -96,10 +96,11 @@ class ExerciseFilterBar extends ConsumerWidget {
   Future<void> _openFilterDialog(
     BuildContext context,
     ExerciseLibraryController controller,
+    WidgetRef ref,
   ) async {
     // FIXED: Initialize with current filter values from controller state
-    final state = ref.read(exerciseLibraryControllerProvider);
-    final currentCriteria = state.filterCriteria;
+    final currentState = ref.read(exerciseLibraryControllerProvider);
+    final currentCriteria = currentState.filterCriteria;
     ExerciseType? typeFilter = currentCriteria.typeFilter;
     TrainingIntensity? intensityFilter = currentCriteria.intensityFilter;
     var minDuration = currentCriteria.minDuration;

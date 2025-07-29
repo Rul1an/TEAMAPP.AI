@@ -54,7 +54,7 @@ class SupabaseTagRepository implements TagRepository {
         .eq(
           'organization_id',
           // Use cached auth.uid() pattern for sub-millisecond video tag searches
-          await client.rpc('get_user_organization_id') as String,
+          await client.rpc<String>('get_user_organization_id'),
         );
 
     // Apply additional filters on top of optimized base query
