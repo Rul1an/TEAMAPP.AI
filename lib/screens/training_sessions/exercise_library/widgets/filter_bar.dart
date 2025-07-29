@@ -97,12 +97,13 @@ class ExerciseFilterBar extends ConsumerWidget {
     BuildContext context,
     ExerciseLibraryController controller,
   ) async {
-    // Local mutable copies of current values - using simplified filters
-    ExerciseType? typeFilter;
-    TrainingIntensity? intensityFilter;
-    var minDuration = 0;
-    var maxDuration = 120;
-    var playerCount = 18;
+    // FIXED: Initialize with current filter values from controller
+    final currentCriteria = controller.state.filterCriteria;
+    ExerciseType? typeFilter = currentCriteria.typeFilter;
+    TrainingIntensity? intensityFilter = currentCriteria.intensityFilter;
+    var minDuration = currentCriteria.minDuration;
+    var maxDuration = currentCriteria.maxDuration;
+    var playerCount = currentCriteria.playerCount;
 
     await showModalBottomSheet<void>(
       context: context,
