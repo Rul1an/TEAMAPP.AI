@@ -126,7 +126,7 @@ enum Environment {
     'maxTenantsPerInstance': 100,
     'enableTenantIsolation': true,
     'tenantDataRetentionDays': 90,
-    'enableCrossTerantAnalytics': false,
+    'enableCrossTenantAnalytics': false,
   };
 
   // API endpoints

@@ -31,7 +31,8 @@ class ExercisePhaseDialog extends StatelessWidget {
             else
               ...phase.exerciseIds.map(
                 (id) => ListTile(
-                  title: Text('Oefening $id'), // TODO(roel): replace with name lookup
+                  title: Text(
+                      'Oefening $id'), // TODO(roel): replace with name lookup
                   trailing: IconButton(
                     icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
