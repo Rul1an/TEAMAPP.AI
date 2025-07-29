@@ -25,7 +25,8 @@ void main() {
     final container = ProviderScope.containerOf(
       tester.element(find.byType(ExerciseSearchBar)),
     );
-    container.listen(exerciseLibraryControllerProvider, (_, __) {}, fireImmediately: true);
+    container.listen(exerciseLibraryControllerProvider, (_, __) {},
+        fireImmediately: true);
 
     // Enter text in search field.
     await tester.enterText(

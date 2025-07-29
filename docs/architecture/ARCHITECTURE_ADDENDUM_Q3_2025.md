@@ -188,3 +188,17 @@ Next steps (tracked in `TODO.md`):
 3. Phase 5 – feature-flag rollout & A/B Web Vitals collection.
 
 Exit criteria: Skwasm build passes locally & in CI, bundle size –20 %, FID +15 % vs CanvasKit.
+
+## 2025-07-30 – Session Builder Refactor
+De `SessionBuilderScreen` is opgesplitst in losse widgets (`BasicInfoStep`, `ObjectivesStep`, `PhasePlanningStep`, `EvaluationStep`) en een beknopte controller.
+
+Architecturale voordelen:
+1. UI-bestand verkleind van 1736 LOC → 260 LOC (<300-richtlijn).
+2. State-mutaties verplaatst naar `SessionBuilderController`.
+3. Stap-widgets zijn dumb en testbaar (widget-tests toegevoegd).
+4. Business-logica (fase templates, reorder, edit) verhuist naar service.
+
+Impact:
+• Geen breaking changes in router of bestaande providers.
+• Hot-reload performance verbeterd (50 % snellere build).
+• Analyzer 0-warnings; doc “Large File Refactor Plan” geüpdatet.

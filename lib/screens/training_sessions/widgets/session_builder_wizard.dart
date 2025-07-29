@@ -8,7 +8,7 @@ class SessionBuilderWizard extends StatefulWidget {
     required this.stepTitles,
     required this.stepBuilders,
     required this.onFinished,
-  })  : assert(stepTitles.length == stepBuilders.length,
+  }) : assert(stepTitles.length == stepBuilders.length,
             'Titles and builders must have equal length');
 
   final List<String> stepTitles;
