@@ -11,13 +11,13 @@ class ExerciseSearchBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ctrl = ref.read(exerciseLibraryControllerProvider);
+    final controller = ref.read(exerciseLibraryControllerProvider.notifier);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: TextField(
         key: const Key('exercise_search_field'),
-        onChanged: ctrl.setSearch,
+        onChanged: controller.updateSearchQuery,
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.search),
           hintText: 'Search exercises…',
