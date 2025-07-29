@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -199,9 +200,9 @@ void main() {
     group('Performance Monitoring', () {
       test('should track cache hit rates accurately', () {
         // Simulate cache operations
-        CachePerformanceMonitor.recordCacheHit('test_key', Duration(milliseconds: 2));
-        CachePerformanceMonitor.recordCacheHit('test_key', Duration(milliseconds: 3));
-        CachePerformanceMonitor.recordCacheMiss('test_key', Duration(milliseconds: 10));
+        CachePerformanceMonitor.recordCacheHit('test_key', const Duration(milliseconds: 2));
+        CachePerformanceMonitor.recordCacheHit('test_key', const Duration(milliseconds: 3));
+        CachePerformanceMonitor.recordCacheMiss('test_key', const Duration(milliseconds: 10));
 
         final metrics = CachePerformanceMonitor.getMetrics('test_key');
         expect(metrics, isNotNull);
@@ -211,9 +212,9 @@ void main() {
 
       test('should identify underperforming caches', () {
         // Simulate poor cache performance
-        CachePerformanceMonitor.recordCacheMiss('poor_cache', Duration(milliseconds: 50));
-        CachePerformanceMonitor.recordCacheMiss('poor_cache', Duration(milliseconds: 45));
-        CachePerformanceMonitor.recordCacheHit('poor_cache', Duration(milliseconds: 2));
+        CachePerformanceMonitor.recordCacheMiss('poor_cache', const Duration(milliseconds: 50));
+        CachePerformanceMonitor.recordCacheMiss('poor_cache', const Duration(milliseconds: 45));
+        CachePerformanceMonitor.recordCacheHit('poor_cache', const Duration(milliseconds: 2));
 
         final underperforming = CachePerformanceMonitor.getUnderperformingCaches();
         expect(underperforming, contains('poor_cache'),
@@ -286,17 +287,17 @@ void main() {
 
     tearDownAll(() async {
       // Cleanup test resources
-      print('\n=== Performance Test Summary ===');
+      debugPrint('\n=== Performance Test Summary ===');
       final hitRates = CachePerformanceMonitor.getCacheHitRates();
       for (final entry in hitRates.entries) {
-        print('${entry.key}: ${(entry.value * 100).toStringAsFixed(1)}% hit rate');
+        debugPrint('${entry.key}: ${(entry.value * 100).toStringAsFixed(1)}% hit rate');
       }
 
       final underperforming = CachePerformanceMonitor.getUnderperformingCaches();
       if (underperforming.isNotEmpty) {
-        print('Underperforming caches: ${underperforming.join(', ')}');
+        debugPrint('Underperforming caches: ${underperforming.join(', ')}');
       }
-      print('================================\n');
+      debugPrint('================================\n');
     });
   });
 }

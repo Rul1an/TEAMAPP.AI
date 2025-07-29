@@ -24,5 +24,5 @@ class HeatMapPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant HeatMapPainter old) => old.matrix != matrix;
+  bool shouldRepaint(covariant HeatMapPainter oldDelegate) => oldDelegate.matrix != matrix;
 }

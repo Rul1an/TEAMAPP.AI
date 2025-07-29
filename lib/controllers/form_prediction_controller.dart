@@ -6,11 +6,11 @@ import '../providers/matches_provider.dart';
 
 class FormPredictionController extends FamilyAsyncNotifier<FormTrend, String> {
   @override
-  Future<FormTrend> build(String teamId) async {
+  Future<FormTrend> build(String arg) async {
     final repo = PredictionRepositoryStub(
       matchRepository: ref.read(matchRepositoryProvider),
     );
-    final res = await repo.predictForm(teamId);
+    final res = await repo.predictForm(arg);
     return res.dataOrNull ?? FormTrend.stable;
   }
 }
