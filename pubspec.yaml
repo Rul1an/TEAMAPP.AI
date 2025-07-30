@@ -94,9 +94,8 @@ dev_dependencies:
   # Replaced by very_good_analysis for stricter lint set
   very_good_analysis: ^7.0.0
 
-  # Custom lint with compatible versions - 2025 fix (downgraded for dependency resolution)
-  custom_lint: ^0.6.2
-  analyzer: '>=5.12.0 <7.0.0'
+  # Custom lint removed - conflicts with analyzer 6.11.0 (AugmentationImportDirective missing)
+  # Using very_good_analysis instead for comprehensive linting
 
   import_sorter: ^4.6.0
   build_runner: ^2.4.9
