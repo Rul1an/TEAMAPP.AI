@@ -252,9 +252,23 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
+          cache-key: flutter-${{ env.FLUTTER_VERSION }}
+          cache-path: ${{ runner.tool_cache }}/flutter
 
-      - name: '📦 Get Dependencies'
-        run: flutter pub get
+      - name: '💾 Restore Pub Cache'
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/.pub-cache
+          key: flutter-pub-linux-stable-${{ env.FLUTTER_VERSION }}-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys: |
+            flutter-pub-linux-stable-${{ env.FLUTTER_VERSION }}-
+            flutter-pub-linux-stable-
+          fail-on-cache-miss: false
+
+      - name: '📦 Install Dependencies'
+        run: |
+          flutter pub get
+          echo "::notice::Dependencies installed successfully"
 
       - name: '🧪 Run Unit Tests'
         run: |
