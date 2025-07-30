@@ -30,8 +30,10 @@ class PerformanceAnalyticsService {
 
   // Data Providers
   AsyncValue<List<Player>> get players => ref.watch(playersProvider);
-  AsyncValue<List<PlayerAssessment>> get assessments => ref.watch(assessmentsProvider);
-  AsyncValue<List<TrainingSession>> get trainingSessions => ref.watch(allTrainingSessionsProvider);
+  AsyncValue<List<PlayerAssessment>> get assessments =>
+      ref.watch(assessmentsProvider);
+  AsyncValue<List<TrainingSession>> get trainingSessions =>
+      ref.watch(allTrainingSessionsProvider);
 
   /// Refresh all analytics data
   Future<void> refreshData() async {
@@ -64,7 +66,8 @@ class PerformanceAnalyticsService {
   }
 
   /// Get top performing players based on latest assessments
-  Future<List<PlayerPerformanceData>> getTopPerformingPlayers({int limit = 5}) async {
+  Future<List<PlayerPerformanceData>> getTopPerformingPlayers(
+      {int limit = 5}) async {
     try {
       final playersList = await ref.read(playersProvider.future);
       final assessmentsList = await ref.read(assessmentsProvider.future);
@@ -77,7 +80,8 @@ class PerformanceAnalyticsService {
       final latestAssessments = <String, PlayerAssessment>{};
       for (final assessment in assessmentsList) {
         if (!latestAssessments.containsKey(assessment.playerId) ||
-            assessment.assessmentDate.isAfter(latestAssessments[assessment.playerId]!.assessmentDate)) {
+            assessment.assessmentDate.isAfter(
+                latestAssessments[assessment.playerId]!.assessmentDate)) {
           latestAssessments[assessment.playerId] = assessment;
         }
       }
@@ -118,7 +122,8 @@ class PerformanceAnalyticsService {
               ))
           .toList();
 
-      attendanceData.sort((a, b) => b.attendancePercentage.compareTo(a.attendancePercentage));
+      attendanceData.sort(
+          (a, b) => b.attendancePercentage.compareTo(a.attendancePercentage));
       return attendanceData.take(limit).toList();
     } catch (e) {
       debugPrint('Error getting top attendance players: $e');
@@ -189,7 +194,10 @@ class PerformanceAnalyticsService {
 
   double _calculateAverageAttendance(List<Player> players) {
     if (players.isEmpty) return 0.0;
-    return players.map((p) => p.attendancePercentage).fold(0.0, (a, b) => a + b) / players.length;
+    return players
+            .map((p) => p.attendancePercentage)
+            .fold(0.0, (a, b) => a + b) /
+        players.length;
   }
 }
 
@@ -263,6 +271,7 @@ class AssessmentRadarData {
 }
 
 /// Provider for the Performance Analytics Service
-final performanceAnalyticsServiceProvider = Provider<PerformanceAnalyticsService>((ref) {
+final performanceAnalyticsServiceProvider =
+    Provider<PerformanceAnalyticsService>((ref) {
   return PerformanceAnalyticsService(ref: ref);
 });

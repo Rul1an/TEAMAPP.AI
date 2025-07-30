@@ -143,7 +143,8 @@ class PerformanceAnalyticsController extends StateNotifier<AnalyticsState> {
     } catch (e, stackTrace) {
       debugPrint('Error loading analytics data: $e');
       debugPrint('Stack trace: $stackTrace');
-      state = AnalyticsError('Fout bij laden van analytics data: ${e.toString()}');
+      state =
+          AnalyticsError('Fout bij laden van analytics data: ${e.toString()}');
     }
   }
 
@@ -231,7 +232,6 @@ class PerformanceAnalyticsController extends StateNotifier<AnalyticsState> {
         return const Color(0xFFF44336); // Red
     }
   }
-
 }
 
 /// Analytics feature enumeration for navigation
@@ -244,7 +244,8 @@ enum AnalyticsFeature {
 
 /// Provider for the Performance Analytics Controller
 final performanceAnalyticsControllerProvider =
-    StateNotifierProvider<PerformanceAnalyticsController, AnalyticsState>((ref) {
+    StateNotifierProvider<PerformanceAnalyticsController, AnalyticsState>(
+        (ref) {
   final analyticsService = ref.watch(performanceAnalyticsServiceProvider);
   return PerformanceAnalyticsController(analyticsService: analyticsService);
 });

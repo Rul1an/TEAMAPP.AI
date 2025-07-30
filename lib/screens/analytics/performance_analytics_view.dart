@@ -66,7 +66,8 @@ class PerformanceAnalyticsView extends ConsumerWidget {
   ///
   /// Shows a summary of recent assessments and training sessions.
   /// Provides quick overview of recent analytics activity.
-  Widget _buildRecentActivity(BuildContext context, AnalyticsState analyticsState) {
+  Widget _buildRecentActivity(
+      BuildContext context, AnalyticsState analyticsState) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -87,8 +88,10 @@ class PerformanceAnalyticsView extends ConsumerWidget {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-              AnalyticsError(:final message) => _buildActivityError(context, message),
-              AnalyticsLoaded(:final teamStats) => _buildActivityContent(context, teamStats),
+              AnalyticsError(:final message) =>
+                _buildActivityError(context, message),
+              AnalyticsLoaded(:final teamStats) =>
+                _buildActivityContent(context, teamStats),
             },
           ],
         ),

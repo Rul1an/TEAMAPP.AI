@@ -28,9 +28,11 @@ class AnalyticsHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final analyticsState = ref.watch(performanceAnalyticsControllerProvider);
-    final controller = ref.read(performanceAnalyticsControllerProvider.notifier);
+    final controller =
+        ref.read(performanceAnalyticsControllerProvider.notifier);
 
-    final isRefreshing = analyticsState is AnalyticsLoaded && analyticsState.isRefreshing;
+    final isRefreshing =
+        analyticsState is AnalyticsLoaded && analyticsState.isRefreshing;
 
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
@@ -96,9 +98,11 @@ class AnalyticsAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final analyticsState = ref.watch(performanceAnalyticsControllerProvider);
-    final controller = ref.read(performanceAnalyticsControllerProvider.notifier);
+    final controller =
+        ref.read(performanceAnalyticsControllerProvider.notifier);
 
-    final isRefreshing = analyticsState is AnalyticsLoaded && analyticsState.isRefreshing;
+    final isRefreshing =
+        analyticsState is AnalyticsLoaded && analyticsState.isRefreshing;
 
     return AppBar(
       title: const Text('Performance Analytics'),

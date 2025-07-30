@@ -32,7 +32,8 @@ class QuickStatsRow extends ConsumerWidget {
     return switch (analyticsState) {
       AnalyticsLoading() => _buildLoadingState(),
       AnalyticsError(:final message) => _buildErrorState(context, message),
-      AnalyticsLoaded(:final teamStats) => _buildLoadedState(context, teamStats),
+      AnalyticsLoaded(:final teamStats) =>
+        _buildLoadedState(context, teamStats),
     };
   }
 
