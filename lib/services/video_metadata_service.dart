@@ -14,6 +14,7 @@ class VideoMetadataService {
     try {
       // Verify file exists
       final file = File(videoPath);
+      // ignore: avoid_slow_async_io
       if (!await file.exists()) {
         return const Failure(MetadataFailure('Video file does not exist'));
       }
@@ -33,7 +34,9 @@ class VideoMetadataService {
       final streamData = streamResult.dataOrNull!;
 
       // Get file stats
+      // ignore: avoid_slow_async_io
       final fileSize = await file.length();
+      // ignore: avoid_slow_async_io
       final lastModified = await file.lastModified();
 
       // Create comprehensive metadata
@@ -83,7 +86,8 @@ class VideoMetadataService {
   }
 
   /// Extract basic format information using FFprobe
-  Future<Result<Map<String, dynamic>>> _extractBasicMetadata(String videoPath) async {
+  Future<Result<Map<String, dynamic>>> _extractBasicMetadata(
+      String videoPath) async {
     try {
       // FFprobe command for format information
       final command = '-v quiet -print_format json -show_format "$videoPath"';
@@ -91,7 +95,8 @@ class VideoMetadataService {
       final returnCode = await session.getReturnCode();
 
       if (!ReturnCode.isSuccess(returnCode)) {
-        return const Failure(MetadataFailure('Failed to extract format metadata'));
+        return const Failure(
+            MetadataFailure('Failed to extract format metadata'));
       }
 
       final output = await session.getOutput();
@@ -104,7 +109,8 @@ class VideoMetadataService {
 
       // Parse duration
       final durationStr = format['duration'] as String?;
-      final duration = durationStr != null ? double.tryParse(durationStr) ?? 0.0 : 0.0;
+      final duration =
+          durationStr != null ? double.tryParse(durationStr) ?? 0.0 : 0.0;
 
       // Parse bitrate
       final bitrateStr = format['bit_rate'] as String?;
@@ -124,7 +130,8 @@ class VideoMetadataService {
   }
 
   /// Extract stream information (video and audio streams)
-  Future<Result<Map<String, dynamic>>> _extractStreamInfo(String videoPath) async {
+  Future<Result<Map<String, dynamic>>> _extractStreamInfo(
+      String videoPath) async {
     try {
       // FFprobe command for stream information
       final command = '-v quiet -print_format json -show_streams "$videoPath"';
@@ -132,7 +139,8 @@ class VideoMetadataService {
       final returnCode = await session.getReturnCode();
 
       if (!ReturnCode.isSuccess(returnCode)) {
-        return const Failure(MetadataFailure('Failed to extract stream metadata'));
+        return const Failure(
+            MetadataFailure('Failed to extract stream metadata'));
       }
 
       final output = await session.getOutput();
@@ -240,9 +248,9 @@ class VideoMetadataService {
 
     // Common aspect ratios
     final ratio = width / height;
-    if ((ratio - 16/9).abs() < 0.1) return '16:9';
-    if ((ratio - 4/3).abs() < 0.1) return '4:3';
-    if ((ratio - 21/9).abs() < 0.1) return '21:9';
+    if ((ratio - 16 / 9).abs() < 0.1) return '16:9';
+    if ((ratio - 4 / 3).abs() < 0.1) return '4:3';
+    if ((ratio - 21 / 9).abs() < 0.1) return '21:9';
     if ((ratio - 1.0).abs() < 0.1) return '1:1';
 
     // Calculate GCD for custom ratios
@@ -287,7 +295,7 @@ class VideoMetadataService {
     const hdrPixelFormats = ['yuv420p10le', 'yuv422p10le', 'yuv444p10le'];
 
     return hdrColorSpaces.contains(colorSpace.toLowerCase()) ||
-           hdrPixelFormats.contains(pixelFormat.toLowerCase());
+        hdrPixelFormats.contains(pixelFormat.toLowerCase());
   }
 
   /// Estimate total frame count
@@ -308,20 +316,24 @@ class VideoMetadataService {
   }
 
   /// Quick metadata extraction for upload validation
-  Future<Result<Map<String, dynamic>>> extractQuickMetadata(String videoPath) async {
+  Future<Result<Map<String, dynamic>>> extractQuickMetadata(
+      String videoPath) async {
     try {
       final file = File(videoPath);
+      // ignore: avoid_slow_async_io
       if (!await file.exists()) {
         return const Failure(MetadataFailure('File does not exist'));
       }
 
       // Quick duration and resolution check
-      final command = '-v quiet -show_entries stream=width,height,duration,codec_name:format=duration -of csv=p=0 "$videoPath"';
+      final command =
+          '-v quiet -show_entries stream=width,height,duration,codec_name:format=duration -of csv=p=0 "$videoPath"';
       final session = await FFmpegKit.execute('ffprobe $command');
       final returnCode = await session.getReturnCode();
 
       if (!ReturnCode.isSuccess(returnCode)) {
-        return const Failure(MetadataFailure('Quick metadata extraction failed'));
+        return const Failure(
+            MetadataFailure('Quick metadata extraction failed'));
       }
 
       final output = await session.getOutput();
@@ -336,8 +348,8 @@ class VideoMetadataService {
       return Success({
         'file_size': fileSize,
         'duration_estimate': 120, // Placeholder - parse from actual output
-        'width_estimate': 1920,   // Placeholder - parse from actual output
-        'height_estimate': 1080,  // Placeholder - parse from actual output
+        'width_estimate': 1920, // Placeholder - parse from actual output
+        'height_estimate': 1080, // Placeholder - parse from actual output
       });
     } catch (e) {
       return Failure(MetadataFailure('Quick metadata error: $e'));
@@ -399,37 +411,36 @@ class VideoMetadata {
 
   /// Convert to JSON for storage
   Map<String, dynamic> toJson() => {
-    'filePath': filePath,
-    'fileName': fileName,
-    'fileSize': fileSize,
-    'duration': duration,
-    'width': width,
-    'height': height,
-    'frameRate': frameRate,
-    'bitrate': bitrate,
-    'format': format,
-    'videoCodec': videoCodec,
-    'audioCodec': audioCodec,
-    'aspectRatio': aspectRatio,
-    'orientation': orientation.name,
-    'hasAudio': hasAudio,
-    'audioChannels': audioChannels,
-    'audioSampleRate': audioSampleRate,
-    'createdAt': createdAt.toIso8601String(),
-    'extractedAt': extractedAt.toIso8601String(),
-    'quality': quality.name,
-    'isHdr': isHdr,
-    'colorSpace': colorSpace,
-    'pixelFormat': pixelFormat,
-    'frameCount': frameCount,
-  };
+        'filePath': filePath,
+        'fileName': fileName,
+        'fileSize': fileSize,
+        'duration': duration,
+        'width': width,
+        'height': height,
+        'frameRate': frameRate,
+        'bitrate': bitrate,
+        'format': format,
+        'videoCodec': videoCodec,
+        'audioCodec': audioCodec,
+        'aspectRatio': aspectRatio,
+        'orientation': orientation.name,
+        'hasAudio': hasAudio,
+        'audioChannels': audioChannels,
+        'audioSampleRate': audioSampleRate,
+        'createdAt': createdAt.toIso8601String(),
+        'extractedAt': extractedAt.toIso8601String(),
+        'quality': quality.name,
+        'isHdr': isHdr,
+        'colorSpace': colorSpace,
+        'pixelFormat': pixelFormat,
+        'frameCount': frameCount,
+      };
 
   /// Human-readable summary
-  String get summary =>
-    '${width}x$height $aspectRatio, '
-    '${(duration / 60).toStringAsFixed(1)}min, '
-    '${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB, '
-    '${quality.displayName}';
+  String get summary => '${width}x$height $aspectRatio, '
+      '${(duration / 60).toStringAsFixed(1)}min, '
+      '${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB, '
+      '${quality.displayName}';
 }
 
 /// Video orientation enum
@@ -448,10 +459,14 @@ enum VideoQuality {
 
   String get displayName {
     switch (this) {
-      case VideoQuality.low: return 'Low Quality';
-      case VideoQuality.medium: return 'Medium Quality';
-      case VideoQuality.high: return 'High Quality';
-      case VideoQuality.ultra: return 'Ultra Quality';
+      case VideoQuality.low:
+        return 'Low Quality';
+      case VideoQuality.medium:
+        return 'Medium Quality';
+      case VideoQuality.high:
+        return 'High Quality';
+      case VideoQuality.ultra:
+        return 'Ultra Quality';
     }
   }
 }

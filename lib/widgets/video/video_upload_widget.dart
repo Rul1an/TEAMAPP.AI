@@ -175,7 +175,8 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
             label: const Text('Select Video File'),
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              textStyle:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ),
         ),
@@ -230,7 +231,7 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
             },
             onLeave: (_) => setState(() => _isDragOver = false),
             builder: (context, candidateData, rejectedData) {
-              return Container(
+              return DecoratedBox(
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: _isDragOver ? Colors.blue : Colors.grey.shade300,
@@ -238,9 +239,8 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
                     style: BorderStyle.solid,
                   ),
                   borderRadius: BorderRadius.circular(12),
-                  color: _isDragOver
-                      ? Colors.blue.shade50
-                      : Colors.grey.shade50,
+                  color:
+                      _isDragOver ? Colors.blue.shade50 : Colors.grey.shade50,
                 ),
                 child: Center(
                   child: Column(
@@ -259,7 +259,8 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
-                          color: _isDragOver ? Colors.blue : Colors.grey.shade600,
+                          color:
+                              _isDragOver ? Colors.blue : Colors.grey.shade600,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -292,10 +293,16 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
         Row(
           children: [
             Icon(
-              isCompleted ? Icons.check_circle :
-              isFailed ? Icons.error : Icons.upload,
-              color: isCompleted ? Colors.green :
-                     isFailed ? Colors.red : Colors.blue,
+              isCompleted
+                  ? Icons.check_circle
+                  : isFailed
+                      ? Icons.error
+                      : Icons.upload,
+              color: isCompleted
+                  ? Colors.green
+                  : isFailed
+                      ? Colors.red
+                      : Colors.blue,
               size: 32,
             ),
             const SizedBox(width: 12),
@@ -313,8 +320,11 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
                   Text(
                     _getStatusText(progress.status),
                     style: TextStyle(
-                      color: isCompleted ? Colors.green :
-                             isFailed ? Colors.red : Colors.blue,
+                      color: isCompleted
+                          ? Colors.green
+                          : isFailed
+                              ? Colors.red
+                              : Colors.blue,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -343,7 +353,8 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
                 '${(progress.progress * 100).toStringAsFixed(1)}%',
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
-              if (progress.fileSizeBytes != null && progress.uploadedBytes != null)
+              if (progress.fileSizeBytes != null &&
+                  progress.uploadedBytes != null)
                 Text(
                   '${_formatBytes(progress.uploadedBytes!)} / ${_formatBytes(progress.fileSizeBytes!)}',
                   style: TextStyle(color: Colors.grey.shade600),
@@ -358,9 +369,11 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
         if (progress.startedAt != null) ...[
           _buildProgressDetail('Started', _formatTime(progress.startedAt!)),
           if (progress.completedAt != null)
-            _buildProgressDetail('Completed', _formatTime(progress.completedAt!)),
+            _buildProgressDetail(
+                'Completed', _formatTime(progress.completedAt!)),
           if (progress.fileSizeBytes != null)
-            _buildProgressDetail('File Size', _formatBytes(progress.fileSizeBytes!)),
+            _buildProgressDetail(
+                'File Size', _formatBytes(progress.fileSizeBytes!)),
         ],
 
         // Error Message
@@ -489,7 +502,8 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
       await _uploadVideoFile(result.dataOrNull!);
     } else {
       setState(() {
-        _errorMessage = result.errorOrNull?.message ?? 'Failed to pick video file';
+        _errorMessage =
+            result.errorOrNull?.message ?? 'Failed to pick video file';
       });
     }
   }
@@ -509,7 +523,8 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
     final result = await _uploadService.uploadVideoWithProgress(
       organizationId: widget.organizationId,
       title: _titleController,
-      description: _descriptionController.isEmpty ? null : _descriptionController,
+      description:
+          _descriptionController.isEmpty ? null : _descriptionController,
       playerId: widget.playerId,
       platformFile: file,
       onProgress: (progress) {
@@ -580,7 +595,9 @@ class _VideoUploadWidgetState extends ConsumerState<VideoUploadWidget>
   String _formatBytes(int bytes) {
     if (bytes < 1024) return '${bytes}B';
     if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)}KB';
-    if (bytes < 1024 * 1024 * 1024) return '${(bytes / (1024 * 1024)).toStringAsFixed(1)}MB';
+    if (bytes < 1024 * 1024 * 1024) {
+      return '${(bytes / (1024 * 1024)).toStringAsFixed(1)}MB';
+    }
     return '${(bytes / (1024 * 1024 * 1024)).toStringAsFixed(1)}GB';
   }
 

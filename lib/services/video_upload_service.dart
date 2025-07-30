@@ -32,13 +32,15 @@ class VideoUploadService {
 
     try {
       // Step 1: Initialize upload progress
-      _updateProgress(onProgress, VideoUploadProgress(
-        videoId: uploadId,
-        title: title,
-        status: VideoUploadStatus.preparing,
-        progress: 0.0,
-        startedAt: DateTime.now(),
-      ));
+      _updateProgress(
+          onProgress,
+          VideoUploadProgress(
+            videoId: uploadId,
+            title: title,
+            status: VideoUploadStatus.preparing,
+            progress: 0.0,
+            startedAt: DateTime.now(),
+          ));
 
       // Step 2: Validate input
       final file = await _validateAndGetFile(platformFile, localFilePath);
@@ -49,24 +51,28 @@ class VideoUploadService {
       // Step 3: Pre-upload validation
       final validationResult = await _validateVideoFile(file, organizationId);
       if (!validationResult.isSuccess) {
-        _updateProgress(onProgress, VideoUploadProgress(
-          videoId: uploadId,
-          title: title,
-          status: VideoUploadStatus.failed,
-          progress: 0.0,
-          errorMessage: validationResult.errorOrNull?.toString(),
-          startedAt: DateTime.now(),
-        ));
+        _updateProgress(
+            onProgress,
+            VideoUploadProgress(
+              videoId: uploadId,
+              title: title,
+              status: VideoUploadStatus.failed,
+              progress: 0.0,
+              errorMessage: validationResult.errorOrNull?.toString(),
+              startedAt: DateTime.now(),
+            ));
         return Failure(validationResult.errorOrNull!);
       }
 
       // Step 4: Extract metadata
-      _updateProgress(onProgress, VideoUploadProgress(
-        videoId: uploadId,
-        title: title,
-        status: VideoUploadStatus.preparing,
-        progress: 0.1,
-      ));
+      _updateProgress(
+          onProgress,
+          VideoUploadProgress(
+            videoId: uploadId,
+            title: title,
+            status: VideoUploadStatus.preparing,
+            progress: 0.1,
+          ));
 
       final metadataResult = await _extractVideoMetadata(file.path);
       if (!metadataResult.isSuccess) {
@@ -78,12 +84,14 @@ class VideoUploadService {
       // Step 5: Compress video if needed
       final compressionResult = await _compressVideoIfNeeded(
         file,
-        onProgress: (progress) => _updateProgress(onProgress, VideoUploadProgress(
-          videoId: uploadId,
-          title: title,
-          status: VideoUploadStatus.compressing,
-          progress: 0.1 + (progress * 0.3), // 10-40% for compression
-        )),
+        onProgress: (progress) => _updateProgress(
+            onProgress,
+            VideoUploadProgress(
+              videoId: uploadId,
+              title: title,
+              status: VideoUploadStatus.compressing,
+              progress: 0.1 + (progress * 0.3), // 10-40% for compression
+            )),
       );
 
       if (!compressionResult.isSuccess) {
@@ -93,13 +101,15 @@ class VideoUploadService {
       final finalFile = compressionResult.dataOrNull!;
 
       // Step 6: Upload to repository
-      _updateProgress(onProgress, VideoUploadProgress(
-        videoId: uploadId,
-        title: title,
-        status: VideoUploadStatus.uploading,
-        progress: 0.4,
-        fileSizeBytes: await finalFile.length(),
-      ));
+      _updateProgress(
+          onProgress,
+          VideoUploadProgress(
+            videoId: uploadId,
+            title: title,
+            status: VideoUploadStatus.uploading,
+            progress: 0.4,
+            fileSizeBytes: await finalFile.length(),
+          ));
 
       final uploadRequest = VideoUploadRequest(
         organizationId: organizationId,
@@ -109,14 +119,16 @@ class VideoUploadService {
         localFilePath: finalFile.path,
         onProgress: (progress) async {
           final fileSize = await finalFile.length();
-          _updateProgress(onProgress, VideoUploadProgress(
-            videoId: uploadId,
-            title: title,
-            status: VideoUploadStatus.uploading,
-            progress: 0.4 + (progress * 0.5), // 40-90% for upload
-            fileSizeBytes: fileSize,
-            uploadedBytes: (fileSize * progress).round(),
-          ));
+          _updateProgress(
+              onProgress,
+              VideoUploadProgress(
+                videoId: uploadId,
+                title: title,
+                status: VideoUploadStatus.uploading,
+                progress: 0.4 + (progress * 0.5), // 40-90% for upload
+                fileSizeBytes: fileSize,
+                uploadedBytes: (fileSize * progress).round(),
+              ));
         },
       );
 
@@ -125,36 +137,42 @@ class VideoUploadService {
       );
 
       if (!uploadResult.isSuccess) {
-        _updateProgress(onProgress, VideoUploadProgress(
-          videoId: uploadId,
-          title: title,
-          status: VideoUploadStatus.failed,
-          progress: 0.4,
-          errorMessage: uploadResult.errorOrNull?.toString(),
-        ));
+        _updateProgress(
+            onProgress,
+            VideoUploadProgress(
+              videoId: uploadId,
+              title: title,
+              status: VideoUploadStatus.failed,
+              progress: 0.4,
+              errorMessage: uploadResult.errorOrNull?.toString(),
+            ));
         return Failure(uploadResult.errorOrNull!);
       }
 
       // Step 7: Post-processing
       final video = uploadResult.dataOrNull!;
-      _updateProgress(onProgress, VideoUploadProgress(
-        videoId: video.id,
-        title: title,
-        status: VideoUploadStatus.processing,
-        progress: 0.95,
-      ));
+      _updateProgress(
+          onProgress,
+          VideoUploadProgress(
+            videoId: video.id,
+            title: title,
+            status: VideoUploadStatus.processing,
+            progress: 0.95,
+          ));
 
       // Trigger background processing if needed
       await _triggerBackgroundProcessing(video.id);
 
       // Step 8: Complete
-      _updateProgress(onProgress, VideoUploadProgress(
-        videoId: video.id,
-        title: title,
-        status: VideoUploadStatus.completed,
-        progress: 1.0,
-        completedAt: DateTime.now(),
-      ));
+      _updateProgress(
+          onProgress,
+          VideoUploadProgress(
+            videoId: video.id,
+            title: title,
+            status: VideoUploadStatus.completed,
+            progress: 1.0,
+            completedAt: DateTime.now(),
+          ));
 
       // Cleanup temporary files
       if (finalFile.path != file.path) {
@@ -166,15 +184,16 @@ class VideoUploadService {
       }
 
       return Success(video);
-
     } catch (e) {
-      _updateProgress(onProgress, VideoUploadProgress(
-        videoId: uploadId,
-        title: title,
-        status: VideoUploadStatus.failed,
-        progress: 0.0,
-        errorMessage: e.toString(),
-      ));
+      _updateProgress(
+          onProgress,
+          VideoUploadProgress(
+            videoId: uploadId,
+            title: title,
+            status: VideoUploadStatus.failed,
+            progress: 0.0,
+            errorMessage: e.toString(),
+          ));
       return Failure(NetworkFailure('Upload failed: $e'));
     }
   }
@@ -208,21 +227,23 @@ class VideoUploadService {
   }
 
   /// Validate video file before upload
-  Future<Result<void>> _validateVideoFile(File file, String organizationId) async {
+  Future<Result<void>> _validateVideoFile(
+      File file, String organizationId) async {
     try {
       // Check file existence
+      // ignore: avoid_slow_async_io
       if (!await file.exists()) {
         return const Failure(ValidationFailure('File does not exist'));
       }
 
       // Check file size (500MB limit)
       const maxSizeBytes = 500 * 1024 * 1024;
+      // ignore: avoid_slow_async_io
       final fileSize = await file.length();
       if (fileSize > maxSizeBytes) {
         return Failure(ValidationFailure(
-          'File too large: ${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB. '
-          'Maximum allowed: 500MB'
-        ));
+            'File too large: ${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB. '
+            'Maximum allowed: 500MB'));
       }
 
       if (fileSize < 1024) {
@@ -233,25 +254,22 @@ class VideoUploadService {
       const supportedFormats = ['.mp4', '.mov', '.avi', '.webm'];
       final extension = path.extension(file.path).toLowerCase();
       if (!supportedFormats.contains(extension)) {
-        return Failure(ValidationFailure(
-          'Unsupported format: $extension. '
-          'Supported formats: ${supportedFormats.join(', ')}'
-        ));
+        return Failure(ValidationFailure('Unsupported format: $extension. '
+            'Supported formats: ${supportedFormats.join(', ')}'));
       }
 
       // Check storage quota
-      final quotaResult = await _videoRepository.getStorageUsage(organizationId);
+      final quotaResult =
+          await _videoRepository.getStorageUsage(organizationId);
       if (quotaResult.isSuccess) {
         const maxQuotaBytes = 5 * 1024 * 1024 * 1024; // 5GB default
         final currentUsage = quotaResult.dataOrNull!;
 
         if (currentUsage + fileSize > maxQuotaBytes) {
-          return Failure(ValidationFailure(
-            'Upload would exceed storage quota. '
-            'Current usage: ${(currentUsage / (1024 * 1024)).toStringAsFixed(0)}MB, '
-            'File size: ${(fileSize / (1024 * 1024)).toStringAsFixed(0)}MB, '
-            'Available: ${((maxQuotaBytes - currentUsage) / (1024 * 1024)).toStringAsFixed(0)}MB'
-          ));
+          return Failure(ValidationFailure('Upload would exceed storage quota. '
+              'Current usage: ${(currentUsage / (1024 * 1024)).toStringAsFixed(0)}MB, '
+              'File size: ${(fileSize / (1024 * 1024)).toStringAsFixed(0)}MB, '
+              'Available: ${((maxQuotaBytes - currentUsage) / (1024 * 1024)).toStringAsFixed(0)}MB'));
         }
       }
 
@@ -262,7 +280,8 @@ class VideoUploadService {
   }
 
   /// Extract video metadata using FFmpeg
-  Future<Result<Map<String, dynamic>>> _extractVideoMetadata(String filePath) async {
+  Future<Result<Map<String, dynamic>>> _extractVideoMetadata(
+      String filePath) async {
     try {
       // Use FFprobe to get video information
       const command = '-v quiet -print_format json -show_format -show_streams';
@@ -270,7 +289,8 @@ class VideoUploadService {
       final returnCode = await session.getReturnCode();
 
       if (!ReturnCode.isSuccess(returnCode)) {
-        return const Failure(ProcessingFailure('Failed to extract video metadata'));
+        return const Failure(
+            ProcessingFailure('Failed to extract video metadata'));
       }
 
       final output = await session.getOutput();
@@ -350,16 +370,21 @@ class VideoUploadService {
 
       if (!ReturnCode.isSuccess(returnCode)) {
         final logs = await session.getLogs();
-        final errorMessage = logs.isNotEmpty ? logs.last.getMessage() : 'Unknown compression error';
-        return Failure(ProcessingFailure('Video compression failed: $errorMessage'));
+        final errorMessage = logs.isNotEmpty
+            ? logs.last.getMessage()
+            : 'Unknown compression error';
+        return Failure(
+            ProcessingFailure('Video compression failed: $errorMessage'));
       }
 
       onProgress?.call(0.9);
 
       // Verify compressed file exists and is smaller
       final compressedFile = File(outputPath);
+      // ignore: avoid_slow_async_io
       if (!await compressedFile.exists()) {
-        return const Failure(ProcessingFailure('Compressed file was not created'));
+        return const Failure(
+            ProcessingFailure('Compressed file was not created'));
       }
 
       final compressedSize = await compressedFile.length();
@@ -371,7 +396,8 @@ class VideoUploadService {
       }
 
       onProgress?.call(1.0);
-      debugPrint('Video compressed: ${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB → ${(compressedSize / (1024 * 1024)).toStringAsFixed(1)}MB');
+      debugPrint(
+          'Video compressed: ${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB → ${(compressedSize / (1024 * 1024)).toStringAsFixed(1)}MB');
 
       return Success(compressedFile);
     } catch (e) {
@@ -397,13 +423,15 @@ class VideoUploadService {
   }
 
   /// Get file from platform file or local path
-  Future<File?> _validateAndGetFile(PlatformFile? platformFile, String? localFilePath) async {
+  Future<File?> _validateAndGetFile(
+      PlatformFile? platformFile, String? localFilePath) async {
     if (platformFile != null && platformFile.path != null) {
       return File(platformFile.path!);
     }
 
     if (localFilePath != null && localFilePath.isNotEmpty) {
       final file = File(localFilePath);
+      // ignore: avoid_slow_async_io
       if (await file.exists()) {
         return file;
       }
@@ -425,7 +453,9 @@ class VideoUploadService {
     // Rough estimation: ~1MB per 10 seconds for compressed video
     // This is very approximate and should be replaced with actual FFprobe parsing
     const bytesPerSecond = 100 * 1024; // ~100KB per second
-    return (fileSizeBytes / bytesPerSecond).round().clamp(1, 1800); // Max 30 minutes
+    return (fileSizeBytes / bytesPerSecond)
+        .round()
+        .clamp(1, 1800); // Max 30 minutes
   }
 
   /// Estimate bitrate based on file size

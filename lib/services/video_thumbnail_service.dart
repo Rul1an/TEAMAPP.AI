@@ -20,6 +20,7 @@ class VideoThumbnailService {
     try {
       // Ensure output directory exists
       final outputDir = Directory(outputDirectory);
+      // ignore: avoid_slow_async_io
       if (!await outputDir.exists()) {
         await outputDir.create(recursive: true);
       }
@@ -51,12 +52,14 @@ class VideoThumbnailService {
         if (result.isSuccess) {
           thumbnailPaths.add(result.dataOrNull!);
         } else {
-          debugPrint('Warning: Failed to generate thumbnail at ${timestamp}s: ${result.errorOrNull}');
+          debugPrint(
+              'Warning: Failed to generate thumbnail at ${timestamp}s: ${result.errorOrNull}');
         }
       }
 
       if (thumbnailPaths.isEmpty) {
-        return const Failure(ProcessingFailure('No thumbnails could be generated'));
+        return const Failure(
+            ProcessingFailure('No thumbnails could be generated'));
       }
 
       return Success(thumbnailPaths);
@@ -108,24 +111,31 @@ class VideoThumbnailService {
       if (!ReturnCode.isSuccess(returnCode)) {
         final logs = await session.getLogs();
         final errorMessage = logs.isNotEmpty
-          ? logs.map((log) => log.getMessage()).join('\n')
-          : 'Unknown thumbnail generation error';
-        return Failure(ProcessingFailure('Thumbnail generation failed: $errorMessage'));
+            ? logs.map((log) => log.getMessage()).join('\n')
+            : 'Unknown thumbnail generation error';
+        return Failure(
+            ProcessingFailure('Thumbnail generation failed: $errorMessage'));
       }
 
       // Verify thumbnail was created
       final thumbnailFile = File(outputPath);
+      // ignore: avoid_slow_async_io
       if (!await thumbnailFile.exists()) {
-        return const Failure(ProcessingFailure('Thumbnail file was not created'));
+        return const Failure(
+            ProcessingFailure('Thumbnail file was not created'));
       }
 
       // Verify file has content
+      // ignore: avoid_slow_async_io
       final fileSize = await thumbnailFile.length();
-      if (fileSize < 1024) { // Less than 1KB is probably not a valid image
-        return const Failure(ProcessingFailure('Generated thumbnail is too small'));
+      if (fileSize < 1024) {
+        // Less than 1KB is probably not a valid image
+        return const Failure(
+            ProcessingFailure('Generated thumbnail is too small'));
       }
 
-      debugPrint('Thumbnail generated successfully: $outputPath (${(fileSize / 1024).toStringAsFixed(1)}KB)');
+      debugPrint(
+          'Thumbnail generated successfully: $outputPath (${(fileSize / 1024).toStringAsFixed(1)}KB)');
       return Success(outputPath);
     } catch (e) {
       return Failure(ProcessingFailure('Thumbnail generation error: $e'));
@@ -136,7 +146,8 @@ class VideoThumbnailService {
   Future<Result<double>> _getVideoDuration(String videoPath) async {
     try {
       // Use FFprobe to get duration
-      final command = '-v quiet -show_entries format=duration -of csv=p=0 "$videoPath"';
+      final command =
+          '-v quiet -show_entries format=duration -of csv=p=0 "$videoPath"';
       final session = await FFmpegKit.execute('ffprobe $command');
       final returnCode = await session.getReturnCode();
 
@@ -201,19 +212,24 @@ class VideoThumbnailService {
       if (!ReturnCode.isSuccess(returnCode)) {
         final logs = await session.getLogs();
         final errorMessage = logs.isNotEmpty
-          ? logs.map((log) => log.getMessage()).join('\n')
-          : 'Unknown animated thumbnail error';
-        return Failure(ProcessingFailure('Animated thumbnail failed: $errorMessage'));
+            ? logs.map((log) => log.getMessage()).join('\n')
+            : 'Unknown animated thumbnail error';
+        return Failure(
+            ProcessingFailure('Animated thumbnail failed: $errorMessage'));
       }
 
       // Verify output file
       final outputFile = File(outputPath);
+      // ignore: avoid_slow_async_io
       if (!await outputFile.exists()) {
-        return const Failure(ProcessingFailure('Animated thumbnail was not created'));
+        return const Failure(
+            ProcessingFailure('Animated thumbnail was not created'));
       }
 
+      // ignore: avoid_slow_async_io
       final fileSize = await outputFile.length();
-      debugPrint('Animated thumbnail generated: $outputPath (${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB)');
+      debugPrint(
+          'Animated thumbnail generated: $outputPath (${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB)');
 
       return Success(outputPath);
     } catch (e) {
@@ -226,6 +242,7 @@ class VideoThumbnailService {
     for (final path in thumbnailPaths) {
       try {
         final file = File(path);
+        // ignore: avoid_slow_async_io
         if (await file.exists()) {
           await file.delete();
           debugPrint('Cleaned up thumbnail: $path');
