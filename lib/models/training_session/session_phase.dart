@@ -66,29 +66,58 @@ class SessionPhase {
 
   factory SessionPhase.fromJson(Map<String, dynamic> json) {
     return SessionPhase()
-      ..id = json['id'] as String? ?? ''
-      ..name = json['name'] as String? ?? ''
-      ..startTime = json['startTime'] != null
-          ? DateTime.parse(json['startTime'] as String)
-          : DateTime.now()
-      ..endTime = json['endTime'] != null
-          ? DateTime.parse(json['endTime'] as String)
-          : DateTime.now()
-      ..description = json['description'] as String?
-      ..orderIndex = json['orderIndex'] as int? ?? 0
-      ..type = PhaseType.values.firstWhere(
-        (e) => e.name == json['type'],
-        orElse: () => PhaseType.main,
-      )
-      ..exerciseIds = json['exerciseIds'] != null
-          ? List<String>.from(json['exerciseIds'] as List<dynamic>)
-          : []
-      ..createdAt = json['createdAt'] != null
-          ? DateTime.parse(json['createdAt'] as String)
-          : DateTime.now()
-      ..updatedAt = json['updatedAt'] != null
-          ? DateTime.parse(json['updatedAt'] as String)
-          : DateTime.now();
+      ..id = _parseString(json['id']) ?? ''
+      ..name = _parseString(json['name']) ?? ''
+      ..startTime = _parseDateTimeOrNow(_parseString(json['startTime']))
+      ..endTime = _parseDateTimeOrNow(_parseString(json['endTime']))
+      ..description = _parseString(json['description'])
+      ..orderIndex = _parseInt(json['orderIndex']) ?? 0
+      ..type = _parsePhaseType(_parseString(json['type']))
+      ..exerciseIds = _parseStringList(json['exerciseIds'])
+      ..createdAt = _parseDateTimeOrNow(_parseString(json['createdAt']))
+      ..updatedAt = _parseDateTimeOrNow(_parseString(json['updatedAt']));
+  }
+
+  // Helper methods for JSON parsing
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) {
+      return int.tryParse(value);
+    }
+    return null;
+  }
+
+  static PhaseType _parsePhaseType(String? typeString) {
+    if (typeString == null) return PhaseType.main;
+    return PhaseType.values.firstWhere(
+      (e) => e.name == typeString,
+      orElse: () => PhaseType.main,
+    );
+  }
+
+  static List<String> _parseStringList(dynamic value) {
+    if (value == null) return [];
+    if (value is List) {
+      return value.map((e) => _parseString(e) ?? '').where((s) => s.isNotEmpty).toList();
+    }
+    return [];
+  }
+
+  static DateTime _parseDateTimeOrNow(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return DateTime.now();
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return DateTime.now();
+    }
   }
   String id = '';
 

@@ -99,28 +99,67 @@ class PlayerAttendance {
   /// ```
   factory PlayerAttendance.fromJson(Map<String, dynamic> json) {
     return PlayerAttendance()
-      ..id = json['id'] as String? ?? ''
-      ..playerId = json['playerId'] as String? ?? ''
-      ..playerName = json['playerName'] as String? ?? ''
-      ..playerNumber = json['playerNumber'] as int? ?? 0
-      ..position = PlayerPosition.values.firstWhere(
-        (e) => e.name == json['position'],
-        orElse: () => PlayerPosition.V,
-      )
-      ..status = AttendanceStatus.values.firstWhere(
-        (e) => e.name == json['status'],
-        orElse: () => AttendanceStatus.unknown,
-      )
-      ..notes = json['notes'] as String?
-      ..arrivalTime = json['arrivalTime'] != null
-          ? DateTime.parse(json['arrivalTime'] as String)
-          : null
-      ..createdAt = json['createdAt'] != null
-          ? DateTime.parse(json['createdAt'] as String)
-          : DateTime.now()
-      ..updatedAt = json['updatedAt'] != null
-          ? DateTime.parse(json['updatedAt'] as String)
-          : DateTime.now();
+      ..id = _parseString(json['id']) ?? ''
+      ..playerId = _parseString(json['playerId']) ?? ''
+      ..playerName = _parseString(json['playerName']) ?? ''
+      ..playerNumber = _parseInt(json['playerNumber']) ?? 0
+      ..position = _parsePlayerPosition(_parseString(json['position']))
+      ..status = _parseAttendanceStatus(_parseString(json['status']))
+      ..notes = _parseString(json['notes'])
+      ..arrivalTime = _parseDateTime(_parseString(json['arrivalTime']))
+      ..createdAt = _parseDateTimeOrNow(_parseString(json['createdAt']))
+      ..updatedAt = _parseDateTimeOrNow(_parseString(json['updatedAt']));
+  }
+
+  // Helper methods for JSON parsing
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) {
+      return int.tryParse(value);
+    }
+    return null;
+  }
+
+  static PlayerPosition _parsePlayerPosition(String? positionString) {
+    if (positionString == null) return PlayerPosition.V;
+    return PlayerPosition.values.firstWhere(
+      (e) => e.name == positionString,
+      orElse: () => PlayerPosition.V,
+    );
+  }
+
+  static AttendanceStatus _parseAttendanceStatus(String? statusString) {
+    if (statusString == null) return AttendanceStatus.unknown;
+    return AttendanceStatus.values.firstWhere(
+      (e) => e.name == statusString,
+      orElse: () => AttendanceStatus.unknown,
+    );
+  }
+
+  static DateTime? _parseDateTime(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return null;
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static DateTime _parseDateTimeOrNow(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return DateTime.now();
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return DateTime.now();
+    }
   }
   String id = '';
 

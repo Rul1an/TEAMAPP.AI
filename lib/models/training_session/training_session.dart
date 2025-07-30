@@ -29,31 +29,31 @@ class TrainingSession {
 
   factory TrainingSession.fromJson(Map<String, dynamic> json) {
     return TrainingSession()
-      ..id = json['id'] as String? ?? ''
-      ..teamId = json['teamId'] as String? ?? ''
-      ..date = _parseDateTimeOrNow(json['date'] as String?)
-      ..trainingNumber = json['trainingNumber'] as int? ?? 1
-      ..type = _parseTrainingType(json['type'] as String?)
-      ..sessionObjective = json['sessionObjective'] as String?
-      ..teamFunction = json['teamFunction'] as String?
-      ..coachingAccent = json['coachingAccent'] as String?
-      ..technicalTacticalGoal = json['technicalTacticalGoal'] as String?
-      ..phasesJson = json['phasesJson'] as String?
-      ..warmupActivitiesJson = json['warmupActivitiesJson'] as String?
-      ..playerAttendanceJson = json['playerAttendanceJson'] as String?
-      ..expectedPlayers = json['expectedPlayers'] as int? ?? 16
-      ..actualPlayers = json['actualPlayers'] as int? ?? 0
-      ..notes = json['notes'] as String?
-      ..postSessionEvaluation = json['postSessionEvaluation'] as String?
-      ..periodizationPhaseId = json['periodizationPhaseId'] as String?
-      ..contentFocusJson = json['contentFocusJson'] as String?
-      ..targetIntensity = (json['targetIntensity'] as num?)?.toDouble()
-      ..startTime = _parseDateTime(json['startTime'] as String?)
-      ..endTime = _parseDateTime(json['endTime'] as String?)
-      ..durationMinutes = json['durationMinutes'] as int?
-      ..status = _parseSessionStatus(json['status'] as String?)
-      ..createdAt = _parseDateTimeOrNow(json['createdAt'] as String?)
-      ..updatedAt = _parseDateTimeOrNow(json['updatedAt'] as String?);
+      ..id = _parseString(json['id']) ?? ''
+      ..teamId = _parseString(json['teamId']) ?? ''
+      ..date = _parseDateTimeOrNow(_parseString(json['date']))
+      ..trainingNumber = _parseInt(json['trainingNumber']) ?? 1
+      ..type = _parseTrainingType(_parseString(json['type']))
+      ..sessionObjective = _parseString(json['sessionObjective'])
+      ..teamFunction = _parseString(json['teamFunction'])
+      ..coachingAccent = _parseString(json['coachingAccent'])
+      ..technicalTacticalGoal = _parseString(json['technicalTacticalGoal'])
+      ..phasesJson = _parseString(json['phasesJson'])
+      ..warmupActivitiesJson = _parseString(json['warmupActivitiesJson'])
+      ..playerAttendanceJson = _parseString(json['playerAttendanceJson'])
+      ..expectedPlayers = _parseInt(json['expectedPlayers']) ?? 16
+      ..actualPlayers = _parseInt(json['actualPlayers']) ?? 0
+      ..notes = _parseString(json['notes'])
+      ..postSessionEvaluation = _parseString(json['postSessionEvaluation'])
+      ..periodizationPhaseId = _parseString(json['periodizationPhaseId'])
+      ..contentFocusJson = _parseString(json['contentFocusJson'])
+      ..targetIntensity = _parseDouble(json['targetIntensity'])
+      ..startTime = _parseDateTime(_parseString(json['startTime']))
+      ..endTime = _parseDateTime(_parseString(json['endTime']))
+      ..durationMinutes = _parseInt(json['durationMinutes'])
+      ..status = _parseSessionStatus(_parseString(json['status']))
+      ..createdAt = _parseDateTimeOrNow(_parseString(json['createdAt']))
+      ..updatedAt = _parseDateTimeOrNow(_parseString(json['updatedAt']));
   }
   String id = '';
 
@@ -202,7 +202,34 @@ class TrainingSession {
   bool get isCompleted => status == SessionStatus.completed;
 
   // Helper methods for JSON parsing
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) {
+      return int.tryParse(value);
+    }
+    return null;
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      return double.tryParse(value);
+    }
+    return null;
+  }
+
   static TrainingType _parseTrainingType(String? typeString) {
+    if (typeString == null) return TrainingType.regularTraining;
     return TrainingType.values.firstWhere(
       (e) => e.name == typeString,
       orElse: () => TrainingType.regularTraining,
@@ -210,6 +237,7 @@ class TrainingSession {
   }
 
   static SessionStatus _parseSessionStatus(String? statusString) {
+    if (statusString == null) return SessionStatus.planned;
     return SessionStatus.values.firstWhere(
       (e) => e.name == statusString,
       orElse: () => SessionStatus.planned,
@@ -217,11 +245,21 @@ class TrainingSession {
   }
 
   static DateTime? _parseDateTime(String? dateString) {
-    return dateString != null ? DateTime.parse(dateString) : null;
+    if (dateString == null || dateString.isEmpty) return null;
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return null;
+    }
   }
 
   static DateTime _parseDateTimeOrNow(String? dateString) {
-    return dateString != null ? DateTime.parse(dateString) : DateTime.now();
+    if (dateString == null || dateString.isEmpty) return DateTime.now();
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return DateTime.now();
+    }
   }
 
   // JSON serialization
