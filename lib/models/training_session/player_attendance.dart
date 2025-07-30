@@ -161,6 +161,7 @@ class PlayerAttendance {
       return DateTime.now();
     }
   }
+
   String id = '';
 
   late String playerId;

@@ -89,6 +89,7 @@ class PerformanceRating {
       return DateTime.now();
     }
   }
+
   final String id;
   final String playerId;
   final String? matchId;

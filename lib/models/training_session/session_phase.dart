@@ -106,7 +106,10 @@ class SessionPhase {
   static List<String> _parseStringList(dynamic value) {
     if (value == null) return [];
     if (value is List) {
-      return value.map((e) => _parseString(e) ?? '').where((s) => s.isNotEmpty).toList();
+      return value
+          .map((e) => _parseString(e) ?? '')
+          .where((s) => s.isNotEmpty)
+          .toList();
     }
     return [];
   }
@@ -119,6 +122,7 @@ class SessionPhase {
       return DateTime.now();
     }
   }
+
   String id = '';
 
   late String name; // "training uitzetten", "bespreking", "evaluatie"

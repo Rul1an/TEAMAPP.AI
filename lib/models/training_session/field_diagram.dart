@@ -80,16 +80,6 @@ class FieldDiagram {
     return null;
   }
 
-  static double? _parseDouble(dynamic value) {
-    if (value == null) return null;
-    if (value is double) return value;
-    if (value is num) return value.toDouble();
-    if (value is String) {
-      return double.tryParse(value);
-    }
-    return null;
-  }
-
   static FieldType _parseFieldType(String? typeString) {
     if (typeString == null) return FieldType.halfField;
     return FieldType.values.firstWhere(
@@ -108,42 +98,43 @@ class FieldDiagram {
   static List<PlayerMarker> _parsePlayerMarkerList(dynamic value) {
     if (value is! List) return [];
     return value
-        .where((item) => item is Map<String, dynamic>)
-        .map((item) => PlayerMarker.fromJson(item as Map<String, dynamic>))
+        .whereType<Map<String, dynamic>>()
+        .map(PlayerMarker.fromJson)
         .toList();
   }
 
   static List<EquipmentMarker> _parseEquipmentMarkerList(dynamic value) {
     if (value is! List) return [];
     return value
-        .where((item) => item is Map<String, dynamic>)
-        .map((item) => EquipmentMarker.fromJson(item as Map<String, dynamic>))
+        .whereType<Map<String, dynamic>>()
+        .map(EquipmentMarker.fromJson)
         .toList();
   }
 
   static List<MovementLine> _parseMovementLineList(dynamic value) {
     if (value is! List) return [];
     return value
-        .where((item) => item is Map<String, dynamic>)
-        .map((item) => MovementLine.fromJson(item as Map<String, dynamic>))
+        .whereType<Map<String, dynamic>>()
+        .map(MovementLine.fromJson)
         .toList();
   }
 
   static List<AreaMarker> _parseAreaMarkerList(dynamic value) {
     if (value is! List) return [];
     return value
-        .where((item) => item is Map<String, dynamic>)
-        .map((item) => AreaMarker.fromJson(item as Map<String, dynamic>))
+        .whereType<Map<String, dynamic>>()
+        .map(AreaMarker.fromJson)
         .toList();
   }
 
   static List<TextLabel> _parseTextLabelList(dynamic value) {
     if (value is! List) return [];
     return value
-        .where((item) => item is Map<String, dynamic>)
-        .map((item) => TextLabel.fromJson(item as Map<String, dynamic>))
+        .whereType<Map<String, dynamic>>()
+        .map(TextLabel.fromJson)
         .toList();
   }
+
   final String id;
   final FieldType fieldType;
   final Dimensions fieldSize;
@@ -245,6 +236,7 @@ class PlayerMarker {
       orElse: () => PlayerType.neutral,
     );
   }
+
   final String id;
   final Position position;
   final PlayerType type;
@@ -311,6 +303,7 @@ class EquipmentMarker {
       orElse: () => EquipmentType.cone,
     );
   }
+
   final String id;
   final Position position;
   final EquipmentType type;
@@ -357,37 +350,78 @@ class MovementLine {
     // Handle legacy format with start/end
     if (json.containsKey('start') && json.containsKey('end')) {
       return MovementLine(
-        id: json['id'] as String? ?? '',
+        id: _parseString(json['id']) ?? '',
         points: [
-          Position.fromJson(json['start'] as Map<String, dynamic>),
-          Position.fromJson(json['end'] as Map<String, dynamic>),
+          _parsePosition(json['start']),
+          _parsePosition(json['end']),
         ],
-        type: LineType.values.firstWhere(
-          (e) => e.name == json['type'],
-          orElse: () => LineType.pass,
-        ),
-        color: json['color'] as String? ?? '#4CAF50',
-        label: json['label'] as String?,
+        type: _parseLineType(_parseString(json['type'])),
+        color: _parseString(json['color']) ?? '#4CAF50',
+        label: _parseString(json['label']),
       );
     }
 
     // New format with points array
     return MovementLine(
-      id: json['id'] as String? ?? '',
-      points: (json['points'] as List<dynamic>?)
-              ?.map((p) => Position.fromJson(p as Map<String, dynamic>))
-              .toList() ??
-          [],
-      type: LineType.values.firstWhere(
-        (e) => e.name == json['type'],
-        orElse: () => LineType.pass,
-      ),
-      color: json['color'] as String? ?? '#4CAF50',
-      strokeWidth: (json['strokeWidth'] as num?)?.toDouble() ?? 2.0,
-      hasArrowHead: json['hasArrowHead'] as bool? ?? true,
-      label: json['label'] as String?,
+      id: _parseString(json['id']) ?? '',
+      points: _parsePositionList(json['points']),
+      type: _parseLineType(_parseString(json['type'])),
+      color: _parseString(json['color']) ?? '#4CAF50',
+      strokeWidth: _parseDouble(json['strokeWidth']) ?? 2.0,
+      hasArrowHead: _parseBool(json['hasArrowHead']) ?? true,
+      label: _parseString(json['label']),
     );
   }
+
+  // Helper methods for JSON parsing
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      return double.tryParse(value);
+    }
+    return null;
+  }
+
+  static bool? _parseBool(dynamic value) {
+    if (value == null) return null;
+    if (value is bool) return value;
+    if (value is String) {
+      return value.toLowerCase() == 'true';
+    }
+    return null;
+  }
+
+  static Position _parsePosition(dynamic value) {
+    if (value is Map<String, dynamic>) {
+      return Position.fromJson(value);
+    }
+    return const Position(0.0, 0.0);
+  }
+
+  static LineType _parseLineType(String? typeString) {
+    if (typeString == null) return LineType.pass;
+    return LineType.values.firstWhere(
+      (e) => e.name == typeString,
+      orElse: () => LineType.pass,
+    );
+  }
+
+  static List<Position> _parsePositionList(dynamic value) {
+    if (value is! List) return [];
+    return value
+        .whereType<Map<String, dynamic>>()
+        .map(Position.fromJson)
+        .toList();
+  }
+
   final String id;
   final List<Position> points;
   final LineType type;
@@ -448,6 +482,7 @@ class AreaMarker {
     }
     return const Position(0.0, 0.0);
   }
+
   final String id;
   final Position topLeft;
   final Position bottomRight;
@@ -504,6 +539,7 @@ class TextLabel {
     }
     return const Position(0.0, 0.0);
   }
+
   final String id;
   final Position position;
   final String text;
