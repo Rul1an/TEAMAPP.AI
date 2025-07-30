@@ -16,7 +16,9 @@ import 'package:jo17_tactical_manager/config/supabase_config.dart';
 
 // Mock classes
 class MockSupabaseClient extends Mock implements SupabaseClient {}
+
 class MockGoTrueClient extends Mock implements GoTrueClient {}
+
 class MockSupabaseQueryBuilder extends Mock implements SupabaseQueryBuilder {}
 
 /// Performance tests for optimized repository implementations.
