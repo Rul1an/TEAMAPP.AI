@@ -11,8 +11,8 @@ import '../../models/video_tag.dart';
 import '../../providers/video_tag_repository_provider.dart';
 
 /// Provider for video tagging controller
-final videoTaggingControllerProvider =
-    StateNotifierProvider.family<VideoTaggingController, VideoTaggingState, String>(
+final videoTaggingControllerProvider = StateNotifierProvider.family<
+    VideoTaggingController, VideoTaggingState, String>(
   (ref, videoId) {
     final repository = ref.watch(videoTagRepositoryProvider);
     final controller = VideoTaggingController(repository);
@@ -60,7 +60,8 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(videoTaggingControllerProvider(widget.video.id));
-    final controller = ref.read(videoTaggingControllerProvider(widget.video.id).notifier);
+    final controller =
+        ref.read(videoTaggingControllerProvider(widget.video.id).notifier);
 
     return Card(
       child: Padding(
@@ -113,9 +114,10 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
     );
   }
 
-  Widget _buildTagForm(BuildContext context, VideoTaggingController controller) {
+  Widget _buildTagForm(
+      BuildContext context, VideoTaggingController controller) {
     return Card(
-      color: Theme.of(context).colorScheme.surfaceVariant,
+      color: Theme.of(context).colorScheme.surfaceContainerHighest,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -142,7 +144,8 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
                       _selectedTagType = selected ? tagType : null;
                     });
                   },
-                  backgroundColor: isSelected ? _getTagTypeColor(tagType) : null,
+                  backgroundColor:
+                      isSelected ? _getTagTypeColor(tagType) : null,
                 );
               }).toList(),
             ),
@@ -150,7 +153,8 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
             const SizedBox(height: 16),
 
             // Player selection (optional)
-            Text('Player (Optional):', style: Theme.of(context).textTheme.labelLarge),
+            Text('Player (Optional):',
+                style: Theme.of(context).textTheme.labelLarge),
             const SizedBox(height: 8),
             // TODO(players): Implement player selection dropdown
             TextField(
@@ -158,13 +162,15 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
                 hintText: 'Select player...',
                 border: OutlineInputBorder(),
               ),
-              onChanged: (value) => _selectedPlayerId = value.isEmpty ? null : value,
+              onChanged: (value) =>
+                  _selectedPlayerId = value.isEmpty ? null : value,
             ),
 
             const SizedBox(height: 16),
 
             // Notes
-            Text('Notes (Optional):', style: Theme.of(context).textTheme.labelLarge),
+            Text('Notes (Optional):',
+                style: Theme.of(context).textTheme.labelLarge),
             const SizedBox(height: 8),
             TextField(
               controller: _notesController,
@@ -181,12 +187,14 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
             Row(
               children: [
                 ElevatedButton(
-                  onPressed: _selectedTagType != null ? () => _createTag(controller) : null,
+                  onPressed: _selectedTagType != null
+                      ? () => _createTag(controller)
+                      : null,
                   child: const Text('Create Tag'),
                 ),
                 const SizedBox(width: 8),
                 TextButton(
-                  onPressed: () => _resetForm(),
+                  onPressed: _resetForm,
                   child: const Text('Clear'),
                 ),
               ],
@@ -197,7 +205,8 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
     );
   }
 
-  Widget _buildTagsList(BuildContext context, VideoTaggingState state, VideoTaggingController controller) {
+  Widget _buildTagsList(BuildContext context, VideoTaggingState state,
+      VideoTaggingController controller) {
     if (state.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -251,7 +260,8 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
     );
   }
 
-  Widget _buildTagItem(BuildContext context, VideoTag tag, VideoTaggingController controller) {
+  Widget _buildTagItem(
+      BuildContext context, VideoTag tag, VideoTaggingController controller) {
     final tagColor = _getTagTypeColor(tag.tagType);
 
     return Card(
@@ -272,7 +282,8 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
             Text('Time: ${_formatTime(tag.timestampSeconds)}'),
             if (tag.playerId != null) Text('Player: ${tag.playerId}'),
             if (tag.description != null && tag.description!.isNotEmpty)
-              Text('Notes: ${tag.description}', maxLines: 2, overflow: TextOverflow.ellipsis),
+              Text('Notes: ${tag.description}',
+                  maxLines: 2, overflow: TextOverflow.ellipsis),
           ],
         ),
         trailing: PopupMenuButton<String>(
@@ -305,13 +316,17 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
     );
   }
 
-  Widget _buildAnalyticsSummary(BuildContext context, VideoTagAnalytics analytics) {
+  Widget _buildAnalyticsSummary(
+      BuildContext context, VideoTagAnalytics analytics) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildAnalyticsStat(context, 'Total Tags', analytics.totalTags.toString()),
-        _buildAnalyticsStat(context, 'Types', analytics.tagsByType.length.toString()),
-        _buildAnalyticsStat(context, 'Tags/Min', analytics.averageTagsPerMinute.toStringAsFixed(1)),
+        _buildAnalyticsStat(
+            context, 'Total Tags', analytics.totalTags.toString()),
+        _buildAnalyticsStat(
+            context, 'Types', analytics.tagsByType.length.toString()),
+        _buildAnalyticsStat(context, 'Tags/Min',
+            analytics.averageTagsPerMinute.toStringAsFixed(1)),
       ],
     );
   }
@@ -321,7 +336,10 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
       children: [
         Text(
           value,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
         ),
         Text(
           label,
@@ -336,7 +354,7 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
 
     final request = CreateVideoTagRequest(
       videoId: widget.video.id,
-      organizationId: 'temp-org', // TODO: Get from context
+      organizationId: 'temp-org', // TODO(context): Get from context
       tagType: _selectedTagType!,
       timestampSeconds: widget.currentTime,
       description: _notesController.text.isEmpty ? null : _notesController.text,
@@ -362,7 +380,8 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
     _notesController.clear();
   }
 
-  void _handleTagAction(String action, VideoTag tag, VideoTaggingController controller) {
+  void _handleTagAction(
+      String action, VideoTag tag, VideoTaggingController controller) {
     switch (action) {
       case 'edit':
         // TODO(edit): Implement tag editing
@@ -376,12 +395,14 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
     }
   }
 
-  void _showDeleteConfirmation(VideoTag tag, VideoTaggingController controller) {
+  void _showDeleteConfirmation(
+      VideoTag tag, VideoTaggingController controller) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Tag'),
-        content: Text('Are you sure you want to delete this ${tag.tagTypeDisplayName} tag?'),
+        content: Text(
+            'Are you sure you want to delete this ${tag.tagTypeDisplayName} tag?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

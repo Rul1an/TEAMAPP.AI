@@ -26,7 +26,8 @@ class VideoTag with _$VideoTag {
 
   const VideoTag._();
 
-  factory VideoTag.fromJson(Map<String, dynamic> json) => _$VideoTagFromJson(json);
+  factory VideoTag.fromJson(Map<String, dynamic> json) =>
+      _$VideoTagFromJson(json);
 
   /// Create a placeholder tag for optimistic updates
   factory VideoTag.placeholder({
@@ -99,8 +100,8 @@ class VideoTag with _$VideoTag {
   bool get hasPlayerData {
     final playerIds = tagData['playerIds'] as List?;
     return tagData.containsKey('playerIds') &&
-           playerIds != null &&
-           playerIds.isNotEmpty;
+        playerIds != null &&
+        playerIds.isNotEmpty;
   }
 
   /// Get player names from tag data
@@ -147,7 +148,8 @@ class VideoTag with _$VideoTag {
   /// Backward compatibility getters
   VideoTagType get eventType => tagType; // Alias for backward compatibility
 
-  String? get playerId => tagData['playerId'] as String?; // Get player ID from tag data
+  String? get playerId =>
+      tagData['playerId'] as String?; // Get player ID from tag data
 
   String? get notes => description; // Alias for backward compatibility
 }

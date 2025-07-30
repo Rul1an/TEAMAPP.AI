@@ -26,7 +26,6 @@ class VideoTaggingState with _$VideoTaggingState {
   }) = _VideoTaggingState;
 }
 
-
 /// Controller for video tagging operations
 class VideoTaggingController extends StateNotifier<VideoTaggingState> {
   final VideoTagRepository _repository;
@@ -136,9 +135,7 @@ class VideoTaggingController extends StateNotifier<VideoTaggingState> {
         return false;
       },
       (_) {
-        final updatedTags = state.tags
-            .where((tag) => tag.id != tagId)
-            .toList();
+        final updatedTags = state.tags.where((tag) => tag.id != tagId).toList();
 
         final analytics = _calculateAnalytics(updatedTags);
         final hotspots = _generateHotspots(updatedTags);
@@ -147,7 +144,8 @@ class VideoTaggingController extends StateNotifier<VideoTaggingState> {
           tags: updatedTags,
           analytics: analytics,
           hotspots: hotspots,
-          selectedTagId: state.selectedTagId == tagId ? null : state.selectedTagId,
+          selectedTagId:
+              state.selectedTagId == tagId ? null : state.selectedTagId,
           error: null,
         );
         return true;
@@ -177,9 +175,11 @@ class VideoTaggingController extends StateNotifier<VideoTaggingState> {
 
   /// Get tags within a time range
   List<VideoTag> getTagsInTimeRange(double startTime, double endTime) {
-    return state.tags.where((tag) =>
-      tag.timestampSeconds >= startTime && tag.timestampSeconds <= endTime
-    ).toList();
+    return state.tags
+        .where((tag) =>
+            tag.timestampSeconds >= startTime &&
+            tag.timestampSeconds <= endTime)
+        .toList();
   }
 
   /// Calculate analytics for the current tags
@@ -210,8 +210,10 @@ class VideoTaggingController extends StateNotifier<VideoTaggingState> {
     }
 
     // Calculate tags per minute
-    final lastTimestamp = tags.map((t) => t.timestampSeconds).reduce((a, b) => a > b ? a : b);
-    final avgTagsPerMinute = lastTimestamp > 0 ? (tags.length / (lastTimestamp / 60)) : 0.0;
+    final lastTimestamp =
+        tags.map((t) => t.timestampSeconds).reduce((a, b) => a > b ? a : b);
+    final avgTagsPerMinute =
+        lastTimestamp > 0 ? (tags.length / (lastTimestamp / 60)) : 0.0;
 
     return VideoTagAnalytics(
       totalTags: tags.length,
@@ -232,7 +234,8 @@ class VideoTaggingController extends StateNotifier<VideoTaggingState> {
 
     // Group tags by time intervals
     for (final tag in tags) {
-      final intervalStart = (tag.timestampSeconds / hotspotInterval).floor() * hotspotInterval;
+      final intervalStart =
+          (tag.timestampSeconds / hotspotInterval).floor() * hotspotInterval;
       hotspotMap.putIfAbsent(intervalStart, () => []).add(tag);
     }
 
@@ -248,6 +251,7 @@ class VideoTaggingController extends StateNotifier<VideoTaggingState> {
         tagCount: intervalTags.length,
         dominantTagTypes: dominantTypes,
       );
-    }).toList()..sort((a, b) => a.startSeconds.compareTo(b.startSeconds));
+    }).toList()
+      ..sort((a, b) => a.startSeconds.compareTo(b.startSeconds));
   }
 }

@@ -46,9 +46,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
       }
 
       if (filter.tagTypes != null && filter.tagTypes!.isNotEmpty) {
-        final tagTypeValues = filter.tagTypes!
-            .map((type) => type.name)
-            .toList();
+        final tagTypeValues =
+            filter.tagTypes!.map((type) => type.name).toList();
         query = query.inFilter('tag_type', tagTypeValues);
       }
 
@@ -61,7 +60,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
       }
 
       if (filter.createdBefore != null) {
-        query = query.lte('created_at', filter.createdBefore!.toIso8601String());
+        query =
+            query.lte('created_at', filter.createdBefore!.toIso8601String());
       }
 
       if (filter.timestampStart != null) {
@@ -73,10 +73,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
       }
 
       if (filter.searchQuery != null && filter.searchQuery!.isNotEmpty) {
-        query = query.or(
-          'title.ilike.%${filter.searchQuery}%,'
-          'description.ilike.%${filter.searchQuery}%'
-        );
+        query = query.or('title.ilike.%${filter.searchQuery}%,'
+            'description.ilike.%${filter.searchQuery}%');
       }
 
       // Apply pagination and execute query
@@ -109,11 +107,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
         'created_at': DateTime.now().toIso8601String(),
       };
 
-      final response = await _supabase
-          .from('video_tags')
-          .insert(tagData)
-          .select()
-          .single();
+      final response =
+          await _supabase.from('video_tags').insert(tagData).select().single();
 
       final tag = VideoTag.fromJson(response);
       return Result.success(tag);
@@ -162,10 +157,7 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
   @override
   Future<Result<void>> deleteTag(String tagId) async {
     try {
-      await _supabase
-          .from('video_tags')
-          .delete()
-          .eq('id', tagId);
+      await _supabase.from('video_tags').delete().eq('id', tagId);
 
       return Result.success(null);
     } catch (e) {
@@ -199,9 +191,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
 
       // Get video duration for average calculation
       final videoDuration = await _getVideoDuration(videoId);
-      final averageTagsPerMinute = videoDuration > 0
-          ? (tags.length / (videoDuration / 60.0))
-          : 0.0;
+      final averageTagsPerMinute =
+          videoDuration > 0 ? (tags.length / (videoDuration / 60.0)) : 0.0;
 
       // Generate hotspots
       final hotspots = _generateHotspots(tags, videoDuration);
@@ -236,10 +227,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
 
       // Search in title and description
       if (searchQuery.isNotEmpty) {
-        query = query.or(
-          'title.ilike.%$searchQuery%,'
-          'description.ilike.%$searchQuery%'
-        );
+        query = query.or('title.ilike.%$searchQuery%,'
+            'description.ilike.%$searchQuery%');
       }
 
       // Filter by tag types
@@ -248,9 +237,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
         query = query.inFilter('tag_type', typeNames);
       }
 
-      final response = await query
-          .order('created_at', ascending: false)
-          .limit(limit);
+      final response =
+          await query.order('created_at', ascending: false).limit(limit);
 
       final tags = (response as List)
           .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
@@ -278,9 +266,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
         query = query.eq('created_by', createdBy);
       }
 
-      final response = await query
-          .order('created_at', ascending: false)
-          .limit(limit);
+      final response =
+          await query.order('created_at', ascending: false).limit(limit);
 
       final tags = (response as List)
           .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
@@ -297,22 +284,22 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
     List<CreateVideoTagRequest> requests,
   ) async {
     try {
-      final tagDataList = requests.map((request) => {
-        'video_id': request.videoId,
-        'organization_id': request.organizationId,
-        'tag_type': request.tagType.name,
-        'timestamp_seconds': request.timestampSeconds,
-        'title': request.title,
-        'description': request.description,
-        'tag_data': request.tagData,
-        'created_by': _supabase.auth.currentUser?.id,
-        'created_at': DateTime.now().toIso8601String(),
-      }).toList();
+      final tagDataList = requests
+          .map((request) => {
+                'video_id': request.videoId,
+                'organization_id': request.organizationId,
+                'tag_type': request.tagType.name,
+                'timestamp_seconds': request.timestampSeconds,
+                'title': request.title,
+                'description': request.description,
+                'tag_data': request.tagData,
+                'created_by': _supabase.auth.currentUser?.id,
+                'created_at': DateTime.now().toIso8601String(),
+              })
+          .toList();
 
-      final response = await _supabase
-          .from('video_tags')
-          .insert(tagDataList)
-          .select();
+      final response =
+          await _supabase.from('video_tags').insert(tagDataList).select();
 
       final tags = (response as List)
           .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
@@ -418,7 +405,8 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
       final segmentIndex = entry.key;
       final segmentTags = entry.value;
 
-      if (segmentTags.length >= 2) { // Minimum 2 tags for a hotspot
+      if (segmentTags.length >= 2) {
+        // Minimum 2 tags for a hotspot
         final startSeconds = segmentIndex * segmentDuration;
         final endSeconds = (segmentIndex + 1) * segmentDuration;
 

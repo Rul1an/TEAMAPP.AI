@@ -9,7 +9,8 @@ import '../repositories/supabase_video_repository.dart';
 
 // Low-level singletons -----------------------------------------------------
 
-final supabaseClientProvider = Provider<SupabaseClient>((_) => Supabase.instance.client);
+final supabaseClientProvider =
+    Provider<SupabaseClient>((_) => Supabase.instance.client);
 
 // Repository --------------------------------------------------------------
 
@@ -20,7 +21,8 @@ final videoRepositoryProvider = Provider<VideoRepository>((ref) {
 
 // Video data providers ----------------------------------------------------
 
-final videosProvider = FutureProvider.family<List<Video>, String>((ref, organizationId) async {
+final videosProvider =
+    FutureProvider.family<List<Video>, String>((ref, organizationId) async {
   final repo = ref.read(videoRepositoryProvider);
   final result = await repo.getVideos(organizationId: organizationId);
   return result.fold(
@@ -29,7 +31,8 @@ final videosProvider = FutureProvider.family<List<Video>, String>((ref, organiza
   );
 });
 
-final videoByIdProvider = FutureProvider.family<Video?, String>((ref, videoId) async {
+final videoByIdProvider =
+    FutureProvider.family<Video?, String>((ref, videoId) async {
   final repo = ref.read(videoRepositoryProvider);
   final result = await repo.getVideoById(videoId);
   return result.fold(
@@ -40,13 +43,14 @@ final videoByIdProvider = FutureProvider.family<Video?, String>((ref, videoId) a
 
 // Video state management --------------------------------------------------
 
-final videosNotifierProvider =
-    StateNotifierProvider.family<VideosNotifier, AsyncValue<List<Video>>, String>(
-  (ref, organizationId) => VideosNotifier(ref, organizationId),
+final videosNotifierProvider = StateNotifierProvider.family<VideosNotifier,
+    AsyncValue<List<Video>>, String>(
+  VideosNotifier.new,
 );
 
 class VideosNotifier extends StateNotifier<AsyncValue<List<Video>>> {
-  VideosNotifier(this._ref, this._organizationId) : super(const AsyncValue.loading()) {
+  VideosNotifier(this._ref, this._organizationId)
+      : super(const AsyncValue.loading()) {
     loadVideos();
   }
 
@@ -60,7 +64,7 @@ class VideosNotifier extends StateNotifier<AsyncValue<List<Video>>> {
     final result = await _repo.getVideos(organizationId: _organizationId);
     state = result.fold(
       (error) => AsyncValue.error(error, StackTrace.current),
-      (videos) => AsyncValue.data(videos),
+      AsyncValue.data,
     );
   }
 
@@ -105,7 +109,8 @@ class VideosNotifier extends StateNotifier<AsyncValue<List<Video>>> {
       (_) {
         // Remove video from current list
         final currentVideos = state.value ?? [];
-        final updatedVideos = currentVideos.where((v) => v.id != videoId).toList();
+        final updatedVideos =
+            currentVideos.where((v) => v.id != videoId).toList();
         state = AsyncValue.data(updatedVideos);
       },
     );

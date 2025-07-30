@@ -17,7 +17,8 @@ sealed class Result<T> {
   static Result<T> success<T>(T data) => Success(data);
 
   /// Factory constructor for failure
-  static Result<T> failure<T>(Exception error) => Failure(GenericFailure(error.toString()));
+  static Result<T> failure<T>(Exception error) =>
+      Failure(GenericFailure(error.toString()));
 
   R when<R>({
     required R Function(T data) success,
@@ -46,7 +47,9 @@ sealed class Result<T> {
   bool get isSuccess => this is Success<T>;
   bool get isFailure => this is Failure<T>;
   T? get dataOrNull => this is Success<T> ? (this as Success<T>).data : null;
-  T get value => this is Success<T> ? (this as Success<T>).data : throw Exception('Called value on Failure');
+  T get value => this is Success<T>
+      ? (this as Success<T>).data
+      : throw Exception('Called value on Failure');
 
   AppFailure? get errorOrNull =>
       this is Failure<T> ? (this as Failure<T>).error : null;

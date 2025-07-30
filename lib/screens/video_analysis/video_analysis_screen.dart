@@ -12,7 +12,8 @@ import '../../widgets/video/video_player_widget.dart';
 import '../../widgets/video/video_tagging_widget.dart';
 
 /// Provider for video data
-final videoProvider = FutureProvider.family<Video, String>((ref, videoId) async {
+final videoProvider =
+    FutureProvider.family<Video, String>((ref, videoId) async {
   final repository = ref.watch(videoRepositoryProvider);
   final result = await repository.getVideoById(videoId);
 
@@ -34,7 +35,8 @@ class VideoAnalysisScreen extends ConsumerStatefulWidget {
   static const routeName = '/video-analysis';
 
   @override
-  ConsumerState<VideoAnalysisScreen> createState() => _VideoAnalysisScreenState();
+  ConsumerState<VideoAnalysisScreen> createState() =>
+      _VideoAnalysisScreenState();
 }
 
 class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
@@ -67,7 +69,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
           IconButton(
             icon: Icon(_isTaggingMode ? Icons.videocam : Icons.label),
             onPressed: () => setState(() => _isTaggingMode = !_isTaggingMode),
-            tooltip: _isTaggingMode ? 'Exit Tagging Mode' : 'Enter Tagging Mode',
+            tooltip:
+                _isTaggingMode ? 'Exit Tagging Mode' : 'Enter Tagging Mode',
           ),
           PopupMenuButton<String>(
             onSelected: _handleMenuAction,
@@ -117,7 +120,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
       body: videoAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => _buildErrorView(error),
-        data: (video) => _buildVideoAnalysisView(video),
+        data: _buildVideoAnalysisView,
       ),
     );
   }
@@ -160,7 +163,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
             children: [
               VideoPlayerWidget(
                 video: video,
-                onTimeUpdate: (time) => setState(() => _currentVideoTime = time),
+                onTimeUpdate: (time) =>
+                    setState(() => _currentVideoTime = time),
                 showControls: true,
               ),
 
@@ -170,19 +174,24 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   top: 16,
                   right: 16,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.8),
+                      color: Colors.red.withValues(alpha: 0.8),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.fiber_manual_record, color: Colors.white, size: 16),
+                        Icon(Icons.fiber_manual_record,
+                            color: Colors.white, size: 16),
                         SizedBox(width: 4),
                         Text(
                           'TAGGING MODE',
-                          style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -229,7 +238,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
               children: [
                 // Hotspots
                 ...taggingState.hotspots.map((hotspot) {
-                  final position = (hotspot.startSeconds / (video.durationSeconds?.toDouble() ?? 1.0)) *
+                  final position = (hotspot.startSeconds /
+                          (video.durationSeconds.toDouble() ?? 1.0)) *
                       MediaQuery.of(context).size.width;
 
                   return Positioned(
@@ -247,7 +257,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
 
                 // Current position indicator
                 Positioned(
-                  left: (_currentVideoTime / (video.durationSeconds?.toDouble() ?? 1.0)) *
+                  left: (_currentVideoTime /
+                          (video.durationSeconds.toDouble() ?? 1.0)) *
                       MediaQuery.of(context).size.width,
                   child: Container(
                     width: 2,
@@ -298,10 +309,13 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   ),
                   const SizedBox(height: 16),
                   _buildInfoRow('Title', video.title),
-                  _buildInfoRow('Duration', _formatTime((video.durationSeconds ?? 0).toDouble())),
-                  _buildInfoRow('Size', _formatFileSize(video.fileSizeBytes ?? 0)),
+                  _buildInfoRow('Duration',
+                      _formatTime((video.durationSeconds ?? 0).toDouble())),
+                  _buildInfoRow(
+                      'Size', _formatFileSize(video.fileSizeBytes ?? 0)),
                   _buildInfoRow('Status', video.status.name.toUpperCase()),
-                  if (video.description != null && video.description!.isNotEmpty)
+                  if (video.description != null &&
+                      video.description!.isNotEmpty)
                     _buildInfoRow('Description', video.description!),
                 ],
               ),
@@ -339,7 +353,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                       _buildActionChip(
                         'Jump to End',
                         Icons.skip_next,
-                        () => _jumpToTime(video.durationSeconds?.toDouble() ?? 0.0),
+                        () => _jumpToTime(
+                            video.durationSeconds.toDouble() ?? 0.0),
                       ),
                       _buildActionChip(
                         'Rewind 10s',
@@ -389,7 +404,6 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
-
           if (taggingState.analytics != null) ...[
             _buildAnalyticsCards(taggingState.analytics!),
             const SizedBox(height: 16),
@@ -451,7 +465,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Icon(Icons.label, size: 32, color: Theme.of(context).primaryColor),
+                  Icon(Icons.label,
+                      size: 32, color: Theme.of(context).primaryColor),
                   const SizedBox(height: 8),
                   Text(
                     analytics.totalTags.toString(),
@@ -470,7 +485,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Icon(Icons.event, size: 32, color: Theme.of(context).primaryColor),
+                  Icon(Icons.event,
+                      size: 32, color: Theme.of(context).primaryColor),
                   const SizedBox(height: 8),
                   Text(
                     analytics.tagsByType.length.toString(),
@@ -489,7 +505,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Icon(Icons.speed, size: 32, color: Theme.of(context).primaryColor),
+                  Icon(Icons.speed,
+                      size: 32, color: Theme.of(context).primaryColor),
                   const SizedBox(height: 8),
                   Text(
                     analytics.averageTagsPerMinute.toStringAsFixed(1),
@@ -606,7 +623,9 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
   String _formatFileSize(int bytes) {
     if (bytes < 1024) return '$bytes B';
     if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
-    if (bytes < 1024 * 1024 * 1024) return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+    if (bytes < 1024 * 1024 * 1024) {
+      return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+    }
     return '${(bytes / (1024 * 1024 * 1024)).toStringAsFixed(1)} GB';
   }
 }

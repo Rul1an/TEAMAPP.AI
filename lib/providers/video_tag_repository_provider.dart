@@ -16,7 +16,8 @@ final videoTagRepositoryProvider = Provider<VideoTagRepository>((ref) {
 
 // Video tag data providers -----------------------------------------------
 
-final videoTagsProvider = FutureProvider.family<List<VideoTag>, String>((ref, videoId) async {
+final videoTagsProvider =
+    FutureProvider.family<List<VideoTag>, String>((ref, videoId) async {
   final repo = ref.read(videoTagRepositoryProvider);
   final result = await repo.getTagsForVideo(videoId);
   return result.fold(
@@ -25,7 +26,8 @@ final videoTagsProvider = FutureProvider.family<List<VideoTag>, String>((ref, vi
   );
 });
 
-final videoTagsByFilterProvider = FutureProvider.family<List<VideoTag>, VideoTagFilter>((ref, filter) async {
+final videoTagsByFilterProvider =
+    FutureProvider.family<List<VideoTag>, VideoTagFilter>((ref, filter) async {
   final repo = ref.read(videoTagRepositoryProvider);
   final result = await repo.getTags(filter);
   return result.fold(
@@ -34,7 +36,8 @@ final videoTagsByFilterProvider = FutureProvider.family<List<VideoTag>, VideoTag
   );
 });
 
-final videoTagAnalyticsProvider = FutureProvider.family<VideoTagAnalytics, String>((ref, videoId) async {
+final videoTagAnalyticsProvider =
+    FutureProvider.family<VideoTagAnalytics, String>((ref, videoId) async {
   final repo = ref.read(videoTagRepositoryProvider);
   final result = await repo.getTagAnalytics(videoId);
   return result.fold(
@@ -45,13 +48,14 @@ final videoTagAnalyticsProvider = FutureProvider.family<VideoTagAnalytics, Strin
 
 // Video tag state management ---------------------------------------------
 
-final videoTagsNotifierProvider =
-    StateNotifierProvider.family<VideoTagsNotifier, AsyncValue<List<VideoTag>>, String>(
-  (ref, videoId) => VideoTagsNotifier(ref, videoId),
+final videoTagsNotifierProvider = StateNotifierProvider.family<
+    VideoTagsNotifier, AsyncValue<List<VideoTag>>, String>(
+  VideoTagsNotifier.new,
 );
 
 class VideoTagsNotifier extends StateNotifier<AsyncValue<List<VideoTag>>> {
-  VideoTagsNotifier(this._ref, this._videoId) : super(const AsyncValue.loading()) {
+  VideoTagsNotifier(this._ref, this._videoId)
+      : super(const AsyncValue.loading()) {
     loadTags();
   }
 
@@ -65,7 +69,7 @@ class VideoTagsNotifier extends StateNotifier<AsyncValue<List<VideoTag>>> {
     final result = await _repo.getTagsForVideo(_videoId);
     state = result.fold(
       (error) => AsyncValue.error(error, StackTrace.current),
-      (tags) => AsyncValue.data(tags),
+      AsyncValue.data,
     );
   }
 
@@ -119,18 +123,20 @@ class VideoTagsNotifier extends StateNotifier<AsyncValue<List<VideoTag>>> {
 
   Future<void> bulkUpdateTags(List<VideoTag> tags) async {
     final result = await _repo.createBulkTags(
-      tags.map((tag) => CreateVideoTagRequest(
-        videoId: tag.videoId,
-        organizationId: tag.organizationId,
-        tagType: tag.tagType,
-        timestampSeconds: tag.timestampSeconds,
-        title: tag.title,
-        description: tag.description,
-        tagData: {
-          ...tag.tagData,
-          if (tag.playerId != null) 'playerId': tag.playerId,
-        },
-      )).toList(),
+      tags
+          .map((tag) => CreateVideoTagRequest(
+                videoId: tag.videoId,
+                organizationId: tag.organizationId,
+                tagType: tag.tagType,
+                timestampSeconds: tag.timestampSeconds,
+                title: tag.title,
+                description: tag.description,
+                tagData: {
+                  ...tag.tagData,
+                  if (tag.playerId != null) 'playerId': tag.playerId,
+                },
+              ))
+          .toList(),
     );
     result.fold(
       (error) {
@@ -150,9 +156,10 @@ class VideoTagsNotifier extends StateNotifier<AsyncValue<List<VideoTag>>> {
 
   List<VideoTag> getTagsInTimeRange(double startSeconds, double endSeconds) {
     final tags = state.value ?? [];
-    return tags.where((tag) =>
-      tag.timestampSeconds >= startSeconds &&
-      tag.timestampSeconds <= endSeconds
-    ).toList();
+    return tags
+        .where((tag) =>
+            tag.timestampSeconds >= startSeconds &&
+            tag.timestampSeconds <= endSeconds)
+        .toList();
   }
 }
