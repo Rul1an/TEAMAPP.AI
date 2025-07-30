@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import '../../../../models/annual_planning/morphocycle.dart';
 import '../../../../models/training_session/training_exercise.dart';
+import '../../../../providers/exercise_repository_provider.dart';
 import '../exercise_library_controller.dart';
 
 /// Displays the tab content for the Exercise Library (Recommended, Intensity,
@@ -30,19 +31,43 @@ class ExerciseTabView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(exerciseLibraryControllerProvider.notifier);
 
-    // FIXED: Get exercises from the exercise library service directly
-    final allExercises =
-        <TrainingExercise>[]; // TODO(exercise-library): Connect to exercise library service
-    final exercises = controller.getFilteredExercises(allExercises);
+    // Database integration: Get exercises from Supabase
+    // TODO(auth): Get organization ID from current user context
+    const organizationId = 'demo-org-id'; // Temporary hardcoded org ID
+    final exercisesAsync = ref.watch(exercisesProvider(organizationId));
 
-    return TabBarView(
-      controller: tabController,
-      children: [
-        _buildRecommendedTab(context, exercises),
-        _buildIntensityTab(context, exercises),
-        _buildFocusTab(context, exercises),
-        _buildAllTab(context, exercises),
-      ],
+    return exercisesAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error, size: 48, color: Colors.red),
+            const SizedBox(height: 16),
+            Text('Error loading exercises: $error'),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => ref.invalidate(exercisesProvider),
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      ),
+      data: (allExercises) {
+        final exercises = controller.getFilteredExercises(
+          allExercises.cast<TrainingExercise>(),
+        );
+
+        return TabBarView(
+          controller: tabController,
+          children: [
+            _buildRecommendedTab(context, exercises),
+            _buildIntensityTab(context, exercises),
+            _buildFocusTab(context, exercises),
+            _buildAllTab(context, exercises),
+          ],
+        );
+      },
     );
   }
 
