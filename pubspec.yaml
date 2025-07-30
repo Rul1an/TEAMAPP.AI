@@ -78,7 +78,13 @@ dependencies:
 
   # Networking
   http: ^0.13.6
-  video_player: ^2.8.1
+
+  # Video Core Dependencies (Phase 1 Implementation)
+  video_player: ^2.8.6
+  ffmpeg_kit_flutter: ^6.0.3
+  chewie: ^1.7.5  # Enhanced video controls
+  wakelock_plus: ^1.2.5  # Prevent screen sleep
+  flutter_cache_manager: ^3.3.1
 
   # Analytics & Data (duplicates removed)
 
@@ -99,7 +105,7 @@ dev_dependencies:
 
   import_sorter: ^4.6.0
   build_runner: ^2.4.9
-  riverpod_generator: ^2.4.0
+  riverpod_generator: ^2.6.1  # Re-enabled with Phase 1 solution
   shared_preferences: ^2.2.2
 
   # Code generation
@@ -116,3 +122,7 @@ flutter:
 
 dependency_overrides:
   file: 7.0.1
+  # Phase 1: Conservative Approach - Riverpod Generator + Custom Lint Resolution
+  analyzer_plugin: ^0.13.1  # Critical fix for publiclyExporting typo
+  analyzer: ^6.7.0          # Compatible with custom_lint_core
+  custom_lint_core: 0.6.3   # Pin problematic version

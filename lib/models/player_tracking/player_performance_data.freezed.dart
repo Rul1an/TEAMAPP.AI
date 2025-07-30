@@ -48,8 +48,12 @@ mixin _$PlayerPerformanceData {
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
 
+  /// Serializes this PlayerPerformanceData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PlayerPerformanceDataCopyWith<PlayerPerformanceData> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -99,6 +103,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -187,6 +193,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PhysicalMetricsCopyWith<$Res>? get physicalMetrics {
@@ -199,6 +207,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TechnicalMetricsCopyWith<$Res>? get technicalMetrics {
@@ -211,6 +221,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TacticalMetricsCopyWith<$Res>? get tacticalMetrics {
@@ -223,6 +235,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $MentalMetricsCopyWith<$Res>? get mentalMetrics {
@@ -235,6 +249,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $MatchMetricsCopyWith<$Res>? get matchMetrics {
@@ -247,6 +263,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TrainingLoadMetricsCopyWith<$Res>? get trainingLoad {
@@ -259,6 +277,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $WellnessMetricsCopyWith<$Res>? get wellness {
@@ -271,6 +291,8 @@ class _$PlayerPerformanceDataCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CoachEvaluationCopyWith<$Res>? get coachEvaluation {
@@ -338,6 +360,8 @@ class __$$PlayerPerformanceDataImplCopyWithImpl<$Res>
       $Res Function(_$PlayerPerformanceDataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -544,7 +568,7 @@ class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
             (identical(other.notes, notes) || other.notes == notes));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -565,7 +589,9 @@ class _$PlayerPerformanceDataImpl implements _PlayerPerformanceData {
       updatedAt,
       notes);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerPerformanceDataImplCopyWith<_$PlayerPerformanceDataImpl>
@@ -609,34 +635,37 @@ abstract class _PlayerPerformanceData implements PlayerPerformanceData {
   @override
   DateTime get date;
   @override
-  PerformanceType get type;
-  @override // Metadata
-  DateTime get createdAt;
-  @override // training, match, test
+  PerformanceType get type; // Metadata
+  @override
+  DateTime get createdAt; // training, match, test
 // Physical Performance Metrics
-  PhysicalMetrics? get physicalMetrics;
-  @override // Technical Performance Metrics
-  TechnicalMetrics? get technicalMetrics;
-  @override // Tactical Performance Metrics
-  TacticalMetrics? get tacticalMetrics;
-  @override // Mental/Psychological Metrics
-  MentalMetrics? get mentalMetrics;
-  @override // Match Specific Metrics
-  MatchMetrics? get matchMetrics;
-  @override // Training Load & Recovery
-  TrainingLoadMetrics? get trainingLoad;
-  @override // Wellness & Health
-  WellnessMetrics? get wellness;
-  @override // Coach Evaluation
-  CoachEvaluation? get coachEvaluation;
-  @override // AI-Generated Insights
+  @override
+  PhysicalMetrics? get physicalMetrics; // Technical Performance Metrics
+  @override
+  TechnicalMetrics? get technicalMetrics; // Tactical Performance Metrics
+  @override
+  TacticalMetrics? get tacticalMetrics; // Mental/Psychological Metrics
+  @override
+  MentalMetrics? get mentalMetrics; // Match Specific Metrics
+  @override
+  MatchMetrics? get matchMetrics; // Training Load & Recovery
+  @override
+  TrainingLoadMetrics? get trainingLoad; // Wellness & Health
+  @override
+  WellnessMetrics? get wellness; // Coach Evaluation
+  @override
+  CoachEvaluation? get coachEvaluation; // AI-Generated Insights
+  @override
   List<PerformanceInsight>? get insights;
   @override
   DateTime? get updatedAt;
   @override
   String? get notes;
+
+  /// Create a copy of PlayerPerformanceData
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerPerformanceDataImplCopyWith<_$PlayerPerformanceDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -686,8 +715,12 @@ mixin _$PhysicalMetrics {
   double? get sleepQuality => throw _privateConstructorUsedError; // 0-10
   int? get sleepHours => throw _privateConstructorUsedError;
 
+  /// Serializes this PhysicalMetrics to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PhysicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PhysicalMetricsCopyWith<PhysicalMetrics> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -735,6 +768,8 @@ class _$PhysicalMetricsCopyWithImpl<$Res, $Val extends PhysicalMetrics>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PhysicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -907,6 +942,8 @@ class __$$PhysicalMetricsImplCopyWithImpl<$Res>
       _$PhysicalMetricsImpl _value, $Res Function(_$PhysicalMetricsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PhysicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1204,7 +1241,7 @@ class _$PhysicalMetricsImpl implements _PhysicalMetrics {
                 other.sleepHours == sleepHours));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -1234,7 +1271,9 @@ class _$PhysicalMetricsImpl implements _PhysicalMetrics {
         sleepHours
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PhysicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PhysicalMetricsImplCopyWith<_$PhysicalMetricsImpl> get copyWith =>
@@ -1279,61 +1318,65 @@ abstract class _PhysicalMetrics implements PhysicalMetrics {
   factory _PhysicalMetrics.fromJson(Map<String, dynamic> json) =
       _$PhysicalMetricsImpl.fromJson;
 
-  @override // Distance & Speed
-  double? get totalDistance;
-  @override // meters
-  double? get highSpeedRunning;
-  @override // meters >19.8 km/h
-  double? get sprints;
-  @override // count >25.2 km/h
-  double? get maxSpeed;
-  @override // km/h
-  double? get averageSpeed;
-  @override // km/h
-// Acceleration & Deceleration
-  int? get accelerations;
-  @override // count >3 m/s²
-  int? get decelerations;
-  @override // count <-3 m/s²
-// Heart Rate
-  int? get maxHeartRate;
-  @override // bpm
-  int? get averageHeartRate;
-  @override // bpm
-  int? get timeInZone1;
-  @override // seconds (50-60% max HR)
-  int? get timeInZone2;
-  @override // seconds (60-70% max HR)
-  int? get timeInZone3;
-  @override // seconds (70-80% max HR)
-  int? get timeInZone4;
-  @override // seconds (80-90% max HR)
-  int? get timeInZone5;
-  @override // seconds (90-100% max HR)
-// Power & Explosiveness
-  double? get jumpHeight;
-  @override // cm
-  double? get sprintTime10m;
-  @override // seconds
-  double? get sprintTime30m;
-  @override // seconds
-  double? get agility505;
-  @override // seconds
-// Endurance
-  double? get yoyoTestDistance;
-  @override // meters
-  double? get vo2Max;
-  @override // ml/kg/min
-// Recovery Metrics
-  double? get hrvScore;
-  @override // Heart Rate Variability
-  int? get restingHeartRate;
-  @override // bpm
-  double? get sleepQuality;
-  @override // 0-10
-  int? get sleepHours;
+// Distance & Speed
   @override
-  @JsonKey(ignore: true)
+  double? get totalDistance; // meters
+  @override
+  double? get highSpeedRunning; // meters >19.8 km/h
+  @override
+  double? get sprints; // count >25.2 km/h
+  @override
+  double? get maxSpeed; // km/h
+  @override
+  double? get averageSpeed; // km/h
+// Acceleration & Deceleration
+  @override
+  int? get accelerations; // count >3 m/s²
+  @override
+  int? get decelerations; // count <-3 m/s²
+// Heart Rate
+  @override
+  int? get maxHeartRate; // bpm
+  @override
+  int? get averageHeartRate; // bpm
+  @override
+  int? get timeInZone1; // seconds (50-60% max HR)
+  @override
+  int? get timeInZone2; // seconds (60-70% max HR)
+  @override
+  int? get timeInZone3; // seconds (70-80% max HR)
+  @override
+  int? get timeInZone4; // seconds (80-90% max HR)
+  @override
+  int? get timeInZone5; // seconds (90-100% max HR)
+// Power & Explosiveness
+  @override
+  double? get jumpHeight; // cm
+  @override
+  double? get sprintTime10m; // seconds
+  @override
+  double? get sprintTime30m; // seconds
+  @override
+  double? get agility505; // seconds
+// Endurance
+  @override
+  double? get yoyoTestDistance; // meters
+  @override
+  double? get vo2Max; // ml/kg/min
+// Recovery Metrics
+  @override
+  double? get hrvScore; // Heart Rate Variability
+  @override
+  int? get restingHeartRate; // bpm
+  @override
+  double? get sleepQuality; // 0-10
+  @override
+  int? get sleepHours;
+
+  /// Create a copy of PhysicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PhysicalMetricsImplCopyWith<_$PhysicalMetricsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1379,8 +1422,12 @@ mixin _$TechnicalMetrics {
   int? get savePercentage => throw _privateConstructorUsedError;
   int? get cleanSheets => throw _privateConstructorUsedError;
 
+  /// Serializes this TechnicalMetrics to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TechnicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TechnicalMetricsCopyWith<TechnicalMetrics> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1430,6 +1477,8 @@ class _$TechnicalMetricsCopyWithImpl<$Res, $Val extends TechnicalMetrics>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TechnicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1614,6 +1663,8 @@ class __$$TechnicalMetricsImplCopyWithImpl<$Res>
       $Res Function(_$TechnicalMetricsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TechnicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1907,7 +1958,7 @@ class _$TechnicalMetricsImpl implements _TechnicalMetrics {
                 other.cleanSheets == cleanSheets));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -1939,7 +1990,9 @@ class _$TechnicalMetricsImpl implements _TechnicalMetrics {
         cleanSheets
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TechnicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TechnicalMetricsImplCopyWith<_$TechnicalMetricsImpl> get copyWith =>
@@ -1986,41 +2039,42 @@ abstract class _TechnicalMetrics implements TechnicalMetrics {
   factory _TechnicalMetrics.fromJson(Map<String, dynamic> json) =
       _$TechnicalMetricsImpl.fromJson;
 
-  @override // Ball Control
-  int? get touches;
-  @override // total touches
-  int? get firstTouchSuccess;
-  @override // successful first touches
-  int? get firstTouchTotal;
-  @override // total first touches
+// Ball Control
+  @override
+  int? get touches; // total touches
+  @override
+  int? get firstTouchSuccess; // successful first touches
+  @override
+  int? get firstTouchTotal; // total first touches
 // Passing
+  @override
   int? get passesCompleted;
   @override
   int? get passesAttempted;
   @override
-  int? get keyPasses;
-  @override // passes leading to shot
+  int? get keyPasses; // passes leading to shot
+  @override
   int? get throughBalls;
   @override
   int? get longBallsCompleted;
   @override
-  int? get longBallsAttempted;
-  @override // Dribbling
+  int? get longBallsAttempted; // Dribbling
+  @override
   int? get dribblesCompleted;
   @override
   int? get dribblesAttempted;
   @override
-  int? get nutmegs;
-  @override // Shooting
+  int? get nutmegs; // Shooting
+  @override
   int? get shots;
   @override
   int? get shotsOnTarget;
   @override
   int? get goals;
   @override
-  double? get xG;
-  @override // expected goals
+  double? get xG; // expected goals
 // Defending
+  @override
   int? get tackles;
   @override
   int? get tacklesWon;
@@ -2033,15 +2087,18 @@ abstract class _TechnicalMetrics implements TechnicalMetrics {
   @override
   int? get aerialDuelsWon;
   @override
-  int? get aerialDuelsTotal;
-  @override // Goalkeeping (if applicable)
+  int? get aerialDuelsTotal; // Goalkeeping (if applicable)
+  @override
   int? get saves;
   @override
   int? get savePercentage;
   @override
   int? get cleanSheets;
+
+  /// Create a copy of TechnicalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TechnicalMetricsImplCopyWith<_$TechnicalMetricsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2079,8 +2136,12 @@ mixin _$TacticalMetrics {
   int? get recoveryRuns => throw _privateConstructorUsedError;
   double? get transitionSpeed => throw _privateConstructorUsedError;
 
+  /// Serializes this TacticalMetrics to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TacticalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TacticalMetricsCopyWith<TacticalMetrics> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2119,6 +2180,8 @@ class _$TacticalMetricsCopyWithImpl<$Res, $Val extends TacticalMetrics>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TacticalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2237,6 +2300,8 @@ class __$$TacticalMetricsImplCopyWithImpl<$Res>
       _$TacticalMetricsImpl _value, $Res Function(_$TacticalMetricsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TacticalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2429,7 +2494,7 @@ class _$TacticalMetricsImpl implements _TacticalMetrics {
                 other.transitionSpeed == transitionSpeed));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -2449,7 +2514,9 @@ class _$TacticalMetricsImpl implements _TacticalMetrics {
       recoveryRuns,
       transitionSpeed);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TacticalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TacticalMetricsImplCopyWith<_$TacticalMetricsImpl> get copyWith =>
@@ -2485,41 +2552,45 @@ abstract class _TacticalMetrics implements TacticalMetrics {
   factory _TacticalMetrics.fromJson(Map<String, dynamic> json) =
       _$TacticalMetricsImpl.fromJson;
 
-  @override // Positioning
-  double? get averagePositionX;
-  @override // field percentage 0-100
-  double? get averagePositionY;
-  @override // field percentage 0-100
-  double? get heatmapCoverage;
-  @override // percentage of field covered
+// Positioning
+  @override
+  double? get averagePositionX; // field percentage 0-100
+  @override
+  double? get averagePositionY; // field percentage 0-100
+  @override
+  double? get heatmapCoverage; // percentage of field covered
 // Team Play
+  @override
   int? get combinationPlays;
   @override
   int? get supportRuns;
   @override
   int? get defensiveActions;
   @override
-  double? get pressingIntensity;
-  @override // 0-10
+  double? get pressingIntensity; // 0-10
 // Decision Making
-  double? get decisionAccuracy;
-  @override // percentage
+  @override
+  double? get decisionAccuracy; // percentage
+  @override
   int? get correctDecisions;
   @override
-  int? get poorDecisions;
-  @override // Formation Discipline
-  double? get positionAdherence;
-  @override // percentage
-  double? get compactness;
-  @override // team shape metric
+  int? get poorDecisions; // Formation Discipline
+  @override
+  double? get positionAdherence; // percentage
+  @override
+  double? get compactness; // team shape metric
 // Transition Play
+  @override
   int? get counterAttacks;
   @override
   int? get recoveryRuns;
   @override
   double? get transitionSpeed;
+
+  /// Create a copy of TacticalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TacticalMetricsImplCopyWith<_$TacticalMetricsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2548,8 +2619,12 @@ mixin _$MentalMetrics {
   double? get learningRate => throw _privateConstructorUsedError; // 0-10
   double? get adaptability => throw _privateConstructorUsedError;
 
+  /// Serializes this MentalMetrics to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MentalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MentalMetricsCopyWith<MentalMetrics> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2586,6 +2661,8 @@ class _$MentalMetricsCopyWithImpl<$Res, $Val extends MentalMetrics>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MentalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2692,6 +2769,8 @@ class __$$MentalMetricsImplCopyWithImpl<$Res>
       _$MentalMetricsImpl _value, $Res Function(_$MentalMetricsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MentalMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2866,7 +2945,7 @@ class _$MentalMetricsImpl implements _MentalMetrics {
                 other.adaptability == adaptability));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -2884,7 +2963,9 @@ class _$MentalMetricsImpl implements _MentalMetrics {
       learningRate,
       adaptability);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MentalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MentalMetricsImplCopyWith<_$MentalMetricsImpl> get copyWith =>
@@ -2917,36 +2998,40 @@ abstract class _MentalMetrics implements MentalMetrics {
   factory _MentalMetrics.fromJson(Map<String, dynamic> json) =
       _$MentalMetricsImpl.fromJson;
 
-  @override // Self Assessment
-  double? get confidence;
-  @override // 0-10
-  double? get motivation;
-  @override // 0-10
-  double? get focus;
-  @override // 0-10
-  double? get stressLevel;
-  @override // 0-10
-// Coach Assessment
-  double? get leadership;
-  @override // 0-10
-  double? get communication;
-  @override // 0-10
-  double? get workRate;
-  @override // 0-10
-  double? get coachability;
-  @override // 0-10
-  double? get teamwork;
-  @override // 0-10
-// Performance Under Pressure
-  double? get pressureHandling;
-  @override // 0-10
-  int? get mistakesUnderPressure;
-  @override // Learning & Development
-  double? get learningRate;
-  @override // 0-10
-  double? get adaptability;
+// Self Assessment
   @override
-  @JsonKey(ignore: true)
+  double? get confidence; // 0-10
+  @override
+  double? get motivation; // 0-10
+  @override
+  double? get focus; // 0-10
+  @override
+  double? get stressLevel; // 0-10
+// Coach Assessment
+  @override
+  double? get leadership; // 0-10
+  @override
+  double? get communication; // 0-10
+  @override
+  double? get workRate; // 0-10
+  @override
+  double? get coachability; // 0-10
+  @override
+  double? get teamwork; // 0-10
+// Performance Under Pressure
+  @override
+  double? get pressureHandling; // 0-10
+  @override
+  int? get mistakesUnderPressure; // Learning & Development
+  @override
+  double? get learningRate; // 0-10
+  @override
+  double? get adaptability;
+
+  /// Create a copy of MentalMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MentalMetricsImplCopyWith<_$MentalMetricsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2972,8 +3057,12 @@ mixin _$MatchMetrics {
       throw _privateConstructorUsedError; // expected goals from moves involved in
   double? get xGBuildup => throw _privateConstructorUsedError;
 
+  /// Serializes this MatchMetrics to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MatchMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MatchMetricsCopyWith<MatchMetrics> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3009,6 +3098,8 @@ class _$MatchMetricsCopyWithImpl<$Res, $Val extends MatchMetrics>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MatchMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3109,6 +3200,8 @@ class __$$MatchMetricsImplCopyWithImpl<$Res>
       _$MatchMetricsImpl _value, $Res Function(_$MatchMetricsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MatchMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3258,7 +3351,7 @@ class _$MatchMetricsImpl implements _MatchMetrics {
                 other.xGBuildup == xGBuildup));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -3275,7 +3368,9 @@ class _$MatchMetricsImpl implements _MatchMetrics {
       xGChain,
       xGBuildup);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MatchMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MatchMetricsImplCopyWith<_$MatchMetricsImpl> get copyWith =>
@@ -3314,26 +3409,29 @@ abstract class _MatchMetrics implements MatchMetrics {
   @override
   String? get position;
   @override
-  double? get rating;
-  @override // 0-10
+  double? get rating; // 0-10
 // Match Events
+  @override
   int? get goals;
   @override
   int? get assists;
   @override
   int? get yellowCards;
   @override
-  int? get redCards;
-  @override // Advanced Stats
-  double? get xG;
-  @override // expected goals
-  double? get xA;
-  @override // expected assists
-  double? get xGChain;
-  @override // expected goals from moves involved in
-  double? get xGBuildup;
+  int? get redCards; // Advanced Stats
   @override
-  @JsonKey(ignore: true)
+  double? get xG; // expected goals
+  @override
+  double? get xA; // expected assists
+  @override
+  double? get xGChain; // expected goals from moves involved in
+  @override
+  double? get xGBuildup;
+
+  /// Create a copy of MatchMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MatchMetricsImplCopyWith<_$MatchMetricsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3364,8 +3462,12 @@ mixin _$TrainingLoadMetrics {
   double? get injuryRiskScore => throw _privateConstructorUsedError; // 0-100
   List<String>? get riskFactors => throw _privateConstructorUsedError;
 
+  /// Serializes this TrainingLoadMetrics to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TrainingLoadMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TrainingLoadMetricsCopyWith<TrainingLoadMetrics> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3400,6 +3502,8 @@ class _$TrainingLoadMetricsCopyWithImpl<$Res, $Val extends TrainingLoadMetrics>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TrainingLoadMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3494,6 +3598,8 @@ class __$$TrainingLoadMetricsImplCopyWithImpl<$Res>
       $Res Function(_$TrainingLoadMetricsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TrainingLoadMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3653,7 +3759,7 @@ class _$TrainingLoadMetricsImpl implements _TrainingLoadMetrics {
                 .equals(other._riskFactors, _riskFactors));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -3669,7 +3775,9 @@ class _$TrainingLoadMetricsImpl implements _TrainingLoadMetrics {
       injuryRiskScore,
       const DeepCollectionEquality().hash(_riskFactors));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TrainingLoadMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TrainingLoadMetricsImplCopyWith<_$TrainingLoadMetricsImpl> get copyWith =>
@@ -3701,32 +3809,36 @@ abstract class _TrainingLoadMetrics implements TrainingLoadMetrics {
   factory _TrainingLoadMetrics.fromJson(Map<String, dynamic> json) =
       _$TrainingLoadMetricsImpl.fromJson;
 
-  @override // Acute:Chronic Workload Ratio
-  double? get acwr;
-  @override // optimal: 0.8-1.3
+// Acute:Chronic Workload Ratio
+  @override
+  double? get acwr; // optimal: 0.8-1.3
+  @override
   double? get weeklyLoad;
   @override
-  double? get monthlyLoad;
-  @override // Training Intensity
-  double? get sessionRPE;
-  @override // Rate of Perceived Exertion 0-10
-  double? get trainingLoad;
-  @override // RPE * duration
+  double? get monthlyLoad; // Training Intensity
+  @override
+  double? get sessionRPE; // Rate of Perceived Exertion 0-10
+  @override
+  double? get trainingLoad; // RPE * duration
 // Monotony & Strain
+  @override
   double? get trainingMonotony;
   @override
-  double? get trainingStrain;
-  @override // Recovery Status
-  double? get recoveryScore;
-  @override // 0-100
-  String? get fatigueLevel;
-  @override // low, moderate, high
-// Injury Risk
-  double? get injuryRiskScore;
-  @override // 0-100
-  List<String>? get riskFactors;
+  double? get trainingStrain; // Recovery Status
   @override
-  @JsonKey(ignore: true)
+  double? get recoveryScore; // 0-100
+  @override
+  String? get fatigueLevel; // low, moderate, high
+// Injury Risk
+  @override
+  double? get injuryRiskScore; // 0-100
+  @override
+  List<String>? get riskFactors;
+
+  /// Create a copy of TrainingLoadMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TrainingLoadMetricsImplCopyWith<_$TrainingLoadMetricsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3756,8 +3868,12 @@ mixin _$WellnessMetrics {
   String? get injuryType => throw _privateConstructorUsedError;
   int? get daysUntilReturn => throw _privateConstructorUsedError;
 
+  /// Serializes this WellnessMetrics to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of WellnessMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WellnessMetricsCopyWith<WellnessMetrics> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3795,6 +3911,8 @@ class _$WellnessMetricsCopyWithImpl<$Res, $Val extends WellnessMetrics>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WellnessMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3907,6 +4025,8 @@ class __$$WellnessMetricsImplCopyWithImpl<$Res>
       _$WellnessMetricsImpl _value, $Res Function(_$WellnessMetricsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WellnessMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -4087,7 +4207,7 @@ class _$WellnessMetricsImpl implements _WellnessMetrics {
                 other.daysUntilReturn == daysUntilReturn));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -4106,7 +4226,9 @@ class _$WellnessMetricsImpl implements _WellnessMetrics {
       injuryType,
       daysUntilReturn);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WellnessMetrics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WellnessMetricsImplCopyWith<_$WellnessMetricsImpl> get copyWith =>
@@ -4141,39 +4263,43 @@ abstract class _WellnessMetrics implements WellnessMetrics {
   factory _WellnessMetrics.fromJson(Map<String, dynamic> json) =
       _$WellnessMetricsImpl.fromJson;
 
-  @override // Daily Wellness
-  double? get sleepQuality;
-  @override // 0-10
+// Daily Wellness
+  @override
+  double? get sleepQuality; // 0-10
+  @override
   double? get sleepHours;
   @override
-  double? get fatigue;
-  @override // 0-10
-  double? get soreness;
-  @override // 0-10
-  double? get stress;
-  @override // 0-10
-  double? get mood;
-  @override // 0-10
+  double? get fatigue; // 0-10
+  @override
+  double? get soreness; // 0-10
+  @override
+  double? get stress; // 0-10
+  @override
+  double? get mood; // 0-10
 // Nutrition & Hydration
-  double? get hydrationLevel;
-  @override // 0-10
-  double? get nutritionQuality;
-  @override // 0-10
+  @override
+  double? get hydrationLevel; // 0-10
+  @override
+  double? get nutritionQuality; // 0-10
 // Health Indicators
-  double? get bodyWeight;
-  @override // kg
-  double? get bodyFat;
-  @override // percentage
-  double? get muscleMass;
-  @override // kg
+  @override
+  double? get bodyWeight; // kg
+  @override
+  double? get bodyFat; // percentage
+  @override
+  double? get muscleMass; // kg
 // Injury Status
+  @override
   bool? get isInjured;
   @override
   String? get injuryType;
   @override
   int? get daysUntilReturn;
+
+  /// Create a copy of WellnessMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WellnessMetricsImplCopyWith<_$WellnessMetricsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -4200,8 +4326,12 @@ mixin _$CoachEvaluation {
   String? get generalComments => throw _privateConstructorUsedError;
   String? get improvementAdvice => throw _privateConstructorUsedError;
 
+  /// Serializes this CoachEvaluation to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CoachEvaluation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CoachEvaluationCopyWith<CoachEvaluation> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -4237,6 +4367,8 @@ class _$CoachEvaluationCopyWithImpl<$Res, $Val extends CoachEvaluation>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CoachEvaluation
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -4337,6 +4469,8 @@ class __$$CoachEvaluationImplCopyWithImpl<$Res>
       _$CoachEvaluationImpl _value, $Res Function(_$CoachEvaluationImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CoachEvaluation
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -4524,7 +4658,7 @@ class _$CoachEvaluationImpl implements _CoachEvaluation {
                 other.improvementAdvice == improvementAdvice));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -4541,7 +4675,9 @@ class _$CoachEvaluationImpl implements _CoachEvaluation {
       generalComments,
       improvementAdvice);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CoachEvaluation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CoachEvaluationImplCopyWith<_$CoachEvaluationImpl> get copyWith =>
@@ -4577,30 +4713,33 @@ abstract class _CoachEvaluation implements CoachEvaluation {
   @override
   String get coachId;
   @override
-  DateTime get evaluationDate;
-  @override // Performance Rating
-  double? get overallRating;
-  @override // 0-10
-  double? get technicalRating;
-  @override // 0-10
-  double? get tacticalRating;
-  @override // 0-10
-  double? get physicalRating;
-  @override // 0-10
-  double? get mentalRating;
-  @override // 0-10
+  DateTime get evaluationDate; // Performance Rating
+  @override
+  double? get overallRating; // 0-10
+  @override
+  double? get technicalRating; // 0-10
+  @override
+  double? get tacticalRating; // 0-10
+  @override
+  double? get physicalRating; // 0-10
+  @override
+  double? get mentalRating; // 0-10
 // Development Areas
+  @override
   List<String>? get strengths;
   @override
   List<String>? get weaknesses;
   @override
-  List<String>? get developmentGoals;
-  @override // Comments
+  List<String>? get developmentGoals; // Comments
+  @override
   String? get generalComments;
   @override
   String? get improvementAdvice;
+
+  /// Create a copy of CoachEvaluation
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CoachEvaluationImplCopyWith<_$CoachEvaluationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -4626,8 +4765,12 @@ mixin _$PerformanceInsight {
       throw _privateConstructorUsedError; // improving, stable, declining
   double? get changePercentage => throw _privateConstructorUsedError;
 
+  /// Serializes this PerformanceInsight to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PerformanceInsight
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PerformanceInsightCopyWith<PerformanceInsight> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -4661,6 +4804,8 @@ class _$PerformanceInsightCopyWithImpl<$Res, $Val extends PerformanceInsight>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PerformanceInsight
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -4749,6 +4894,8 @@ class __$$PerformanceInsightImplCopyWithImpl<$Res>
       $Res Function(_$PerformanceInsightImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PerformanceInsight
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -4899,7 +5046,7 @@ class _$PerformanceInsightImpl implements _PerformanceInsight {
                 other.changePercentage == changePercentage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -4914,7 +5061,9 @@ class _$PerformanceInsightImpl implements _PerformanceInsight {
       trend,
       changePercentage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PerformanceInsight
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PerformanceInsightImplCopyWith<_$PerformanceInsightImpl> get copyWith =>
@@ -4956,17 +5105,20 @@ abstract class _PerformanceInsight implements PerformanceInsight {
   @override
   InsightPriority get priority;
   @override
-  DateTime get generatedAt;
-  @override // Actionable Recommendations
-  List<String>? get recommendations;
-  @override // Related Metrics
-  Map<String, dynamic>? get relatedData;
-  @override // Trend Analysis
-  String? get trend;
-  @override // improving, stable, declining
-  double? get changePercentage;
+  DateTime get generatedAt; // Actionable Recommendations
   @override
-  @JsonKey(ignore: true)
+  List<String>? get recommendations; // Related Metrics
+  @override
+  Map<String, dynamic>? get relatedData; // Trend Analysis
+  @override
+  String? get trend; // improving, stable, declining
+  @override
+  double? get changePercentage;
+
+  /// Create a copy of PerformanceInsight
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PerformanceInsightImplCopyWith<_$PerformanceInsightImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
