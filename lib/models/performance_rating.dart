@@ -37,26 +37,58 @@ class PerformanceRating {
 
   factory PerformanceRating.fromJson(Map<String, dynamic> json) =>
       PerformanceRating(
-        id: json['id'] as String?,
-        playerId: json['playerId'] as String,
-        matchId: json['matchId'] as String?,
-        trainingId: json['trainingId'] as String?,
-        date: DateTime.parse(json['date'] as String),
-        type: RatingType.values.firstWhere(
-          (e) => e.name == json['type'] as String,
-        ),
-        overallRating: json['overallRating'] as int,
-        attackingRating: json['attackingRating'] as int?,
-        defendingRating: json['defendingRating'] as int?,
-        tacticalRating: json['tacticalRating'] as int?,
-        workRateRating: json['workRateRating'] as int?,
-        technicalRating: json['technicalRating'] as int?,
-        coachabilityRating: json['coachabilityRating'] as int?,
-        teamworkRating: json['teamworkRating'] as int?,
-        notes: json['notes'] as String?,
-        coachId: json['coachId'] as String,
-        createdAt: DateTime.parse(json['createdAt'] as String),
+        id: _parseString(json['id']),
+        playerId: _parseString(json['playerId']) ?? '',
+        matchId: _parseString(json['matchId']),
+        trainingId: _parseString(json['trainingId']),
+        date: _parseDateTimeOrNow(_parseString(json['date'])),
+        type: _parseRatingType(_parseString(json['type'])),
+        overallRating: _parseInt(json['overallRating']) ?? 1,
+        attackingRating: _parseInt(json['attackingRating']),
+        defendingRating: _parseInt(json['defendingRating']),
+        tacticalRating: _parseInt(json['tacticalRating']),
+        workRateRating: _parseInt(json['workRateRating']),
+        technicalRating: _parseInt(json['technicalRating']),
+        coachabilityRating: _parseInt(json['coachabilityRating']),
+        teamworkRating: _parseInt(json['teamworkRating']),
+        notes: _parseString(json['notes']),
+        coachId: _parseString(json['coachId']) ?? '',
+        createdAt: _parseDateTimeOrNow(_parseString(json['createdAt'])),
       );
+
+  // Helper methods for JSON parsing
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) {
+      return int.tryParse(value);
+    }
+    return null;
+  }
+
+  static RatingType _parseRatingType(String? typeString) {
+    if (typeString == null) return RatingType.training;
+    return RatingType.values.firstWhere(
+      (e) => e.name == typeString,
+      orElse: () => RatingType.training,
+    );
+  }
+
+  static DateTime _parseDateTimeOrNow(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return DateTime.now();
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return DateTime.now();
+    }
+  }
   final String id;
   final String playerId;
   final String? matchId;

@@ -9,13 +9,30 @@ class VeoHighlight {
   });
 
   factory VeoHighlight.fromJson(Map<String, dynamic> json) => VeoHighlight(
-        id: json['id'] as String,
-        startMs: json['startMs'] as int? ?? 0,
-        endMs: json['endMs'] as int? ?? 0,
-        title: json['title'] as String?,
-        videoUrl: json['videoUrl'] as String?,
-        storagePath: json['storagePath'] as String?,
+        id: _parseString(json['id']) ?? '',
+        startMs: _parseInt(json['startMs']) ?? 0,
+        endMs: _parseInt(json['endMs']) ?? 0,
+        title: _parseString(json['title']),
+        videoUrl: _parseString(json['videoUrl']),
+        storagePath: _parseString(json['storagePath']),
       );
+
+  // Helper methods for JSON parsing
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) {
+      return int.tryParse(value);
+    }
+    return null;
+  }
 
   final String id;
   final int startMs;
