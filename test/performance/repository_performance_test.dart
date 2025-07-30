@@ -10,6 +10,7 @@ import 'package:jo17_tactical_manager/config/supabase_config.dart';
 
 // Mock classes
 class MockSupabaseClient extends Mock implements SupabaseClient {}
+
 class MockGoTrueClient extends Mock implements GoTrueClient {}
 
 /// Performance configuration and monitoring tests.
@@ -116,7 +117,8 @@ void main() {
         expect(OptimizedCacheConfig.profileCacheTTL.inSeconds, greaterThan(0));
         expect(OptimizedCacheConfig.videoTagCacheTTL.inSeconds, greaterThan(0));
         expect(OptimizedCacheConfig.playerCacheTTL.inSeconds, greaterThan(0));
-        expect(OptimizedCacheConfig.trainingSessionCacheTTL.inSeconds, greaterThan(0));
+        expect(OptimizedCacheConfig.trainingSessionCacheTTL.inSeconds,
+            greaterThan(0));
       });
 
       test('should provide sensible cache sizes', () {
@@ -124,7 +126,8 @@ void main() {
         expect(OptimizedCacheConfig.profileCacheTTL.inMinutes, lessThan(60));
         expect(OptimizedCacheConfig.videoTagCacheTTL.inMinutes, lessThan(30));
         expect(OptimizedCacheConfig.playerCacheTTL.inMinutes, lessThan(120));
-        expect(OptimizedCacheConfig.trainingSessionCacheTTL.inMinutes, lessThan(60));
+        expect(OptimizedCacheConfig.trainingSessionCacheTTL.inMinutes,
+            lessThan(60));
       });
     });
 
