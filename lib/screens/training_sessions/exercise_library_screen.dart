@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/annual_planning/morphocycle.dart';
 import '../../models/training_session/training_exercise.dart';
 import '../../providers/annual_planning_provider.dart';
-import 'exercise_library/exercise_library_controller.dart';
 
 // Modular widgets
 import 'exercise_library/widgets/search_bar.dart';
@@ -59,7 +58,6 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
     final morphocycle = ref
         .watch(annualPlanningProvider)
         .getMorphocycleForWeek(widget.weekNumber);
-    final ctrl = ref.watch(exerciseLibraryControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -79,27 +77,25 @@ class _ExerciseLibraryScreenState extends ConsumerState<ExerciseLibraryScreen>
           ],
         ),
       ),
-      body: (ctrl.filteredExercises.isEmpty)
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                if (morphocycle != null)
-                  MorphocycleBanner(
-                    morphocycle: morphocycle,
-                    weekNumber: widget.weekNumber,
-                  ),
-                const ExerciseSearchBar(),
-                const ExerciseFilterBar(),
-                Expanded(
-                  child: ExerciseTabView(
-                    tabController: _tabController,
-                    morphocycle: morphocycle,
-                    isSelectMode: widget.isSelectMode,
-                    onExerciseSelected: widget.onExerciseSelected,
-                  ),
-                ),
-              ],
+      body: Column(
+        children: [
+          if (morphocycle != null)
+            MorphocycleBanner(
+              morphocycle: morphocycle,
+              weekNumber: widget.weekNumber,
             ),
+          const ExerciseSearchBar(),
+          const ExerciseFilterBar(),
+          Expanded(
+            child: ExerciseTabView(
+              tabController: _tabController,
+              morphocycle: morphocycle,
+              isSelectMode: widget.isSelectMode,
+              onExerciseSelected: widget.onExerciseSelected,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

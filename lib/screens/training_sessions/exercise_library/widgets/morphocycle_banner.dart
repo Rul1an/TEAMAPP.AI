@@ -21,9 +21,10 @@ class MorphocycleBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ctrl = ref.watch(exerciseLibraryControllerProvider);
+    final state = ref.watch(exerciseLibraryControllerProvider);
+    final controller = ref.read(exerciseLibraryControllerProvider.notifier);
 
-    if (!ctrl.showMorphocycleBanner) return const SizedBox.shrink();
+    if (!state.showMorphocycleRecommendations) return const SizedBox.shrink();
 
     return Container(
       margin: const EdgeInsets.all(16),
@@ -54,7 +55,7 @@ class MorphocycleBanner extends ConsumerWidget {
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.close, color: Colors.white, size: 20),
-                onPressed: ctrl.toggleMorphocycleBanner,
+                onPressed: controller.toggleMorphocycleRecommendations,
               ),
             ],
           ),

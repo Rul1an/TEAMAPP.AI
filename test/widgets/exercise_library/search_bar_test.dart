@@ -34,7 +34,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify controller state updated.
-    final ctrl = container.read(exerciseLibraryControllerProvider);
-    expect(ctrl.search, 'drill');
+    final state = container.read(exerciseLibraryControllerProvider);
+    expect(state.searchQuery, 'drill');
   });
 }

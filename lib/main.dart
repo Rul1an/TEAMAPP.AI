@@ -13,6 +13,7 @@ import 'package:firebase_performance/firebase_performance.dart';
 
 // Project imports:
 import 'config/environment.dart';
+import 'config/supabase_config.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
 import 'widgets/demo_mode_starter.dart';
@@ -27,11 +28,23 @@ Future<void> main() async {
   // Initialize date formatting for Dutch locale
   await initializeDateFormatting('nl');
 
-  // Initialize Supabase
-  await Supabase.initialize(
-    url: Environment.current.supabaseUrl,
-    anonKey: Environment.current.supabaseAnonKey,
-  );
+  // Initialize Supabase with error handling
+  try {
+    await Supabase.initialize(
+      url: Environment.current.supabaseUrl,
+      anonKey: Environment.current.supabaseAnonKey,
+    );
+
+    // CRITICAL FIX: Initialize SupabaseConfig after Supabase.initialize()
+    // This prevents the null check operator error
+    await SupabaseConfig.initialize();
+  } catch (e) {
+    // Log error but don't crash - app can work offline
+    if (kDebugMode) {
+      print('⚠️ Supabase initialization failed: $e');
+      print('📱 App will run in offline mode');
+    }
+  }
 
   // Initialize Firebase (Performance Monitoring) – skip on web until proper
   // firebase_options.dart is generated and configured. Prevents runtime error

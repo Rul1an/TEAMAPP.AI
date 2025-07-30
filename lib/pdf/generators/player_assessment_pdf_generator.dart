@@ -17,7 +17,7 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
   const PlayerAssessmentPdfGenerator();
 
   @override
-  Future<Uint8List> generate(PlayerAssessment assessment) async {
+  Future<Uint8List> generate(PlayerAssessment data) async {
     final regular = await fonts.regular;
     final bold = await fonts.bold;
 
@@ -28,42 +28,42 @@ class PlayerAssessmentPdfGenerator extends PdfGenerator<PlayerAssessment> {
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(20),
         build: (context) => [
-          _buildHeader(assessment, bold),
+          _buildHeader(data, bold),
           pw.SizedBox(height: 16),
-          _buildOverview(assessment, regular, bold),
+          _buildOverview(data, regular, bold),
           pw.SizedBox(height: 16),
           _buildSkillsSection(
             'Technisch',
-            assessment.technicalSkills,
+            data.technicalSkills,
             regular,
             bold,
           ),
           pw.SizedBox(height: 12),
           _buildSkillsSection(
             'Tactisch',
-            assessment.tacticalSkills,
+            data.tacticalSkills,
             regular,
             bold,
           ),
           pw.SizedBox(height: 12),
           _buildSkillsSection(
             'Fysiek',
-            assessment.physicalAttributes,
+            data.physicalAttributes,
             regular,
             bold,
           ),
           pw.SizedBox(height: 12),
           _buildSkillsSection(
             'Mentaal',
-            assessment.mentalAttributes,
+            data.mentalAttributes,
             regular,
             bold,
           ),
-          if (assessment.strengths != null ||
-              assessment.areasForImprovement != null ||
-              assessment.developmentGoals != null) ...[
+          if (data.strengths != null ||
+              data.areasForImprovement != null ||
+              data.developmentGoals != null) ...[
             pw.SizedBox(height: 16),
-            _buildNotesSection(assessment, regular, bold),
+            _buildNotesSection(data, regular, bold),
           ],
         ],
       ),

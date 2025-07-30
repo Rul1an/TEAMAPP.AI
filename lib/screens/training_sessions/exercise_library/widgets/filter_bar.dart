@@ -12,63 +12,46 @@ class ExerciseFilterBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ctrl = ref.watch(exerciseLibraryControllerProvider);
+    final state = ref.watch(exerciseLibraryControllerProvider);
+    final controller = ref.read(exerciseLibraryControllerProvider.notifier);
 
     // Build a list of chips for the currently active filters.
     final chips = <Widget>[];
-    if (ctrl.category != null) {
+    final criteria = state.filterCriteria;
+
+    if (criteria.typeFilter != null) {
       chips.add(
         _buildChip(
           context,
-          label: ctrl.category!.displayName,
-          onDeleted: () => ctrl.setCategory(null),
+          label: criteria.typeFilter!.toString().split('.').last,
+          onDeleted: () => controller.updateTypeFilter(null),
         ),
       );
     }
-    if (ctrl.complexity != null) {
+    if (criteria.intensityFilter != null) {
       chips.add(
         _buildChip(
           context,
-          label: ctrl.complexity!.displayName,
-          onDeleted: () => ctrl.setComplexity(null),
+          label: _intensityLabel(criteria.intensityFilter!),
+          onDeleted: () => controller.updateIntensityFilter(null),
         ),
       );
     }
-    if (ctrl.intensity != null) {
+    if (criteria.minDuration > 0 || criteria.maxDuration < 120) {
       chips.add(
         _buildChip(
           context,
-          label: _intensityLabel(ctrl.intensity!),
-          onDeleted: () => ctrl.setIntensity(null),
+          label: '${criteria.minDuration}-${criteria.maxDuration} min',
+          onDeleted: () => controller.updateDurationRange(0, 120),
         ),
       );
     }
-    if (ctrl.tacticalFocus != null) {
+    if (criteria.playerCount != 18) {
       chips.add(
         _buildChip(
           context,
-          label: ctrl.tacticalFocus!.displayName,
-          onDeleted: () => ctrl.setTacticalFocus(null),
-        ),
-      );
-    }
-    if (ctrl.minDuration != null || ctrl.maxDuration != null) {
-      final min = ctrl.minDuration ?? 0;
-      final max = ctrl.maxDuration ?? 120;
-      chips.add(
-        _buildChip(
-          context,
-          label: '$min-$max min',
-          onDeleted: () => ctrl.setDurationRange(null, null),
-        ),
-      );
-    }
-    if (ctrl.playerCount != null) {
-      chips.add(
-        _buildChip(
-          context,
-          label: '${ctrl.playerCount} players',
-          onDeleted: () => ctrl.setPlayerCount(null),
+          label: '${criteria.playerCount} players',
+          onDeleted: () => controller.updatePlayerCount(18),
         ),
       );
     }
@@ -80,7 +63,7 @@ class ExerciseFilterBar extends ConsumerWidget {
         children: [
           ElevatedButton.icon(
             key: const Key('open_filter_dialog_button'),
-            onPressed: () => _openFilterDialog(context, ctrl),
+            onPressed: () => _openFilterDialog(context, controller, ref),
             icon: const Icon(Icons.filter_list),
             label: const Text('Filters'),
             style: ElevatedButton.styleFrom(
@@ -112,16 +95,17 @@ class ExerciseFilterBar extends ConsumerWidget {
   // Opens the bottom sheet that lets the user configure exercise filters.
   Future<void> _openFilterDialog(
     BuildContext context,
-    ExerciseLibraryController ctrl,
+    ExerciseLibraryController controller,
+    WidgetRef ref,
   ) async {
-    // Local mutable copies of current values
-    var category = ctrl.category;
-    var complexity = ctrl.complexity;
-    var intensity = ctrl.intensity;
-    var tacticalFocus = ctrl.tacticalFocus;
-    var minDuration = ctrl.minDuration ?? 0;
-    var maxDuration = ctrl.maxDuration ?? 120;
-    var playerCount = ctrl.playerCount ?? 18;
+    // FIXED: Initialize with current filter values from controller state
+    final currentState = ref.read(exerciseLibraryControllerProvider);
+    final currentCriteria = currentState.filterCriteria;
+    ExerciseType? typeFilter = currentCriteria.typeFilter;
+    TrainingIntensity? intensityFilter = currentCriteria.intensityFilter;
+    var minDuration = currentCriteria.minDuration;
+    var maxDuration = currentCriteria.maxDuration;
+    var playerCount = currentCriteria.playerCount;
 
     await showModalBottomSheet<void>(
       context: context,
@@ -151,40 +135,26 @@ class ExerciseFilterBar extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              // Category
-              DropdownButtonFormField<ExerciseCategory?>(
-                decoration: const InputDecoration(labelText: 'Category'),
-                value: category,
+              // Exercise Type
+              DropdownButtonFormField<ExerciseType?>(
+                decoration: const InputDecoration(labelText: 'Exercise Type'),
+                value: typeFilter,
                 items: [
-                  const DropdownMenuItem<ExerciseCategory?>(child: Text('All')),
-                  ...ExerciseCategory.values.map(
-                    (e) =>
-                        DropdownMenuItem(value: e, child: Text(e.displayName)),
+                  const DropdownMenuItem<ExerciseType?>(child: Text('All')),
+                  ...ExerciseType.values.map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e.toString().split('.').last),
+                    ),
                   ),
                 ],
-                onChanged: (value) => setState(() => category = value),
-              ),
-              const SizedBox(height: 12),
-              // Complexity
-              DropdownButtonFormField<ExerciseComplexity?>(
-                decoration: const InputDecoration(labelText: 'Complexity'),
-                value: complexity,
-                items: [
-                  const DropdownMenuItem<ExerciseComplexity?>(
-                    child: Text('All'),
-                  ),
-                  ...ExerciseComplexity.values.map(
-                    (e) =>
-                        DropdownMenuItem(value: e, child: Text(e.displayName)),
-                  ),
-                ],
-                onChanged: (value) => setState(() => complexity = value),
+                onChanged: (value) => setState(() => typeFilter = value),
               ),
               const SizedBox(height: 12),
               // Intensity
               DropdownButtonFormField<TrainingIntensity?>(
                 decoration: const InputDecoration(labelText: 'Intensity'),
-                value: intensity,
+                value: intensityFilter,
                 items: [
                   const DropdownMenuItem<TrainingIntensity?>(
                     child: Text('All'),
@@ -196,21 +166,7 @@ class ExerciseFilterBar extends ConsumerWidget {
                     ),
                   ),
                 ],
-                onChanged: (value) => setState(() => intensity = value),
-              ),
-              const SizedBox(height: 12),
-              // Tactical Focus
-              DropdownButtonFormField<TacticalFocus?>(
-                decoration: const InputDecoration(labelText: 'Tactical Focus'),
-                value: tacticalFocus,
-                items: [
-                  const DropdownMenuItem<TacticalFocus?>(child: Text('All')),
-                  ...TacticalFocus.values.map(
-                    (e) =>
-                        DropdownMenuItem(value: e, child: Text(e.displayName)),
-                  ),
-                ],
-                onChanged: (value) => setState(() => tacticalFocus = value),
+                onChanged: (value) => setState(() => intensityFilter = value),
               ),
               const SizedBox(height: 12),
               // Player count slider
@@ -257,10 +213,8 @@ class ExerciseFilterBar extends ConsumerWidget {
                   TextButton(
                     onPressed: () {
                       setState(() {
-                        category = null;
-                        complexity = null;
-                        intensity = null;
-                        tacticalFocus = null;
+                        typeFilter = null;
+                        intensityFilter = null;
                         minDuration = 0;
                         maxDuration = 120;
                         playerCount = 18;
@@ -270,12 +224,10 @@ class ExerciseFilterBar extends ConsumerWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      ctrl.setCategory(category);
-                      ctrl.setComplexity(complexity);
-                      ctrl.setIntensity(intensity);
-                      ctrl.setTacticalFocus(tacticalFocus);
-                      ctrl.setDurationRange(minDuration, maxDuration);
-                      ctrl.setPlayerCount(playerCount);
+                      controller.updateTypeFilter(typeFilter);
+                      controller.updateIntensityFilter(intensityFilter);
+                      controller.updateDurationRange(minDuration, maxDuration);
+                      controller.updatePlayerCount(playerCount);
                       Navigator.pop(context);
                     },
                     child: const Text('Apply'),

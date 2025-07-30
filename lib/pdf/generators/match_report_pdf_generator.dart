@@ -14,7 +14,7 @@ class MatchReportPdfGenerator extends PdfGenerator<Match> {
   const MatchReportPdfGenerator();
 
   @override
-  Future<Uint8List> generate(Match match) async {
+  Future<Uint8List> generate(Match data) async {
     final regular = await fonts.regular;
     final bold = await fonts.bold;
 
@@ -26,9 +26,9 @@ class MatchReportPdfGenerator extends PdfGenerator<Match> {
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(20),
         build: (context) => [
-          _buildHeader(match, bold),
+          _buildHeader(data, bold),
           pw.SizedBox(height: 16),
-          _buildMatchInfo(match, regular, bold),
+          _buildMatchInfo(data, regular, bold),
           pw.SizedBox(height: 24),
           pw.Text(
             '— Eind van het voorlopige rapport —',
