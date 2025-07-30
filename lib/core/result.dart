@@ -13,6 +13,12 @@
 sealed class Result<T> {
   const Result();
 
+  /// Factory constructor for success
+  static Result<T> success<T>(T data) => Success(data);
+
+  /// Factory constructor for failure
+  static Result<T> failure<T>(Exception error) => Failure(GenericFailure(error.toString()));
+
   R when<R>({
     required R Function(T data) success,
     required R Function(AppFailure error) failure,
@@ -24,8 +30,27 @@ sealed class Result<T> {
     }
   }
 
+  /// Alternative method for folding results
+  R fold<R>(
+    R Function(Exception error) onFailure,
+    R Function(T data) onSuccess,
+  ) {
+    if (this is Success<T>) {
+      return onSuccess((this as Success<T>).data);
+    } else {
+      final error = (this as Failure<T>).error;
+      return onFailure(Exception(error.message));
+    }
+  }
+
   bool get isSuccess => this is Success<T>;
+  bool get isFailure => this is Failure<T>;
   T? get dataOrNull => this is Success<T> ? (this as Success<T>).data : null;
+  T get value => this is Success<T> ? (this as Success<T>).data : throw Exception('Called value on Failure');
+
+  @override
+  Exception get error => this is Failure<T> ? Exception((this as Failure<T>).error.message) : throw Exception('Called error on Success');
+
   AppFailure? get errorOrNull =>
       this is Failure<T> ? (this as Failure<T>).error : null;
 }
@@ -47,6 +72,14 @@ sealed class AppFailure {
 
   @override
   String toString() => 'AppFailure($message)';
+}
+
+/// Generic app failure implementation
+class GenericFailure extends AppFailure {
+  const GenericFailure(super.message);
+
+  /// Named constructor for backward compatibility
+  const GenericFailure.generic(String message) : super(message);
 }
 
 class NetworkFailure extends AppFailure {

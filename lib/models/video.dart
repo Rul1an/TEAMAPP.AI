@@ -305,4 +305,7 @@ extension VideoExtensions on Video {
 
   /// Check if video has AI analysis
   bool get hasAiAnalysis => aiProcessed && aiConfidence > 0;
+
+  /// Backward compatibility getter for status
+  VideoProcessingStatus get status => processingStatus;
 }

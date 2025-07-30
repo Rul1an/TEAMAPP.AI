@@ -141,6 +141,13 @@ class VideoTag with _$VideoTag {
   String? get importanceLevel {
     return tagData['importance'] as String?;
   }
+
+  /// Backward compatibility getters
+  VideoTagType get eventType => tagType; // Alias for backward compatibility
+
+  String? get playerId => tagData['playerId'] as String?; // Get player ID from tag data
+
+  String? get notes => description; // Alias for backward compatibility
 }
 
 /// Types of video tags for tactical analysis
@@ -163,6 +170,9 @@ enum VideoTagType {
   @JsonValue('skill')
   skill,
 }
+
+/// Backward compatibility alias for VideoEventType
+typedef VideoEventType = VideoTagType;
 
 /// Request model for creating video tags
 @freezed

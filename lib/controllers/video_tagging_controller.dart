@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import '../core/result.dart';
 import '../models/video_tag.dart';
 import '../repositories/video_tag_repository.dart';
 
