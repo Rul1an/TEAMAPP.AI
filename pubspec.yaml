@@ -77,7 +77,7 @@ dependencies:
   hive_flutter: ^1.1.0
 
   # Networking
-  http: ^0.13.6
+  http: ^1.4.0
 
   # Video Core Dependencies (Phase 1 Implementation)
   video_player: ^2.8.6
@@ -100,6 +100,10 @@ dev_dependencies:
   coverage: ^1.7.2
   # Replaced by very_good_analysis for stricter lint set
   very_good_analysis: ^7.0.0
+
+  # Phase 2A: Advanced Integration Testing Framework
+  patrol: ^3.6.1              # Advanced integration testing
+  alchemist: ^0.7.0           # Golden testing for UI regression
 
   # Custom lint removed - conflicts with analyzer 6.11.0 (AugmentationImportDirective missing)
   # Using very_good_analysis instead for comprehensive linting

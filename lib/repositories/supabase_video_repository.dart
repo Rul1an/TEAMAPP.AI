@@ -592,4 +592,12 @@ class SupabaseVideoRepository implements VideoRepository {
       return [];
     }
   }
+
+  // COMPATIBILITY METHODS FOR TESTS
+  // These methods provide compatibility with test expectations
+
+  /// Compatibility method for tests - gets a video by ID
+  Future<Result<Video>> getVideo(String videoId) async {
+    return getVideoById(videoId);
+  }
 }

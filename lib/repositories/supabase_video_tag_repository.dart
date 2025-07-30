@@ -376,6 +376,81 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
     }
   }
 
+  // COMPATIBILITY METHODS FOR TESTS
+  // These methods provide compatibility with test expectations
+
+  /// Compatibility method for tests - creates a video tag
+  Future<Result<VideoTag>> createVideoTag(CreateVideoTagRequest request) async {
+    return createTag(request);
+  }
+
+  /// Compatibility method for tests - gets a single video tag by ID
+  Future<Result<VideoTag>> getVideoTag(String tagId) async {
+    try {
+      final response = await _supabase
+          .from('video_tags')
+          .select('*')
+          .eq('id', tagId)
+          .single();
+
+      final tag = VideoTag.fromJson(response);
+      return Result.success(tag);
+    } catch (e) {
+      return Result.failure(Exception('Failed to get video tag: $e'));
+    }
+  }
+
+  /// Compatibility method for tests - updates a video tag
+  Future<Result<VideoTag>> updateVideoTag(UpdateVideoTagRequest request) async {
+    return updateTag(request);
+  }
+
+  /// Compatibility method for tests - deletes a video tag
+  Future<Result<void>> deleteVideoTag(String tagId) async {
+    return deleteTag(tagId);
+  }
+
+  /// Compatibility method for tests - gets tags for a video
+  Future<Result<List<VideoTag>>> getVideoTagsForVideo(String videoId) async {
+    return getTagsForVideo(videoId);
+  }
+
+  /// Compatibility method for tests - gets tags by type
+  Future<Result<List<VideoTag>>> getVideoTagsByType(
+    String videoId,
+    VideoTagType tagType,
+  ) async {
+    try {
+      final response = await _supabase
+          .from('video_tags')
+          .select('*')
+          .eq('video_id', videoId)
+          .eq('tag_type', tagType.name)
+          .order('timestamp_seconds');
+
+      final tags = (response as List)
+          .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
+          .toList();
+
+      return Result.success(tags);
+    } catch (e) {
+      return Result.failure(Exception('Failed to get tags by type: $e'));
+    }
+  }
+
+  /// Compatibility method for tests - gets tags in range
+  Future<Result<List<VideoTag>>> getVideoTagsInRange(
+    String videoId,
+    double startSeconds,
+    double endSeconds,
+  ) async {
+    return getTagsInTimeRange(
+      videoId: videoId,
+      startSeconds: startSeconds,
+      endSeconds: endSeconds,
+    );
+  }
+
   /// Generate hotspots from tags
   List<VideoTagHotspot> _generateHotspots(
     List<VideoTag> tags,
