@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
@@ -73,7 +74,7 @@ class SupabaseVideoRepository implements VideoRepository {
 
       final metadata = metadataResult.dataOrNull!;
       final videoFile = File(request.localFilePath);
-      final fileSize = await videoFile.length();
+      final fileSize = videoFile.lengthSync(); // Use sync version for better performance
 
       // Step 3: Generate unique filename with organization structure
       final fileExtension = path.extension(request.localFilePath);
@@ -182,7 +183,7 @@ class SupabaseVideoRepository implements VideoRepository {
             await _supabase.storage.from('training-videos').remove([fileName]);
           } catch (e) {
             // Storage deletion failure shouldn't block database cleanup
-            print('Warning: Failed to delete video file from storage: $e');
+            debugPrint('Warning: Failed to delete video file from storage: $e');
           }
         }
       }
@@ -197,7 +198,7 @@ class SupabaseVideoRepository implements VideoRepository {
                 .remove([thumbnailFileName]);
           } catch (e) {
             // Storage deletion failure shouldn't block database cleanup
-            print('Warning: Failed to delete thumbnail from storage: $e');
+            debugPrint('Warning: Failed to delete thumbnail from storage: $e');
           }
         }
       }
@@ -352,13 +353,13 @@ class SupabaseVideoRepository implements VideoRepository {
       final file = File(filePath);
 
       // Check if file exists
-      if (!await file.exists()) {
+      if (!file.existsSync()) { // Use sync version for better performance
         return const Failure(NetworkFailure('File does not exist'));
       }
 
-      // Check file size (500MB limit)
+      // Check file size (500MB limit) - cached for performance
       const maxSizeBytes = 500 * 1024 * 1024;
-      final fileSize = await file.length();
+      final fileSize = file.lengthSync(); // Use sync version for better performance
       if (fileSize > maxSizeBytes) {
         return Failure(NetworkFailure(
             'File too large. Maximum size is 500MB. File size: ${fileSize ~/ (1024 * 1024)}MB'));
@@ -422,7 +423,7 @@ class SupabaseVideoRepository implements VideoRepository {
       // 2. Extract duration, resolution, codec, bitrate, etc.
 
       final file = File(filePath);
-      final fileSize = await file.length();
+      final fileSize = file.lengthSync(); // Use sync version for better performance
 
       // Placeholder metadata - in production, use ffmpeg probe
       final metadata = {
