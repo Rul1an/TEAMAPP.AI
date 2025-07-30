@@ -74,7 +74,8 @@ class SupabaseVideoRepository implements VideoRepository {
 
       final metadata = metadataResult.dataOrNull!;
       final videoFile = File(request.localFilePath);
-      final fileSize = videoFile.lengthSync(); // Use sync version for better performance
+      final fileSize =
+          videoFile.lengthSync(); // Use sync version for better performance
 
       // Step 3: Generate unique filename with organization structure
       final fileExtension = path.extension(request.localFilePath);
@@ -353,13 +354,15 @@ class SupabaseVideoRepository implements VideoRepository {
       final file = File(filePath);
 
       // Check if file exists
-      if (!file.existsSync()) { // Use sync version for better performance
+      if (!file.existsSync()) {
+        // Use sync version for better performance
         return const Failure(NetworkFailure('File does not exist'));
       }
 
       // Check file size (500MB limit) - cached for performance
       const maxSizeBytes = 500 * 1024 * 1024;
-      final fileSize = file.lengthSync(); // Use sync version for better performance
+      final fileSize =
+          file.lengthSync(); // Use sync version for better performance
       if (fileSize > maxSizeBytes) {
         return Failure(NetworkFailure(
             'File too large. Maximum size is 500MB. File size: ${fileSize ~/ (1024 * 1024)}MB'));
@@ -423,7 +426,8 @@ class SupabaseVideoRepository implements VideoRepository {
       // 2. Extract duration, resolution, codec, bitrate, etc.
 
       final file = File(filePath);
-      final fileSize = file.lengthSync(); // Use sync version for better performance
+      final fileSize =
+          file.lengthSync(); // Use sync version for better performance
 
       // Placeholder metadata - in production, use ffmpeg probe
       final metadata = {

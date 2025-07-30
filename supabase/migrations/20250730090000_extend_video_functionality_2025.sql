@@ -167,6 +167,30 @@ CREATE POLICY "thumbnails_org_upload" ON storage.objects
 -- Phase 5: Video Processing Functions
 -- =====================================================================================
 
+-- CRITICAL FIX: Missing RPC function that's used in repositories
+CREATE OR REPLACE FUNCTION public.get_user_organization_id()
+RETURNS UUID
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  org_id UUID;
+BEGIN
+  -- Get the organization_id for the current authenticated user
+  SELECT organization_id INTO org_id
+  FROM organization_members
+  WHERE user_id = (SELECT auth.uid())
+  LIMIT 1;
+
+  -- Return the organization_id or raise exception if not found
+  IF org_id IS NULL THEN
+    RAISE EXCEPTION 'User is not a member of any organization';
+  END IF;
+
+  RETURN org_id;
+END;
+$$;
+
 -- Function to update video processing status
 CREATE OR REPLACE FUNCTION public.update_video_processing_status(
   video_id UUID,
@@ -254,6 +278,7 @@ GROUP BY organization_id;
 
 -- Grant permissions for new functions and views
 GRANT SELECT ON public.video_analytics TO authenticated;
+GRANT EXECUTE ON FUNCTION public.get_user_organization_id() TO authenticated;
 GRANT EXECUTE ON FUNCTION public.update_video_processing_status(UUID, TEXT, TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.get_organization_videos(UUID, TEXT, INTEGER, INTEGER) TO authenticated;
 

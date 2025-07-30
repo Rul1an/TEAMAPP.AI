@@ -99,7 +99,8 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
         children: [
           // Video player
           AspectRatio(
-            aspectRatio: state.controller?.value.aspectRatio ?? widget.aspectRatio,
+            aspectRatio:
+                state.controller?.value.aspectRatio ?? widget.aspectRatio,
             child: VideoPlayer(state.controller!),
           ),
 
@@ -108,8 +109,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
             _buildVideoControls(context, state, notifier),
 
           // Buffering indicator
-          if (state.isBuffering)
-            _buildBufferingIndicator(),
+          if (state.isBuffering) _buildBufferingIndicator(),
 
           // Play button overlay (when paused and controls are hidden)
           if (!state.isPlaying && !state.showControls && !state.isBuffering)
@@ -125,16 +125,16 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
     VideoPlayerNotifier notifier,
   ) {
     return Positioned.fill(
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.black.withOpacity(0.7),
+              Colors.black.withValues(alpha: 0.7),
               Colors.transparent,
               Colors.transparent,
-              Colors.black.withOpacity(0.7),
+              Colors.black.withValues(alpha: 0.7),
             ],
             stops: const [0.0, 0.3, 0.7, 1.0],
           ),
@@ -218,7 +218,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
         width: 80,
         height: 80,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.black.withValues(alpha: 0.7),
           shape: BoxShape.circle,
         ),
         child: Icon(
@@ -310,12 +310,14 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
         thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
         activeTrackColor: Theme.of(context).primaryColor,
-        inactiveTrackColor: Colors.white.withOpacity(0.3),
+        inactiveTrackColor: Colors.white.withValues(alpha: 0.3),
         thumbColor: Theme.of(context).primaryColor,
       ),
       child: Slider(
         value: state.position.inMilliseconds.toDouble(),
-        max: state.duration.inMilliseconds.toDouble().clamp(1.0, double.infinity),
+        max: state.duration.inMilliseconds
+            .toDouble()
+            .clamp(1.0, double.infinity),
         onChanged: (double value) {
           notifier.seekTo(Duration(milliseconds: value.round()));
         },
@@ -356,7 +358,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
         width: 80,
         height: 80,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.black.withValues(alpha: 0.7),
           shape: BoxShape.circle,
         ),
         child: const Icon(
@@ -389,7 +391,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           Text(
             'Duration: ${widget.video.durationFormatted} • ${widget.video.fileSizeFormatted}',
             style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
               fontSize: 12,
             ),
             textAlign: TextAlign.center,
@@ -425,7 +427,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           Text(
             error ?? 'Unknown error occurred',
             style: TextStyle(
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
               fontSize: 12,
             ),
             textAlign: TextAlign.center,
@@ -451,9 +453,9 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
   }
 
   Widget _buildBufferingIndicator() {
-    return Container(
+    return const ColoredBox(
       color: Colors.black26,
-      child: const Center(
+      child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -512,7 +514,7 @@ class CompactVideoPlayer extends ConsumerWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withOpacity(0.7),
+                    Colors.black.withValues(alpha: 0.7),
                   ],
                 ),
               ),

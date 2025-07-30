@@ -132,22 +132,23 @@ class VideoPlayerNotifier extends StateNotifier<VideoPlayerState> {
   VideoPlayerController? _controller;
   bool _isInitialized = false;
 
-  VideoPlayerNotifier() : super(const VideoPlayerState(
-    isInitialized: false,
-    isPlaying: false,
-    isBuffering: false,
-    hasError: false,
-    errorMessage: null,
-    position: Duration.zero,
-    duration: Duration.zero,
-    volume: 1.0,
-    playbackSpeed: 1.0,
-    showControls: true,
-    isControlsLocked: false,
-    isMuted: false,
-    isFullscreen: false,
-    controller: null,
-  ));
+  VideoPlayerNotifier()
+      : super(const VideoPlayerState(
+          isInitialized: false,
+          isPlaying: false,
+          isBuffering: false,
+          hasError: false,
+          errorMessage: null,
+          position: Duration.zero,
+          duration: Duration.zero,
+          volume: 1.0,
+          playbackSpeed: 1.0,
+          showControls: true,
+          isControlsLocked: false,
+          isMuted: false,
+          isFullscreen: false,
+          controller: null,
+        ));
 
   /// Initialize video player with a video URL
   Future<void> initializeVideo(Video video, {bool autoPlay = false}) async {
@@ -178,7 +179,6 @@ class VideoPlayerNotifier extends StateNotifier<VideoPlayerState> {
       if (autoPlay) {
         await play();
       }
-
     } catch (e) {
       state = state.copyWith(
         hasError: true,
@@ -224,18 +224,16 @@ class VideoPlayerNotifier extends StateNotifier<VideoPlayerState> {
   /// Skip backward by specified seconds
   Future<void> skipBackward({int seconds = 10}) async {
     final newPosition = Duration(
-      milliseconds: (state.position.inMilliseconds - (seconds * 1000))
-          .clamp(0, state.duration.inMilliseconds)
-    );
+        milliseconds: (state.position.inMilliseconds - (seconds * 1000))
+            .clamp(0, state.duration.inMilliseconds));
     await seekTo(newPosition);
   }
 
   /// Skip forward by specified seconds
   Future<void> skipForward({int seconds = 10}) async {
     final newPosition = Duration(
-      milliseconds: (state.position.inMilliseconds + (seconds * 1000))
-          .clamp(0, state.duration.inMilliseconds)
-    );
+        milliseconds: (state.position.inMilliseconds + (seconds * 1000))
+            .clamp(0, state.duration.inMilliseconds));
     await seekTo(newPosition);
   }
 
@@ -332,7 +330,8 @@ class VideoPlayerNotifier extends StateNotifier<VideoPlayerState> {
 }
 
 /// Provider for video player state management
-final videoPlayerProvider = StateNotifierProvider<VideoPlayerNotifier, VideoPlayerState>((ref) {
+final videoPlayerProvider =
+    StateNotifierProvider<VideoPlayerNotifier, VideoPlayerState>((ref) {
   return VideoPlayerNotifier();
 });
 
