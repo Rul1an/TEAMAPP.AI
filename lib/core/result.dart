@@ -60,3 +60,15 @@ class CacheFailure extends AppFailure {
 class UnauthorizedFailure extends AppFailure {
   const UnauthorizedFailure() : super('Unauthorized');
 }
+
+class ProcessingFailure extends AppFailure {
+  const ProcessingFailure(super.message);
+}
+
+class ValidationFailure extends AppFailure {
+  const ValidationFailure(super.message);
+}
+
+class MetadataFailure extends AppFailure {
+  const MetadataFailure(super.message);
+}

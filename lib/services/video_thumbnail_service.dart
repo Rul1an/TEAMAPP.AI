@@ -256,8 +256,3 @@ class ThumbnailSettings {
     required this.quality,
   });
 }
-
-/// Processing failure for video operations
-class ProcessingFailure extends AppFailure {
-  const ProcessingFailure(super.message);
-}

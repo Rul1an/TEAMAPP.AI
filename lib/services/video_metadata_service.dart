@@ -148,21 +148,28 @@ class VideoMetadataService {
       }
 
       // Find video stream
-      final videoStream = streams.firstWhere(
-        (stream) => stream['codec_type'] == 'video',
-        orElse: () => null,
-      ) as Map<String, dynamic>?;
+      Map<String, dynamic>? videoStream;
+      try {
+        videoStream = streams.firstWhere(
+          (stream) => stream['codec_type'] == 'video',
+        ) as Map<String, dynamic>?;
+      } catch (e) {
+        return const Failure(MetadataFailure('No video stream found'));
+      }
 
       if (videoStream == null) {
         return const Failure(MetadataFailure('No video stream found'));
       }
 
       // Find audio stream (optional)
-      final audioStream = streams.where(
-        (stream) => stream['codec_type'] == 'audio',
-      ).isNotEmpty ? streams.firstWhere(
-        (stream) => stream['codec_type'] == 'audio',
-      ) as Map<String, dynamic>? : null;
+      Map<String, dynamic>? audioStream;
+      try {
+        audioStream = streams.firstWhere(
+          (stream) => stream['codec_type'] == 'audio',
+        ) as Map<String, dynamic>?;
+      } catch (e) {
+        audioStream = null; // No audio stream found
+      }
 
       // Parse frame rate
       final frameRateStr = videoStream['avg_frame_rate'] as String? ?? '30/1';
@@ -184,9 +191,13 @@ class VideoMetadataService {
       final hasAudio = audioStream != null;
       final audioCodec = audioStream?['codec_name'] as String? ?? 'none';
       final audioChannels = audioStream?['channels'] as int?;
-      final audioSampleRate = audioStream?['sample_rate'] as String? != null
-          ? int.tryParse(audioStream!['sample_rate'] as String)
-          : null;
+      int? audioSampleRate;
+      if (audioStream != null) {
+        final sampleRateStr = audioStream['sample_rate'] as String?;
+        if (sampleRateStr != null) {
+          audioSampleRate = int.tryParse(sampleRateStr);
+        }
+      }
 
       return Success({
         'width': width,
@@ -286,12 +297,14 @@ class VideoMetadataService {
 
   /// Calculate Greatest Common Divisor
   int _gcd(int a, int b) {
-    while (b != 0) {
-      final temp = b;
-      b = a % b;
-      a = temp;
+    int tempA = a;
+    int tempB = b;
+    while (tempB != 0) {
+      final temp = tempB;
+      tempB = tempA % tempB;
+      tempA = temp;
     }
-    return a;
+    return tempA;
   }
 
   /// Quick metadata extraction for upload validation
@@ -441,9 +454,4 @@ enum VideoQuality {
       case VideoQuality.ultra: return 'Ultra Quality';
     }
   }
-}
-
-/// Metadata extraction failure
-class MetadataFailure extends AppFailure {
-  const MetadataFailure(super.message);
 }

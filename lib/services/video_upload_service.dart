@@ -107,14 +107,17 @@ class VideoUploadService {
         description: description,
         playerId: playerId,
         localFilePath: finalFile.path,
-        onProgress: (progress) => _updateProgress(onProgress, VideoUploadProgress(
-          videoId: uploadId,
-          title: title,
-          status: VideoUploadStatus.uploading,
-          progress: 0.4 + (progress * 0.5), // 40-90% for upload
-        fileSizeBytes: await finalFile.length(),
-        uploadedBytes: (await finalFile.length() * progress).round(),
-        )),
+        onProgress: (progress) async {
+          final fileSize = await finalFile.length();
+          _updateProgress(onProgress, VideoUploadProgress(
+            videoId: uploadId,
+            title: title,
+            status: VideoUploadStatus.uploading,
+            progress: 0.4 + (progress * 0.5), // 40-90% for upload
+            fileSizeBytes: fileSize,
+            uploadedBytes: (fileSize * progress).round(),
+          ));
+        },
       );
 
       final uploadResult = await _videoRepository.uploadVideo(
@@ -431,13 +434,4 @@ class VideoUploadService {
     const duration = 120; // Assume 2 minutes average
     return ((fileSizeBytes * 8) / duration).round(); // bits per second
   }
-}
-
-/// Custom exceptions for video processing
-class ProcessingFailure extends AppFailure {
-  const ProcessingFailure(super.message);
-}
-
-class ValidationFailure extends AppFailure {
-  const ValidationFailure(super.message);
 }
