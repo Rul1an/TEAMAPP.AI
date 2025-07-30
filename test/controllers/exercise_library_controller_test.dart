@@ -39,8 +39,9 @@ void main() {
     test('search filter returns matching results', () {
       controller.updateSearchQuery('pass');
       final result = controller.getFilteredExercises(exercises);
-      expect(result.length, 1);
-      expect(result.first.name, contains('Pass'));
+      expect(result.length, 2); // Both exercises contain 'pass' - 'Recovery passing' and 'High Pass Drill'
+      expect(result.any((exercise) => exercise.name.contains('Pass')), true);
+      expect(result.any((exercise) => exercise.description.contains('passing')), true);
     });
 
     test('intensity filter returns low intensity exercise', () {

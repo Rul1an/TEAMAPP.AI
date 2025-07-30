@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:mocktail/mocktail.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/core/optimized_cache_config.dart';
@@ -11,6 +12,12 @@ import 'package:jo17_tactical_manager/repositories/supabase_training_session_rep
 import 'package:jo17_tactical_manager/models/player.dart';
 import 'package:jo17_tactical_manager/features/video_tagging/models/video_tag.dart';
 import 'package:jo17_tactical_manager/features/video_tagging/models/tag_type.dart';
+import 'package:jo17_tactical_manager/config/supabase_config.dart';
+
+// Mock classes
+class MockSupabaseClient extends Mock implements SupabaseClient {}
+class MockGoTrueClient extends Mock implements GoTrueClient {}
+class MockSupabaseQueryBuilder extends Mock implements SupabaseQueryBuilder {}
 
 /// Performance tests for optimized repository implementations.
 ///
@@ -28,12 +35,19 @@ void main() {
     late SupabaseTrainingSessionRepository trainingSessionRepository;
 
     setUpAll(() async {
-      // Initialize repositories with test client (would use test containers in real CI)
-      // For now, we'll use mock implementations to test performance patterns
+      // Initialize mock Supabase client for testing
+      final mockClient = MockSupabaseClient();
+      final mockAuth = MockGoTrueClient();
+
+      // Set up the mock client with basic stubs
+      when(() => mockClient.auth).thenReturn(mockAuth);
+
+      // Initialize SupabaseConfig with test client to prevent "client not initialized" error
+      SupabaseConfig.setClientForTest(mockClient);
+
+      // Initialize repositories - they will use the mock client through SupabaseConfig
       playerRepository = SupabasePlayerRepository();
-      // Mock client for video tag repository - skip in tests
-      videoTagRepository =
-          SupabaseTagRepository(SupabaseClient('mock', 'mock'));
+      videoTagRepository = SupabaseTagRepository(mockClient);
       trainingSessionRepository = SupabaseTrainingSessionRepository();
     });
 
