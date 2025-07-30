@@ -122,7 +122,7 @@ flutter:
 
 dependency_overrides:
   file: 7.0.1
-  # Phase 1: Conservative Approach - Riverpod Generator + Custom Lint Resolution
+  # Updated for Dart 3.8.1 compatibility - Analyzer version must support AugmentationImportDirective
   analyzer_plugin: ^0.13.1  # Critical fix for publiclyExporting typo
-  analyzer: ^6.7.0          # Compatible with custom_lint_core
-  custom_lint_core: 0.6.3   # Pin problematic version
+  analyzer: ^7.0.0          # Compatible with Dart 3.8.1 and AugmentationImportDirective
+  custom_lint_core: ^0.6.3  # Allow newer versions for Dart 3.8.1 compatibility
