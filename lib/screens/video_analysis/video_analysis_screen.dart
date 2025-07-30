@@ -239,7 +239,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                 // Hotspots
                 ...taggingState.hotspots.map((hotspot) {
                   final position = (hotspot.startSeconds /
-                          (video.durationSeconds.toDouble() ?? 1.0)) *
+                          video.durationSeconds.toDouble()) *
                       MediaQuery.of(context).size.width;
 
                   return Positioned(
@@ -258,7 +258,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                 // Current position indicator
                 Positioned(
                   left: (_currentVideoTime /
-                          (video.durationSeconds.toDouble() ?? 1.0)) *
+                          video.durationSeconds.toDouble()) *
                       MediaQuery.of(context).size.width,
                   child: Container(
                     width: 2,
@@ -281,7 +281,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               Text(
-                _formatTime((video.durationSeconds ?? 0).toDouble()),
+                _formatTime(video.durationSeconds.toDouble()),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -310,9 +310,9 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   const SizedBox(height: 16),
                   _buildInfoRow('Title', video.title),
                   _buildInfoRow('Duration',
-                      _formatTime((video.durationSeconds ?? 0).toDouble())),
+                      _formatTime(video.durationSeconds.toDouble())),
                   _buildInfoRow(
-                      'Size', _formatFileSize(video.fileSizeBytes ?? 0)),
+                      'Size', _formatFileSize(video.fileSizeBytes)),
                   _buildInfoRow('Status', video.status.name.toUpperCase()),
                   if (video.description != null &&
                       video.description!.isNotEmpty)
@@ -354,7 +354,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                         'Jump to End',
                         Icons.skip_next,
                         () => _jumpToTime(
-                            video.durationSeconds.toDouble() ?? 0.0),
+                            video.durationSeconds.toDouble()),
                       ),
                       _buildActionChip(
                         'Rewind 10s',

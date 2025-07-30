@@ -352,6 +352,7 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
   Future<void> _createTag(VideoTaggingController controller) async {
     if (_selectedTagType == null) return;
 
+    final messenger = ScaffoldMessenger.of(context);
     final request = CreateVideoTagRequest(
       videoId: widget.video.id,
       organizationId: 'temp-org', // TODO(context): Get from context
@@ -362,10 +363,13 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
     );
 
     final success = await controller.createTag(request);
-    if (success && mounted) {
+    if (success) {
       _resetForm();
       widget.onTagCreated?.call();
-      ScaffoldMessenger.of(context).showSnackBar(
+    }
+
+    if (success && mounted) {
+      messenger.showSnackBar(
         const SnackBar(content: Text('Tag created successfully!')),
       );
     }
@@ -410,10 +414,12 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
           ),
           TextButton(
             onPressed: () async {
-              Navigator.of(context).pop();
+              final navigator = Navigator.of(context);
+              final messenger = ScaffoldMessenger.of(context);
+              navigator.pop();
               final success = await controller.deleteTag(tag.id);
               if (success && mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                messenger.showSnackBar(
                   const SnackBar(content: Text('Tag deleted successfully!')),
                 );
               }
