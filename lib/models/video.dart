@@ -20,7 +20,8 @@ class Video with _$Video {
     required int resolutionWidth,
     required int resolutionHeight,
     @Default('mp4') String encodingFormat,
-    @Default(VideoProcessingStatus.pending) VideoProcessingStatus processingStatus,
+    @Default(VideoProcessingStatus.pending)
+    VideoProcessingStatus processingStatus,
     String? processingError,
     @Default({}) Map<String, dynamic> videoMetadata,
     @Default({}) Map<String, dynamic> tagData,
@@ -106,7 +107,8 @@ class VideoTimeCode with _$VideoTimeCode {
     @Default({}) Map<String, dynamic> metadata,
   }) = _VideoTimeCode;
 
-  factory VideoTimeCode.fromJson(Map<String, dynamic> json) => _$VideoTimeCodeFromJson(json);
+  factory VideoTimeCode.fromJson(Map<String, dynamic> json) =>
+      _$VideoTimeCodeFromJson(json);
 }
 
 /// Coordinate-based tag for spatial video analysis
@@ -121,7 +123,8 @@ class VideoCoordinate with _$VideoCoordinate {
     @Default({}) Map<String, dynamic> metadata,
   }) = _VideoCoordinate;
 
-  factory VideoCoordinate.fromJson(Map<String, dynamic> json) => _$VideoCoordinateFromJson(json);
+  factory VideoCoordinate.fromJson(Map<String, dynamic> json) =>
+      _$VideoCoordinateFromJson(json);
 }
 
 /// Video analytics data for organization dashboard
@@ -140,7 +143,8 @@ class VideoAnalytics with _$VideoAnalytics {
     required int videosLast7Days,
   }) = _VideoAnalytics;
 
-  factory VideoAnalytics.fromJson(Map<String, dynamic> json) => _$VideoAnalyticsFromJson(json);
+  factory VideoAnalytics.fromJson(Map<String, dynamic> json) =>
+      _$VideoAnalyticsFromJson(json);
 }
 
 /// Video upload progress tracking
@@ -158,7 +162,8 @@ class VideoUploadProgress with _$VideoUploadProgress {
     DateTime? completedAt,
   }) = _VideoUploadProgress;
 
-  factory VideoUploadProgress.fromJson(Map<String, dynamic> json) => _$VideoUploadProgressFromJson(json);
+  factory VideoUploadProgress.fromJson(Map<String, dynamic> json) =>
+      _$VideoUploadProgressFromJson(json);
 }
 
 /// Video upload status enum
@@ -241,7 +246,8 @@ class VideoSearchFilters with _$VideoSearchFilters {
     int? maxDurationSeconds,
   }) = _VideoSearchFilters;
 
-  factory VideoSearchFilters.fromJson(Map<String, dynamic> json) => _$VideoSearchFiltersFromJson(json);
+  factory VideoSearchFilters.fromJson(Map<String, dynamic> json) =>
+      _$VideoSearchFiltersFromJson(json);
 }
 
 /// Extensions for Video model
@@ -252,8 +258,12 @@ extension VideoExtensions on Video {
   /// Get human-readable file size
   String get fileSizeFormatted {
     if (fileSizeBytes < 1024) return '$fileSizeBytes B';
-    if (fileSizeBytes < 1024 * 1024) return '${(fileSizeBytes / 1024).toStringAsFixed(1)} KB';
-    if (fileSizeBytes < 1024 * 1024 * 1024) return '${(fileSizeBytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+    if (fileSizeBytes < 1024 * 1024) {
+      return '${(fileSizeBytes / 1024).toStringAsFixed(1)} KB';
+    }
+    if (fileSizeBytes < 1024 * 1024 * 1024) {
+      return '${(fileSizeBytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+    }
     return '${(fileSizeBytes / (1024 * 1024 * 1024)).toStringAsFixed(1)} GB';
   }
 
@@ -265,9 +275,9 @@ extension VideoExtensions on Video {
     final seconds = duration.inSeconds.remainder(60);
 
     if (hours > 0) {
-      return '${hours}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+      return '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
     } else {
-      return '${minutes}:${seconds.toString().padLeft(2, '0')}';
+      return '$minutes:${seconds.toString().padLeft(2, '0')}';
     }
   }
 

@@ -27,7 +27,7 @@ class SupabaseVideoRepository implements VideoRepository {
       final videosList = <Video>[];
       return Success(videosList);
     } catch (e) {
-      return Failure(VideoStorageError('Failed to fetch videos: $e'));
+      return Failure(NetworkFailure('Failed to fetch videos: $e'));
     }
   }
 
@@ -44,9 +44,9 @@ class SupabaseVideoRepository implements VideoRepository {
       return Success(video);
     } catch (e) {
       if (e.toString().contains('No rows returned')) {
-        return Failure(VideoNotFoundError('Video not found: $videoId'));
+        return Failure(NetworkFailure('Video not found: $videoId'));
       }
-      return Failure(VideoStorageError('Failed to get video: $e'));
+      return Failure(NetworkFailure('Failed to get video: $e'));
     }
   }
 
@@ -77,8 +77,7 @@ class SupabaseVideoRepository implements VideoRepository {
 
       // Step 3: Generate unique filename with organization structure
       final fileExtension = path.extension(request.localFilePath);
-      final fileName =
-          '${request.organizationId}/${_uuid.v4()}$fileExtension';
+      final fileName = '${request.organizationId}/${_uuid.v4()}$fileExtension';
 
       // Step 4: Upload video file to Supabase Storage
       final uploadResult = await _uploadVideoFile(
@@ -126,9 +125,8 @@ class SupabaseVideoRepository implements VideoRepository {
 
       final video = _mapDatabaseRowToVideo(response);
       return Success(video);
-
     } catch (e) {
-      return Failure(VideoUploadError('Upload failed: $e'));
+      return Failure(NetworkFailure('Upload failed: $e'));
     }
   }
 
@@ -161,7 +159,7 @@ class SupabaseVideoRepository implements VideoRepository {
       final video = _mapDatabaseRowToVideo(response);
       return Success(video);
     } catch (e) {
-      return Failure(VideoStorageError('Failed to update video: $e'));
+      return Failure(NetworkFailure('Failed to update video: $e'));
     }
   }
 
@@ -181,9 +179,7 @@ class SupabaseVideoRepository implements VideoRepository {
         final fileName = _extractFileNameFromUrl(video.fileUrl);
         if (fileName != null) {
           try {
-            await _supabase.storage
-                .from('training-videos')
-                .remove([fileName]);
+            await _supabase.storage.from('training-videos').remove([fileName]);
           } catch (e) {
             // Storage deletion failure shouldn't block database cleanup
             print('Warning: Failed to delete video file from storage: $e');
@@ -207,19 +203,17 @@ class SupabaseVideoRepository implements VideoRepository {
       }
 
       // Delete from database
-      await _supabase
-          .from('video_tags')
-          .delete()
-          .eq('id', videoId);
+      await _supabase.from('video_tags').delete().eq('id', videoId);
 
       return const Success(null);
     } catch (e) {
-      return Failure(VideoStorageError('Failed to delete video: $e'));
+      return Failure(NetworkFailure('Failed to delete video: $e'));
     }
   }
 
   @override
-  Future<Result<VideoAnalytics>> getVideoAnalytics(String organizationId) async {
+  Future<Result<VideoAnalytics>> getVideoAnalytics(
+      String organizationId) async {
     try {
       final response = await _supabase
           .from('video_analytics')
@@ -230,7 +224,7 @@ class SupabaseVideoRepository implements VideoRepository {
       final analytics = VideoAnalytics.fromJson(response);
       return Success(analytics);
     } catch (e) {
-      return Failure(VideoStorageError('Failed to get analytics: $e'));
+      return Failure(NetworkFailure('Failed to get analytics: $e'));
     }
   }
 
@@ -241,7 +235,7 @@ class SupabaseVideoRepository implements VideoRepository {
     String? errorMessage,
   }) async {
     try {
-      await _supabase.rpc(
+      await _supabase.rpc<void>(
         'update_video_processing_status',
         params: {
           'video_id': videoId,
@@ -252,7 +246,7 @@ class SupabaseVideoRepository implements VideoRepository {
 
       return const Success(null);
     } catch (e) {
-      return Failure(VideoProcessingError('Failed to update status: $e'));
+      return Failure(NetworkFailure('Failed to update status: $e'));
     }
   }
 
@@ -269,10 +263,11 @@ class SupabaseVideoRepository implements VideoRepository {
       // 4. Return the public URL
 
       // Placeholder implementation
-      const thumbnailUrl = 'https://via.placeholder.com/320x180.png?text=Video+Thumbnail';
+      const thumbnailUrl =
+          'https://via.placeholder.com/320x180.png?text=Video+Thumbnail';
       return const Success(thumbnailUrl);
     } catch (e) {
-      return Failure(VideoProcessingError('Thumbnail generation failed: $e'));
+      return Failure(NetworkFailure('Thumbnail generation failed: $e'));
     }
   }
 
@@ -294,13 +289,13 @@ class SupabaseVideoRepository implements VideoRepository {
           .limit(limit ?? 50)
           .range(offset ?? 0, (offset ?? 0) + (limit ?? 50) - 1);
 
-      final videos = (response as List)
-          .map((json) => _mapDatabaseRowToVideo(json))
+      final videos = (response as List<dynamic>)
+          .map((json) => _mapDatabaseRowToVideo(json as Map<String, dynamic>))
           .toList();
 
       return Success(videos);
     } catch (e) {
-      return Failure(VideoStorageError('Search failed: $e'));
+      return Failure(NetworkFailure('Search failed: $e'));
     }
   }
 
@@ -321,13 +316,13 @@ class SupabaseVideoRepository implements VideoRepository {
           .limit(limit ?? 50)
           .range(offset ?? 0, (offset ?? 0) + (limit ?? 50) - 1);
 
-      final videos = (response as List)
-          .map((json) => _mapDatabaseRowToVideo(json))
+      final videos = (response as List<dynamic>)
+          .map((json) => _mapDatabaseRowToVideo(json as Map<String, dynamic>))
           .toList();
 
       return Success(videos);
     } catch (e) {
-      return Failure(VideoStorageError('Failed to get videos by status: $e'));
+      return Failure(NetworkFailure('Failed to get videos by status: $e'));
     }
   }
 
@@ -358,25 +353,23 @@ class SupabaseVideoRepository implements VideoRepository {
 
       // Check if file exists
       if (!await file.exists()) {
-        return Failure(VideoValidationError('File does not exist'));
+        return const Failure(NetworkFailure('File does not exist'));
       }
 
       // Check file size (500MB limit)
       const maxSizeBytes = 500 * 1024 * 1024;
       final fileSize = await file.length();
       if (fileSize > maxSizeBytes) {
-        return Failure(VideoValidationError(
-          'File too large. Maximum size is 500MB. File size: ${fileSize ~/ (1024 * 1024)}MB'
-        ));
+        return Failure(NetworkFailure(
+            'File too large. Maximum size is 500MB. File size: ${fileSize ~/ (1024 * 1024)}MB'));
       }
 
       // Check file extension
       const supportedFormats = ['.mp4', '.mov', '.avi', '.webm'];
       final extension = path.extension(filePath).toLowerCase();
       if (!supportedFormats.contains(extension)) {
-        return Failure(VideoValidationError(
-          'Unsupported format: $extension. Supported: ${supportedFormats.join(', ')}'
-        ));
+        return Failure(NetworkFailure(
+            'Unsupported format: $extension. Supported: ${supportedFormats.join(', ')}'));
       }
 
       // Check storage quota for organization
@@ -389,17 +382,15 @@ class SupabaseVideoRepository implements VideoRepository {
       const quotaBytes = 5 * 1024 * 1024 * 1024; // 5GB default quota
       final currentUsage = usageResult.dataOrNull!;
       if (currentUsage + fileSize > quotaBytes) {
-        return Failure(VideoQuotaExceededError(
-          'Upload would exceed storage quota. '
-          'Current: ${currentUsage ~/ (1024 * 1024)}MB, '
-          'File: ${fileSize ~/ (1024 * 1024)}MB, '
-          'Quota: ${quotaBytes ~/ (1024 * 1024)}MB'
-        ));
+        return Failure(NetworkFailure('Upload would exceed storage quota. '
+            'Current: ${currentUsage ~/ (1024 * 1024)}MB, '
+            'File: ${fileSize ~/ (1024 * 1024)}MB, '
+            'Quota: ${quotaBytes ~/ (1024 * 1024)}MB'));
       }
 
       return const Success(null);
     } catch (e) {
-      return Failure(VideoValidationError('Validation failed: $e'));
+      return Failure(NetworkFailure('Validation failed: $e'));
     }
   }
 
@@ -411,12 +402,15 @@ class SupabaseVideoRepository implements VideoRepository {
           .select('file_size_bytes')
           .eq('organization_id', organizationId);
 
-      final totalBytes = (response as List)
-          .fold<int>(0, (sum, row) => sum + (row['file_size_bytes'] as int? ?? 0));
+      final totalBytes = (response as List<dynamic>).fold<int>(
+          0,
+          (sum, row) =>
+              sum +
+              ((row as Map<String, dynamic>)['file_size_bytes'] as int? ?? 0));
 
       return Success(totalBytes);
     } catch (e) {
-      return Failure(VideoStorageError('Failed to get storage usage: $e'));
+      return Failure(NetworkFailure('Failed to get storage usage: $e'));
     }
   }
 
@@ -445,7 +439,7 @@ class SupabaseVideoRepository implements VideoRepository {
 
       return Success(metadata);
     } catch (e) {
-      return Failure(VideoProcessingError('Failed to get metadata: $e'));
+      return Failure(NetworkFailure('Failed to get metadata: $e'));
     }
   }
 
@@ -456,7 +450,7 @@ class SupabaseVideoRepository implements VideoRepository {
     void Function(double progress)? onProgress,
   }) async {
     // Placeholder - would implement with flutter_cache_manager
-    return Failure(VideoStorageError('Offline caching not yet implemented'));
+    return const Failure(NetworkFailure('Offline caching not yet implemented'));
   }
 
   @override
@@ -486,9 +480,7 @@ class SupabaseVideoRepository implements VideoRepository {
     void Function(double progress)? onProgress,
   ) async {
     try {
-      await _supabase.storage
-          .from('training-videos')
-          .upload(
+      await _supabase.storage.from('training-videos').upload(
             fileName,
             videoFile,
             fileOptions: const FileOptions(
@@ -499,15 +491,13 @@ class SupabaseVideoRepository implements VideoRepository {
 
       return Success(fileName);
     } catch (e) {
-      return Failure(VideoUploadError('File upload failed: $e'));
+      return Failure(NetworkFailure('File upload failed: $e'));
     }
   }
 
   /// Get public URL for video file
   String _getPublicVideoUrl(String fileName) {
-    return _supabase.storage
-        .from('training-videos')
-        .getPublicUrl(fileName);
+    return _supabase.storage.from('training-videos').getPublicUrl(fileName);
   }
 
   /// Extract filename from Supabase storage URL
@@ -546,9 +536,11 @@ class SupabaseVideoRepository implements VideoRepository {
         orElse: () => VideoProcessingStatus.pending,
       ),
       processingError: row['processing_error'] as String?,
-      videoMetadata: Map<String, dynamic>.from(row['video_metadata'] ?? {}),
-      tagData: Map<String, dynamic>.from(row['tag_data'] ?? {}),
-      tags: List<String>.from(row['tags'] ?? []),
+      videoMetadata: Map<String, dynamic>.from((row['video_metadata'] ??
+          <String, dynamic>{}) as Map<dynamic, dynamic>),
+      tagData: Map<String, dynamic>.from(
+          (row['tag_data'] ?? <String, dynamic>{}) as Map<dynamic, dynamic>),
+      tags: List<String>.from((row['tags'] ?? <String>[]) as List<dynamic>),
       timeCodes: _parseTimeCodes(row['time_codes']),
       coordinates: _parseCoordinates(row['coordinates']),
       aiConfidence: (row['ai_confidence'] as num?)?.toDouble() ?? 0.0,
@@ -568,11 +560,11 @@ class SupabaseVideoRepository implements VideoRepository {
 
     try {
       final List<dynamic> timeCodesList = timeCodesJson is String
-          ? jsonDecode(timeCodesJson)
-          : timeCodesJson;
+          ? jsonDecode(timeCodesJson) as List<dynamic>
+          : timeCodesJson as List<dynamic>;
 
       return timeCodesList
-          .map((json) => VideoTimeCode.fromJson(json))
+          .map((json) => VideoTimeCode.fromJson(json as Map<String, dynamic>))
           .toList();
     } catch (e) {
       return [];
@@ -585,11 +577,11 @@ class SupabaseVideoRepository implements VideoRepository {
 
     try {
       final List<dynamic> coordinatesList = coordinatesJson is String
-          ? jsonDecode(coordinatesJson)
-          : coordinatesJson;
+          ? jsonDecode(coordinatesJson) as List<dynamic>
+          : coordinatesJson as List<dynamic>;
 
       return coordinatesList
-          .map((json) => VideoCoordinate.fromJson(json))
+          .map((json) => VideoCoordinate.fromJson(json as Map<String, dynamic>))
           .toList();
     } catch (e) {
       return [];

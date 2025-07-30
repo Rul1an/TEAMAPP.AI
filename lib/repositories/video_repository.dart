@@ -95,39 +95,6 @@ abstract class VideoRepository {
   Future<Result<Map<String, dynamic>>> getVideoMetadata(String filePath);
 }
 
-/// Error types specific to video operations
-sealed class VideoError extends AppFailure {
-  const VideoError(super.message);
-}
-
-class VideoUploadError extends VideoError {
-  const VideoUploadError(super.message);
-}
-
-class VideoProcessingError extends VideoError {
-  const VideoProcessingError(super.message);
-}
-
-class VideoPlaybackError extends VideoError {
-  const VideoPlaybackError(super.message);
-}
-
-class VideoStorageError extends VideoError {
-  const VideoStorageError(super.message);
-}
-
-class VideoValidationError extends VideoError {
-  const VideoValidationError(super.message);
-}
-
-class VideoNotFoundError extends VideoError {
-  const VideoNotFoundError(super.message);
-}
-
-class VideoQuotaExceededError extends VideoError {
-  const VideoQuotaExceededError(super.message);
-}
-
 /// Video repository provider keys for dependency injection
 class VideoRepositoryKeys {
   static const String supabase = 'supabase_video_repository';
