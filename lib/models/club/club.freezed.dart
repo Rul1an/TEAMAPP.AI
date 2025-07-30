@@ -45,8 +45,12 @@ mixin _$Club {
   String? get createdBy => throw _privateConstructorUsedError;
   String? get updatedBy => throw _privateConstructorUsedError;
 
+  /// Serializes this Club to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Club
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ClubCopyWith<Club> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -94,6 +98,8 @@ class _$ClubCopyWithImpl<$Res, $Val extends Club>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Club
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -222,6 +228,8 @@ class _$ClubCopyWithImpl<$Res, $Val extends Club>
     ) as $Val);
   }
 
+  /// Create a copy of Club
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ClubSettingsCopyWith<$Res> get settings {
@@ -275,6 +283,8 @@ class __$$ClubImplCopyWithImpl<$Res>
   __$$ClubImplCopyWithImpl(_$ClubImpl _value, $Res Function(_$ClubImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Club
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -554,7 +564,7 @@ class _$ClubImpl extends _Club {
                 other.updatedBy == updatedBy));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -584,7 +594,9 @@ class _$ClubImpl extends _Club {
         updatedBy
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Club
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ClubImplCopyWith<_$ClubImpl> get copyWith =>
@@ -633,14 +645,14 @@ abstract class _Club extends Club {
   @override
   String get name;
   @override
-  String get shortName;
-  @override // Club Details
-  DateTime get foundedDate;
-  @override // Settings
-  ClubSettings get settings;
-  @override // Status
-  ClubStatus get status;
-  @override // Metadata
+  String get shortName; // Club Details
+  @override
+  DateTime get foundedDate; // Settings
+  @override
+  ClubSettings get settings; // Status
+  @override
+  ClubStatus get status; // Metadata
+  @override
   DateTime get createdAt;
   @override
   String? get description;
@@ -651,8 +663,8 @@ abstract class _Club extends Club {
   @override
   String? get email;
   @override
-  String? get phone;
-  @override // Address
+  String? get phone; // Address
+  @override
   String? get street;
   @override
   String? get city;
@@ -663,8 +675,8 @@ abstract class _Club extends Club {
   @override
   String? get colors;
   @override
-  String? get motto;
-  @override // SaaS Properties
+  String? get motto; // SaaS Properties
+  @override
   ClubTier get tier;
   @override
   List<Team> get teams;
@@ -676,8 +688,11 @@ abstract class _Club extends Club {
   String? get createdBy;
   @override
   String? get updatedBy;
+
+  /// Create a copy of Club
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ClubImplCopyWith<_$ClubImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -709,8 +724,12 @@ mixin _$ClubSettings {
       throw _privateConstructorUsedError; // Data Retention
   int get dataRetentionYears => throw _privateConstructorUsedError;
 
+  /// Serializes this ClubSettings to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ClubSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ClubSettingsCopyWith<ClubSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -750,6 +769,8 @@ class _$ClubSettingsCopyWithImpl<$Res, $Val extends ClubSettings>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ClubSettings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -874,6 +895,8 @@ class __$$ClubSettingsImplCopyWithImpl<$Res>
       _$ClubSettingsImpl _value, $Res Function(_$ClubSettingsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ClubSettings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1091,7 +1114,7 @@ class _$ClubSettingsImpl implements _ClubSettings {
                 other.dataRetentionYears == dataRetentionYears));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -1112,7 +1135,9 @@ class _$ClubSettingsImpl implements _ClubSettings {
       defaultMatchDuration,
       dataRetentionYears);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ClubSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ClubSettingsImplCopyWith<_$ClubSettingsImpl> get copyWith =>
@@ -1148,40 +1173,44 @@ abstract class _ClubSettings implements ClubSettings {
   factory _ClubSettings.fromJson(Map<String, dynamic> json) =
       _$ClubSettingsImpl.fromJson;
 
-  @override // General
+// General
+  @override
   String get defaultLanguage;
   @override
   String get currency;
   @override
-  String get timezone;
-  @override // Features
+  String get timezone; // Features
+  @override
   bool get enablePlayerTracking;
   @override
   bool get enableCommunication;
   @override
   bool get enableFinancialManagement;
   @override
-  bool get enableAdvancedAnalytics;
-  @override // Privacy
+  bool get enableAdvancedAnalytics; // Privacy
+  @override
   bool get allowParentAccess;
   @override
   bool get allowPlayerSelfRegistration;
   @override
-  bool get requireVOGForStaff;
-  @override // Notifications
+  bool get requireVOGForStaff; // Notifications
+  @override
   bool get emailNotifications;
   @override
   bool get pushNotifications;
   @override
-  bool get smsNotifications;
-  @override // Training
+  bool get smsNotifications; // Training
+  @override
   int get defaultTrainingDuration;
   @override
-  int get defaultMatchDuration;
-  @override // Data Retention
-  int get dataRetentionYears;
+  int get defaultMatchDuration; // Data Retention
   @override
-  @JsonKey(ignore: true)
+  int get dataRetentionYears;
+
+  /// Create a copy of ClubSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ClubSettingsImplCopyWith<_$ClubSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

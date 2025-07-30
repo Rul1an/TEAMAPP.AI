@@ -1,0 +1,8 @@
+Analyzing jo17_tactical_manager...
+
+   info - test/performance/repository_performance_test.dart:289:7 - Don't invoke 'print' in production code. Try using a logging framework. - avoid_print
+   info - test/performance/repository_performance_test.dart:292:9 - Don't invoke 'print' in production code. Try using a logging framework. - avoid_print
+   info - test/performance/repository_performance_test.dart:297:9 - Don't invoke 'print' in production code. Try using a logging framework. - avoid_print
+   info - test/performance/repository_performance_test.dart:299:7 - Don't invoke 'print' in production code. Try using a logging framework. - avoid_print
+
+4 issues found.

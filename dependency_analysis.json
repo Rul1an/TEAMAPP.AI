@@ -1,0 +1,1509 @@
+{
+  "packages": [
+    {
+      "package": "_fe_analyzer_shared",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "76.0.0"
+      },
+      "upgradable": {
+        "version": "76.0.0"
+      },
+      "resolvable": {
+        "version": "76.0.0"
+      },
+      "latest": {
+        "version": "86.0.0"
+      }
+    },
+    {
+      "package": "_flutterfire_internals",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.3.59"
+      },
+      "upgradable": {
+        "version": "1.3.59"
+      },
+      "resolvable": {
+        "version": "1.3.60"
+      },
+      "latest": {
+        "version": "1.3.60"
+      }
+    },
+    {
+      "package": "analyzer",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "6.11.0"
+      },
+      "upgradable": {
+        "version": "6.11.0"
+      },
+      "resolvable": {
+        "version": "6.11.0"
+      },
+      "latest": {
+        "version": "8.0.0"
+      }
+    },
+    {
+      "package": "analyzer_plugin",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.11.3"
+      },
+      "upgradable": {
+        "version": "0.11.3"
+      },
+      "resolvable": {
+        "version": "0.11.3"
+      },
+      "latest": {
+        "version": "0.13.5"
+      }
+    },
+    {
+      "package": "archive",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.6.1"
+      },
+      "upgradable": {
+        "version": "3.6.1"
+      },
+      "resolvable": {
+        "version": "3.6.1"
+      },
+      "latest": {
+        "version": "4.0.7"
+      }
+    },
+    {
+      "package": "build",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.4.2"
+      },
+      "upgradable": {
+        "version": "2.4.2"
+      },
+      "resolvable": {
+        "version": "2.5.4"
+      },
+      "latest": {
+        "version": "3.0.0"
+      }
+    },
+    {
+      "package": "build_resolvers",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.4.4"
+      },
+      "upgradable": {
+        "version": "2.4.4"
+      },
+      "resolvable": {
+        "version": "2.5.4"
+      },
+      "latest": {
+        "version": "3.0.0"
+      }
+    },
+    {
+      "package": "build_runner",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.4.14"
+      },
+      "upgradable": {
+        "version": "2.4.14"
+      },
+      "resolvable": {
+        "version": "2.5.4"
+      },
+      "latest": {
+        "version": "2.6.0"
+      }
+    },
+    {
+      "package": "build_runner_core",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "8.0.0"
+      },
+      "upgradable": {
+        "version": "8.0.0"
+      },
+      "resolvable": {
+        "version": "9.1.2"
+      },
+      "latest": {
+        "version": "9.2.0"
+      }
+    },
+    {
+      "package": "characters",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.4.0"
+      },
+      "upgradable": {
+        "version": "1.4.0"
+      },
+      "resolvable": {
+        "version": "1.4.0"
+      },
+      "latest": {
+        "version": "1.4.1"
+      }
+    },
+    {
+      "package": "connectivity_plus",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "5.0.2"
+      },
+      "upgradable": {
+        "version": "5.0.2"
+      },
+      "resolvable": {
+        "version": "6.1.4"
+      },
+      "latest": {
+        "version": "6.1.4"
+      }
+    },
+    {
+      "package": "connectivity_plus_platform_interface",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.2.4"
+      },
+      "upgradable": {
+        "version": "1.2.4"
+      },
+      "resolvable": {
+        "version": "2.0.1"
+      },
+      "latest": {
+        "version": "2.0.1"
+      }
+    },
+    {
+      "package": "custom_lint",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.6.4"
+      },
+      "upgradable": {
+        "version": "0.6.4"
+      },
+      "resolvable": {
+        "version": "0.7.0"
+      },
+      "latest": {
+        "version": "0.8.0"
+      }
+    },
+    {
+      "package": "custom_lint_core",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.6.3"
+      },
+      "upgradable": {
+        "version": "0.6.3"
+      },
+      "resolvable": {
+        "version": "0.7.0"
+      },
+      "latest": {
+        "version": "0.8.0"
+      }
+    },
+    {
+      "package": "custom_lint_visitor",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": null,
+      "upgradable": null,
+      "resolvable": {
+        "version": "1.0.0+6.11.0"
+      },
+      "latest": {
+        "version": "1.0.0+7.7.0"
+      }
+    },
+    {
+      "package": "dart_style",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.3.8"
+      },
+      "upgradable": {
+        "version": "2.3.8"
+      },
+      "resolvable": {
+        "version": "2.3.8"
+      },
+      "latest": {
+        "version": "3.1.1"
+      }
+    },
+    {
+      "package": "file_saver",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.2.14"
+      },
+      "upgradable": {
+        "version": "0.2.14"
+      },
+      "resolvable": {
+        "version": "0.3.1"
+      },
+      "latest": {
+        "version": "0.3.1"
+      }
+    },
+    {
+      "package": "firebase_analytics",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "11.6.0"
+      },
+      "upgradable": {
+        "version": "11.6.0"
+      },
+      "resolvable": {
+        "version": "12.0.0"
+      },
+      "latest": {
+        "version": "12.0.0"
+      }
+    },
+    {
+      "package": "firebase_analytics_platform_interface",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "4.4.3"
+      },
+      "upgradable": {
+        "version": "4.4.3"
+      },
+      "resolvable": {
+        "version": "5.0.0"
+      },
+      "latest": {
+        "version": "5.0.0"
+      }
+    },
+    {
+      "package": "firebase_analytics_web",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.5.10+16"
+      },
+      "upgradable": {
+        "version": "0.5.10+16"
+      },
+      "resolvable": {
+        "version": "0.6.0"
+      },
+      "latest": {
+        "version": "0.6.0"
+      }
+    },
+    {
+      "package": "firebase_core",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.15.2"
+      },
+      "upgradable": {
+        "version": "3.15.2"
+      },
+      "resolvable": {
+        "version": "4.0.0"
+      },
+      "latest": {
+        "version": "4.0.0"
+      }
+    },
+    {
+      "package": "firebase_core_web",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.24.1"
+      },
+      "upgradable": {
+        "version": "2.24.1"
+      },
+      "resolvable": {
+        "version": "3.0.0"
+      },
+      "latest": {
+        "version": "3.0.0"
+      }
+    },
+    {
+      "package": "firebase_messaging",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "15.2.10"
+      },
+      "upgradable": {
+        "version": "15.2.10"
+      },
+      "resolvable": {
+        "version": "16.0.0"
+      },
+      "latest": {
+        "version": "16.0.0"
+      }
+    },
+    {
+      "package": "firebase_messaging_platform_interface",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "4.6.10"
+      },
+      "upgradable": {
+        "version": "4.6.10"
+      },
+      "resolvable": {
+        "version": "4.7.0"
+      },
+      "latest": {
+        "version": "4.7.0"
+      }
+    },
+    {
+      "package": "firebase_messaging_web",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.10.10"
+      },
+      "upgradable": {
+        "version": "3.10.10"
+      },
+      "resolvable": {
+        "version": "4.0.0"
+      },
+      "latest": {
+        "version": "4.0.0"
+      }
+    },
+    {
+      "package": "firebase_performance",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.10.1+10"
+      },
+      "upgradable": {
+        "version": "0.10.1+10"
+      },
+      "resolvable": {
+        "version": "0.11.0"
+      },
+      "latest": {
+        "version": "0.11.0"
+      }
+    },
+    {
+      "package": "firebase_performance_platform_interface",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.1.5+10"
+      },
+      "upgradable": {
+        "version": "0.1.5+10"
+      },
+      "resolvable": {
+        "version": "0.1.5+11"
+      },
+      "latest": {
+        "version": "0.1.5+11"
+      }
+    },
+    {
+      "package": "firebase_performance_web",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.1.7+16"
+      },
+      "upgradable": {
+        "version": "0.1.7+16"
+      },
+      "resolvable": {
+        "version": "0.1.7+17"
+      },
+      "latest": {
+        "version": "0.1.7+17"
+      }
+    },
+    {
+      "package": "fl_chart",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.68.0"
+      },
+      "upgradable": {
+        "version": "0.68.0"
+      },
+      "resolvable": {
+        "version": "1.0.0"
+      },
+      "latest": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "package": "flutter_form_builder",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "9.7.0"
+      },
+      "upgradable": {
+        "version": "9.7.0"
+      },
+      "resolvable": {
+        "version": "10.1.0"
+      },
+      "latest": {
+        "version": "10.1.0"
+      }
+    },
+    {
+      "package": "flutter_hooks",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.20.5"
+      },
+      "upgradable": {
+        "version": "0.20.5"
+      },
+      "resolvable": {
+        "version": "0.20.5"
+      },
+      "latest": {
+        "version": "0.21.2"
+      }
+    },
+    {
+      "package": "flutter_secure_storage_darwin",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": null,
+      "upgradable": null,
+      "resolvable": {
+        "version": "0.1.0"
+      },
+      "latest": {
+        "version": "0.1.0"
+      }
+    },
+    {
+      "package": "flutter_secure_storage_linux",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.2.3"
+      },
+      "upgradable": {
+        "version": "1.2.3"
+      },
+      "resolvable": {
+        "version": "2.0.1"
+      },
+      "latest": {
+        "version": "2.0.1"
+      }
+    },
+    {
+      "package": "flutter_secure_storage_macos",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.1.3"
+      },
+      "upgradable": {
+        "version": "3.1.3"
+      },
+      "resolvable": null,
+      "latest": {
+        "version": "4.0.0"
+      }
+    },
+    {
+      "package": "flutter_secure_storage_platform_interface",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.1.2"
+      },
+      "upgradable": {
+        "version": "1.1.2"
+      },
+      "resolvable": {
+        "version": "2.0.1"
+      },
+      "latest": {
+        "version": "2.0.1"
+      }
+    },
+    {
+      "package": "flutter_secure_storage_web",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.2.1"
+      },
+      "upgradable": {
+        "version": "1.2.1"
+      },
+      "resolvable": {
+        "version": "2.0.0"
+      },
+      "latest": {
+        "version": "2.0.0"
+      }
+    },
+    {
+      "package": "flutter_secure_storage_windows",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.1.2"
+      },
+      "upgradable": {
+        "version": "3.1.2"
+      },
+      "resolvable": {
+        "version": "4.0.0"
+      },
+      "latest": {
+        "version": "4.0.0"
+      }
+    },
+    {
+      "package": "freezed",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.5.7"
+      },
+      "upgradable": {
+        "version": "2.5.7"
+      },
+      "resolvable": {
+        "version": "2.5.7"
+      },
+      "latest": {
+        "version": "3.2.0"
+      }
+    },
+    {
+      "package": "freezed_annotation",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.4.4"
+      },
+      "upgradable": {
+        "version": "2.4.4"
+      },
+      "resolvable": {
+        "version": "2.4.4"
+      },
+      "latest": {
+        "version": "3.1.0"
+      }
+    },
+    {
+      "package": "go_router",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "14.8.1"
+      },
+      "upgradable": {
+        "version": "14.8.1"
+      },
+      "resolvable": {
+        "version": "16.0.0"
+      },
+      "latest": {
+        "version": "16.0.0"
+      }
+    },
+    {
+      "package": "google_fonts",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "4.0.4"
+      },
+      "upgradable": {
+        "version": "4.0.4"
+      },
+      "resolvable": {
+        "version": "6.2.1"
+      },
+      "latest": {
+        "version": "6.2.1"
+      }
+    },
+    {
+      "package": "graphql",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "5.2.0-beta.4"
+      },
+      "upgradable": {
+        "version": "5.2.0-beta.4"
+      },
+      "resolvable": {
+        "version": "5.2.1"
+      },
+      "latest": {
+        "version": "5.2.1"
+      }
+    },
+    {
+      "package": "graphql_flutter",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "5.2.0-beta.6"
+      },
+      "upgradable": {
+        "version": "5.2.0-beta.6"
+      },
+      "resolvable": {
+        "version": "5.2.0"
+      },
+      "latest": {
+        "version": "5.2.0"
+      }
+    },
+    {
+      "package": "http",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.13.6"
+      },
+      "upgradable": {
+        "version": "0.13.6"
+      },
+      "resolvable": {
+        "version": "1.4.0"
+      },
+      "latest": {
+        "version": "1.4.0"
+      }
+    },
+    {
+      "package": "image",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "4.3.0"
+      },
+      "upgradable": {
+        "version": "4.3.0"
+      },
+      "resolvable": {
+        "version": "4.3.0"
+      },
+      "latest": {
+        "version": "4.5.4"
+      }
+    },
+    {
+      "package": "intl",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.19.0"
+      },
+      "upgradable": {
+        "version": "0.19.0"
+      },
+      "resolvable": {
+        "version": "0.20.2"
+      },
+      "latest": {
+        "version": "0.20.2"
+      }
+    },
+    {
+      "package": "jni",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.14.1"
+      },
+      "upgradable": {
+        "version": "0.14.1"
+      },
+      "resolvable": {
+        "version": "0.14.1"
+      },
+      "latest": {
+        "version": "0.14.2"
+      }
+    },
+    {
+      "package": "js",
+      "kind": "transitive",
+      "isDiscontinued": true,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.6.7"
+      },
+      "upgradable": {
+        "version": "0.6.7"
+      },
+      "resolvable": {
+        "version": "0.7.2"
+      },
+      "latest": {
+        "version": "0.7.2"
+      }
+    },
+    {
+      "package": "json_serializable",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "6.9.0"
+      },
+      "upgradable": {
+        "version": "6.9.0"
+      },
+      "resolvable": {
+        "version": "6.9.0"
+      },
+      "latest": {
+        "version": "6.10.0"
+      }
+    },
+    {
+      "package": "leak_tracker",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "10.0.9"
+      },
+      "upgradable": {
+        "version": "10.0.9"
+      },
+      "resolvable": {
+        "version": "10.0.9"
+      },
+      "latest": {
+        "version": "11.0.1"
+      }
+    },
+    {
+      "package": "leak_tracker_flutter_testing",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.0.9"
+      },
+      "upgradable": {
+        "version": "3.0.9"
+      },
+      "resolvable": {
+        "version": "3.0.9"
+      },
+      "latest": {
+        "version": "3.0.10"
+      }
+    },
+    {
+      "package": "leak_tracker_testing",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.0.1"
+      },
+      "upgradable": {
+        "version": "3.0.1"
+      },
+      "resolvable": {
+        "version": "3.0.1"
+      },
+      "latest": {
+        "version": "3.0.2"
+      }
+    },
+    {
+      "package": "material_color_utilities",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.11.1"
+      },
+      "upgradable": {
+        "version": "0.11.1"
+      },
+      "resolvable": {
+        "version": "0.11.1"
+      },
+      "latest": {
+        "version": "0.13.0"
+      }
+    },
+    {
+      "package": "meta",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.16.0"
+      },
+      "upgradable": {
+        "version": "1.16.0"
+      },
+      "resolvable": {
+        "version": "1.16.0"
+      },
+      "latest": {
+        "version": "1.17.0"
+      }
+    },
+    {
+      "package": "mime",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.0.6"
+      },
+      "upgradable": {
+        "version": "1.0.6"
+      },
+      "resolvable": {
+        "version": "2.0.0"
+      },
+      "latest": {
+        "version": "2.0.0"
+      }
+    },
+    {
+      "package": "normalize",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.8.2+1"
+      },
+      "upgradable": {
+        "version": "0.8.2+1"
+      },
+      "resolvable": {
+        "version": "0.9.1"
+      },
+      "latest": {
+        "version": "0.10.0"
+      }
+    },
+    {
+      "package": "petitparser",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "6.1.0"
+      },
+      "upgradable": {
+        "version": "6.1.0"
+      },
+      "resolvable": {
+        "version": "6.1.0"
+      },
+      "latest": {
+        "version": "7.0.0"
+      }
+    },
+    {
+      "package": "process",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "5.0.3"
+      },
+      "upgradable": {
+        "version": "5.0.3"
+      },
+      "resolvable": {
+        "version": "5.0.3"
+      },
+      "latest": {
+        "version": "5.0.4"
+      }
+    },
+    {
+      "package": "protobuf",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.1.0"
+      },
+      "upgradable": {
+        "version": "3.1.0"
+      },
+      "resolvable": {
+        "version": "3.1.0"
+      },
+      "latest": {
+        "version": "4.1.1"
+      }
+    },
+    {
+      "package": "riverpod_analyzer_utils",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.5.6"
+      },
+      "upgradable": {
+        "version": "0.5.6"
+      },
+      "resolvable": {
+        "version": "0.5.8"
+      },
+      "latest": {
+        "version": "0.5.10"
+      }
+    },
+    {
+      "package": "riverpod_generator",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.6.1"
+      },
+      "upgradable": {
+        "version": "2.6.1"
+      },
+      "resolvable": {
+        "version": "2.6.3"
+      },
+      "latest": {
+        "version": "2.6.5"
+      }
+    },
+    {
+      "package": "rxdart",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.27.7"
+      },
+      "upgradable": {
+        "version": "0.27.7"
+      },
+      "resolvable": {
+        "version": "0.28.0"
+      },
+      "latest": {
+        "version": "0.28.0"
+      }
+    },
+    {
+      "package": "share_plus",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "7.2.2"
+      },
+      "upgradable": {
+        "version": "7.2.2"
+      },
+      "resolvable": {
+        "version": "11.0.0"
+      },
+      "latest": {
+        "version": "11.0.0"
+      }
+    },
+    {
+      "package": "share_plus_platform_interface",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.4.0"
+      },
+      "upgradable": {
+        "version": "3.4.0"
+      },
+      "resolvable": {
+        "version": "6.0.0"
+      },
+      "latest": {
+        "version": "6.0.0"
+      }
+    },
+    {
+      "package": "shelf_web_socket",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.0.1"
+      },
+      "upgradable": {
+        "version": "2.0.1"
+      },
+      "resolvable": {
+        "version": "3.0.0"
+      },
+      "latest": {
+        "version": "3.0.0"
+      }
+    },
+    {
+      "package": "source_gen",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.5.0"
+      },
+      "upgradable": {
+        "version": "1.5.0"
+      },
+      "resolvable": {
+        "version": "1.5.0"
+      },
+      "latest": {
+        "version": "3.0.0"
+      }
+    },
+    {
+      "package": "source_helper",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "1.3.5"
+      },
+      "upgradable": {
+        "version": "1.3.5"
+      },
+      "resolvable": {
+        "version": "1.3.5"
+      },
+      "latest": {
+        "version": "1.3.6"
+      }
+    },
+    {
+      "package": "sprintf",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": null,
+      "upgradable": null,
+      "resolvable": {
+        "version": "7.0.0"
+      },
+      "latest": {
+        "version": "7.0.0"
+      }
+    },
+    {
+      "package": "table_calendar",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.1.3"
+      },
+      "upgradable": {
+        "version": "3.1.3"
+      },
+      "resolvable": {
+        "version": "3.2.0"
+      },
+      "latest": {
+        "version": "3.2.0"
+      }
+    },
+    {
+      "package": "test_api",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.7.4"
+      },
+      "upgradable": {
+        "version": "0.7.4"
+      },
+      "resolvable": {
+        "version": "0.7.4"
+      },
+      "latest": {
+        "version": "0.7.7"
+      }
+    },
+    {
+      "package": "test_utils",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "0.0.1",
+        "overridden": true
+      },
+      "upgradable": {
+        "version": "0.0.1",
+        "overridden": true
+      },
+      "resolvable": {
+        "version": "0.0.1",
+        "overridden": true
+      },
+      "latest": {
+        "version": "0.0.1"
+      }
+    },
+    {
+      "package": "uuid",
+      "kind": "direct",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "3.0.7"
+      },
+      "upgradable": {
+        "version": "3.0.7"
+      },
+      "resolvable": {
+        "version": "4.5.1"
+      },
+      "latest": {
+        "version": "4.5.1"
+      }
+    },
+    {
+      "package": "vector_math",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.1.4"
+      },
+      "upgradable": {
+        "version": "2.1.4"
+      },
+      "resolvable": {
+        "version": "2.1.4"
+      },
+      "latest": {
+        "version": "2.2.0"
+      }
+    },
+    {
+      "package": "very_good_analysis",
+      "kind": "dev",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "7.0.0"
+      },
+      "upgradable": {
+        "version": "7.0.0"
+      },
+      "resolvable": {
+        "version": "9.0.0"
+      },
+      "latest": {
+        "version": "9.0.0"
+      }
+    },
+    {
+      "package": "video_player_android",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.8.9"
+      },
+      "upgradable": {
+        "version": "2.8.10"
+      },
+      "resolvable": {
+        "version": "2.8.10"
+      },
+      "latest": {
+        "version": "2.8.10"
+      }
+    },
+    {
+      "package": "video_player_avfoundation",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.8.0"
+      },
+      "upgradable": {
+        "version": "2.8.1"
+      },
+      "resolvable": {
+        "version": "2.8.1"
+      },
+      "latest": {
+        "version": "2.8.1"
+      }
+    },
+    {
+      "package": "vm_service",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "15.0.0"
+      },
+      "upgradable": {
+        "version": "15.0.0"
+      },
+      "resolvable": {
+        "version": "15.0.0"
+      },
+      "latest": {
+        "version": "15.0.2"
+      }
+    },
+    {
+      "package": "web_socket",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": null,
+      "upgradable": null,
+      "resolvable": {
+        "version": "1.0.1"
+      },
+      "latest": {
+        "version": "1.0.1"
+      }
+    },
+    {
+      "package": "web_socket_channel",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "2.4.0"
+      },
+      "upgradable": {
+        "version": "2.4.0"
+      },
+      "resolvable": {
+        "version": "3.0.3"
+      },
+      "latest": {
+        "version": "3.0.3"
+      }
+    },
+    {
+      "package": "xml",
+      "kind": "transitive",
+      "isDiscontinued": false,
+      "isCurrentRetracted": false,
+      "isCurrentAffectedByAdvisory": false,
+      "current": {
+        "version": "6.5.0"
+      },
+      "upgradable": {
+        "version": "6.5.0"
+      },
+      "resolvable": {
+        "version": "6.5.0"
+      },
+      "latest": {
+        "version": "6.6.0"
+      }
+    }
+  ]
+}

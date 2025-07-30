@@ -22,8 +22,8 @@ class TrainingSessionPdfGenerator
   const TrainingSessionPdfGenerator();
 
   @override
-  Future<Uint8List> generate((TrainingSession, List<Player>) input) async {
-    final (session, players) = input;
+  Future<Uint8List> generate((TrainingSession, List<Player>) data) async {
+    final (session, players) = data;
 
     // Fail fast if essential fields are missing – prevents cryptic errors
     assert(

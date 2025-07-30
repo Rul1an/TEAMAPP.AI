@@ -225,7 +225,6 @@ class _SessionBuilderScreenState extends ConsumerState<SessionBuilderScreen> {
     );
   }
 
-
   Future<void> _saveSession() async {
     try {
       session!.sessionObjective = _objectiveController.text;

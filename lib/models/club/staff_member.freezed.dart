@@ -64,8 +64,12 @@ mixin _$StaffMember {
   String? get createdBy => throw _privateConstructorUsedError;
   String? get updatedBy => throw _privateConstructorUsedError;
 
+  /// Serializes this StaffMember to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StaffMember
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StaffMemberCopyWith<StaffMember> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -127,6 +131,8 @@ class _$StaffMemberCopyWithImpl<$Res, $Val extends StaffMember>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StaffMember
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -310,6 +316,8 @@ class _$StaffMemberCopyWithImpl<$Res, $Val extends StaffMember>
     ) as $Val);
   }
 
+  /// Create a copy of StaffMember
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StaffPermissionsCopyWith<$Res> get permissions {
@@ -318,6 +326,8 @@ class _$StaffMemberCopyWithImpl<$Res, $Val extends StaffMember>
     });
   }
 
+  /// Create a copy of StaffMember
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StaffAvailabilityCopyWith<$Res> get availability {
@@ -386,6 +396,8 @@ class __$$StaffMemberImplCopyWithImpl<$Res>
       _$StaffMemberImpl _value, $Res Function(_$StaffMemberImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StaffMember
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -809,7 +821,7 @@ class _$StaffMemberImpl implements _StaffMember {
                 other.updatedBy == updatedBy));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -850,7 +862,9 @@ class _$StaffMemberImpl implements _StaffMember {
         updatedBy
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StaffMember
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StaffMemberImplCopyWith<_$StaffMemberImpl> get copyWith =>
@@ -908,22 +922,22 @@ abstract class _StaffMember implements StaffMember {
   @override
   String get id;
   @override
-  String get clubId;
-  @override // Personal Information
+  String get clubId; // Personal Information
+  @override
   String get firstName;
   @override
-  String get lastName;
-  @override // Contact Information
-  String get email;
-  @override // Professional Information
-  StaffRole get primaryRole;
-  @override // Permissions
-  StaffPermissions get permissions;
-  @override // Availability
-  StaffAvailability get availability;
-  @override // Status
-  StaffStatus get status;
-  @override // Metadata
+  String get lastName; // Contact Information
+  @override
+  String get email; // Professional Information
+  @override
+  StaffRole get primaryRole; // Permissions
+  @override
+  StaffPermissions get permissions; // Availability
+  @override
+  StaffAvailability get availability; // Status
+  @override
+  StaffStatus get status; // Metadata
+  @override
   DateTime get createdAt;
   @override
   String? get middleName;
@@ -934,8 +948,8 @@ abstract class _StaffMember implements StaffMember {
   @override
   String? get emergencyContact;
   @override
-  String? get emergencyPhone;
-  @override // Address
+  String? get emergencyPhone; // Address
+  @override
   String? get street;
   @override
   String? get city;
@@ -950,16 +964,16 @@ abstract class _StaffMember implements StaffMember {
   @override
   DateTime? get startDate;
   @override
-  DateTime? get endDate;
-  @override // Qualifications
+  DateTime? get endDate; // Qualifications
+  @override
   List<Qualification> get qualifications;
   @override
-  List<Certificate> get certificates;
-  @override // Teams
+  List<Certificate> get certificates; // Teams
+  @override
   List<String> get teamIds;
   @override
-  List<String> get primaryTeamIds;
-  @override // Documents
+  List<String> get primaryTeamIds; // Documents
+  @override
   bool? get hasVOG;
   @override
   DateTime? get vogExpiryDate;
@@ -975,8 +989,11 @@ abstract class _StaffMember implements StaffMember {
   String? get createdBy;
   @override
   String? get updatedBy;
+
+  /// Create a copy of StaffMember
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StaffMemberImplCopyWith<_$StaffMemberImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1013,8 +1030,12 @@ mixin _$StaffPermissions {
   bool get canViewLogs => throw _privateConstructorUsedError;
   bool get canManageIntegrations => throw _privateConstructorUsedError;
 
+  /// Serializes this StaffPermissions to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StaffPermissions
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StaffPermissionsCopyWith<StaffPermissions> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1059,6 +1080,8 @@ class _$StaffPermissionsCopyWithImpl<$Res, $Val extends StaffPermissions>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StaffPermissions
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1213,6 +1236,8 @@ class __$$StaffPermissionsImplCopyWithImpl<$Res>
       $Res Function(_$StaffPermissionsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StaffPermissions
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1480,7 +1505,7 @@ class _$StaffPermissionsImpl implements _StaffPermissions {
                 other.canManageIntegrations == canManageIntegrations));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -1507,7 +1532,9 @@ class _$StaffPermissionsImpl implements _StaffPermissions {
         canManageIntegrations
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StaffPermissions
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StaffPermissionsImplCopyWith<_$StaffPermissionsImpl> get copyWith =>
@@ -1549,50 +1576,54 @@ abstract class _StaffPermissions implements StaffPermissions {
   factory _StaffPermissions.fromJson(Map<String, dynamic> json) =
       _$StaffPermissionsImpl.fromJson;
 
-  @override // Administrative
+// Administrative
+  @override
   bool get canManageClub;
   @override
   bool get canManageTeams;
   @override
   bool get canManageStaff;
   @override
-  bool get canManagePlayers;
-  @override // Training & Matches
+  bool get canManagePlayers; // Training & Matches
+  @override
   bool get canCreateTraining;
   @override
   bool get canEditTraining;
   @override
   bool get canDeleteTraining;
   @override
-  bool get canManageMatches;
-  @override // Performance & Analytics
+  bool get canManageMatches; // Performance & Analytics
+  @override
   bool get canViewPlayerData;
   @override
   bool get canEditPlayerData;
   @override
   bool get canViewAnalytics;
   @override
-  bool get canExportData;
-  @override // Communication
+  bool get canExportData; // Communication
+  @override
   bool get canSendMessages;
   @override
   bool get canManageCommunication;
   @override
-  bool get canAccessParentPortal;
-  @override // Financial
+  bool get canAccessParentPortal; // Financial
+  @override
   bool get canViewFinancials;
   @override
   bool get canManagePayments;
   @override
-  bool get canGenerateInvoices;
-  @override // System
+  bool get canGenerateInvoices; // System
+  @override
   bool get canManageSettings;
   @override
   bool get canViewLogs;
   @override
   bool get canManageIntegrations;
+
+  /// Create a copy of StaffPermissions
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StaffPermissionsImplCopyWith<_$StaffPermissionsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1611,8 +1642,12 @@ mixin _$StaffAvailability {
   bool? get availableForTraining => throw _privateConstructorUsedError;
   bool? get availableForEvents => throw _privateConstructorUsedError;
 
+  /// Serializes this StaffAvailability to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StaffAvailability
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StaffAvailabilityCopyWith<StaffAvailability> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1643,6 +1678,8 @@ class _$StaffAvailabilityCopyWithImpl<$Res, $Val extends StaffAvailability>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StaffAvailability
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1713,6 +1750,8 @@ class __$$StaffAvailabilityImplCopyWithImpl<$Res>
       $Res Function(_$StaffAvailabilityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StaffAvailability
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1830,7 +1869,7 @@ class _$StaffAvailabilityImpl implements _StaffAvailability {
                 other.availableForEvents == availableForEvents));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -1842,7 +1881,9 @@ class _$StaffAvailabilityImpl implements _StaffAvailability {
       availableForTraining,
       availableForEvents);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StaffAvailability
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StaffAvailabilityImplCopyWith<_$StaffAvailabilityImpl> get copyWith =>
@@ -1884,8 +1925,11 @@ abstract class _StaffAvailability implements StaffAvailability {
   bool? get availableForTraining;
   @override
   bool? get availableForEvents;
+
+  /// Create a copy of StaffAvailability
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StaffAvailabilityImplCopyWith<_$StaffAvailabilityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1906,8 +1950,12 @@ mixin _$Qualification {
   String? get level => throw _privateConstructorUsedError;
   bool? get isValid => throw _privateConstructorUsedError;
 
+  /// Serializes this Qualification to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Qualification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $QualificationCopyWith<Qualification> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1940,6 +1988,8 @@ class _$QualificationCopyWithImpl<$Res, $Val extends Qualification>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Qualification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2022,6 +2072,8 @@ class __$$QualificationImplCopyWithImpl<$Res>
       _$QualificationImpl _value, $Res Function(_$QualificationImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Qualification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2137,12 +2189,14 @@ class _$QualificationImpl implements _Qualification {
             (identical(other.isValid, isValid) || other.isValid == isValid));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, type, issuingBody,
       issuedDate, expiryDate, certificateNumber, level, isValid);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Qualification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QualificationImplCopyWith<_$QualificationImpl> get copyWith =>
@@ -2189,8 +2243,11 @@ abstract class _Qualification implements Qualification {
   String? get level;
   @override
   bool? get isValid;
+
+  /// Create a copy of Qualification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QualificationImplCopyWith<_$QualificationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2210,8 +2267,12 @@ mixin _$Certificate {
   String? get documentUrl => throw _privateConstructorUsedError;
   bool? get isVerified => throw _privateConstructorUsedError;
 
+  /// Serializes this Certificate to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Certificate
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CertificateCopyWith<Certificate> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2243,6 +2304,8 @@ class _$CertificateCopyWithImpl<$Res, $Val extends Certificate>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Certificate
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2319,6 +2382,8 @@ class __$$CertificateImplCopyWithImpl<$Res>
       _$CertificateImpl _value, $Res Function(_$CertificateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Certificate
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2426,12 +2491,14 @@ class _$CertificateImpl implements _Certificate {
                 other.isVerified == isVerified));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, type, issuedDate,
       expiryDate, issuingBody, documentUrl, isVerified);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Certificate
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CertificateImplCopyWith<_$CertificateImpl> get copyWith =>
@@ -2475,8 +2542,11 @@ abstract class _Certificate implements Certificate {
   String? get documentUrl;
   @override
   bool? get isVerified;
+
+  /// Create a copy of Certificate
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CertificateImplCopyWith<_$CertificateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -48,8 +48,12 @@ mixin _$Team {
   String? get createdBy => throw _privateConstructorUsedError;
   String? get updatedBy => throw _privateConstructorUsedError;
 
+  /// Serializes this Team to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Team
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TeamCopyWith<Team> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -98,6 +102,8 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Team
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -231,6 +237,8 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
     ) as $Val);
   }
 
+  /// Create a copy of Team
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TeamSettingsCopyWith<$Res> get settings {
@@ -285,6 +293,8 @@ class __$$TeamImplCopyWithImpl<$Res>
   __$$TeamImplCopyWithImpl(_$TeamImpl _value, $Res Function(_$TeamImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Team
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -589,7 +599,7 @@ class _$TeamImpl implements _Team {
                 other.updatedBy == updatedBy));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -620,7 +630,9 @@ class _$TeamImpl implements _Team {
         updatedBy
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Team
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TeamImplCopyWith<_$TeamImpl> get copyWith =>
@@ -671,22 +683,22 @@ abstract class _Team implements Team {
   @override
   String get name;
   @override
-  String get shortName;
-  @override // Team Classification
+  String get shortName; // Team Classification
+  @override
   AgeCategory get ageCategory;
   @override
   TeamLevel get level;
   @override
-  TeamGender get gender;
-  @override // Season Information
-  String get currentSeason;
-  @override // Settings
-  TeamSettings get settings;
-  @override // Status
-  TeamStatus get status;
-  @override // Metadata
-  DateTime get createdAt;
-  @override // Details
+  TeamGender get gender; // Season Information
+  @override
+  String get currentSeason; // Settings
+  @override
+  TeamSettings get settings; // Status
+  @override
+  TeamStatus get status; // Metadata
+  @override
+  DateTime get createdAt; // Details
+  @override
   String? get description;
   @override
   String? get logoUrl;
@@ -695,16 +707,16 @@ abstract class _Team implements Team {
   @override
   String? get league;
   @override
-  String? get division;
-  @override // Staff
+  String? get division; // Staff
+  @override
   List<String> get staffIds;
   @override
   String? get headCoachId;
   @override
   String? get assistantCoachId;
   @override
-  String? get teamManagerId;
-  @override // Players
+  String? get teamManagerId; // Players
+  @override
   List<String> get playerIds;
   @override
   List<String> get captainIds;
@@ -714,8 +726,11 @@ abstract class _Team implements Team {
   String? get createdBy;
   @override
   String? get updatedBy;
+
+  /// Create a copy of Team
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TeamImplCopyWith<_$TeamImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -745,8 +760,12 @@ mixin _$TeamSettings {
   bool get requireInsurance => throw _privateConstructorUsedError;
   bool get requireVOG => throw _privateConstructorUsedError;
 
+  /// Serializes this TeamSettings to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TeamSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TeamSettingsCopyWith<TeamSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -784,6 +803,8 @@ class _$TeamSettingsCopyWithImpl<$Res, $Val extends TeamSettings>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TeamSettings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -896,6 +917,8 @@ class __$$TeamSettingsImplCopyWithImpl<$Res>
       _$TeamSettingsImpl _value, $Res Function(_$TeamSettingsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TeamSettings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1095,7 +1118,7 @@ class _$TeamSettingsImpl implements _TeamSettings {
                 other.requireVOG == requireVOG));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -1114,7 +1137,9 @@ class _$TeamSettingsImpl implements _TeamSettings {
       requireInsurance,
       requireVOG);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TeamSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TeamSettingsImplCopyWith<_$TeamSettingsImpl> get copyWith =>
@@ -1148,36 +1173,40 @@ abstract class _TeamSettings implements TeamSettings {
   factory _TeamSettings.fromJson(Map<String, dynamic> json) =
       _$TeamSettingsImpl.fromJson;
 
-  @override // Training
+// Training
+  @override
   int get trainingsPerWeek;
   @override
   int get defaultTrainingDuration;
   @override
-  List<String> get trainingDays;
-  @override // Match
+  List<String> get trainingDays; // Match
+  @override
   String get matchDay;
   @override
-  int get defaultMatchDuration;
-  @override // Communication
+  int get defaultMatchDuration; // Communication
+  @override
   bool get allowParentCommunication;
   @override
   bool get sendTrainingReminders;
   @override
-  bool get sendMatchReminders;
-  @override // Performance
+  bool get sendMatchReminders; // Performance
+  @override
   bool get trackPlayerPerformance;
   @override
   bool get enableVideoAnalysis;
   @override
-  bool get enableGPSTracking;
-  @override // Administrative
+  bool get enableGPSTracking; // Administrative
+  @override
   bool get requireMedicalCertificate;
   @override
   bool get requireInsurance;
   @override
   bool get requireVOG;
+
+  /// Create a copy of TeamSettings
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TeamSettingsImplCopyWith<_$TeamSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

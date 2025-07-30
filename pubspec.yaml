@@ -78,7 +78,13 @@ dependencies:
 
   # Networking
   http: ^0.13.6
-  video_player: ^2.8.1
+
+  # Video Core Dependencies (Phase 1 Implementation)
+  video_player: ^2.8.6
+  ffmpeg_kit_flutter: ^6.0.3
+  chewie: ^1.7.5  # Enhanced video controls
+  wakelock_plus: ^1.2.5  # Prevent screen sleep
+  flutter_cache_manager: ^3.3.1
 
   # Analytics & Data (duplicates removed)
 
@@ -93,10 +99,13 @@ dev_dependencies:
   coverage: ^1.7.2
   # Replaced by very_good_analysis for stricter lint set
   very_good_analysis: ^7.0.0
-  custom_lint: ^0.6.4
+
+  # Custom lint removed - conflicts with analyzer 6.11.0 (AugmentationImportDirective missing)
+  # Using very_good_analysis instead for comprehensive linting
+
   import_sorter: ^4.6.0
   build_runner: ^2.4.9
-  riverpod_generator: ^2.4.0
+  riverpod_generator: ^2.6.1  # Re-enabled with Phase 1 solution
   shared_preferences: ^2.2.2
 
   # Code generation
@@ -106,11 +115,14 @@ dev_dependencies:
 
   # New dev dependency
   hive_test: ^1.0.1
-  leak_tracker: ^10.0.9
-  leak_tracker_flutter_testing: ^3.0.9
+  leak_tracker: ^10.0.7
 
 flutter:
   uses-material-design: true
 
 dependency_overrides:
   file: 7.0.1
+  # Updated for Dart 3.8.1 compatibility - Analyzer version must support AugmentationImportDirective
+  analyzer_plugin: ^0.13.1  # Critical fix for publiclyExporting typo
+  analyzer: ^7.0.0          # Compatible with Dart 3.8.1 and AugmentationImportDirective
+  custom_lint_core: ^0.6.3  # Allow newer versions for Dart 3.8.1 compatibility
