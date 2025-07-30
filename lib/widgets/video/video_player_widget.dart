@@ -31,16 +31,14 @@ class VideoPlayerWidget extends ConsumerStatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
-  late final VideoPlayerNotifier _playerNotifier;
-
   @override
   void initState() {
     super.initState();
 
     // Initialize video player after the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _playerNotifier = ref.read(videoPlayerNotifierProvider.notifier);
-      _playerNotifier.initializeVideo(widget.video, autoPlay: widget.autoPlay);
+      final notifier = ref.read(videoPlayerProvider.notifier);
+      notifier.initializeVideo(widget.video, autoPlay: widget.autoPlay);
     });
   }
 
@@ -50,15 +48,15 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
 
     // Reinitialize if video changes
     if (oldWidget.video.id != widget.video.id) {
-      _playerNotifier = ref.read(videoPlayerNotifierProvider.notifier);
-      _playerNotifier.initializeVideo(widget.video, autoPlay: widget.autoPlay);
+      final notifier = ref.read(videoPlayerProvider.notifier);
+      notifier.initializeVideo(widget.video, autoPlay: widget.autoPlay);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final playerState = ref.watch(videoPlayerNotifierProvider);
-    final playerNotifier = ref.read(videoPlayerNotifierProvider.notifier);
+    final playerState = ref.watch(videoPlayerProvider);
+    final playerNotifier = ref.read(videoPlayerProvider.notifier);
 
     return Container(
       width: double.infinity,
@@ -317,8 +315,8 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
       ),
       child: Slider(
         value: state.position.inMilliseconds.toDouble(),
-        max: state.duration.inMilliseconds.toDouble(),
-        onChanged: (value) {
+        max: state.duration.inMilliseconds.toDouble().clamp(1.0, double.infinity),
+        onChanged: (double value) {
           notifier.seekTo(Duration(milliseconds: value.round()));
         },
       ),
@@ -437,7 +435,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           const SizedBox(height: 16),
           ElevatedButton.icon(
             onPressed: () {
-              final notifier = ref.read(videoPlayerNotifierProvider.notifier);
+              final notifier = ref.read(videoPlayerProvider.notifier);
               notifier.initializeVideo(widget.video);
             },
             icon: const Icon(Icons.refresh),
