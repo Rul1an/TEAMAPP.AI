@@ -50,40 +50,100 @@ class FieldDiagram {
         );
 
   factory FieldDiagram.fromJson(Map<String, dynamic> json) => FieldDiagram(
-        id: json['id'] as String? ??
+        id: _parseString(json['id']) ??
             DateTime.now().millisecondsSinceEpoch.toString(),
-        fieldType: FieldType.values.firstWhere(
-          (e) => e.name == json['fieldType'] as String,
-          orElse: () => FieldType.halfField,
-        ),
-        fieldSize:
-            Dimensions.fromJson(json['fieldSize'] as Map<String, dynamic>),
-        players: (json['players'] as List<dynamic>?)
-                ?.map((p) => PlayerMarker.fromJson(p as Map<String, dynamic>))
-                .toList() ??
-            [],
-        equipment: (json['equipment'] as List<dynamic>?)
-                ?.map(
-                  (e) => EquipmentMarker.fromJson(e as Map<String, dynamic>),
-                )
-                .toList() ??
-            [],
-        movements: (json['movements'] as List<dynamic>?)
-                ?.map((m) => MovementLine.fromJson(m as Map<String, dynamic>))
-                .toList() ??
-            [],
-        areas: (json['areas'] as List<dynamic>?)
-                ?.map((a) => AreaMarker.fromJson(a as Map<String, dynamic>))
-                .toList() ??
-            [],
-        labels: (json['labels'] as List<dynamic>?)
-                ?.map((l) => TextLabel.fromJson(l as Map<String, dynamic>))
-                .toList() ??
-            [],
-        backgroundColor: json['backgroundColor'] as String?,
-        showFieldMarkings: json['showFieldMarkings'] as bool? ?? true,
-        showGoals: json['showGoals'] as bool? ?? true,
+        fieldType: _parseFieldType(_parseString(json['fieldType'])),
+        fieldSize: _parseDimensions(json['fieldSize']),
+        players: _parsePlayerMarkerList(json['players']),
+        equipment: _parseEquipmentMarkerList(json['equipment']),
+        movements: _parseMovementLineList(json['movements']),
+        areas: _parseAreaMarkerList(json['areas']),
+        labels: _parseTextLabelList(json['labels']),
+        backgroundColor: _parseString(json['backgroundColor']),
+        showFieldMarkings: _parseBool(json['showFieldMarkings']) ?? true,
+        showGoals: _parseBool(json['showGoals']) ?? true,
       );
+
+  // Helper methods for JSON parsing
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static bool? _parseBool(dynamic value) {
+    if (value == null) return null;
+    if (value is bool) return value;
+    if (value is String) {
+      return value.toLowerCase() == 'true';
+    }
+    return null;
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      return double.tryParse(value);
+    }
+    return null;
+  }
+
+  static FieldType _parseFieldType(String? typeString) {
+    if (typeString == null) return FieldType.halfField;
+    return FieldType.values.firstWhere(
+      (e) => e.name == typeString,
+      orElse: () => FieldType.halfField,
+    );
+  }
+
+  static Dimensions _parseDimensions(dynamic value) {
+    if (value is Map<String, dynamic>) {
+      return Dimensions.fromJson(value);
+    }
+    return const Dimensions(52.5, 68); // Default half field
+  }
+
+  static List<PlayerMarker> _parsePlayerMarkerList(dynamic value) {
+    if (value is! List) return [];
+    return value
+        .where((item) => item is Map<String, dynamic>)
+        .map((item) => PlayerMarker.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  static List<EquipmentMarker> _parseEquipmentMarkerList(dynamic value) {
+    if (value is! List) return [];
+    return value
+        .where((item) => item is Map<String, dynamic>)
+        .map((item) => EquipmentMarker.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  static List<MovementLine> _parseMovementLineList(dynamic value) {
+    if (value is! List) return [];
+    return value
+        .where((item) => item is Map<String, dynamic>)
+        .map((item) => MovementLine.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  static List<AreaMarker> _parseAreaMarkerList(dynamic value) {
+    if (value is! List) return [];
+    return value
+        .where((item) => item is Map<String, dynamic>)
+        .map((item) => AreaMarker.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  static List<TextLabel> _parseTextLabelList(dynamic value) {
+    if (value is! List) return [];
+    return value
+        .where((item) => item is Map<String, dynamic>)
+        .map((item) => TextLabel.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
   final String id;
   final FieldType fieldType;
   final Dimensions fieldSize;
@@ -158,15 +218,33 @@ class PlayerMarker {
   });
 
   factory PlayerMarker.fromJson(Map<String, dynamic> json) => PlayerMarker(
-        id: json['id'] as String? ?? '',
-        position: Position.fromJson(json['position'] as Map<String, dynamic>),
-        type: PlayerType.values.firstWhere(
-          (e) => e.name == json['type'],
-          orElse: () => PlayerType.neutral,
-        ),
-        label: json['label'] as String?,
-        color: json['color'] as String? ?? '#2196F3',
+        id: _parseString(json['id']) ?? '',
+        position: _parsePosition(json['position']),
+        type: _parsePlayerType(_parseString(json['type'])),
+        label: _parseString(json['label']),
+        color: _parseString(json['color']) ?? '#2196F3',
       );
+
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static Position _parsePosition(dynamic value) {
+    if (value is Map<String, dynamic>) {
+      return Position.fromJson(value);
+    }
+    return const Position(0.0, 0.0);
+  }
+
+  static PlayerType _parsePlayerType(String? typeString) {
+    if (typeString == null) return PlayerType.neutral;
+    return PlayerType.values.firstWhere(
+      (e) => e.name == typeString,
+      orElse: () => PlayerType.neutral,
+    );
+  }
   final String id;
   final Position position;
   final PlayerType type;
@@ -196,15 +274,43 @@ class EquipmentMarker {
 
   factory EquipmentMarker.fromJson(Map<String, dynamic> json) =>
       EquipmentMarker(
-        id: json['id'] as String? ?? '',
-        position: Position.fromJson(json['position'] as Map<String, dynamic>),
-        type: EquipmentType.values.firstWhere(
-          (e) => e.name == json['type'],
-          orElse: () => EquipmentType.cone,
-        ),
-        color: json['color'] as String? ?? '#FF9800',
-        size: (json['size'] as num?)?.toDouble(),
+        id: _parseString(json['id']) ?? '',
+        position: _parsePosition(json['position']),
+        type: _parseEquipmentType(_parseString(json['type'])),
+        color: _parseString(json['color']) ?? '#FF9800',
+        size: _parseDouble(json['size']),
       );
+
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      return double.tryParse(value);
+    }
+    return null;
+  }
+
+  static Position _parsePosition(dynamic value) {
+    if (value is Map<String, dynamic>) {
+      return Position.fromJson(value);
+    }
+    return const Position(0.0, 0.0);
+  }
+
+  static EquipmentType _parseEquipmentType(String? typeString) {
+    if (typeString == null) return EquipmentType.cone;
+    return EquipmentType.values.firstWhere(
+      (e) => e.name == typeString,
+      orElse: () => EquipmentType.cone,
+    );
+  }
   final String id;
   final Position position;
   final EquipmentType type;
@@ -312,14 +418,36 @@ class AreaMarker {
   });
 
   factory AreaMarker.fromJson(Map<String, dynamic> json) => AreaMarker(
-        id: json['id'] as String? ?? '',
-        topLeft: Position.fromJson(json['topLeft'] as Map<String, dynamic>),
-        bottomRight:
-            Position.fromJson(json['bottomRight'] as Map<String, dynamic>),
-        color: json['color'] as String? ?? '#FFC107',
-        opacity: (json['opacity'] as num?)?.toDouble() ?? 0.3,
-        label: json['label'] as String?,
+        id: _parseString(json['id']) ?? '',
+        topLeft: _parsePosition(json['topLeft']),
+        bottomRight: _parsePosition(json['bottomRight']),
+        color: _parseString(json['color']) ?? '#FFC107',
+        opacity: _parseDouble(json['opacity']) ?? 0.3,
+        label: _parseString(json['label']),
       );
+
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      return double.tryParse(value);
+    }
+    return null;
+  }
+
+  static Position _parsePosition(dynamic value) {
+    if (value is Map<String, dynamic>) {
+      return Position.fromJson(value);
+    }
+    return const Position(0.0, 0.0);
+  }
   final String id;
   final Position topLeft;
   final Position bottomRight;
@@ -347,12 +475,35 @@ class TextLabel {
   });
 
   factory TextLabel.fromJson(Map<String, dynamic> json) => TextLabel(
-        id: json['id'] as String? ?? '',
-        position: Position.fromJson(json['position'] as Map<String, dynamic>),
-        text: json['text'] as String? ?? '',
-        color: json['color'] as String? ?? '#000000',
-        fontSize: (json['fontSize'] as num?)?.toDouble() ?? 14.0,
+        id: _parseString(json['id']) ?? '',
+        position: _parsePosition(json['position']),
+        text: _parseString(json['text']) ?? '',
+        color: _parseString(json['color']) ?? '#000000',
+        fontSize: _parseDouble(json['fontSize']) ?? 14.0,
       );
+
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      return double.tryParse(value);
+    }
+    return null;
+  }
+
+  static Position _parsePosition(dynamic value) {
+    if (value is Map<String, dynamic>) {
+      return Position.fromJson(value);
+    }
+    return const Position(0.0, 0.0);
+  }
   final String id;
   final Position position;
   final String text;
