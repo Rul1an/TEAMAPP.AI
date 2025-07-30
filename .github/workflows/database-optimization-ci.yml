@@ -127,17 +127,28 @@ jobs:
 
           # Parse and validate performance metrics (2025 best practice)
           echo "::group::Performance Test Results"
-          cat performance_results.json | jq '.testResults[] | select(.result == "success") | .name'
+
+          # Count successful tests
+          SUCCESS_COUNT=$(cat performance_results.json | jq -r 'select(.type == "testDone" and .hidden == false and .result == "success")' | wc -l | xargs)
+
+          # Count failed tests
+          FAILED_COUNT=$(cat performance_results.json | jq -r 'select(.type == "testDone" and .result == "failure")' | wc -l | xargs)
+
+          # Check overall test run success
+          OVERALL_SUCCESS=$(cat performance_results.json | jq -r 'select(.type == "done") | .success')
+
+          echo "Successful tests: $SUCCESS_COUNT"
+          echo "Failed tests: $FAILED_COUNT"
+          echo "Overall test run success: $OVERALL_SUCCESS"
           echo "::endgroup::"
 
-          # Fail if any performance test fails
-          FAILED_TESTS=$(cat performance_results.json | jq -r '.testResults[] | select(.result == "failure") | .name' | wc -l)
-          if [ $FAILED_TESTS -gt 0 ]; then
-            echo "::error::$FAILED_TESTS performance tests failed"
+          # Fail if any performance test fails or overall run failed
+          if [ "$FAILED_COUNT" -gt 0 ] || [ "$OVERALL_SUCCESS" != "true" ]; then
+            echo "::error::Performance tests failed - Failed: $FAILED_COUNT, Overall success: $OVERALL_SUCCESS"
             exit 1
           fi
 
-          echo "::notice::All repository performance tests passed ✅"
+          echo "::notice::All repository performance tests passed ✅ ($SUCCESS_COUNT tests successful)"
 
       - name: '📊 Performance Metrics Analysis'
         run: |
