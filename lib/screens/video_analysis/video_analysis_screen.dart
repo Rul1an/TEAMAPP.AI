@@ -5,18 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
-import '../../controllers/video_player_controller.dart';
-import '../../controllers/video_tagging_controller.dart';
 import '../../models/video.dart';
-import '../../models/video_tag.dart';
-import '../../repositories/video_repository.dart';
+import '../../models/video_tag.dart' as models;
+import '../../providers/video_repository_provider.dart';
 import '../../widgets/video/video_player_widget.dart';
 import '../../widgets/video/video_tagging_widget.dart';
 
 /// Provider for video data
 final videoProvider = FutureProvider.family<Video, String>((ref, videoId) async {
   final repository = ref.watch(videoRepositoryProvider);
-  final result = await repository.getVideo(videoId);
+  final result = await repository.getVideoById(videoId);
 
   return result.fold(
     (error) => throw Exception('Failed to load video: $error'),
@@ -180,7 +178,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.fiber_man_record, color: Colors.white, size: 16),
+                        Icon(Icons.fiber_manual_record, color: Colors.white, size: 16),
                         SizedBox(width: 4),
                         Text(
                           'TAGGING MODE',
@@ -231,7 +229,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
               children: [
                 // Hotspots
                 ...taggingState.hotspots.map((hotspot) {
-                  final position = (hotspot.timestamp / (video.durationSeconds ?? 1)) *
+                  final position = (hotspot.startSeconds / (video.durationSeconds?.toDouble() ?? 1.0)) *
                       MediaQuery.of(context).size.width;
 
                   return Positioned(
@@ -249,7 +247,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
 
                 // Current position indicator
                 Positioned(
-                  left: (_currentVideoTime / (video.durationSeconds ?? 1)) *
+                  left: (_currentVideoTime / (video.durationSeconds?.toDouble() ?? 1.0)) *
                       MediaQuery.of(context).size.width,
                   child: Container(
                     width: 2,
@@ -272,7 +270,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               Text(
-                _formatTime(video.durationSeconds ?? 0),
+                _formatTime((video.durationSeconds ?? 0).toDouble()),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -300,7 +298,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   ),
                   const SizedBox(height: 16),
                   _buildInfoRow('Title', video.title),
-                  _buildInfoRow('Duration', _formatTime(video.durationSeconds ?? 0)),
+                  _buildInfoRow('Duration', _formatTime((video.durationSeconds ?? 0).toDouble())),
                   _buildInfoRow('Size', _formatFileSize(video.fileSizeBytes ?? 0)),
                   _buildInfoRow('Status', video.status.name.toUpperCase()),
                   if (video.description != null && video.description!.isNotEmpty)
@@ -341,7 +339,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                       _buildActionChip(
                         'Jump to End',
                         Icons.skip_next,
-                        () => _jumpToTime(video.durationSeconds ?? 0),
+                        () => _jumpToTime(video.durationSeconds?.toDouble() ?? 0.0),
                       ),
                       _buildActionChip(
                         'Rewind 10s',
@@ -444,7 +442,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
     );
   }
 
-  Widget _buildAnalyticsCards(VideoTagAnalytics analytics) {
+  Widget _buildAnalyticsCards(models.VideoTagAnalytics analytics) {
     return Row(
       children: [
         Expanded(
@@ -475,10 +473,10 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   Icon(Icons.event, size: 32, color: Theme.of(context).primaryColor),
                   const SizedBox(height: 8),
                   Text(
-                    analytics.uniqueEvents.toString(),
+                    analytics.tagsByType.length.toString(),
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  const Text('Event Types'),
+                  const Text('Tag Types'),
                 ],
               ),
             ),
@@ -507,8 +505,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
     );
   }
 
-  Widget _buildEventTypeChart(VideoTagAnalytics analytics) {
-    if (analytics.eventTypeCounts.isEmpty) {
+  Widget _buildEventTypeChart(models.VideoTagAnalytics analytics) {
+    if (analytics.tagsByType.isEmpty) {
       return const SizedBox.shrink();
     }
 
@@ -519,11 +517,11 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Event Distribution',
+              'Tag Type Distribution',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 16),
-            ...analytics.eventTypeCounts.entries.map((entry) {
+            ...analytics.tagsByType.entries.map((entry) {
               final percentage = (entry.value / analytics.totalTags) * 100;
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -531,7 +529,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   children: [
                     Expanded(
                       flex: 2,
-                      child: Text(entry.key),
+                      child: Text(entry.key.name.toUpperCase()),
                     ),
                     Expanded(
                       flex: 3,

@@ -22,7 +22,7 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
           .order('timestamp_seconds');
 
       final tags = (response as List)
-          .map((json) => VideoTag.fromJson(json))
+          .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
           .toList();
 
       return Result.success(tags);
@@ -49,7 +49,7 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
         final tagTypeValues = filter.tagTypes!
             .map((type) => type.name)
             .toList();
-        query = query.in_('tag_type', tagTypeValues);
+        query = query.inFilter('tag_type', tagTypeValues);
       }
 
       if (filter.createdBy != null) {
@@ -79,15 +79,13 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
         );
       }
 
-      // Apply pagination
-      query = query
+      // Apply pagination and execute query
+      final response = await query
           .range(filter.offset, filter.offset + filter.limit - 1)
           .order('created_at', ascending: false);
 
-      final response = await query;
-
       final tags = (response as List)
-          .map((json) => VideoTag.fromJson(json))
+          .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
           .toList();
 
       return Result.success(tags);
@@ -181,7 +179,7 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
       // Get all tags for the video
       final tagsResult = await getTagsForVideo(videoId);
       if (tagsResult.isFailure) {
-        return Result.failure(tagsResult.error);
+        return Result.failure(Exception('Failed to get tags for analytics'));
       }
 
       final tags = tagsResult.value;
@@ -247,17 +245,15 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
       // Filter by tag types
       if (tagTypes != null && tagTypes.isNotEmpty) {
         final typeNames = tagTypes.map((type) => type.name).toList();
-        query = query.in_('tag_type', typeNames);
+        query = query.inFilter('tag_type', typeNames);
       }
 
-      query = query
+      final response = await query
           .order('created_at', ascending: false)
           .limit(limit);
 
-      final response = await query;
-
       final tags = (response as List)
-          .map((json) => VideoTag.fromJson(json))
+          .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
           .toList();
 
       return Result.success(tags);
@@ -282,14 +278,12 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
         query = query.eq('created_by', createdBy);
       }
 
-      query = query
+      final response = await query
           .order('created_at', ascending: false)
           .limit(limit);
 
-      final response = await query;
-
       final tags = (response as List)
-          .map((json) => VideoTag.fromJson(json))
+          .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
           .toList();
 
       return Result.success(tags);
@@ -321,7 +315,7 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
           .select();
 
       final tags = (response as List)
-          .map((json) => VideoTag.fromJson(json))
+          .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
           .toList();
 
       return Result.success(tags);
@@ -338,7 +332,7 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
     try {
       final tagsResult = await getTagsForVideo(videoId);
       if (tagsResult.isFailure) {
-        return Result.failure(tagsResult.error);
+        return Result.failure(Exception('Failed to get tags for hotspots'));
       }
 
       final tags = tagsResult.value;
@@ -371,7 +365,7 @@ class SupabaseVideoTagRepository implements VideoTagRepository {
           .order('timestamp_seconds');
 
       final tags = (response as List)
-          .map((json) => VideoTag.fromJson(json))
+          .map((json) => VideoTag.fromJson(json as Map<String, dynamic>))
           .toList();
 
       return Result.success(tags);

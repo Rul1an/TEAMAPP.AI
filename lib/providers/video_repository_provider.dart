@@ -33,7 +33,7 @@ final videoByIdProvider = FutureProvider.family<Video?, String>((ref, videoId) a
   final repo = ref.read(videoRepositoryProvider);
   final result = await repo.getVideoById(videoId);
   return result.fold(
-    (error) => null,
+    (_) => null,
     (video) => video,
   );
 });

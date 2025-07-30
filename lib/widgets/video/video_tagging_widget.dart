@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../controllers/video_tagging_controller.dart';
 import '../../models/video.dart';
 import '../../models/video_tag.dart';
-import '../../repositories/video_tag_repository.dart';
+import '../../providers/video_tag_repository_provider.dart';
 
 /// Provider for video tagging controller
 final videoTaggingControllerProvider =
@@ -46,7 +46,7 @@ class VideoTaggingWidget extends ConsumerStatefulWidget {
 }
 
 class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
-  VideoEventType? _selectedEventType;
+  VideoTagType? _selectedTagType;
   String? _selectedPlayerId;
   final _notesController = TextEditingController();
   bool _showTagForm = false;
@@ -127,22 +127,22 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
             ),
             const SizedBox(height: 16),
 
-            // Event type selection
-            Text('Event Type:', style: Theme.of(context).textTheme.labelLarge),
+            // Tag type selection
+            Text('Tag Type:', style: Theme.of(context).textTheme.labelLarge),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
-              children: VideoEventType.values.map((eventType) {
-                final isSelected = _selectedEventType == eventType;
+              children: VideoTagType.values.map((tagType) {
+                final isSelected = _selectedTagType == tagType;
                 return FilterChip(
-                  label: Text(eventType.displayName),
+                  label: Text(tagType.name.toUpperCase()),
                   selected: isSelected,
                   onSelected: (selected) {
                     setState(() {
-                      _selectedEventType = selected ? eventType : null;
+                      _selectedTagType = selected ? tagType : null;
                     });
                   },
-                  backgroundColor: isSelected ? _getEventTypeColor(eventType) : null,
+                  backgroundColor: isSelected ? _getTagTypeColor(tagType) : null,
                 );
               }).toList(),
             ),
@@ -181,7 +181,7 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
             Row(
               children: [
                 ElevatedButton(
-                  onPressed: _selectedEventType != null ? () => _createTag(controller) : null,
+                  onPressed: _selectedTagType != null ? () => _createTag(controller) : null,
                   child: const Text('Create Tag'),
                 ),
                 const SizedBox(width: 8),
@@ -252,27 +252,27 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
   }
 
   Widget _buildTagItem(BuildContext context, VideoTag tag, VideoTaggingController controller) {
-    final eventColor = _getEventTypeColor(tag.eventType);
+    final tagColor = _getTagTypeColor(tag.tagType);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: eventColor,
+          backgroundColor: tagColor,
           child: Icon(
-            _getEventTypeIcon(tag.eventType),
+            _getTagTypeIcon(tag.tagType),
             color: Colors.white,
             size: 20,
           ),
         ),
-        title: Text(tag.eventType.displayName),
+        title: Text(tag.tagTypeDisplayName),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Time: ${_formatTime(tag.timestampSeconds)}'),
             if (tag.playerId != null) Text('Player: ${tag.playerId}'),
-            if (tag.notes != null && tag.notes!.isNotEmpty)
-              Text('Notes: ${tag.notes}', maxLines: 2, overflow: TextOverflow.ellipsis),
+            if (tag.description != null && tag.description!.isNotEmpty)
+              Text('Notes: ${tag.description}', maxLines: 2, overflow: TextOverflow.ellipsis),
           ],
         ),
         trailing: PopupMenuButton<String>(
@@ -310,7 +310,7 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         _buildAnalyticsStat(context, 'Total Tags', analytics.totalTags.toString()),
-        _buildAnalyticsStat(context, 'Events', analytics.uniqueEvents.toString()),
+        _buildAnalyticsStat(context, 'Types', analytics.tagsByType.length.toString()),
         _buildAnalyticsStat(context, 'Tags/Min', analytics.averageTagsPerMinute.toStringAsFixed(1)),
       ],
     );
@@ -332,14 +332,15 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
   }
 
   Future<void> _createTag(VideoTaggingController controller) async {
-    if (_selectedEventType == null) return;
+    if (_selectedTagType == null) return;
 
     final request = CreateVideoTagRequest(
       videoId: widget.video.id,
-      eventType: _selectedEventType!,
+      organizationId: 'temp-org', // TODO: Get from context
+      tagType: _selectedTagType!,
       timestampSeconds: widget.currentTime,
-      playerId: _selectedPlayerId,
-      notes: _notesController.text.isEmpty ? null : _notesController.text,
+      description: _notesController.text.isEmpty ? null : _notesController.text,
+      tagData: _selectedPlayerId != null ? {'playerId': _selectedPlayerId} : {},
     );
 
     final success = await controller.createTag(request);
@@ -354,7 +355,7 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
 
   void _resetForm() {
     setState(() {
-      _selectedEventType = null;
+      _selectedTagType = null;
       _selectedPlayerId = null;
       _showTagForm = false;
     });
@@ -380,7 +381,7 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Tag'),
-        content: Text('Are you sure you want to delete this ${tag.eventType.displayName} tag?'),
+        content: Text('Are you sure you want to delete this ${tag.tagTypeDisplayName} tag?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -404,77 +405,37 @@ class _VideoTaggingWidgetState extends ConsumerState<VideoTaggingWidget> {
     );
   }
 
-  Color _getEventTypeColor(VideoEventType eventType) {
-    switch (eventType) {
-      case VideoEventType.goal:
+  Color _getTagTypeColor(VideoTagType tagType) {
+    switch (tagType) {
+      case VideoTagType.drill:
         return Colors.green;
-      case VideoEventType.assist:
+      case VideoTagType.moment:
         return Colors.blue;
-      case VideoEventType.shot:
+      case VideoTagType.player:
         return Colors.orange;
-      case VideoEventType.save:
+      case VideoTagType.tactic:
         return Colors.purple;
-      case VideoEventType.foul:
+      case VideoTagType.mistake:
         return Colors.red;
-      case VideoEventType.card:
-        return Colors.amber;
-      case VideoEventType.substitution:
-        return Colors.teal;
-      case VideoEventType.cornerKick:
-        return Colors.indigo;
-      case VideoEventType.freeKick:
+      case VideoTagType.skill:
         return Colors.cyan;
-      case VideoEventType.offside:
-        return Colors.pink;
-      case VideoEventType.penalty:
-        return Colors.deepOrange;
-      case VideoEventType.tackle:
-        return Colors.brown;
-      case VideoEventType.interception:
-        return Colors.lime;
-      case VideoEventType.pass:
-        return Colors.lightBlue;
-      case VideoEventType.cross:
-        return Colors.deepPurple;
-      case VideoEventType.other:
-        return Colors.grey;
     }
   }
 
-  IconData _getEventTypeIcon(VideoEventType eventType) {
-    switch (eventType) {
-      case VideoEventType.goal:
+  IconData _getTagTypeIcon(VideoTagType tagType) {
+    switch (tagType) {
+      case VideoTagType.drill:
         return Icons.sports_soccer;
-      case VideoEventType.assist:
-        return Icons.handshake;
-      case VideoEventType.shot:
-        return Icons.my_location;
-      case VideoEventType.save:
-        return Icons.shield;
-      case VideoEventType.foul:
+      case VideoTagType.moment:
+        return Icons.star;
+      case VideoTagType.player:
+        return Icons.person;
+      case VideoTagType.tactic:
+        return Icons.analytics;
+      case VideoTagType.mistake:
         return Icons.warning;
-      case VideoEventType.card:
-        return Icons.rectangle;
-      case VideoEventType.substitution:
-        return Icons.swap_horiz;
-      case VideoEventType.cornerKick:
-        return Icons.flag;
-      case VideoEventType.freeKick:
-        return Icons.sports_football;
-      case VideoEventType.offside:
-        return Icons.block;
-      case VideoEventType.penalty:
-        return Icons.gps_fixed;
-      case VideoEventType.tackle:
-        return Icons.sports_martial_arts;
-      case VideoEventType.interception:
-        return Icons.pan_tool;
-      case VideoEventType.pass:
-        return Icons.arrow_forward;
-      case VideoEventType.cross:
-        return Icons.call_made;
-      case VideoEventType.other:
-        return Icons.more_horiz;
+      case VideoTagType.skill:
+        return Icons.emoji_objects;
     }
   }
 

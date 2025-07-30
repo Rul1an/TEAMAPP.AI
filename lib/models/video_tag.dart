@@ -97,8 +97,10 @@ class VideoTag with _$VideoTag {
 
   /// Check if tag has specific player data
   bool get hasPlayerData {
+    final playerIds = tagData['playerIds'] as List?;
     return tagData.containsKey('playerIds') &&
-           (tagData['playerIds'] as List?)?.isNotEmpty == true;
+           playerIds != null &&
+           playerIds.isNotEmpty;
   }
 
   /// Get player names from tag data

@@ -13,6 +13,7 @@ class VideoPlayerWidget extends ConsumerStatefulWidget {
   final bool allowFullscreen;
   final VoidCallback? onFullscreen;
   final VoidCallback? onVideoEnd;
+  final void Function(double)? onTimeUpdate;
   final double aspectRatio;
 
   const VideoPlayerWidget({
@@ -23,6 +24,7 @@ class VideoPlayerWidget extends ConsumerStatefulWidget {
     this.allowFullscreen = true,
     this.onFullscreen,
     this.onVideoEnd,
+    this.onTimeUpdate,
     this.aspectRatio = 16 / 9,
   });
 

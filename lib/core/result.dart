@@ -48,9 +48,6 @@ sealed class Result<T> {
   T? get dataOrNull => this is Success<T> ? (this as Success<T>).data : null;
   T get value => this is Success<T> ? (this as Success<T>).data : throw Exception('Called value on Failure');
 
-  @override
-  Exception get error => this is Failure<T> ? Exception((this as Failure<T>).error.message) : throw Exception('Called error on Success');
-
   AppFailure? get errorOrNull =>
       this is Failure<T> ? (this as Failure<T>).error : null;
 }
