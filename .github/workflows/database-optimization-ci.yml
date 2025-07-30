@@ -277,12 +277,57 @@ jobs:
 
       - name: '📊 Coverage Analysis'
         run: |
-          # 2025 Best Practice: Enforce minimum coverage for critical paths
-          COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep -oP 'lines......: \K[0-9.]+(?=%)')
-          echo "Code coverage: $COVERAGE%"
+          set -ex
+          echo "::group::Coverage Analysis"
 
-          # Require minimum 85% coverage for performance-critical code
-          if (( $(echo "$COVERAGE < 85" | bc -l) )); then
+          # Check if coverage file exists
+          if [ ! -f "coverage/lcov.info" ]; then
+            echo "::error::Coverage file not found at coverage/lcov.info"
+            echo "Available files in coverage directory:"
+            ls -la coverage/ || echo "Coverage directory does not exist"
+            exit 1
+          fi
+
+          # Validate coverage file is not empty
+          if [ ! -s "coverage/lcov.info" ]; then
+            echo "::error::Coverage file is empty"
+            exit 1
+          fi
+
+          # Install lcov if not available (CI environment safety)
+          which lcov || sudo apt-get install -y lcov
+
+          # Extract coverage with error handling
+          echo "Extracting coverage information..."
+          COVERAGE_OUTPUT=$(lcov --summary coverage/lcov.info 2>&1) || {
+            echo "::error::Failed to read coverage file"
+            echo "Coverage file contents (first 10 lines):"
+            head -10 coverage/lcov.info
+            exit 1
+          }
+
+          echo "Coverage output: $COVERAGE_OUTPUT"
+
+          # Parse coverage percentage with fallback
+          COVERAGE=$(echo "$COVERAGE_OUTPUT" | grep -oP 'lines......: \K[0-9.]+(?=%)') || {
+            echo "::warning::Could not parse coverage percentage from output"
+            echo "Setting coverage to 0% for safety"
+            COVERAGE="0.0"
+          }
+
+          echo "Parsed coverage: $COVERAGE%"
+
+          # Validate coverage is a number
+          if ! [[ "$COVERAGE" =~ ^[0-9]+\.?[0-9]*$ ]]; then
+            echo "::warning::Invalid coverage format: $COVERAGE, setting to 0%"
+            COVERAGE="0.0"
+          fi
+
+          echo "Final code coverage: $COVERAGE%"
+          echo "::endgroup::"
+
+          # Coverage evaluation (non-blocking for now during CI fixes)
+          if (( $(echo "$COVERAGE < 85" | bc -l 2>/dev/null) )); then
             echo "::warning::Code coverage ($COVERAGE%) below recommended 85%"
           else
             echo "::notice::Code coverage excellent: $COVERAGE% ✅"
