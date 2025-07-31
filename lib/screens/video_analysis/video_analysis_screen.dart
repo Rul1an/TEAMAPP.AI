@@ -164,8 +164,10 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
             children: [
               EnhancedVideoPlayer(
                 video: video,
-                tags:
-                    ref.watch(videoTagsNotifierProvider(video.id)).valueOrNull ?? [],
+                tags: ref
+                        .watch(videoTagsNotifierProvider(video.id))
+                        .valueOrNull ??
+                    [],
                 onSeek: (duration) => setState(
                     () => _currentVideoTime = duration.inSeconds.toDouble()),
                 onTagSelected: (tag) => _jumpToTime(tag.timestampSeconds),
@@ -225,7 +227,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
   }
 
   Widget _buildVideoTimeline(Video video) {
-    final tags = ref.watch(videoTagsNotifierProvider(video.id)).valueOrNull ?? [];
+    final tags =
+        ref.watch(videoTagsNotifierProvider(video.id)).valueOrNull ?? [];
 
     return Container(
       height: 60,
