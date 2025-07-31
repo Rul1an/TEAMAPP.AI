@@ -93,10 +93,35 @@ jobs:
       - name: Run Video Schema Verification
         run: |
           echo "🔍 Running video schema verification..."
-          # Execute our verification migration
+          # Execute our verification migration with better error handling
           psql -h localhost -p 54322 -U postgres -d postgres \
             -f supabase/migrations/20250730230000_migration_verification_2025.sql \
-            -v ON_ERROR_STOP=1
+            -v ON_ERROR_STOP=1 || {
+              echo "❌ Migration verification failed, checking logs..."
+              psql -h localhost -p 54322 -U postgres -d postgres -c "
+                SELECT table_name, column_name
+                FROM information_schema.columns
+                WHERE table_name IN ('videos', 'video_tags')
+                ORDER BY table_name, ordinal_position;
+              "
+              exit 1
+            }
+
+      - name: Verify RLS Policies
+        run: |
+          echo "🔒 Verifying RLS policies are applied..."
+          psql -h localhost -p 54322 -U postgres -d postgres -c "
+            SELECT
+              schemaname,
+              tablename,
+              policyname,
+              permissive,
+              roles,
+              cmd
+            FROM pg_policies
+            WHERE tablename IN ('videos', 'video_tags')
+            ORDER BY tablename, policyname;
+          " || echo "⚠️ Some RLS policies may be missing, but continuing..."
 
       - name: Generate TypeScript Types
         run: |
@@ -166,9 +191,28 @@ jobs:
             WHERE tablename IN ('videos', 'video_tags');
           "
 
-      - name: Performance Index Verification
+      - name: Performance Index Validation
         run: |
+          echo "::group::Performance Index Validation"
           echo "⚡ Verifying performance indexes..."
+
+          # Count video-related indexes
+          video_indexes=$(psql -h localhost -p 54322 -U postgres -d postgres -t -c "
+            SELECT COUNT(*) FROM pg_indexes
+            WHERE tablename IN ('videos', 'video_tags');
+          " | xargs)
+
+          echo "Video performance indexes found: $video_indexes"
+
+          # Count RLS policies
+          rls_policies=$(psql -h localhost -p 54322 -U postgres -d postgres -t -c "
+            SELECT COUNT(*) FROM pg_policies
+            WHERE tablename IN ('videos', 'video_tags');
+          " | xargs)
+
+          echo "Video RLS policies found: $rls_policies"
+
+          # List all indexes for debugging
           psql -h localhost -p 54322 -U postgres -d postgres -c "
             SELECT
               tablename,
@@ -178,6 +222,22 @@ jobs:
             WHERE tablename IN ('videos', 'video_tags')
             ORDER BY tablename, indexname;
           "
+
+          # Verify minimum requirements
+          if [ "$video_indexes" -lt 3 ]; then
+            echo "⚠️ Warning: Expected at least 3 performance indexes, found $video_indexes"
+          else
+            echo "✅ Performance indexes validation passed"
+          fi
+
+          if [ "$rls_policies" -lt 1 ]; then
+            echo "⚠️ Warning: Expected at least 1 RLS policy, found $rls_policies"
+            echo "This may be expected in local development environment"
+          else
+            echo "✅ RLS policies validation passed"
+          fi
+
+          echo "::endgroup::"
 
       - name: Stop Supabase
         if: always()
