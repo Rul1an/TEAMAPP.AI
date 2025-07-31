@@ -1,3 +1,4 @@
+\set ON_ERROR_STOP on
 -- Migration: Create video tags functionality
 -- Phase: Video Phase 3 - Tagging & Analysis
 -- Date: 2025-07-30
