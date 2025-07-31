@@ -312,21 +312,8 @@ class _VideoTagTimelineState extends State<_VideoTagTimeline> {
     }
   }
 
-  Color _getTagColor(VideoTagType tagType) {
-    switch (tagType) {
-      case VideoTagType.drill:
-        return Colors.blue;
-      case VideoTagType.moment:
-        return Colors.green;
-      case VideoTagType.mistake:
-        return Colors.red;
-      case VideoTagType.player:
-        return Colors.orange;
-      case VideoTagType.tactic:
-        return Colors.purple;
-      case VideoTagType.skill:
-        return Colors.cyan;
-    }
+  Color _getTagColor(VideoTag tag) {
+    return Color(tag.tagColor);
   }
 
   String _formatDuration(Duration duration) {
@@ -389,7 +376,7 @@ class _VideoTagTimelineState extends State<_VideoTagTimeline> {
                             width: 12,
                             height: 12,
                             decoration: BoxDecoration(
-                              color: _getTagColor(tag.tagType),
+                              color: _getTagColor(tag),
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.white,
