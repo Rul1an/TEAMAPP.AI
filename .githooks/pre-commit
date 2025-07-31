@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Pre-commit hook to test database migrations locally
+# Prevents broken migrations from being pushed to GitHub
+
+echo "🔍 Running pre-commit migration validation..."
+
+# Check if we're in the right directory
+if [ ! -f "scripts/test_migrations_locally.sh" ]; then
+    echo "❌ Migration test script not found. Are you in the project root?"
+    exit 1
+fi
+
+# Only run migration tests if migrations were changed
+if git diff --cached --name-only | grep -q "supabase/migrations/"; then
+    echo "📊 Migration files detected in commit - running validation..."
+
+    # Run the local migration test
+    if ! ./scripts/test_migrations_locally.sh; then
+        echo ""
+        echo "💥 MIGRATION VALIDATION FAILED!"
+        echo "❌ Commit aborted to prevent GitHub CI failures"
+        echo ""
+        echo "🔧 Fix the migration issues and try again:"
+        echo "   1. Review the migration errors above"
+        echo "   2. Fix the problematic SQL"
+        echo "   3. Test manually: ./scripts/test_migrations_locally.sh"
+        echo "   4. Commit again when tests pass"
+        echo ""
+        exit 1
+    fi
+
+    echo "✅ All migrations validated successfully!"
+else
+    echo "ℹ️ No migration changes detected - skipping validation"
+fi
+
+echo "🚀 Pre-commit validation complete - proceeding with commit"
+exit 0
