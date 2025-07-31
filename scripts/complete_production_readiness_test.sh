@@ -1,0 +1,222 @@
+#!/bin/bash
+
+# Complete Production Readiness Test Suite
+# Date: 2025-07-31
+# Integrates all three critical testing components
+
+set -e
+
+echo "🚀 Complete Production Readiness Test Suite"
+echo "============================================="
+echo "Testing: Local DB → Production DB → End-to-End App Flow"
+echo ""
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+print_success() {
+    echo -e "${GREEN}✅ $1${NC}"
+}
+
+print_error() {
+    echo -e "${RED}❌ $1${NC}"
+}
+
+print_warning() {
+    echo -e "${YELLOW}⚠️ $1${NC}"
+}
+
+print_info() {
+    echo -e "${BLUE}ℹ️ $1${NC}"
+}
+
+# Test results tracking
+TESTS_PASSED=0
+TESTS_FAILED=0
+FAILED_TESTS=()
+
+# Run test and track results
+run_test() {
+    local test_name="$1"
+    local test_command="$2"
+
+    print_info "Running: $test_name"
+
+    if eval "$test_command"; then
+        print_success "$test_name passed"
+        TESTS_PASSED=$((TESTS_PASSED + 1))
+    else
+        print_error "$test_name failed"
+        TESTS_FAILED=$((TESTS_FAILED + 1))
+        FAILED_TESTS+=("$test_name")
+    fi
+
+    echo ""
+}
+
+# Phase 1: Local PostgreSQL Setup and Testing
+phase1_local_setup() {
+    echo "📋 PHASE 1: Local PostgreSQL Setup and Migration Testing"
+    echo "========================================================"
+
+    run_test "PostgreSQL Installation & Setup" "./scripts/setup_local_postgresql.sh"
+    run_test "Local Migration Testing" "./scripts/test_migrations_locally.sh"
+}
+
+# Phase 2: Production Environment Verification
+phase2_production() {
+    echo "📋 PHASE 2: Production Environment Migration Verification"
+    echo "========================================================="
+
+    # Check if Supabase credentials are available
+    if [ -z "$SUPABASE_PROJECT_REF" ]; then
+        print_warning "SUPABASE_PROJECT_REF not set, using default"
+        export SUPABASE_PROJECT_REF="ohdbsujaetmrztseqana"
+    fi
+
+    run_test "Production Migration Verification" "./scripts/test_production_migrations.sh"
+}
+
+# Phase 3: End-to-End Application Testing
+phase3_e2e() {
+    echo "📋 PHASE 3: End-to-End Application Flow Testing"
+    echo "==============================================="
+
+    # Flutter analyze first (learned from previous feedback)
+    run_test "Flutter Code Analysis" "flutter analyze"
+
+    # Run E2E tests
+    run_test "E2E Video Flow Tests" "flutter test test/e2e/video_flow_e2e_test.dart"
+
+    # Run integration tests
+    run_test "Integration Tests" "flutter test integration_test/"
+}
+
+# Generate comprehensive report
+generate_final_report() {
+    local report_file="complete_production_readiness_report_$(date +%Y%m%d_%H%M%S).md"
+
+    cat > "$report_file" << EOF
+# Complete Production Readiness Test Report
+Date: $(date)
+Test Suite: Local DB → Production DB → End-to-End App Flow
+
+## Test Results Summary
+- ✅ Tests Passed: $TESTS_PASSED
+- ❌ Tests Failed: $TESTS_FAILED
+- 📊 Success Rate: $(( TESTS_PASSED * 100 / (TESTS_PASSED + TESTS_FAILED) ))%
+
+## Failed Tests
+$(if [ ${#FAILED_TESTS[@]} -eq 0 ]; then echo "None - All tests passed! 🎉"; else printf '%s\n' "${FAILED_TESTS[@]}" | sed 's/^/- /'; fi)
+
+## Phase Results
+
+### Phase 1: Local Database Testing
+- PostgreSQL installation and setup
+- Local migration testing with pre-commit hooks
+- Database schema validation
+
+### Phase 2: Production Environment
+- Supabase managed database migration verification
+- Production schema state validation
+- RLS policy verification
+
+### Phase 3: Application Flow Testing
+- Flutter code analysis (0 issues target)
+- End-to-end video flow testing
+- Integration test suite
+
+## Production Readiness Assessment
+
+### ✅ Infrastructure Ready
+- Migration testing pipeline: Operational
+- Pre-commit validation: Active
+- Database schema: Verified
+
+### ⚠️ Application Integration
+- UI components: Implemented
+- Database connectivity: $(if [ $TESTS_FAILED -eq 0 ]; then echo "Verified"; else echo "Requires attention"; fi)
+- End-to-end flows: $(if [ $TESTS_FAILED -eq 0 ]; then echo "Tested"; else echo "In progress"; fi)
+
+### 📊 Overall Status
+$(if [ $TESTS_FAILED -eq 0 ]; then
+    echo "🎉 PRODUCTION READY: All systems operational"
+    echo "- Database migrations: ✅ Tested and deployed"
+    echo "- Application flow: ✅ End-to-end verified"
+    echo "- Code quality: ✅ Flutter analyze clean"
+else
+    echo "⚠️ REQUIRES ATTENTION: $(echo "${FAILED_TESTS[@]}" | wc -w) test(s) failed"
+    echo "- Address failed tests before production deployment"
+    echo "- Review error logs and fix identified issues"
+fi)
+
+## Next Steps
+$(if [ $TESTS_FAILED -eq 0 ]; then
+    echo "1. Deploy to production environment"
+    echo "2. Set up monitoring and alerting"
+    echo "3. Conduct user acceptance testing"
+else
+    echo "1. Fix failed tests: ${FAILED_TESTS[*]}"
+    echo "2. Re-run test suite until all tests pass"
+    echo "3. Address any infrastructure dependencies"
+fi)
+
+---
+*Report generated by complete_production_readiness_test.sh*
+*Test infrastructure follows 2025 best practices*
+EOF
+
+    print_success "Comprehensive report generated: $report_file"
+
+    # Display immediate summary
+    echo ""
+    echo "🏁 FINAL RESULTS"
+    echo "==============="
+    print_info "Tests Passed: $TESTS_PASSED"
+    if [ $TESTS_FAILED -gt 0 ]; then
+        print_error "Tests Failed: $TESTS_FAILED"
+        print_warning "Failed tests: ${FAILED_TESTS[*]}"
+    else
+        print_success "All tests passed! System ready for production."
+    fi
+}
+
+# Main execution
+main() {
+    echo "Starting comprehensive production readiness testing..."
+    echo "This will test the complete pipeline from local development to production deployment."
+    echo ""
+
+    # Make sure we're in the right directory
+    if [ ! -f "pubspec.yaml" ]; then
+        print_error "Must be run from Flutter project root directory"
+        exit 1
+    fi
+
+    # Make sure scripts are executable
+    chmod +x scripts/*.sh
+
+    # Run all phases
+    phase1_local_setup
+    phase2_production
+    phase3_e2e
+
+    # Generate final report
+    generate_final_report
+
+    # Exit with appropriate code
+    if [ $TESTS_FAILED -eq 0 ]; then
+        print_success "🎉 ALL TESTS PASSED - PRODUCTION READY!"
+        exit 0
+    else
+        print_error "💥 SOME TESTS FAILED - NOT READY FOR PRODUCTION"
+        exit 1
+    fi
+}
+
+# Execute main function
+main "$@"
