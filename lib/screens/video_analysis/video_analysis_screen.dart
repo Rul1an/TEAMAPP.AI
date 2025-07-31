@@ -233,45 +233,70 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
       child: Column(
         children: [
           // Timeline with hotspots
-          Container(
-            height: 20,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Stack(
-              children: [
-                // Tag indicators
-                ...tags.map((tag) {
-                  final position = (tag.timestampSeconds /
-                          video.durationSeconds.toDouble()) *
-                      MediaQuery.of(context).size.width;
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final timelineWidth = constraints.maxWidth;
+              final videoDuration = video.durationSeconds.toDouble();
 
-                  return Positioned(
-                    left: position,
-                    child: Container(
-                      width: 4,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: _getTagColor(tag.tagType),
-                        borderRadius: BorderRadius.circular(2),
+              // Prevent division by zero
+              if (videoDuration <= 0) {
+                return Container(
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Invalid video duration',
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ),
+                );
+              }
+
+              return Container(
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Stack(
+                  children: [
+                    // Tag indicators
+                    ...tags.map((tag) {
+                      final position = (tag.timestampSeconds / videoDuration) * timelineWidth;
+
+                      // Ensure position is within bounds
+                      final clampedPosition = position.clamp(0.0, timelineWidth - 4);
+
+                      return Positioned(
+                        left: clampedPosition,
+                        child: Container(
+                          width: 4,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: _getTagColor(tag.tagType),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      );
+                    }),
+
+                    // Current position indicator
+                    Positioned(
+                      left: ((_currentVideoTime / videoDuration) * timelineWidth)
+                          .clamp(0.0, timelineWidth - 2),
+                      child: Container(
+                        width: 2,
+                        height: 20,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
-                  );
-                }),
-
-                // Current position indicator
-                Positioned(
-                  left: (_currentVideoTime / video.durationSeconds.toDouble()) *
-                      MediaQuery.of(context).size.width,
-                  child: Container(
-                    width: 2,
-                    height: 20,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
 
           const SizedBox(height: 8),
