@@ -642,7 +642,9 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
 
   void _jumpToTime(double seconds) {
     // TODO(video-player): Implement video seeking
-    setState(() => _currentVideoTime = seconds.clamp(0.0, double.infinity));
+    final videoAsync = ref.read(videoProvider(widget.videoId));
+    final maxDuration = videoAsync.value?.durationSeconds.toDouble() ?? 0.0;
+    setState(() => _currentVideoTime = seconds.clamp(0.0, maxDuration));
   }
 
   void _handleMenuAction(String action) {
