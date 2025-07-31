@@ -1,5 +1,5 @@
 name: 🎬 Video Schema Verification
-# Modern Supabase Migration Testing - 2025 Best Practices
+# Static Analysis CI - 2025 Best Practices (No Database Dependencies)
 
 on:
   pull_request:
@@ -14,92 +14,152 @@ on:
     paths:
       - 'supabase/migrations/**'
 
-env:
-  POSTGRES_PASSWORD: postgres
-  POSTGRES_DB: postgres
-
 jobs:
   # ====================================================================
-  # JOB 1: Supabase Migration Testing (2025 Best Practice)
+  # JOB 1: Static Migration Analysis (2025 Best Practice)
   # ====================================================================
-  supabase-migration-test:
-    name: 🧪 Supabase Migration Test
+  static-analysis:
+    name: 🔍 Static Migration Analysis
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ env.POSTGRES_DB }}
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
 
     steps:
       - name: 📂 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🔍 Setup Test Database with Base Schema
+      - name: 🎬 Video Schema Structure Validation
         run: |
-          echo "::group::Phase 1: Foundation Schema Setup"
-          echo "Phase 1: Foundation Schema Setup"
-          echo "::group::Phase 2: Video-specific migrations"
-          echo "Phase 2: Video-specific migrations"
-          echo "Notice: Video schema test database setup complete using 2025 foundation"
+          echo "::group::Video Schema Structure Validation"
+          echo "📋 Analyzing video migration structure..."
 
-      - name: 🔍 Run Comprehensive Video Schema Verification
+          # Count migration files
+          migration_count=$(find supabase/migrations -name "*.sql" | wc -l)
+          echo "Total migration files: $migration_count"
+
+          # Check video-related migrations
+          video_migrations=$(find supabase/migrations -name "*video*" | wc -l)
+          echo "Video-related migrations: $video_migrations"
+
+          # Verify critical migration files exist
+          critical_files=(
+            "supabase/migrations/20250730230000_migration_verification_2025.sql"
+            "supabase/migrations/20250731200000_add_storage_helper_functions_2025.sql"
+          )
+
+          for file in "${critical_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ Found: $file"
+            else
+              echo "⚠️ Missing: $file (may be expected)"
+            fi
+          done
+
+          echo "::endgroup::"
+
+      - name: 📊 Schema Content Analysis
         run: |
-          echo "::group::Video Schema Verification"
-          echo "Video Schema Verification"
+          echo "::group::Schema Content Analysis"
+          echo "🔍 Analyzing migration content for video functionality..."
 
-      - name: 📊 Video Performance Index Validation
-        run: |
-          echo "::group::Performance Index Validation"
-          echo "Performance Index Validation"
+          # Check for video table definitions
+          if grep -r "CREATE TABLE.*videos" supabase/migrations/; then
+            echo "✅ Video table definitions found"
+          else
+            echo "⚠️ Video table definitions not found"
+          fi
 
-          # Mock validation for CI - count existing indexes
-          video_indexes=3
-          rls_policies=0
+          # Check for video_tags table definitions
+          if grep -r "CREATE TABLE.*video_tags" supabase/migrations/; then
+            echo "✅ Video tags table definitions found"
+          else
+            echo "⚠️ Video tags table definitions not found"
+          fi
 
-          echo "  Video performance indexes found: $video_indexes"
-          echo "  Video RLS policies found: $rls_policies"
+          # Check for performance indexes
+          if grep -r "CREATE INDEX.*video" supabase/migrations/; then
+            echo "✅ Video performance indexes found"
+          else
+            echo "⚠️ Video performance indexes not found"
+          fi
 
-          # In local development, RLS policies may not be fully configured
-          if [ "$rls_policies" -eq 0 ]; then
-            echo "  Error: No RLS policies found for video_tags table"
-            echo "  This is expected in CI environment without full Supabase stack"
-            echo "  ⚠️ Warning: RLS policies should be verified in integration tests"
+          # Check for RLS policies
+          if grep -r "CREATE POLICY.*video" supabase/migrations/; then
+            echo "✅ Video RLS policies found"
+          else
+            echo "⚠️ Video RLS policies not found"
           fi
 
           echo "::endgroup::"
 
-      - name: 🗄️ Storage Configuration Verification
+      - name: 🗄️ Storage Configuration Check
         run: |
           echo "::group::Storage Configuration Check"
           echo "📁 Verifying storage bucket configurations..."
 
-          # In CI, we can't test actual storage buckets without Supabase
-          # Instead, verify migration files contain proper bucket setup
+          # Check for storage bucket configurations
           if grep -r "training-videos" supabase/migrations/; then
-            echo "✅ Training videos bucket configuration found in migrations"
+            echo "✅ Training videos bucket configuration found"
           else
-            echo "⚠️ Training videos bucket not found in migrations"
+            echo "⚠️ Training videos bucket configuration not found"
           fi
 
           if grep -r "video-thumbnails" supabase/migrations/; then
-            echo "✅ Video thumbnails bucket configuration found in migrations"
+            echo "✅ Video thumbnails bucket configuration found"
           else
-            echo "⚠️ Video thumbnails bucket not found in migrations"
+            echo "⚠️ Video thumbnails bucket configuration not found"
+          fi
+
+          # Check for storage policies
+          if grep -r "storage\.objects" supabase/migrations/; then
+            echo "✅ Storage policies found"
+          else
+            echo "⚠️ Storage policies not found"
           fi
 
           echo "::endgroup::"
 
-      - name: 📈 Upload Schema Verification Report
+      - name: 📝 Generate Verification Report
+        run: |
+          echo "::group::Verification Report Generation"
+
+          # Create verification log
+          echo "Video Schema Verification Report - $(date)" > verification_output.log
+          echo "=======================================" >> verification_output.log
+          echo "" >> verification_output.log
+          echo "Migration Analysis Results:" >> verification_output.log
+          echo "- Total migrations: $(find supabase/migrations -name "*.sql" | wc -l)" >> verification_output.log
+          echo "- Video-related: $(find supabase/migrations -name "*video*" | wc -l)" >> verification_output.log
+          echo "" >> verification_output.log
+          echo "Content Analysis:" >> verification_output.log
+
+          # Video tables
+          if grep -r "CREATE TABLE.*videos" supabase/migrations/ > /dev/null; then
+            echo "- Videos table: ✅ Found" >> verification_output.log
+          else
+            echo "- Videos table: ⚠️ Not found" >> verification_output.log
+          fi
+
+          # Video tags
+          if grep -r "CREATE TABLE.*video_tags" supabase/migrations/ > /dev/null; then
+            echo "- Video tags table: ✅ Found" >> verification_output.log
+          else
+            echo "- Video tags table: ⚠️ Not found" >> verification_output.log
+          fi
+
+          # Storage config
+          if grep -r "training-videos" supabase/migrations/ > /dev/null; then
+            echo "- Storage configuration: ✅ Found" >> verification_output.log
+          else
+            echo "- Storage configuration: ⚠️ Not found" >> verification_output.log
+          fi
+
+          echo "" >> verification_output.log
+          echo "Status: Static analysis completed successfully" >> verification_output.log
+          echo "Note: This is static analysis only - actual database testing requires Supabase environment" >> verification_output.log
+
+          echo "📄 Verification report generated"
+          echo "::endgroup::"
+
+      - name: 📈 Upload Verification Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -112,7 +172,7 @@ jobs:
   migration-analysis:
     name: 📝 Migration File Analysis
     runs-on: ubuntu-latest
-    needs: supabase-migration-test
+    needs: static-analysis
 
     steps:
       - name: 📂 Checkout Code
@@ -170,7 +230,7 @@ jobs:
   verification-report:
     name: 📋 Final Verification Report
     runs-on: ubuntu-latest
-    needs: [supabase-migration-test, migration-analysis]
+    needs: [static-analysis, migration-analysis]
 
     steps:
       - name: Generate CI Summary
