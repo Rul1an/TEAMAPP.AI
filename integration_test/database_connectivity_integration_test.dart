@@ -41,7 +41,8 @@ void main() {
         try {
           final session = client.auth.currentSession;
           developer.log('✅ Network connectivity confirmed - auth accessible');
-          developer.log('   Session status: ${session?.accessToken != null ? 'Active' : 'Anonymous'}');
+          developer.log(
+              '   Session status: ${session?.accessToken != null ? 'Active' : 'Anonymous'}');
         } catch (authError) {
           developer.log('⚠️  Auth status check: $authError');
           // This is still successful if we can reach the server
@@ -52,18 +53,17 @@ void main() {
     testWidgets('should test video tables accessibility', (tester) async {
       try {
         // Test video table access (anonymous might not have permission - that's OK)
-        final response = await client
-            .from('videos')
-            .select('id')
-            .limit(1);
+        final response = await client.from('videos').select('id').limit(1);
 
-        developer.log('✅ Video table accessible - found ${response.length} records');
+        developer
+            .log('✅ Video table accessible - found ${response.length} records');
       } catch (e) {
         if (e.toString().contains('permission denied') ||
             e.toString().contains('RLS')) {
-          developer.log('✅ Video table exists but requires authentication (RLS working)');
+          developer.log(
+              '✅ Video table exists but requires authentication (RLS working)');
         } else if (e.toString().contains('relation') &&
-                   e.toString().contains('does not exist')) {
+            e.toString().contains('does not exist')) {
           developer.log('⚠️  Video table not deployed - migration needed');
           // This indicates schema deployment issue, not connectivity
         } else {
@@ -75,18 +75,17 @@ void main() {
 
     testWidgets('should test video_tags table accessibility', (tester) async {
       try {
-        final response = await client
-            .from('video_tags')
-            .select('id')
-            .limit(1);
+        final response = await client.from('video_tags').select('id').limit(1);
 
-        developer.log('✅ Video tags table accessible - found ${response.length} records');
+        developer.log(
+            '✅ Video tags table accessible - found ${response.length} records');
       } catch (e) {
         if (e.toString().contains('permission denied') ||
             e.toString().contains('RLS')) {
-          developer.log('✅ Video tags table exists but requires authentication (RLS working)');
+          developer.log(
+              '✅ Video tags table exists but requires authentication (RLS working)');
         } else if (e.toString().contains('relation') &&
-                   e.toString().contains('does not exist')) {
+            e.toString().contains('does not exist')) {
           developer.log('⚠️  Video tags table not deployed - migration needed');
         } else {
           developer.log('❌ Unexpected video tags error: $e');
@@ -104,7 +103,8 @@ void main() {
       developer.log('✅ Environment configuration validated');
       developer.log('   URL: ${Environment.current.supabaseUrl}');
       developer.log('   Environment: ${Environment.current.name}');
-      developer.log('   Video features enabled: ${Environment.availableFeatures['video']}');
+      developer.log(
+          '   Video features enabled: ${Environment.availableFeatures['video']}');
     });
 
     testWidgets('should test authentication flow (anonymous)', (tester) async {
@@ -127,7 +127,8 @@ void main() {
         developer.log('✅ Database metadata accessible: $response');
       } catch (e) {
         // If version RPC doesn't exist, that's still OK - server is reachable
-        developer.log('✅ Database server reachable (version RPC not available)');
+        developer
+            .log('✅ Database server reachable (version RPC not available)');
       }
     });
   });

@@ -126,7 +126,7 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
   }
 
   void _onVideoPositionChanged() {
-        if (_controller?.value.isInitialized ?? false) {
+    if (_controller?.value.isInitialized ?? false) {
       setState(() {
         _currentPosition = _controller!.value.position;
       });
@@ -150,7 +150,6 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
 
     return Result.success(url);
   }
-
 
   void _showTagCreationDialog() {
     if (_controller?.value.isInitialized != true) {

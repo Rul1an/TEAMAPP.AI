@@ -24,7 +24,8 @@ void main() {
         final response = await request.close();
 
         expect(response.statusCode, lessThan(500),
-               reason: 'Supabase should be reachable (status: ${response.statusCode})');
+            reason:
+                'Supabase should be reachable (status: ${response.statusCode})');
 
         developer.log('✅ Supabase HTTP connectivity verified');
         developer.log('   Status Code: ${response.statusCode}');
@@ -48,9 +49,8 @@ void main() {
 
       try {
         // Test video table access via REST API
-        final request = await client.getUrl(
-          Uri.parse('$supabaseUrl/rest/v1/videos?select=id&limit=1')
-        );
+        final request = await client
+            .getUrl(Uri.parse('$supabaseUrl/rest/v1/videos?select=id&limit=1'));
         request.headers.add('apikey', supabaseKey);
         request.headers.add('Authorization', 'Bearer $supabaseKey');
         request.headers.add('Content-Type', 'application/json');
@@ -65,7 +65,8 @@ void main() {
           final data = json.decode(responseBody);
           developer.log('   Found ${data.length} video records');
         } else if (response.statusCode == 401 || response.statusCode == 403) {
-          developer.log('   Table exists but requires authentication (RLS working)');
+          developer
+              .log('   Table exists but requires authentication (RLS working)');
         } else if (response.statusCode == 404) {
           developer.log('   Video table not deployed - migration needed');
         } else {
@@ -74,7 +75,6 @@ void main() {
 
         // Any response means we can reach the database
         expect(response.statusCode, isNotNull);
-
       } catch (e) {
         if (e is SocketException) {
           fail('❌ Network connectivity failed for video table: ${e.message}');
@@ -91,8 +91,7 @@ void main() {
 
       try {
         final request = await client.getUrl(
-          Uri.parse('$supabaseUrl/rest/v1/video_tags?select=id&limit=1')
-        );
+            Uri.parse('$supabaseUrl/rest/v1/video_tags?select=id&limit=1'));
         request.headers.add('apikey', supabaseKey);
         request.headers.add('Authorization', 'Bearer $supabaseKey');
         request.headers.add('Content-Type', 'application/json');
@@ -107,13 +106,13 @@ void main() {
           final data = json.decode(responseBody);
           developer.log('   Found ${data.length} video tag records');
         } else if (response.statusCode == 401 || response.statusCode == 403) {
-          developer.log('   Table exists but requires authentication (RLS working)');
+          developer
+              .log('   Table exists but requires authentication (RLS working)');
         } else if (response.statusCode == 404) {
           developer.log('   Video tags table not deployed - migration needed');
         }
 
         expect(response.statusCode, isNotNull);
-
       } catch (e) {
         if (e is SocketException) {
           fail('❌ Network connectivity failed for video_tags: ${e.message}');
@@ -136,7 +135,8 @@ void main() {
       developer.log('   URL: $supabaseUrl');
       developer.log('   Key length: ${supabaseKey.length}');
       developer.log('   Environment: ${Environment.current.name}');
-      developer.log('   Video features: ${Environment.availableFeatures['video']}');
+      developer
+          .log('   Video features: ${Environment.availableFeatures['video']}');
     });
 
     test('should test Supabase auth endpoint', () async {
@@ -144,9 +144,8 @@ void main() {
 
       try {
         // Test auth endpoint accessibility
-        final request = await client.getUrl(
-          Uri.parse('$supabaseUrl/auth/v1/settings')
-        );
+        final request =
+            await client.getUrl(Uri.parse('$supabaseUrl/auth/v1/settings'));
         request.headers.add('apikey', supabaseKey);
 
         final response = await request.close();

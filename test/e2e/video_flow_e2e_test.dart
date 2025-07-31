@@ -25,11 +25,14 @@ void main() {
       supabaseClient = Supabase.instance.client;
 
       // Verify database connection
-      final response = await supabaseClient.from('organizations').select('id').limit(1);
-      expect(response, isNotNull, reason: 'Database connection required for E2E tests');
+      final response =
+          await supabaseClient.from('organizations').select('id').limit(1);
+      expect(response, isNotNull,
+          reason: 'Database connection required for E2E tests');
     });
 
-    testWidgets('Complete Video Upload and Display Flow', (WidgetTester tester) async {
+    testWidgets('Complete Video Upload and Display Flow',
+        (WidgetTester tester) async {
       // Launch the app
       await tester.runAsync(() async {
         await app.main();
@@ -140,14 +143,15 @@ Future<void> _navigateToVideoUpload(WidgetTester tester) async {
   final videoUploadText = find.text('Video Upload');
 
   expect(
-    uploadVideoText.evaluate().isNotEmpty || videoUploadText.evaluate().isNotEmpty,
-    isTrue,
-    reason: 'Should navigate to video upload screen'
-  );
+      uploadVideoText.evaluate().isNotEmpty ||
+          videoUploadText.evaluate().isNotEmpty,
+      isTrue,
+      reason: 'Should navigate to video upload screen');
 }
 
 /// Perform video upload (mocked for testing)
-Future<void> _performVideoUpload(WidgetTester tester, String title, String description) async {
+Future<void> _performVideoUpload(
+    WidgetTester tester, String title, String description) async {
   // Fill in video title
   final titleField = find.byType(TextFormField);
   final titleFieldAlt = find.byType(TextField);
@@ -190,7 +194,8 @@ Future<void> _performVideoUpload(WidgetTester tester, String title, String descr
 
   if (uploadButton.evaluate().isNotEmpty) {
     await tester.tap(uploadButton);
-    await tester.pumpAndSettle(const Duration(seconds: 3)); // Allow time for upload
+    await tester
+        .pumpAndSettle(const Duration(seconds: 3)); // Allow time for upload
   } else if (saveButton.evaluate().isNotEmpty) {
     await tester.tap(saveButton);
     await tester.pumpAndSettle(const Duration(seconds: 3));
@@ -211,11 +216,7 @@ Future<void> _performVideoUpload(WidgetTester tester, String title, String descr
     }
   }
 
-  expect(
-    foundSuccessIndicator,
-    isTrue,
-    reason: 'Should show upload success'
-  );
+  expect(foundSuccessIndicator, isTrue, reason: 'Should show upload success');
 }
 
 /// Verify video is stored in database
@@ -280,11 +281,7 @@ Future<void> _verifyVideoInUI(WidgetTester tester, String title) async {
     }
   }
 
-  expect(
-    videoTitle,
-    findsOneWidget,
-    reason: 'Video should appear in UI list'
-  );
+  expect(videoTitle, findsOneWidget, reason: 'Video should appear in UI list');
 }
 
 /// Test video player functionality
@@ -297,8 +294,10 @@ Future<void> _testVideoPlayer(WidgetTester tester, String title) async {
   final playButton = find.byIcon(Icons.play_arrow);
   final pauseButton = find.byIcon(Icons.pause);
 
-  final hasPlayControls = playButton.evaluate().isNotEmpty || pauseButton.evaluate().isNotEmpty;
-  expect(hasPlayControls, isTrue, reason: 'Video player should have play/pause controls');
+  final hasPlayControls =
+      playButton.evaluate().isNotEmpty || pauseButton.evaluate().isNotEmpty;
+  expect(hasPlayControls, isTrue,
+      reason: 'Video player should have play/pause controls');
 
   // Test play/pause functionality
   if (playButton.evaluate().isNotEmpty) {
@@ -313,7 +312,8 @@ Future<void> _testVideoPlayer(WidgetTester tester, String title) async {
   final progressIndicator = find.byType(LinearProgressIndicator);
   final sliderIndicator = find.byType(Slider);
 
-  final hasProgress = progressIndicator.evaluate().isNotEmpty || sliderIndicator.evaluate().isNotEmpty;
+  final hasProgress = progressIndicator.evaluate().isNotEmpty ||
+      sliderIndicator.evaluate().isNotEmpty;
   expect(hasProgress, isTrue, reason: 'Video player should show progress');
 }
 
@@ -374,7 +374,8 @@ Future<void> _testVideoTagging(WidgetTester tester) async {
     }
 
     // Verify tag appears
-    expect(find.text('Test Tag'), findsOneWidget, reason: 'Tag should be visible');
+    expect(find.text('Test Tag'), findsOneWidget,
+        reason: 'Tag should be visible');
   }
 }
 
@@ -429,7 +430,8 @@ Future<void> _testAnalysisFeatures(WidgetTester tester) async {
     }
   }
 
-  expect(foundAnalysisElement, isTrue, reason: 'Should find analysis interface elements');
+  expect(foundAnalysisElement, isTrue,
+      reason: 'Should find analysis interface elements');
 }
 
 /// Test database error handling
@@ -451,16 +453,18 @@ Future<void> _testDatabaseErrorHandling(WidgetTester tester) async {
   }
 
   // App should still be functional (not crash)
-  expect(find.byType(MaterialApp), findsOneWidget, reason: 'App should remain stable');
+  expect(find.byType(MaterialApp), findsOneWidget,
+      reason: 'App should remain stable');
 }
 
 /// Cleanup test data from database
 Future<void> _cleanupTestData(SupabaseClient client, String title) async {
   try {
     // Delete test video and related data
-    await client.from('video_tags').delete().eq('video_id',
-      client.from('videos').select('id').eq('title', title)
-    );
+    await client
+        .from('video_tags')
+        .delete()
+        .eq('video_id', client.from('videos').select('id').eq('title', title));
 
     await client.from('videos').delete().eq('title', title);
   } catch (e) {

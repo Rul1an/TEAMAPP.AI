@@ -33,12 +33,15 @@ void main() {
       } catch (e) {
         if (e.toString().contains('MissingPluginException')) {
           developer.log('✅ Database connection established');
-          developer.log('   Note: SharedPreferences plugin unavailable in test environment (expected)');
+          developer.log(
+              '   Note: SharedPreferences plugin unavailable in test environment (expected)');
           // This is expected in test environment - SharedPreferences plugin not available
           // But the fact we get this error means we successfully reached Supabase
-        } else if (e.toString().contains('relation') && e.toString().contains('does not exist')) {
+        } else if (e.toString().contains('relation') &&
+            e.toString().contains('does not exist')) {
           developer.log('✅ Database connection established');
-          developer.log('   Note: ping RPC function not deployed (migration needed)');
+          developer.log(
+              '   Note: ping RPC function not deployed (migration needed)');
         } else {
           developer.log('✅ Database connection test completed');
           developer.log('   Response: $e');
@@ -49,25 +52,25 @@ void main() {
     test('should test video table accessibility', () async {
       try {
         // Test video table access (anonymous might not have permission - that's OK)
-        final response = await client
-            .from('videos')
-            .select('id')
-            .limit(1);
+        final response = await client.from('videos').select('id').limit(1);
 
         developer.log('✅ Video table accessible');
         developer.log('   Found ${response.length} records');
       } catch (e) {
         if (e.toString().contains('permission denied') ||
             e.toString().contains('RLS')) {
-          developer.log('✅ Video table exists but requires authentication (RLS working)');
+          developer.log(
+              '✅ Video table exists but requires authentication (RLS working)');
           developer.log('   This confirms proper security configuration');
         } else if (e.toString().contains('relation') &&
-                   e.toString().contains('does not exist')) {
+            e.toString().contains('does not exist')) {
           developer.log('⚠️  Video table not deployed - migration needed');
-          developer.log('   Database connection confirmed, schema deployment pending');
+          developer.log(
+              '   Database connection confirmed, schema deployment pending');
         } else if (e.toString().contains('MissingPluginException')) {
           developer.log('✅ Video table query attempt successful');
-          developer.log('   SharedPreferences plugin unavailable (expected in test)');
+          developer.log(
+              '   SharedPreferences plugin unavailable (expected in test)');
         } else {
           developer.log('✅ Video table connectivity test completed');
           developer.log('   Response: $e');
@@ -77,19 +80,17 @@ void main() {
 
     test('should test video_tags table accessibility', () async {
       try {
-        final response = await client
-            .from('video_tags')
-            .select('id')
-            .limit(1);
+        final response = await client.from('video_tags').select('id').limit(1);
 
         developer.log('✅ Video tags table accessible');
         developer.log('   Found ${response.length} records');
       } catch (e) {
         if (e.toString().contains('permission denied') ||
             e.toString().contains('RLS')) {
-          developer.log('✅ Video tags table exists but requires authentication (RLS working)');
+          developer.log(
+              '✅ Video tags table exists but requires authentication (RLS working)');
         } else if (e.toString().contains('relation') &&
-                   e.toString().contains('does not exist')) {
+            e.toString().contains('does not exist')) {
           developer.log('⚠️  Video tags table not deployed - migration needed');
         } else if (e.toString().contains('MissingPluginException')) {
           developer.log('✅ Video tags table query attempt successful');
@@ -109,8 +110,10 @@ void main() {
       developer.log('✅ Environment configuration validated');
       developer.log('   URL: ${Environment.current.supabaseUrl}');
       developer.log('   Environment: ${Environment.current.name}');
-      developer.log('   Video features enabled: ${Environment.availableFeatures['video']}');
-      developer.log('   Key length: ${Environment.current.supabaseAnonKey.length}');
+      developer.log(
+          '   Video features enabled: ${Environment.availableFeatures['video']}');
+      developer
+          .log('   Key length: ${Environment.current.supabaseAnonKey.length}');
     });
 
     test('should test authentication flow accessibility', () async {
