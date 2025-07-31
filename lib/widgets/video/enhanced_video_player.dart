@@ -186,7 +186,7 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
                   child: FloatingActionButton(
                     mini: true,
                     onPressed: widget.onAddTag,
-                    backgroundColor: Colors.blue.withValues(alpha: 0.8),
+                    backgroundColor: Colors.blue.withOpacity(0.8),
                     child: const Icon(Icons.add, color: Colors.white),
                   ),
                 ),
