@@ -1,5 +1,4 @@
 -- 2025-07-10  Create profiles table with RLS + bucket policies
-\set ON_ERROR_STOP on
 
 -- 0. Ensure auth schema & users table for CI/local (noop on Supabase)
 create schema if not exists auth;

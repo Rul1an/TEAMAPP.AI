@@ -265,10 +265,12 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   children: [
                     // Tag indicators
                     ...tags.map((tag) {
-                      final position = (tag.timestampSeconds / videoDuration) * timelineWidth;
+                      final position = (tag.timestampSeconds / videoDuration) *
+                          timelineWidth;
 
                       // Ensure position is within bounds
-                      final clampedPosition = position.clamp(0.0, timelineWidth - 4);
+                      final clampedPosition =
+                          position.clamp(0.0, timelineWidth - 4);
 
                       return Positioned(
                         left: clampedPosition,
@@ -285,8 +287,9 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
 
                     // Current position indicator
                     Positioned(
-                      left: ((_currentVideoTime / videoDuration) * timelineWidth)
-                          .clamp(0.0, timelineWidth - 2),
+                      left:
+                          ((_currentVideoTime / videoDuration) * timelineWidth)
+                              .clamp(0.0, timelineWidth - 2),
                       child: Container(
                         width: 2,
                         height: 20,

@@ -1,8 +1,6 @@
 -- 2025-08-01  Create table to store Veo highlights fetched via Edge Functions
 -- RLS isolates data per organization.
 
-\set ON_ERROR_STOP on
-
 create table if not exists veo_highlights (
   highlight_id text primary key,
   match_id text not null,

@@ -1,8 +1,6 @@
 -- 2025-07-07  Add organization_id column + RLS policies
 -- NOTE: Replace <PLACEHOLDER_ORG_UUID> with a real UUID for production back-fill.
 
-\set ON_ERROR_STOP on
-
 -- 1. Add column & back-fill for existing tables
 alter table if exists players   add column if not exists organization_id uuid;
 alter table if exists matches   add column if not exists organization_id uuid;
@@ -12,7 +10,6 @@ alter table if exists sessions  add column if not exists organization_id uuid;
 alter table if exists statistics add column if not exists organization_id uuid;
 
 -- Temporary back-fill so NOT NULL can be enforced later
-\set ON_ERROR_STOP off
 
 do $$
 begin
@@ -35,8 +32,6 @@ begin
     update statistics set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
   end if;
 end$$;
-
-\set ON_ERROR_STOP on
 
 -- Enforce NOT NULL (can be relaxed if needed)
 alter table if exists players      alter column organization_id set not null;
