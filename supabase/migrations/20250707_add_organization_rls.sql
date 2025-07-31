@@ -5,7 +5,8 @@
 -- 1. Add column & back-fill for existing tables
 alter table if exists players   add column if not exists organization_id uuid;
 alter table if exists matches   add column if not exists organization_id uuid;
-alter table if exists trainings add column if not exists organization_id uuid;
+-- Skip trainings - it's a view, not a table (handled by training_sessions)
+-- alter table if exists trainings add column if not exists organization_id uuid;
 alter table if exists exercises add column if not exists organization_id uuid;
 alter table if exists sessions  add column if not exists organization_id uuid;
 alter table if exists statistics add column if not exists organization_id uuid;
@@ -20,9 +21,10 @@ begin
   if exists (select 1 from information_schema.tables where table_name = 'matches') then
     update matches set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
   end if;
-  if exists (select 1 from information_schema.tables where table_name = 'trainings') then
-    update trainings set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
-  end if;
+  -- Skip trainings - it's a view, not a table (handled by training_sessions)
+  -- if exists (select 1 from information_schema.tables where table_name = 'trainings') then
+  --   update trainings set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
+  -- end if;
   if exists (select 1 from information_schema.tables where table_name = 'exercises') then
     update exercises set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
   end if;
@@ -37,7 +39,8 @@ end$$;
 -- Enforce NOT NULL (can be relaxed if needed)
 alter table if exists players      alter column organization_id set not null;
 alter table if exists matches      alter column organization_id set not null;
-alter table if exists trainings    alter column organization_id set not null;
+-- Skip trainings - it's a view, not a table (handled by training_sessions)
+-- alter table if exists trainings    alter column organization_id set not null;
 alter table if exists exercises    alter column organization_id set not null;
 alter table if exists sessions     alter column organization_id set not null;
 alter table if exists statistics   alter column organization_id set not null;
