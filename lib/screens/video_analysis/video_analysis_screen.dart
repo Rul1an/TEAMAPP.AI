@@ -8,7 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/video.dart';
 import '../../models/video_tag.dart' as models;
 import '../../providers/video_repository_provider.dart';
-import '../../widgets/video/video_player_widget.dart';
+import '../../providers/video_tag_repository_provider.dart';
+import '../../widgets/video/enhanced_video_player.dart';
 import '../../widgets/video/video_tagging_widget.dart';
 
 /// Provider for video data
@@ -161,11 +162,15 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
           color: Colors.black,
           child: Stack(
             children: [
-              VideoPlayerWidget(
+              EnhancedVideoPlayer(
                 video: video,
-                onTimeUpdate: (time) =>
-                    setState(() => _currentVideoTime = time),
-                showControls: true,
+                tags:
+                    ref.watch(videoTagsNotifierProvider(video.id)).value ?? [],
+                onSeek: (duration) => setState(
+                    () => _currentVideoTime = duration.inSeconds.toDouble()),
+                onTagSelected: (tag) => _jumpToTime(tag.timestampSeconds),
+                onAddTag:
+                    _isTaggingMode ? () => _showTagCreationDialog(video) : null,
               ),
 
               // Tagging mode overlay
@@ -220,7 +225,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
   }
 
   Widget _buildVideoTimeline(Video video) {
-    final taggingState = ref.watch(videoTaggingControllerProvider(video.id));
+    final tags = ref.watch(videoTagsNotifierProvider(video.id)).value ?? [];
 
     return Container(
       height: 60,
@@ -236,9 +241,9 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
             ),
             child: Stack(
               children: [
-                // Hotspots
-                ...taggingState.hotspots.map((hotspot) {
-                  final position = (hotspot.startSeconds /
+                // Tag indicators
+                ...tags.map((tag) {
+                  final position = (tag.timestampSeconds /
                           video.durationSeconds.toDouble()) *
                       MediaQuery.of(context).size.width;
 
@@ -248,7 +253,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                       width: 4,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: _getHotspotColor(hotspot.tagCount),
+                        color: _getTagColor(tag.tagType),
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -257,8 +262,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
 
                 // Current position indicator
                 Positioned(
-                  left: (_currentVideoTime /
-                          video.durationSeconds.toDouble()) *
+                  left: (_currentVideoTime / video.durationSeconds.toDouble()) *
                       MediaQuery.of(context).size.width,
                   child: Container(
                     width: 2,
@@ -311,8 +315,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   _buildInfoRow('Title', video.title),
                   _buildInfoRow('Duration',
                       _formatTime(video.durationSeconds.toDouble())),
-                  _buildInfoRow(
-                      'Size', _formatFileSize(video.fileSizeBytes)),
+                  _buildInfoRow('Size', _formatFileSize(video.fileSizeBytes)),
                   _buildInfoRow('Status', video.status.name.toUpperCase()),
                   if (video.description != null &&
                       video.description!.isNotEmpty)
@@ -353,8 +356,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                       _buildActionChip(
                         'Jump to End',
                         Icons.skip_next,
-                        () => _jumpToTime(
-                            video.durationSeconds.toDouble()),
+                        () => _jumpToTime(video.durationSeconds.toDouble()),
                       ),
                       _buildActionChip(
                         'Rewind 10s',
@@ -392,7 +394,7 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
   }
 
   Widget _buildAnalyticsTab(Video video) {
-    final taggingState = ref.watch(videoTaggingControllerProvider(video.id));
+    final analyticsAsync = ref.watch(videoTagAnalyticsProvider(video.id));
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -404,11 +406,27 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
-          if (taggingState.analytics != null) ...[
-            _buildAnalyticsCards(taggingState.analytics!),
-            const SizedBox(height: 16),
-            _buildEventTypeChart(taggingState.analytics!),
-          ] else
+          analyticsAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, _) => const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error, size: 48, color: Colors.red),
+                  SizedBox(height: 16),
+                  Text('Error loading analytics'),
+                ],
+              ),
+            ),
+            data: (analytics) => Column(
+              children: [
+                _buildAnalyticsCards(analytics),
+                const SizedBox(height: 16),
+                _buildEventTypeChart(analytics),
+              ],
+            ),
+          ),
+          if (analyticsAsync.value == null)
             const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -567,11 +585,28 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
     );
   }
 
-  Color _getHotspotColor(int tagCount) {
-    if (tagCount >= 5) return Colors.red;
-    if (tagCount >= 3) return Colors.orange;
-    if (tagCount >= 2) return Colors.yellow;
-    return Colors.green;
+  Color _getTagColor(models.VideoTagType tagType) {
+    switch (tagType) {
+      case models.VideoTagType.drill:
+        return Colors.green;
+      case models.VideoTagType.moment:
+        return Colors.orange;
+      case models.VideoTagType.player:
+        return Colors.blue;
+      case models.VideoTagType.tactic:
+        return Colors.purple;
+      case models.VideoTagType.mistake:
+        return Colors.red;
+      case models.VideoTagType.skill:
+        return Colors.cyan;
+    }
+  }
+
+  void _showTagCreationDialog(Video video) {
+    // TODO(tagging): Implement tag creation dialog
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Tag creation dialog coming soon')),
+    );
   }
 
   void _jumpToTime(double seconds) {

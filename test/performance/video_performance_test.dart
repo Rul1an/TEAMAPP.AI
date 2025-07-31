@@ -15,13 +15,15 @@ import 'package:jo17_tactical_manager/services/performance_monitor.dart';
 class MockVideoTagRepository extends Mock implements VideoTagRepository {}
 
 // Create a provider for the tagging controller
-final videoTaggingControllerProvider = StateNotifierProvider<VideoTaggingController, VideoTaggingState>((ref) {
+final videoTaggingControllerProvider =
+    StateNotifierProvider<VideoTaggingController, VideoTaggingState>((ref) {
   final repository = ref.read(videoTagRepositoryProvider);
   return VideoTaggingController(repository);
 });
 
 // Helper provider to access the controller directly
-final videoTaggingControllerInstanceProvider = Provider<VideoTaggingController>((ref) {
+final videoTaggingControllerInstanceProvider =
+    Provider<VideoTaggingController>((ref) {
   return ref.read(videoTaggingControllerProvider.notifier);
 });
 
@@ -59,14 +61,16 @@ void main() {
 
   group('Video Performance Tests - Phase 3A Implementation', () {
     group('Video Player Performance', () {
-      test('video player initialization should complete within 3 seconds', () async {
+      test('video player initialization should complete within 3 seconds',
+          () async {
         final stopwatch = Stopwatch()..start();
 
         Video(
           id: 'test-video-123',
           organizationId: 'test-org-123',
           title: 'Test Training Video',
-          fileUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+          fileUrl:
+              'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
           thumbnailUrl: null,
           durationSeconds: 300, // 5 minutes
           fileSizeBytes: 1048576, // 1MB
@@ -80,7 +84,8 @@ void main() {
         final playerNotifier = VideoPlayerNotifier();
 
         // Simulate video initialization (mocked for testing)
-        await Future<void>.delayed(const Duration(milliseconds: 500)); // Simulate network delay
+        await Future<void>.delayed(
+            const Duration(milliseconds: 500)); // Simulate network delay
 
         stopwatch.stop();
 
@@ -90,14 +95,15 @@ void main() {
         playerNotifier.dispose();
       });
 
-      test('video player memory usage should remain below 50MB during playback', () async {
+      test('video player memory usage should remain below 50MB during playback',
+          () async {
         // Simulate memory usage monitoring
         var memoryUsageBytes = 0;
 
         // Simulate video loading and playback memory impact
         memoryUsageBytes += 10 * 1024 * 1024; // 10MB for video buffer
-        memoryUsageBytes += 5 * 1024 * 1024;  // 5MB for UI components
-        memoryUsageBytes += 3 * 1024 * 1024;  // 3MB for state management
+        memoryUsageBytes += 5 * 1024 * 1024; // 5MB for UI components
+        memoryUsageBytes += 3 * 1024 * 1024; // 3MB for state management
 
         // Total memory increase should be less than 50MB (52,428,800 bytes)
         const maxMemoryIncrease = 50 * 1024 * 1024;
@@ -108,7 +114,8 @@ void main() {
         final stopwatch = Stopwatch()..start();
 
         // Simulate video seek operation
-        await Future<void>.delayed(const Duration(milliseconds: 200)); // Mock seek time
+        await Future<void>.delayed(
+            const Duration(milliseconds: 200)); // Mock seek time
 
         stopwatch.stop();
 
@@ -121,19 +128,20 @@ void main() {
       test('tag creation should complete within 500ms', () async {
         when(() => mockVideoTagRepository.createTag(any()))
             .thenAnswer((_) async => Success(VideoTag(
-              id: 'tag-123',
-              videoId: 'video-123',
-              organizationId: 'test-org-123',
-              tagType: VideoTagType.drill,
-              timestampSeconds: 45.5,
-              description: 'Test tag',
-              tagData: const {},
-              createdAt: DateTime.now(),
-            )));
+                  id: 'tag-123',
+                  videoId: 'video-123',
+                  organizationId: 'test-org-123',
+                  tagType: VideoTagType.drill,
+                  timestampSeconds: 45.5,
+                  description: 'Test tag',
+                  tagData: const {},
+                  createdAt: DateTime.now(),
+                )));
 
         final stopwatch = Stopwatch()..start();
 
-        final taggingController = container.read(videoTaggingControllerInstanceProvider);
+        final taggingController =
+            container.read(videoTaggingControllerInstanceProvider);
         final request = const CreateVideoTagRequest(
           videoId: 'video-123',
           organizationId: 'test-org-123',
@@ -154,27 +162,30 @@ void main() {
         // Mock successful responses for bulk operations
         when(() => mockVideoTagRepository.createTag(any()))
             .thenAnswer((_) async => Success(VideoTag(
-              id: 'tag-${DateTime.now().millisecondsSinceEpoch}',
-              videoId: 'video-123',
-              organizationId: 'test-org-123',
-              tagType: VideoTagType.drill,
-              timestampSeconds: 45.5,
-              description: 'Bulk test tag',
-              tagData: const {},
-              createdAt: DateTime.now(),
-            )));
+                  id: 'tag-${DateTime.now().millisecondsSinceEpoch}',
+                  videoId: 'video-123',
+                  organizationId: 'test-org-123',
+                  tagType: VideoTagType.drill,
+                  timestampSeconds: 45.5,
+                  description: 'Bulk test tag',
+                  tagData: const {},
+                  createdAt: DateTime.now(),
+                )));
 
         final stopwatch = Stopwatch()..start();
-        final taggingController = container.read(videoTaggingControllerInstanceProvider);
+        final taggingController =
+            container.read(videoTaggingControllerInstanceProvider);
 
         // Create 100 tags in parallel
-        final futures = List.generate(100, (index) => taggingController.createTag(CreateVideoTagRequest(
-          videoId: 'video-123',
-          organizationId: 'test-org-123',
-          tagType: VideoTagType.drill,
-          timestampSeconds: index * 1.0,
-          description: 'Bulk tag $index',
-        )));
+        final futures = List.generate(
+            100,
+            (index) => taggingController.createTag(CreateVideoTagRequest(
+                  videoId: 'video-123',
+                  organizationId: 'test-org-123',
+                  tagType: VideoTagType.drill,
+                  timestampSeconds: index * 1.0,
+                  description: 'Bulk tag $index',
+                )));
 
         final results = await Future.wait<bool>(futures);
         stopwatch.stop();
@@ -191,23 +202,27 @@ void main() {
       });
 
       test('tag query operations should complete within 200ms', () async {
-        final mockTags = List.generate(50, (index) => VideoTag(
-          id: 'tag-$index',
-          videoId: 'video-123',
-          organizationId: 'test-org-123',
-          tagType: VideoTagType.values[index % VideoTagType.values.length],
-          timestampSeconds: index * 2.0,
-          description: 'Test tag $index',
-          tagData: const {},
-          createdAt: DateTime.now(),
-        ));
+        final mockTags = List.generate(
+            50,
+            (index) => VideoTag(
+                  id: 'tag-$index',
+                  videoId: 'video-123',
+                  organizationId: 'test-org-123',
+                  tagType:
+                      VideoTagType.values[index % VideoTagType.values.length],
+                  timestampSeconds: index * 2.0,
+                  description: 'Test tag $index',
+                  tagData: const {},
+                  createdAt: DateTime.now(),
+                ));
 
         when(() => mockVideoTagRepository.getTagsForVideo('video-123'))
             .thenAnswer((_) async => Success(mockTags));
 
         final stopwatch = Stopwatch()..start();
 
-        final taggingController = container.read(videoTaggingControllerInstanceProvider);
+        final taggingController =
+            container.read(videoTaggingControllerInstanceProvider);
         await taggingController.loadVideoTags('video-123');
 
         stopwatch.stop();
@@ -268,7 +283,8 @@ void main() {
         // Test cache cleanup trigger
         if (currentCacheSize > maxCacheSize * 0.8) {
           // Would trigger cleanup in real implementation
-          expect(true, isTrue, reason: 'Cache cleanup should be triggered at 80% capacity');
+          expect(true, isTrue,
+              reason: 'Cache cleanup should be triggered at 80% capacity');
         }
       });
 
@@ -280,7 +296,8 @@ void main() {
           id: 'test-video-dispose',
           organizationId: 'test-org-123',
           title: 'Disposal Test Video',
-          fileUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+          fileUrl:
+              'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
           thumbnailUrl: null,
           durationSeconds: 120, // 2 minutes
           fileSizeBytes: 1048576,
@@ -292,12 +309,13 @@ void main() {
         );
 
         // Test disposal doesn't throw errors
-        expect(() => playerNotifier.dispose(), returnsNormally);
+        expect(playerNotifier.dispose, returnsNormally);
       });
     });
 
     group('Real-world Performance Scenarios', () {
-      test('concurrent video operations should not degrade performance', () async {
+      test('concurrent video operations should not degrade performance',
+          () async {
         final stopwatch = Stopwatch()..start();
 
         // Simulate concurrent operations
@@ -311,17 +329,18 @@ void main() {
         // 10 concurrent tag operations
         when(() => mockVideoTagRepository.createTag(any()))
             .thenAnswer((_) async => Success(VideoTag(
-              id: 'concurrent-tag-${DateTime.now().millisecondsSinceEpoch}',
-              videoId: 'video-concurrent',
-              organizationId: 'test-org-123',
-              tagType: VideoTagType.moment,
-              timestampSeconds: 30.0,
-              description: 'Concurrent test',
-              tagData: const {},
-              createdAt: DateTime.now(),
-            )));
+                  id: 'concurrent-tag-${DateTime.now().millisecondsSinceEpoch}',
+                  videoId: 'video-concurrent',
+                  organizationId: 'test-org-123',
+                  tagType: VideoTagType.moment,
+                  timestampSeconds: 30.0,
+                  description: 'Concurrent test',
+                  tagData: const {},
+                  createdAt: DateTime.now(),
+                )));
 
-        final taggingController = container.read(videoTaggingControllerInstanceProvider);
+        final taggingController =
+            container.read(videoTaggingControllerInstanceProvider);
         for (int i = 0; i < 10; i++) {
           futures.add(taggingController.createTag(const CreateVideoTagRequest(
             videoId: 'video-concurrent',
@@ -348,9 +367,11 @@ void main() {
         });
 
         final stopwatch = Stopwatch()..start();
-        final taggingController = container.read(videoTaggingControllerInstanceProvider);
+        final taggingController =
+            container.read(videoTaggingControllerInstanceProvider);
 
-        final result = await taggingController.createTag(const CreateVideoTagRequest(
+        final result =
+            await taggingController.createTag(const CreateVideoTagRequest(
           videoId: 'video-timeout',
           organizationId: 'test-org-123',
           tagType: VideoTagType.drill,

@@ -45,7 +45,8 @@ class PerformanceMonitor {
 
     // Alert on performance issues
     if (metric.duration > _getThreshold(metric.operation)) {
-      debugPrint('PERFORMANCE WARNING: ${metric.operation} took ${metric.duration}ms');
+      debugPrint(
+          'PERFORMANCE WARNING: ${metric.operation} took ${metric.duration}ms');
     }
   }
 
