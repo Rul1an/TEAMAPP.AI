@@ -33,16 +33,8 @@ BEGIN
 END
 $$;
 
--- Create auth schema (for Supabase compatibility)
-CREATE SCHEMA IF NOT EXISTS auth;
-
--- Create auth.users table (basic structure for references)
-CREATE TABLE IF NOT EXISTS auth.users (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  email text,
-  created_at timestamptz DEFAULT now(),
-  updated_at timestamptz DEFAULT now()
-);
+-- Note: auth schema and auth.users are managed by Supabase
+-- Do not create these - they already exist in Supabase
 
 -- Organizations table (foundational)
 CREATE TABLE IF NOT EXISTS public.organizations (
@@ -360,63 +352,13 @@ CREATE INDEX IF NOT EXISTS idx_veo_highlights_organization_id ON public.veo_high
 CREATE INDEX IF NOT EXISTS idx_veo_highlights_video_id ON public.veo_highlights(video_id);
 CREATE INDEX IF NOT EXISTS idx_veo_highlights_match_id ON public.veo_highlights(match_id);
 
--- Create basic RLS policies for authenticated users
-CREATE POLICY "Organizations: Users can view organizations they belong to" ON public.organizations
-  FOR SELECT TO authenticated
-  USING (
-    id IN (
-      SELECT organization_id FROM public.organization_members
-      WHERE user_id = auth.uid()
-    )
-  );
+-- Note: RLS policies will be created after Supabase auth is fully initialized
+-- These will be added in a separate migration after the foundation is established
 
-CREATE POLICY "Profiles: Users can view all profiles" ON public.profiles
-  FOR SELECT TO authenticated
-  USING (true);
-
-CREATE POLICY "Teams: Users can view teams in their organizations" ON public.teams
-  FOR SELECT TO authenticated
-  USING (
-    organization_id IN (
-      SELECT organization_id FROM public.organization_members
-      WHERE user_id = auth.uid()
-    )
-  );
-
-CREATE POLICY "Players: Users can view players in their organizations" ON public.players
-  FOR SELECT TO authenticated
-  USING (
-    organization_id IN (
-      SELECT organization_id FROM public.organization_members
-      WHERE user_id = auth.uid()
-    )
-  );
-
-CREATE POLICY "Videos: Users can view videos in their organizations" ON public.videos
-  FOR SELECT TO authenticated
-  USING (
-    organization_id IN (
-      SELECT organization_id FROM public.organization_members
-      WHERE user_id = auth.uid()
-    )
-  );
-
-CREATE POLICY "Video Tags: Users can view tags in their organizations" ON public.video_tags
-  FOR SELECT TO authenticated
-  USING (
-    organization_id IN (
-      SELECT organization_id FROM public.organization_members
-      WHERE user_id = auth.uid()
-    )
-  );
-
--- Grant necessary permissions to roles
+-- Grant necessary permissions to roles (public schema only)
 GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
-GRANT USAGE ON SCHEMA auth TO anon, authenticated, service_role;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated, service_role;
-GRANT ALL ON ALL TABLES IN SCHEMA auth TO anon, authenticated, service_role;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;
-GRANT ALL ON ALL SEQUENCES IN SCHEMA auth TO anon, authenticated, service_role;
 
 -- Create updated_at trigger function
 CREATE OR REPLACE FUNCTION public.handle_updated_at()
@@ -494,7 +436,7 @@ BEGIN
   RAISE NOTICE '==============================================';
   RAISE NOTICE '✅ COMPLETE SUPABASE FOUNDATION ESTABLISHED';
   RAISE NOTICE '✅ All required roles created: authenticated, service_role, anon';
-  RAISE NOTICE '✅ Auth schema and users table created';
+  RAISE NOTICE '✅ Auth schema managed by Supabase (as expected)';
   RAISE NOTICE '✅ All application tables created with complete schemas';
   RAISE NOTICE '✅ All expected columns present: video_id, label, description, etc.';
   RAISE NOTICE '✅ Backwards compatibility tables: memberships, etc.';

@@ -15,22 +15,22 @@ alter table if exists statistics add column if not exists organization_id uuid;
 do $$
 begin
   if exists (select 1 from information_schema.tables where table_name = 'players') then
-    update players set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+    update players set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
   end if;
   if exists (select 1 from information_schema.tables where table_name = 'matches') then
-    update matches set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+    update matches set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
   end if;
   if exists (select 1 from information_schema.tables where table_name = 'trainings') then
-    update trainings set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+    update trainings set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
   end if;
   if exists (select 1 from information_schema.tables where table_name = 'exercises') then
-    update exercises set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+    update exercises set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
   end if;
   if exists (select 1 from information_schema.tables where table_name = 'sessions') then
-    update sessions set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+    update sessions set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
   end if;
   if exists (select 1 from information_schema.tables where table_name = 'statistics') then
-    update statistics set organization_id = coalesce(organization_id, '<PLACEHOLDER_ORG_UUID>');
+    update statistics set organization_id = coalesce(organization_id, '00000000-0000-0000-0000-000000000000');
   end if;
 end$$;
 
