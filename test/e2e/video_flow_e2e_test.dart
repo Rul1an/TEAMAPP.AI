@@ -95,11 +95,9 @@ void main() {
 /// Navigate to video upload screen
 Future<void> _navigateToVideoUpload(WidgetTester tester) async {
   // Look for video upload navigation
-  final videoUploadButton = find.text('Upload Video').or(
-    find.byIcon(Icons.video_call)
-  ).or(
-    find.byTooltip('Upload Video')
-  );
+  final videoUploadButton = find.text('Upload Video');
+  final videoCallButton = find.byIcon(Icons.video_call);
+  final videoTooltipButton = find.byTooltip('Upload Video');
 
   if (videoUploadButton.evaluate().isNotEmpty) {
     await tester.tap(videoUploadButton);
@@ -111,20 +109,35 @@ Future<void> _navigateToVideoUpload(WidgetTester tester) async {
       await tester.tap(menuButton);
       await tester.pumpAndSettle();
 
-      final videoMenuItem = find.text('Videos').or(find.text('Video'));
-      await tester.tap(videoMenuItem);
+      final videoMenuItem = find.text('Videos');
+      final videoMenuItemAlt = find.text('Video');
+
+      if (videoMenuItem.evaluate().isNotEmpty) {
+        await tester.tap(videoMenuItem);
+      } else {
+        await tester.tap(videoMenuItemAlt);
+      }
       await tester.pumpAndSettle();
 
-      final uploadButton = find.byIcon(Icons.add).or(find.text('Upload'));
-      await tester.tap(uploadButton);
+      final uploadButton = find.byIcon(Icons.add);
+      final uploadButtonAlt = find.text('Upload');
+
+      if (uploadButton.evaluate().isNotEmpty) {
+        await tester.tap(uploadButton);
+      } else {
+        await tester.tap(uploadButtonAlt);
+      }
       await tester.pumpAndSettle();
     }
   }
 
   // Verify we're on the upload screen
+  final uploadVideoText = find.text('Upload Video');
+  final videoUploadText = find.text('Video Upload');
+
   expect(
-    find.text('Upload Video').or(find.text('Video Upload')),
-    findsOneWidget,
+    uploadVideoText.evaluate().isNotEmpty || videoUploadText.evaluate().isNotEmpty,
+    isTrue,
     reason: 'Should navigate to video upload screen'
   );
 }
@@ -132,47 +145,71 @@ Future<void> _navigateToVideoUpload(WidgetTester tester) async {
 /// Perform video upload (mocked for testing)
 Future<void> _performVideoUpload(WidgetTester tester, String title, String description) async {
   // Fill in video title
-  final titleField = find.byType(TextFormField).or(find.byType(TextField));
+  final titleField = find.byType(TextFormField);
+  final titleFieldAlt = find.byType(TextField);
+
   if (titleField.evaluate().isNotEmpty) {
     await tester.enterText(titleField.first, title);
+    await tester.pumpAndSettle();
+  } else if (titleFieldAlt.evaluate().isNotEmpty) {
+    await tester.enterText(titleFieldAlt.first, title);
     await tester.pumpAndSettle();
   }
 
   // Fill in description if available
-  final descriptionField = find.widgetWithText(TextFormField, 'Description').or(
-    find.widgetWithText(TextField, 'Description')
-  );
+  final descriptionField = find.widgetWithText(TextFormField, 'Description');
+  final descriptionFieldAlt = find.widgetWithText(TextField, 'Description');
+
   if (descriptionField.evaluate().isNotEmpty) {
     await tester.enterText(descriptionField, description);
+    await tester.pumpAndSettle();
+  } else if (descriptionFieldAlt.evaluate().isNotEmpty) {
+    await tester.enterText(descriptionFieldAlt, description);
     await tester.pumpAndSettle();
   }
 
   // Mock file selection (in real scenario this would be a file picker)
-  final selectFileButton = find.text('Select Video').or(
-    find.byIcon(Icons.file_upload)
-  );
+  final selectFileButton = find.text('Select Video');
+  final fileUploadButton = find.byIcon(Icons.file_upload);
+
   if (selectFileButton.evaluate().isNotEmpty) {
     await tester.tap(selectFileButton);
+    await tester.pumpAndSettle();
+  } else if (fileUploadButton.evaluate().isNotEmpty) {
+    await tester.tap(fileUploadButton);
     await tester.pumpAndSettle();
   }
 
   // Submit upload
-  final uploadButton = find.text('Upload').or(find.text('Save'));
+  final uploadButton = find.text('Upload');
+  final saveButton = find.text('Save');
+
   if (uploadButton.evaluate().isNotEmpty) {
     await tester.tap(uploadButton);
     await tester.pumpAndSettle(const Duration(seconds: 3)); // Allow time for upload
+  } else if (saveButton.evaluate().isNotEmpty) {
+    await tester.tap(saveButton);
+    await tester.pumpAndSettle(const Duration(seconds: 3));
   }
 
   // Verify success message or navigation
-  final successIndicator = find.text('Upload successful').or(
-    find.text('Video uploaded')
-  ).or(
-    find.byIcon(Icons.check_circle)
-  );
+  final successIndicators = [
+    find.text('Upload successful'),
+    find.text('Video uploaded'),
+    find.byIcon(Icons.check_circle),
+  ];
+
+  bool foundSuccessIndicator = false;
+  for (final indicator in successIndicators) {
+    if (indicator.evaluate().isNotEmpty) {
+      foundSuccessIndicator = true;
+      break;
+    }
+  }
 
   expect(
-    successIndicator,
-    findsOneWidget,
+    foundSuccessIndicator,
+    isTrue,
     reason: 'Should show upload success'
   );
 }
@@ -196,16 +233,23 @@ Future<void> _verifyDatabaseStorage(SupabaseClient client, String title) async {
 
 /// Navigate to video list screen
 Future<void> _navigateToVideoList(WidgetTester tester) async {
-  final videoListButton = find.text('Videos').or(
-    find.text('Video List')
-  ).or(
-    find.byIcon(Icons.video_library)
-  );
+  final videoListButtons = [
+    find.text('Videos'),
+    find.text('Video List'),
+    find.byIcon(Icons.video_library),
+  ];
 
-  if (videoListButton.evaluate().isNotEmpty) {
-    await tester.tap(videoListButton);
-    await tester.pumpAndSettle();
-  } else {
+  bool navigated = false;
+  for (final button in videoListButtons) {
+    if (button.evaluate().isNotEmpty) {
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      navigated = true;
+      break;
+    }
+  }
+
+  if (!navigated) {
     // Navigate back to main screen first
     final backButton = find.byIcon(Icons.arrow_back);
     if (backButton.evaluate().isNotEmpty) {
@@ -246,47 +290,81 @@ Future<void> _testVideoPlayer(WidgetTester tester, String title) async {
   await tester.pumpAndSettle();
 
   // Verify player controls exist
-  final playButton = find.byIcon(Icons.play_arrow).or(
-    find.byIcon(Icons.pause)
-  );
-  expect(playButton, findsOneWidget, reason: 'Video player should have play/pause controls');
+  final playButton = find.byIcon(Icons.play_arrow);
+  final pauseButton = find.byIcon(Icons.pause);
+
+  final hasPlayControls = playButton.evaluate().isNotEmpty || pauseButton.evaluate().isNotEmpty;
+  expect(hasPlayControls, isTrue, reason: 'Video player should have play/pause controls');
 
   // Test play/pause functionality
   if (playButton.evaluate().isNotEmpty) {
     await tester.tap(playButton);
     await tester.pumpAndSettle();
+  } else if (pauseButton.evaluate().isNotEmpty) {
+    await tester.tap(pauseButton);
+    await tester.pumpAndSettle();
   }
 
   // Check for video progress indicator
-  final progressIndicator = find.byType(LinearProgressIndicator).or(
-    find.byType(Slider)
-  );
-  expect(progressIndicator, findsOneWidget, reason: 'Video player should show progress');
+  final progressIndicator = find.byType(LinearProgressIndicator);
+  final sliderIndicator = find.byType(Slider);
+
+  final hasProgress = progressIndicator.evaluate().isNotEmpty || sliderIndicator.evaluate().isNotEmpty;
+  expect(hasProgress, isTrue, reason: 'Video player should show progress');
 }
 
 /// Test video tagging functionality
 Future<void> _testVideoTagging(WidgetTester tester) async {
   // Look for tagging controls
-  final tagButton = find.text('Add Tag').or(
-    find.byIcon(Icons.label)
-  ).or(
-    find.byIcon(Icons.add)
-  );
+  final tagButtons = [
+    find.text('Add Tag'),
+    find.byIcon(Icons.label),
+    find.byIcon(Icons.add),
+  ];
 
-  if (tagButton.evaluate().isNotEmpty) {
-    await tester.tap(tagButton);
-    await tester.pumpAndSettle();
+  bool foundTagButton = false;
+  for (final button in tagButtons) {
+    if (button.evaluate().isNotEmpty) {
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      foundTagButton = true;
+      break;
+    }
+  }
 
+  if (foundTagButton) {
     // Enter tag information
-    final tagField = find.byType(TextFormField).or(find.byType(TextField));
+    final tagField = find.byType(TextFormField);
+    final tagFieldAlt = find.byType(TextField);
+
     if (tagField.evaluate().isNotEmpty) {
       await tester.enterText(tagField.first, 'Test Tag');
       await tester.pumpAndSettle();
 
       // Save tag
-      final saveButton = find.text('Save').or(find.text('Add'));
+      final saveButton = find.text('Save');
+      final addButton = find.text('Add');
+
       if (saveButton.evaluate().isNotEmpty) {
         await tester.tap(saveButton);
+        await tester.pumpAndSettle();
+      } else if (addButton.evaluate().isNotEmpty) {
+        await tester.tap(addButton);
+        await tester.pumpAndSettle();
+      }
+    } else if (tagFieldAlt.evaluate().isNotEmpty) {
+      await tester.enterText(tagFieldAlt.first, 'Test Tag');
+      await tester.pumpAndSettle();
+
+      // Save tag
+      final saveButton = find.text('Save');
+      final addButton = find.text('Add');
+
+      if (saveButton.evaluate().isNotEmpty) {
+        await tester.tap(saveButton);
+        await tester.pumpAndSettle();
+      } else if (addButton.evaluate().isNotEmpty) {
+        await tester.tap(addButton);
         await tester.pumpAndSettle();
       }
     }
@@ -314,15 +392,18 @@ Future<void> _setupTestVideo(SupabaseClient client, String title) async {
 
 /// Navigate to video analysis screen
 Future<void> _navigateToVideoAnalysis(WidgetTester tester) async {
-  final analysisButton = find.text('Analysis').or(
-    find.text('Video Analysis')
-  ).or(
-    find.byIcon(Icons.analytics)
-  );
+  final analysisButtons = [
+    find.text('Analysis'),
+    find.text('Video Analysis'),
+    find.byIcon(Icons.analytics),
+  ];
 
-  if (analysisButton.evaluate().isNotEmpty) {
-    await tester.tap(analysisButton);
-    await tester.pumpAndSettle();
+  for (final button in analysisButtons) {
+    if (button.evaluate().isNotEmpty) {
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      break;
+    }
   }
 }
 
@@ -353,16 +434,20 @@ Future<void> _testDatabaseErrorHandling(WidgetTester tester) async {
   // This is more of a behavioral test - app shouldn't crash
 
   // Try to perform actions that require database
-  final buttons = find.byType(ElevatedButton).or(find.byType(TextButton));
+  final elevatedButtons = find.byType(ElevatedButton);
+  final textButtons = find.byType(TextButton);
 
-  if (buttons.evaluate().isNotEmpty) {
+  if (elevatedButtons.evaluate().isNotEmpty) {
     // Tap first available button
-    await tester.tap(buttons.first);
+    await tester.tap(elevatedButtons.first);
     await tester.pumpAndSettle();
-
-    // App should still be functional (not crash)
-    expect(find.byType(MaterialApp), findsOneWidget, reason: 'App should remain stable');
+  } else if (textButtons.evaluate().isNotEmpty) {
+    await tester.tap(textButtons.first);
+    await tester.pumpAndSettle();
   }
+
+  // App should still be functional (not crash)
+  expect(find.byType(MaterialApp), findsOneWidget, reason: 'App should remain stable');
 }
 
 /// Cleanup test data from database

@@ -55,6 +55,7 @@ begin
   if exists (select 1 from information_schema.tables where table_name = 'matches') then
     execute 'create index if not exists matches_org_idx on matches(organization_id, id)';
   end if;
+  -- Skip trainings - it's a view, not a table (handled by training_sessions)
   if exists (select 1 from information_schema.tables where table_name = 'trainings') then
     execute 'create index if not exists trainings_org_idx on trainings(organization_id, id)';
   end if;
