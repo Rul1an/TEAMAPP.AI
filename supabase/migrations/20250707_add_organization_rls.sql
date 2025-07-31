@@ -1,3 +1,4 @@
+\set ON_ERROR_STOP on
 -- 2025-07-07  Add organization_id column + RLS policies
 -- NOTE: Replace <PLACEHOLDER_ORG_UUID> with a real UUID for production back-fill.
 

@@ -1,3 +1,4 @@
+\set ON_ERROR_STOP on
 -- 2025-08-01  Create table to store Veo highlights fetched via Edge Functions
 -- RLS isolates data per organization.
 

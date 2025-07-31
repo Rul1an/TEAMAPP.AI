@@ -1,3 +1,4 @@
+\set ON_ERROR_STOP on
 -- 2025-08-02  Add storage_path column to veo_highlights for local Storage object reference
 
 alter table if exists veo_highlights
