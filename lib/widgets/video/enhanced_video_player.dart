@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
-import '../../models/video.dart';
 import '../../models/video_tag.dart';
-import '../../services/performance_monitor.dart';
+import '../../core/result.dart';
+import 'video_tag_timeline.dart';
+import 'video_tag_creation_dialog.dart';
 
-/// Enhanced video player with tag timeline integration
-///
-/// Replaces placeholder implementation with actual video playback
-/// Following Video Production Readiness Plan 2025 - Phase 3B
+/// Enhanced video player with tag integration and custom controls
+/// Implements Phase 3A: Video Player Foundation
 class EnhancedVideoPlayer extends StatefulWidget {
-  final Video video;
+  final String videoUrl;
   final List<VideoTag> tags;
-  final void Function(Duration)? onSeek;
-  final void Function(VideoTag)? onTagSelected;
-  final VoidCallback? onAddTag;
+  final void Function(Duration) onTagTimelineSeek;
+  final void Function(VideoTag) onTagCreated;
+  final void Function(String) onError;
 
   const EnhancedVideoPlayer({
     Key? key,
-    required this.video,
-    this.tags = const [],
-    this.onSeek,
-    this.onTagSelected,
-    this.onAddTag,
+    required this.videoUrl,
+    required this.tags,
+    required this.onTagTimelineSeek,
+    required this.onTagCreated,
+    required this.onError,
   }) : super(key: key);
 
   @override
@@ -33,8 +32,9 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
   VideoPlayerController? _controller;
   ChewieController? _chewieController;
   bool _isInitialized = false;
-  bool _hasError = false;
+  bool _isLoading = true;
   String? _errorMessage;
+  Duration _currentPosition = Duration.zero;
 
   @override
   void initState() {
@@ -44,32 +44,39 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
 
   @override
   void dispose() {
-    _controller?.dispose();
-    _chewieController?.dispose();
+    _disposeControllers();
     super.dispose();
   }
 
-  Future<void> _initializePlayer() async {
-    final performanceMonitor = PerformanceMonitor();
-    performanceMonitor.startTimer('video_load');
+  void _disposeControllers() {
+    _chewieController?.dispose();
+    _controller?.dispose();
+  }
 
+  Future<void> _initializePlayer() async {
     try {
+      setState(() {
+        _isLoading = true;
+        _errorMessage = null;
+      });
+
       // Validate video URL
-      final videoUrl = widget.video.fileUrl;
-      if (videoUrl.isEmpty) {
-        throw Exception('Video URL is empty');
+      final urlValidation = _validateVideoUrl(widget.videoUrl);
+      if (urlValidation.isFailure) {
+        throw Exception(urlValidation.error ?? 'Unknown validation error');
       }
 
       // Initialize video player controller
-      _controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
+      _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
 
-      // Add error listener
-      _controller!.addListener(_onVideoError);
+      // Add position listener for timeline updates
+      _controller!.addListener(_onVideoPositionChanged);
 
-      // Initialize controller
       await _controller!.initialize();
 
-      // Setup Chewie controller for enhanced UI
+      if (!mounted) return;
+
+      // Initialize Chewie controller with custom options
       _chewieController = ChewieController(
         videoPlayerController: _controller!,
         aspectRatio: _controller!.value.aspectRatio,
@@ -79,148 +86,207 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
         allowFullScreen: true,
         allowPlaybackSpeedChanging: true,
         showControlsOnInitialize: false,
-        placeholder: const ColoredBox(
-          color: Colors.black,
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
+        materialProgressColors: ChewieProgressColors(
+          playedColor: Theme.of(context).primaryColor,
+          handleColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.grey[300]!,
+          bufferedColor: Colors.grey[400]!,
         ),
-        errorBuilder: (context, errorMessage) {
-          return ColoredBox(
-            color: Colors.black,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.error_outline,
-                    color: Colors.red,
-                    size: 48,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Video Error',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Colors.white,
-                        ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    errorMessage,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.white70,
-                        ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+        additionalOptions: (context) => [
+          OptionItem(
+            onTap: (_) => _showTagCreationDialog(),
+            iconData: Icons.add_circle,
+            title: 'Add Tag',
+          ),
+          OptionItem(
+            onTap: (_) => _showTagList(),
+            iconData: Icons.list,
+            title: 'View Tags',
+          ),
+        ],
       );
 
-      performanceMonitor.endTimer('video_load');
+      setState(() {
+        _isInitialized = true;
+        _isLoading = false;
+      });
 
-      if (mounted) {
-        setState(() {
-          _isInitialized = true;
-          _hasError = false;
-        });
-      }
+      debugPrint('✅ Video player initialized successfully');
     } catch (e) {
-      performanceMonitor.endTimer('video_load');
+      debugPrint('❌ Video player initialization failed: $e');
 
-      if (mounted) {
-        setState(() {
-          _hasError = true;
-          _errorMessage = e.toString();
-        });
-      }
+      setState(() {
+        _isLoading = false;
+        _errorMessage = e.toString();
+      });
 
-      debugPrint('Video initialization error: $e');
+      widget.onError('Failed to load video: $e');
     }
   }
 
-  void _onVideoError() {
-    if (_controller?.value.hasError ?? false) {
-      final error = _controller?.value.errorDescription;
+  void _onVideoPositionChanged() {
+    if (_controller?.value.isInitialized == true) {
       setState(() {
-        _hasError = true;
-        _errorMessage = error ?? 'Unknown video error';
+        _currentPosition = _controller!.value.position;
       });
     }
   }
 
-  void _seekToTag(VideoTag tag) {
-    if (_controller != null && _isInitialized) {
-      final position = Duration(seconds: tag.timestampSeconds.toInt());
-      _controller!.seekTo(position);
-      widget.onTagSelected?.call(tag);
+  Result<String> _validateVideoUrl(String url) {
+    if (url.isEmpty) {
+      return Result.failure('Video URL cannot be empty');
+    }
+
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme) {
+      return Result.failure('Invalid video URL format');
+    }
+
+    final allowedSchemes = ['http', 'https', 'file'];
+    if (!allowedSchemes.contains(uri.scheme)) {
+      return Result.failure('Unsupported URL scheme: ${uri.scheme}');
+    }
+
+    return Result.success(url);
+  }
+
+  Exception _getUserFriendlyError(String error) {
+    if (error.contains('network')) {
+      return Exception('Network error. Please check your connection and try again.');
+    } else if (error.contains('format') || error.contains('codec')) {
+      return Exception('Video format not supported. Please try a different video.');
+    } else if (error.contains('timeout')) {
+      return Exception('Connection timeout. Please try again.');
+    } else {
+      return Exception('Failed to load video. Please try again later.');
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (_hasError) {
-      return _buildErrorState();
+  void _showTagCreationDialog() {
+    if (_controller?.value.isInitialized != true) {
+      _showSnackBar('Video must be loaded before creating tags');
+      return;
     }
 
-    if (!_isInitialized) {
-      return _buildLoadingState();
-    }
-
-    return Column(
-      children: [
-        // Video player
-        AspectRatio(
-          aspectRatio: _controller!.value.aspectRatio,
-          child: Stack(
-            children: [
-              Chewie(controller: _chewieController!),
-
-              // Add tag button overlay
-              if (widget.onAddTag != null)
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: FloatingActionButton(
-                    mini: true,
-                    onPressed: widget.onAddTag,
-                    backgroundColor: Colors.blue.withValues(alpha: 0.8),
-                    child: const Icon(Icons.add, color: Colors.white),
-                  ),
-                ),
-            ],
-          ),
-        ),
-
-        // Tag timeline
-        if (widget.tags.isNotEmpty)
-          _VideoTagTimeline(
-            tags: widget.tags,
-            duration: _controller!.value.duration,
-            controller: _controller!,
-            onTagSelected: _seekToTag,
-            onSeek: widget.onSeek,
-          ),
-      ],
+    showDialog(
+      context: context,
+      builder: (context) => VideoTagCreationDialog(
+        currentTimestamp: _currentPosition,
+        onTagCreated: (tag) {
+          widget.onTagCreated(tag);
+          Navigator.of(context).pop();
+          _showSnackBar('Tag created successfully');
+        },
+      ),
     );
+  }
+
+  void _showTagList() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Video Tags (${widget.tags.length})',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            if (widget.tags.isEmpty)
+              const Center(
+                child: Text('No tags created yet'),
+              )
+            else
+              ...widget.tags.map((tag) => ListTile(
+                leading: Icon(
+                  _getTagIcon(tag.tagType),
+                  color: _getTagColor(tag.tagType),
+                ),
+                title: Text(tag.description ?? 'Untitled tag'),
+                subtitle: Text(_formatDuration(Duration(seconds: tag.timestampSeconds.toInt()))),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  _seekToTag(tag);
+                },
+              )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _seekToTag(VideoTag tag) {
+    final position = Duration(seconds: tag.timestampSeconds.toInt());
+    _controller?.seekTo(position);
+    widget.onTagTimelineSeek(position);
+    _showSnackBar('Jumped to ${tag.description ?? 'tag'}');
+  }
+
+  void _showSnackBar(String message) {
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  IconData _getTagIcon(VideoTagType tagType) {
+    switch (tagType) {
+      case VideoTagType.drill:
+        return Icons.sports_soccer;
+      case VideoTagType.moment:
+        return Icons.star;
+      case VideoTagType.player:
+        return Icons.person;
+      case VideoTagType.tactic:
+        return Icons.analytics;
+      case VideoTagType.mistake:
+        return Icons.warning;
+      case VideoTagType.skill:
+        return Icons.star_border;
+    }
+  }
+
+  Color _getTagColor(VideoTagType tagType) {
+    switch (tagType) {
+      case VideoTagType.drill:
+        return Colors.green;
+      case VideoTagType.moment:
+        return Colors.orange;
+      case VideoTagType.player:
+        return Colors.blue;
+      case VideoTagType.tactic:
+        return Colors.purple;
+      case VideoTagType.mistake:
+        return Colors.red;
+      case VideoTagType.skill:
+        return Colors.cyan;
+    }
+  }
+
+  String _formatDuration(Duration duration) {
+    final minutes = duration.inMinutes;
+    final seconds = duration.inSeconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
   Widget _buildLoadingState() {
     return Container(
       height: 200,
-      color: Colors.black,
+      color: Colors.black12,
       child: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(color: Colors.white),
+            CircularProgressIndicator(),
             SizedBox(height: 16),
-            Text(
-              'Loading video...',
-              style: TextStyle(color: Colors.white),
-            ),
+            Text('Loading video...'),
           ],
         ),
       ),
@@ -230,40 +296,25 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
   Widget _buildErrorState() {
     return Container(
       height: 200,
-      color: Colors.black,
+      color: Colors.red[50],
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.error_outline,
-              color: Colors.red,
+            Icon(
+              Icons.error,
               size: 48,
+              color: Colors.red[300],
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Failed to load video',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
             Text(
-              _errorMessage ?? 'Unknown error',
-              style: const TextStyle(color: Colors.white70),
+              _errorMessage ?? 'Failed to load video',
               textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.red[700]),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _hasError = false;
-                  _isInitialized = false;
-                });
-                _initializePlayer();
-              },
+              onPressed: _initializePlayer,
               child: const Text('Retry'),
             ),
           ],
@@ -271,169 +322,80 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
       ),
     );
   }
-}
 
-/// Video tag timeline widget showing tag positions and allowing navigation
-class _VideoTagTimeline extends StatefulWidget {
-  final List<VideoTag> tags;
-  final Duration duration;
-  final VideoPlayerController controller;
-  final void Function(VideoTag) onTagSelected;
-  final void Function(Duration)? onSeek;
+  Widget _buildVideoPlayer() {
+    return Column(
+      children: [
+        // Video player
+        AspectRatio(
+          aspectRatio: _controller!.value.aspectRatio,
+          child: Chewie(controller: _chewieController!),
+        ),
 
-  const _VideoTagTimeline({
-    required this.tags,
-    required this.duration,
-    required this.controller,
-    required this.onTagSelected,
-    this.onSeek,
-  });
+        // Tag timeline
+        VideoTagTimeline(
+          tags: widget.tags,
+          duration: _controller!.value.duration,
+          currentPosition: _currentPosition,
+          onSeek: (position) {
+            _controller!.seekTo(position);
+            widget.onTagTimelineSeek(position);
+          },
+          onTagTap: _seekToTag,
+        ),
 
-  @override
-  State<_VideoTagTimeline> createState() => _VideoTagTimelineState();
-}
-
-class _VideoTagTimelineState extends State<_VideoTagTimeline> {
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_onVideoPositionChanged);
-  }
-
-  @override
-  void dispose() {
-    widget.controller.removeListener(_onVideoPositionChanged);
-    super.dispose();
-  }
-
-  void _onVideoPositionChanged() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  Color _getTagColor(VideoTag tag) {
-    return Color(tag.tagColor);
-  }
-
-  String _formatDuration(Duration duration) {
-    final minutes = duration.inMinutes;
-    final seconds = duration.inSeconds % 60;
-    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+        // Quick actions
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                onPressed: _showTagCreationDialog,
+                icon: const Icon(Icons.add_circle),
+                tooltip: 'Add Tag',
+              ),
+              IconButton(
+                onPressed: _showTagList,
+                icon: const Icon(Icons.list),
+                tooltip: 'View Tags',
+              ),
+              IconButton(
+                onPressed: () {
+                  if (_controller?.value.isPlaying == true) {
+                    _controller?.pause();
+                  } else {
+                    _controller?.play();
+                  }
+                },
+                icon: Icon(
+                  _controller?.value.isPlaying == true
+                    ? Icons.pause
+                    : Icons.play_arrow,
+                ),
+                tooltip: _controller?.value.isPlaying == true ? 'Pause' : 'Play',
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentPosition = widget.controller.value.position;
-    final progress = widget.duration.inMilliseconds > 0
-        ? currentPosition.inMilliseconds / widget.duration.inMilliseconds
-        : 0.0;
+    if (_isLoading) {
+      return _buildLoadingState();
+    }
 
-    return Container(
-      height: 80,
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          // Progress bar with tag indicators
-          SizedBox(
-            height: 20,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return Stack(
-                  children: [
-                    // Background progress bar
-                    Container(
-                      width: constraints.maxWidth,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
+    if (_errorMessage != null) {
+      return _buildErrorState();
+    }
 
-                    // Current progress
-                    Container(
-                      width: constraints.maxWidth * progress,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
+    if (!_isInitialized || _controller == null || _chewieController == null) {
+      return _buildLoadingState();
+    }
 
-                    // Tag hotspots
-                    ...widget.tags.map((tag) {
-                      final tagProgress = widget.duration.inSeconds > 0
-                          ? tag.timestampSeconds / widget.duration.inSeconds
-                          : 0.0;
-
-                      return Positioned(
-                        left: (constraints.maxWidth * tagProgress) - 6,
-                        top: -4,
-                        child: GestureDetector(
-                          onTap: () => widget.onTagSelected(tag),
-                          child: Container(
-                            width: 12,
-                            height: 12,
-                            decoration: BoxDecoration(
-                              color: _getTagColor(tag),
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-
-                    // Seek interaction overlay
-                    Positioned.fill(
-                      child: GestureDetector(
-                        onTapDown: (details) {
-                          final percentage =
-                              details.localPosition.dx / constraints.maxWidth;
-                          final newPosition = Duration(
-                            milliseconds:
-                                (widget.duration.inMilliseconds * percentage)
-                                    .round(),
-                          );
-                          widget.controller.seekTo(newPosition);
-                          widget.onSeek?.call(newPosition);
-                        },
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-
-          const SizedBox(height: 8),
-
-          // Time display
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                _formatDuration(currentPosition),
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              Text(
-                '${widget.tags.length} tags',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey[600],
-                    ),
-              ),
-              Text(
-                _formatDuration(widget.duration),
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+    return _buildVideoPlayer();
   }
 }

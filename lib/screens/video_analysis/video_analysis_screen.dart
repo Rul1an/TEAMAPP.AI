@@ -163,16 +163,30 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
           child: Stack(
             children: [
               EnhancedVideoPlayer(
-                video: video,
+                videoUrl: video.playbackUrl,
                 tags: ref
                         .watch(videoTagsNotifierProvider(video.id))
                         .valueOrNull ??
                     [],
-                onSeek: (duration) => setState(
+                onTagTimelineSeek: (duration) => setState(
                     () => _currentVideoTime = duration.inSeconds.toDouble()),
-                onTagSelected: (tag) => _jumpToTime(tag.timestampSeconds),
-                onAddTag:
-                    _isTaggingMode ? () => _showTagCreationDialog(video) : null,
+                onTagCreated: (tag) {
+                  // Handle tag creation - will be implemented in Phase 3B
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Tag created: ${tag.description ?? "Untitled"}'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                },
+                onError: (error) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Video error: $error'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                },
               ),
 
               // Tagging mode overlay
@@ -633,12 +647,6 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
     }
   }
 
-  void _showTagCreationDialog(Video video) {
-    // TODO(tagging): Implement tag creation dialog
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Tag creation dialog coming soon')),
-    );
-  }
 
   void _jumpToTime(double seconds) {
     // TODO(video-player): Implement video seeking
