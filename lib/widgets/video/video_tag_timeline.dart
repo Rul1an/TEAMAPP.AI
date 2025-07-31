@@ -49,7 +49,9 @@ class VideoTagTimeline extends StatelessWidget {
               ),
               Expanded(
                 child: Slider(
-                  value: currentPosition.inSeconds.toDouble().clamp(0.0, duration.inSeconds.toDouble()),
+                  value: currentPosition.inSeconds
+                      .toDouble()
+                      .clamp(0.0, duration.inSeconds.toDouble()),
                   min: 0.0,
                   max: duration.inSeconds.toDouble(),
                   onChanged: (value) {
@@ -74,7 +76,10 @@ class VideoTagTimeline extends StatelessWidget {
                     height: 4,
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .outline
+                          .withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),

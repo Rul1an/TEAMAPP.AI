@@ -63,11 +63,12 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
       // Validate video URL
       final urlValidation = _validateVideoUrl(widget.videoUrl);
       if (urlValidation.isFailure) {
-        throw Exception(urlValidation.error ?? 'Unknown validation error');
+        throw Exception('Invalid video URL');
       }
 
       // Initialize video player controller
-      _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
+      _controller =
+          VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
 
       // Add position listener for timeline updates
       _controller!.addListener(_onVideoPositionChanged);
@@ -94,12 +95,12 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
         ),
         additionalOptions: (context) => [
           OptionItem(
-            onTap: (_) => _showTagCreationDialog(),
+            onTap: (context) => _showTagCreationDialog(),
             iconData: Icons.add_circle,
             title: 'Add Tag',
           ),
           OptionItem(
-            onTap: (_) => _showTagList(),
+            onTap: (context) => _showTagList(),
             iconData: Icons.list,
             title: 'View Tags',
           ),
@@ -125,7 +126,7 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
   }
 
   void _onVideoPositionChanged() {
-    if (_controller?.value.isInitialized == true) {
+        if (_controller?.value.isInitialized ?? false) {
       setState(() {
         _currentPosition = _controller!.value.position;
       });
@@ -134,33 +135,22 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
 
   Result<String> _validateVideoUrl(String url) {
     if (url.isEmpty) {
-      return Result.failure('Video URL cannot be empty');
+      return Result.failure(Exception('Video URL cannot be empty'));
     }
 
     final uri = Uri.tryParse(url);
     if (uri == null || !uri.hasScheme) {
-      return Result.failure('Invalid video URL format');
+      return Result.failure(Exception('Invalid video URL format'));
     }
 
     final allowedSchemes = ['http', 'https', 'file'];
     if (!allowedSchemes.contains(uri.scheme)) {
-      return Result.failure('Unsupported URL scheme: ${uri.scheme}');
+      return Result.failure(Exception('Unsupported URL scheme: ${uri.scheme}'));
     }
 
     return Result.success(url);
   }
 
-  Exception _getUserFriendlyError(String error) {
-    if (error.contains('network')) {
-      return Exception('Network error. Please check your connection and try again.');
-    } else if (error.contains('format') || error.contains('codec')) {
-      return Exception('Video format not supported. Please try a different video.');
-    } else if (error.contains('timeout')) {
-      return Exception('Connection timeout. Please try again.');
-    } else {
-      return Exception('Failed to load video. Please try again later.');
-    }
-  }
 
   void _showTagCreationDialog() {
     if (_controller?.value.isInitialized != true) {
@@ -168,7 +158,7 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
       return;
     }
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => VideoTagCreationDialog(
         currentTimestamp: _currentPosition,
@@ -182,7 +172,7 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
   }
 
   void _showTagList() {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       builder: (context) => Container(
         padding: const EdgeInsets.all(16),
@@ -201,17 +191,18 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
               )
             else
               ...widget.tags.map((tag) => ListTile(
-                leading: Icon(
-                  _getTagIcon(tag.tagType),
-                  color: _getTagColor(tag.tagType),
-                ),
-                title: Text(tag.description ?? 'Untitled tag'),
-                subtitle: Text(_formatDuration(Duration(seconds: tag.timestampSeconds.toInt()))),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  _seekToTag(tag);
-                },
-              )),
+                    leading: Icon(
+                      _getTagIcon(tag.tagType),
+                      color: _getTagColor(tag.tagType),
+                    ),
+                    title: Text(tag.description ?? 'Untitled tag'),
+                    subtitle: Text(_formatDuration(
+                        Duration(seconds: tag.timestampSeconds.toInt()))),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      _seekToTag(tag);
+                    },
+                  )),
           ],
         ),
       ),
@@ -362,18 +353,19 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
               ),
               IconButton(
                 onPressed: () {
-                  if (_controller?.value.isPlaying == true) {
+                  if (_controller?.value.isPlaying ?? false) {
                     _controller?.pause();
                   } else {
                     _controller?.play();
                   }
                 },
                 icon: Icon(
-                  _controller?.value.isPlaying == true
-                    ? Icons.pause
-                    : Icons.play_arrow,
+                  _controller?.value.isPlaying ?? false
+                      ? Icons.pause
+                      : Icons.play_arrow,
                 ),
-                tooltip: _controller?.value.isPlaying == true ? 'Pause' : 'Play',
+                tooltip:
+                    _controller?.value.isPlaying ?? false ? 'Pause' : 'Play',
               ),
             ],
           ),

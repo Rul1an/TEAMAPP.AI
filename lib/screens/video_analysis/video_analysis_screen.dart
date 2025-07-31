@@ -174,7 +174,8 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
                   // Handle tag creation - will be implemented in Phase 3B
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Tag created: ${tag.description ?? "Untitled"}'),
+                      content:
+                          Text('Tag created: ${tag.description ?? "Untitled"}'),
                       backgroundColor: Colors.green,
                     ),
                   );
@@ -646,7 +647,6 @@ class _VideoAnalysisScreenState extends ConsumerState<VideoAnalysisScreen>
         return Colors.cyan;
     }
   }
-
 
   void _jumpToTime(double seconds) {
     // TODO(video-player): Implement video seeking

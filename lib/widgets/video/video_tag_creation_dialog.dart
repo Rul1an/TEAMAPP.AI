@@ -5,7 +5,7 @@ import '../../models/video_tag.dart';
 /// Part of Phase 3A: Video Player Foundation
 class VideoTagCreationDialog extends StatefulWidget {
   final Duration currentTimestamp;
-  final Function(VideoTag) onTagCreated;
+  final void Function(VideoTag) onTagCreated;
 
   const VideoTagCreationDialog({
     Key? key,
@@ -179,15 +179,19 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                     children: [
                       Text(
                         'Create New Tag',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                       ),
                       Text(
                         'At ${_formatTimestamp(widget.currentTimestamp)}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-                        ),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withValues(alpha: 0.7),
+                            ),
                       ),
                     ],
                   ),
@@ -196,7 +200,10 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close),
                   style: IconButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
+                    backgroundColor: Theme.of(context)
+                        .colorScheme
+                        .surface
+                        .withValues(alpha: 0.1),
                   ),
                 ),
               ],
@@ -215,72 +222,85 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                     Text(
                       'Tag Type',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                     const SizedBox(height: 12),
 
                     // Tag type cards
                     ...VideoTagType.values.map((tagType) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: InkWell(
-                        onTap: () => setState(() => _selectedTagType = tagType),
-                        borderRadius: BorderRadius.circular(12),
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: _selectedTagType == tagType
-                                  ? _getTagTypeColor(tagType)
-                                  : Theme.of(context).colorScheme.outline,
-                              width: _selectedTagType == tagType ? 2 : 1,
-                            ),
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: InkWell(
+                            onTap: () =>
+                                setState(() => _selectedTagType = tagType),
                             borderRadius: BorderRadius.circular(12),
-                            color: _selectedTagType == tagType
-                                ? _getTagTypeColor(tagType).withValues(alpha: 0.1)
-                                : null,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                _getTagTypeIcon(tagType),
-                                color: _getTagTypeColor(tagType),
-                                size: 28,
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      tagType.name.toUpperCase(),
-                                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        color: _selectedTagType == tagType
-                                            ? _getTagTypeColor(tagType)
-                                            : null,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      _getTagTypeDescription(tagType),
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-                                      ),
-                                    ),
-                                  ],
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: _selectedTagType == tagType
+                                      ? _getTagTypeColor(tagType)
+                                      : Theme.of(context).colorScheme.outline,
+                                  width: _selectedTagType == tagType ? 2 : 1,
                                 ),
+                                borderRadius: BorderRadius.circular(12),
+                                color: _selectedTagType == tagType
+                                    ? _getTagTypeColor(tagType)
+                                        .withValues(alpha: 0.1)
+                                    : null,
                               ),
-                              if (_selectedTagType == tagType)
-                                Icon(
-                                  Icons.check_circle,
-                                  color: _getTagTypeColor(tagType),
-                                ),
-                            ],
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    _getTagTypeIcon(tagType),
+                                    color: _getTagTypeColor(tagType),
+                                    size: 28,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          tagType.name.toUpperCase(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                color: _selectedTagType ==
+                                                        tagType
+                                                    ? _getTagTypeColor(tagType)
+                                                    : null,
+                                              ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          _getTagTypeDescription(tagType),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface
+                                                    .withValues(alpha: 0.7),
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (_selectedTagType == tagType)
+                                    Icon(
+                                      Icons.check_circle,
+                                      color: _getTagTypeColor(tagType),
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )),
+                        )),
 
                     const SizedBox(height: 24),
 
@@ -288,8 +308,8 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                     Text(
                       'Description',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
@@ -303,7 +323,10 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         filled: true,
-                        fillColor: Theme.of(context).colorScheme.surface.withValues(alpha: 0.3),
+                        fillColor: Theme.of(context)
+                            .colorScheme
+                            .surface
+                            .withValues(alpha: 0.3),
                       ),
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _createTag(),
@@ -320,7 +343,8 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: _isCreating ? null : () => Navigator.of(context).pop(),
+                    onPressed:
+                        _isCreating ? null : () => Navigator.of(context).pop(),
                     child: const Text('Cancel'),
                   ),
                 ),
