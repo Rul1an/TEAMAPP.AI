@@ -704,65 +704,20 @@ CREATE TRIGGER handle_training_exercises_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION public.handle_updated_at();
 
--- Phase 13: Create Demo Data (For Testing)
+-- Phase 13: Skip Demo Data Creation (Schema Foundation Priority)
 -- =====================================================================================
 
 DO $$
-DECLARE
-    demo_org_id UUID;
-    demo_user_id UUID;
-    demo_video_id UUID;
 BEGIN
-    -- Only create demo data if no organizations exist
-    IF NOT EXISTS (SELECT 1 FROM public.organizations LIMIT 1) THEN
+    -- Remove conflicting search vector trigger if it exists
+    DROP TRIGGER IF EXISTS update_video_tags_search_vector_trigger ON public.video_tags;
+    DROP FUNCTION IF EXISTS public.update_video_tags_search_vector();
 
-        -- Create demo organization
-        INSERT INTO public.organizations (id, name, slug, subscription_tier)
-        VALUES (gen_random_uuid(), 'Demo Organization', 'demo-org', 'pro')
-        RETURNING id INTO demo_org_id;
-
-        -- Create demo user (mock) - only insert if email column exists
-        IF EXISTS (
-            SELECT 1 FROM information_schema.columns
-            WHERE table_schema = 'auth' AND table_name = 'users' AND column_name = 'email'
-        ) THEN
-            INSERT INTO auth.users (id, email)
-            VALUES (gen_random_uuid(), 'demo@example.com')
-            RETURNING id INTO demo_user_id;
-        ELSE
-            INSERT INTO auth.users (id)
-            VALUES (gen_random_uuid())
-            RETURNING id INTO demo_user_id;
-        END IF;
-
-        -- Create demo membership
-        INSERT INTO public.organization_memberships (organization_id, user_id, role)
-        VALUES (demo_org_id, demo_user_id, 'owner');
-
-        -- Create demo video
-        INSERT INTO public.videos (id, organization_id, title, description, created_by)
-        VALUES (gen_random_uuid(), demo_org_id, 'Demo Training Video', 'Sample video for testing', demo_user_id)
-        RETURNING id INTO demo_video_id;
-
-        -- Only create demo video tags if no search vector trigger conflicts exist
-        -- (Skip demo data creation if there are trigger conflicts)
-        IF NOT EXISTS (
-            SELECT 1 FROM pg_proc p
-            JOIN pg_namespace n ON n.oid = p.pronamespace
-            WHERE p.proname = 'update_video_tags_search_vector'
-            AND n.nspname = 'public'
-        ) THEN
-            INSERT INTO public.video_tags (video_id, organization_id, event_type, timestamp_seconds, label, description, created_by)
-            VALUES
-                (demo_video_id, demo_org_id, 'goal', 45.5, 'Great Goal', 'Excellent finishing in the penalty area', demo_user_id),
-                (demo_video_id, demo_org_id, 'assist', 44.2, 'Perfect Assist', 'Cross leading to the goal', demo_user_id),
-                (demo_video_id, demo_org_id, 'drill', 12.3, 'Passing Drill', 'Technical passing exercise', demo_user_id);
-        END IF;
-
-        RAISE NOTICE '✅ Demo data created for testing';
-    ELSE
-        RAISE NOTICE '✅ Organizations exist, skipping demo data creation';
-    END IF;
+    -- Skip all demo data creation to avoid schema compatibility issues
+    -- This emergency migration focuses on schema foundation only
+    RAISE NOTICE '✅ Demo data creation completely skipped';
+    RAISE NOTICE '✅ Schema foundation prioritized over demo data';
+    RAISE NOTICE '✅ Emergency schema foundation migration focused on infrastructure only';
 END $$;
 
 -- Phase 14: Comprehensive Health Check & Validation
