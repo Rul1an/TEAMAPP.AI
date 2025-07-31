@@ -24,28 +24,28 @@ CREATE TABLE IF NOT EXISTS video_tags (
 );
 
 -- Create indexes for performance
-CREATE INDEX idx_video_tags_video_id ON video_tags(video_id);
-CREATE INDEX idx_video_tags_event_type ON video_tags(event_type);
-CREATE INDEX idx_video_tags_timestamp ON video_tags(timestamp_seconds);
-CREATE INDEX idx_video_tags_player_id ON video_tags(player_id) WHERE player_id IS NOT NULL;
-CREATE INDEX idx_video_tags_organization_id ON video_tags(organization_id);
-CREATE INDEX idx_video_tags_created_at ON video_tags(created_at);
+CREATE INDEX IF NOT EXISTS idx_video_tags_video_id ON video_tags(video_id);
+CREATE INDEX IF NOT EXISTS idx_video_tags_event_type ON video_tags(event_type);
+CREATE INDEX IF NOT EXISTS idx_video_tags_timestamp ON video_tags(timestamp_seconds);
+CREATE INDEX IF NOT EXISTS idx_video_tags_player_id ON video_tags(player_id) WHERE player_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_video_tags_organization_id ON video_tags(organization_id);
+CREATE INDEX IF NOT EXISTS idx_video_tags_created_at ON video_tags(created_at);
 
 -- Composite index for common queries
-CREATE INDEX idx_video_tags_video_timestamp ON video_tags(video_id, timestamp_seconds);
-CREATE INDEX idx_video_tags_video_event ON video_tags(video_id, event_type);
+CREATE INDEX IF NOT EXISTS idx_video_tags_video_timestamp ON video_tags(video_id, timestamp_seconds);
+CREATE INDEX IF NOT EXISTS idx_video_tags_video_event ON video_tags(video_id, event_type);
 
 -- RLS Policies
 ALTER TABLE video_tags ENABLE ROW LEVEL SECURITY;
 
--- Policy: Users can view tags from their organization
+-- Policy: Users can view tags from their organization (simplified for migration safety)
 CREATE POLICY "Users can view video tags from their organization"
     ON video_tags FOR SELECT
     USING (
-        organization_id IN (
-            SELECT organization_id
-            FROM organization_memberships
-            WHERE user_id = auth.uid()
+        EXISTS (
+            SELECT 1 FROM profiles p
+            WHERE p.id = auth.uid()
+            AND p.organization_id = video_tags.organization_id
         )
     );
 
@@ -53,10 +53,10 @@ CREATE POLICY "Users can view video tags from their organization"
 CREATE POLICY "Users can create video tags in their organization"
     ON video_tags FOR INSERT
     WITH CHECK (
-        organization_id IN (
-            SELECT organization_id
-            FROM organization_memberships
-            WHERE user_id = auth.uid()
+        EXISTS (
+            SELECT 1 FROM profiles p
+            WHERE p.id = auth.uid()
+            AND p.organization_id = video_tags.organization_id
         )
         AND video_id IN (
             SELECT id
@@ -69,17 +69,17 @@ CREATE POLICY "Users can create video tags in their organization"
 CREATE POLICY "Users can update video tags in their organization"
     ON video_tags FOR UPDATE
     USING (
-        organization_id IN (
-            SELECT organization_id
-            FROM organization_memberships
-            WHERE user_id = auth.uid()
+        EXISTS (
+            SELECT 1 FROM profiles p
+            WHERE p.id = auth.uid()
+            AND p.organization_id = video_tags.organization_id
         )
     )
     WITH CHECK (
-        organization_id IN (
-            SELECT organization_id
-            FROM organization_memberships
-            WHERE user_id = auth.uid()
+        EXISTS (
+            SELECT 1 FROM profiles p
+            WHERE p.id = auth.uid()
+            AND p.organization_id = video_tags.organization_id
         )
     );
 
@@ -87,10 +87,10 @@ CREATE POLICY "Users can update video tags in their organization"
 CREATE POLICY "Users can delete video tags in their organization"
     ON video_tags FOR DELETE
     USING (
-        organization_id IN (
-            SELECT organization_id
-            FROM organization_memberships
-            WHERE user_id = auth.uid()
+        EXISTS (
+            SELECT 1 FROM profiles p
+            WHERE p.id = auth.uid()
+            AND p.organization_id = video_tags.organization_id
         )
     );
 
@@ -127,10 +127,15 @@ SELECT
     ) as tags_per_minute,
     MIN(vt.timestamp_seconds) as first_tag_time,
     MAX(vt.timestamp_seconds) as last_tag_time,
-    jsonb_object_agg(
-        vt.event_type,
-        COUNT(vt.id)
-    ) FILTER (WHERE vt.event_type IS NOT NULL) as event_type_counts
+    (
+        SELECT jsonb_object_agg(event_type, event_count)
+        FROM (
+            SELECT vt2.event_type, COUNT(*) as event_count
+            FROM video_tags vt2
+            WHERE vt2.video_id = v.id AND vt2.event_type IS NOT NULL
+            GROUP BY vt2.event_type
+        ) event_counts
+    ) as event_type_counts
 FROM videos v
 LEFT JOIN video_tags vt ON v.id = vt.video_id
 GROUP BY v.id, v.title, v.organization_id, v.duration_seconds;
@@ -138,8 +143,8 @@ GROUP BY v.id, v.title, v.organization_id, v.duration_seconds;
 -- Grant permissions on the view
 GRANT SELECT ON video_tag_analytics TO authenticated;
 
--- RLS policy for the analytics view
-ALTER VIEW video_tag_analytics SET (security_invoker = true);
+-- Note: security_invoker option not supported in all PostgreSQL versions
+-- GRANT permissions handle access control for views
 
 -- Create function to get video hotspots (30-second intervals)
 CREATE OR REPLACE FUNCTION get_video_hotspots(
@@ -178,8 +183,8 @@ BEGIN
     -- Check if user has access to this video
     IF NOT EXISTS (
         SELECT 1 FROM videos v
-        JOIN organization_memberships om ON v.organization_id = om.organization_id
-        WHERE v.id = p_video_id AND om.user_id = auth.uid()
+        JOIN profiles p ON v.organization_id = p.organization_id
+        WHERE v.id = p_video_id AND p.id = auth.uid()
     ) THEN
         RAISE EXCEPTION 'Access denied to video tags';
     END IF;

@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS public.organization_memberships (
 
 -- 5.3 Profiles table (Supabase standard)
 CREATE TABLE IF NOT EXISTS public.profiles (
-    user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     organization_id UUID REFERENCES public.organizations(id) ON DELETE SET NULL,
     username TEXT UNIQUE,
     full_name TEXT,
@@ -384,15 +384,38 @@ CREATE INDEX IF NOT EXISTS idx_videos_created_at ON public.videos (created_at);
 -- Video tags (high performance requirements)
 CREATE INDEX IF NOT EXISTS idx_video_tags_video_id ON public.video_tags (video_id);
 CREATE INDEX IF NOT EXISTS idx_video_tags_organization_id ON public.video_tags (organization_id);
-CREATE INDEX IF NOT EXISTS idx_video_tags_event_type ON public.video_tags (event_type);
+-- Skip index creation for event_type if column doesn't exist (handled by other migrations)
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = 'public'
+        AND table_name = 'video_tags'
+        AND column_name = 'event_type'
+    ) THEN
+        CREATE INDEX IF NOT EXISTS idx_video_tags_event_type ON public.video_tags (event_type);
+    END IF;
+END $$;
 CREATE INDEX IF NOT EXISTS idx_video_tags_timestamp ON public.video_tags (timestamp_seconds);
 CREATE INDEX IF NOT EXISTS idx_video_tags_player_id ON public.video_tags (player_id) WHERE player_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_video_tags_created_at ON public.video_tags (created_at);
 
--- Composite indexes for common queries
+-- Composite indexes for common queries (conditional on column existence)
 CREATE INDEX IF NOT EXISTS idx_video_tags_video_timestamp ON public.video_tags (video_id, timestamp_seconds);
-CREATE INDEX IF NOT EXISTS idx_video_tags_video_event ON public.video_tags (video_id, event_type);
-CREATE INDEX IF NOT EXISTS idx_video_tags_org_status ON public.video_tags (organization_id, event_type);
+
+-- Only create indexes with event_type if the column exists
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = 'public'
+        AND table_name = 'video_tags'
+        AND column_name = 'event_type'
+    ) THEN
+        CREATE INDEX IF NOT EXISTS idx_video_tags_video_event ON public.video_tags (video_id, event_type);
+        CREATE INDEX IF NOT EXISTS idx_video_tags_org_status ON public.video_tags (organization_id, event_type);
+    END IF;
+END $$;
 
 -- VEO highlights
 CREATE INDEX IF NOT EXISTS idx_veo_highlights_org_id ON public.veo_highlights (organization_id);
@@ -445,61 +468,131 @@ AS $$
     WHERE user_id = auth.uid();
 $$;
 
--- 9.1 Organizations policies
-CREATE POLICY "organizations_member_access" ON public.organizations
-    FOR ALL TO authenticated
-    USING (id = ANY(public.current_user_organization_ids()))
-    WITH CHECK (id = ANY(public.current_user_organization_ids()));
+-- 9.1 Organizations policies (create only if not exists)
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'organizations' AND policyname = 'organizations_member_access'
+    ) THEN
+        CREATE POLICY "organizations_member_access" ON public.organizations
+            FOR ALL TO authenticated
+            USING (id = ANY(public.current_user_organization_ids()))
+            WITH CHECK (id = ANY(public.current_user_organization_ids()));
+    END IF;
+END $$;
 
 -- 9.2 Organization memberships policies
-CREATE POLICY "memberships_own_org_access" ON public.organization_memberships
-    FOR ALL TO authenticated
-    USING (organization_id = ANY(public.current_user_organization_ids()))
-    WITH CHECK (organization_id = ANY(public.current_user_organization_ids()));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'organization_memberships' AND policyname = 'memberships_own_org_access'
+    ) THEN
+        CREATE POLICY "memberships_own_org_access" ON public.organization_memberships
+            FOR ALL TO authenticated
+            USING (organization_id = ANY(public.current_user_organization_ids()))
+            WITH CHECK (organization_id = ANY(public.current_user_organization_ids()));
+    END IF;
+END $$;
 
 -- 9.3 Profiles policies
-CREATE POLICY "profiles_own_access" ON public.profiles
-    FOR ALL TO authenticated
-    USING (user_id = auth.uid() OR organization_id = ANY(public.current_user_organization_ids()))
-    WITH CHECK (user_id = auth.uid());
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'profiles' AND policyname = 'profiles_own_access'
+    ) THEN
+        CREATE POLICY "profiles_own_access" ON public.profiles
+            FOR ALL TO authenticated
+            USING (id = auth.uid() OR organization_id = ANY(public.current_user_organization_ids()))
+            WITH CHECK (id = auth.uid());
+    END IF;
+END $$;
 
 -- 9.4 Teams policies
-CREATE POLICY "teams_org_access" ON public.teams
-    FOR ALL TO authenticated
-    USING (organization_id = ANY(public.current_user_organization_ids()));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'teams' AND policyname = 'teams_org_access'
+    ) THEN
+        CREATE POLICY "teams_org_access" ON public.teams
+            FOR ALL TO authenticated
+            USING (organization_id = ANY(public.current_user_organization_ids()));
+    END IF;
+END $$;
 
 -- 9.5 Players policies
-CREATE POLICY "players_org_access" ON public.players
-    FOR ALL TO authenticated
-    USING (organization_id = ANY(public.current_user_organization_ids()));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'players' AND policyname = 'players_org_access'
+    ) THEN
+        CREATE POLICY "players_org_access" ON public.players
+            FOR ALL TO authenticated
+            USING (organization_id = ANY(public.current_user_organization_ids()));
+    END IF;
+END $$;
 
 -- 9.6 Videos policies
-CREATE POLICY "videos_org_access" ON public.videos
-    FOR ALL TO authenticated
-    USING (organization_id = ANY(public.current_user_organization_ids()));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'videos' AND policyname = 'videos_org_access'
+    ) THEN
+        CREATE POLICY "videos_org_access" ON public.videos
+            FOR ALL TO authenticated
+            USING (organization_id = ANY(public.current_user_organization_ids()));
+    END IF;
+END $$;
 
 -- 9.7 Video tags policies (critical for CI tests)
-CREATE POLICY "video_tags_org_access" ON public.video_tags
-    FOR ALL TO authenticated
-    USING (organization_id = ANY(public.current_user_organization_ids()));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'video_tags' AND policyname = 'video_tags_org_access'
+    ) THEN
+        CREATE POLICY "video_tags_org_access" ON public.video_tags
+            FOR ALL TO authenticated
+            USING (organization_id = ANY(public.current_user_organization_ids()));
+    END IF;
+END $$;
 
 -- 9.8 VEO highlights policies
-CREATE POLICY "veo_highlights_org_access" ON public.veo_highlights
-    FOR ALL TO authenticated
-    USING (organization_id = ANY(public.current_user_organization_ids()));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'veo_highlights' AND policyname = 'veo_highlights_org_access'
+    ) THEN
+        CREATE POLICY "veo_highlights_org_access" ON public.veo_highlights
+            FOR ALL TO authenticated
+            USING (organization_id = ANY(public.current_user_organization_ids()));
+    END IF;
+END $$;
 
 -- 9.9 Training sessions policies
-CREATE POLICY "training_sessions_org_access" ON public.training_sessions
-    FOR ALL TO authenticated
-    USING (organization_id = ANY(public.current_user_organization_ids()));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'training_sessions' AND policyname = 'training_sessions_org_access'
+    ) THEN
+        CREATE POLICY "training_sessions_org_access" ON public.training_sessions
+            FOR ALL TO authenticated
+            USING (organization_id = ANY(public.current_user_organization_ids()));
+    END IF;
+END $$;
 
 -- 9.10 Training exercises policies
-CREATE POLICY "training_exercises_access" ON public.training_exercises
-    FOR ALL TO authenticated
-    USING (
-        organization_id = ANY(public.current_user_organization_ids())
-        OR is_public = true
-    );
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies WHERE schemaname = 'public' AND tablename = 'training_exercises' AND policyname = 'training_exercises_access'
+    ) THEN
+        CREATE POLICY "training_exercises_access" ON public.training_exercises
+            FOR ALL TO authenticated
+            USING (
+                organization_id = ANY(public.current_user_organization_ids())
+                OR is_public = true
+            );
+    END IF;
+END $$;
 
 -- Phase 10: Service Role Bypass Policies
 -- =====================================================================================
@@ -628,10 +721,19 @@ BEGIN
         VALUES (gen_random_uuid(), 'Demo Organization', 'demo-org', 'pro')
         RETURNING id INTO demo_org_id;
 
-        -- Create demo user (mock)
-        INSERT INTO auth.users (id, email)
-        VALUES (gen_random_uuid(), 'demo@example.com')
-        RETURNING id INTO demo_user_id;
+        -- Create demo user (mock) - only insert if email column exists
+        IF EXISTS (
+            SELECT 1 FROM information_schema.columns
+            WHERE table_schema = 'auth' AND table_name = 'users' AND column_name = 'email'
+        ) THEN
+            INSERT INTO auth.users (id, email)
+            VALUES (gen_random_uuid(), 'demo@example.com')
+            RETURNING id INTO demo_user_id;
+        ELSE
+            INSERT INTO auth.users (id)
+            VALUES (gen_random_uuid())
+            RETURNING id INTO demo_user_id;
+        END IF;
 
         -- Create demo membership
         INSERT INTO public.organization_memberships (organization_id, user_id, role)
@@ -642,12 +744,20 @@ BEGIN
         VALUES (gen_random_uuid(), demo_org_id, 'Demo Training Video', 'Sample video for testing', demo_user_id)
         RETURNING id INTO demo_video_id;
 
-        -- Create demo video tags
-        INSERT INTO public.video_tags (video_id, organization_id, event_type, timestamp_seconds, label, description, created_by)
-        VALUES
-            (demo_video_id, demo_org_id, 'goal', 45.5, 'Great Goal', 'Excellent finishing in the penalty area', demo_user_id),
-            (demo_video_id, demo_org_id, 'assist', 44.2, 'Perfect Assist', 'Cross leading to the goal', demo_user_id),
-            (demo_video_id, demo_org_id, 'drill', 12.3, 'Passing Drill', 'Technical passing exercise', demo_user_id);
+        -- Only create demo video tags if no search vector trigger conflicts exist
+        -- (Skip demo data creation if there are trigger conflicts)
+        IF NOT EXISTS (
+            SELECT 1 FROM pg_proc p
+            JOIN pg_namespace n ON n.oid = p.pronamespace
+            WHERE p.proname = 'update_video_tags_search_vector'
+            AND n.nspname = 'public'
+        ) THEN
+            INSERT INTO public.video_tags (video_id, organization_id, event_type, timestamp_seconds, label, description, created_by)
+            VALUES
+                (demo_video_id, demo_org_id, 'goal', 45.5, 'Great Goal', 'Excellent finishing in the penalty area', demo_user_id),
+                (demo_video_id, demo_org_id, 'assist', 44.2, 'Perfect Assist', 'Cross leading to the goal', demo_user_id),
+                (demo_video_id, demo_org_id, 'drill', 12.3, 'Passing Drill', 'Technical passing exercise', demo_user_id);
+        END IF;
 
         RAISE NOTICE '✅ Demo data created for testing';
     ELSE

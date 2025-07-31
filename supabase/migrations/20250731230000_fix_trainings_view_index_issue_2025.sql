@@ -22,11 +22,14 @@ BEGIN
   IF EXISTS (
     SELECT 1 FROM information_schema.tables
     WHERE table_schema = 'public' AND table_name = 'trainings'
+    AND table_type = 'BASE TABLE'
   ) THEN
-    -- Only if trainings is actually a table
+    -- Only if trainings is actually a table (not a view)
     EXECUTE 'ALTER TABLE trainings ENABLE ROW LEVEL SECURITY';
     EXECUTE 'CREATE INDEX IF NOT EXISTS trainings_org_idx ON trainings(organization_id, id)';
     RAISE NOTICE '✅ Applied RLS and index to trainings table';
+  ELSE
+    RAISE NOTICE '⚠️ Trainings is not a base table - skipping RLS and index operations';
   END IF;
 
   -- Clean up any problematic function calls

@@ -56,9 +56,10 @@ begin
     execute 'create index if not exists matches_org_idx on matches(organization_id, id)';
   end if;
   -- Skip trainings - it's a view, not a table (handled by training_sessions)
-  if exists (select 1 from information_schema.tables where table_name = 'trainings') then
-    execute 'create index if not exists trainings_org_idx on trainings(organization_id, id)';
-  end if;
+  -- trainings is a view - cannot create indexes on views
+  -- if exists (select 1 from information_schema.tables where table_name = 'trainings') then
+  --   execute 'create index if not exists trainings_org_idx on trainings(organization_id, id)';
+  -- end if;
   if exists (select 1 from information_schema.tables where table_name = 'exercises') then
     execute 'create index if not exists exercises_org_idx on exercises(organization_id, id)';
   end if;
@@ -76,9 +77,10 @@ begin
   if exists (select 1 from information_schema.tables where table_name = 'matches') then
     execute 'alter table matches enable row level security';
   end if;
-  if exists (select 1 from information_schema.tables where table_name = 'trainings') then
-    execute 'alter table trainings enable row level security';
-  end if;
+  -- Skip trainings - it's a view, cannot enable RLS on views
+  -- if exists (select 1 from information_schema.tables where table_name = 'trainings') then
+  --   execute 'alter table trainings enable row level security';
+  -- end if;
   if exists (select 1 from information_schema.tables where table_name = 'exercises') then
     execute 'alter table exercises enable row level security';
   end if;
@@ -101,9 +103,10 @@ begin
   if exists (select 1 from information_schema.tables where table_name = 'matches') then
     perform create_rls_policy('matches');
   end if;
-  if exists (select 1 from information_schema.tables where table_name = 'trainings') then
-    perform create_rls_policy('trainings');
-  end if;
+  -- Skip trainings - it's a view, cannot create RLS policies on views
+  -- if exists (select 1 from information_schema.tables where table_name = 'trainings') then
+  --   perform create_rls_policy('trainings');
+  -- end if;
   if exists (select 1 from information_schema.tables where table_name = 'exercises') then
     perform create_rls_policy('exercises');
   end if;

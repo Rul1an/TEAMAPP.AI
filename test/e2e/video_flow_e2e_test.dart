@@ -31,7 +31,9 @@ void main() {
 
     testWidgets('Complete Video Upload and Display Flow', (WidgetTester tester) async {
       // Launch the app
-      app.main();
+      await tester.runAsync(() async {
+        await app.main();
+      });
       await tester.pumpAndSettle();
 
       // Test data
@@ -64,7 +66,9 @@ void main() {
     });
 
     testWidgets('Video Analysis Flow', (WidgetTester tester) async {
-      app.main();
+      await tester.runAsync(() async {
+        await app.main();
+      });
       await tester.pumpAndSettle();
 
       const testVideoTitle = 'E2E Analysis Test Video';
@@ -83,7 +87,9 @@ void main() {
     });
 
     testWidgets('Database Error Handling', (WidgetTester tester) async {
-      app.main();
+      await tester.runAsync(() async {
+        await app.main();
+      });
       await tester.pumpAndSettle();
 
       // Test app behavior when database is unreachable
@@ -96,8 +102,6 @@ void main() {
 Future<void> _navigateToVideoUpload(WidgetTester tester) async {
   // Look for video upload navigation
   final videoUploadButton = find.text('Upload Video');
-  final videoCallButton = find.byIcon(Icons.video_call);
-  final videoTooltipButton = find.byTooltip('Upload Video');
 
   if (videoUploadButton.evaluate().isNotEmpty) {
     await tester.tap(videoUploadButton);
@@ -386,7 +390,7 @@ Future<void> _setupTestVideo(SupabaseClient client, String title) async {
     });
   } catch (e) {
     // Video might already exist, which is fine for testing
-    print('Setup video warning: $e');
+    debugPrint('Setup video warning: $e');
   }
 }
 
@@ -460,7 +464,7 @@ Future<void> _cleanupTestData(SupabaseClient client, String title) async {
 
     await client.from('videos').delete().eq('title', title);
   } catch (e) {
-    print('Cleanup warning: $e');
+    debugPrint('Cleanup warning: $e');
     // Non-critical if cleanup fails
   }
 }
