@@ -1,18 +1,41 @@
+# Netlify Configuration - 2025 Best Practices
 [build]
-  # Build command for Flutter Web
-  command = "flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/"
+  # Modern Flutter Web build with tree-shaking and optimizations
+  command = """
+    flutter build web \
+      --release \
+      --web-renderer canvaskit \
+      --dart-define=APP_ENV=production \
+      --dart-define=FLUTTER_WEB_AUTO_DETECT=true \
+      --source-maps \
+      --tree-shake-icons
+  """
 
-  # Publish directory
+  # Output directory
   publish = "build/web"
 
+  # Build timeout (30 minutes)
+  command_timeout = 1800
+
 [build.environment]
-  FLUTTER_VERSION = "3.32.x"
-  NODE_VERSION = "20"
+  # Latest stable versions for 2025
+  FLUTTER_VERSION = "3.35.x"
+  NODE_VERSION = "22"
+  DART_SDK_VERSION = "3.5.x"
+
+  # Flutter Web optimizations
+  FLUTTER_WEB_USE_SKIA = "true"
   FLUTTER_WEB_CANVASKIT_URL = "https://unpkg.com/canvaskit-wasm@0.39.1/"
+
+  # App environment
   DART_DEFINE_APP_ENV = "production"
 
+  # Build optimizations
+  FLUTTER_BUILD_MODE = "release"
+  ENABLE_FLUTTER_DESKTOP = "false"
+
+# Modern build processing with 2025 optimizations
 [build.processing]
-  # Skip processing of JS and CSS to avoid conflicts with Flutter's optimization
   skip_processing = false
 
 [build.processing.css]
@@ -23,37 +46,97 @@
   bundle = true
   minify = true
 
-# Headers for security and performance
+[build.processing.html]
+  pretty_urls = true
+
+# 2025 Security Headers with modern CSP and COOP/COEP
 [[headers]]
   for = "/*"
   [headers.values]
-    # Security headers
+    # Modern Content Security Policy
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      img-src 'self' data: https: blob:;
+      connect-src 'self' https://*.supabase.co https://*.supabase.io;
+      media-src 'self' blob:;
+      worker-src 'self' blob:;
+      frame-src 'none';
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+    """
+
+    # Cross-Origin Policies for 2025
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Resource-Policy = "same-origin"
+
+    # Modern Security Headers
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
-    # Performance headers
+    # Permissions Policy (2025 standard)
+    Permissions-Policy = """
+      camera=(),
+      microphone=(),
+      geolocation=(),
+      interest-cohort=(),
+      payment=(),
+      usb=(),
+      bluetooth=(),
+      accelerometer=(),
+      gyroscope=(),
+      magnetometer=()
+    """
+
+    # Performance headers with modern caching
     Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
 
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    # Don't cache the main page
-    Cache-Control = "public, max-age=0, must-revalidate"
-
+# HTML files - no cache for dynamic content
 [[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+    Vary = "Accept-Encoding"
 
-# Redirects for SPA routing
+# Service Worker - short cache
+[[headers]]
+  for = "/flutter_service_worker.js"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
+
+# Manifest and icons - medium cache
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Assets - long cache with immutable
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Modern SPA routing with precise rules
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/*"
+  to = "https://your-api-domain.com/api/:splat"
   status = 200
+  force = true
 
-# Prevent redirect for static assets
+# Static assets - prevent SPA redirect
 [[redirects]]
   from = "/assets/*"
   to = "/assets/:splat"
@@ -70,44 +153,110 @@
   status = 200
 
 [[redirects]]
-  from = "/favicon.ico"
-  to = "/favicon.ico"
+  from = "/*.wasm"
+  to = "/:splat.wasm"
   status = 200
 
+[[redirects]]
+  from = "/canvaskit/*"
+  to = "/canvaskit/:splat"
+  status = 200
 
-# Deploy notifications
-[build.hooks]
-  # Send notification to Slack when deploy succeeds
-  command = '''
-    if [ "$DEPLOY_PRIME_URL" != "" ]; then
-      echo "Deploy succeeded: $DEPLOY_PRIME_URL"
-    fi
-  '''
+[[redirects]]
+  from = "/icons/*"
+  to = "/icons/:splat"
+  status = 200
 
-# Context-based deploy settings
+[[redirects]]
+  from = "/manifest.json"
+  to = "/manifest.json"
+  status = 200
+
+[[redirects]]
+  from = "/flutter_service_worker.js"
+  to = "/flutter_service_worker.js"
+  status = 200
+
+# SPA fallback - must be last
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Context-specific builds for 2025
 [context.production]
-  command = "flutter build web --release --dart-define=APP_ENV=production"
+  command = """
+    flutter build web \
+      --release \
+      --web-renderer canvaskit \
+      --dart-define=APP_ENV=production \
+      --dart-define=FLUTTER_WEB_AUTO_DETECT=true \
+      --source-maps \
+      --tree-shake-icons \
+      --pwa-strategy=offline-first
+  """
 
 [context.deploy-preview]
-  command = "flutter build web --release --dart-define=APP_ENV=staging"
+  command = """
+    flutter build web \
+      --release \
+      --web-renderer canvaskit \
+      --dart-define=APP_ENV=staging \
+      --dart-define=FLUTTER_WEB_AUTO_DETECT=true \
+      --source-maps
+  """
 
 [context.branch-deploy]
-  command = "flutter build web --release --dart-define=APP_ENV=development"
+  command = """
+    flutter build web \
+      --profile \
+      --web-renderer canvaskit \
+      --dart-define=APP_ENV=development \
+      --dart-define=FLUTTER_WEB_AUTO_DETECT=true
+  """
 
-# Functions (if needed later)
+# Modern Edge Functions (2025)
 [functions]
-  directory = "netlify/functions"
+  directory = "netlify/edge-functions"
+  node_bundler = "esbuild"
 
-# Plugin configuration for Flutter
-[[plugins]]
-  package = "netlify-plugin-flutter"
+# Performance optimizations
+[build.processing.images]
+  compress = true
 
-  [plugins.inputs]
-    # Flutter channel to use
-    channel = "stable"
+# Modern form handling
+[build.forms]
+  spam_filter = true
 
-    # Cache Flutter SDK
-    cache = true
+# Dev server configuration
+[dev]
+  command = "flutter run -d web-server --web-port=3000"
+  port = 8888
+  publish = "build/web"
+  framework = "#custom"
 
-    # Build arguments
-    build_args = "--release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/"
+# Build hooks for 2025 CI/CD
+[build.hooks]
+  # Pre-build validation
+  before_build = """
+    echo "🚀 Starting Flutter Web build..."
+    flutter doctor --verbose
+    flutter pub get
+    flutter analyze --fatal-infos
+  """
+
+  # Post-build optimization
+  after_build = """
+    echo "✅ Build completed successfully"
+    echo "📊 Build size analysis:"
+    du -sh build/web/
+    echo "🔍 Checking critical files:"
+    ls -la build/web/
+  """
+
+# Environment-specific settings
+[site]
+  id = "your-netlify-site-id"
+
+# Plugin configuration - removed problematic Flutter plugin
+# Using native Netlify build process instead
