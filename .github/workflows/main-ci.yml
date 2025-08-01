@@ -22,11 +22,9 @@ jobs:
           cache: true
 
       - name: 🔧 Install Dependencies
-        working-directory: jo17_tactical_manager
         run: flutter pub get
 
       - name: 🧹 Quality Gate (Analyze + Format + Test)
-        working-directory: jo17_tactical_manager
         run: |
           flutter analyze
           dart format . --set-exit-if-changed
@@ -35,7 +33,7 @@ jobs:
       - name: 📊 Upload Coverage
         uses: codecov/codecov-action@v5
         with:
-          files: jo17_tactical_manager/coverage/lcov.info
+          files: coverage/lcov.info
 
   # Phase 2: Build Web (Only if Needed)
   build-web:
@@ -54,7 +52,6 @@ jobs:
           cache: true
 
       - name: 🏗️ Build Web
-        working-directory: jo17_tactical_manager
         run: |
           flutter pub get
           flutter build web --release
@@ -63,4 +60,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: web-build
-          path: jo17_tactical_manager/build/web/
+          path: build/web/

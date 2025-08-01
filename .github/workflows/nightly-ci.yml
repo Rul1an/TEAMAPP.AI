@@ -20,16 +20,13 @@ jobs:
           cache: true
 
       - name: 🔧 Install Dependencies
-        working-directory: jo17_tactical_manager
         run: flutter pub get
 
       - name: 🎯 E2E Tests
-        working-directory: jo17_tactical_manager
         run: flutter test integration_test/
         continue-on-error: true
 
       - name: ⚡ Performance Benchmarks
-        working-directory: jo17_tactical_manager
         run: |
           flutter test test/performance/ --reporter json > performance-results.json
           echo "📊 Performance results saved"
@@ -44,7 +41,6 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
       - name: 📈 Dependency Audit
-        working-directory: jo17_tactical_manager
         run: |
           flutter pub deps
           dart pub audit
@@ -54,5 +50,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: performance-results
-          path: jo17_tactical_manager/performance-results.json
+          path: performance-results.json
         if: always()
