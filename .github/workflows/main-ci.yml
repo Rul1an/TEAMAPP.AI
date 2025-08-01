@@ -156,11 +156,27 @@ jobs:
           path: build/web/
           retention-days: 7
 
+      - name: 🎯 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: 🚀 Deploy to Netlify
         id: deploy
-        uses: netlify/actions/cli@master
-        with:
-          args: deploy --prod --dir=build/web --message="Deploy ${{ github.sha }}"
+        run: |
+          echo "🚀 Deploying to Netlify..."
+          OUTPUT=$(npx netlify-cli deploy \
+            --dir=build/web \
+            --prod \
+            --json \
+            --message "Deploy ${{ github.sha }}-${{ github.run_number }}")
+
+          echo "$OUTPUT" | tee netlify-output.json
+
+          # Extract deploy URL for output
+          DEPLOY_URL=$(echo "$OUTPUT" | jq -r '.deploy_url // .url // "https://teamappai.netlify.app"')
+          echo "deploy-url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          echo "✅ Netlify deploy successful: $DEPLOY_URL"
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
