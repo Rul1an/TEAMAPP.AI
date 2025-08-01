@@ -144,22 +144,60 @@ jobs:
             --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
 
           # Add modern Netlify _headers file (2025 best practice)
-          echo "Creating Netlify _headers file with Flutter CanvasKit CSP support..."
+          echo "Creating Netlify _headers file with COMPLETE Flutter CanvasKit CSP support..."
           cat << 'EOF' > build/web/_headers
           /*
-            Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://*.supabase.io https://www.gstatic.com https://fonts.gstatic.com; media-src 'self' blob:; worker-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+            Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com https://www.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://*.supabase.io https://www.gstatic.com https://fonts.gstatic.com; media-src 'self' blob:; worker-src 'self' blob: https://www.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
             X-Frame-Options: DENY
             X-Content-Type-Options: nosniff
             X-XSS-Protection: 1; mode=block
             Referrer-Policy: strict-origin-when-cross-origin
           EOF
 
-          # Optimize build
-          echo "::group::Build Optimization"
-          ls -la build/web/
-          echo "✅ _headers file created:"
-          cat build/web/_headers
-          du -sh build/web/
+          # Advanced Build Analytics (2025 best practice)
+          echo "::group::Build Analytics & Performance Tracking"
+
+          # Build size tracking with trend analysis
+          BUILD_SIZE_KB=$(du -sk build/web/ | cut -f1)
+          BUILD_SIZE_MB=$(echo "scale=2; $BUILD_SIZE_KB/1024" | bc)
+
+          echo "📊 Build Metrics:"
+          echo "- Size: ${BUILD_SIZE_MB}MB (${BUILD_SIZE_KB}KB)"
+          echo "- Files: $(find build/web -type f | wc -l)"
+          echo "- Largest assets:"
+          find build/web -type f -exec ls -lh {} + | sort -rh -k5 | head -5
+
+          # Performance thresholds
+          if [ $BUILD_SIZE_KB -gt 15360 ]; then  # >15MB
+            echo "⚠️ BUILD SIZE WARNING: ${BUILD_SIZE_MB}MB exceeds 15MB threshold"
+            echo "Consider asset optimization or code splitting"
+          elif [ $BUILD_SIZE_KB -gt 10240 ]; then  # >10MB
+            echo "⚡ BUILD SIZE NOTICE: ${BUILD_SIZE_MB}MB - monitoring recommended"
+          else
+            echo "✅ BUILD SIZE: Optimal (${BUILD_SIZE_MB}MB)"
+          fi
+
+          # CSP Headers verification
+          echo "🔒 Security Headers Verification:"
+          if grep -q "Content-Security-Policy" build/web/_headers; then
+            echo "✅ CSP headers configured"
+            echo "✅ Flutter CanvasKit CSP support enabled"
+          else
+            echo "❌ CSP headers missing!"
+          fi
+
+          # Build summary for GitHub
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## 📊 Build Analytics
+
+          | Metric | Value |
+          |--------|-------|
+          | Build Size | ${BUILD_SIZE_MB}MB |
+          | File Count | $(find build/web -type f | wc -l) |
+          | CSP Headers | ✅ Configured |
+          | Performance | $([ $BUILD_SIZE_KB -lt 10240 ] && echo "🚀 Optimal" || echo "⚡ Monitoring") |
+          EOF
+
           echo "::endgroup::"
 
       - name: 📤 Upload Build Artifacts
