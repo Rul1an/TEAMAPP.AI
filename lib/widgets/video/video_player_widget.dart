@@ -105,9 +105,9 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                 state.controller?.value.aspectRatio ?? widget.aspectRatio,
             child: state.controller != null
                 ? VideoPlayer(state.controller!)
-                : Container(
+                : const ColoredBox(
                     color: Colors.black,
-                    child: const Center(
+                    child: Center(
                       child: Icon(
                         Icons.video_library,
                         color: Colors.white54,
