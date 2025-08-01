@@ -49,6 +49,10 @@ analyzer:
     prefer_int_literals: ignore
     no_default_cases: ignore
 
+    # Flutter 2025 Best Practice: Allow print in test files for debugging
+    # Production code should use proper logging, tests can use print for debug output
+    avoid_print: ignore
+
     # Added temporary ignores to unblock Web build; remove after quality sprint
     prefer_const_declarations: ignore
     avoid_redundant_argument_values: ignore
