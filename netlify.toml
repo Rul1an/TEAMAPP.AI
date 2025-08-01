@@ -1,15 +1,7 @@
 # Netlify Configuration - 2025 Best Practices
 [build]
-  # Modern Flutter Web build with tree-shaking and optimizations
-  command = """
-    flutter build web \
-      --release \
-      --web-renderer canvaskit \
-      --dart-define=APP_ENV=production \
-      --dart-define=FLUTTER_WEB_AUTO_DETECT=true \
-      --source-maps \
-      --tree-shake-icons
-  """
+  # Modern Flutter Web build with optimizations
+  command = "flutter build web --release --web-renderer canvaskit --dart-define=APP_ENV=production --source-maps --tree-shake-icons"
 
   # Output directory
   publish = "build/web"
@@ -18,10 +10,10 @@
   command_timeout = 1800
 
 [build.environment]
-  # Latest stable versions for 2025
-  FLUTTER_VERSION = "3.35.x"
-  NODE_VERSION = "22"
-  DART_SDK_VERSION = "3.5.x"
+  # Current stable versions (aligned with GitHub Actions)
+  FLUTTER_VERSION = "3.32.x"
+  NODE_VERSION = "20"
+  DART_SDK_VERSION = "3.2.x"
 
   # Flutter Web optimizations
   FLUTTER_WEB_USE_SKIA = "true"
@@ -185,35 +177,13 @@
 
 # Context-specific builds for 2025
 [context.production]
-  command = """
-    flutter build web \
-      --release \
-      --web-renderer canvaskit \
-      --dart-define=APP_ENV=production \
-      --dart-define=FLUTTER_WEB_AUTO_DETECT=true \
-      --source-maps \
-      --tree-shake-icons \
-      --pwa-strategy=offline-first
-  """
+  command = "flutter build web --release --web-renderer canvaskit --dart-define=APP_ENV=production --source-maps --tree-shake-icons"
 
 [context.deploy-preview]
-  command = """
-    flutter build web \
-      --release \
-      --web-renderer canvaskit \
-      --dart-define=APP_ENV=staging \
-      --dart-define=FLUTTER_WEB_AUTO_DETECT=true \
-      --source-maps
-  """
+  command = "flutter build web --release --web-renderer canvaskit --dart-define=APP_ENV=staging --source-maps --tree-shake-icons"
 
 [context.branch-deploy]
-  command = """
-    flutter build web \
-      --profile \
-      --web-renderer canvaskit \
-      --dart-define=APP_ENV=development \
-      --dart-define=FLUTTER_WEB_AUTO_DETECT=true
-  """
+  command = "flutter build web --profile --web-renderer canvaskit --dart-define=APP_ENV=development --source-maps"
 
 # Modern Edge Functions (2025)
 [functions]
