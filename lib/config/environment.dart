@@ -129,6 +129,29 @@ enum Environment {
     'enableCrossTenantAnalytics': false,
   };
 
+  // Telemetry & Monitoring endpoints
+  static String? get otlpEndpoint {
+    switch (current.name) {
+      case 'production':
+        return 'https://otlp.teammanager.app/v1/traces';
+      case 'test':
+        return 'https://staging-otlp.teammanager.app/v1/traces';
+      default:
+        return null; // Skip telemetry in development
+    }
+  }
+
+  static String? get sentryDsn {
+    switch (current.name) {
+      case 'production':
+        return 'https://your-sentry-dsn@sentry.io/project-id';
+      case 'test':
+        return 'https://your-staging-sentry-dsn@sentry.io/project-id';
+      default:
+        return null; // Skip error reporting in development
+    }
+  }
+
   // API endpoints
   static String get apiBaseUrl {
     switch (current.name) {

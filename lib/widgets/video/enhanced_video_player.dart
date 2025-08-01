@@ -71,41 +71,49 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
           VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
 
       // Add position listener for timeline updates
-      _controller!.addListener(_onVideoPositionChanged);
+      if (_controller != null) {
+        _controller!.addListener(_onVideoPositionChanged);
 
-      await _controller!.initialize();
+        await _controller!.initialize();
+      } else {
+        throw Exception('Failed to initialize video controller');
+      }
 
       if (!mounted) return;
 
       // Initialize Chewie controller with custom options
-      _chewieController = ChewieController(
-        videoPlayerController: _controller!,
-        aspectRatio: _controller!.value.aspectRatio,
-        autoPlay: false,
-        looping: false,
-        allowMuting: true,
-        allowFullScreen: true,
-        allowPlaybackSpeedChanging: true,
-        showControlsOnInitialize: false,
-        materialProgressColors: ChewieProgressColors(
-          playedColor: Theme.of(context).primaryColor,
-          handleColor: Theme.of(context).primaryColor,
-          backgroundColor: Colors.grey[300]!,
-          bufferedColor: Colors.grey[400]!,
-        ),
-        additionalOptions: (context) => [
-          OptionItem(
-            onTap: (context) => _showTagCreationDialog(),
-            iconData: Icons.add_circle,
-            title: 'Add Tag',
+      if (_controller != null && _controller!.value.isInitialized) {
+        _chewieController = ChewieController(
+          videoPlayerController: _controller!,
+          aspectRatio: _controller!.value.aspectRatio,
+          autoPlay: false,
+          looping: false,
+          allowMuting: true,
+          allowFullScreen: true,
+          allowPlaybackSpeedChanging: true,
+          showControlsOnInitialize: false,
+          materialProgressColors: ChewieProgressColors(
+            playedColor: Theme.of(context).primaryColor,
+            handleColor: Theme.of(context).primaryColor,
+            backgroundColor: Colors.grey[300] ?? Colors.grey,
+            bufferedColor: Colors.grey[400] ?? Colors.grey,
           ),
-          OptionItem(
-            onTap: (context) => _showTagList(),
-            iconData: Icons.list,
-            title: 'View Tags',
-          ),
-        ],
-      );
+          additionalOptions: (context) => [
+            OptionItem(
+              onTap: (context) => _showTagCreationDialog(),
+              iconData: Icons.add_circle,
+              title: 'Add Tag',
+            ),
+            OptionItem(
+              onTap: (context) => _showTagList(),
+              iconData: Icons.list,
+              title: 'View Tags',
+            ),
+          ],
+        );
+      } else {
+        throw Exception('Failed to initialize Chewie controller');
+      }
 
       setState(() {
         _isInitialized = true;

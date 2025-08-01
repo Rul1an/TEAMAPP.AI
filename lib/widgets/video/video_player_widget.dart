@@ -103,7 +103,18 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           AspectRatio(
             aspectRatio:
                 state.controller?.value.aspectRatio ?? widget.aspectRatio,
-            child: VideoPlayer(state.controller!),
+            child: state.controller != null
+                ? VideoPlayer(state.controller!)
+                : Container(
+                    color: Colors.black,
+                    child: const Center(
+                      child: Icon(
+                        Icons.video_library,
+                        color: Colors.white54,
+                        size: 48,
+                      ),
+                    ),
+                  ),
           ),
 
           // Video controls overlay

@@ -2,9 +2,11 @@
 import 'dart:async';
 
 // Package imports:
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:opentelemetry/api.dart' as api;
 import 'package:opentelemetry/sdk.dart' as sdk;
+
+// Project imports:
+import '../config/environment.dart';
 
 /// TelemetryService wraps OpenTelemetry tracing & metrics for the app.
 /// It exposes simple helpers similar to the legacy MonitoringService so we can
@@ -21,8 +23,8 @@ class TelemetryService {
   Future<void> init() async {
     if (_initialized) return;
 
-    // Load env vars (ensure dotenv was initialized in main).
-    final endpoint = dotenv.env['OTLP_ENDPOINT'];
+    // Get telemetry endpoint from Environment configuration
+    final endpoint = Environment.otlpEndpoint;
     if (endpoint == null || endpoint.isEmpty) {
       // No endpoint – skip initialization (e.g. local dev).
       return;
