@@ -220,14 +220,25 @@ jobs:
       - name: '🔄 Test Migration Rollback Safety'
         run: |
           # 2025 Best Practice: Use single comprehensive migration for CI/CD
-          echo "::group::Testing CI/CD Foundation Migration"
-          # Apply the comprehensive CI/CD foundation fix
+          echo "::group::Testing All Migrations (2025 Best Practice)"
+          # Apply migrations in chronological order - GitHub CI/CD best practice 2025
+
+          # Apply the comprehensive CI/CD foundation fix first
           psql -h localhost -U postgres -d migration_test -f supabase/migrations/20250801120000_ci_cd_foundation_fix_2025.sql || {
             echo "::error::CI/CD foundation migration failed in validation environment"
             echo "::group::Migration Error Details"
             psql -h localhost -U postgres -d migration_test -c "SELECT version();"
             psql -h localhost -U postgres -d migration_test -c "\dn"
             psql -h localhost -U postgres -d migration_test -c "\dt"
+            echo "::endgroup::"
+            exit 1
+          }
+
+          # Apply the performance indexes migration (CRITICAL FOR CI)
+          psql -h localhost -U postgres -d migration_test -f supabase/migrations/20250801130000_fix_video_tags_indexes_2025.sql || {
+            echo "::error::Video tags index migration failed"
+            echo "::group::Index Migration Error Details"
+            psql -h localhost -U postgres -d migration_test -c "SELECT tablename, indexname FROM pg_indexes WHERE schemaname = 'public' AND tablename = 'video_tags';"
             echo "::endgroup::"
             exit 1
           }
@@ -264,22 +275,49 @@ jobs:
         env:
           PGPASSWORD: postgres
 
-      - name: '📊 Performance Index Validation'
+      - name: '📊 Performance Index Validation (2025 Enhanced)'
         run: |
           # Validate that our performance indexes are created correctly
-          INDEX_COUNT=$(psql -h localhost -U postgres -d migration_test -t -c "
+          echo "::group::Index Validation Details"
+
+          # Count video_tags specific indexes (should be at least 6 from new migration)
+          VIDEO_TAGS_INDEX_COUNT=$(psql -h localhost -U postgres -d migration_test -t -c "
             SELECT COUNT(*) FROM pg_indexes
-            WHERE indexname LIKE '%optimized%' OR indexname LIKE '%performance%';
+            WHERE schemaname = 'public' AND tablename = 'video_tags';
           " | xargs)
 
-          echo "Performance indexes found: $INDEX_COUNT"
+          # Count all performance indexes
+          PERFORMANCE_INDEX_COUNT=$(psql -h localhost -U postgres -d migration_test -t -c "
+            SELECT COUNT(*) FROM pg_indexes
+            WHERE indexname LIKE '%optimized%' OR indexname LIKE '%performance%' OR indexname LIKE 'idx_%';
+          " | xargs)
 
-          if [ $INDEX_COUNT -lt 3 ]; then
-            echo "::error::Expected at least 3 performance indexes, found $INDEX_COUNT"
+          echo "Video tags indexes found: $VIDEO_TAGS_INDEX_COUNT"
+          echo "Total performance indexes found: $PERFORMANCE_INDEX_COUNT"
+
+          # List all video_tags indexes for debugging
+          echo "Video tags indexes:"
+          psql -h localhost -U postgres -d migration_test -c "
+            SELECT indexname, indexdef
+            FROM pg_indexes
+            WHERE schemaname = 'public' AND tablename = 'video_tags';
+          "
+          echo "::endgroup::"
+
+          # Validate we have the required video_tags indexes (minimum 6 from enhanced migration)
+          if [ $VIDEO_TAGS_INDEX_COUNT -lt 6 ]; then
+            echo "::error::Expected at least 6 video_tags indexes, found $VIDEO_TAGS_INDEX_COUNT"
+            echo "::error::This indicates the 20250801130000_fix_video_tags_indexes_2025.sql migration did not run properly"
             exit 1
           fi
 
-          echo "::notice::All performance indexes validated ✅"
+          # Validate overall performance index count
+          if [ $PERFORMANCE_INDEX_COUNT -lt 3 ]; then
+            echo "::error::Expected at least 3 performance indexes total, found $PERFORMANCE_INDEX_COUNT"
+            exit 1
+          fi
+
+          echo "::notice::All performance indexes validated ✅ ($VIDEO_TAGS_INDEX_COUNT video_tags indexes, $PERFORMANCE_INDEX_COUNT total performance indexes)"
         env:
           PGPASSWORD: postgres
 
