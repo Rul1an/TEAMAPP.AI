@@ -61,3 +61,11 @@ jobs:
         with:
           name: web-build
           path: build/web/
+
+      - name: 🚀 Deploy to Netlify Production
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --prod --dir=build/web
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
