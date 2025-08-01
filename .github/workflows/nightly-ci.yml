@@ -1,0 +1,58 @@
+name: 🌙 Nightly Quality Assurance
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM UTC
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  comprehensive-testing:
+    name: 🧪 Full Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 📱 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.x'
+          channel: stable
+          cache: true
+
+      - name: 🔧 Install Dependencies
+        working-directory: jo17_tactical_manager
+        run: flutter pub get
+
+      - name: 🎯 E2E Tests
+        working-directory: jo17_tactical_manager
+        run: flutter test integration_test/
+        continue-on-error: true
+
+      - name: ⚡ Performance Benchmarks
+        working-directory: jo17_tactical_manager
+        run: |
+          flutter test test/performance/ --reporter json > performance-results.json
+          echo "📊 Performance results saved"
+        continue-on-error: true
+
+      - name: 🔒 Security Scan with CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: dart
+
+      - name: 🔒 Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      - name: 📈 Dependency Audit
+        working-directory: jo17_tactical_manager
+        run: |
+          flutter pub deps
+          dart pub audit
+        continue-on-error: true
+
+      - name: 📊 Upload Performance Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-results
+          path: jo17_tactical_manager/performance-results.json
+        if: always()

@@ -1,4 +1,4 @@
-name: 🚀 Main CI/CD Pipeline - 2025 Best Practices
+name: 🚀 Streamlined CI - 2025 Best Practices
 
 on:
   push:
@@ -6,155 +6,18 @@ on:
   pull_request:
     branches: [main]
 
-# Global environment variables
-env:
-  FLUTTER_VERSION: '3.32.x'
-  NODE_VERSION: '20'
-  CACHE_VERSION: v1
-
 jobs:
-  # Phase 1: Fast Quality Checks (runs first)
-  quality-gate:
-    name: 📋 Quality Gate & Linting
+  # Phase 1: Essential Quality Checks Only
+  quality-and-test:
+    name: 📋 Quality & Testing
     runs-on: ubuntu-latest
-    outputs:
-      should-test: ${{ steps.changes.outputs.flutter == 'true' }}
-      should-deploy-db: ${{ steps.changes.outputs.migrations == 'true' }}
-      should-build-web: ${{ steps.changes.outputs.web == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: 🔍 Detect Changes
-        uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            flutter:
-              - 'jo17_tactical_manager/lib/**'
-              - 'jo17_tactical_manager/test/**'
-              - 'jo17_tactical_manager/pubspec.yaml'
-            migrations:
-              - 'jo17_tactical_manager/supabase/migrations/**'
-            web:
-              - 'jo17_tactical_manager/lib/**'
-              - 'jo17_tactical_manager/web/**'
-
-      - name: 🧹 Lefthook Quality Gate
-        if: steps.changes.outputs.flutter == 'true'
-        uses: evilmartians/lefthook-action@v1
-        with:
-          working-directory: jo17_tactical_manager
-
-  # Phase 2: Database Foundation (runs after quality, before tests)
-  database-setup:
-    name: 🗄️ Database Migration & Setup
-    runs-on: ubuntu-latest
-    needs: quality-gate
-    if: needs.quality-gate.outputs.should-deploy-db == 'true'
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: 🔧 Setup Supabase CLI
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
-      - name: 🚀 Run Database Migrations (Sequential)
-        working-directory: jo17_tactical_manager
-        run: |
-          echo "🔄 Running migrations in chronological order..."
-          # Run all migrations in proper sequence
-          for migration in supabase/migrations/*.sql; do
-            echo "⚡ Applying: $(basename $migration)"
-            supabase db reset --local
-          done
-          echo "✅ All migrations applied successfully"
-
-      - name: 🔍 Verify Database Schema
-        working-directory: jo17_tactical_manager
-        run: |
-          echo "🔍 Verifying video_tags indexes..."
-          # Verify minimum 6 indexes exist
-          supabase db diff --local
-
-  # Phase 3: Flutter Testing & Analysis (runs after database)
-  flutter-test:
-    name: 🧪 Flutter Test Suite
-    runs-on: ubuntu-latest
-    needs: [quality-gate, database-setup]
-    if: always() && needs.quality-gate.outputs.should-test == 'true'
-    strategy:
-      matrix:
-        test-type: [unit, integration, e2e]
     steps:
       - uses: actions/checkout@v4
 
       - name: 📱 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: stable
-          cache: true
-
-      - name: 📦 Cache Dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.pub-cache
-            jo17_tactical_manager/.dart_tool
-          key: ${{ runner.os }}-flutter-${{ env.CACHE_VERSION }}-${{ hashFiles('jo17_tactical_manager/pubspec.lock') }}
-
-      - name: 🔧 Install Dependencies
-        working-directory: jo17_tactical_manager
-        run: |
-          flutter pub get
-          dart pub global activate melos
-          flutter pub run build_runner build --delete-conflicting-outputs
-
-      - name: 🧪 Run Tests by Type
-        working-directory: jo17_tactical_manager
-        run: |
-          case "${{ matrix.test-type }}" in
-            unit)
-              echo "🧪 Running unit tests..."
-              flutter test --coverage --exclude-tags=integration,e2e
-              ;;
-            integration)
-              echo "🔗 Running integration tests..."
-              flutter test test/integration/
-              ;;
-            e2e)
-              echo "🎯 Running E2E tests..."
-              flutter test test/e2e/
-              ;;
-          esac
-
-      - name: 📊 Upload Coverage
-        if: matrix.test-type == 'unit'
-        uses: codecov/codecov-action@v5
-        with:
-          files: jo17_tactical_manager/coverage/lcov.info
-          flags: flutter-unit
-          verbose: true
-
-  # Phase 4: Build & Deploy (runs after tests pass)
-  build-deploy:
-    name: 🏗️ Build & Deploy
-    runs-on: ubuntu-latest
-    needs: [quality-gate, flutter-test]
-    if: always() && needs.flutter-test.result == 'success'
-    strategy:
-      matrix:
-        platform: [web, android]
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: 📱 Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: '3.32.x'
           channel: stable
           cache: true
 
@@ -162,64 +25,42 @@ jobs:
         working-directory: jo17_tactical_manager
         run: flutter pub get
 
-      - name: 🏗️ Build Platform
+      - name: 🧹 Quality Gate (Analyze + Format + Test)
         working-directory: jo17_tactical_manager
         run: |
-          case "${{ matrix.platform }}" in
-            web)
-              echo "🌐 Building web..."
-              flutter build web --release --web-renderer html
-              ;;
-            android)
-              echo "🤖 Building Android..."
-              flutter build apk --release
-              ;;
-          esac
+          flutter analyze
+          dart format . --set-exit-if-changed
+          flutter test --coverage
 
-      - name: 📤 Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+      - name: 📊 Upload Coverage
+        uses: codecov/codecov-action@v5
         with:
-          name: build-${{ matrix.platform }}
-          path: |
-            jo17_tactical_manager/build/web/**
-            jo17_tactical_manager/build/app/outputs/flutter-apk/*.apk
-          if-no-files-found: warn
+          files: jo17_tactical_manager/coverage/lcov.info
 
-  # Phase 5: Performance & Security (runs in parallel with builds)
-  performance-security:
-    name: 🔒 Performance & Security Analysis
+  # Phase 2: Build Web (Only if Needed)
+  build-web:
+    name: 🌐 Build Web
     runs-on: ubuntu-latest
-    needs: flutter-test
-    if: needs.flutter-test.result == 'success'
+    needs: quality-and-test
+    if: github.ref == 'refs/heads/main'  # Only on main branch
     steps:
       - uses: actions/checkout@v4
 
-      - name: 🔍 Security Scan
-        uses: securecodewarrior/github-action-add-sarif@v1
+      - name: 📱 Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          sarif-file: security-results.sarif
+          flutter-version: '3.32.x'
+          channel: stable
+          cache: true
 
-      - name: ⚡ Performance Benchmarks
+      - name: 🏗️ Build Web
         working-directory: jo17_tactical_manager
         run: |
-          echo "⚡ Running performance benchmarks..."
-          flutter test test/performance/ --reporter json > performance-results.json
+          flutter pub get
+          flutter build web --release
 
-  # Phase 6: Final Status (runs last)
-  deployment-status:
-    name: 🎯 Deployment Status
-    runs-on: ubuntu-latest
-    needs: [build-deploy, performance-security]
-    if: always()
-    steps:
-      - name: 🎉 Success Summary
-        if: needs.build-deploy.result == 'success'
-        run: |
-          echo "✅ All CI/CD phases completed successfully!"
-          echo "🚀 Ready for production deployment"
-
-      - name: ❌ Failure Summary
-        if: failure()
-        run: |
-          echo "❌ CI/CD pipeline failed"
-          echo "🔍 Please check the failed jobs above"
+      - name: 📤 Upload Web Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: jo17_tactical_manager/build/web/
