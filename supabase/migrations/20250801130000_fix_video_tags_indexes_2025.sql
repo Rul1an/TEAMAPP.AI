@@ -8,27 +8,22 @@
 
 \set ON_ERROR_STOP on
 
--- Phase 1: Ensure video_tags table exists with correct schema
+-- Phase 1: Validate existing video_tags table schema
 -- =====================================================================================
 
--- Create video_tags table if it doesn't exist (with all required columns)
-CREATE TABLE IF NOT EXISTS public.video_tags (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    video_id UUID NOT NULL,
-    event_type TEXT NOT NULL DEFAULT 'other' CHECK (event_type IN (
-        'goal', 'assist', 'shot', 'save', 'foul', 'card', 'substitution',
-        'corner_kick', 'free_kick', 'offside', 'penalty', 'tackle',
-        'interception', 'pass', 'cross', 'drill', 'moment', 'other'
-    )),
-    timestamp_seconds DECIMAL(10,3) NOT NULL DEFAULT 0 CHECK (timestamp_seconds >= 0),
-    player_id UUID,
-    description TEXT,
-    label TEXT,
-    notes TEXT,
-    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-    organization_id UUID NOT NULL
-);
+-- Only create indexes - table should already exist from earlier migrations
+-- Validate that video_tags table exists
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.tables
+        WHERE table_schema = 'public' AND table_name = 'video_tags'
+    ) THEN
+        RAISE EXCEPTION 'video_tags table must exist before running this migration. Run earlier migrations first.';
+    END IF;
+
+    RAISE NOTICE '✅ video_tags table found - proceeding with index creation';
+END $$;
 
 -- Phase 2: Force create all required performance indexes
 -- =====================================================================================

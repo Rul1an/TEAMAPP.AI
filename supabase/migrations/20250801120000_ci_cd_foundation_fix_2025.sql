@@ -142,7 +142,7 @@ CREATE INDEX IF NOT EXISTS idx_video_tags_event_type ON public.video_tags(event_
 CREATE INDEX IF NOT EXISTS idx_video_tags_timestamp ON public.video_tags(timestamp_seconds);
 CREATE INDEX IF NOT EXISTS idx_video_tags_organization_id ON public.video_tags(organization_id);
 
--- Only add missing columns if they don't exist
+-- Fix column duplication issues - Only add truly missing columns
 DO $$
 BEGIN
     -- Add label column if missing
@@ -155,44 +155,42 @@ BEGIN
         ALTER TABLE public.video_tags ADD COLUMN label TEXT;
     END IF;
 
-    -- Add description column if missing (avoid duplicate error)
-    IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns
-        WHERE table_schema = 'public'
-        AND table_name = 'video_tags'
-        AND column_name = 'description'
-    ) THEN
-        ALTER TABLE public.video_tags ADD COLUMN description TEXT;
-    END IF;
-
-    -- Add event_type column if missing
-    IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns
-        WHERE table_schema = 'public'
-        AND table_name = 'video_tags'
-        AND column_name = 'event_type'
-    ) THEN
-        ALTER TABLE public.video_tags ADD COLUMN event_type TEXT CHECK (event_type IN (
-            'goal', 'assist', 'shot', 'save', 'foul', 'card', 'substitution',
-            'corner_kick', 'free_kick', 'offside', 'penalty', 'tackle',
-            'interception', 'pass', 'cross', 'drill', 'moment', 'other'
-        ));
-    END IF;
-
-    -- Safely rename notes to description if needed (avoid duplicate column error)
+    -- Handle notes/description column consolidation properly
     IF EXISTS (
         SELECT 1 FROM information_schema.columns
         WHERE table_schema = 'public'
         AND table_name = 'video_tags'
         AND column_name = 'notes'
-    ) AND NOT EXISTS (
-        SELECT 1 FROM information_schema.columns
-        WHERE table_schema = 'public'
-        AND table_name = 'video_tags'
-        AND column_name = 'description'
     ) THEN
-        ALTER TABLE public.video_tags RENAME COLUMN notes TO description;
+        -- If both notes and description exist, migrate data and drop notes
+        IF EXISTS (
+            SELECT 1 FROM information_schema.columns
+            WHERE table_schema = 'public'
+            AND table_name = 'video_tags'
+            AND column_name = 'description'
+        ) THEN
+            -- Merge notes into description where description is null
+            UPDATE public.video_tags SET description = notes WHERE description IS NULL AND notes IS NOT NULL;
+            -- Drop the redundant notes column
+            ALTER TABLE public.video_tags DROP COLUMN notes;
+        ELSE
+            -- Just rename notes to description
+            ALTER TABLE public.video_tags RENAME COLUMN notes TO description;
+        END IF;
+    ELSE
+        -- Add description column if neither notes nor description exist
+        IF NOT EXISTS (
+            SELECT 1 FROM information_schema.columns
+            WHERE table_schema = 'public'
+            AND table_name = 'video_tags'
+            AND column_name = 'description'
+        ) THEN
+            ALTER TABLE public.video_tags ADD COLUMN description TEXT;
+        END IF;
     END IF;
+
+    -- Note: event_type column is already included in table creation above
+    -- No need to add it again - this was causing the redundant column error
 END $$;
 
 -- Phase 6: Create Essential RLS Policies (Only If Missing)

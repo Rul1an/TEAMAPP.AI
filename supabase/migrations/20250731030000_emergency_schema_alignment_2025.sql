@@ -22,12 +22,31 @@ ALTER TABLE videos
   ADD COLUMN IF NOT EXISTS created_by TEXT,
   ADD COLUMN IF NOT EXISTS player_id UUID REFERENCES players(id) ON DELETE SET NULL;
 
--- Update existing video records to use new field names
+-- Update existing video records to use new field names (safe COALESCE)
 UPDATE videos SET
-  file_url = COALESCE(file_url, url, storage_path, ''),
-  file_size_bytes = COALESCE(file_size_bytes, file_size, 0),
-  duration_seconds = COALESCE(duration_seconds, duration_seconds, 0)
+  file_url = COALESCE(file_url, ''),
+  file_size_bytes = COALESCE(file_size_bytes, 0),
+  duration_seconds = COALESCE(duration_seconds, 0)
 WHERE file_url IS NULL OR file_size_bytes IS NULL OR duration_seconds IS NULL;
+
+-- Only attempt to use legacy columns if they exist
+DO $$
+BEGIN
+    -- Try to migrate from url column if it exists
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'videos' AND column_name = 'url') THEN
+        UPDATE videos SET file_url = COALESCE(file_url, url, '') WHERE file_url = '' OR file_url IS NULL;
+    END IF;
+
+    -- Try to migrate from storage_path column if it exists
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'videos' AND column_name = 'storage_path') THEN
+        UPDATE videos SET file_url = COALESCE(file_url, storage_path, '') WHERE file_url = '' OR file_url IS NULL;
+    END IF;
+
+    -- Try to migrate from file_size column if it exists
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'videos' AND column_name = 'file_size') THEN
+        UPDATE videos SET file_size_bytes = COALESCE(file_size_bytes, file_size, 0) WHERE file_size_bytes = 0 OR file_size_bytes IS NULL;
+    END IF;
+END $$;
 
 -- Fix video_tags table schema to match VideoTag model expectations
 ALTER TABLE video_tags
