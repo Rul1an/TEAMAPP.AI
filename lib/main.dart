@@ -23,7 +23,15 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load environment variables (contains SENTRY_DSN, etc.)
-  await dotenv.load();
+  // Safe loading for CI/Test environments where .env might not exist
+  try {
+    await dotenv.load();
+  } catch (e) {
+    if (kDebugMode) {
+      print('⚠️ .env file not found: $e');
+      print('📝 Running without environment file (CI/Test mode)');
+    }
+  }
 
   // Initialize date formatting for Dutch locale
   await initializeDateFormatting('nl');
