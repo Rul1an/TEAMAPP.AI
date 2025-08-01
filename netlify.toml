@@ -5,8 +5,11 @@
   # Publish directory
   publish = "build/web"
 
-  # Environment variables
-  environment = { FLUTTER_VERSION = "3.32.x", NODE_VERSION = "20" }
+[build.environment]
+  FLUTTER_VERSION = "3.32.x"
+  NODE_VERSION = "20"
+  FLUTTER_WEB_CANVASKIT_URL = "https://unpkg.com/canvaskit-wasm@0.39.1/"
+  DART_DEFINE_APP_ENV = "production"
 
 [build.processing]
   # Skip processing of JS and CSS to avoid conflicts with Flutter's optimization
@@ -71,10 +74,6 @@
   to = "/favicon.ico"
   status = 200
 
-# Flutter Web specific optimizations
-[build.environment]
-  FLUTTER_WEB_CANVASKIT_URL = "https://unpkg.com/canvaskit-wasm@0.39.1/"
-  DART_DEFINE_APP_ENV = "production"
 
 # Deploy notifications
 [build.hooks]
