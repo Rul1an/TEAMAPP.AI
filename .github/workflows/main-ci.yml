@@ -140,7 +140,7 @@ jobs:
       - name: 🏗️ Build Web
         run: |
           flutter pub get
-          flutter build web --release \
+          flutter build web --release --no-web-resources-cdn \
             --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
 
           # Add modern Netlify _headers file (2025 best practice)
