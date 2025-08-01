@@ -9,6 +9,15 @@
 
 \set ON_ERROR_STOP on
 
+-- Phase 0: CRITICAL - Ensure Required Extensions (MUST BE FIRST)
+-- =====================================================================================
+
+-- Create pgcrypto extension - REQUIRED for gen_random_uuid() and all UUID operations
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- Create other essential extensions for CI/CD
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Phase 1: Create Missing Schemas (Safe, Idempotent)
 -- =====================================================================================
 

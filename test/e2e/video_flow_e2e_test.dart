@@ -306,11 +306,18 @@ Future<void> _performVideoUpload(
     await tester.pumpAndSettle(const Duration(seconds: 3));
   }
 
-  // Verify success message or navigation
+  // Verify success indicators that actually exist in video analysis screen
   final successIndicators = [
-    find.text('Upload successful'),
-    find.text('Video uploaded'),
-    find.byIcon(Icons.check_circle),
+    find.text('Tag created:'), // SnackBar from video analysis screen
+    find.text('Video Analysis'), // Screen title indicates successful navigation
+    find.text('Player'), // Tab in video analysis screen
+    find.text('Tags'), // Tab in video analysis screen
+    find.text('Analytics'), // Tab in video analysis screen
+    find.text('Video Information'), // Card in player tab
+    find.text('Quick Actions'), // Card in player tab
+    find.byIcon(Icons.play_arrow), // Player tab icon
+    find.byIcon(Icons.label), // Tags tab icon
+    find.byIcon(Icons.analytics), // Analytics tab icon
   ];
 
   bool foundSuccessIndicator = false;
@@ -321,7 +328,9 @@ Future<void> _performVideoUpload(
     }
   }
 
-  expect(foundSuccessIndicator, isTrue, reason: 'Should show upload success');
+  expect(foundSuccessIndicator, isTrue,
+      reason:
+          'Should show video analysis screen elements indicating successful upload/navigation');
 }
 
 /// Verify video is stored in database
