@@ -1,45 +1,96 @@
 [build]
-  # No command needed; GitHub Actions builds the site.
-  # The publish directory is kept for local `netlify dev` convenience.
+  # Build command for Flutter Web
+  command = "flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/"
+
+  # Publish directory
   publish = "build/web"
 
+  # Environment variables
+  environment = { FLUTTER_VERSION = "3.32.x", NODE_VERSION = "20" }
+
+[build.processing]
+  # Skip processing of JS and CSS to avoid conflicts with Flutter's optimization
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+    # Performance headers
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    # Don't cache the main page
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Redirects for SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-[[redirects]]
-  from = "/api/web-vitals"
-  to = "https://<YOUR_SUPABASE_PROJECT>.supabase.co/functions/v1/web_vitals"
-  status = 200
-  force = true
+  # Don't redirect asset files
+  conditions = {Role = ["admin"], Country = ["US"]}
 
-[[headers]]
-  for = "/.well-known/*"
-  [headers.values]
-    # Reserved for future security files
+# Flutter Web specific optimizations
+[build.environment]
+  FLUTTER_WEB_CANVASKIT_URL = "https://unpkg.com/canvaskit-wasm@0.39.1/"
+  DART_DEFINE_APP_ENV = "production"
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Cross-Origin-Embedder-Policy = "credentialless"
-    Cross-Origin-Opener-Policy = "same-origin"
+# Deploy notifications
+[build.hooks]
+  # Send notification to Slack when deploy succeeds
+  command = '''
+    if [ "$DEPLOY_PRIME_URL" != "" ]; then
+      echo "Deploy succeeded: $DEPLOY_PRIME_URL"
+    fi
+  '''
 
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+# Context-based deploy settings
+[context.production]
+  command = "flutter build web --release --dart-define=APP_ENV=production"
 
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+[context.deploy-preview]
+  command = "flutter build web --release --dart-define=APP_ENV=staging"
 
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+[context.branch-deploy]
+  command = "flutter build web --release --dart-define=APP_ENV=development"
+
+# Functions (if needed later)
+[functions]
+  directory = "netlify/functions"
+
+# Plugin configuration for Flutter
+[[plugins]]
+  package = "netlify-plugin-flutter"
+
+  [plugins.inputs]
+    # Flutter channel to use
+    channel = "stable"
+
+    # Cache Flutter SDK
+    cache = true
+
+    # Build arguments
+    build_args = "--release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/"
