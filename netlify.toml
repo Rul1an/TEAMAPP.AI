@@ -50,8 +50,26 @@
   to = "/index.html"
   status = 200
 
-  # Don't redirect asset files
-  conditions = {Role = ["admin"], Country = ["US"]}
+# Prevent redirect for static assets
+[[redirects]]
+  from = "/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*.js"
+  to = "/:splat.js"
+  status = 200
+
+[[redirects]]
+  from = "/*.css"
+  to = "/:splat.css"
+  status = 200
+
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/favicon.ico"
+  status = 200
 
 # Flutter Web specific optimizations
 [build.environment]
