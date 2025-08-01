@@ -143,9 +143,22 @@ jobs:
           flutter build web --release \
             --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
 
+          # Add modern Netlify _headers file (2025 best practice)
+          echo "Creating Netlify _headers file with Flutter CanvasKit CSP support..."
+          cat << 'EOF' > build/web/_headers
+          /*
+            Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://*.supabase.io https://www.gstatic.com https://fonts.gstatic.com; media-src 'self' blob:; worker-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+            X-Frame-Options: DENY
+            X-Content-Type-Options: nosniff
+            X-XSS-Protection: 1; mode=block
+            Referrer-Policy: strict-origin-when-cross-origin
+          EOF
+
           # Optimize build
           echo "::group::Build Optimization"
           ls -la build/web/
+          echo "✅ _headers file created:"
+          cat build/web/_headers
           du -sh build/web/
           echo "::endgroup::"
 
