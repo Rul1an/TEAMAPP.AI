@@ -50,6 +50,7 @@ jobs:
               - 'lib/**'
               - 'web/**'
               - 'pubspec.yaml'
+              - 'netlify.toml'
               - '.github/workflows/main-ci.yml'
 
       - name: 📱 Setup Flutter
