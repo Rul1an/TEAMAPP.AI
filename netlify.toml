@@ -1,13 +1,8 @@
 # Netlify Configuration - 2025 Best Practices
 [build]
-  # Modern Flutter Web build with optimizations
-  command = "flutter build web --release --web-renderer canvaskit --dart-define=APP_ENV=production --source-maps --tree-shake-icons"
-
-  # Output directory
+  # Skip build - using pre-built artifacts from GitHub Actions
+  # Modern 2025 pattern: Build in CI, Deploy artifacts
   publish = "build/web"
-
-  # Build timeout (30 minutes)
-  command_timeout = 1800
 
 [build.environment]
   # Current stable versions (aligned with GitHub Actions)
@@ -175,15 +170,15 @@
   to = "/index.html"
   status = 200
 
-# Context-specific builds for 2025
+# Context-specific settings for 2025 (using pre-built artifacts)
 [context.production]
-  command = "flutter build web --release --web-renderer canvaskit --dart-define=APP_ENV=production --source-maps --tree-shake-icons"
+  publish = "build/web"
 
 [context.deploy-preview]
-  command = "flutter build web --release --web-renderer canvaskit --dart-define=APP_ENV=staging --source-maps --tree-shake-icons"
+  publish = "build/web"
 
 [context.branch-deploy]
-  command = "flutter build web --profile --web-renderer canvaskit --dart-define=APP_ENV=development --source-maps"
+  publish = "build/web"
 
 # Modern Edge Functions (2025)
 [functions]
@@ -205,23 +200,22 @@
   publish = "build/web"
   framework = "#custom"
 
-# Build hooks for 2025 CI/CD
+# Build hooks for 2025 CI/CD (using pre-built artifacts)
 [build.hooks]
-  # Pre-build validation
+  # Pre-deployment validation
   before_build = """
-    echo "🚀 Starting Flutter Web build..."
-    flutter doctor --verbose
-    flutter pub get
-    flutter analyze --fatal-infos
+    echo "🚀 Deploying pre-built Flutter Web artifacts..."
+    echo "📊 Checking build directory:"
+    ls -la build/web/ || echo "No build directory found - will be uploaded by CI"
   """
 
-  # Post-build optimization
+  # Post-deployment validation
   after_build = """
-    echo "✅ Build completed successfully"
-    echo "📊 Build size analysis:"
-    du -sh build/web/
-    echo "🔍 Checking critical files:"
-    ls -la build/web/
+    echo "✅ Deployment completed successfully"
+    echo "📊 Deployed size analysis:"
+    du -sh build/web/ || echo "Size analysis not available"
+    echo "🔍 Deployed files:"
+    ls -la build/web/ || echo "Files listing not available"
   """
 
 # Environment-specific settings
