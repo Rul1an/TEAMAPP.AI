@@ -1,4 +1,4 @@
-name: 🚀 Streamlined CI - 2025 Best Practices
+name: 🚀 Modern CI/CD Pipeline - 2025 Best Practices
 
 on:
   push:
@@ -6,66 +6,220 @@ on:
   pull_request:
     branches: [main]
 
+# Security & Concurrency Controls
+permissions:
+  contents: read
+  pull-requests: write
+  deployments: write
+  statuses: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  FLUTTER_VERSION: '3.32.x'
+  NODE_VERSION: '20'
+
 jobs:
-  # Phase 1: Essential Quality Checks Only
+  # Phase 1: Essential Quality Checks
   quality-and-test:
     name: 📋 Quality & Testing
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      should-deploy: ${{ steps.changes.outputs.should-deploy }}
     steps:
-      - uses: actions/checkout@v4
+      - name: 🔐 Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
+      - name: 📂 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Detect Changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            should-deploy:
+              - 'lib/**'
+              - 'web/**'
+              - 'pubspec.yaml'
+              - '.github/workflows/main-ci.yml'
 
       - name: 📱 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.x'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
+
+      - name: 📦 Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            build/
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
 
       - name: 🔧 Install Dependencies
         run: flutter pub get
 
-      - name: 🧹 Quality Gate (Analyze + Format + Test)
+      - name: 🧹 Quality Gate
         run: |
-          flutter analyze
+          echo "::group::Flutter Analyze"
+          flutter analyze --fatal-infos
+          echo "::endgroup::"
+
+          echo "::group::Dart Format Check"
           dart format . --set-exit-if-changed
-          flutter test --coverage
+          echo "::endgroup::"
+
+          echo "::group::Flutter Test"
+          flutter test --coverage --reporter=json > test-results.json
+          echo "::endgroup::"
 
       - name: 📊 Upload Coverage
         uses: codecov/codecov-action@v5
         with:
           files: coverage/lcov.info
+          fail_ci_if_error: false
 
-  # Phase 2: Build Web (Only if Needed)
-  build-web:
-    name: 🌐 Build Web
+      - name: 📈 Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Flutter Tests
+          path: test-results.json
+          reporter: flutter-json
+
+  # Phase 2: Build & Deploy Pipeline
+  build-and-deploy:
+    name: 🏗️ Build & Deploy
     runs-on: ubuntu-latest
     needs: quality-and-test
-    if: github.ref == 'refs/heads/main'  # Only on main branch
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.quality-and-test.outputs.should-deploy == 'true'
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.deploy-url }}
     steps:
-      - uses: actions/checkout@v4
+      - name: 🔐 Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
+      - name: 📂 Checkout
+        uses: actions/checkout@v4
 
       - name: 📱 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.x'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
+
+      - name: 📦 Restore Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            build/
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
 
       - name: 🏗️ Build Web
         run: |
           flutter pub get
-          flutter build web --release
+          flutter build web --release \
+            --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
 
-      - name: 📤 Upload Web Build
+          # Optimize build
+          echo "::group::Build Optimization"
+          ls -la build/web/
+          du -sh build/web/
+          echo "::endgroup::"
+
+      - name: 📤 Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: web-build
+          name: web-build-${{ github.sha }}
           path: build/web/
+          retention-days: 7
 
-      - name: 🚀 Deploy to Netlify Production
+      - name: 🚀 Deploy to Netlify
+        id: deploy
         uses: netlify/actions/cli@master
         with:
-          args: deploy --prod --dir=build/web
+          args: deploy --prod --dir=build/web --message="Deploy ${{ github.sha }}"
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+      - name: 📝 Deployment Summary
+        run: |
+          echo "## 🚀 Deployment Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: Production" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deploy URL**: ${{ steps.deploy.outputs.deploy-url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+
+  # Phase 3: Preview Deployments for PRs
+  preview-deploy:
+    name: 🔍 Preview Deploy
+    runs-on: ubuntu-latest
+    needs: quality-and-test
+    if: |
+      github.event_name == 'pull_request' &&
+      needs.quality-and-test.outputs.should-deploy == 'true'
+    timeout-minutes: 10
+    environment:
+      name: preview-pr-${{ github.event.number }}
+      url: ${{ steps.deploy-preview.outputs.deploy-url }}
+    steps:
+      - name: 📂 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📱 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: 🏗️ Build Web Preview
+        run: |
+          flutter pub get
+          flutter build web --release
+
+      - name: 🔍 Deploy Preview
+        id: deploy-preview
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=build/web --message="Preview for PR #${{ github.event.number }}"
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+      - name: 💬 PR Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔍 Preview Deployment
+
+              **Deploy Preview**: ${{ steps.deploy-preview.outputs.deploy-url }}
+
+              Changes ready for review! 🚀`
+            })
