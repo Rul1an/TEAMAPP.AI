@@ -110,6 +110,29 @@ END $$;
 -- Phase 5: Fix Video Tags Table Issues (Conditional)
 -- =====================================================================================
 
+-- Create video_tags table if it doesn't exist (CRITICAL FIX - Schema Aligned)
+CREATE TABLE IF NOT EXISTS public.video_tags (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    video_id UUID NOT NULL,
+    event_type TEXT NOT NULL DEFAULT 'other' CHECK (event_type IN (
+        'goal', 'assist', 'shot', 'save', 'foul', 'card', 'substitution',
+        'corner_kick', 'free_kick', 'offside', 'penalty', 'tackle',
+        'interception', 'pass', 'cross', 'drill', 'moment', 'other'
+    )),
+    timestamp_seconds DECIMAL(10,3) NOT NULL DEFAULT 0 CHECK (timestamp_seconds >= 0),
+    player_id UUID,
+    notes TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    organization_id UUID NOT NULL
+);
+
+-- Create essential indexes for performance (Safe with IF NOT EXISTS)
+CREATE INDEX IF NOT EXISTS idx_video_tags_video_id ON public.video_tags(video_id);
+CREATE INDEX IF NOT EXISTS idx_video_tags_event_type ON public.video_tags(event_type);
+CREATE INDEX IF NOT EXISTS idx_video_tags_timestamp ON public.video_tags(timestamp_seconds);
+CREATE INDEX IF NOT EXISTS idx_video_tags_organization_id ON public.video_tags(organization_id);
+
 -- Only add missing columns if they don't exist
 DO $$
 BEGIN
