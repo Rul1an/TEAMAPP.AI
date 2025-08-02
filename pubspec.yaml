@@ -19,7 +19,7 @@ dependencies:
   google_fonts: ^6.3.0
 
   # Code generation annotations
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^2.4.4    # Keep stable - major version 3.x may have breaking changes
   json_annotation: ^4.9.0
 
   # State Management
@@ -87,7 +87,7 @@ dependencies:
   flutter_cache_manager: ^3.3.1
 
   # Security Implementation (DAG 1 - 2025)
-  device_info_plus: ^9.1.0      # Device integrity verification
+  device_info_plus: ^11.0.0     # Device integrity verification (updated for 2025 compatibility)
   package_info_plus: ^8.3.0     # App signature validation (compatible with wakelock_plus)
 
   # Analytics & Data (duplicates removed)
