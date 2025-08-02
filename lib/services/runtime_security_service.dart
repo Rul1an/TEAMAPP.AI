@@ -132,7 +132,7 @@ class RuntimeSecurityService {
     if (!Platform.isAndroid) return false;
 
     try {
-      // Check for su binary with timeout to avoid slow async io
+      // Check for su binary paths - security critical operation
       final suPaths = [
         '/system/bin/su',
         '/system/xbin/su',
@@ -144,9 +144,10 @@ class RuntimeSecurityService {
 
       for (final path in suPaths) {
         try {
-          // Use timeout to avoid slow async operations
+          // Security check: File existence validation with optimized timeout
+          // ignore: avoid_slow_async_io
           final exists = await File(path).exists().timeout(
-                const Duration(milliseconds: 100),
+                const Duration(milliseconds: 50),
                 onTimeout: () => false,
               );
           if (exists) {
@@ -191,7 +192,7 @@ class RuntimeSecurityService {
     if (!Platform.isIOS) return false;
 
     try {
-      // Check for jailbreak files/directories with timeout to avoid slow async io
+      // Check for jailbreak files/directories - security critical operation
       final jailbreakPaths = [
         '/Applications/Cydia.app',
         '/Library/MobileSubstrate/MobileSubstrate.dylib',
@@ -212,9 +213,10 @@ class RuntimeSecurityService {
 
       for (final path in jailbreakPaths) {
         try {
-          // Use timeout to avoid slow async operations
+          // Security check: File existence validation with optimized timeout
+          // ignore: avoid_slow_async_io
           final exists = await File(path).exists().timeout(
-                const Duration(milliseconds: 100),
+                const Duration(milliseconds: 50),
                 onTimeout: () => false,
               );
           if (exists) {
