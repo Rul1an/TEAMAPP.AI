@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 0.9.0+0
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'  # Updated for Dart 3.8.1+ support
 
 dependencies:
   flutter:
@@ -130,8 +130,12 @@ flutter:
   uses-material-design: true
 
 dependency_overrides:
-  file: 7.0.1
-  # Updated for Dart 3.8.1 compatibility - Analyzer version must support AugmentationImportDirective
-  analyzer_plugin: ^0.13.1  # Critical fix for publiclyExporting typo
-  analyzer: ^7.0.0          # Compatible with Dart 3.8.1 and AugmentationImportDirective
-  custom_lint_core: ^0.6.3  # Allow newer versions for Dart 3.8.1 compatibility
+  # Updated for Dart 3.8.1+ and Flutter 3.32.x compatibility (2025)
+  analyzer: ^7.0.0                    # Support for AugmentationImportDirective
+  analyzer_plugin: ^0.13.2           # Fix publiclyExporting issue
+  custom_lint_core: ^0.6.7           # Latest stable for Dart 3.8.1+
+  riverpod_lint: ^2.3.13             # Compatible with riverpod 2.5.1
+  meta: ^1.15.0                      # Required by analyzer 7.0.0
+  collection: ^1.19.0                # Latest stable version
+  pub_semver: ^2.1.5                 # Required by newer analyzer versions
+  file: ^7.0.1                       # Keep file version stable

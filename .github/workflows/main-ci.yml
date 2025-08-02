@@ -26,6 +26,8 @@ jobs:
     permissions:
       contents: read
       actions: read
+      checks: write        # Required for test reporting
+      pull-requests: write # Required for PR comments
     outputs:
       should-deploy: ${{ steps.changes.outputs.should-deploy }}
     steps:
