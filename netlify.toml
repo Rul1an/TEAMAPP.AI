@@ -36,55 +36,86 @@
 [build.processing.html]
   pretty_urls = true
 
-# 2025 Security Headers with modern CSP and COOP/COEP
+# 2025 Complete Security Headers - Production Ready
 [[headers]]
   for = "/*"
   [headers.values]
-    # Modern Content Security Policy with Flutter CanvasKit support
+    # Content Security Policy v3 - 2025 Enhanced
     Content-Security-Policy = """
-      default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      default-src 'self' https://ohdbsujaetmrztseqana.supabase.co;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://unpkg.com https://www.gstatic.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
       font-src 'self' https://fonts.gstatic.com;
       img-src 'self' data: https: blob:;
-      connect-src 'self' https://*.supabase.co https://*.supabase.io https://www.gstatic.com https://fonts.gstatic.com;
-      media-src 'self' blob:;
+      media-src 'self' https: blob:;
+      connect-src 'self' https://ohdbsujaetmrztseqana.supabase.co wss://realtime.supabase.co https://www.gstatic.com https://fonts.gstatic.com;
       worker-src 'self' blob:;
       frame-src 'none';
+      frame-ancestors 'none';
       object-src 'none';
       base-uri 'self';
       form-action 'self';
+      upgrade-insecure-requests;
+      require-trusted-types-for 'script';
+      trusted-types dompurify;
     """
 
-    # Cross-Origin Policies for 2025
-    Cross-Origin-Opener-Policy = "same-origin"
-    Cross-Origin-Embedder-Policy = "require-corp"
-    Cross-Origin-Resource-Policy = "same-origin"
-
-    # Modern Security Headers
-    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    # Frame Protection - 2025 Enhanced
     X-Frame-Options = "DENY"
+
+    # Content Type Protection
     X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
+
+    # Referrer Policy - Privacy Enhanced
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-    # Permissions Policy (2025 standard)
+    # XSS Protection
+    X-XSS-Protection = "1; mode=block"
+
+    # HSTS - Extended Protection
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
+    # 2025 NEW: Permissions Policy (Feature Policy v2)
     Permissions-Policy = """
       camera=(),
       microphone=(),
-      geolocation=(),
-      interest-cohort=(),
+      geolocation=(self),
       payment=(),
       usb=(),
       bluetooth=(),
       accelerometer=(),
       gyroscope=(),
-      magnetometer=()
+      magnetometer=(),
+      ambient-light-sensor=(),
+      encrypted-media=(self),
+      autoplay=(self),
+      picture-in-picture=(self),
+      fullscreen=(self),
+      interest-cohort=()
     """
 
-    # Performance headers with modern caching
-    Cache-Control = "public, max-age=31536000, immutable"
-    Vary = "Accept-Encoding"
+    # Cross-Origin Policies - 2025 Standards
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+
+    # Security Headers for APIs
+    X-Permitted-Cross-Domain-Policies = "none"
+
+    # Cache Control for Security
+    Cache-Control = "no-store, no-cache, must-revalidate, proxy-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# API specific headers - Extra Secure
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    # API-specific CSP
+    Content-Security-Policy = "default-src 'none'; frame-ancestors 'none';"
+    Content-Type = "application/json; charset=utf-8"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
 
 # HTML files - no cache for dynamic content
 [[headers]]
@@ -110,11 +141,12 @@
   [headers.values]
     Cache-Control = "public, max-age=2592000"
 
-# Assets - long cache with immutable
+# Static assets caching with security
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    Cross-Origin-Resource-Policy = "cross-origin"
 
 # Modern SPA routing with precise rules
 [[redirects]]

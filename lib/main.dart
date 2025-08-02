@@ -15,6 +15,7 @@ import 'config/environment.dart';
 import 'config/supabase_config.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
+import 'services/runtime_security_service.dart';
 import 'widgets/demo_mode_starter.dart';
 import 'app_runner.dart';
 
@@ -30,6 +31,24 @@ Future<void> main() async {
 
   // Initialize date formatting for Dutch locale
   await initializeDateFormatting('nl');
+
+  // Initialize security first (DAG 1 - Critical Security Implementation)
+  try {
+    await RuntimeSecurityService.initializeSecurity(
+      level:
+          Environment.isProduction ? SecurityLevel.high : SecurityLevel.medium,
+    );
+
+    if (kDebugMode) {
+      debugPrint('🔒 Runtime security initialized successfully');
+    }
+  } catch (e) {
+    if (kDebugMode) {
+      debugPrint('⚠️ Security initialization warning: $e');
+      debugPrint('🔒 App will continue with reduced security features');
+    }
+    // Don't crash on security init failure - graceful degradation
+  }
 
   // Initialize Supabase with error handling
   try {

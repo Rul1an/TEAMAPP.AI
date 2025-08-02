@@ -304,9 +304,8 @@ class ExportService {
     try {
       final bytes = await pdf.save();
       await FileSaver.instance.saveFile(
-        name: filename,
+        name: '$filename.pdf',
         bytes: Uint8List.fromList(bytes),
-        ext: 'pdf',
         mimeType: MimeType.pdf,
       );
     } catch (e) {
@@ -320,9 +319,8 @@ class ExportService {
       final bytes = excel.save();
       if (bytes != null) {
         await FileSaver.instance.saveFile(
-          name: filename,
+          name: '$filename.xlsx',
           bytes: Uint8List.fromList(bytes),
-          ext: 'xlsx',
           mimeType: MimeType.microsoftExcel,
         );
       }

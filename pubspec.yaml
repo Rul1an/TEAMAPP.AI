@@ -9,14 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_analytics: ^11.5.2
+  firebase_analytics: ^12.0.0
   graphql_flutter: ^5.1.3
   equatable: ^2.0.5
   collection: ^1.17.2
 
   # Core UI
   cupertino_icons: ^1.0.6
-  google_fonts: ^4.0.4
+  google_fonts: ^6.3.0
 
   # Code generation annotations
   freezed_annotation: ^2.4.4
@@ -27,35 +27,35 @@ dependencies:
   riverpod_annotation: ^2.3.5
 
   # Navigation
-  go_router: ^14.2.0
+  go_router: ^16.0.0
 
   # Backend & Database
   supabase_flutter: ^2.5.6
   supabase: ^2.8.0
 
   # Utilities
-  uuid: ^3.0.7
+  uuid: ^4.5.1
   path_provider: ^2.1.3
-  firebase_core: ^3.7.4
-  firebase_messaging: ^15.2.9
-  firebase_performance: ^0.10.1+9
-  intl: ^0.19.0  # For date formatting
+  firebase_core: ^4.0.0
+  firebase_messaging: ^16.0.0
+  firebase_performance: ^0.11.0
+  intl: ^0.20.2  # For date formatting
 
   # UI Components
   table_calendar: ^3.1.1
-  fl_chart: ^0.68.0
+  fl_chart: ^1.0.0
 
   # Forms & Validation
-  flutter_form_builder: ^9.3.0
+  flutter_form_builder: ^10.1.0
   # form_builder_validators will be added later or we'll use custom validators
 
   # Export functionality
   pdf: ^3.11.3
   excel: ^4.0.6
-  share_plus: ^7.2.2
+  share_plus: ^11.0.0
   file_picker: ^10.1.9
   csv: ^6.0.0
-  file_saver: ^0.2.14
+  file_saver: ^0.3.1
   web: ^1.1.1
   flutter_heatmap_calendar: ^1.0.5
   dio: ^5.8.0
@@ -70,7 +70,7 @@ dependencies:
   path: ^1.9.0
 
   # Secure storage for Hive encryption key
-  flutter_secure_storage: ^9.0.0
+  flutter_secure_storage: ^10.0.0-beta.4
 
   # Local encrypted cache
   hive: ^2.2.3
@@ -86,6 +86,10 @@ dependencies:
   wakelock_plus: ^1.2.5  # Prevent screen sleep
   flutter_cache_manager: ^3.3.1
 
+  # Security Implementation (DAG 1 - 2025)
+  device_info_plus: ^9.1.0      # Device integrity verification
+  package_info_plus: ^8.3.0     # App signature validation (compatible with wakelock_plus)
+
   # Analytics & Data (duplicates removed)
 
   riverpod: any
@@ -99,11 +103,11 @@ dev_dependencies:
   mocktail: ^1.0.1
   coverage: ^1.7.2
   # Replaced by very_good_analysis for stricter lint set
-  very_good_analysis: ^7.0.0
+  very_good_analysis: ^9.0.0
 
   # Phase 2A: Advanced Integration Testing Framework
   patrol: ^3.6.1              # Advanced integration testing
-  alchemist: ^0.7.0           # Golden testing for UI regression
+  alchemist: ^0.12.1           # Golden testing for UI regression
 
   # Custom lint removed - conflicts with analyzer 6.11.0 (AugmentationImportDirective missing)
   # Using very_good_analysis instead for comprehensive linting

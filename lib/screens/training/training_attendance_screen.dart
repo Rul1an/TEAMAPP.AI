@@ -622,7 +622,9 @@ class _TrainingAttendanceScreenState
       parameters: {'training_id': widget.trainingId},
     );
     try {
-      await Share.share(link.toString());
+      await SharePlus.instance.share(
+        ShareParams(text: link.toString()),
+      );
     } catch (_) {
       // In tests, the share_plus MethodChannel may not be registered.
     }

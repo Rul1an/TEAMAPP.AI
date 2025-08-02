@@ -264,9 +264,8 @@ class ImportService {
     final bytes = excel.save();
     if (bytes != null) {
       await FileSaver.instance.saveFile(
-        name: 'spelers_import_template',
+        name: 'spelers_import_template.xlsx',
         bytes: Uint8List.fromList(bytes),
-        ext: 'xlsx',
         mimeType: MimeType.microsoftExcel,
       );
     }

@@ -495,9 +495,8 @@ class FieldDiagramEditorNotifier
       if (byteData != null) {
         final bytes = byteData.buffer.asUint8List();
         await FileSaver.instance.saveFile(
-          name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
+          name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}.png',
           bytes: bytes,
-          ext: 'png',
           mimeType: MimeType.png,
         );
       }
@@ -557,9 +556,8 @@ class FieldDiagramEditorNotifier
 
         final pdfBytes = await pdf.save();
         await FileSaver.instance.saveFile(
-          name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}',
+          name: 'field_diagram_${DateTime.now().millisecondsSinceEpoch}.pdf',
           bytes: Uint8List.fromList(pdfBytes),
-          ext: 'pdf',
           mimeType: MimeType.pdf,
         );
       }

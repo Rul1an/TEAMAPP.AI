@@ -7,16 +7,18 @@ class PerformanceChartsRow extends StatelessWidget {
   const PerformanceChartsRow({super.key});
 
   @override
-  Widget build(BuildContext context) => Row(
+  Widget build(BuildContext context) => const Row(
         children: [
           Expanded(child: _MemoryUsageCard()),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(child: _RequestDistributionCard()),
         ],
       );
 }
 
 class _MemoryUsageCard extends StatelessWidget {
+  const _MemoryUsageCard();
+
   @override
   Widget build(BuildContext context) => Card(
         elevation: 4,
@@ -38,7 +40,7 @@ class _MemoryUsageCard extends StatelessWidget {
                     maxY: 100,
                     barTouchData: BarTouchData(enabled: false),
                     borderData: FlBorderData(show: false),
-                    titlesData: const FlTitlesData(show: false),
+                    titlesData: FlTitlesData(show: false),
                     barGroups: [
                       BarChartGroupData(
                         x: 0,
@@ -69,6 +71,8 @@ class _MemoryUsageCard extends StatelessWidget {
 }
 
 class _RequestDistributionCard extends StatelessWidget {
+  const _RequestDistributionCard();
+
   @override
   Widget build(BuildContext context) => Card(
         elevation: 4,

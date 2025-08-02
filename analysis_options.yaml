@@ -66,6 +66,12 @@ analyzer:
     avoid_equals_and_hash_code_on_mutable_classes: ignore
     one_member_abstracts: ignore
 
+    # FL_CHART COMPATIBILITY EXCEPTIONS
+    # fl_chart library constructors are not const-compatible
+    # These exceptions allow proper use of BarChartData, PieChartData, etc.
+    const_with_non_const: ignore
+    prefer_const_constructors: ignore
+
 # custom_lint:
 #   rules:
 #     - dart_code_metrics_preset

@@ -80,8 +80,15 @@ enum Environment {
   final bool enablePerformanceLogging;
   final String logLevel;
 
-  /// Get current environment based on build mode
+  /// Get current environment based on build mode and environment variables
   static Environment get current {
+    // Check for explicit environment variable first
+    const envName = String.fromEnvironment('FLUTTER_ENV', defaultValue: '');
+    if (envName.isNotEmpty) {
+      return getByName(envName);
+    }
+
+    // Fallback to build mode detection
     if (kDebugMode) {
       return development;
     } else if (kProfileMode) {
