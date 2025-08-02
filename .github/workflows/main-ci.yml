@@ -86,7 +86,7 @@ jobs:
           echo "::endgroup::"
 
       - name: 📊 Upload Coverage
-        uses: codecov/codecov-action@e28ff129e5465c7d0c597733fb291a06c23db174  # v5.0.4
+        uses: codecov/codecov-action@v4  # GitHub enforced tag-based reference (SHA pinning deprecated)
         with:
           files: coverage/lcov.info
           fail_ci_if_error: false
