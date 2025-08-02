@@ -6,8 +6,13 @@ on:
   pull_request:
     branches: [main]
 
-# Security & Concurrency Controls - 2025 Best Practices
-permissions: {}  # Force job-level specification - LEAST PRIVILEGE PRINCIPLE
+# Security & Concurrency Controls
+permissions:
+  contents: write
+  pull-requests: write
+  deployments: write
+  statuses: write
+  checks: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -23,25 +28,22 @@ jobs:
     name: 📋 Quality & Testing
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    permissions:
-      contents: read
-      actions: read
     outputs:
       should-deploy: ${{ steps.changes.outputs.should-deploy }}
     steps:
       - name: 🔐 Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142  # v2.7.0
+        uses: step-security/harden-runner@v2
         with:
           egress-policy: audit
 
       - name: 📂 Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: 🔍 Detect Changes
         id: changes
-        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36  # v3.0.2
+        uses: dorny/paths-filter@v3
         with:
           filters: |
             should-deploy:
@@ -52,14 +54,14 @@ jobs:
               - '.github/workflows/main-ci.yml'
 
       - name: 📱 Setup Flutter
-        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1  # v2.16.0
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
       - name: 📦 Cache Dependencies
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9  # v4.0.2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.pub-cache
@@ -86,7 +88,7 @@ jobs:
           echo "::endgroup::"
 
       - name: 📊 Upload Coverage
-        uses: codecov/codecov-action@e28ff129e5465c7d0c597733fb291a06c23db174  # v5.0.4
+        uses: codecov/codecov-action@v5
         with:
           files: coverage/lcov.info
           fail_ci_if_error: false
@@ -108,9 +110,6 @@ jobs:
       github.ref == 'refs/heads/main' &&
       needs.quality-and-test.outputs.should-deploy == 'true'
     timeout-minutes: 10
-    permissions:
-      contents: read
-      actions: read
     environment:
       name: production
       url: ${{ steps.deploy.outputs.deploy-url }}
@@ -251,9 +250,6 @@ jobs:
       github.event_name == 'pull_request' &&
       needs.quality-and-test.outputs.should-deploy == 'true'
     timeout-minutes: 10
-    permissions:
-      contents: read
-      pull-requests: write  # Required for PR comments
     environment:
       name: preview-pr-${{ github.event.number }}
       url: ${{ steps.deploy-preview.outputs.deploy-url }}
