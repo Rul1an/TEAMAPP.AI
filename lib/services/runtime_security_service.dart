@@ -132,7 +132,7 @@ class RuntimeSecurityService {
     if (!Platform.isAndroid) return false;
 
     try {
-      // Check for su binary
+      // Check for su binary with timeout to avoid slow async io
       final suPaths = [
         '/system/bin/su',
         '/system/xbin/su',
@@ -143,8 +143,18 @@ class RuntimeSecurityService {
       ];
 
       for (final path in suPaths) {
-        if (await File(path).exists()) {
-          return true;
+        try {
+          // Use timeout to avoid slow async operations
+          final exists = await File(path).exists().timeout(
+                const Duration(milliseconds: 100),
+                onTimeout: () => false,
+              );
+          if (exists) {
+            return true;
+          }
+        } catch (_) {
+          // Skip path if access denied or timeout
+          continue;
         }
       }
 
@@ -181,7 +191,7 @@ class RuntimeSecurityService {
     if (!Platform.isIOS) return false;
 
     try {
-      // Check for jailbreak files/directories
+      // Check for jailbreak files/directories with timeout to avoid slow async io
       final jailbreakPaths = [
         '/Applications/Cydia.app',
         '/Library/MobileSubstrate/MobileSubstrate.dylib',
@@ -201,8 +211,18 @@ class RuntimeSecurityService {
       ];
 
       for (final path in jailbreakPaths) {
-        if (await File(path).exists()) {
-          return true;
+        try {
+          // Use timeout to avoid slow async operations
+          final exists = await File(path).exists().timeout(
+                const Duration(milliseconds: 100),
+                onTimeout: () => false,
+              );
+          if (exists) {
+            return true;
+          }
+        } catch (_) {
+          // Skip path if access denied or timeout
+          continue;
         }
       }
 
