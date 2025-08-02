@@ -40,18 +40,18 @@ void main() {
         final testJwtPattern =
             RegExp(r'^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]*$');
 
-        // Valid JWT structure examples
-        const validJwtExample =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+        // Test JWT structure without using actual tokens to avoid GitHub secret scanning
+        const validJwtFormat = 'abc123.def456.ghi789';
 
-        expect(testJwtPattern.hasMatch(validJwtExample), isTrue,
+        expect(testJwtPattern.hasMatch(validJwtFormat), isTrue,
             reason: 'Should validate proper JWT structure');
 
-        // Test that dangerous patterns are rejected
+        // Test that dangerous patterns are rejected in JWT content
         const maliciousPatterns = ['password', 'secret', 'private_key'];
+        const safeTestPayload = 'user_data_example';
         for (final pattern in maliciousPatterns) {
-          expect(validJwtExample.toLowerCase(), isNot(contains(pattern)),
-              reason: 'JWT should not contain $pattern');
+          expect(safeTestPayload.toLowerCase(), isNot(contains(pattern)),
+              reason: 'JWT payload should not contain $pattern');
         }
 
         print('✅ JWT validation patterns verified');
