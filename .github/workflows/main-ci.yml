@@ -159,12 +159,12 @@ jobs:
 
           echo "::group::🧪 Flutter Test (Verbose)"
           echo "Running flutter test with verbose output..."
-          echo "Command: flutter test --coverage --reporter=verbose --reporter=json"
+          echo "Command: flutter test --coverage -v --reporter=json"
 
           # Create test results directory
           mkdir -p test-results
 
-          if ! flutter test --coverage --reporter=verbose --reporter=json > test-results/test-results.json 2>&1; then
+          if ! flutter test --coverage -v --reporter=json > test-results/test-results.json 2>&1; then
             echo "::error::Flutter tests failed!"
             echo ""
             echo "🚨 TEST FAILURE DIAGNOSTICS:"
