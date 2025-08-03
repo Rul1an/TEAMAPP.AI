@@ -724,7 +724,8 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
 
       final title = 'Wedstrijd ${match.opponent}';
       final link = DeepLinkService.instance.createMatchLink(match.id);
-      await Share.share(link.toString(), subject: title);
+      await SharePlus.instance
+          .share(ShareParams(text: link.toString(), subject: title));
       await AnalyticsService.instance.logEvent(
         'share_match',
         parameters: {

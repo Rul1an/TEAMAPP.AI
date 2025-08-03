@@ -16,14 +16,14 @@ class SharePdfUtils {
   ) async {
     try {
       if (kIsWeb) {
-        await Share.shareXFiles([
+        await SharePlus.instance.share(ShareParams(files: [
           XFile.fromData(data, name: filename, mimeType: 'application/pdf')
-        ]);
+        ]));
       } else {
         final dir = await getTemporaryDirectory();
         final file = io.File('${dir.path}/$filename');
         await file.writeAsBytes(data, flush: true);
-        await Share.shareXFiles([XFile(file.path)]);
+        await SharePlus.instance.share(ShareParams(files: [XFile(file.path)]));
       }
     } catch (e) {
       if (context.mounted) {
