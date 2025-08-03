@@ -84,7 +84,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                         // Title
                         Text(
-                          'JO17 Tactical Manager',
+                          'JO17 Coach App',
                           style: theme.textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -92,7 +92,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Professioneel Team Management',
+                          'Voor Voetbaltrainers',
                           style: theme.textTheme.bodyLarge?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -155,72 +155,56 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                         // Demo section
                         Text(
-                          'Probeer Direct',
+                          'Start Direct',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Kies een rol voor de demo',
+                          'Geen account nodig - probeer de app',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
                         const SizedBox(height: 16),
 
-                        // Demo buttons - Management roles
-                        _DemoRoleButton(
-                          icon: Icons.business,
-                          label: 'Demo als Club Admin',
-                          subtitle: 'Volledige toegang tot alle functies',
-                          onPressed: () => _startDemoMode(DemoRole.clubAdmin),
-                          isPrimary: true,
+                        // Primary coach demo button
+                        SizedBox(
+                          width: double.infinity,
+                          height: 56,
+                          child: ElevatedButton(
+                            onPressed: () => _startDemoMode(DemoRole.coach),
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              elevation: 2,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.sports, size: 24),
+                                const SizedBox(width: 12),
+                                Text(
+                                  'Start als Coach',
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 12),
 
-                        _DemoRoleButton(
-                          icon: Icons.groups,
-                          label: 'Demo als Bestuurder',
-                          subtitle: 'Beheer teams en spelers',
-                          onPressed: () => _startDemoMode(DemoRole.boardMember),
-                        ),
-                        const SizedBox(height: 12),
-
-                        _DemoRoleButton(
-                          icon: Icons.analytics,
-                          label: 'Demo als Technische Commissie',
-                          subtitle: 'Analyseer prestaties en ontwikkeling',
-                          onPressed: () =>
-                              _startDemoMode(DemoRole.technicalCommittee),
-                        ),
-                        const SizedBox(height: 12),
-
-                        // Demo buttons - Coaching roles
-                        _DemoRoleButton(
-                          icon: Icons.sports,
-                          label: 'Demo als Hoofdtrainer',
-                          subtitle: 'Plan trainingen en wedstrijden',
-                          onPressed: () => _startDemoMode(DemoRole.coach),
-                          isPrimary: true,
-                        ),
-                        const SizedBox(height: 12),
-
+                        // Alternative demo button
                         _DemoRoleButton(
                           icon: Icons.assistant,
-                          label: 'Demo als Assistent Trainer',
+                          label: 'Start als Assistent Coach',
                           subtitle: 'Ondersteun de hoofdtrainer',
                           onPressed: () =>
                               _startDemoMode(DemoRole.assistantCoach),
-                        ),
-                        const SizedBox(height: 12),
-
-                        // Demo button - Player role
-                        _DemoRoleButton(
-                          icon: Icons.person,
-                          label: 'Demo als Speler',
-                          subtitle: 'Bekijk je schema en statistieken',
-                          onPressed: () => _startDemoMode(DemoRole.player),
                           isOutlined: true,
                         ),
 
@@ -272,14 +256,12 @@ class _DemoRoleButton extends StatelessWidget {
     required this.label,
     required this.subtitle,
     required this.onPressed,
-    this.isPrimary = false,
     this.isOutlined = false,
   });
   final IconData icon;
   final String label;
   final String subtitle;
   final VoidCallback onPressed;
-  final bool isPrimary;
   final bool isOutlined;
 
   @override
@@ -302,13 +284,11 @@ class _DemoRoleButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-            isPrimary ? null : theme.colorScheme.secondaryContainer,
-        foregroundColor:
-            isPrimary ? null : theme.colorScheme.onSecondaryContainer,
+        backgroundColor: theme.colorScheme.secondaryContainer,
+        foregroundColor: theme.colorScheme.onSecondaryContainer,
         padding: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: isPrimary ? 2 : 0,
+        elevation: 0,
       ),
       child: _buildContent(theme),
     );

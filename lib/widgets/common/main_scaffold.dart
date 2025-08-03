@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import '../../providers/auth_provider.dart';
 import '../../providers/demo_mode_provider.dart';
-import '../organization/organization_badge.dart';
 
 // ignore_for_file: prefer_const_constructors
 class MainScaffold extends ConsumerWidget {
@@ -44,15 +43,12 @@ class MainScaffold extends ConsumerWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'JO17',
+                      'JO17 Coach',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
                     const SizedBox(height: 16),
-                    // Organization badge
-                    const OrganizationBadge(),
-                    const SizedBox(height: 8),
                     // Demo mode indicator
                     if (demoMode.isActive)
                       Container(
@@ -128,32 +124,27 @@ class MainScaffold extends ConsumerWidget {
                 NavigationRailDestination(
                   icon: const Icon(Icons.dashboard_outlined),
                   selectedIcon: const Icon(Icons.dashboard),
-                  label: Text(_navLabel('Overzicht', compactLabels)),
-                ),
-                NavigationRailDestination(
-                  icon: const Icon(Icons.sports_soccer_outlined),
-                  selectedIcon: const Icon(Icons.sports_soccer),
-                  label: Text(_navLabel('Seizoen', compactLabels)),
-                ),
-                NavigationRailDestination(
-                  icon: const Icon(Icons.sports_outlined),
-                  selectedIcon: const Icon(Icons.sports),
-                  label: Text(_navLabel('Training', compactLabels)),
-                ),
-                NavigationRailDestination(
-                  icon: const Icon(Icons.stadium_outlined),
-                  selectedIcon: const Icon(Icons.stadium),
-                  label: Text(_navLabel('Wedstr', compactLabels)),
+                  label: Text(_navLabel('Dashboard', compactLabels)),
                 ),
                 NavigationRailDestination(
                   icon: const Icon(Icons.people_outline),
                   selectedIcon: const Icon(Icons.people),
                   label: Text(_navLabel('Spelers', compactLabels)),
                 ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.insights_outlined),
-                  selectedIcon: Icon(Icons.insights),
-                  label: Text('Insights'),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.stadium_outlined),
+                  selectedIcon: const Icon(Icons.stadium),
+                  label: Text(_navLabel('Wedstrijden', compactLabels)),
+                ),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.sports_outlined),
+                  selectedIcon: const Icon(Icons.sports),
+                  label: Text(_navLabel('Trainingen', compactLabels)),
+                ),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.bar_chart_outlined),
+                  selectedIcon: const Icon(Icons.bar_chart),
+                  label: Text(_navLabel('Rapporten', compactLabels)),
                 ),
               ],
             ),
@@ -173,32 +164,27 @@ class MainScaffold extends ConsumerWidget {
             NavigationDestination(
               icon: const Icon(Icons.dashboard_outlined),
               selectedIcon: const Icon(Icons.dashboard),
-              label: _navLabel('Overzicht', compactLabels),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.sports_soccer_outlined),
-              selectedIcon: const Icon(Icons.sports_soccer),
-              label: _navLabel('Seizoen', compactLabels),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.sports_outlined),
-              selectedIcon: const Icon(Icons.sports),
-              label: _navLabel('Training', compactLabels),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.stadium_outlined),
-              selectedIcon: const Icon(Icons.stadium),
-              label: _navLabel('Wedstr', compactLabels),
+              label: _navLabel('Dashboard', compactLabels),
             ),
             NavigationDestination(
               icon: const Icon(Icons.people_outline),
               selectedIcon: const Icon(Icons.people),
               label: _navLabel('Spelers', compactLabels),
             ),
-            const NavigationDestination(
-              icon: Icon(Icons.insights_outlined),
-              selectedIcon: Icon(Icons.insights),
-              label: 'Insights',
+            NavigationDestination(
+              icon: const Icon(Icons.stadium_outlined),
+              selectedIcon: const Icon(Icons.stadium),
+              label: _navLabel('Wedstrijden', compactLabels),
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.sports_outlined),
+              selectedIcon: const Icon(Icons.sports),
+              label: _navLabel('Trainingen', compactLabels),
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.bar_chart_outlined),
+              selectedIcon: const Icon(Icons.bar_chart),
+              label: _navLabel('Rapporten', compactLabels),
             ),
           ],
         ),
@@ -214,9 +200,10 @@ class MainScaffold extends ConsumerWidget {
   /// by both NavigationRail and NavigationBar.
   static int routeToNavIndex(String currentRoute) {
     if (currentRoute.startsWith('/dashboard')) return 0;
-    if (currentRoute.startsWith('/season') ||
-        currentRoute.startsWith('/annual-planning')) {
-      return 1;
+    if (currentRoute.startsWith('/players')) return 1;
+    if (currentRoute.startsWith('/matches') ||
+        currentRoute.startsWith('/lineup')) {
+      return 2;
     }
     if (currentRoute.startsWith('/training') ||
         currentRoute.startsWith('/exercise') ||
@@ -224,17 +211,14 @@ class MainScaffold extends ConsumerWidget {
         currentRoute.startsWith('/exercise-library') ||
         currentRoute.startsWith('/field-diagram-editor') ||
         currentRoute.startsWith('/exercise-designer')) {
-      return 2;
-    }
-    if (currentRoute.startsWith('/matches') ||
-        currentRoute.startsWith('/lineup')) {
       return 3;
     }
-    if (currentRoute.startsWith('/players')) return 4;
     if (currentRoute.startsWith('/insights') ||
         currentRoute.startsWith('/analytics') ||
-        currentRoute.startsWith('/svs')) {
-      return 5;
+        currentRoute.startsWith('/svs') ||
+        currentRoute.startsWith('/season') ||
+        currentRoute.startsWith('/annual-planning')) {
+      return 4;
     }
     return 0;
   }
@@ -244,14 +228,12 @@ class MainScaffold extends ConsumerWidget {
       case 0:
         context.go('/dashboard');
       case 1:
-        context.go('/season');
-      case 2:
-        context.go('/training');
-      case 3:
-        context.go('/matches');
-      case 4:
         context.go('/players');
-      case 5:
+      case 2:
+        context.go('/matches');
+      case 3:
+        context.go('/training');
+      case 4:
         context.go('/insights');
     }
   }
