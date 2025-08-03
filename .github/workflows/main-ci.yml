@@ -159,18 +159,18 @@ jobs:
 
           echo "::group::🧪 Flutter Test (Verbose)"
           echo "Running flutter test with verbose output..."
-          echo "Command: flutter test --coverage -v --reporter=json"
+          echo "Command: flutter test --coverage --reporter=failures-only"
 
           # Create test results directory
           mkdir -p test-results
 
-          if ! flutter test --coverage -v --reporter=json > test-results/test-results.json 2>&1; then
+          if ! flutter test --coverage --reporter=failures-only > test-results/test-results.txt 2>&1; then
             echo "::error::Flutter tests failed!"
             echo ""
             echo "🚨 TEST FAILURE DIAGNOSTICS:"
             echo ""
             echo "Test output (last 100 lines):"
-            tail -100 test-results/test-results.json || true
+            tail -100 test-results/test-results.txt || true
             echo ""
             echo "Checking for common test issues:"
             echo "- Test files exist:"
@@ -182,18 +182,18 @@ jobs:
             ps aux | grep flutter | head -5 || true
             echo ""
             echo "Failed test details:"
-            if [ -f test-results/test-results.json ]; then
-              grep -E "(FAIL|ERROR|Exception)" test-results/test-results.json | head -20 || true
+            if [ -f test-results/test-results.txt ]; then
+              grep -E "(FAIL|ERROR|Exception)" test-results/test-results.txt | head -20 || true
             fi
             exit 1
           else
             echo "✅ Flutter tests passed successfully"
             echo ""
             echo "Test Summary:"
-            if [ -f test-results/test-results.json ]; then
-              echo "Test results file size: $(wc -l < test-results/test-results.json) lines"
+            if [ -f test-results/test-results.txt ]; then
+              echo "Test results file size: $(wc -l < test-results/test-results.txt) lines"
               # Extract summary info if available
-              grep -E "(All tests passed|tests passed)" test-results/test-results.json | tail -5 || true
+              grep -E "(All tests passed|tests passed)" test-results/test-results.txt | tail -5 || true
             fi
           fi
           echo "::endgroup::"
@@ -222,13 +222,19 @@ jobs:
           fail_ci_if_error: false
 
       - name: 📈 Test Report & Failure Analysis
-        uses: dorny/test-reporter@v1
         if: always()
-        with:
-          name: Flutter Tests
-          path: test-results/test-results.json
-          reporter: flutter-json
-          fail-on-error: false  # Don't fail here, we already handled it above
+        run: |
+          echo "::group::📈 Test Report Summary"
+          if [ -f test-results/test-results.txt ]; then
+            echo "✅ Test results file found"
+            echo "Test output file size: $(wc -l < test-results/test-results.txt) lines"
+            echo ""
+            echo "Test Summary (last 20 lines):"
+            tail -20 test-results/test-results.txt || true
+          else
+            echo "⚠️ No test results file found"
+          fi
+          echo "::endgroup::"
 
       - name: 📋 Upload Test Artifacts (Always)
         uses: actions/upload-artifact@v4
@@ -256,9 +262,9 @@ jobs:
           ps aux | grep -E "(dart|flutter)" | head -10 || true
           echo ""
           echo "Recent Logs:"
-          if [ -f test-results/test-results.json ]; then
+          if [ -f test-results/test-results.txt ]; then
             echo "Last 50 lines of test results:"
-            tail -50 test-results/test-results.json
+            tail -50 test-results/test-results.txt
           fi
           echo ""
           echo "Error Files:"
