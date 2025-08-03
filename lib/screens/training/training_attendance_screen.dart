@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import '../../../compat/share_plus_compat.dart';
+import 'package:share_plus/share_plus.dart';
 
 // Project imports:
 import '../../models/performance_rating.dart';
@@ -622,9 +622,7 @@ class _TrainingAttendanceScreenState
       parameters: {'training_id': widget.trainingId},
     );
     try {
-      await SharePlus.instance.share(
-        ShareParams(text: link.toString()),
-      );
+      await Share.share(link.toString());
     } catch (_) {
       // In tests, the share_plus MethodChannel may not be registered.
     }

@@ -3,10 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import '../compat/share_plus_compat.dart';
-
-// No direct web API usage required with ShareXFiles.
-
+import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
 
@@ -19,18 +16,14 @@ class SharePdfUtils {
   ) async {
     try {
       if (kIsWeb) {
-        await SharePlus.instance.share(
-          ShareParams(files: [
-            XFile.fromData(data, name: filename, mimeType: 'application/pdf')
-          ]),
-        );
+        await Share.shareXFiles([
+          XFile.fromData(data, name: filename, mimeType: 'application/pdf')
+        ]);
       } else {
         final dir = await getTemporaryDirectory();
         final file = io.File('${dir.path}/$filename');
         await file.writeAsBytes(data, flush: true);
-        await SharePlus.instance.share(
-          ShareParams(files: [XFile(file.path)]),
-        );
+        await Share.shareXFiles([XFile(file.path)]);
       }
     } catch (e) {
       if (context.mounted) {

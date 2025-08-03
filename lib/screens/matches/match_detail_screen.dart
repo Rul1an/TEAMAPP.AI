@@ -12,7 +12,7 @@ import '../../models/player.dart';
 import '../../providers/matches_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../providers/pdf/pdf_generators_providers.dart';
-import '../../compat/share_plus_compat.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 import '../../widgets/highlight_gallery.dart';
@@ -724,12 +724,7 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
 
       final title = 'Wedstrijd ${match.opponent}';
       final link = DeepLinkService.instance.createMatchLink(match.id);
-      await SharePlus.instance.share(
-        ShareParams(
-          text: link.toString(),
-          subject: title,
-        ),
-      );
+      await Share.share(link.toString(), subject: title);
       await AnalyticsService.instance.logEvent(
         'share_match',
         parameters: {
