@@ -20,6 +20,8 @@ import 'widgets/demo_mode_starter.dart';
 import 'app_runner.dart';
 
 Future<void> main() async {
+  // CRITICAL FIX: Initialize bindings first, before any async operations
+  // This ensures all subsequent operations run in the correct zone
   WidgetsFlutterBinding.ensureInitialized();
 
   // Environment configuration handled by Environment class
@@ -50,16 +52,28 @@ Future<void> main() async {
     // Don't crash on security init failure - graceful degradation
   }
 
-  // Initialize Supabase with error handling
+  // Initialize Supabase with error handling - FIXED: No double initialization
   try {
-    await Supabase.initialize(
-      url: Environment.current.supabaseUrl,
-      anonKey: Environment.current.supabaseAnonKey,
-    );
+    // Try to access Supabase - if it fails, we need to initialize
+    try {
+      // ignore: unnecessary_statements
+      Supabase.instance.client;
+      // If we get here, Supabase is already initialized
+    } catch (_) {
+      // Supabase not initialized yet
+      await Supabase.initialize(
+        url: Environment.current.supabaseUrl,
+        anonKey: Environment.current.supabaseAnonKey,
+      );
 
-    // CRITICAL FIX: Initialize SupabaseConfig after Supabase.initialize()
-    // This prevents the null check operator error
-    await SupabaseConfig.initialize();
+      if (kDebugMode) {
+        debugPrint(
+            'supabase.supabase_flutter: INFO: ***** Supabase init completed ***** ');
+      }
+    }
+
+    // Initialize our SupabaseConfig wrapper (safe - no duplicate Supabase.initialize)
+    await SupabaseConfig.initializeClient();
   } catch (e) {
     // Log error but don't crash - app can work offline
     if (kDebugMode) {

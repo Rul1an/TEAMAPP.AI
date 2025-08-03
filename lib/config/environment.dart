@@ -98,6 +98,13 @@ enum Environment {
     }
   }
 
+  /// Check if app is running in coach-only mode
+  static bool get isCoachMode {
+    const coachMode =
+        String.fromEnvironment('COACH_MODE_ONLY', defaultValue: 'false');
+    return coachMode.toLowerCase() == 'true';
+  }
+
   /// Get environment by name
   static Environment getByName(String name) {
     switch (name.toLowerCase()) {
@@ -125,8 +132,15 @@ enum Environment {
 
   // Feature flags based on environment
   static bool get showDebugInfo => current.enableDebugFeatures;
-  static bool get enableCrashReporting => !isDevelopment;
-  static bool get enablePerformanceMonitoring => isProduction;
+  static bool get enableCrashReporting => !isDevelopment && !isCoachMode;
+  static bool get enablePerformanceMonitoring => isProduction && !isCoachMode;
+
+  // Coach mode feature flags
+  static bool get enableAuthentication => !isCoachMode;
+  static bool get enableSubscriptionGating => !isCoachMode;
+  static bool get enableUsageLimits => !isCoachMode;
+  static bool get enableOrganizationFeatures => !isCoachMode;
+  static bool get enableBillingFeatures => !isCoachMode;
 
   // Multi-tenant configuration
   static const multiTenantConfig = {
@@ -173,6 +187,32 @@ enum Environment {
 
   // Feature availability per environment
   static Map<String, bool> get availableFeatures {
+    // In coach mode, all core features are enabled without restrictions
+    if (isCoachMode) {
+      return {
+        'calendar': true,
+        'analytics': true,
+        'fieldDiagram': true,
+        'video': true,
+        'annualPlanning': true,
+        'importExport': true,
+        'api': false, // API access disabled in coach mode
+        'betaFeatures': true,
+        'playerManagement': true,
+        'trainingPlanning': true,
+        'matchManagement': true,
+        'performanceAnalytics': true,
+        'exerciseLibrary': true,
+        'offlineMode': true,
+        // Disabled SaaS features
+        'userManagement': false,
+        'billing': false,
+        'organizationSettings': false,
+        'subscriptions': false,
+        'multiTenant': false,
+      };
+    }
+
     switch (current.name) {
       case 'production':
         return {
@@ -184,6 +224,17 @@ enum Environment {
           'importExport': true,
           'api': true,
           'betaFeatures': false,
+          'playerManagement': true,
+          'trainingPlanning': true,
+          'matchManagement': true,
+          'performanceAnalytics': true,
+          'exerciseLibrary': true,
+          'offlineMode': false,
+          'userManagement': true,
+          'billing': true,
+          'organizationSettings': true,
+          'subscriptions': true,
+          'multiTenant': true,
         };
       case 'test':
         return {
@@ -195,6 +246,17 @@ enum Environment {
           'importExport': true,
           'api': true,
           'betaFeatures': true,
+          'playerManagement': true,
+          'trainingPlanning': true,
+          'matchManagement': true,
+          'performanceAnalytics': true,
+          'exerciseLibrary': true,
+          'offlineMode': false,
+          'userManagement': true,
+          'billing': true,
+          'organizationSettings': true,
+          'subscriptions': true,
+          'multiTenant': true,
         };
       default:
         return {
@@ -206,6 +268,17 @@ enum Environment {
           'importExport': true,
           'api': true,
           'betaFeatures': true,
+          'playerManagement': true,
+          'trainingPlanning': true,
+          'matchManagement': true,
+          'performanceAnalytics': true,
+          'exerciseLibrary': true,
+          'offlineMode': false,
+          'userManagement': true,
+          'billing': true,
+          'organizationSettings': true,
+          'subscriptions': true,
+          'multiTenant': true,
         };
     }
   }

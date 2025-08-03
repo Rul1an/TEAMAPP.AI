@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import '../../providers/auth_provider.dart';
 import '../../providers/demo_mode_provider.dart';
+import '../../config/environment.dart';
 
 // ignore_for_file: prefer_const_constructors
 class MainScaffold extends ConsumerWidget {
@@ -22,6 +23,7 @@ class MainScaffold extends ConsumerWidget {
     final compactLabels = screenWidth < 800;
     final demoMode = ref.watch(demoModeProvider);
     final currentUser = ref.watch(currentUserProvider);
+    final isCoachMode = Environment.isCoachMode;
 
     if (isDesktop) {
       // Desktop/Tablet layout with NavigationRail
@@ -43,14 +45,48 @@ class MainScaffold extends ConsumerWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'JO17 Coach',
+                      isCoachMode ? 'Tactical Coach' : 'JO17 Coach',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
                     const SizedBox(height: 16),
-                    // Demo mode indicator
-                    if (demoMode.isActive)
+                    // Coach mode indicator
+                    if (isCoachMode)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.green.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.offline_pin,
+                              size: 14,
+                              color: Colors.green[700],
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              'Coach',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.green[700],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    // Demo mode indicator (only in SaaS mode)
+                    else if (demoMode.isActive)
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
@@ -86,40 +122,42 @@ class MainScaffold extends ConsumerWidget {
                   ],
                 ),
               ),
-              trailing: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    // User info
-                    if (currentUser != null || demoMode.isActive)
-                      Text(
-                        demoMode.isActive
-                            ? demoMode.userName ?? 'Demo User'
-                            : currentUser?.email ?? '',
-                        style: Theme.of(context).textTheme.bodySmall,
+              trailing: isCoachMode
+                  ? null
+                  : Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          // User info
+                          if (currentUser != null || demoMode.isActive)
+                            Text(
+                              demoMode.isActive
+                                  ? demoMode.userName ?? 'Demo User'
+                                  : currentUser?.email ?? '',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          const SizedBox(height: 8),
+                          // Logout button
+                          IconButton(
+                            icon: const Icon(Icons.logout),
+                            onPressed: () async {
+                              if (demoMode.isActive) {
+                                ref.read(demoModeProvider.notifier).endDemo();
+                              } else {
+                                await ref
+                                    .read(authNotifierProvider.notifier)
+                                    .signOut();
+                              }
+                              if (context.mounted) {
+                                context.go('/auth');
+                              }
+                            },
+                            tooltip: 'Uitloggen',
+                          ),
+                        ],
                       ),
-                    const SizedBox(height: 8),
-                    // Logout button
-                    IconButton(
-                      icon: const Icon(Icons.logout),
-                      onPressed: () async {
-                        if (demoMode.isActive) {
-                          ref.read(demoModeProvider.notifier).endDemo();
-                        } else {
-                          await ref
-                              .read(authNotifierProvider.notifier)
-                              .signOut();
-                        }
-                        if (context.mounted) {
-                          context.go('/auth');
-                        }
-                      },
-                      tooltip: 'Uitloggen',
                     ),
-                  ],
-                ),
-              ),
               destinations: [
                 NavigationRailDestination(
                   icon: const Icon(Icons.dashboard_outlined),

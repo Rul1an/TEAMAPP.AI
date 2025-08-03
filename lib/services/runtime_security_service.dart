@@ -291,7 +291,8 @@ class RuntimeSecurityService {
 
     // Verify runtime environment
     _securityContext['flutter_mode'] = kReleaseMode ? 'release' : 'debug';
-    _securityContext['platform'] = Platform.operatingSystem;
+    // CRITICAL FIX: Use kIsWeb for safe platform detection (2025 best practice)
+    _securityContext['platform'] = _getSafePlatformName();
     _securityContext['security_level'] = _currentSecurityLevel.name;
   }
 
@@ -382,6 +383,31 @@ class RuntimeSecurityService {
       }
       return false;
     }
+  }
+
+  /// Safely get platform name (2025 best practice - web compatible)
+  static String _getSafePlatformName() {
+    if (kIsWeb) return 'web';
+
+    try {
+      // Use the safe Platform properties that don't cause issues on web
+      if (Platform.isAndroid) return 'android';
+      if (Platform.isIOS) return 'ios';
+      if (Platform.isMacOS) return 'macos';
+      if (Platform.isWindows) return 'windows';
+      if (Platform.isLinux) return 'linux';
+      if (Platform.isFuchsia) return 'fuchsia';
+      return 'unknown';
+    } catch (e) {
+      // If platform detection fails, return 'unknown' instead of crashing
+      return 'unknown';
+    }
+  }
+
+  /// Clean up security context and remove sensitive data
+  static void dispose() {
+    _securityContext.clear();
+    _securityInitialized = false;
   }
 }
 

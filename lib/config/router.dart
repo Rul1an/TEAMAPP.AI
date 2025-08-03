@@ -31,10 +31,21 @@ import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
 // import schedule import removed – feature postponed
 import '../config/providers.dart';
+import '../config/environment.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
-      initialLocation: '/auth',
+      initialLocation: Environment.isCoachMode ? '/dashboard' : '/auth',
       redirect: (context, state) {
+        // In coach mode, skip all authentication and go directly to dashboard
+        if (Environment.isCoachMode) {
+          final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
+          if (isOnAuthPage) {
+            return '/dashboard';
+          }
+          return null;
+        }
+
+        // Standard SaaS mode authentication flow
         final isLoggedIn = ref.read(isLoggedInProvider);
         final isDemoMode = ref.read(demoModeProvider).isActive;
 

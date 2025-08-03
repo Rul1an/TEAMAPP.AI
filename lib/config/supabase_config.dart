@@ -15,8 +15,18 @@ import 'environment.dart';
 class SupabaseConfig {
   static SupabaseClient? _client;
 
-  /// Initialize Supabase with environment-specific settings
+  /// Initialize Supabase with environment-specific settings (includes Supabase.initialize)
   static Future<void> initialize() async {
+    // Check if already initialized to prevent double initialization
+    try {
+      // Try to access the client - if this works, Supabase is already initialized
+      _client = Supabase.instance.client;
+      _setupAuthListener();
+      return;
+    } catch (e) {
+      // Supabase not initialized yet, continue with initialization
+    }
+
     await Supabase.initialize(
       url: Environment.current.supabaseUrl,
       anonKey: Environment.current.supabaseAnonKey,
@@ -25,6 +35,24 @@ class SupabaseConfig {
         logLevel: RealtimeLogLevel.info,
       ),
     );
+
+    _client = Supabase.instance.client;
+
+    // Setup auth state listener
+    _setupAuthListener();
+  }
+
+  /// Initialize only our SupabaseConfig wrapper (assumes Supabase.initialize already called)
+  static Future<void> initializeClient() async {
+    try {
+      // Try to access Supabase instance - will throw if not initialized
+      // ignore: unnecessary_statements
+      Supabase.instance.client;
+      // If we get here, Supabase is initialized
+    } catch (e) {
+      throw StateError(
+          'Supabase must be initialized before calling initializeClient()');
+    }
 
     _client = Supabase.instance.client;
 

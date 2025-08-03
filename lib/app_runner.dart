@@ -9,8 +9,9 @@ Future<void> runAppWithGuards(Widget app) async {
   // Capture any errors that might occur during runApp by executing within
   // a zone and delegating to Sentry.
   await runZonedGuarded(() async {
-    // Ensure Flutter binding is initialised.
-    WidgetsFlutterBinding.ensureInitialized();
+    // CRITICAL FIX: Do NOT call WidgetsFlutterBinding.ensureInitialized() here
+    // It's already initialized in main() in the correct zone
+    // This prevents the zone mismatch error
 
     // Initialise Sentry only if a DSN is provided via env (avoid crashes in
     // dev if secrets are absent).
