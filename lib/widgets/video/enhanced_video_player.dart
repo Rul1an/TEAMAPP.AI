@@ -49,6 +49,8 @@ class _EnhancedVideoPlayerState extends State<EnhancedVideoPlayer> {
   }
 
   void _disposeControllers() {
+    // Remove listener before disposing to prevent memory leaks
+    _controller?.removeListener(_onVideoPositionChanged);
     _chewieController?.dispose();
     _controller?.dispose();
   }
