@@ -247,6 +247,9 @@ class SeasonPlan {
     final totalDays = seasonEndDate.difference(seasonStartDate).inDays;
     final elapsedDays = now.difference(seasonStartDate).inDays;
 
+    // Prevent division by zero if dates are equal (should not happen with validation)
+    if (totalDays <= 0) return 0;
+
     return (elapsedDays / totalDays * 100).clamp(0.0, 100.0);
   }
 
@@ -323,6 +326,9 @@ class SeasonPlan {
     }
     if (totalWeeks <= 0) errors.add('Total weeks must be positive');
     if (currentWeek < 1) errors.add('Current week must be at least 1');
+    if (currentWeek > totalWeeks) {
+      errors.add('Current week cannot exceed total weeks');
+    }
     if (progressPercentage < 0.0 || progressPercentage > 100.0) {
       errors.add('Progress percentage must be between 0 and 100');
     }
