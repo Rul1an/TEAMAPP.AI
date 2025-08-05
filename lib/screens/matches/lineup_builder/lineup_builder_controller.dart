@@ -140,6 +140,6 @@ class LineupBuilderController extends ChangeNotifier {
 
 /// Riverpod provider
 final lineupBuilderControllerProvider =
-    ChangeNotifierProvider.autoDispose<LineupBuilderController>((ref) {
+    ChangeNotifierProvider<LineupBuilderController>((ref) {
   return LineupBuilderController(ref);
 });

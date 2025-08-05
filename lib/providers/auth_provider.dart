@@ -5,15 +5,16 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 // Project imports:
 import '../services/auth_service.dart';
 import '../config/environment.dart';
+import 'demo_mode_provider.dart';
 
 // Auth service provider
 final authServiceProvider = Provider<AuthService>((ref) => AuthService());
 
 // Current user provider
 final currentUserProvider = Provider<User?>((ref) {
-  // In coach mode, return a mock user
-  if (Environment.isCoachMode) {
-    // Return null since we don't need actual Supabase User object in coach mode
+  // In standalone mode, return null since we don't need actual Supabase User object
+  if (Environment.isStandaloneMode) {
+    // Return null since we don't need actual Supabase User object in standalone mode
     // The isLoggedInProvider will handle the "logged in" state
     return null;
   }
@@ -28,21 +29,33 @@ final authStateProvider = StreamProvider<AuthState>((ref) {
   return authService.authStateChanges;
 });
 
-// Is logged in provider
+// Is logged in provider - Enhanced with multi-mode support (2025)
 final isLoggedInProvider = Provider<bool>((ref) {
-  // In coach mode, always consider user as "logged in"
-  if (Environment.isCoachMode) {
+  // In standalone mode, always consider user as "logged in"
+  if (Environment.isStandaloneMode) {
     return true;
   }
 
-  final user = ref.watch(currentUserProvider);
-  return user != null;
+  // In demo mode, check demo state
+  if (Environment.isDemoMode) {
+    final demoState = ref.watch(demoModeProvider);
+    return demoState.isActive;
+  }
+
+  // In SaaS mode, check actual user authentication
+  if (Environment.isSaasMode) {
+    final user = ref.watch(currentUserProvider);
+    return user != null;
+  }
+
+  // Default fallback (should not reach here)
+  return false;
 });
 
 // User role provider
 final userRoleProvider = Provider<String?>((ref) {
-  // In coach mode, always return 'coach' role
-  if (Environment.isCoachMode) {
+  // In standalone mode, always return 'coach' role
+  if (Environment.isStandaloneMode) {
     return 'coach';
   }
 
@@ -52,9 +65,9 @@ final userRoleProvider = Provider<String?>((ref) {
 
 // Organization ID provider
 final organizationIdProvider = Provider<String?>((ref) {
-  // In coach mode, return a mock organization ID
-  if (Environment.isCoachMode) {
-    return 'coach-org-local';
+  // In standalone mode, return a mock organization ID
+  if (Environment.isStandaloneMode) {
+    return 'standalone-org-local';
   }
 
   final authService = ref.watch(authServiceProvider);

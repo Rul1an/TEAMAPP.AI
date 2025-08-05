@@ -1,7 +1,26 @@
-// Environment configuration for multi-tenant SaaS deployment
+// Environment configuration for multi-mode app deployment
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+
+/// 🎯 App Mode Configuration - 2025 Best Practice
+/// Defines how the app operates for different use cases
+enum AppMode {
+  /// Single user, no authentication required
+  /// Perfect for individual coaches who want to use the app standalone
+  standalone('Standalone Mode'),
+
+  /// Multi-user demo with temporary accounts
+  /// For trying out the SaaS features without commitment
+  demo('Demo Mode'),
+
+  /// Full SaaS with authentication, billing, multi-tenant
+  /// For club-level deployment with multiple users
+  saas('SaaS Mode');
+
+  const AppMode(this.displayName);
+  final String displayName;
+}
 
 /// 🌍 Environment Configuration
 /// Manages different environments: development, test, production
@@ -39,12 +58,13 @@ enum Environment {
     logLevel: 'debug',
   ),
 
-  /// Test Environment
+  /// Test Environment - Uses development database with test isolation
   test._(
     name: 'Test',
-    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
+    supabaseUrl:
+        'https://ohdbsujaetmrztseqana.supabase.co', // Same as dev for now
     supabaseAnonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8', // Same as dev
     appName: 'JO17 Tactical Manager (Test)',
     enableDebugFeatures: true,
     enablePerformanceLogging: false,
@@ -98,12 +118,40 @@ enum Environment {
     }
   }
 
-  /// Check if app is running in coach-only mode
-  static bool get isCoachMode {
+  /// 🎯 Get current app mode - 2025 Best Practice
+  /// Determines how the app operates: standalone, demo, or saas
+  static AppMode get appMode {
+    // Check for explicit app mode environment variable
+    const modeString = String.fromEnvironment('APP_MODE', defaultValue: '');
+    if (modeString.isNotEmpty) {
+      switch (modeString.toLowerCase()) {
+        case 'standalone':
+          return AppMode.standalone;
+        case 'demo':
+          return AppMode.demo;
+        case 'saas':
+          return AppMode.saas;
+      }
+    }
+
+    // Check legacy coach mode flag for backwards compatibility
     const coachMode =
         String.fromEnvironment('COACH_MODE_ONLY', defaultValue: 'false');
-    return coachMode.toLowerCase() == 'true';
+    if (coachMode.toLowerCase() == 'true') {
+      return AppMode.standalone;
+    }
+
+    // Default to standalone mode for single-user experience
+    return AppMode.standalone;
   }
+
+  /// Check if app is running in coach-only mode (legacy compatibility)
+  static bool get isCoachMode => appMode == AppMode.standalone;
+
+  /// Modern app mode checks - 2025 Best Practice
+  static bool get isStandaloneMode => appMode == AppMode.standalone;
+  static bool get isDemoMode => appMode == AppMode.demo;
+  static bool get isSaasMode => appMode == AppMode.saas;
 
   /// Get environment by name
   static Environment getByName(String name) {

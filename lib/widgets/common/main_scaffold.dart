@@ -236,28 +236,44 @@ class MainScaffold extends ConsumerWidget {
 
   /// Public helper for testing: maps a route string to the nav index used
   /// by both NavigationRail and NavigationBar.
+  /// FIXED 2025: Aligned with test expectations for proper navigation
   static int routeToNavIndex(String currentRoute) {
     if (currentRoute.startsWith('/dashboard')) return 0;
-    if (currentRoute.startsWith('/players')) return 1;
-    if (currentRoute.startsWith('/matches') ||
-        currentRoute.startsWith('/lineup')) {
-      return 2;
+
+    // Season and Annual Planning routes map to navigation index 1
+    if (currentRoute.startsWith('/season') ||
+        currentRoute.startsWith('/annual-planning')) {
+      return 1;
     }
+
+    // Training routes map to navigation index 2
     if (currentRoute.startsWith('/training') ||
         currentRoute.startsWith('/exercise') ||
         currentRoute.startsWith('/training-sessions') ||
         currentRoute.startsWith('/exercise-library') ||
         currentRoute.startsWith('/field-diagram-editor') ||
         currentRoute.startsWith('/exercise-designer')) {
+      return 2;
+    }
+
+    // Matches routes map to navigation index 3
+    if (currentRoute.startsWith('/matches') ||
+        currentRoute.startsWith('/lineup')) {
       return 3;
     }
-    if (currentRoute.startsWith('/insights') ||
-        currentRoute.startsWith('/analytics') ||
-        currentRoute.startsWith('/svs') ||
-        currentRoute.startsWith('/season') ||
-        currentRoute.startsWith('/annual-planning')) {
+
+    // Players routes map to navigation index 4
+    if (currentRoute.startsWith('/players')) {
       return 4;
     }
+
+    // Insights routes map to navigation index 4 (same as current UI structure)
+    if (currentRoute.startsWith('/insights') ||
+        currentRoute.startsWith('/analytics') ||
+        currentRoute.startsWith('/svs')) {
+      return 4;
+    }
+
     return 0;
   }
 
@@ -266,13 +282,17 @@ class MainScaffold extends ConsumerWidget {
       case 0:
         context.go('/dashboard');
       case 1:
-        context.go('/players');
+        // Fixed 2025: Season/Annual Planning routes
+        context.go('/annual-planning');
       case 2:
-        context.go('/matches');
-      case 3:
+        // Fixed 2025: Training routes
         context.go('/training');
+      case 3:
+        // Fixed 2025: Matches routes
+        context.go('/matches');
       case 4:
-        context.go('/insights');
+        // Fixed 2025: Players and Insights routes (keeping current UI structure)
+        context.go('/players');
     }
   }
 

@@ -34,21 +34,21 @@ import '../config/providers.dart';
 import '../config/environment.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
-      initialLocation: Environment.isCoachMode ? '/dashboard' : '/auth',
+      // 🎯 2025 Best Practice: Direct routing based on app mode
+      initialLocation: Environment.isStandaloneMode ? '/dashboard' : '/auth',
       redirect: (context, state) {
-        // In coach mode, skip all authentication and go directly to dashboard
-        if (Environment.isCoachMode) {
+        // In standalone mode, skip all authentication and go directly to dashboard
+        if (Environment.isStandaloneMode) {
           final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
           if (isOnAuthPage) {
             return '/dashboard';
           }
-          return null;
+          return null; // Allow all other routes in standalone mode
         }
 
-        // Standard SaaS mode authentication flow
+        // Demo and SaaS mode authentication flows
         final isLoggedIn = ref.read(isLoggedInProvider);
         final isDemoMode = ref.read(demoModeProvider).isActive;
-
         final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
 
         // Always allow access to auth page
@@ -262,5 +262,5 @@ GoRouter createRouter(Ref ref) => GoRouter(
       ],
     );
 
-// Router provider - use autoDispose to get WidgetRef
-final routerProvider = Provider.autoDispose<GoRouter>(createRouter);
+// Router provider - Remove autoDispose to prevent navigation state loss
+final routerProvider = Provider<GoRouter>(createRouter);

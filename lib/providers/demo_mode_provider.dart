@@ -194,10 +194,15 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
   }
 }
 
-// Provider (autoDispose to ensure Timer is cancelled when no listeners)
-final demoModeProvider =
-    StateNotifierProvider.autoDispose<DemoModeNotifier, DemoModeState>(
-  (ref) => DemoModeNotifier(),
+// Provider - Remove autoDispose to prevent state loss during navigation
+final demoModeProvider = StateNotifierProvider<DemoModeNotifier, DemoModeState>(
+  (ref) {
+    final notifier = DemoModeNotifier();
+    ref.onDispose(() {
+      notifier._expirationTimer?.cancel();
+    });
+    return notifier;
+  },
 );
 
 // Helper providers

@@ -1,131 +1,234 @@
-/// Safe numeric operations to prevent null pointer exceptions
-/// 2025 Best Practice: Always handle null values gracefully
-class SafeNumeric {
-  /// Safely convert a nullable num to double with default fallback
-  static double toDoubleSafe(num? value, {double defaultValue = 0.0}) {
-    if (value == null) return defaultValue;
-    return value.toDouble();
-  }
+// lib/utils/safe_numeric_operations.dart
 
-  /// Safely convert a nullable num to int with default fallback
-  static int toIntSafe(num? value, {int defaultValue = 0}) {
-    if (value == null) return defaultValue;
-    return value.toInt();
-  }
+/// 🛡️ Safe Numeric Operations Utility (2025 Best Practices)
+///
+/// Prevents NoSuchMethodError: 'toStringAsFixed' and similar numeric errors
+/// by providing null-safe alternatives for all numeric operations.
+///
+/// This directly addresses the UI Error Display Crisis by providing
+/// defensive programming techniques for numeric data handling.
+class SafeNumericOperations {
+  /// Safely format a number to fixed decimal places
+  /// Prevents: NoSuchMethodError: 'toStringAsFixed' on null values
+  static String toStringAsFixed(dynamic value, int fractionDigits) {
+    try {
+      if (value == null) return '0.${'0' * fractionDigits}';
 
-  /// Safely format a nullable num to string with fixed decimal places
-  static String toStringAsFixedSafe(
-    num? value,
-    int fractionDigits, {
-    String defaultValue = '0.0',
-  }) {
-    if (value == null) return defaultValue;
-    return value.toStringAsFixed(fractionDigits);
-  }
+      final numValue = value is num ? value : double.tryParse(value.toString());
+      if (numValue == null) return '0.${'0' * fractionDigits}';
 
-  /// Safely format a percentage from nullable double
-  static String toPercentageSafe(
-    double? value, {
-    int decimalPlaces = 1,
-    String defaultValue = '0.0%',
-  }) {
-    if (value == null) return defaultValue;
-    return '${value.toStringAsFixed(decimalPlaces)}%';
-  }
-
-  /// Safely clamp a nullable double between min and max values
-  static double clampSafe(
-    double? value,
-    double min,
-    double max, {
-    double defaultValue = 0.0,
-  }) {
-    if (value == null) return defaultValue.clamp(min, max);
-    return value.clamp(min, max);
-  }
-
-  /// Safely parse a dynamic value to double
-  static double parseDoubleSafe(
-    dynamic value, {
-    double defaultValue = 0.0,
-  }) {
-    if (value == null) return defaultValue;
-    if (value is num) return value.toDouble();
-    if (value is String) {
-      return double.tryParse(value) ?? defaultValue;
+      return numValue.toStringAsFixed(fractionDigits);
+    } catch (e) {
+      return '0.${'0' * fractionDigits}';
     }
-    return defaultValue;
   }
 
-  /// Safely parse a dynamic value to int
-  static int parseIntSafe(
-    dynamic value, {
-    int defaultValue = 0,
-  }) {
-    if (value == null) return defaultValue;
-    if (value is num) return value.toInt();
-    if (value is String) {
-      return int.tryParse(value) ?? defaultValue;
+  /// Safely convert to double with default fallback
+  static double toDouble(dynamic value, {double defaultValue = 0.0}) {
+    try {
+      if (value == null) return defaultValue;
+      if (value is double) return value;
+      if (value is int) return value.toDouble();
+
+      final parsed = double.tryParse(value.toString());
+      return parsed ?? defaultValue;
+    } catch (e) {
+      return defaultValue;
     }
-    return defaultValue;
   }
 
-  /// Check if a numeric value is safe for mathematical operations
-  static bool isValidNumber(num? value) {
-    if (value == null) return false;
-    if (value.isNaN || value.isInfinite) return false;
-    return true;
-  }
+  /// Safely convert to integer with default fallback
+  static int toInt(dynamic value, {int defaultValue = 0}) {
+    try {
+      if (value == null) return defaultValue;
+      if (value is int) return value;
+      if (value is double) return value.round();
 
-  /// Safely divide two numbers with null safety
-  static double divideSafe(
-    num? numerator,
-    num? denominator, {
-    double defaultValue = 0.0,
-  }) {
-    if (numerator == null || denominator == null) return defaultValue;
-    if (denominator == 0) return defaultValue;
-    return numerator / denominator;
-  }
-
-  /// Format file size safely
-  static String formatFileSizeSafe(int? bytes) {
-    if (bytes == null || bytes < 0) return '0 B';
-
-    if (bytes < 1024) return '$bytes B';
-    if (bytes < 1024 * 1024) {
-      return '${(bytes / 1024).toStringAsFixed(1)} KB';
+      final parsed = int.tryParse(value.toString());
+      return parsed ?? defaultValue;
+    } catch (e) {
+      return defaultValue;
     }
-    if (bytes < 1024 * 1024 * 1024) {
-      return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
-    }
-    return '${(bytes / (1024 * 1024 * 1024)).toStringAsFixed(1)} GB';
   }
 
-  /// Format duration safely from seconds
-  static String formatDurationSafe(double? seconds) {
-    if (seconds == null || seconds < 0) return '0:00';
+  /// Safe percentage calculation
+  static String toPercentage(dynamic value, {int decimalPlaces = 1}) {
+    try {
+      final numValue = toDouble(value);
+      final percentage = numValue * 100;
+      return '${toStringAsFixed(percentage, decimalPlaces)}%';
+    } catch (e) {
+      return '0.${'0' * decimalPlaces}%';
+    }
+  }
 
-    final int totalSeconds = seconds.toInt();
-    final int minutes = totalSeconds ~/ 60;
-    final int remainingSeconds = totalSeconds % 60;
+  /// Safe division with zero protection
+  static double safeDivide(dynamic numerator, dynamic denominator,
+      {double defaultValue = 0.0}) {
+    try {
+      final num = toDouble(numerator);
+      final den = toDouble(denominator);
 
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+      if (den == 0.0) return defaultValue;
+      return num / den;
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  /// Safe average calculation
+  static double safeAverage(List<dynamic> values, {double defaultValue = 0.0}) {
+    try {
+      if (values.isEmpty) return defaultValue;
+
+      final validNumbers =
+          values.map(toDouble).where((v) => v.isFinite).toList();
+
+      if (validNumbers.isEmpty) return defaultValue;
+
+      final sum = validNumbers.reduce((a, b) => a + b);
+      return sum / validNumbers.length;
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  /// Safe min/max calculations
+  static double safeMin(List<dynamic> values, {double defaultValue = 0.0}) {
+    try {
+      if (values.isEmpty) return defaultValue;
+
+      final validNumbers =
+          values.map(toDouble).where((v) => v.isFinite).toList();
+
+      if (validNumbers.isEmpty) return defaultValue;
+
+      return validNumbers.reduce((a, b) => a < b ? a : b);
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  static double safeMax(List<dynamic> values, {double defaultValue = 0.0}) {
+    try {
+      if (values.isEmpty) return defaultValue;
+
+      final validNumbers =
+          values.map(toDouble).where((v) => v.isFinite).toList();
+
+      if (validNumbers.isEmpty) return defaultValue;
+
+      return validNumbers.reduce((a, b) => a > b ? a : b);
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  /// Format currency safely
+  static String toCurrency(dynamic value,
+      {String symbol = '€', int decimalPlaces = 2}) {
+    try {
+      final numValue = toDouble(value);
+      return '$symbol${toStringAsFixed(numValue, decimalPlaces)}';
+    } catch (e) {
+      return '$symbol.${'0' * decimalPlaces}';
+    }
+  }
+
+  /// Safe comparison operations
+  static bool safeEquals(dynamic a, dynamic b) {
+    try {
+      return toDouble(a) == toDouble(b);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static bool safeGreaterThan(dynamic a, dynamic b) {
+    try {
+      return toDouble(a) > toDouble(b);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static bool safeLessThan(dynamic a, dynamic b) {
+    try {
+      return toDouble(a) < toDouble(b);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Validate if a value is a valid number
+  static bool isValidNumber(dynamic value) {
+    try {
+      if (value == null) return false;
+      if (value is num) return value.isFinite;
+
+      final parsed = double.tryParse(value.toString());
+      return parsed != null && parsed.isFinite;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Safe range validation
+  static double clamp(dynamic value, dynamic min, dynamic max) {
+    try {
+      final numValue = toDouble(value);
+      final minValue = toDouble(min);
+      final maxValue = toDouble(max);
+
+      if (numValue < minValue) return minValue;
+      if (numValue > maxValue) return maxValue;
+      return numValue;
+    } catch (e) {
+      return toDouble(min);
+    }
+  }
+
+  /// Format with thousands separator
+  static String toFormattedString(dynamic value,
+      {String separator = '.', int decimalPlaces = 0}) {
+    try {
+      final numValue = toDouble(value);
+      final intPart = numValue.floor();
+      final decimalPart = decimalPlaces > 0
+          ? toStringAsFixed(numValue - intPart, decimalPlaces).substring(1)
+          : '';
+
+      // Add thousands separator
+      final intString = intPart.toString();
+      final regex = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+      final formattedInt =
+          intString.replaceAllMapped(regex, (match) => '${match[1]}$separator');
+
+      return '$formattedInt$decimalPart';
+    } catch (e) {
+      return '0';
+    }
   }
 }
 
-/// Extension methods for null-safe numeric operations
-extension SafeNumericExtensions on num? {
-  /// Safe conversion to double
-  double get safeDouble => SafeNumeric.toDoubleSafe(this);
+/// Extension methods for easier usage
+extension SafeNumericExtensions on dynamic {
+  /// Safe toStringAsFixed
+  String safeToStringAsFixed(int fractionDigits) =>
+      SafeNumericOperations.toStringAsFixed(this, fractionDigits);
 
-  /// Safe conversion to int
-  int get safeInt => SafeNumeric.toIntSafe(this);
+  /// Safe toDouble
+  double safeToDouble({double defaultValue = 0.0}) =>
+      SafeNumericOperations.toDouble(this, defaultValue: defaultValue);
 
-  /// Safe string formatting with fixed decimals
-  String safeFixed(int fractionDigits) =>
-      SafeNumeric.toStringAsFixedSafe(this, fractionDigits);
+  /// Safe toInt
+  int safeToInt({int defaultValue = 0}) =>
+      SafeNumericOperations.toInt(this, defaultValue: defaultValue);
 
-  /// Check if this number is valid for operations
-  bool get isValidNumber => SafeNumeric.isValidNumber(this);
+  /// Safe percentage
+  String safeToPercentage({int decimalPlaces = 1}) =>
+      SafeNumericOperations.toPercentage(this, decimalPlaces: decimalPlaces);
+
+  /// Check if valid number
+  bool get isSafeNumber => SafeNumericOperations.isValidNumber(this);
 }

@@ -56,7 +56,6 @@ class DashboardController extends ChangeNotifier {
 
 /// Riverpod provider exposing the [DashboardController]. Auto-disposed so it
 /// cleans up when dashboard screen is popped.
-final dashboardControllerProvider =
-    ChangeNotifierProvider.autoDispose<DashboardController>(
+final dashboardControllerProvider = ChangeNotifierProvider<DashboardController>(
   DashboardController.new,
 );

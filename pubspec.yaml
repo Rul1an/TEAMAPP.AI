@@ -101,13 +101,24 @@ dev_dependencies:
   test_utils:
     path: packages/test_utils
   mocktail: ^1.0.1
+  mockito: ^5.4.4
   coverage: ^1.7.2
   # Replaced by very_good_analysis for stricter lint set
   very_good_analysis: ^9.0.0
 
-  # Phase 2A: Advanced Integration Testing Framework
-  patrol: ^3.6.1              # Advanced integration testing
-  alchemist: ^0.12.1           # Golden testing for UI regression
+  # Modern Testing Tools (2025 UI Automation Plan)
+  # Note: Using stable, well-supported testing dependencies
+  flutter_driver:
+    sdk: flutter
+
+  # Visual regression testing
+  golden_toolkit: ^0.15.0
+
+  # Network testing
+  http_mock_adapter: ^0.6.1
+
+  # Database testing
+  sqflite_common_ffi: ^2.3.3
 
   # Custom lint removed - conflicts with analyzer 6.11.0 (AugmentationImportDirective missing)
   # Using very_good_analysis instead for comprehensive linting
@@ -126,6 +137,7 @@ dev_dependencies:
   hive_test: ^1.0.1
   leak_tracker: ^10.0.7
 
+  crypto: any
 flutter:
   uses-material-design: true
 

@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:async';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,14 +17,35 @@ import 'config/supabase_config.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
 import 'services/runtime_security_service.dart';
+import 'services/ui_error_handler.dart';
 import 'widgets/demo_mode_starter.dart';
-import 'app_runner.dart';
 
 Future<void> main() async {
-  // CRITICAL FIX: Initialize bindings first, before any async operations
-  // This ensures all subsequent operations run in the correct zone
-  WidgetsFlutterBinding.ensureInitialized();
+  // CRITICAL ZONE FIX: Initialize bindings in same zone where runApp will be called
+  // This prevents Zone mismatch errors by ensuring consistent zone usage
+  await runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
 
+      await _initializeApp();
+
+      // Initialize UI Error Handler within the same zone
+      UIErrorHandler.initialize();
+
+      // Run app in the same zone where bindings were initialized
+      runApp(const ProviderScope(child: JO17TacticalManagerApp()));
+    },
+    (error, stackTrace) {
+      // Catch any initialization errors
+      if (kDebugMode) {
+        print('🚨 App Initialization Error: $error');
+        print('Stack: $stackTrace');
+      }
+    },
+  );
+}
+
+Future<void> _initializeApp() async {
   // Environment configuration handled by Environment class
   // No .env file dependency - uses build-time environment detection
   if (kDebugMode) {
@@ -90,11 +112,6 @@ Future<void> main() async {
     await FirebasePerformance.instance
         .setPerformanceCollectionEnabled(!kDebugMode);
   }
-
-  // Run the app inside error boundary & initialise Sentry (handled internally).
-  await runAppWithGuards(
-    const ProviderScope(child: JO17TacticalManagerApp()),
-  );
 }
 
 class JO17TacticalManagerApp extends ConsumerWidget {

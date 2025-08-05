@@ -114,7 +114,7 @@ class SessionBuilderController extends StateNotifier<SessionBuilderState> {
 }
 
 /// Public provider (family) to access controller + state by [sessionId].
-final sessionBuilderControllerProvider = StateNotifierProvider.autoDispose
-    .family<SessionBuilderController, SessionBuilderState, int?>(
+final sessionBuilderControllerProvider = StateNotifierProvider.family<
+    SessionBuilderController, SessionBuilderState, int?>(
   (ref, sessionId) => SessionBuilderController(ref, sessionId: sessionId),
 );

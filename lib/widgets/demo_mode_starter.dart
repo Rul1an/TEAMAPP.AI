@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,17 +49,34 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
           durationMinutes: 60, // 1 hour demo session
         );
 
-    // Show welcome message
+    // SAFE SNACKBAR: Only show if ScaffoldMessenger is available
+    // This prevents "No ScaffoldMessenger widget found" errors
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            '🎭 Demo Mode Actief! Wissel tussen rollen in het gebruikersmenu.',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.blue,
-        ),
-      );
+      try {
+        // Check if ScaffoldMessenger is available before using it
+        final messenger = ScaffoldMessenger.maybeOf(context);
+        if (messenger != null) {
+          messenger.showSnackBar(
+            const SnackBar(
+              content: Text(
+                '🎭 Demo Mode Actief! Wissel tussen rollen in het gebruikersmenu.',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Colors.blue,
+            ),
+          );
+        } else {
+          // Fallback: Log the demo mode activation
+          if (kDebugMode) {
+            print('🎭 Demo Mode Actief! ScaffoldMessenger not available yet.');
+          }
+        }
+      } catch (e) {
+        // Graceful fallback if ScaffoldMessenger access fails
+        if (kDebugMode) {
+          print('🎭 Demo Mode Actief! (ScaffoldMessenger error: $e)');
+        }
+      }
     }
   }
 

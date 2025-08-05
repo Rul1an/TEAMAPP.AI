@@ -9,15 +9,15 @@ final _veoRepositoryProvider = Provider<VeoHighlightRepository>((ref) {
 });
 
 /// Fetch highlights for given match id lazily.
-final veoHighlightsProvider = FutureProvider.family
-    .autoDispose<List<VeoHighlight>, String>((ref, matchId) async {
+final veoHighlightsProvider =
+    FutureProvider.family<List<VeoHighlight>, String>((ref, matchId) async {
   final repo = ref.watch(_veoRepositoryProvider);
   return repo.fetchHighlightsByMatch(matchId);
 });
 
 /// Provider to fetch playback URL when requested.
 final highlightPlaybackUrlProvider =
-    FutureProvider.family.autoDispose<String, String>((ref, highlightId) async {
+    FutureProvider.family<String, String>((ref, highlightId) async {
   final repo = ref.watch(_veoRepositoryProvider);
   return repo.getPlaybackUrl(highlightId);
 });

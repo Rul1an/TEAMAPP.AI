@@ -14,8 +14,10 @@
   FLUTTER_WEB_USE_SKIA = "true"
   FLUTTER_WEB_CANVASKIT_URL = "https://unpkg.com/canvaskit-wasm@0.39.1/"
 
-  # App environment
+  # App environment - Multi-environment support (2025)
   DART_DEFINE_APP_ENV = "production"
+  DART_DEFINE_SUPABASE_URL = "https://ohdbsujaetmrztseqana.supabase.co"
+  DART_DEFINE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8"
 
   # Build optimizations
   FLUTTER_BUILD_MODE = "release"

@@ -95,4 +95,4 @@ List<RouteBase> _cloneCoreRoutesExceptDashboard(Ref ref) {
   ];
 }
 
-final routerFanProvider = Provider.autoDispose<GoRouter>(createFanRouter);
+final routerFanProvider = Provider<GoRouter>(createFanRouter);
