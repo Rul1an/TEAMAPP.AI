@@ -2,7 +2,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
-import '../models/training.dart';
+import 'package:jo17_tactical_manager/models/training.dart';
+import 'package:jo17_tactical_manager/utils/error_sanitizer.dart';
 
 /// Raw Supabase I/O for the `trainings` table.
 class SupabaseTrainingDataSource {
@@ -13,31 +14,69 @@ class SupabaseTrainingDataSource {
   static const _table = 'trainings';
 
   Future<List<Training>> fetchAll() async {
-    final data = await _supabase.from(_table).select();
-    return (data as List<dynamic>)
-        .cast<Map<String, dynamic>>()
-        .map(_fromRow)
-        .toList();
+    try {
+      final data = await _supabase.from(_table).select();
+      return (data as List<dynamic>)
+          .cast<Map<String, dynamic>>()
+          .map(_fromRow)
+          .toList();
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    }
   }
 
   Future<Training?> fetchById(String id) async {
-    final data =
-        await _supabase.from(_table).select().eq('id', id).maybeSingle();
-    return data == null ? null : _fromRow(data);
+    try {
+      final data =
+          await _supabase.from(_table).select().eq('id', id).maybeSingle();
+      return data == null ? null : _fromRow(data);
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    }
   }
 
-  Future<void> add(Training t) async =>
-      _supabase.from(_table).insert(_toRow(t));
-  Future<void> update(Training t) async =>
-      _supabase.from(_table).update(_toRow(t)).eq('id', t.id);
-  Future<void> delete(String id) async =>
-      _supabase.from(_table).delete().eq('id', id);
+  Future<void> add(Training t) async {
+    try {
+      await _supabase.from(_table).insert(_toRow(t));
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    }
+  }
+
+  Future<void> update(Training t) async {
+    try {
+      await _supabase.from(_table).update(_toRow(t)).eq('id', t.id);
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    }
+  }
+
+  Future<void> delete(String id) async {
+    try {
+      await _supabase.from(_table).delete().eq('id', id);
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    }
+  }
 
   Stream<List<Training>> subscribe() => _supabase
       .from(_table)
       .stream(primaryKey: ['id'])
       .map(_rowsToTrainings)
-      .distinct(_listEquals);
+      .distinct(_listEquals)
+      .handleError((Object error, StackTrace st) {
+        throw StateError(ErrorSanitizer.sanitize(error, st));
+      });
 
   // helpers ----------------------------------------------------
   static SupabaseClient _tryGetClient() {
@@ -53,26 +92,32 @@ class SupabaseTrainingDataSource {
   }
 
   static Training _fromRow(Map<String, dynamic> r) {
-    final t = Training()
-      ..id = r['id'] as String? ?? ''
-      ..date = DateTime.parse(r['date'] as String)
-      ..duration = r['duration'] as int? ?? 0
-      ..focus = _focus(r['focus'] as String?)
-      ..intensity = _intensity(r['intensity'] as String?)
-      ..status = _status(r['status'] as String?)
-      ..location = r['location'] as String?
-      ..description = r['description'] as String?
-      ..objectives = r['objectives'] as String?
-      ..drills = (r['drills'] as List<dynamic>? ?? []).cast<String>()
-      ..presentPlayerIds = (r['present'] as List<dynamic>? ?? []).cast<String>()
-      ..absentPlayerIds = (r['absent'] as List<dynamic>? ?? []).cast<String>()
-      ..injuredPlayerIds = (r['injured'] as List<dynamic>? ?? []).cast<String>()
-      ..latePlayerIds = (r['late'] as List<dynamic>? ?? []).cast<String>()
-      ..coachNotes = r['coach_notes'] as String?
-      ..performanceNotes = r['performance_notes'] as String?
-      ..createdAt = DateTime.parse(r['created_at'] as String)
-      ..updatedAt = DateTime.parse(r['updated_at'] as String);
-    return t;
+    // Convert Supabase row format to Training.fromJson format
+    final normalizedData = <String, dynamic>{
+      'id': r['id'] as String? ?? '',
+      'date': r['date'] as String? ?? DateTime.now().toIso8601String(),
+      'duration': r['duration'] as int? ?? 0,
+      'trainingNumber': r['training_number'] as int? ?? 1,
+      'focus': (r['focus'] as String? ?? 'technical').toLowerCase(),
+      'intensity': (r['intensity'] as String? ?? 'medium').toLowerCase(),
+      'status': (r['status'] as String? ?? 'planned').toLowerCase(),
+      'location': r['location'] as String?,
+      'description': r['description'] as String?,
+      'objectives': r['objectives'] as String?,
+      'drills': r['drills'] as List? ?? [],
+      'presentPlayerIds': r['present'] as List? ?? [],
+      'absentPlayerIds': r['absent'] as List? ?? [],
+      'injuredPlayerIds': r['injured'] as List? ?? [],
+      'latePlayerIds': r['late'] as List? ?? [],
+      'coachNotes': r['coach_notes'] as String?,
+      'performanceNotes': r['performance_notes'] as String?,
+      'createdAt':
+          r['created_at'] as String? ?? DateTime.now().toIso8601String(),
+      'updatedAt':
+          r['updated_at'] as String? ?? DateTime.now().toIso8601String(),
+    };
+
+    return Training.fromJson(normalizedData);
   }
 
   static Map<String, dynamic> _toRow(Training t) => <String, dynamic>{
@@ -106,18 +151,4 @@ class SupabaseTrainingDataSource {
     }
     return true;
   }
-
-  static TrainingFocus _focus(String? s) => TrainingFocus.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingFocus.technical,
-      );
-  static TrainingIntensity _intensity(String? s) =>
-      TrainingIntensity.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingIntensity.medium,
-      );
-  static TrainingStatus _status(String? s) => TrainingStatus.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingStatus.planned,
-      );
 }

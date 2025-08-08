@@ -1,8 +1,5 @@
 // Package imports:
 import 'package:jo17_tactical_manager/compat/isar_stub.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-// part 'training.g.dart'; // Temporarily commented out
 
 enum TrainingFocus {
   technical,
@@ -70,11 +67,39 @@ class Training {
     updatedAt = DateTime.now();
     status = TrainingStatus.planned;
   }
+
+  // Named constructor for JSON deserialization
+  Training.fromJson(Map<String, dynamic> json) : this._fromJson(json);
+
+  // Private constructor for actual JSON deserialization
+  Training._fromJson(Map<String, dynamic> json) {
+    id = json['id'] as String? ?? '';
+    date = DateTime.parse(json['date'] as String);
+    duration = json['duration'] as int;
+    trainingNumber = json['trainingNumber'] as int? ?? 1;
+    focus = TrainingFocus.values.byName(json['focus'] as String);
+    intensity = TrainingIntensity.values.byName(json['intensity'] as String);
+    status = TrainingStatus.values.byName(json['status'] as String);
+    location = json['location'] as String?;
+    description = json['description'] as String?;
+    objectives = json['objectives'] as String?;
+    drills = List<String>.from(json['drills'] as List? ?? []);
+    presentPlayerIds =
+        List<String>.from(json['presentPlayerIds'] as List? ?? []);
+    absentPlayerIds = List<String>.from(json['absentPlayerIds'] as List? ?? []);
+    injuredPlayerIds =
+        List<String>.from(json['injuredPlayerIds'] as List? ?? []);
+    latePlayerIds = List<String>.from(json['latePlayerIds'] as List? ?? []);
+    coachNotes = json['coachNotes'] as String?;
+    performanceNotes = json['performanceNotes'] as String?;
+    createdAt = DateTime.parse(json['createdAt'] as String);
+    updatedAt = DateTime.parse(json['updatedAt'] as String);
+  }
+
   String id = '';
 
   late DateTime date;
   late int duration; // in minutes
-  @JsonKey(defaultValue: 1)
   int trainingNumber = 1; // Sequential number within the season or cycle
 
   @Enumerated(EnumType.name)
@@ -105,4 +130,30 @@ class Training {
 
   late DateTime createdAt;
   late DateTime updatedAt;
+
+  // JSON serialization
+  Map<String, dynamic> toJson() => _$TrainingToJson(this);
 }
+
+// Manual toJson implementation to avoid build_runner issues
+Map<String, dynamic> _$TrainingToJson(Training instance) => <String, dynamic>{
+      'id': instance.id,
+      'date': instance.date.toIso8601String(),
+      'duration': instance.duration,
+      'trainingNumber': instance.trainingNumber,
+      'focus': instance.focus.name,
+      'intensity': instance.intensity.name,
+      'status': instance.status.name,
+      'location': instance.location,
+      'description': instance.description,
+      'objectives': instance.objectives,
+      'drills': instance.drills,
+      'presentPlayerIds': instance.presentPlayerIds,
+      'absentPlayerIds': instance.absentPlayerIds,
+      'injuredPlayerIds': instance.injuredPlayerIds,
+      'latePlayerIds': instance.latePlayerIds,
+      'coachNotes': instance.coachNotes,
+      'performanceNotes': instance.performanceNotes,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
+    };

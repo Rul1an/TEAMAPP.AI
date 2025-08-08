@@ -236,63 +236,82 @@ class MainScaffold extends ConsumerWidget {
 
   /// Public helper for testing: maps a route string to the nav index used
   /// by both NavigationRail and NavigationBar.
-  /// FIXED 2025: Aligned with test expectations for proper navigation
+  /// 🚨 CRITICAL FIX 2025: Fixed navigation mapping to match EXACT UI destination order
   static int routeToNavIndex(String currentRoute) {
-    if (currentRoute.startsWith('/dashboard')) return 0;
+    print('🔍 Route mapping: $currentRoute');
 
-    // Season and Annual Planning routes map to navigation index 1
-    if (currentRoute.startsWith('/season') ||
-        currentRoute.startsWith('/annual-planning')) {
+    if (currentRoute.startsWith('/dashboard')) {
+      print('🔍 Mapped to index 0 (Dashboard)');
+      return 0;
+    }
+
+    // 🚨 CORRECTED: Players routes map to navigation index 1 (UI position: "Spelers")
+    if (currentRoute.startsWith('/players')) {
+      print('🔍 Mapped to index 1 (Spelers)');
       return 1;
     }
 
-    // Training routes map to navigation index 2
+    // 🚨 CORRECTED: Matches routes map to navigation index 2 (UI position: "Wedstrijden")
+    if (currentRoute.startsWith('/matches') ||
+        currentRoute.startsWith('/lineup')) {
+      print('🔍 Mapped to index 2 (Wedstrijden)');
+      return 2;
+    }
+
+    // 🚨 CORRECTED: Training routes map to navigation index 3 (UI position: "Trainingen")
     if (currentRoute.startsWith('/training') ||
         currentRoute.startsWith('/exercise') ||
         currentRoute.startsWith('/training-sessions') ||
         currentRoute.startsWith('/exercise-library') ||
         currentRoute.startsWith('/field-diagram-editor') ||
         currentRoute.startsWith('/exercise-designer')) {
-      return 2;
-    }
-
-    // Matches routes map to navigation index 3
-    if (currentRoute.startsWith('/matches') ||
-        currentRoute.startsWith('/lineup')) {
+      print('🔍 Mapped to index 3 (Trainingen)');
       return 3;
     }
 
-    // Players routes map to navigation index 4
-    if (currentRoute.startsWith('/players')) {
-      return 4;
-    }
-
-    // Insights routes map to navigation index 4 (same as current UI structure)
+    // 🚨 CORRECTED: Insights/Reports routes map to navigation index 4 (UI position: "Rapporten")
     if (currentRoute.startsWith('/insights') ||
         currentRoute.startsWith('/analytics') ||
-        currentRoute.startsWith('/svs')) {
+        currentRoute.startsWith('/svs') ||
+        currentRoute.startsWith('/season') ||
+        currentRoute.startsWith('/annual-planning')) {
+      print('🔍 Mapped to index 4 (Rapporten)');
       return 4;
     }
 
+    print('🔍 No match, defaulting to index 0');
     return 0;
   }
 
   void _onItemTapped(BuildContext context, int index) {
+    // 🛡️ 2025 Fix: Defensive navigation with explicit break statements
+    // and detailed logging for debugging navigation issues
+    print('🧭 Navigation: Tapped index $index');
+
     switch (index) {
       case 0:
+        print('🧭 Navigating to: /dashboard');
         context.go('/dashboard');
+        break;
       case 1:
-        // Fixed 2025: Season/Annual Planning routes
-        context.go('/annual-planning');
-      case 2:
-        // Fixed 2025: Training routes
-        context.go('/training');
-      case 3:
-        // Fixed 2025: Matches routes
-        context.go('/matches');
-      case 4:
-        // Fixed 2025: Players and Insights routes (keeping current UI structure)
+        print('🧭 Navigating to: /players (Spelers)');
         context.go('/players');
+        break;
+      case 2:
+        print('🧭 Navigating to: /matches (Wedstrijden)');
+        context.go('/matches');
+        break;
+      case 3:
+        print('🧭 Navigating to: /training (Trainingen)');
+        context.go('/training');
+        break;
+      case 4:
+        print('🧭 Navigating to: /insights (Rapporten)');
+        context.go('/insights');
+        break;
+      default:
+        print('🧭 Invalid navigation index: $index, defaulting to dashboard');
+        context.go('/dashboard');
     }
   }
 

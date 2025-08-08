@@ -39,32 +39,32 @@ class HiveTrainingCache {
       };
 
   static Training _trainingFromJson(Map<String, dynamic> json) {
-    final t = Training()
-      ..id = json['id'] as String? ?? ''
-      ..date =
-          DateTime.tryParse(json['date'] as String? ?? '') ?? DateTime.now()
-      ..duration = json['duration'] as int? ?? 0
-      ..focus = _focus(json['focus'] as String?)
-      ..intensity = _intensity(json['intensity'] as String?)
-      ..status = _status(json['status'] as String?)
-      ..location = json['location'] as String?
-      ..description = json['description'] as String?
-      ..objectives = json['objectives'] as String?
-      ..drills = (json['drills'] as List<dynamic>? ?? []).cast<String>()
-      ..presentPlayerIds =
-          (json['present'] as List<dynamic>? ?? []).cast<String>()
-      ..absentPlayerIds =
-          (json['absent'] as List<dynamic>? ?? []).cast<String>()
-      ..injuredPlayerIds =
-          (json['injured'] as List<dynamic>? ?? []).cast<String>()
-      ..latePlayerIds = (json['late'] as List<dynamic>? ?? []).cast<String>()
-      ..coachNotes = json['coach_notes'] as String?
-      ..performanceNotes = json['performance_notes'] as String?
-      ..createdAt = DateTime.tryParse(json['created_at'] as String? ?? '') ??
-          DateTime.now()
-      ..updatedAt = DateTime.tryParse(json['updated_at'] as String? ?? '') ??
-          DateTime.now();
-    return t;
+    // Convert cache format to Training.fromJson format
+    final normalizedJson = <String, dynamic>{
+      'id': json['id'] as String? ?? '',
+      'date': json['date'] as String? ?? DateTime.now().toIso8601String(),
+      'duration': json['duration'] as int? ?? 0,
+      'trainingNumber': json['trainingNumber'] as int? ?? 1,
+      'focus': json['focus'] as String? ?? 'technical',
+      'intensity': json['intensity'] as String? ?? 'medium',
+      'status': json['status'] as String? ?? 'planned',
+      'location': json['location'] as String?,
+      'description': json['description'] as String?,
+      'objectives': json['objectives'] as String?,
+      'drills': json['drills'] as List? ?? [],
+      'presentPlayerIds': json['present'] as List? ?? [],
+      'absentPlayerIds': json['absent'] as List? ?? [],
+      'injuredPlayerIds': json['injured'] as List? ?? [],
+      'latePlayerIds': json['late'] as List? ?? [],
+      'coachNotes': json['coach_notes'] as String?,
+      'performanceNotes': json['performance_notes'] as String?,
+      'createdAt':
+          json['created_at'] as String? ?? DateTime.now().toIso8601String(),
+      'updatedAt':
+          json['updated_at'] as String? ?? DateTime.now().toIso8601String(),
+    };
+
+    return Training.fromJson(normalizedJson);
   }
 
   static Map<String, dynamic> _trainingToJson(Training t) => <String, dynamic>{
@@ -88,18 +88,6 @@ class HiveTrainingCache {
         'updated_at': t.updatedAt.toIso8601String(),
       }..removeWhere((_, v) => v == null);
 
-  static TrainingFocus _focus(String? s) => TrainingFocus.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingFocus.technical,
-      );
-  static TrainingIntensity _intensity(String? s) =>
-      TrainingIntensity.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingIntensity.medium,
-      );
-  static TrainingStatus _status(String? s) => TrainingStatus.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => TrainingStatus.planned,
-      );
+  // Removed unused helpers to satisfy analyzer
   // endregion --------------------------------------------------------------
 }

@@ -67,7 +67,7 @@ class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
     final res = await _repo.getAll();
     state = res.when(
       success: AsyncValue.data,
-      failure: (err) => AsyncValue.error(err, StackTrace.current),
+      failure: (err) => AsyncValue.error(err.message, StackTrace.current),
     );
   }
 
@@ -77,7 +77,7 @@ class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
     if (res.isSuccess) {
       await loadPlayers();
     } else {
-      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
+      state = AsyncValue.error(res.errorOrNull!.message, StackTrace.current);
     }
   }
 
@@ -87,7 +87,7 @@ class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
     if (res.isSuccess) {
       await loadPlayers();
     } else {
-      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
+      state = AsyncValue.error(res.errorOrNull!.message, StackTrace.current);
     }
   }
 
@@ -97,7 +97,7 @@ class PlayersNotifier extends StateNotifier<AsyncValue<List<Player>>> {
     if (res.isSuccess) {
       await loadPlayers();
     } else {
-      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
+      state = AsyncValue.error(res.errorOrNull!.message, StackTrace.current);
     }
   }
 }
