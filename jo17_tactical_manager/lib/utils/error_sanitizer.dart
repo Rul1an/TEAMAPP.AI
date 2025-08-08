@@ -2,20 +2,19 @@ import 'package:flutter/foundation.dart';
 
 class ErrorSanitizer {
   static const _redacted = 'Internal server error';
-  static const _maxLen = 900; // keep < 1000
+  static const _maxLen = 900;
 
   static String sanitize(Object error, [StackTrace? stack]) {
     final raw = error.toString();
     final lowered = raw.toLowerCase();
 
-    // Block sensitive keywords (lowercased)
     const blocked = <String>[
       'postgres', 'postgrest', 'database', 'sql', 'stack trace',
       'exception', 'supabase', 'psql', 'syntax error', 'relation '
     ];
 
-    final containsSensitive = blocked.any(lowered.contains);
-    if (containsSensitive || lowered.contains('exception')) {
+    final containsSensitive = blocked.any(lowered.contains) || lowered.contains('exception');
+    if (containsSensitive) {
       if (kDebugMode) {
         // ignore: avoid_print
         print('[ERROR-RAW] $raw');
