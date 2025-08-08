@@ -1,6 +1,6 @@
 // Package imports:
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:postgrest/postgrest.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
 import 'package:jo17_tactical_manager/models/training.dart';
@@ -21,10 +21,10 @@ class SupabaseTrainingDataSource {
           .cast<Map<String, dynamic>>()
           .map(_fromRow)
           .toList();
-    } on PostgrestException catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e.message ?? e, s));
-    } catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e, s));
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
     }
   }
 
@@ -33,40 +33,40 @@ class SupabaseTrainingDataSource {
       final data =
           await _supabase.from(_table).select().eq('id', id).maybeSingle();
       return data == null ? null : _fromRow(data);
-    } on PostgrestException catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e.message ?? e, s));
-    } catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e, s));
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
     }
   }
 
   Future<void> add(Training t) async {
     try {
       await _supabase.from(_table).insert(_toRow(t));
-    } on PostgrestException catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e.message ?? e, s));
-    } catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e, s));
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
     }
   }
 
   Future<void> update(Training t) async {
     try {
       await _supabase.from(_table).update(_toRow(t)).eq('id', t.id);
-    } on PostgrestException catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e.message ?? e, s));
-    } catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e, s));
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
     }
   }
 
   Future<void> delete(String id) async {
     try {
       await _supabase.from(_table).delete().eq('id', id);
-    } on PostgrestException catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e.message ?? e, s));
-    } catch (e, s) {
-      throw Exception(ErrorSanitizer.sanitize(e, s));
+    } on PostgrestException catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
+    } catch (e, st) {
+      throw StateError(ErrorSanitizer.sanitize(e, st));
     }
   }
 
@@ -74,7 +74,10 @@ class SupabaseTrainingDataSource {
       .from(_table)
       .stream(primaryKey: ['id'])
       .map(_rowsToTrainings)
-      .distinct(_listEquals);
+      .distinct(_listEquals)
+      .handleError((e, st) {
+        throw StateError(ErrorSanitizer.sanitize(e, st));
+      });
 
   // helpers ----------------------------------------------------
   static SupabaseClient _tryGetClient() {
