@@ -8,18 +8,29 @@ class ErrorSanitizer {
     final raw = error.toString();
     final lowered = raw.toLowerCase();
 
-    // Block sensitive keywords
+    // Block sensitive keywords (lowercased)
     const blocked = <String>[
       'postgres', 'postgrest', 'database', 'sql', 'stack trace',
-      'exception:', 'supabase', 'psql', 'syntax error', 'relation '
+      'exception', 'supabase', 'psql', 'syntax error', 'relation '
     ];
 
     final containsSensitive = blocked.any(lowered.contains);
-    var out = containsSensitive ? _redacted : raw;
+    if (containsSensitive || lowered.contains('exception')) {
+      if (kDebugMode) {
+        // ignore: avoid_print
+        print('[ERROR-RAW] $raw');
+        if (stack != null) {
+          // ignore: avoid_print
+          print('[STACK] $stack');
+        }
+      }
+      return _redacted;
+    }
 
-    if (out.length > _maxLen) out = '${out.substring(0, _maxLen)}…';
-
-    if (containsSensitive || out.contains('Exception')) out = _redacted;
+    var out = raw;
+    if (out.length > _maxLen) {
+      out = '${out.substring(0, _maxLen)}…';
+    }
 
     if (kDebugMode) {
       // ignore: avoid_print
