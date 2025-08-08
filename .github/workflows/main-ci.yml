@@ -30,6 +30,9 @@ jobs:
       pull-requests: write # Required for PR comments
     outputs:
       should-deploy: ${{ steps.changes.outputs.should-deploy }}
+    defaults:
+      run:
+        working-directory: jo17_tactical_manager
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142  # v2.7.0
@@ -47,10 +50,10 @@ jobs:
         with:
           filters: |
             should-deploy:
-              - 'lib/**'
-              - 'web/**'
-              - 'pubspec.yaml'
-              - 'netlify.toml'
+              - 'jo17_tactical_manager/lib/**'
+              - 'jo17_tactical_manager/web/**'
+              - 'jo17_tactical_manager/pubspec.yaml'
+              - 'jo17_tactical_manager/netlify.toml'
               - '.github/workflows/main-ci.yml'
 
       - name: 📱 Setup Flutter
@@ -66,7 +69,7 @@ jobs:
           path: |
             ~/.pub-cache
             build/
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('jo17_tactical_manager/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
 
@@ -333,7 +336,9 @@ jobs:
       actions: read
     environment:
       name: production
-      url: ${{ steps.deploy.outputs.deploy-url }}
+    defaults:
+      run:
+        working-directory: jo17_tactical_manager
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@v2
@@ -356,7 +361,7 @@ jobs:
           path: |
             ~/.pub-cache
             build/
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('jo17_tactical_manager/pubspec.lock') }}
 
       - name: 🏗️ Build Web
         run: |
@@ -476,7 +481,9 @@ jobs:
       pull-requests: write  # Required for PR comments
     environment:
       name: preview-pr-${{ github.event.number }}
-      url: ${{ steps.deploy-preview.outputs.deploy-url }}
+    defaults:
+      run:
+        working-directory: jo17_tactical_manager
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
