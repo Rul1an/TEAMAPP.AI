@@ -362,7 +362,11 @@ jobs:
         run: |
           flutter pub get
           flutter build web --release --no-web-resources-cdn \
-            --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
+            --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/ \
+            --dart-define=FLUTTER_ENV=${{ secrets.FLUTTER_ENV }} \
+            --dart-define=APP_MODE=${{ secrets.APP_MODE }} \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
 
           # Add modern Netlify _headers file (2025 best practice)
           echo "Creating Netlify _headers file with COMPLETE Flutter CanvasKit CSP support..."
@@ -491,7 +495,11 @@ jobs:
       - name: 🏗️ Build Web Preview
         run: |
           flutter pub get
-          flutter build web --release
+          flutter build web --release \
+            --dart-define=FLUTTER_ENV=${{ secrets.FLUTTER_ENV }} \
+            --dart-define=APP_MODE=${{ secrets.APP_MODE }} \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
 
       - name: 🔍 Deploy Preview
         id: deploy-preview
