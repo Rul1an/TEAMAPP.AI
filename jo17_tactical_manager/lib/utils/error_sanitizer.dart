@@ -9,11 +9,20 @@ class ErrorSanitizer {
     final lowered = raw.toLowerCase();
 
     const blocked = <String>[
-      'postgres', 'postgrest', 'database', 'sql', 'stack trace',
-      'exception', 'supabase', 'psql', 'syntax error', 'relation '
+      'postgres',
+      'postgrest',
+      'database',
+      'sql',
+      'stack trace',
+      'exception',
+      'supabase',
+      'psql',
+      'syntax error',
+      'relation '
     ];
 
-    final containsSensitive = blocked.any(lowered.contains) || lowered.contains('exception');
+    final containsSensitive =
+        blocked.any(lowered.contains) || lowered.contains('exception');
     if (containsSensitive) {
       if (kDebugMode) {
         // ignore: avoid_print
