@@ -481,6 +481,12 @@ jobs:
     environment:
       name: preview-pr-${{ github.event.number }}
       url: ${{ steps.deploy-preview.outputs.deploy-url }}
+    env:
+      # Preview/Staging config (set these in Repo → Settings → Variables/Secrets)
+      FLUTTER_ENV: ${{ vars.PREVIEW_FLUTTER_ENV }}
+      APP_MODE: ${{ vars.PREVIEW_APP_MODE }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL_PREVIEW }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
@@ -496,10 +502,11 @@ jobs:
         run: |
           flutter pub get
           flutter build web --release \
-            --dart-define=FLUTTER_ENV=${{ secrets.FLUTTER_ENV }} \
-            --dart-define=APP_MODE=${{ secrets.APP_MODE }} \
-            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
-            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+            --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/ \
+            --dart-define=FLUTTER_ENV=$FLUTTER_ENV \
+            --dart-define=APP_MODE=$APP_MODE \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
 
       - name: 🔍 Deploy Preview
         id: deploy-preview
