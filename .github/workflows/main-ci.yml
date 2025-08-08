@@ -241,7 +241,7 @@ jobs:
       - name: 📊 Upload Coverage
         uses: codecov/codecov-action@v4  # GitHub enforced tag-based reference (SHA pinning deprecated)
         with:
-          files: coverage/lcov.info
+          files: jo17_tactical_manager/coverage/lcov.info
           fail_ci_if_error: false
 
       - name: 📈 Test Report & Failure Analysis
@@ -265,10 +265,10 @@ jobs:
         with:
           name: test-artifacts-${{ github.sha }}
           path: |
-            test-results/
-            coverage/
-            analysis_options.yaml
-            pubspec.lock
+            jo17_tactical_manager/test-results/
+            jo17_tactical_manager/coverage/
+            jo17_tactical_manager/analysis_options.yaml
+            jo17_tactical_manager/pubspec.lock
           retention-days: 14
 
       - name: 🚨 Failure Diagnostics
@@ -430,7 +430,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: web-build-${{ github.sha }}
-          path: build/web/
+          path: jo17_tactical_manager/build/web/
           retention-days: 7
 
       - name: 🎯 Setup Node.js
@@ -504,7 +504,7 @@ jobs:
         id: deploy-preview
         uses: netlify/actions/cli@master
         with:
-          args: deploy --dir=build/web --message="Preview for PR #${{ github.event.number }}"
+          args: deploy --dir=jo17_tactical_manager/build/web --message="Preview for PR #${{ github.event.number }}"
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
