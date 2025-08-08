@@ -16,9 +16,18 @@ sealed class Result<T> {
   /// Factory constructor for success
   static Result<T> success<T>(T data) => Success(data);
 
-  /// Factory constructor for failure
-  static Result<T> failure<T>(Exception error) =>
-      Failure(GenericFailure(error.toString()));
+  /// Factory constructor for failure with enhanced error handling
+  static Result<T> failure<T>(Exception error) {
+    // 🛡️ 2025 Fix: Safe error message extraction to prevent type casting issues
+    late final String errorMessage;
+    try {
+      errorMessage = error.toString();
+    } catch (e) {
+      // Fallback for minified/corrupted error objects
+      errorMessage = 'Unknown error occurred (type: ${error.runtimeType})';
+    }
+    return Failure(GenericFailure(errorMessage));
+  }
 
   R when<R>({
     required R Function(T data) success,

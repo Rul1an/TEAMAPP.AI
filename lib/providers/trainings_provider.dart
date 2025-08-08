@@ -53,7 +53,7 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
     final res = await _repo.getAll();
     state = res.when(
       success: AsyncValue.data,
-      failure: (err) => AsyncValue.error(err, StackTrace.current),
+      failure: (err) => AsyncValue.error(err.message, StackTrace.current),
     );
   }
 
@@ -63,7 +63,7 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
     if (res.isSuccess) {
       await loadTrainings();
     } else {
-      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
+      state = AsyncValue.error(res.errorOrNull!.message, StackTrace.current);
     }
   }
 
@@ -73,7 +73,7 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
     if (res.isSuccess) {
       await loadTrainings();
     } else {
-      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
+      state = AsyncValue.error(res.errorOrNull!.message, StackTrace.current);
     }
   }
 }

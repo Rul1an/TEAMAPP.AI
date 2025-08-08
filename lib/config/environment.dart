@@ -141,8 +141,8 @@ enum Environment {
       return AppMode.standalone;
     }
 
-    // Default to standalone mode for single-user experience
-    return AppMode.standalone;
+    // Default to SaaS mode for cross-device sync
+    return AppMode.saas;
   }
 
   /// Check if app is running in coach-only mode (legacy compatibility)

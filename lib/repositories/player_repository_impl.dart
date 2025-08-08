@@ -96,7 +96,19 @@ class PlayerRepositoryImpl implements PlayerRepository {
       await _cache.clear();
       return const Success(null);
     } catch (e) {
-      return Failure(_mapError(e));
+      // In standalone mode, fallback to cache-only operation
+      try {
+        final cached = await _tryGetCached() ?? <Player>[];
+        // Generate a unique ID if not set
+        if (player.id.isEmpty) {
+          player.id = DateTime.now().millisecondsSinceEpoch.toString();
+        }
+        cached.add(player);
+        await _cache.write(cached);
+        return const Success(null);
+      } catch (cacheError) {
+        return Failure(_mapError(cacheError));
+      }
     }
   }
 

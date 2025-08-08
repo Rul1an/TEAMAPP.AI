@@ -6,8 +6,7 @@ on:
   pull_request:
     branches: [main]
 
-# Security & Concurrency Controls - 2025 Best Practices
-permissions: {}  # Force job-level specification - LEAST PRIVILEGE PRINCIPLE
+permissions: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -18,7 +17,6 @@ env:
   NODE_VERSION: '20'
 
 jobs:
-  # Phase 1: Essential Quality Checks
   quality-and-test:
     name: 📋 Quality & Testing
     runs-on: ubuntu-latest
@@ -26,24 +24,24 @@ jobs:
     permissions:
       contents: read
       actions: read
-      checks: write        # Required for test reporting
-      pull-requests: write # Required for PR comments
+      checks: write
+      pull-requests: write
     outputs:
       should-deploy: ${{ steps.changes.outputs.should-deploy }}
     steps:
       - name: 🔐 Harden Runner
-        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142  # v2.7.0
+        uses: step-security/harden-runner@v2
         with:
           egress-policy: audit
 
       - name: 📂 Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: 🔍 Detect Changes
         id: changes
-        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36  # v3.0.2
+        uses: dorny/paths-filter@v3
         with:
           filters: |
             should-deploy:
@@ -54,19 +52,19 @@ jobs:
               - '.github/workflows/main-ci.yml'
 
       - name: 📱 Setup Flutter
-        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1  # v2.16.0
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
       - name: 📦 Cache Dependencies
-        uses: actions/cache@v4  # GitHub enforced tag-based reference (SHA pinning deprecated for cache)
+        uses: actions/cache@v4
         with:
           path: |
             ~/.pub-cache
             build/
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
 
@@ -76,22 +74,11 @@ jobs:
       - name: 🧹 Quality Gate
         run: |
           echo "::group::🔍 Environment Debug Info"
-          echo "Flutter Doctor:"
           flutter doctor -v
-          echo ""
-          echo "Flutter Version:"
           flutter --version
-          echo ""
-          echo "Dart Version:"
           dart --version
-          echo ""
-          echo "System Info:"
           uname -a
-          echo ""
-          echo "Available Memory:"
-          free -h
-          echo ""
-          echo "Disk Space:"
+          free -h || true
           df -h
           echo "::endgroup::"
 
@@ -103,33 +90,20 @@ jobs:
           if [ -f pubspec.lock ]; then
             echo "✅ pubspec.lock exists"
             echo "Lock file size: $(wc -l < pubspec.lock) lines"
-            echo "First 20 lines of pubspec.lock:"
             head -20 pubspec.lock
           else
             echo "❌ pubspec.lock not found"
           fi
           echo ""
-          echo "Pub cache status:"
           flutter pub deps --style=tree | head -50
           echo "::endgroup::"
 
           echo "::group::🔍 Flutter Analyze (Verbose)"
-          echo "Running flutter analyze with verbose output..."
-          echo "Command: flutter analyze --fatal-infos --verbose"
           if ! flutter analyze --fatal-infos --verbose; then
             echo "::error::Flutter analyze failed!"
-            echo ""
-            echo "🚨 ANALYZE FAILURE DIAGNOSTICS:"
-            echo "Re-running analyze with machine output for debugging:"
             flutter analyze --machine || true
-            echo ""
-            echo "Checking for common issues:"
-            echo "- Missing imports:"
-            find lib -name "*.dart" | head -20 | xargs grep -l "import" | head -10 || true
-            echo "- Analysis options:"
             if [ -f analysis_options.yaml ]; then
-              echo "✅ analysis_options.yaml found:"
-              cat analysis_options.yaml
+              echo "✅ analysis_options.yaml:" && cat analysis_options.yaml
             else
               echo "❌ analysis_options.yaml not found"
             fi
@@ -140,16 +114,9 @@ jobs:
           echo "::endgroup::"
 
           echo "::group::🎨 Dart Format Check (Verbose)"
-          echo "Running dart format check with verbose output..."
-          echo "Command: dart format . --set-exit-if-changed"
           if ! dart format . --set-exit-if-changed; then
             echo "::error::Dart format check failed!"
-            echo ""
-            echo "🚨 FORMAT FAILURE DIAGNOSTICS:"
-            echo "Files that need formatting:"
             dart format . --output=show --set-exit-if-changed || true
-            echo ""
-            echo "Checking format differences:"
             dart format . --output=show | head -50 || true
             exit 1
           else
@@ -158,59 +125,24 @@ jobs:
           echo "::endgroup::"
 
           echo "::group::🧪 Flutter Test (Verbose)"
-          echo "Running flutter test with verbose output..."
-          echo "Command: flutter test --coverage --reporter=failures-only"
-
-          # Create test results directory
           mkdir -p test-results
-
-          # Run tests and capture output, but don't fail on exit code yet
-          set +e  # Disable exit on error temporarily
+          set +e
           flutter test --coverage --reporter=failures-only > test-results/test-results.txt 2>&1
           TEST_EXIT_CODE=$?
-          set -e  # Re-enable exit on error
-
-          # Analyze test results for actual failures
+          set -e
           echo "Flutter test exit code: $TEST_EXIT_CODE"
 
           if [ -f test-results/test-results.txt ]; then
             echo "Test results file created ($(wc -l < test-results/test-results.txt) lines)"
-
-            # Check for actual test failures (not expected 404s or security test passes)
             ACTUAL_FAILURES=$(grep -E "(FAIL|ERROR|Exception)" test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | grep -v "integration_test plugin was not detected" | wc -l)
             PASSED_TESTS=$(grep -E "(✅|tests passed)" test-results/test-results.txt | wc -l)
-
-            echo "Analysis Results:"
-            echo "- Actual failures detected: $ACTUAL_FAILURES"
-            echo "- Passed test indicators: $PASSED_TESTS"
-
-            # Show recent test output for debugging
-            echo ""
-            echo "Recent test output (last 50 lines):"
+            echo "- Actual failures: $ACTUAL_FAILURES"
+            echo "- Passed indicators: $PASSED_TESTS"
+            echo "\nRecent test output (last 50 lines):"
             tail -50 test-results/test-results.txt
-
             if [ $ACTUAL_FAILURES -gt 0 ]; then
               echo "::error::Found actual test failures!"
-              echo ""
-              echo "🚨 REAL TEST FAILURE DIAGNOSTICS:"
-              echo ""
-              echo "Actual failures found:"
-              grep -E "(FAIL|ERROR|Exception)" test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | head -10
-              echo ""
-              echo "Test environment details:"
-              echo "- Test files exist: $(find test -name "*_test.dart" | wc -l)"
-              echo "- Memory usage: $(ps aux | grep flutter | head -3 || true)"
               exit 1
-            else
-              echo "✅ All tests passed successfully!"
-              echo ""
-              echo "Test Summary:"
-              echo "- No actual failures detected"
-              echo "- Security tests with expected 404s: ✅"
-              echo "- Error handling tests with expected responses: ✅"
-              if [ $PASSED_TESTS -gt 0 ]; then
-                echo "- Passed test count: $PASSED_TESTS"
-              fi
             fi
           else
             echo "::error::No test results file created!"
@@ -220,23 +152,15 @@ jobs:
 
           echo "::group::📊 Coverage Analysis"
           if [ -f coverage/lcov.info ]; then
-            echo "✅ Coverage file generated"
-            echo "Coverage file size: $(wc -l < coverage/lcov.info) lines"
-            echo "Coverage summary:"
-            # Simple coverage analysis
-            if command -v genhtml >/dev/null 2>&1; then
-              genhtml coverage/lcov.info -o coverage/html --summary || true
-            else
-              echo "genhtml not available, showing basic coverage info:"
-              grep -E "^LF:|^LH:" coverage/lcov.info | head -10 || true
-            fi
+            echo "✅ coverage/lcov.info exists"
+            echo "Lines: $(wc -l < coverage/lcov.info)"
           else
             echo "⚠️ No coverage file generated"
           fi
           echo "::endgroup::"
 
       - name: 📊 Upload Coverage
-        uses: codecov/codecov-action@v4  # GitHub enforced tag-based reference (SHA pinning deprecated)
+        uses: codecov/codecov-action@v4
         with:
           files: coverage/lcov.info
           fail_ci_if_error: false
@@ -247,9 +171,6 @@ jobs:
           echo "::group::📈 Test Report Summary"
           if [ -f test-results/test-results.txt ]; then
             echo "✅ Test results file found"
-            echo "Test output file size: $(wc -l < test-results/test-results.txt) lines"
-            echo ""
-            echo "Test Summary (last 20 lines):"
             tail -20 test-results/test-results.txt || true
           else
             echo "⚠️ No test results file found"
@@ -272,54 +193,13 @@ jobs:
         if: failure()
         run: |
           echo "::group::🚨 FAILURE DIAGNOSTICS"
-          echo "Job failed! Collecting diagnostic information..."
-          echo ""
-          echo "System Resources:"
-          free -h
+          free -h || true
           df -h
-          echo ""
-          echo "Process Information:"
-          ps aux | grep -E "(dart|flutter)" | head -10 || true
-          echo ""
-          echo "Recent Logs:"
-          if [ -f test-results/test-results.txt ]; then
-            echo "Last 50 lines of test results:"
-            tail -50 test-results/test-results.txt
-          fi
-          echo ""
-          echo "Error Files:"
-          find . -name "*.log" -o -name "*error*" | head -10 | xargs ls -la || true
-          echo ""
-          echo "Git Status:"
+          if [ -f test-results/test-results.txt ]; then tail -50 test-results/test-results.txt; fi
           git status
           git log --oneline -5
           echo "::endgroup::"
 
-          echo "::group::📤 Emergency Artifact Upload"
-          echo "Creating emergency diagnostic bundle..."
-          mkdir -p emergency-diagnostics
-
-          # Collect all relevant debug info
-          flutter doctor -v > emergency-diagnostics/flutter-doctor.txt 2>&1 || true
-          flutter --version > emergency-diagnostics/flutter-version.txt 2>&1 || true
-          dart --version > emergency-diagnostics/dart-version.txt 2>&1 || true
-          cat pubspec.yaml > emergency-diagnostics/pubspec.yaml 2>&1 || true
-          cp pubspec.lock emergency-diagnostics/ 2>/dev/null || true
-          cp analysis_options.yaml emergency-diagnostics/ 2>/dev/null || true
-
-          # System info
-          uname -a > emergency-diagnostics/system-info.txt
-          free -h > emergency-diagnostics/memory-info.txt
-          df -h > emergency-diagnostics/disk-info.txt
-
-          # Process info
-          ps aux > emergency-diagnostics/processes.txt
-
-          echo "Emergency diagnostics collected in emergency-diagnostics/"
-          ls -la emergency-diagnostics/
-          echo "::endgroup::"
-
-  # Phase 2: Build & Deploy Pipeline
   build-and-deploy:
     name: 🏗️ Build & Deploy
     runs-on: ubuntu-latest
@@ -356,7 +236,7 @@ jobs:
           path: |
             ~/.pub-cache
             build/
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
 
       - name: 🏗️ Build Web
         run: |
@@ -364,8 +244,7 @@ jobs:
           flutter build web --release --no-web-resources-cdn \
             --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
 
-          # Add modern Netlify _headers file (2025 best practice)
-          echo "Creating Netlify _headers file with COMPLETE Flutter CanvasKit CSP support..."
+          echo "Creating Netlify _headers with CanvasKit CSP"
           cat << 'EOF' > build/web/_headers
           /*
             Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com https://www.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://*.supabase.io https://www.gstatic.com https://fonts.gstatic.com; media-src 'self' blob:; worker-src 'self' blob: https://www.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
@@ -374,52 +253,6 @@ jobs:
             X-XSS-Protection: 1; mode=block
             Referrer-Policy: strict-origin-when-cross-origin
           EOF
-
-          # Advanced Build Analytics (2025 best practice)
-          echo "::group::Build Analytics & Performance Tracking"
-
-          # Build size tracking with trend analysis
-          BUILD_SIZE_KB=$(du -sk build/web/ | cut -f1)
-          BUILD_SIZE_MB=$(echo "scale=2; $BUILD_SIZE_KB/1024" | bc)
-
-          echo "📊 Build Metrics:"
-          echo "- Size: ${BUILD_SIZE_MB}MB (${BUILD_SIZE_KB}KB)"
-          echo "- Files: $(find build/web -type f | wc -l)"
-          echo "- Largest assets:"
-          find build/web -type f -exec ls -lh {} + | sort -rh -k5 | head -5
-
-          # Performance thresholds
-          if [ $BUILD_SIZE_KB -gt 15360 ]; then  # >15MB
-            echo "⚠️ BUILD SIZE WARNING: ${BUILD_SIZE_MB}MB exceeds 15MB threshold"
-            echo "Consider asset optimization or code splitting"
-          elif [ $BUILD_SIZE_KB -gt 10240 ]; then  # >10MB
-            echo "⚡ BUILD SIZE NOTICE: ${BUILD_SIZE_MB}MB - monitoring recommended"
-          else
-            echo "✅ BUILD SIZE: Optimal (${BUILD_SIZE_MB}MB)"
-          fi
-
-          # CSP Headers verification
-          echo "🔒 Security Headers Verification:"
-          if grep -q "Content-Security-Policy" build/web/_headers; then
-            echo "✅ CSP headers configured"
-            echo "✅ Flutter CanvasKit CSP support enabled"
-          else
-            echo "❌ CSP headers missing!"
-          fi
-
-          # Build summary for GitHub
-          cat >> $GITHUB_STEP_SUMMARY << EOF
-          ## 📊 Build Analytics
-
-          | Metric | Value |
-          |--------|-------|
-          | Build Size | ${BUILD_SIZE_MB}MB |
-          | File Count | $(find build/web -type f | wc -l) |
-          | CSP Headers | ✅ Configured |
-          | Performance | $([ $BUILD_SIZE_KB -lt 10240 ] && echo "🚀 Optimal" || echo "⚡ Monitoring") |
-          EOF
-
-          echo "::endgroup::"
 
       - name: 📤 Upload Build Artifacts
         uses: actions/upload-artifact@v4
@@ -442,10 +275,7 @@ jobs:
             --prod \
             --json \
             --message "Deploy ${{ github.sha }}-${{ github.run_number }}")
-
           echo "$OUTPUT" | tee netlify-output.json
-
-          # Extract deploy URL for output
           DEPLOY_URL=$(echo "$OUTPUT" | jq -r '.deploy_url // .url // "https://teamappai.netlify.app"')
           echo "deploy-url=$DEPLOY_URL" >> $GITHUB_OUTPUT
           echo "✅ Netlify deploy successful: $DEPLOY_URL"
@@ -456,13 +286,11 @@ jobs:
       - name: 📝 Deployment Summary
         run: |
           echo "## 🚀 Deployment Complete!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Environment**: Production" >> $GITHUB_STEP_SUMMARY
-          echo "- **Deploy URL**: ${{ steps.deploy.outputs.deploy-url }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Environment: Production" >> $GITHUB_STEP_SUMMARY
+          echo "- Deploy URL: ${{ steps.deploy.outputs.deploy-url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
 
-  # Phase 3: Preview Deployments for PRs
   preview-deploy:
     name: 🔍 Preview Deploy
     runs-on: ubuntu-latest
@@ -473,7 +301,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: read
-      pull-requests: write  # Required for PR comments
+      pull-requests: write
     environment:
       name: preview-pr-${{ github.event.number }}
       url: ${{ steps.deploy-preview.outputs.deploy-url }}
@@ -510,9 +338,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🔍 Preview Deployment
-
-              **Deploy Preview**: ${{ steps.deploy-preview.outputs.deploy-url }}
-
-              Changes ready for review! 🚀`
+              body: `## 🔍 Preview Deployment\n\n**Deploy Preview**: ${{ steps.deploy-preview.outputs.deploy-url }}\n\nChanges ready for review! 🚀`
             })

@@ -1,8 +1,6 @@
 // Package imports:
 import 'package:jo17_tactical_manager/compat/isar_stub.dart';
 
-// part 'player.g.dart'; // Temporarily commented out
-
 enum Position {
   goalkeeper,
   defender,
@@ -45,6 +43,53 @@ class Player {
     createdAt = DateTime.now();
     updatedAt = DateTime.now();
   }
+
+  // Named constructor for JSON deserialization
+  Player.fromJson(Map<String, dynamic> json) : this._fromJson(json);
+
+  // Private constructor for actual JSON deserialization
+  Player._fromJson(Map<String, dynamic> json) {
+    id = json['id'] as String? ?? '';
+    firstName = json['firstName'] as String;
+    lastName = json['lastName'] as String;
+    jerseyNumber = json['jerseyNumber'] as int;
+
+    // Safe DateTime parsing - handle both String and DateTime types
+    final birthDateValue = json['birthDate'];
+    birthDate = birthDateValue is DateTime
+        ? birthDateValue
+        : DateTime.parse(birthDateValue as String);
+
+    position = Position.values.byName(json['position'] as String);
+    preferredFoot =
+        PreferredFoot.values.byName(json['preferredFoot'] as String);
+    height = (json['height'] as num).toDouble();
+    weight = (json['weight'] as num).toDouble();
+    phoneNumber = json['phoneNumber'] as String?;
+    email = json['email'] as String?;
+    parentContact = json['parentContact'] as String?;
+    matchesPlayed = json['matchesPlayed'] as int? ?? 0;
+    matchesInSelection = json['matchesInSelection'] as int? ?? 0;
+    minutesPlayed = json['minutesPlayed'] as int? ?? 0;
+    goals = json['goals'] as int? ?? 0;
+    assists = json['assists'] as int? ?? 0;
+    yellowCards = json['yellowCards'] as int? ?? 0;
+    redCards = json['redCards'] as int? ?? 0;
+    trainingsAttended = json['trainingsAttended'] as int? ?? 0;
+    trainingsTotal = json['trainingsTotal'] as int? ?? 0;
+
+    // Safe DateTime parsing for createdAt and updatedAt
+    final createdAtValue = json['createdAt'];
+    createdAt = createdAtValue is DateTime
+        ? createdAtValue
+        : DateTime.parse(createdAtValue as String);
+
+    final updatedAtValue = json['updatedAt'];
+    updatedAt = updatedAtValue is DateTime
+        ? updatedAtValue
+        : DateTime.parse(updatedAtValue as String);
+  }
+
   String id = '';
 
   late String firstName;
@@ -110,4 +155,34 @@ class Player {
     if (matchesPlayed == 0) return 0;
     return minutesPlayed / matchesPlayed;
   }
+
+  // JSON serialization
+  Map<String, dynamic> toJson() => _$PlayerToJson(this);
 }
+
+// Manual toJson implementation to avoid build_runner issues
+Map<String, dynamic> _$PlayerToJson(Player instance) => <String, dynamic>{
+      'id': instance.id,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'jerseyNumber': instance.jerseyNumber,
+      'birthDate': instance.birthDate.toIso8601String(),
+      'position': instance.position.name,
+      'preferredFoot': instance.preferredFoot.name,
+      'height': instance.height,
+      'weight': instance.weight,
+      'phoneNumber': instance.phoneNumber,
+      'email': instance.email,
+      'parentContact': instance.parentContact,
+      'matchesPlayed': instance.matchesPlayed,
+      'matchesInSelection': instance.matchesInSelection,
+      'minutesPlayed': instance.minutesPlayed,
+      'goals': instance.goals,
+      'assists': instance.assists,
+      'yellowCards': instance.yellowCards,
+      'redCards': instance.redCards,
+      'trainingsAttended': instance.trainingsAttended,
+      'trainingsTotal': instance.trainingsTotal,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
+    };
