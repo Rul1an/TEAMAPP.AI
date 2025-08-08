@@ -1,9 +1,10 @@
 // Package imports:
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:postgrest/postgrest.dart';
 
 // Project imports:
-import '../models/training.dart';
-import '../utils/error_sanitizer.dart';
+import 'package:jo17_tactical_manager/models/training.dart';
+import 'package:jo17_tactical_manager/utils/error_sanitizer.dart';
 
 /// Raw Supabase I/O for the `trainings` table.
 class SupabaseTrainingDataSource {
