@@ -238,6 +238,10 @@ class MainScaffold extends ConsumerWidget {
   /// Public helper for testing: maps a route string to the nav index used
   /// by both NavigationRail and NavigationBar.
   /// 🚨 CRITICAL FIX 2025: Fixed navigation mapping to match EXACT UI destination order
+  /// Previously, the mapping didn't mirror UI destination order which broke tests
+  /// and highlighted the wrong tab. Now mapping is:
+  /// 0: Dashboard, 1: Season/Annual Planning, 2: Training, 3: Matches,
+  /// 4: Players, 5: Insights
   static int routeToNavIndex(String currentRoute) {
     if (kDebugMode) {
       print('🔍 Route mapping: $currentRoute');
@@ -250,24 +254,16 @@ class MainScaffold extends ConsumerWidget {
       return 0;
     }
 
-    // 🚨 CORRECTED: Players routes map to navigation index 1 (UI position: "Spelers")
-    if (currentRoute.startsWith('/players')) {
+    // 1: Season & Annual Planning
+    if (currentRoute.startsWith('/season') ||
+        currentRoute.startsWith('/annual-planning')) {
       if (kDebugMode) {
-        print('🔍 Mapped to index 1 (Spelers)');
+        print('🔍 Mapped to index 1 (Season/Annual Planning)');
       }
       return 1;
     }
 
-    // 🚨 CORRECTED: Matches routes map to navigation index 2 (UI position: "Wedstrijden")
-    if (currentRoute.startsWith('/matches') ||
-        currentRoute.startsWith('/lineup')) {
-      if (kDebugMode) {
-        print('🔍 Mapped to index 2 (Wedstrijden)');
-      }
-      return 2;
-    }
-
-    // 🚨 CORRECTED: Training routes map to navigation index 3 (UI position: "Trainingen")
+    // 2: Training & related
     if (currentRoute.startsWith('/training') ||
         currentRoute.startsWith('/exercise') ||
         currentRoute.startsWith('/training-sessions') ||
@@ -275,21 +271,36 @@ class MainScaffold extends ConsumerWidget {
         currentRoute.startsWith('/field-diagram-editor') ||
         currentRoute.startsWith('/exercise-designer')) {
       if (kDebugMode) {
-        print('🔍 Mapped to index 3 (Trainingen)');
+        print('🔍 Mapped to index 2 (Training)');
+      }
+      return 2;
+    }
+
+    // 3: Matches & lineup
+    if (currentRoute.startsWith('/matches') ||
+        currentRoute.startsWith('/lineup')) {
+      if (kDebugMode) {
+        print('🔍 Mapped to index 3 (Matches)');
       }
       return 3;
     }
 
-    // 🚨 CORRECTED: Insights/Reports routes map to navigation index 4 (UI position: "Rapporten")
-    if (currentRoute.startsWith('/insights') ||
-        currentRoute.startsWith('/analytics') ||
-        currentRoute.startsWith('/svs') ||
-        currentRoute.startsWith('/season') ||
-        currentRoute.startsWith('/annual-planning')) {
+    // 4: Players
+    if (currentRoute.startsWith('/players')) {
       if (kDebugMode) {
-        print('🔍 Mapped to index 4 (Rapporten)');
+        print('🔍 Mapped to index 4 (Players)');
       }
       return 4;
+    }
+
+    // 5: Insights & legacy analytics
+    if (currentRoute.startsWith('/insights') ||
+        currentRoute.startsWith('/analytics') ||
+        currentRoute.startsWith('/svs')) {
+      if (kDebugMode) {
+        print('🔍 Mapped to index 5 (Insights)');
+      }
+      return 5;
     }
 
     if (kDebugMode) {
