@@ -86,11 +86,13 @@ enum Environment {
     name: 'Production',
     supabaseUrl: String.fromEnvironment(
       'SUPABASE_URL',
-      defaultValue: '',
+      // Sentinel to catch misconfiguration at runtime
+      defaultValue: 'MISSING_SUPABASE_URL',
     ),
     supabaseAnonKey: String.fromEnvironment(
       'SUPABASE_ANON_KEY',
-      defaultValue: '',
+      // Sentinel to catch misconfiguration at runtime
+      defaultValue: 'MISSING_SUPABASE_ANON_KEY',
     ),
     appName: 'JO17 Tactical Manager',
     enableDebugFeatures: false,

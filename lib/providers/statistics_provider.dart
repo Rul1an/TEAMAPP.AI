@@ -22,18 +22,17 @@ final statisticsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
 /// 2025 Best Practice: Type-safe Statistics Provider
 /// Always returns valid Statistics object, never null
 final typeSafeStatisticsProvider = FutureProvider<Statistics>((ref) async {
-  final repo =
-      ref.read(statisticsRepositoryProvider) as LocalStatisticsRepository;
-  final res = await repo.getTypeSafeStatistics();
-  return res.dataOrNull ?? const Statistics();
+  final repo = ref.read(statisticsRepositoryProvider);
+  final res = await repo.getStatistics();
+  final legacy = res.dataOrNull;
+  return legacy != null ? Statistics.fromLegacyMap(legacy) : const Statistics();
 });
 
 /// 2025 Best Practice: Statistics State Provider
 /// Provides both data and loading/error states with proper type safety
 final statisticsStateProvider =
     StateNotifierProvider<StatisticsNotifier, StatisticsState>((ref) {
-  final repo =
-      ref.read(statisticsRepositoryProvider) as LocalStatisticsRepository;
+  final repo = ref.read(statisticsRepositoryProvider);
   return StatisticsNotifier(repo);
 });
 
@@ -68,15 +67,15 @@ class StatisticsNotifier extends StateNotifier<StatisticsState> {
     refresh();
   }
 
-  final LocalStatisticsRepository _repository;
+  final StatisticsRepository _repository;
 
   /// Refresh statistics from repository
   Future<void> refresh() async {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      final result = await _repository.getTypeSafeStatistics();
-      final statistics = result.dataOrNull ?? const Statistics();
+      final result = await _repository.getStatistics();
+      final statistics = Statistics.fromLegacyMap(result.dataOrNull);
       state = state.copyWith(statistics: statistics, isLoading: false);
     } catch (e) {
       state = state.copyWith(
@@ -89,23 +88,8 @@ class StatisticsNotifier extends StateNotifier<StatisticsState> {
 
   /// Update statistics
   Future<void> updateStatistics(Statistics statistics) async {
-    state = state.copyWith(isLoading: true, error: null);
-
-    try {
-      final result = await _repository.updateStatistics(statistics);
-      if (result.isSuccess) {
-        state = state.copyWith(statistics: statistics, isLoading: false);
-      } else {
-        state = state.copyWith(
-          isLoading: false,
-          error: 'Failed to update statistics',
-        );
-      }
-    } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        error: 'Failed to update statistics: $e',
-      );
-    }
+    // Local-only update for now; repository is read-only interface
+    state =
+        state.copyWith(statistics: statistics, isLoading: false, error: null);
   }
 }

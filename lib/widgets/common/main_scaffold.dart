@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/foundation.dart';
 
 // Project imports:
 import '../../providers/auth_provider.dart';
@@ -238,23 +239,31 @@ class MainScaffold extends ConsumerWidget {
   /// by both NavigationRail and NavigationBar.
   /// 🚨 CRITICAL FIX 2025: Fixed navigation mapping to match EXACT UI destination order
   static int routeToNavIndex(String currentRoute) {
-    print('🔍 Route mapping: $currentRoute');
+    if (kDebugMode) {
+      print('🔍 Route mapping: $currentRoute');
+    }
 
     if (currentRoute.startsWith('/dashboard')) {
-      print('🔍 Mapped to index 0 (Dashboard)');
+      if (kDebugMode) {
+        print('🔍 Mapped to index 0 (Dashboard)');
+      }
       return 0;
     }
 
     // 🚨 CORRECTED: Players routes map to navigation index 1 (UI position: "Spelers")
     if (currentRoute.startsWith('/players')) {
-      print('🔍 Mapped to index 1 (Spelers)');
+      if (kDebugMode) {
+        print('🔍 Mapped to index 1 (Spelers)');
+      }
       return 1;
     }
 
     // 🚨 CORRECTED: Matches routes map to navigation index 2 (UI position: "Wedstrijden")
     if (currentRoute.startsWith('/matches') ||
         currentRoute.startsWith('/lineup')) {
-      print('🔍 Mapped to index 2 (Wedstrijden)');
+      if (kDebugMode) {
+        print('🔍 Mapped to index 2 (Wedstrijden)');
+      }
       return 2;
     }
 
@@ -265,7 +274,9 @@ class MainScaffold extends ConsumerWidget {
         currentRoute.startsWith('/exercise-library') ||
         currentRoute.startsWith('/field-diagram-editor') ||
         currentRoute.startsWith('/exercise-designer')) {
-      print('🔍 Mapped to index 3 (Trainingen)');
+      if (kDebugMode) {
+        print('🔍 Mapped to index 3 (Trainingen)');
+      }
       return 3;
     }
 
@@ -275,42 +286,60 @@ class MainScaffold extends ConsumerWidget {
         currentRoute.startsWith('/svs') ||
         currentRoute.startsWith('/season') ||
         currentRoute.startsWith('/annual-planning')) {
-      print('🔍 Mapped to index 4 (Rapporten)');
+      if (kDebugMode) {
+        print('🔍 Mapped to index 4 (Rapporten)');
+      }
       return 4;
     }
 
-    print('🔍 No match, defaulting to index 0');
+    if (kDebugMode) {
+      print('🔍 No match, defaulting to index 0');
+    }
     return 0;
   }
 
   void _onItemTapped(BuildContext context, int index) {
     // 🛡️ 2025 Fix: Defensive navigation with explicit break statements
     // and detailed logging for debugging navigation issues
-    print('🧭 Navigation: Tapped index $index');
+    if (kDebugMode) {
+      print('🧭 Navigation: Tapped index $index');
+    }
 
     switch (index) {
       case 0:
-        print('🧭 Navigating to: /dashboard');
+        if (kDebugMode) {
+          print('🧭 Navigating to: /dashboard');
+        }
         context.go('/dashboard');
         break;
       case 1:
-        print('🧭 Navigating to: /players (Spelers)');
+        if (kDebugMode) {
+          print('🧭 Navigating to: /players (Spelers)');
+        }
         context.go('/players');
         break;
       case 2:
-        print('🧭 Navigating to: /matches (Wedstrijden)');
+        if (kDebugMode) {
+          print('🧭 Navigating to: /matches (Wedstrijden)');
+        }
         context.go('/matches');
         break;
       case 3:
-        print('🧭 Navigating to: /training (Trainingen)');
+        if (kDebugMode) {
+          print('🧭 Navigating to: /training (Trainingen)');
+        }
         context.go('/training');
         break;
       case 4:
-        print('🧭 Navigating to: /insights (Rapporten)');
+        if (kDebugMode) {
+          print('🧭 Navigating to: /insights (Rapporten)');
+        }
         context.go('/insights');
         break;
       default:
-        print('🧭 Invalid navigation index: $index, defaulting to dashboard');
+        if (kDebugMode) {
+          print('🧭 Invalid navigation index: $index, defaulting to dashboard');
+        }
         context.go('/dashboard');
     }
   }
