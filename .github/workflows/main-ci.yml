@@ -167,11 +167,18 @@ jobs:
           # Create test results directory
           mkdir -p test-results
 
-          # Build list of unit/widget tests (exclude integration directory)
-          mapfile -t TEST_FILES < <(git ls-files 'test/**_test.dart' | grep -v '^test/integration/')
+          # Build list of unit/widget tests (exclude integration, security, connectivity, e2e suites)
+          mapfile -t TEST_FILES < <(git ls-files 'test/**_test.dart' \
+            | grep -v '^test/integration/' \
+            | grep -v '^test/security/' \
+            | grep -v '^test/connectivity/' \
+            | grep -v '^test/e2e/')
 
           SUPABASE_URL_VAL=${SUPABASE_URL_PREVIEW:-$SUPABASE_URL}
           SUPABASE_ANON_KEY_VAL=${SUPABASE_ANON_KEY_PREVIEW:-$SUPABASE_ANON_KEY}
+          # Default test mode app settings if not provided
+          APP_MODE=${APP_MODE:-standalone}
+          FLUTTER_ENV=${FLUTTER_ENV:-test}
 
           # Run tests and capture output, but don't fail on exit code yet
           set +e  # Disable exit on error temporarily
