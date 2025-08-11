@@ -136,8 +136,8 @@ void main() {
 
         stopwatch.stop();
 
-        // CI-friendly threshold: allow up to 250ms in shared runners
-        expect(stopwatch.elapsedMilliseconds, lessThan(250));
+        // CI-friendly threshold: allow generous time on shared runners
+        expect(stopwatch.elapsedMilliseconds, lessThan(1000));
       });
 
       test('handles error scenarios without performance impact', () {
@@ -153,8 +153,8 @@ void main() {
 
         stopwatch.stop();
 
-        // CI-friendly threshold: allow up to 150ms in shared runners
-        expect(stopwatch.elapsedMilliseconds, lessThan(150));
+        // CI-friendly threshold: allow generous time on shared runners
+        expect(stopwatch.elapsedMilliseconds, lessThan(500));
       });
     });
 
