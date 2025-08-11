@@ -162,14 +162,25 @@ jobs:
 
           echo "::group::🧪 Flutter Test (Verbose)"
           echo "Running flutter test with verbose output..."
-          echo "Command: flutter test --coverage --reporter=failures-only"
+          echo "Command: flutter test --coverage --reporter=failures-only (unit/widget only)"
 
           # Create test results directory
           mkdir -p test-results
 
+          # Build list of unit/widget tests (exclude integration directory)
+          mapfile -t TEST_FILES < <(git ls-files 'test/**_test.dart' | grep -v '^test/integration/')
+
+          SUPABASE_URL_VAL=${SUPABASE_URL_PREVIEW:-$SUPABASE_URL}
+          SUPABASE_ANON_KEY_VAL=${SUPABASE_ANON_KEY_PREVIEW:-$SUPABASE_ANON_KEY}
+
           # Run tests and capture output, but don't fail on exit code yet
           set +e  # Disable exit on error temporarily
-          flutter test --coverage --reporter=failures-only > test-results/test-results.txt 2>&1
+          flutter test --coverage --reporter=failures-only \
+            --dart-define=APP_MODE="${APP_MODE}" \
+            --dart-define=FLUTTER_ENV="${FLUTTER_ENV}" \
+            --dart-define=SUPABASE_URL="${SUPABASE_URL_VAL}" \
+            --dart-define=SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY_VAL}" \
+            "${TEST_FILES[@]}" > test-results/test-results.txt 2>&1
           TEST_EXIT_CODE=$?
           set -e  # Re-enable exit on error
 
