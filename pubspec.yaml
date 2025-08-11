@@ -70,7 +70,8 @@ dependencies:
   path: ^1.9.0
 
   # Secure storage for Hive encryption key
-  flutter_secure_storage: ^10.0.0-beta.4
+  # Prefer stable release; upgrade to 10.x when stable
+  flutter_secure_storage: ^9.2.2
 
   # Local encrypted cache
   hive: ^2.2.3
@@ -91,8 +92,6 @@ dependencies:
   package_info_plus: ^8.3.0     # App signature validation (compatible with wakelock_plus)
 
   # Analytics & Data (duplicates removed)
-
-  riverpod: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

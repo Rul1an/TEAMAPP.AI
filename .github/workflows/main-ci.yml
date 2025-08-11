@@ -32,7 +32,7 @@ jobs:
       should-deploy: ${{ steps.changes.outputs.should-deploy }}
     defaults:
       run:
-        working-directory: jo17_tactical_manager
+        working-directory: .
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142  # v2.7.0
@@ -50,10 +50,10 @@ jobs:
         with:
           filters: |
             should-deploy:
-              - 'jo17_tactical_manager/lib/**'
-              - 'jo17_tactical_manager/web/**'
-              - 'jo17_tactical_manager/pubspec.yaml'
-              - 'jo17_tactical_manager/netlify.toml'
+              - 'lib/**'
+              - 'web/**'
+              - 'pubspec.yaml'
+              - 'analysis_options.yaml'
               - '.github/workflows/main-ci.yml'
 
       - name: 📱 Setup Flutter
@@ -69,7 +69,7 @@ jobs:
           path: |
             ~/.pub-cache
             build/
-          key: ${{ runner.os }}-flutter-${{ hashFiles('jo17_tactical_manager/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
 
@@ -338,7 +338,7 @@ jobs:
       name: production
     defaults:
       run:
-        working-directory: jo17_tactical_manager
+        working-directory: .
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@v2
@@ -361,13 +361,18 @@ jobs:
           path: |
             ~/.pub-cache
             build/
-          key: ${{ runner.os }}-flutter-${{ hashFiles('jo17_tactical_manager/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
 
       - name: 🏗️ Build Web
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           flutter pub get
-          flutter build web --release --no-web-resources-cdn \
-            --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
+          # 2025: HTML renderer removed; default CanvasKit is fine. Provide dart-defines for environment secrets.
+          flutter build web --release \
+            --dart-define=SUPABASE_URL=${SUPABASE_URL} \
+            --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
 
           # Add modern Netlify _headers file (2025 best practice)
           echo "Creating Netlify _headers file with COMPLETE Flutter CanvasKit CSP support..."
@@ -483,7 +488,7 @@ jobs:
       name: preview-pr-${{ github.event.number }}
     defaults:
       run:
-        working-directory: jo17_tactical_manager
+        working-directory: .
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
@@ -496,9 +501,14 @@ jobs:
           cache: true
 
       - name: 🏗️ Build Web Preview
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           flutter pub get
-          flutter build web --release
+          flutter build web --release \
+            --dart-define=SUPABASE_URL=${SUPABASE_URL} \
+            --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
 
       - name: 🔍 Deploy Preview
         id: deploy-preview
