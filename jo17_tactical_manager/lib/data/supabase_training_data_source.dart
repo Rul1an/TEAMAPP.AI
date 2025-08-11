@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:postgrest/postgrest.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
@@ -75,7 +74,7 @@ class SupabaseTrainingDataSource {
       .stream(primaryKey: ['id'])
       .map(_rowsToTrainings)
       .distinct(_listEquals)
-      .handleError((e, st) {
+      .handleError((Object e, StackTrace st) {
         throw StateError(ErrorSanitizer.sanitize(e, st));
       });
 
@@ -112,8 +111,10 @@ class SupabaseTrainingDataSource {
       'latePlayerIds': r['late'] as List? ?? [],
       'coachNotes': r['coach_notes'] as String?,
       'performanceNotes': r['performance_notes'] as String?,
-      'createdAt': r['created_at'] as String? ?? DateTime.now().toIso8601String(),
-      'updatedAt': r['updated_at'] as String? ?? DateTime.now().toIso8601String(),
+      'createdAt':
+          r['created_at'] as String? ?? DateTime.now().toIso8601String(),
+      'updatedAt':
+          r['updated_at'] as String? ?? DateTime.now().toIso8601String(),
     };
 
     return Training.fromJson(normalizedData);
