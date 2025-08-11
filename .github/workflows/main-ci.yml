@@ -16,6 +16,9 @@ concurrency:
 env:
   FLUTTER_VERSION: '3.32.x'
   NODE_VERSION: '20'
+  # Optional preview secrets (if defined in repo secrets)
+  SUPABASE_URL_PREVIEW: ${{ secrets.SUPABASE_URL_PREVIEW }}
+  SUPABASE_ANON_KEY_PREVIEW: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}
 
 jobs:
   # Phase 1: Essential Quality Checks

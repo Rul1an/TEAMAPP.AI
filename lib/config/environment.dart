@@ -84,16 +84,9 @@ enum Environment {
   /// Production Environment – MUST be provided via --dart-define
   production._(
     name: 'Production',
-    supabaseUrl: String.fromEnvironment(
-      'SUPABASE_URL',
-      // Sentinel to catch misconfiguration at runtime
-      defaultValue: 'MISSING_SUPABASE_URL',
-    ),
-    supabaseAnonKey: String.fromEnvironment(
-      'SUPABASE_ANON_KEY',
-      // Sentinel to catch misconfiguration at runtime
-      defaultValue: 'MISSING_SUPABASE_ANON_KEY',
-    ),
+    supabaseUrl: String.fromEnvironment('SUPABASE_URL', defaultValue: ''),
+    supabaseAnonKey:
+        String.fromEnvironment('SUPABASE_ANON_KEY', defaultValue: ''),
     appName: 'JO17 Tactical Manager',
     enableDebugFeatures: false,
     enablePerformanceLogging: false,
@@ -347,4 +340,14 @@ enum Environment {
         };
     }
   }
+}
+
+/// Require a dart-define to be provided at build time.
+/// Throws a clear error in production when missing to prevent silent misconfiguration.
+String requireDefine(String key) {
+  final value = String.fromEnvironment(key, defaultValue: '');
+  if (value.isEmpty) {
+    throw StateError('Missing required define: $key');
+  }
+  return value;
 }
