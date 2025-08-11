@@ -61,7 +61,7 @@ class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
     final res = await _repo.getAll();
     state = res.when(
       success: AsyncValue.data,
-      failure: (err) => AsyncValue.error(err.message, StackTrace.current),
+      failure: (err) => AsyncValue.error(err, StackTrace.current),
     );
   }
 
@@ -71,7 +71,7 @@ class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
     if (res.isSuccess) {
       await loadMatches();
     } else {
-      state = AsyncValue.error(res.errorOrNull!.message, StackTrace.current);
+      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
     }
   }
 
@@ -81,7 +81,7 @@ class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
     if (res.isSuccess) {
       await loadMatches();
     } else {
-      state = AsyncValue.error(res.errorOrNull!.message, StackTrace.current);
+      state = AsyncValue.error(res.errorOrNull!, StackTrace.current);
     }
   }
 }
