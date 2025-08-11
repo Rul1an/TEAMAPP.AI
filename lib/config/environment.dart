@@ -151,8 +151,9 @@ enum Environment {
       return AppMode.standalone;
     }
 
-    // Default to SaaS mode for cross-device sync
-    return AppMode.saas;
+    // Default to Standalone mode for backward compatibility
+    // Changing this to SaaS would be a breaking change
+    return AppMode.standalone;
   }
 
   /// Check if app is running in coach-only mode (legacy compatibility)

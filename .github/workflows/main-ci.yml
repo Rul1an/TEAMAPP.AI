@@ -186,9 +186,15 @@ jobs:
           APP_MODE=${APP_MODE:-standalone}
           FLUTTER_ENV=${FLUTTER_ENV:-test}
 
-          # As a last resort, provide harmless local defaults for unit/widget tests
-          if [ -z "$SUPABASE_URL_VAL" ]; then SUPABASE_URL_VAL="http://localhost:54321"; fi
-          if [ -z "$SUPABASE_ANON_KEY_VAL" ]; then SUPABASE_ANON_KEY_VAL="public-anon-key"; fi
+          # Fail the build if required secrets are missing (prevents silent misconfig)
+          if [ -z "$SUPABASE_URL_VAL" ]; then
+            echo "ERROR: SUPABASE_URL_VAL is not set. Provide SUPABASE_URL_PREVIEW or SUPABASE_URL as a secret."
+            exit 1
+          fi
+          if [ -z "$SUPABASE_ANON_KEY_VAL" ]; then
+            echo "ERROR: SUPABASE_ANON_KEY_VAL is not set. Provide SUPABASE_ANON_KEY_PREVIEW or SUPABASE_ANON_KEY as a secret."
+            exit 1
+          fi
 
           # Run tests and capture output, but don't fail on exit code yet
           set +e  # Disable exit on error temporarily

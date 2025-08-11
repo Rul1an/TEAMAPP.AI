@@ -21,8 +21,7 @@ class ErrorSanitizer {
       'relation '
     ];
 
-    final containsSensitive =
-        blocked.any(lowered.contains) || lowered.contains('exception');
+    final containsSensitive = blocked.any(lowered.contains);
     if (containsSensitive) {
       if (kDebugMode) {
         // ignore: avoid_print
