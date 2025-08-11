@@ -50,21 +50,32 @@ class Player {
   // Private constructor for actual JSON deserialization
   Player._fromJson(Map<String, dynamic> json) {
     id = json['id'] as String? ?? '';
-    firstName = json['firstName'] as String;
-    lastName = json['lastName'] as String;
-    jerseyNumber = json['jerseyNumber'] as int;
+    firstName = (json['firstName'] as String?)?.trim() ?? '';
+    lastName = (json['lastName'] as String?)?.trim() ?? '';
+    jerseyNumber = _safeParseInt(json['jerseyNumber']);
 
     // Safe DateTime parsing - handle both String and DateTime types
     final birthDateValue = json['birthDate'];
-    birthDate = birthDateValue is DateTime
-        ? birthDateValue
-        : DateTime.parse(birthDateValue as String);
+    birthDate = _safeParseDate(birthDateValue) ?? DateTime.now();
 
-    position = Position.values.byName(json['position'] as String);
-    preferredFoot =
-        PreferredFoot.values.byName(json['preferredFoot'] as String);
-    height = (json['height'] as num).toDouble();
-    weight = (json['weight'] as num).toDouble();
+    // Safe enum parsing with fallback
+    position = _safeParseEnum<Position>(
+          source: json['position'],
+          values: Position.values,
+          nameSelector: (e) => e.name,
+          fallback: Position.midfielder,
+        ) ??
+        Position.midfielder;
+    preferredFoot = _safeParseEnum<PreferredFoot>(
+          source: json['preferredFoot'],
+          values: PreferredFoot.values,
+          nameSelector: (e) => e.name,
+          fallback: PreferredFoot.right,
+        ) ??
+        PreferredFoot.right;
+
+    height = _safeParseDouble(json['height']);
+    weight = _safeParseDouble(json['weight']);
     phoneNumber = json['phoneNumber'] as String?;
     email = json['email'] as String?;
     parentContact = json['parentContact'] as String?;
@@ -80,14 +91,10 @@ class Player {
 
     // Safe DateTime parsing for createdAt and updatedAt
     final createdAtValue = json['createdAt'];
-    createdAt = createdAtValue is DateTime
-        ? createdAtValue
-        : DateTime.parse(createdAtValue as String);
+    createdAt = _safeParseDate(createdAtValue) ?? DateTime.now();
 
     final updatedAtValue = json['updatedAt'];
-    updatedAt = updatedAtValue is DateTime
-        ? updatedAtValue
-        : DateTime.parse(updatedAtValue as String);
+    updatedAt = _safeParseDate(updatedAtValue) ?? createdAt;
   }
 
   String id = '';
@@ -186,3 +193,47 @@ Map<String, dynamic> _$PlayerToJson(Player instance) => <String, dynamic>{
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
     };
+
+int _safeParseInt(dynamic value) {
+  if (value == null) return 0;
+  if (value is int) return value;
+  if (value is double) return value.round();
+  if (value is String) return int.tryParse(value) ?? 0;
+  return 0;
+}
+
+double _safeParseDouble(dynamic value) {
+  if (value == null) return 0.0;
+  if (value is double) return value;
+  if (value is int) return value.toDouble();
+  if (value is String) return double.tryParse(value) ?? 0.0;
+  return 0.0;
+}
+
+DateTime? _safeParseDate(dynamic value) {
+  if (value == null) return null;
+  if (value is DateTime) return value;
+  if (value is String && value.trim().isNotEmpty) {
+    try {
+      return DateTime.parse(value);
+    } catch (_) {
+      return null;
+    }
+  }
+  return null;
+}
+
+TEnum? _safeParseEnum<TEnum>({
+  required dynamic source,
+  required List<TEnum> values,
+  required String Function(TEnum e) nameSelector,
+  required TEnum fallback,
+}) {
+  if (source is String) {
+    final normalized = source.trim().toLowerCase();
+    for (final v in values) {
+      if (nameSelector(v).toLowerCase() == normalized) return v;
+    }
+  }
+  return fallback;
+}
