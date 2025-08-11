@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import '../models/training_session/training_exercise.dart';
@@ -63,7 +64,11 @@ GoRouter createRouter(Ref ref) => GoRouter(
 
         return null;
       },
-      observers: [ref.read(analyticsRouteObserverProvider)],
+      observers: [
+        ref.read(analyticsRouteObserverProvider),
+        // 2025: Add Sentry observer to capture navigation breadcrumbs
+        SentryNavigatorObserver(),
+      ],
       routes: [
         // Auth route (outside of shell)
         GoRoute(

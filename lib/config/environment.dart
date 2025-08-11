@@ -49,34 +49,44 @@ enum Environment {
   /// Development Environment
   development._(
     name: 'Development',
-    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
-    supabaseAnonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+    // Read from build-time defines; provide safe local defaults for dev only
+    supabaseUrl: String.fromEnvironment(
+      'SUPABASE_URL',
+      defaultValue: 'http://localhost:54321',
+    ),
+    supabaseAnonKey: String.fromEnvironment(
+      'SUPABASE_ANON_KEY',
+      defaultValue: 'dev-anon-key',
+    ),
     appName: 'JO17 Tactical Manager',
     enableDebugFeatures: true,
     enablePerformanceLogging: true,
     logLevel: 'debug',
   ),
 
-  /// Test Environment - Uses development database with test isolation
+  /// Test Environment - Uses dev-like defaults unless overridden at build-time
   test._(
     name: 'Test',
-    supabaseUrl:
-        'https://ohdbsujaetmrztseqana.supabase.co', // Same as dev for now
-    supabaseAnonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8', // Same as dev
+    supabaseUrl: String.fromEnvironment(
+      'SUPABASE_URL',
+      defaultValue: 'http://localhost:54321',
+    ),
+    supabaseAnonKey: String.fromEnvironment(
+      'SUPABASE_ANON_KEY',
+      defaultValue: 'test-anon-key',
+    ),
     appName: 'JO17 Tactical Manager (Test)',
     enableDebugFeatures: true,
     enablePerformanceLogging: false,
     logLevel: 'info',
   ),
 
-  /// Production Environment
+  /// Production Environment – MUST be provided via --dart-define
   production._(
     name: 'Production',
-    supabaseUrl: 'https://ohdbsujaetmrztseqana.supabase.co',
+    supabaseUrl: String.fromEnvironment('SUPABASE_URL', defaultValue: ''),
     supabaseAnonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZGJzdWphZXRtcnp0c2VxYW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0NTgxNDcsImV4cCI6MjA2NjAzNDE0N30.J7Z9lKyr2nSNpxiwZRx4hJbq9_ZpwhLwtM0nvMCqqV8',
+        String.fromEnvironment('SUPABASE_ANON_KEY', defaultValue: ''),
     appName: 'JO17 Tactical Manager',
     enableDebugFeatures: false,
     enablePerformanceLogging: false,
@@ -141,7 +151,8 @@ enum Environment {
       return AppMode.standalone;
     }
 
-    // Default to standalone mode for single-user experience
+    // Default to Standalone mode for backward compatibility
+    // Changing this to SaaS would be a breaking change
     return AppMode.standalone;
   }
 
@@ -330,4 +341,14 @@ enum Environment {
         };
     }
   }
+}
+
+/// Require a dart-define to be provided at build time.
+/// Throws a clear error in production when missing to prevent silent misconfiguration.
+String requireDefine(String key) {
+  final value = String.fromEnvironment(key, defaultValue: '');
+  if (value.isEmpty) {
+    throw StateError('Missing required define: $key');
+  }
+  return value;
 }

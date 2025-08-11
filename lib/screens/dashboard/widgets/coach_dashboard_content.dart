@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/match.dart';
 import '../../../models/training_session/training_session.dart';
+import '../../../models/statistics.dart';
+import '../../../widgets/dashboard/statistics_card.dart';
 import 'upcoming_events_list.dart';
-import 'dashboard_stats_cards.dart';
 import 'performance_chart.dart';
 import 'quick_actions_section.dart';
 
@@ -21,6 +22,44 @@ class CoachDashboardContent extends StatelessWidget {
   final AsyncValue<List<Match>> upcomingMatchesAsync;
   final AsyncValue<List<TrainingSession>> trainingSessionsAsync;
 
+  Widget _buildStatsCards() {
+    // Create type-safe Statistics from legacy map
+    final stats = Statistics.fromLegacyMap(statistics);
+
+    return Row(
+      children: [
+        Expanded(
+          child: StatisticsCard(
+            title: 'Spelers',
+            value: '${stats.totalPlayers}',
+            icon: Icons.people,
+            color: Colors.blue,
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: StatisticsCard(
+            title: 'Wedstrijden',
+            value: '${stats.totalMatches}',
+            subtitle: 'Win: ${stats.winPercentageFormatted}',
+            icon: Icons.sports_soccer,
+            color: Colors.green,
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: StatisticsCard(
+            title: 'Trainingen',
+            value: '${stats.totalTrainings}',
+            subtitle: 'Aanwezigheid: ${stats.attendanceRateFormatted}',
+            icon: Icons.fitness_center,
+            color: Colors.orange,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +67,7 @@ class CoachDashboardContent extends StatelessWidget {
       children: [
         const QuickActionsSection(),
         const SizedBox(height: 24),
-        DashboardStatsCards(statistics: statistics),
+        _buildStatsCards(),
         const SizedBox(height: 24),
         _buildRows(context),
         const SizedBox(height: 24),

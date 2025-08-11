@@ -8,9 +8,9 @@ class PerformanceChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wins = statistics['wins'] as int;
-    final draws = statistics['draws'] as int;
-    final losses = statistics['losses'] as int;
+    final wins = statistics['wins'] as int? ?? 0;
+    final draws = statistics['draws'] as int? ?? 0;
+    final losses = statistics['losses'] as int? ?? 0;
     final total = wins + draws + losses;
 
     if (total == 0) {
@@ -82,9 +82,9 @@ class PerformanceChart extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 4),
-                      Text('Voor: ${statistics['goalsFor']}'),
-                      Text('Tegen: ${statistics['goalsAgainst']}'),
-                      Text('Saldo: ${statistics['goalDifference']}'),
+                      Text('Voor: ${statistics['goalsFor'] ?? 0}'),
+                      Text('Tegen: ${statistics['goalsAgainst'] ?? 0}'),
+                      Text('Saldo: ${statistics['goalDifference'] ?? 0}'),
                     ],
                   ),
                 ],

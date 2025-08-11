@@ -16,6 +16,12 @@ concurrency:
 env:
   FLUTTER_VERSION: '3.32.x'
   NODE_VERSION: '20'
+  # Optional preview secrets (if defined in repo secrets)
+  SUPABASE_URL_PREVIEW: ${{ secrets.SUPABASE_URL_PREVIEW }}
+  SUPABASE_ANON_KEY_PREVIEW: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}
+  # Base secrets (may be empty on forks)
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
 jobs:
   # Phase 1: Essential Quality Checks
@@ -30,6 +36,9 @@ jobs:
       pull-requests: write # Required for PR comments
     outputs:
       should-deploy: ${{ steps.changes.outputs.should-deploy }}
+    defaults:
+      run:
+        working-directory: .
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142  # v2.7.0
@@ -50,7 +59,7 @@ jobs:
               - 'lib/**'
               - 'web/**'
               - 'pubspec.yaml'
-              - 'netlify.toml'
+              - 'analysis_options.yaml'
               - '.github/workflows/main-ci.yml'
 
       - name: 📱 Setup Flutter
@@ -66,7 +75,7 @@ jobs:
           path: |
             ~/.pub-cache
             build/
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
 
@@ -159,14 +168,42 @@ jobs:
 
           echo "::group::🧪 Flutter Test (Verbose)"
           echo "Running flutter test with verbose output..."
-          echo "Command: flutter test --coverage --reporter=failures-only"
+          echo "Command: flutter test --coverage --reporter=failures-only (unit/widget only)"
 
           # Create test results directory
           mkdir -p test-results
 
+          # Build list of unit/widget tests (exclude integration, security, connectivity, e2e suites)
+          mapfile -t TEST_FILES < <(git ls-files 'test/**_test.dart' \
+            | grep -v '^test/integration/' \
+            | grep -v '^test/security/' \
+            | grep -v '^test/connectivity/' \
+            | grep -v '^test/e2e/')
+
+          SUPABASE_URL_VAL=${SUPABASE_URL_PREVIEW:-$SUPABASE_URL}
+          SUPABASE_ANON_KEY_VAL=${SUPABASE_ANON_KEY_PREVIEW:-$SUPABASE_ANON_KEY}
+          # Default test mode app settings if not provided
+          APP_MODE=${APP_MODE:-standalone}
+          FLUTTER_ENV=${FLUTTER_ENV:-test}
+
+          # Fail the build if required secrets are missing (prevents silent misconfig)
+          if [ -z "$SUPABASE_URL_VAL" ]; then
+            echo "ERROR: SUPABASE_URL_VAL is not set. Provide SUPABASE_URL_PREVIEW or SUPABASE_URL as a secret."
+            exit 1
+          fi
+          if [ -z "$SUPABASE_ANON_KEY_VAL" ]; then
+            echo "ERROR: SUPABASE_ANON_KEY_VAL is not set. Provide SUPABASE_ANON_KEY_PREVIEW or SUPABASE_ANON_KEY as a secret."
+            exit 1
+          fi
+
           # Run tests and capture output, but don't fail on exit code yet
           set +e  # Disable exit on error temporarily
-          flutter test --coverage --reporter=failures-only > test-results/test-results.txt 2>&1
+          flutter test --coverage --reporter=failures-only \
+            --dart-define=APP_MODE="${APP_MODE}" \
+            --dart-define=FLUTTER_ENV="${FLUTTER_ENV}" \
+            --dart-define=SUPABASE_URL="${SUPABASE_URL_VAL}" \
+            --dart-define=SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY_VAL}" \
+            "${TEST_FILES[@]}" > test-results/test-results.txt 2>&1
           TEST_EXIT_CODE=$?
           set -e  # Re-enable exit on error
 
@@ -333,7 +370,9 @@ jobs:
       actions: read
     environment:
       name: production
-      url: ${{ steps.deploy.outputs.deploy-url }}
+    defaults:
+      run:
+        working-directory: .
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@v2
@@ -356,13 +395,18 @@ jobs:
           path: |
             ~/.pub-cache
             build/
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
 
       - name: 🏗️ Build Web
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           flutter pub get
-          flutter build web --release --no-web-resources-cdn \
-            --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
+          # 2025: HTML renderer removed; default CanvasKit is fine. Provide dart-defines for environment secrets.
+          flutter build web --release \
+            --dart-define=SUPABASE_URL=${SUPABASE_URL} \
+            --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
 
           # Add modern Netlify _headers file (2025 best practice)
           echo "Creating Netlify _headers file with COMPLETE Flutter CanvasKit CSP support..."
@@ -476,7 +520,9 @@ jobs:
       pull-requests: write  # Required for PR comments
     environment:
       name: preview-pr-${{ github.event.number }}
-      url: ${{ steps.deploy-preview.outputs.deploy-url }}
+    defaults:
+      run:
+        working-directory: .
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
@@ -489,9 +535,14 @@ jobs:
           cache: true
 
       - name: 🏗️ Build Web Preview
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           flutter pub get
-          flutter build web --release
+          flutter build web --release \
+            --dart-define=SUPABASE_URL=${SUPABASE_URL} \
+            --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
 
       - name: 🔍 Deploy Preview
         id: deploy-preview

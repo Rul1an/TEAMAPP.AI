@@ -40,7 +40,7 @@ Keep commits small (< 400 LOC diff), push after each checklist item, CI must sta
 - [ ] S3 widget tests updated & passing
 - [ ] S4 analyzer 0 issues
 - [ ] S5 manual QA ok
-- [ ] S6 PR merged into `main`
+- [x] S6 PR merged into `main`
 
 ---
 *Document generated via Cursor AI assistant.*

@@ -9,7 +9,11 @@ import 'package:jo17_tactical_manager/services/organization_service.dart';
 
 void main() {
   group('OrganizationService', () {
-    final service = OrganizationService();
+    late OrganizationService service;
+
+    setUp(() {
+      service = OrganizationService();
+    });
 
     test(
       'createOrganization returns Organization with provided values',
