@@ -19,6 +19,9 @@ env:
   # Optional preview secrets (if defined in repo secrets)
   SUPABASE_URL_PREVIEW: ${{ secrets.SUPABASE_URL_PREVIEW }}
   SUPABASE_ANON_KEY_PREVIEW: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}
+  # Base secrets (may be empty on forks)
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
 jobs:
   # Phase 1: Essential Quality Checks
@@ -182,6 +185,10 @@ jobs:
           # Default test mode app settings if not provided
           APP_MODE=${APP_MODE:-standalone}
           FLUTTER_ENV=${FLUTTER_ENV:-test}
+
+          # As a last resort, provide harmless local defaults for unit/widget tests
+          if [ -z "$SUPABASE_URL_VAL" ]; then SUPABASE_URL_VAL="http://localhost:54321"; fi
+          if [ -z "$SUPABASE_ANON_KEY_VAL" ]; then SUPABASE_ANON_KEY_VAL="public-anon-key"; fi
 
           # Run tests and capture output, but don't fail on exit code yet
           set +e  # Disable exit on error temporarily
