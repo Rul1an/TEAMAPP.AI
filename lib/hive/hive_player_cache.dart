@@ -42,33 +42,37 @@ class HivePlayerCache {
         'players': players.map(_playerToJson).toList(),
       };
 
-  static Player _playerFromJson(Map<String, dynamic> json) => Player()
-    ..id = json['id'] as String? ?? ''
-    ..firstName = json['first_name'] as String? ?? ''
-    ..lastName = json['last_name'] as String? ?? ''
-    ..jerseyNumber = json['jersey_number'] as int? ?? 0
-    ..birthDate =
-        DateTime.tryParse(json['birth_date'] as String? ?? '') ?? DateTime.now()
-    ..position = _positionFromString(json['position'] as String?)
-    ..preferredFoot = _footFromString(json['preferred_foot'] as String?)
-    ..height = (json['height_cm'] as num?)?.toDouble() ?? 0
-    ..weight = (json['weight_kg'] as num?)?.toDouble() ?? 0
-    ..phoneNumber = json['phone'] as String?
-    ..email = json['email'] as String?
-    ..parentContact = json['parent_contact'] as String?
-    ..matchesPlayed = json['matches_played'] as int? ?? 0
-    ..matchesInSelection = json['matches_in_selection'] as int? ?? 0
-    ..minutesPlayed = json['minutes_played'] as int? ?? 0
-    ..goals = json['goals'] as int? ?? 0
-    ..assists = json['assists'] as int? ?? 0
-    ..yellowCards = json['yellow_cards'] as int? ?? 0
-    ..redCards = json['red_cards'] as int? ?? 0
-    ..trainingsAttended = json['trainings_attended'] as int? ?? 0
-    ..trainingsTotal = json['trainings_total'] as int? ?? 0
-    ..createdAt =
-        DateTime.tryParse(json['created_at'] as String? ?? '') ?? DateTime.now()
-    ..updatedAt = DateTime.tryParse(json['updated_at'] as String? ?? '') ??
-        DateTime.now();
+  static Player _playerFromJson(Map<String, dynamic> json) {
+    return Player.fromJson({
+      'id': json['id'] as String? ?? '',
+      'firstName': json['first_name'] as String? ?? '',
+      'lastName': json['last_name'] as String? ?? '',
+      'jerseyNumber': json['jersey_number'] ?? 0,
+      'birthDate':
+          json['birth_date'] as String? ?? DateTime.now().toIso8601String(),
+      'position': (json['position'] as String?)?.toLowerCase() ?? 'midfielder',
+      'preferredFoot':
+          (json['preferred_foot'] as String?)?.toLowerCase() ?? 'right',
+      'height': (json['height_cm'] as num?)?.toDouble() ?? 0.0,
+      'weight': (json['weight_kg'] as num?)?.toDouble() ?? 0.0,
+      'phoneNumber': json['phone'] as String?,
+      'email': json['email'] as String?,
+      'parentContact': json['parent_contact'] as String?,
+      'matchesPlayed': json['matches_played'] as int? ?? 0,
+      'matchesInSelection': json['matches_in_selection'] as int? ?? 0,
+      'minutesPlayed': json['minutes_played'] as int? ?? 0,
+      'goals': json['goals'] as int? ?? 0,
+      'assists': json['assists'] as int? ?? 0,
+      'yellowCards': json['yellow_cards'] as int? ?? 0,
+      'redCards': json['red_cards'] as int? ?? 0,
+      'trainingsAttended': json['trainings_attended'] as int? ?? 0,
+      'trainingsTotal': json['trainings_total'] as int? ?? 0,
+      'createdAt':
+          json['created_at'] as String? ?? DateTime.now().toIso8601String(),
+      'updatedAt':
+          json['updated_at'] as String? ?? DateTime.now().toIso8601String(),
+    });
+  }
 
   static Map<String, dynamic> _playerToJson(Player p) => <String, dynamic>{
         'id': p.id,
@@ -96,16 +100,7 @@ class HivePlayerCache {
         'updated_at': p.updatedAt.toIso8601String(),
       }..removeWhere((_, v) => v == null);
 
-  static Position _positionFromString(String? s) => Position.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => Position.defender,
-      );
-
-  static PreferredFoot _footFromString(String? s) =>
-      PreferredFoot.values.firstWhere(
-        (e) => e.name == (s ?? '').toLowerCase(),
-        orElse: () => PreferredFoot.right,
-      );
+  // Note: legacy helpers removed; now using Player.fromJson for safer parsing
 
   // endregion ---------------------------------------------------------------
 }

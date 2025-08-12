@@ -40,6 +40,16 @@ enum PreferredFoot {
 
 class Player {
   Player() {
+    // Initialize defaults to avoid LateInitializationError during serialization
+    id = '';
+    firstName = '';
+    lastName = '';
+    jerseyNumber = 0;
+    birthDate = DateTime.now();
+    position = Position.midfielder;
+    preferredFoot = PreferredFoot.right;
+    height = 0.0;
+    weight = 0.0;
     createdAt = DateTime.now();
     updatedAt = DateTime.now();
   }
@@ -164,7 +174,15 @@ class Player {
   }
 
   // JSON serialization
-  Map<String, dynamic> toJson() => _$PlayerToJson(this);
+  Map<String, dynamic> toJson() {
+    try {
+      return _$PlayerToJson(this);
+    } catch (e) {
+      throw StateError(
+        'Player object is not fully initialized before toJson(): $e',
+      );
+    }
+  }
 }
 
 // Manual toJson implementation to avoid build_runner issues

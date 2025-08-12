@@ -105,9 +105,38 @@ class PlayerRepositoryImpl implements PlayerRepository {
         // Generate a unique ID if not set; prefer UUID v4 to avoid collisions
         final Player playerToAdd = player.id.isEmpty
             ? (() {
-                final clone = Player.fromJson(player.toJson());
-                clone.id = const Uuid().v4();
-                return clone;
+                try {
+                  final clone = Player.fromJson(player.toJson());
+                  clone.id = const Uuid().v4();
+                  return clone;
+                } catch (_) {
+                  // If toJson fails due to uninitialized fields, construct safely
+                  final newPlayer = Player()
+                    ..id = const Uuid().v4()
+                    ..firstName = player.firstName
+                    ..lastName = player.lastName
+                    ..jerseyNumber = player.jerseyNumber
+                    ..birthDate = player.birthDate
+                    ..position = player.position
+                    ..preferredFoot = player.preferredFoot
+                    ..height = player.height
+                    ..weight = player.weight
+                    ..phoneNumber = player.phoneNumber
+                    ..email = player.email
+                    ..parentContact = player.parentContact
+                    ..matchesPlayed = player.matchesPlayed
+                    ..matchesInSelection = player.matchesInSelection
+                    ..minutesPlayed = player.minutesPlayed
+                    ..goals = player.goals
+                    ..assists = player.assists
+                    ..yellowCards = player.yellowCards
+                    ..redCards = player.redCards
+                    ..trainingsAttended = player.trainingsAttended
+                    ..trainingsTotal = player.trainingsTotal
+                    ..createdAt = player.createdAt
+                    ..updatedAt = player.updatedAt;
+                  return newPlayer;
+                }
               })()
             : player;
         cached.add(playerToAdd);

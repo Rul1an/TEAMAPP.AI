@@ -74,44 +74,36 @@ class SupabasePlayerDataSource {
   }
 
   static Player _fromRow(Map<String, dynamic> row) {
-    final p = Player()
-      ..id = row['id'] as String? ?? ''
-      ..firstName = row['first_name'] as String? ?? ''
-      ..lastName = row['last_name'] as String? ?? ''
-      ..jerseyNumber = (row['jersey_number'] ?? 0) as int
-      ..birthDate = DateTime.parse(
-        row['birth_date'] as String? ?? DateTime.now().toIso8601String(),
-      )
-      ..position = Position.values.firstWhere(
-        (e) => e.name == (row['position'] as String? ?? '').toLowerCase(),
-        orElse: () => Position.defender,
-      )
-      ..preferredFoot = PreferredFoot.values.firstWhere(
-        (e) => e.name == (row['preferred_foot'] as String? ?? '').toLowerCase(),
-        orElse: () => PreferredFoot.right,
-      )
-      ..height = (row['height_cm'] as num?)?.toDouble() ?? 0
-      ..weight = (row['weight_kg'] as num?)?.toDouble() ?? 0
-      ..phoneNumber = row['phone'] as String?
-      ..email = row['email'] as String?
-      ..parentContact = row['parent_contact'] as String?
-      ..matchesPlayed = row['matches_played'] as int? ?? 0
-      ..matchesInSelection = row['matches_in_selection'] as int? ?? 0
-      ..minutesPlayed = row['minutes_played'] as int? ?? 0
-      ..goals = row['goals'] as int? ?? 0
-      ..assists = row['assists'] as int? ?? 0
-      ..yellowCards = row['yellow_cards'] as int? ?? 0
-      ..redCards = row['red_cards'] as int? ?? 0
-      ..trainingsAttended = row['trainings_attended'] as int? ?? 0
-      ..trainingsTotal = row['trainings_total'] as int? ?? 0
-      ..createdAt = DateTime.parse(
-        row['created_at'] as String? ?? DateTime.now().toIso8601String(),
-      )
-      ..updatedAt = DateTime.parse(
-        row['updated_at'] as String? ?? DateTime.now().toIso8601String(),
-      );
-
-    return p;
+    // Prefer using domain JSON constructor for consistency and type safety
+    return Player.fromJson({
+      'id': row['id'] as String? ?? '',
+      'firstName': row['first_name'] as String? ?? '',
+      'lastName': row['last_name'] as String? ?? '',
+      'jerseyNumber': row['jersey_number'] ?? 0,
+      'birthDate':
+          row['birth_date'] as String? ?? DateTime.now().toIso8601String(),
+      'position': (row['position'] as String?)?.toLowerCase() ?? 'midfielder',
+      'preferredFoot':
+          (row['preferred_foot'] as String?)?.toLowerCase() ?? 'right',
+      'height': (row['height_cm'] as num?)?.toDouble() ?? 0.0,
+      'weight': (row['weight_kg'] as num?)?.toDouble() ?? 0.0,
+      'phoneNumber': row['phone'] as String?,
+      'email': row['email'] as String?,
+      'parentContact': row['parent_contact'] as String?,
+      'matchesPlayed': row['matches_played'] as int? ?? 0,
+      'matchesInSelection': row['matches_in_selection'] as int? ?? 0,
+      'minutesPlayed': row['minutes_played'] as int? ?? 0,
+      'goals': row['goals'] as int? ?? 0,
+      'assists': row['assists'] as int? ?? 0,
+      'yellowCards': row['yellow_cards'] as int? ?? 0,
+      'redCards': row['red_cards'] as int? ?? 0,
+      'trainingsAttended': row['trainings_attended'] as int? ?? 0,
+      'trainingsTotal': row['trainings_total'] as int? ?? 0,
+      'createdAt':
+          row['created_at'] as String? ?? DateTime.now().toIso8601String(),
+      'updatedAt':
+          row['updated_at'] as String? ?? DateTime.now().toIso8601String(),
+    });
   }
 
   static Map<String, dynamic> _toRow(Player p) => <String, dynamic>{
