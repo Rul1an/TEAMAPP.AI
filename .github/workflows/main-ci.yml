@@ -676,4 +676,23 @@ jobs:
 
       - name: 🚀 Push Migrations
         run: |
-          supabase db push
+          set +e
+          echo "Running supabase db push..."
+          supabase db push 2>&1 | tee supabase-migrate.log
+          STATUS=$?
+          set -e
+          if [ $STATUS -ne 0 ]; then
+            echo "\n❌ Supabase migration push failed. Inspecting error..."
+            if grep -qi "not found in local migrations directory" supabase-migrate.log; then
+              echo "\n🚨 Detected migration history mismatch between remote DB and local migrations."
+              echo "\nHow to fix locally (recommended):"
+              echo "  1) supabase login"
+              echo "  2) supabase link --project-ref $SUPABASE_PROJECT_REF"
+              echo "  3) supabase db pull   # sync local schema/migrations with remote"
+              echo "  4) Commit and push the updated files"
+              echo "\nIf migrations were reverted/renamed, you may need to repair statuses:"
+              echo "  supabase migration repair --status reverted <MIGRATION_IDS_FROM_ERROR>"
+              echo "\nThe job will now fail to avoid accidental drift."
+            fi
+            exit $STATUS
+          fi
