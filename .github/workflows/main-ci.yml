@@ -415,6 +415,50 @@ jobs:
             Referrer-Policy: strict-origin-when-cross-origin
           EOF
 
+          # Add Netlify _redirects to harden endpoint exposure and support SPA fallback
+          echo "Creating Netlify _redirects with denylist + SPA fallback..."
+          cat << 'EOF' > build/web/_redirects
+          # Deny sensitive well-known endpoints (security scanners)
+          /admin        /404.html 404
+          /debug        /404.html 404
+          /swagger      /404.html 404
+          /api-docs     /404.html 404
+          /graphql      /404.html 404
+          /api/*        /404.html 404
+          /rest/*       /404.html 404
+          /rpc/*        /404.html 404
+
+          # SPA fallback for valid app routes
+          /*            /index.html 200
+          EOF
+
+          # Minimal 404 page (avoid 200 on unknown endpoints)
+          cat << 'EOF' > build/web/404.html
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>Page not found</title>
+            <style>
+              body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:#0b1020;color:#e6e8ef;display:flex;align-items:center;justify-content:center;height:100vh}
+              .card{max-width:540px;padding:32px;border:1px solid #1f2540;border-radius:12px;background:#0f1530;box-shadow:0 4px 24px rgba(0,0,0,.35)}
+              h1{margin:0 0 8px;font-size:28px}
+              p{margin:0 0 16px;opacity:.9}
+              a{color:#8ab4ff;text-decoration:none}
+              a:hover{text-decoration:underline}
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <h1>404 — Page not found</h1>
+              <p>The page you are looking for does not exist.</p>
+              <p><a href="/">Go to dashboard</a></p>
+            </div>
+          </body>
+          </html>
+          EOF
+
           # Advanced Build Analytics (2025 best practice)
           echo "::group::Build Analytics & Performance Tracking"
 
