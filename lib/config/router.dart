@@ -47,22 +47,28 @@ GoRouter createRouter(Ref ref) => GoRouter(
           return null; // Allow all other routes in standalone mode
         }
 
-        // Demo and SaaS mode authentication flows
-        final isLoggedIn = ref.read(isLoggedInProvider);
-        final isDemoMode = ref.read(demoModeProvider).isActive;
-        final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
+        // Demo and SaaS mode authentication flows (null-safe)
+        try {
+          final isLoggedIn = ref.read(isLoggedInProvider);
+          final isDemoMode = ref.read(demoModeProvider).isActive;
+          final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
 
-        // Always allow access to auth page
-        if (isOnAuthPage) {
+          // Always allow access to auth page
+          if (isOnAuthPage) {
+            return null;
+          }
+
+          // If not logged in and not in demo mode, redirect to auth
+          if (!isLoggedIn && !isDemoMode) {
+            return '/auth';
+          }
+
           return null;
+        } catch (_) {
+          // Providers may not be ready during very early router boot; allow auth as fallback
+          final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
+          return isOnAuthPage ? null : '/auth';
         }
-
-        // If not logged in and not in demo mode, redirect to auth
-        if (!isLoggedIn && !isDemoMode) {
-          return '/auth';
-        }
-
-        return null;
       },
       observers: [
         ref.read(analyticsRouteObserverProvider),
@@ -141,15 +147,17 @@ GoRouter createRouter(Ref ref) => GoRouter(
                 ),
                 GoRoute(
                   path: 'attendance/:id',
-                  builder: (context, state) => TrainingAttendanceScreen(
-                    trainingId: state.pathParameters['id']!,
-                  ),
+                  builder: (context, state) {
+                    final trainingId = state.pathParameters['id'] ?? '';
+                    return TrainingAttendanceScreen(trainingId: trainingId);
+                  },
                 ),
                 GoRoute(
                   path: ':id/edit',
-                  builder: (context, state) => EditTrainingScreen(
-                    trainingId: state.pathParameters['id']!,
-                  ),
+                  builder: (context, state) {
+                    final trainingId = state.pathParameters['id'] ?? '';
+                    return EditTrainingScreen(trainingId: trainingId);
+                  },
                 ),
               ],
             ),
