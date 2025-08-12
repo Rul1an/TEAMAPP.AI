@@ -20,9 +20,8 @@ void main() {
       expect(MainScaffold.routeToNavIndex('/players'), equals(4),
           reason: 'Players route should map to index 4');
 
-      expect(MainScaffold.routeToNavIndex('/insights'), equals(4),
-          reason:
-              'Insights route should map to index 4 (same as current UI structure)');
+      expect(MainScaffold.routeToNavIndex('/insights'), equals(5),
+          reason: 'Insights route should map to index 5');
 
       // Test dashboard (should remain unchanged)
       expect(MainScaffold.routeToNavIndex('/dashboard'), equals(0),
@@ -43,9 +42,9 @@ void main() {
       // Test lineup routes (should map to matches index 3)
       expect(MainScaffold.routeToNavIndex('/lineup'), equals(3));
 
-      // Test analytics routes (should map to insights index 4)
-      expect(MainScaffold.routeToNavIndex('/analytics'), equals(4));
-      expect(MainScaffold.routeToNavIndex('/svs'), equals(4));
+      // Test analytics routes (should map to insights index 5)
+      expect(MainScaffold.routeToNavIndex('/analytics'), equals(5));
+      expect(MainScaffold.routeToNavIndex('/svs'), equals(5));
     });
 
     test('all navigation indices are valid', () {
@@ -64,9 +63,9 @@ void main() {
         final index = MainScaffold.routeToNavIndex(route);
         expect(index, greaterThanOrEqualTo(0),
             reason: 'Route $route should have non-negative index');
-        expect(index, lessThanOrEqualTo(4),
+        expect(index, lessThanOrEqualTo(5),
             reason:
-                'Route $route should have index <= 4 (max navigation items)');
+                'Route $route should have index <= 5 (max navigation items)');
       }
     });
   });

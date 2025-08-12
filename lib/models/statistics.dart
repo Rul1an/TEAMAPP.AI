@@ -1,4 +1,4 @@
-/// 2025 Best Practice: Type-safe Statistics model with safe defaults
+/// Type-safe Statistics model with safe defaults
 /// Simple immutable class without Freezed to avoid conflicts
 class Statistics {
   const Statistics({
@@ -26,7 +26,7 @@ class Statistics {
   final double attendanceRate;
 
   /// Create Statistics from legacy Map<String, dynamic>
-  /// 2025 Best Practice: Safe parsing with null protection
+  /// Safe parsing with null protection
   factory Statistics.fromLegacyMap(Map<String, dynamic>? map) {
     if (map == null || map.isEmpty) {
       return const Statistics(); // Returns defaults
@@ -129,7 +129,7 @@ class Statistics {
   }
 }
 
-// 2025 Best Practice: Defensive parsing with proper null safety
+// Defensive parsing with proper null safety
 int _safeParseInt(dynamic value) {
   if (value == null) return 0;
   if (value is int) return value;
@@ -146,7 +146,7 @@ double _safeParseDouble(dynamic value) {
   return 0.0;
 }
 
-/// 2025 Best Practice: Extension methods for safe formatting
+/// Extension methods for safe formatting
 extension StatisticsFormatting on Statistics {
   /// Safely format percentage with specified decimal places
   String formatPercentage(double value, {int decimals = 1}) {

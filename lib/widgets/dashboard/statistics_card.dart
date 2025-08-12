@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/statistics.dart';
 
-/// 2025 Best Practice: Type-safe Statistics Card Widget
+/// Type-safe Statistics Card Widget
 class StatisticsCard extends StatelessWidget {
   const StatisticsCard({
     required this.title,
@@ -58,7 +58,7 @@ class StatisticsCard extends StatelessWidget {
   }
 }
 
-/// 2025 Best Practice: Statistics Grid Widget with full type safety
+/// Statistics Grid Widget with full type safety
 class StatisticsGrid extends StatelessWidget {
   const StatisticsGrid({
     required this.statistics,
@@ -123,7 +123,7 @@ class StatisticsGrid extends StatelessWidget {
     );
   }
 
-  /// 2025 Best Practice: Color-coded win percentage indicator
+  /// Color-coded win percentage indicator
   Color _getWinPercentageColor(double winPercentage) {
     if (winPercentage >= 70) return Colors.green;
     if (winPercentage >= 50) return Colors.amber;
@@ -132,7 +132,7 @@ class StatisticsGrid extends StatelessWidget {
   }
 }
 
-/// 2025 Best Practice: Loading state for statistics
+/// Loading state for statistics
 class StatisticsLoadingGrid extends StatelessWidget {
   const StatisticsLoadingGrid({super.key});
 
@@ -173,7 +173,7 @@ class StatisticsLoadingGrid extends StatelessWidget {
   }
 }
 
-/// 2025 Best Practice: Error state for statistics
+/// Error state for statistics
 class StatisticsErrorGrid extends StatelessWidget {
   const StatisticsErrorGrid({
     required this.error,

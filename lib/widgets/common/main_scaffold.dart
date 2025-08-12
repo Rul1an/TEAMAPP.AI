@@ -237,11 +237,8 @@ class MainScaffold extends ConsumerWidget {
 
   /// Public helper for testing: maps a route string to the nav index used
   /// by both NavigationRail and NavigationBar.
-  /// 🚨 CRITICAL FIX 2025: Fixed navigation mapping to match EXACT UI destination order
-  /// Previously, the mapping didn't mirror UI destination order which broke tests
-  /// and highlighted the wrong tab. Now mapping is:
-  /// 0: Dashboard, 1: Season/Annual Planning, 2: Training, 3: Matches,
-  /// 4: Players, 5: Insights
+  /// Mapping aligned with test expectations and UI structure:
+  /// 0: Dashboard, 1: Season/Annual, 2: Training, 3: Matches, 4: Players, 5: Insights
   static int routeToNavIndex(String currentRoute) {
     if (kDebugMode) {
       print('🔍 Route mapping: $currentRoute');
@@ -258,7 +255,7 @@ class MainScaffold extends ConsumerWidget {
     if (currentRoute.startsWith('/season') ||
         currentRoute.startsWith('/annual-planning')) {
       if (kDebugMode) {
-        print('🔍 Mapped to index 1 (Season/Annual Planning)');
+        print('🔍 Mapped to index 1 (Season/Annual)');
       }
       return 1;
     }

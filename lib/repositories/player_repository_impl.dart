@@ -1,6 +1,9 @@
 // Dart imports:
 import 'dart:io';
 
+// Package imports:
+import 'package:uuid/uuid.dart';
+
 // Project imports:
 import '../core/result.dart';
 import '../data/supabase_player_data_source.dart';
@@ -99,11 +102,11 @@ class PlayerRepositoryImpl implements PlayerRepository {
       // In standalone mode, fallback to cache-only operation
       try {
         final cached = await _tryGetCached() ?? <Player>[];
-        // Generate a unique ID if not set without mutating the original
+        // Generate a unique ID if not set; prefer UUID v4 to avoid collisions
         final Player playerToAdd = player.id.isEmpty
             ? (() {
                 final clone = Player.fromJson(player.toJson());
-                clone.id = DateTime.now().millisecondsSinceEpoch.toString();
+                clone.id = const Uuid().v4();
                 return clone;
               })()
             : player;

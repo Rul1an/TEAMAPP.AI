@@ -74,12 +74,21 @@ class Training {
   // Private constructor for actual JSON deserialization
   Training._fromJson(Map<String, dynamic> json) {
     id = json['id'] as String? ?? '';
-    date = DateTime.parse(json['date'] as String);
-    duration = json['duration'] as int;
+
+    // Date parsing with fallback
+    final dateRaw = json['date'] as String?;
+    date = _safeParseDate(dateRaw) ?? DateTime.now();
+
+    // Duration and trainingNumber with safe defaults
+    duration = (json['duration'] as int?) ?? 0;
     trainingNumber = json['trainingNumber'] as int? ?? 1;
-    focus = TrainingFocus.values.byName(json['focus'] as String);
-    intensity = TrainingIntensity.values.byName(json['intensity'] as String);
-    status = TrainingStatus.values.byName(json['status'] as String);
+
+    // Enums parsed case-insensitief met veilige fallback
+    focus = _safeParseFocus(json['focus']) ?? TrainingFocus.technical;
+    intensity =
+        _safeParseIntensity(json['intensity']) ?? TrainingIntensity.medium;
+    status = _safeParseStatus(json['status']) ?? TrainingStatus.planned;
+
     location = json['location'] as String?;
     description = json['description'] as String?;
     objectives = json['objectives'] as String?;
@@ -92,8 +101,10 @@ class Training {
     latePlayerIds = List<String>.from(json['latePlayerIds'] as List? ?? []);
     coachNotes = json['coachNotes'] as String?;
     performanceNotes = json['performanceNotes'] as String?;
-    createdAt = DateTime.parse(json['createdAt'] as String);
-    updatedAt = DateTime.parse(json['updatedAt'] as String);
+
+    // Timestamps with safe parsing
+    createdAt = _safeParseDate(json['createdAt'] as String?) ?? DateTime.now();
+    updatedAt = _safeParseDate(json['updatedAt'] as String?) ?? DateTime.now();
   }
 
   String id = '';
@@ -157,3 +168,47 @@ Map<String, dynamic> _$TrainingToJson(Training instance) => <String, dynamic>{
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
     };
+
+// -------- Safe parsing helpers -------------------------------------------------
+
+DateTime? _safeParseDate(String? value) {
+  if (value == null || value.isEmpty) return null;
+  try {
+    return DateTime.parse(value);
+  } catch (_) {
+    return null;
+  }
+}
+
+TrainingFocus? _safeParseFocus(dynamic value) {
+  final s = _normalizeEnum(value);
+  if (s == null) return null;
+  for (final v in TrainingFocus.values) {
+    if (v.name.toLowerCase() == s) return v;
+  }
+  return null;
+}
+
+TrainingIntensity? _safeParseIntensity(dynamic value) {
+  final s = _normalizeEnum(value);
+  if (s == null) return null;
+  for (final v in TrainingIntensity.values) {
+    if (v.name.toLowerCase() == s) return v;
+  }
+  return null;
+}
+
+TrainingStatus? _safeParseStatus(dynamic value) {
+  final s = _normalizeEnum(value);
+  if (s == null) return null;
+  for (final v in TrainingStatus.values) {
+    if (v.name.toLowerCase() == s) return v;
+  }
+  return null;
+}
+
+String? _normalizeEnum(dynamic value) {
+  if (value == null) return null;
+  if (value is String) return value.trim().toLowerCase();
+  return value.toString().trim().toLowerCase();
+}

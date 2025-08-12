@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
@@ -96,9 +97,8 @@ class AuthService {
 
   // Helper to get redirect URL based on platform
   String _getRedirectUrl() {
-    // For web, use the current origin
-    if (identical(0, 0.0)) {
-      // Check if running on web
+    // For web, use hosted app callback
+    if (kIsWeb) {
       return 'https://app.jo17manager.nl/auth/callback';
     }
     // For mobile, use deep link

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jo17_tactical_manager/models/statistics.dart';
 
-/// 2025 Best Practice: Comprehensive tests for type-safe Statistics model
+/// Best Practice: Comprehensive tests for type-safe Statistics model
 void main() {
-  group('Statistics Model - 2025 Type Safety Tests', () {
+  group('Statistics Model - Type Safety Tests', () {
     test('should create Statistics with default values', () {
       const stats = Statistics();
 
