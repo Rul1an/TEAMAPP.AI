@@ -103,6 +103,7 @@ class SupabaseTrainingDataSource {
       'date': dateValue,
       'duration': r['duration'] as int? ?? 0,
       'trainingNumber': r['training_number'] as int? ?? 1,
+      // Keep original casing so enum byName() matches
       'focus': (r['focus'] as String? ?? 'technical'),
       'intensity': (r['intensity'] as String? ?? 'medium'),
       'status': (r['status'] as String? ?? 'planned'),
