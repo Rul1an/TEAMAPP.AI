@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 /// 🚨 UI Error Handler Service (2025 Best Practices)
 ///
@@ -277,13 +278,21 @@ class UIErrorHandler {
       }
       print('════════════════════════════════════════');
     }
+
+    // Forward to Sentry when available (non-debug)
+    if (kReleaseMode) {
+      Sentry.captureException(
+        error,
+        stackTrace: stack,
+        withScope: (scope) => scope.setTag('ui_error_context', context),
+      );
+    }
   }
 
   /// Send to crash reporting service (implement your preferred service)
   static void _sendToCrashReporting(FlutterErrorDetails details) {
-    // TODO(error-handler): Implement Firebase Crashlytics, Sentry, or other service
-    // Example:
-    // FirebaseCrashlytics.instance.recordFlutterError(details);
+    // Unified crash reporting via Sentry when DSN is configured
+    Sentry.captureException(details.exception, stackTrace: details.stack);
   }
 
   /// Trigger app refresh

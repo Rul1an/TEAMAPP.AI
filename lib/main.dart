@@ -18,6 +18,8 @@ import 'config/router.dart';
 import 'config/theme.dart';
 import 'services/runtime_security_service.dart';
 import 'services/ui_error_handler.dart';
+import 'services/monitoring_service.dart';
+import 'services/telemetry_service.dart';
 import 'widgets/demo_mode_starter.dart';
 
 Future<void> main() async {
@@ -72,6 +74,24 @@ Future<void> _initializeApp() async {
       debugPrint('🔒 App will continue with reduced security features');
     }
     // Don't crash on security init failure - graceful degradation
+  }
+
+  // Initialize Sentry monitoring early in app startup
+  try {
+    await MonitoringService.initialize();
+  } catch (e) {
+    if (kDebugMode) {
+      debugPrint('⚠️ Sentry initialization failed: $e');
+    }
+  }
+
+  // Initialize OpenTelemetry if configured
+  try {
+    await TelemetryService().init();
+  } catch (e) {
+    if (kDebugMode) {
+      debugPrint('⚠️ Telemetry initialization failed: $e');
+    }
   }
 
   // Initialize Supabase with error handling - FIXED: No double initialization
