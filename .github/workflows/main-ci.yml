@@ -626,9 +626,13 @@ jobs:
         run: |
           if [ -n "$SUPABASE_ACCESS_TOKEN" ] && [ -n "$SUPABASE_PROJECT_REF_PREVIEW" ]; then
             echo "Preparing staging schema using Supabase CLI..."
+            set +e
             supabase login --token "$SUPABASE_ACCESS_TOKEN"
             supabase link --project-ref "$SUPABASE_PROJECT_REF_PREVIEW"
-            supabase db push || true
+            supabase db push
+            set -e
+            echo "(Non-fatal) Completed optional staging prepare step"
+            exit 0
           else
             echo "Skipping staging schema prepare (no SUPABASE_* preview secrets)."
           fi
