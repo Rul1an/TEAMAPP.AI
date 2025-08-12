@@ -460,6 +460,33 @@ jobs:
           </html>
           EOF
 
+          # Minimal 500 page for graceful server error rendering (some scanners expect it)
+          cat << 'EOF' > build/web/500.html
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>Unexpected error</title>
+            <style>
+              body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:#1b0b0b;color:#ffecec;display:flex;align-items:center;justify-content:center;height:100vh}
+              .card{max-width:540px;padding:32px;border:1px solid #3a1a1a;border-radius:12px;background:#230f0f;box-shadow:0 4px 24px rgba(0,0,0,.35)}
+              h1{margin:0 0 8px;font-size:28px}
+              p{margin:0 0 16px;opacity:.9}
+              a{color:#ffd2d2;text-decoration:none}
+              a:hover{text-decoration:underline}
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <h1>500 — Something went wrong</h1>
+              <p>Please try again later.</p>
+              <p><a href="/">Go to dashboard</a></p>
+            </div>
+          </body>
+          </html>
+          EOF
+
           # Advanced Build Analytics (2025 best practice)
           echo "::group::Build Analytics & Performance Tracking"
 
