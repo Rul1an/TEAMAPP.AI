@@ -339,3 +339,30 @@ extension SupabaseExtension on SupabaseClient {
     await auth.refreshSession();
   }
 }
+
+/// Additional helpers related to organization context.
+extension SupabaseOrganizationHelpers on SupabaseClient {
+  /// Try to resolve the current organization id via RPC first, then fallback to user metadata.
+  /// Returns null if neither source provides an id.
+  Future<String?> getOrganizationIdWithFallback() async {
+    // 1) Prefer RPC for server-authoritative value (and to benefit from DB-side caching)
+    try {
+      final String? orgId = await rpc<String?>(
+        'get_user_organization_id',
+      );
+      if (orgId != null && orgId.isNotEmpty) {
+        return orgId;
+      }
+    } catch (_) {
+      // Ignore and fallback to metadata
+    }
+
+    // 2) Fallback to metadata on the auth user
+    final String? metadataOrgId = currentOrganizationId;
+    if (metadataOrgId != null && metadataOrgId.isNotEmpty) {
+      return metadataOrgId;
+    }
+
+    return null;
+  }
+}

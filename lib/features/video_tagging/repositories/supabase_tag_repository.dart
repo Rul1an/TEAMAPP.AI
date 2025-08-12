@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:jo17_tactical_manager/config/supabase_config.dart';
 
 import '../models/video_tag.dart';
 import '../models/tag_type.dart';
@@ -49,12 +50,12 @@ class SupabaseTagRepository implements TagRepository {
     TagType? type,
     String? videoId,
   }) async {
-    // OPTIMIZED PATTERN: Start with organization-based filtering for 0.161ms performance
-    var query = client.from('video_tags').select().eq(
-          'organization_id',
-          // Use cached auth.uid() pattern for sub-millisecond video tag searches
-          await client.rpc<String>('get_user_organization_id'),
-        );
+    // OPTIMIZED PATTERN: Start with organization-based filtering; use RPC with metadata fallback
+    final orgId = await client.getOrganizationIdWithFallback();
+    if (orgId == null) {
+      return <VideoTag>[];
+    }
+    var query = client.from('video_tags').select().eq('organization_id', orgId);
 
     // Apply additional filters on top of optimized base query
     if (playerId != null) query = query.eq('player_id', playerId);

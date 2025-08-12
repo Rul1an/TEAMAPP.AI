@@ -109,11 +109,12 @@ class SupabasePlayerRepository implements PlayerRepository {
   Future<Result<List<Player>>> getAll() async {
     try {
       // OPTIMIZED PATTERN: Use RLS function for 95%+ performance improvement
-      final data = await _client.from(_table).select().eq(
-            'organization_id',
-            // Use cached auth.uid() pattern for sub-millisecond performance
-            await _client.rpc<String>('get_user_organization_id'),
-          );
+      final orgId = await _client.getOrganizationIdWithFallback();
+      if (orgId == null) {
+        return Failure(NetworkFailure('No organization context available'));
+      }
+      final data =
+          await _client.from(_table).select().eq('organization_id', orgId);
       final players = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))
           .toList();
@@ -137,12 +138,15 @@ class SupabasePlayerRepository implements PlayerRepository {
   Future<Result<List<Player>>> getByPosition(Position position) async {
     try {
       // OPTIMIZED PATTERN: Combine position filter with organization-based RLS optimization
-      final data =
-          await _client.from(_table).select().eq('position', position.name).eq(
-                'organization_id',
-                // Leverage function caching for consistent sub-millisecond performance
-                await _client.rpc<String>('get_user_organization_id'),
-              );
+      final orgId = await _client.getOrganizationIdWithFallback();
+      if (orgId == null) {
+        return Failure(NetworkFailure('No organization context available'));
+      }
+      final data = await _client
+          .from(_table)
+          .select()
+          .eq('position', position.name)
+          .eq('organization_id', orgId);
       final players = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))
           .toList();

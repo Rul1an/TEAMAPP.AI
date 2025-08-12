@@ -25,11 +25,12 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
   Future<Result<List<TrainingSession>>> getAll() async {
     try {
       // OPTIMIZED PATTERN: Apply organization-based filtering for consistent performance
-      final data = await _client.from(_table).select().eq(
-            'organization_id',
-            // Use cached auth.uid() pattern for sub-millisecond training session queries
-            await _client.rpc<String>('get_user_organization_id'),
-          );
+      final orgId = await _client.getOrganizationIdWithFallback();
+      if (orgId == null) {
+        return Failure(NetworkFailure('No organization context available'));
+      }
+      final data =
+          await _client.from(_table).select().eq('organization_id', orgId);
       final sessions = (data as List<dynamic>)
           .map((e) => TrainingSession.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -44,14 +45,14 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
     try {
       final nowIso = DateTime.now().toIso8601String();
       // OPTIMIZED PATTERN: Combine date filtering with organization-based optimization
+      final orgId = await _client.getOrganizationIdWithFallback();
+      if (orgId == null) {
+        return Failure(NetworkFailure('No organization context available'));
+      }
       final data = await _client
           .from(_table)
           .select()
-          .eq(
-            'organization_id',
-            // Leverage function caching for consistent sub-millisecond performance
-            await _client.rpc<String>('get_user_organization_id'),
-          )
+          .eq('organization_id', orgId)
           .gte('date', nowIso)
           .order('date')
           .limit(20);
