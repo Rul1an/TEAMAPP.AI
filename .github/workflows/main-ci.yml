@@ -413,6 +413,7 @@ jobs:
             X-Content-Type-Options: nosniff
             X-XSS-Protection: 1; mode=block
             Referrer-Policy: strict-origin-when-cross-origin
+            Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
           EOF
 
           # Add Netlify _redirects to harden endpoint exposure and support SPA fallback

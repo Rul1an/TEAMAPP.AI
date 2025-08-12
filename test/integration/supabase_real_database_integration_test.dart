@@ -35,6 +35,7 @@ void main() {
       testClient = SupabaseClient(
         Environment.test.supabaseUrl,
         Environment.test.supabaseAnonKey,
+        // For integration tests we don't persist sessions; PKCE storage not required
         authOptions: const AuthClientOptions(
           autoRefreshToken: false,
         ),

@@ -31,6 +31,7 @@ class SupabaseConfig {
       url: Environment.current.supabaseUrl,
       anonKey: Environment.current.supabaseAnonKey,
       debug: Environment.current.enableDebugFeatures,
+      // Keep default FlutterAuthClientOptions; tests use non-PKCE clients explicitly
       realtimeClientOptions: const RealtimeClientOptions(
         logLevel: RealtimeLogLevel.info,
       ),
