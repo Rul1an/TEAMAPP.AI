@@ -534,9 +534,7 @@ jobs:
     needs: quality-and-test
     if: |
       (github.ref == 'refs/heads/main' || github.event_name == 'pull_request') &&
-      github.event.pull_request.head.repo.fork == false &&
-      (secrets.SUPABASE_URL != '' || secrets.SUPABASE_URL_PREVIEW != '') &&
-      (secrets.SUPABASE_ANON_KEY != '' || secrets.SUPABASE_ANON_KEY_PREVIEW != '')
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false)
     timeout-minutes: 20
     permissions:
       contents: read
