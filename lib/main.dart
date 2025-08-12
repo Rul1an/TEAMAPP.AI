@@ -10,6 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 // kIsWeb accessible via existing flutter/foundation.dart import above
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'config/environment.dart';
@@ -82,6 +83,26 @@ Future<void> _initializeApp() async {
   } catch (e) {
     if (kDebugMode) {
       debugPrint('⚠️ Sentry initialization failed: $e');
+    }
+  }
+
+  // Optional: send a one-time Sentry ping if enabled via dart-define
+  const bool sentryPing =
+      bool.fromEnvironment('SENTRY_PING', defaultValue: false);
+  const String sentryPingMessage = String.fromEnvironment(
+    'SENTRY_PING_MESSAGE',
+    defaultValue: 'SaaS Sentry ping: app startup OK',
+  );
+  if (sentryPing) {
+    try {
+      await Sentry.captureMessage(sentryPingMessage, level: SentryLevel.info);
+      if (kDebugMode) {
+        debugPrint('📨 Sentry ping sent: $sentryPingMessage');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('⚠️ Failed to send Sentry ping: $e');
+      }
     }
   }
 
