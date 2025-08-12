@@ -186,15 +186,9 @@ jobs:
           APP_MODE=${APP_MODE:-standalone}
           FLUTTER_ENV=${FLUTTER_ENV:-test}
 
-          # Fail the build if required secrets are missing (prevents silent misconfig)
-          if [ -z "$SUPABASE_URL_VAL" ]; then
-            echo "ERROR: SUPABASE_URL_VAL is not set. Provide SUPABASE_URL_PREVIEW or SUPABASE_URL as a secret."
-            exit 1
-          fi
-          if [ -z "$SUPABASE_ANON_KEY_VAL" ]; then
-            echo "ERROR: SUPABASE_ANON_KEY_VAL is not set. Provide SUPABASE_ANON_KEY_PREVIEW or SUPABASE_ANON_KEY as a secret."
-            exit 1
-          fi
+          # For unit/widget tests, allow harmless local defaults if secrets are missing (fork-friendly)
+          if [ -z "$SUPABASE_URL_VAL" ]; then SUPABASE_URL_VAL="http://localhost:54321"; fi
+          if [ -z "$SUPABASE_ANON_KEY_VAL" ]; then SUPABASE_ANON_KEY_VAL="public-anon-key"; fi
 
           # Run tests and capture output, but don't fail on exit code yet
           set +e  # Disable exit on error temporarily
@@ -536,8 +530,8 @@ jobs:
 
       - name: 🏗️ Build Web Preview
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL_PREVIEW || secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW || secrets.SUPABASE_ANON_KEY }}
         run: |
           flutter pub get
           flutter build web --release \
