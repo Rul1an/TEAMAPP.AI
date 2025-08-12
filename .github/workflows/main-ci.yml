@@ -397,16 +397,18 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           flutter pub get
-          # 2025: HTML renderer removed; default CanvasKit is fine. Provide dart-defines for environment secrets.
-          flutter build web --release \
+          # Build web with required env and Sentry DSN
+          flutter build web --release --no-web-resources-cdn \
             --dart-define=SUPABASE_URL=${SUPABASE_URL} \
-            --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+            --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
+            --dart-define=SENTRY_DSN=${{ secrets.SENTRY_DSN }} \
+            --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
 
           # Add modern Netlify _headers file (2025 best practice)
-          echo "Creating Netlify _headers file with COMPLETE Flutter CanvasKit CSP support..."
+          echo "Creating Netlify _headers file with COMPLETE Flutter CanvasKit CSP support + Sentry..."
           cat << 'EOF' > build/web/_headers
           /*
-            Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com https://www.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://*.supabase.io https://www.gstatic.com https://fonts.gstatic.com; media-src 'self' blob:; worker-src 'self' blob: https://www.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+            Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com https://www.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://*.supabase.io https://www.gstatic.com https://fonts.gstatic.com https://*.sentry.io https://ingest.sentry.io https://*.ingest.sentry.io https://ingest.de.sentry.io; media-src 'self' blob:; worker-src 'self' blob: https://www.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
             X-Frame-Options: DENY
             X-Content-Type-Options: nosniff
             X-XSS-Protection: 1; mode=block
@@ -441,6 +443,7 @@ jobs:
           if grep -q "Content-Security-Policy" build/web/_headers; then
             echo "✅ CSP headers configured"
             echo "✅ Flutter CanvasKit CSP support enabled"
+            echo "✅ Sentry ingest domains allowed in connect-src"
           else
             echo "❌ CSP headers missing!"
           fi
@@ -465,6 +468,29 @@ jobs:
           name: web-build-${{ github.sha }}
           path: build/web/
           retention-days: 7
+
+      - name: 📦 Install Sentry CLI
+        if: ${{ !cancelled() }}
+        run: |
+          curl -sL https://sentry.io/get-cli/ | bash
+
+      - name: 🧭 Create Sentry Release and Upload Web Source Maps
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        run: |
+          if [ -z "$SENTRY_AUTH_TOKEN" ] || [ -z "$SENTRY_ORG" ] || [ -z "$SENTRY_PROJECT" ]; then
+            echo "⚠️ Sentry release upload skipped (missing SENTRY_* secrets)."
+            exit 0
+          fi
+          export RELEASE=$GITHUB_SHA
+          echo "🔖 Creating Sentry release $RELEASE for $SENTRY_ORG/$SENTRY_PROJECT"
+          sentry-cli releases new "$RELEASE"
+          sentry-cli releases set-commits "$RELEASE" --auto || true
+          echo "📤 Uploading sourcemaps from build/web"
+          sentry-cli releases files "$RELEASE" upload-sourcemaps build/web --rewrite --url-prefix "~/"
+          sentry-cli releases finalize "$RELEASE"
 
       - name: 🎯 Setup Node.js
         uses: actions/setup-node@v4
@@ -592,7 +618,8 @@ jobs:
           flutter pub get
           flutter build web --release \
             --dart-define=SUPABASE_URL=${SUPABASE_URL} \
-            --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+            --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
+            --dart-define=SENTRY_DSN=${{ secrets.SENTRY_DSN }}
 
       - name: 🔍 Deploy Preview
         id: deploy-preview
