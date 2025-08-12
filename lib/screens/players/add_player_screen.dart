@@ -289,9 +289,19 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
           ..firstName = values['firstName'] as String
           ..lastName = values['lastName'] as String
           ..jerseyNumber = int.parse(values['jerseyNumber'] as String)
-          ..birthDate = values['birthDate'] is DateTime
-              ? values['birthDate'] as DateTime
-              : DateTime.now()
+          ..birthDate = (() {
+            final raw = values['birthDate'];
+            if (raw is DateTime) return raw;
+            if (raw is String && raw.trim().isNotEmpty) {
+              try {
+                return DateFormat('dd-MM-yyyy').parseStrict(raw);
+              } catch (_) {
+                // Fallback: today to avoid crash, but validator should prevent this
+                return DateTime.now();
+              }
+            }
+            return DateTime.now();
+          })()
           ..position = values['position'] is Position
               ? values['position'] as Position
               : Position.midfielder

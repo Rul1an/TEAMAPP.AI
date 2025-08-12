@@ -93,14 +93,19 @@ class SupabaseTrainingDataSource {
 
   static Training _fromRow(Map<String, dynamic> r) {
     // Convert Supabase row format to Training.fromJson format
+    final dateValue = r['date'] as String?;
+    if (dateValue == null || dateValue.isEmpty) {
+      throw StateError('Missing required field: date');
+    }
+
     final normalizedData = <String, dynamic>{
       'id': r['id'] as String? ?? '',
-      'date': r['date'] as String? ?? DateTime.now().toIso8601String(),
+      'date': dateValue,
       'duration': r['duration'] as int? ?? 0,
       'trainingNumber': r['training_number'] as int? ?? 1,
-      'focus': (r['focus'] as String? ?? 'technical').toLowerCase(),
-      'intensity': (r['intensity'] as String? ?? 'medium').toLowerCase(),
-      'status': (r['status'] as String? ?? 'planned').toLowerCase(),
+      'focus': (r['focus'] as String? ?? 'technical'),
+      'intensity': (r['intensity'] as String? ?? 'medium'),
+      'status': (r['status'] as String? ?? 'planned'),
       'location': r['location'] as String?,
       'description': r['description'] as String?,
       'objectives': r['objectives'] as String?,
