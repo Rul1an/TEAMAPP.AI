@@ -501,6 +501,62 @@ jobs:
           echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
 
   # Phase 3: Preview Deployments for PRs
+  # Phase 4: Integration Tests (conditional)
+  integration-tests:
+    name: 🔬 Integration Tests (secured)
+    runs-on: ubuntu-latest
+    needs: quality-and-test
+    if: |
+      (github.ref == 'refs/heads/main' || github.event_name == 'pull_request') &&
+      github.event.pull_request.head.repo.fork == false &&
+      (secrets.SUPABASE_URL != '' || secrets.SUPABASE_URL_PREVIEW != '') &&
+      (secrets.SUPABASE_ANON_KEY != '' || secrets.SUPABASE_ANON_KEY_PREVIEW != '')
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: 📂 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📱 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      - name: 🔐 Export Secrets
+        run: |
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL_PREVIEW || secrets.SUPABASE_URL }}" >> $GITHUB_ENV
+          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY_PREVIEW || secrets.SUPABASE_ANON_KEY }}" >> $GITHUB_ENV
+
+      - name: 🧪 Run Integration Tests
+        run: |
+          SUPABASE_URL_VAL=${SUPABASE_URL}
+          SUPABASE_ANON_KEY_VAL=${SUPABASE_ANON_KEY}
+          if [ -z "$SUPABASE_URL_VAL" ] || [ -z "$SUPABASE_ANON_KEY_VAL" ]; then
+            echo "ERROR: Integration tests require Supabase secrets"
+            exit 1
+          fi
+
+          # Only run integration and security suites in this job
+          set +e
+          flutter test --reporter=expanded \
+            --dart-define=APP_MODE=saas \
+            --dart-define=FLUTTER_ENV=test \
+            --dart-define=SUPABASE_URL="${SUPABASE_URL_VAL}" \
+            --dart-define=SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY_VAL}" \
+            test/integration/ test/security/ || INTEG_FAIL=$?
+          set -e
+
+          if [ ! -z "$INTEG_FAIL" ]; then
+            echo "Integration tests reported failures"
+            exit $INTEG_FAIL
+          fi
   preview-deploy:
     name: 🔍 Preview Deploy
     runs-on: ubuntu-latest
