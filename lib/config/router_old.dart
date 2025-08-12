@@ -130,15 +130,17 @@ GoRouter createRouter(Ref ref) => GoRouter(
                 ),
                 GoRoute(
                   path: 'attendance/:id',
-                  builder: (context, state) => TrainingAttendanceScreen(
-                    trainingId: state.pathParameters['id']!,
-                  ),
+                  builder: (context, state) {
+                    final trainingId = state.pathParameters['id'] ?? '';
+                    return TrainingAttendanceScreen(trainingId: trainingId);
+                  },
                 ),
                 GoRoute(
                   path: 'edit/:id',
-                  builder: (context, state) => EditTrainingScreen(
-                    trainingId: state.pathParameters['id']!,
-                  ),
+                  builder: (context, state) {
+                    final trainingId = state.pathParameters['id'] ?? '';
+                    return EditTrainingScreen(trainingId: trainingId);
+                  },
                 ),
               ],
             ),
