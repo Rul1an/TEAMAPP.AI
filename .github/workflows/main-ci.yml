@@ -615,6 +615,22 @@ jobs:
       - name: 📂 Checkout
         uses: actions/checkout@v4
 
+      - name: 🛠️ (Optional) Prepare Staging Database Schema
+        if: ${{ (secrets.SUPABASE_ACCESS_TOKEN != '' ) && (secrets.SUPABASE_PROJECT_REF_PREVIEW != '') }}
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: 🔐 (Optional) Login & Push Migrations to Staging
+        if: ${{ (secrets.SUPABASE_ACCESS_TOKEN != '' ) && (secrets.SUPABASE_PROJECT_REF_PREVIEW != '') }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF_PREVIEW: ${{ secrets.SUPABASE_PROJECT_REF_PREVIEW }}
+        run: |
+          echo "Preparing staging schema (optional)..."
+          supabase login --token "$SUPABASE_ACCESS_TOKEN"
+          supabase link --project-ref "$SUPABASE_PROJECT_REF_PREVIEW"
+          supabase db push || true
+
       - name: 📱 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
