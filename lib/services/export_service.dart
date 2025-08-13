@@ -54,6 +54,28 @@ class ExportService {
     return pct.toStringAsFixed(1);
   }
 
+  static List<String> trainingAttendanceHeaders(List<Player> players) {
+    final headers = ['Datum', 'Focus', 'Intensiteit', 'Status'];
+    for (final player in players) {
+      headers.add('${player.jerseyNumber}. ${player.lastName}');
+    }
+    return headers;
+  }
+
+  static String attendanceSymbolFor({
+    required Set<String> present,
+    required Set<String> absent,
+    required Set<String> injured,
+    required Set<String> late,
+    required String playerId,
+  }) {
+    if (present.contains(playerId)) return 'A';
+    if (absent.contains(playerId)) return 'X';
+    if (injured.contains(playerId)) return 'G';
+    if (late.contains(playerId)) return 'L';
+    return '-';
+  }
+
   /// 🔧 CASCADE OPERATOR DOCUMENTATION - EXPORT SERVICE OPERATIONS
   ///
   /// This export service demonstrates document generation patterns where
@@ -262,11 +284,8 @@ class ExportService {
     final sheet = excel['Trainingen'];
 
     // Headers
-    final headers = ['Datum', 'Focus', 'Intensiteit', 'Status'];
-    for (final player in players) {
-      headers.add('${player.jerseyNumber}. ${player.lastName}');
-    }
-    sheet.appendRow(headers.map(TextCellValue.new).toList());
+    sheet.appendRow(
+        trainingAttendanceHeaders(players).map(TextCellValue.new).toList());
 
     // Data
     for (final training in trainings) {
@@ -278,17 +297,13 @@ class ExportService {
       ];
 
       for (final player in players) {
-        final playerId = player.id;
-        var status = '-';
-        if (training.presentPlayerIds.contains(playerId)) {
-          status = 'A';
-        } else if (training.absentPlayerIds.contains(playerId)) {
-          status = 'X';
-        } else if (training.injuredPlayerIds.contains(playerId)) {
-          status = 'G';
-        } else if (training.latePlayerIds.contains(playerId)) {
-          status = 'L';
-        }
+        final status = attendanceSymbolFor(
+          present: training.presentPlayerIds.toSet(),
+          absent: training.absentPlayerIds.toSet(),
+          injured: training.injuredPlayerIds.toSet(),
+          late: training.latePlayerIds.toSet(),
+          playerId: player.id,
+        );
         row.add(TextCellValue(status));
       }
 
