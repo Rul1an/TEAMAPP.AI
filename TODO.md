@@ -35,6 +35,8 @@ Prioriteit D (opruiming/beleid)
 - [ ] GraphQL: gebruik inventariseren; verwijderen indien ongebruikt of adoptieplan opstellen.
   - [x] Gebruik bevestigd in video tagging; provider test toegevoegd.
 - [ ] Privacy/GDPR: export/delete flows, dataretentie, consent; loghygiene check.
+  - [x] Log hygiëne: PII sanitization toegepast in centrale logger breadcrumbs/events.
+  - [x] GDPR service: `GdprService` met `exportUserData` en `deleteUserData` (RPC hooks) + unit tests.
 - [x] Rollen-constants: vervang stringliterals door centrale constants/enum om typefouten te voorkomen. (Toegepast in `PermissionService`, `FeatureService.hasPermission`, `CoachDashboardScreen`)
 
 Kwaliteitschecks (voor elke PR)

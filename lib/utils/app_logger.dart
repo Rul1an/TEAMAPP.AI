@@ -3,6 +3,7 @@
 // Package imports:
 import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import '../services/pii_sanitizer.dart';
 
 /// Centralized application logger that:
 /// 1. Prints prettified logs to the console (debug mode).
@@ -48,14 +49,15 @@ class _SentryLogOutput extends LogOutput {
     final sentryLevel = _toSentryLevel(event.level);
 
     for (final line in event.lines) {
+      final sanitized = PiiSanitizer.sanitizeString(line);
       // Record breadcrumb for every log.
       Sentry.addBreadcrumb(
-        Breadcrumb(message: line, level: sentryLevel, category: 'log'),
+        Breadcrumb(message: sanitized, level: sentryLevel, category: 'log'),
       );
 
       // Capture standalone event for error & fatal levels.
       if (event.level.index >= Level.error.index) {
-        Sentry.captureMessage(line, level: sentryLevel);
+        Sentry.captureMessage(sanitized, level: sentryLevel);
       }
     }
   }

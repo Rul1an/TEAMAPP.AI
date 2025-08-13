@@ -32,6 +32,7 @@ Doel: een up‑to‑date, hoog‑over overzicht van structuur, entrypoints, data
 - RBAC document: `docs/architecture/RBAC_MATRIX.md` (routes/actions x rollen).
 - RLS (database): enforced via Supabase policies (gevalideerd in CI/harnas‑tests).
 - Runtime bescherming: `lib/services/runtime_security_service.dart` en CSP/headers in `netlify.toml`.
+- GDPR: `lib/services/gdpr_service.dart` (export/delete hooks via RPC); PII-sanitization in `lib/utils/app_logger.dart` en Sentry `sendDefaultPii=false`.
 
 ### 6) Supabase & Database
 - Config: `lib/config/supabase_config.dart` (URL/keys via defines).
