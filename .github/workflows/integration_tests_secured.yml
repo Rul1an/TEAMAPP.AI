@@ -92,12 +92,22 @@ jobs:
         run: |
           dart --version
           # Run only the portable, dart-only suites to avoid PKCE/storage issues
-          dart test -r expanded test/security || true
+          dart test -r expanded test/security/minimal_database_audit_test.dart test/security/database_audit_phase2_live_validation_test.dart || true
 
       - name: Flutter Unit Tests (no e2e)
         working-directory: jo17_tactical_manager
         run: |
-          # Run the main flutter tests. e2e/device tests should be in a dedicated workflow.
-          flutter test -r expanded || true
+          # Run only safe unit/widget suites (exclude live integration & prod net tests)
+          flutter test -r expanded \
+            test/models \
+            test/providers \
+            test/repositories \
+            test/widgets \
+            test/controllers \
+            test/utils \
+            test/hive \
+            test/navigation \
+            test/golden \
+            test/performance || true
 
 

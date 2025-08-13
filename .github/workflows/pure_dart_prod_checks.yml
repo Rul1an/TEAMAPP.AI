@@ -8,6 +8,9 @@ on:
 jobs:
   prod-checks:
     runs-on: ubuntu-latest
+    concurrency:
+      group: prod-dart-checks
+      cancel-in-progress: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,6 +33,7 @@ jobs:
       - name: Run networked security tests (Dart)
         working-directory: jo17_tactical_manager
         run: |
-          dart test -r expanded test/security || true
+          # Run only dart-only suites; skip widget/integration to avoid HttpClient binding 400s
+          dart test -r expanded test/security/minimal_database_audit_test.dart test/security/database_audit_phase2_live_validation_test.dart || true
 
 
