@@ -4,14 +4,23 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
+    paths:
+      - 'jo17_tactical_manager/supabase/migrations/**'
+      - 'jo17_tactical_manager/.github/workflows/integration_tests_secured.yml'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'jo17_tactical_manager/supabase/migrations/**'
+      - 'jo17_tactical_manager/.github/workflows/integration_tests_secured.yml'
 
 jobs:
   integration:
     name: Integration (preview)
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    concurrency:
+      group: supabase-migrations-preview
+      cancel-in-progress: false
 
     env:
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

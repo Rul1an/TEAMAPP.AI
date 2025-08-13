@@ -1,4 +1,4 @@
-\set ON_ERROR_STOP on
+-- ON_ERROR_STOP is not supported by supabase db push runner; remove meta commands
 -- 2025-08-01  Create table to store Veo highlights fetched via Edge Functions
 -- RLS isolates data per organization.
 
