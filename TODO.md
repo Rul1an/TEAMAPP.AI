@@ -37,6 +37,7 @@ Prioriteit D (opruiming/beleid)
 - [ ] Privacy/GDPR: export/delete flows, dataretentie, consent; loghygiene check.
   - [x] Log hygiëne: PII sanitization toegepast in centrale logger breadcrumbs/events.
   - [x] GDPR service: `GdprService` met `exportUserData` en `deleteUserData` (RPC hooks) + unit tests.
+  - [x] Consent management: `ConsentService` met lokale opslag (Hive) en metadata-propagatie naar Supabase bij login + unit tests.
 - [x] Rollen-constants: vervang stringliterals door centrale constants/enum om typefouten te voorkomen. (Toegepast in `PermissionService`, `FeatureService.hasPermission`, `CoachDashboardScreen`)
 
 Kwaliteitschecks (voor elke PR)

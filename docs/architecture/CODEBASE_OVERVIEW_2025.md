@@ -33,6 +33,7 @@ Doel: een up‑to‑date, hoog‑over overzicht van structuur, entrypoints, data
 - RLS (database): enforced via Supabase policies (gevalideerd in CI/harnas‑tests).
 - Runtime bescherming: `lib/services/runtime_security_service.dart` en CSP/headers in `netlify.toml`.
 - GDPR: `lib/services/gdpr_service.dart` (export/delete hooks via RPC); PII-sanitization in `lib/utils/app_logger.dart` en Sentry `sendDefaultPii=false`.
+  - Consent: `lib/services/consent_service.dart` (lokale flags met Hive + sync naar Supabase user metadata).
 
 ### 6) Supabase & Database
 - Config: `lib/config/supabase_config.dart` (URL/keys via defines).
