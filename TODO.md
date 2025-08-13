@@ -35,7 +35,7 @@ Prioriteit D (opruiming/beleid)
 - [ ] GraphQL: gebruik inventariseren; verwijderen indien ongebruikt of adoptieplan opstellen.
   - [x] Gebruik bevestigd in video tagging; provider test toegevoegd.
 - [ ] Privacy/GDPR: export/delete flows, dataretentie, consent; loghygiene check.
-- [ ] Rollen-constants: vervang stringliterals door centrale constants/enum om typefouten te voorkomen.
+- [x] Rollen-constants: vervang stringliterals door centrale constants/enum om typefouten te voorkomen. (Toegepast in `PermissionService`, `FeatureService.hasPermission`, `CoachDashboardScreen`)
 
 Kwaliteitschecks (voor elke PR)
 - [ ] `dart format .`
