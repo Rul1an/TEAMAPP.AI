@@ -19,6 +19,7 @@ Prioriteit B (hoog)
   - [x] Standaard testset geïmplementeerd voor Trainings, Players, Matches; overview sectie “Repository Test Standard (2025)” toegevoegd.
   - [x] Profielen en Statistieken providers rooktests toegevoegd (UI‑safe folding). GraphQL tag‑subscription provider gedekt.
 - [x] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer. (CI job `web-build-matrix` met metrics)
+- [x] Observability: Sentry PII scrub + sampling verbeterd (`sendDefaultPii=false`, `tracesSampler`) en CI secret-check toegevoegd voor prod deploy.
 - [ ] Observability: review OTel/Sentry config, scrub PII, definieer sampling en events.
   - [x] CI workflow gefilterd op migrations + concurrency toegevoegd (stabiliteit).
   - [x] Sentry PII‑scrub via breadcrumbs + sample rates via defines; analyzer info’s opgelost.

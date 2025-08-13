@@ -461,6 +461,18 @@ jobs:
             build/
           key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
 
+      - name: 🔒 Validate required secrets for production
+        run: |
+          MISSING=0
+          if [ -z "${{ secrets.SUPABASE_URL }}" ]; then
+            echo "::error::Missing SUPABASE_URL for production deploy"; MISSING=1; fi
+          if [ -z "${{ secrets.SUPABASE_ANON_KEY }}" ]; then
+            echo "::error::Missing SUPABASE_ANON_KEY for production deploy"; MISSING=1; fi
+          if [ -z "${{ secrets.SENTRY_DSN }}" ]; then
+            echo "::error::Missing SENTRY_DSN for production deploy (observability required)"; MISSING=1; fi
+          if [ "$MISSING" -ne 0 ]; then
+            echo "One or more required secrets are missing. Failing build."; exit 1; fi
+
       - name: 🏗️ Build Web
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

@@ -108,6 +108,8 @@ Bronnen voor detail:
 
 ### Changelog (rolling)
 - 2025‑08‑13
+  - Observability: Sentry `sendDefaultPii=false` en `tracesSampler` toegevoegd; PII-scrubbing blijft via breadcrumbs.
+  - CI: Production deploy faalt wanneer verplichte secrets ontbreken (SUPABASE_URL/ANON_KEY, SENTRY_DSN).
   - CI: Web Build Matrix toegevoegd (CanvasKit + Wasm, metrics upload); duplicate workflow-headers verwijderd.
   - Tests: RLS integratiecovers toegevoegd: `rls_unauth_restrictions_test.dart` en `rls_create_edit_delete_view_test.dart` (skippen zonder env).
   - CI: “Integration Tests (secured)” beperkt tot unit/widget suites; dart‑only security tests gescheiden. Real DB/prod suites skippen in CI via env toggles.
