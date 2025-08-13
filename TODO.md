@@ -10,7 +10,7 @@ Prioriteit A (kritiek, eerst oppakken)
 - [ ] Models/JSON: audit IDs (String), expliciete casts/defaults; fix afwijkingen.
   - [x] Policy-test toegevoegd voor String IDs in modellen (`test/policies/model_id_policy_test.dart`).
   - [x] `TrainingExercise.id` omgezet naar `String` en JSON aangepast.
-  - [ ] Volledige audit over alle `models/` (IDs, null-safety, defaults) en fixes waar nodig.
+  - [x] Volledige audit over alle `models/` (IDs, null-safety, defaults) en fixes waar nodig (grep op `int id` en `json['id'] as int` → geen hits; rest OK).
 
 Prioriteit B (hoog)
 - [ ] Repositories: standaardiseer error- en caching-strategie; documenteer SWR en invalidatie.
@@ -22,7 +22,7 @@ Prioriteit C (medium)
 - [ ] Notifications: platform-setup controleren (iOS/Android), topic/tenant scoping valideren; smoke tests.
 - [ ] Video: compat/perf-meting web/mobiel; fallback-strategie vastleggen.
 - [ ] Demo/standalone: e2e tests voor guards en deep-links naar mutatieroutes.
- - [ ] 404/500 pagina's: voeg `web/404.html`/`500.html` toe en check SPA fallback vs security tests.
+  - [x] 404/500 pagina's: `web/404.html`/`500.html` toegevoegd en Netlify CSP/redirects geverifieerd; CSP uitgebreid met Sentry ingest.
 
 Prioriteit D (opruiming/beleid)
 - [ ] GraphQL: gebruik inventariseren; verwijderen indien ongebruikt of adoptieplan opstellen.

@@ -48,7 +48,7 @@
       font-src 'self' https://fonts.gstatic.com;
       img-src 'self' data: https: blob:;
       media-src 'self' https: blob:;
-      connect-src 'self' https://ohdbsujaetmrztseqana.supabase.co https://*.supabase.co wss://realtime.supabase.co wss://*.supabase.co https://www.gstatic.com https://fonts.gstatic.com;
+      connect-src 'self' https://ohdbsujaetmrztseqana.supabase.co https://*.supabase.co wss://realtime.supabase.co wss://*.supabase.co https://www.gstatic.com https://fonts.gstatic.com https://*.sentry.io https://ingest.sentry.io https://*.ingest.sentry.io;
       worker-src 'self' blob:;
       frame-src 'none';
       frame-ancestors 'none';
