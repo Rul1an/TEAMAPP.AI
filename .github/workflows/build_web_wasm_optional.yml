@@ -1,0 +1,39 @@
+name: Build Web (Wasm Optional)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  build-wasm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: build-web-wasm
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install deps
+        working-directory: jo17_tactical_manager
+        run: flutter pub get
+      - name: Build (CanvasKit fallback)
+        working-directory: jo17_tactical_manager
+        run: |
+          flutter build web --release --tree-shake-icons
+          mv build/web build/web-canvaskit
+      - name: Build (Wasm)
+        working-directory: jo17_tactical_manager
+        run: |
+          flutter build web --wasm --release --tree-shake-icons
+      - name: Artifact upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-wasm-and-canvaskit-${{ github.sha }}
+          path: |
+            jo17_tactical_manager/build/web
+            jo17_tactical_manager/build/web-canvaskit
+

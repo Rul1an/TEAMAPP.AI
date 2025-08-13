@@ -69,4 +69,13 @@ Bronnen voor detail:
 - CI/CD: `.github/workflows/*.yml`
 - Hosting/security: `netlify.toml`
 
+---
+
+### Changelog (rolling)
+- 2025‑08‑13
+  - CI: “Integration Tests (secured)” beperkt tot unit/widget suites; dart‑only security tests gescheiden. Real DB/prod suites skippen in CI via env toggles.
+  - Netlify: CSP `connect-src` uitgebreid met Sentry ingest‑domeinen; 404/500 pagina’s toegevoegd.
+  - IDs policy: audit afgerond, `TrainingExercise.id` naar `String`.
+  - CI: optionele wasm build workflow toegevoegd (manual/scheduled), geen deploy.
+
 
