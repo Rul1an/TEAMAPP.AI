@@ -59,9 +59,21 @@ class MonitoringService {
           ..dsn = _sentryDsn
           ..environment = kReleaseMode ? 'production' : 'staging'
           ..release = 'jo17-tactical-manager@1.0.0'
+          ..sendDefaultPii = false
           ..tracesSampleRate = _readSampleRate('SENTRY_TRACES_SAMPLE_RATE', 0.1)
           ..profilesSampleRate =
               _readSampleRate('SENTRY_PROFILES_SAMPLE_RATE', 0.1)
+          ..tracesSampler = (samplingContext) {
+            // Drop noisy system transactions completely
+            final name = samplingContext.transactionContext.name;
+            if (name.contains('health') || name.contains('heartbeat')) {
+              return 0.0;
+            }
+            // Honor explicit defines; fallback differs per env
+            final defined = _readSampleRate('SENTRY_TRACES_SAMPLE_RATE', -1);
+            if (defined >= 0) return defined;
+            return kReleaseMode ? 0.2 : 0.05;
+          }
           ..beforeSend = (event, hint) {
             // Filter out development errors
             if (kDebugMode) return null;
@@ -76,7 +88,7 @@ class MonitoringService {
               }
             }
 
-            // Keep event unchanged to avoid deprecated APIs; PII is handled in breadcrumbs.
+            // Avoid sending default PII; breadcrumbs are sanitized separately.
             return event;
           }
           ..beforeSendTransaction = (transaction, hint) {
