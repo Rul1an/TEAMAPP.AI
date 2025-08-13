@@ -4,7 +4,9 @@ Prioriteit A (kritiek, eerst oppakken)
 - [ ] RBAC/RLS: maak een permissie x tabel-matrix en voeg security tests toe voor create/edit/delete/view paden.
   - [x] RBAC-matrix document toegevoegd (`docs/architecture/RBAC_MATRIX.md`).
   - [x] Unit tests voor `PermissionService` toegevoegd (`test/services/permission_service_test.dart`).
-  - [ ] RLS end-to-end verificatietests uitbreiden (integration) en stabiliseren (admin-harnas toegevoegd: `test/integration/rls_admin_harness_test.dart`, default skip).
+  - [x] RLS end-to-end verificatietests uitbreiden (integration) en stabiliseren (admin-harnas toegevoegd: `test/integration/rls_admin_harness_test.dart`, default skip).
+    - [x] Unauth restricties: `test/integration/rls_unauth_restrictions_test.dart`
+    - [x] CRUD/view paden: `test/integration/rls_create_edit_delete_view_test.dart`
 - [ ] CI/CD defines: documenteer verplichte `--dart-define` per omgeving; valideer workflows en secrets.
   - [x] Overzicht toegevoegd (`docs/plans/CI_SECRETS_ENV.md`).
 - [ ] Models/JSON: audit IDs (String), expliciete casts/defaults; fix afwijkingen.
@@ -16,7 +18,7 @@ Prioriteit B (hoog)
 - [ ] Repositories: standaardiseer error- en caching-strategie; documenteer SWR en invalidatie.
   - [x] Standaard testset geïmplementeerd voor Trainings, Players, Matches; overview sectie “Repository Test Standard (2025)” toegevoegd.
   - [x] Profielen en Statistieken providers rooktests toegevoegd (UI‑safe folding). GraphQL tag‑subscription provider gedekt.
-- [ ] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer.
+- [x] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer. (CI job `web-build-matrix` met metrics)
 - [ ] Observability: review OTel/Sentry config, scrub PII, definieer sampling en events.
   - [x] CI workflow gefilterd op migrations + concurrency toegevoegd (stabiliteit).
   - [x] Sentry PII‑scrub via breadcrumbs + sample rates via defines; analyzer info’s opgelost.
@@ -336,8 +338,8 @@ Exit criteria:
 
 > See Flutter docs: https://docs.flutter.dev/platform-integration/web/wasm
 
-**Step 0 – Unblock CI (DONE / In-progress)**
-- [ ] CI: Switch mandatory web build to CanvasKit (`flutter build web --release --web-renderer canvaskit`). *(Task id: ci-switch-canvaskit – in progress)*
+**Step 0 – Unblock CI (DONE)**
+- [x] CI: Switch mandatory web build to CanvasKit (`flutter build web --release`). *(Renderer flag verwijderd in 3.29+)*
 
 **Phase 1 – Dependency Audit**
 - [ ] (wasm-dep-audit) `flutter pub deps --json` → script: detect packages importing `dart:html`, `dart:js`, `dart:ffi`.
