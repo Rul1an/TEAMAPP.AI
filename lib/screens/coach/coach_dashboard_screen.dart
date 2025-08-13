@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../config/providers.dart';
+import '../../constants/roles.dart';
 import '../../services/feature_service.dart';
 
 class CoachDashboardScreen extends ConsumerWidget {
@@ -202,7 +203,7 @@ class CoachDashboardScreen extends ConsumerWidget {
               Colors.blue,
               () => context.push('/training/quick'),
               isAvailable: featureService.hasPermission(
-                'hoofdcoach',
+                Roles.hoofdcoach,
                 'manage_training',
               ),
             ),
@@ -216,7 +217,7 @@ class CoachDashboardScreen extends ConsumerWidget {
               Colors.green,
               () => context.push('/matches/lineup'),
               isAvailable: featureService.hasPermission(
-                'hoofdcoach',
+                Roles.hoofdcoach,
                 'manage_tactics',
               ),
             ),
@@ -230,7 +231,7 @@ class CoachDashboardScreen extends ConsumerWidget {
               Colors.orange,
               () => context.push('/players/assessment'),
               isAvailable: featureService.hasPermission(
-                'hoofdcoach',
+                Roles.hoofdcoach,
                 'view_player_data',
               ),
             ),
