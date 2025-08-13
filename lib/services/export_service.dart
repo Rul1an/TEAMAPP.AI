@@ -29,6 +29,31 @@ class ExportService {
   final MatchRepository _matchRepo;
   final TrainingRepository _trainingRepo;
 
+  // Pure helpers for testing/consistency
+  static List<String> playerExcelHeaders() => const [
+        'Nr',
+        'Voornaam',
+        'Achternaam',
+        'Positie',
+        'Geboortedatum',
+        'Lengte (cm)',
+        'Gewicht (kg)',
+        'Voorkeursbeen',
+        'Wedstrijden',
+        'Goals',
+        'Assists',
+        'Trainingen',
+        'Speelminuten %',
+      ];
+
+  static String playtimePercentageFor(Player player) {
+    if (player.matchesInSelection <= 0) return '0.0';
+    final denom = player.matchesInSelection * 80;
+    if (denom <= 0) return '0.0';
+    final pct = (player.minutesPlayed / denom) * 100;
+    return pct.toStringAsFixed(1);
+  }
+
   /// 🔧 CASCADE OPERATOR DOCUMENTATION - EXPORT SERVICE OPERATIONS
   ///
   /// This export service demonstrates document generation patterns where
@@ -138,28 +163,11 @@ class ExportService {
   Future<void> exportPlayersToExcel(List<Player> players) async {
     final excel = Excel.createExcel();
     final sheet = excel['Spelers']
-      ..appendRow([
-        TextCellValue('Nr'),
-        TextCellValue('Voornaam'),
-        TextCellValue('Achternaam'),
-        TextCellValue('Positie'),
-        TextCellValue('Geboortedatum'),
-        TextCellValue('Lengte (cm)'),
-        TextCellValue('Gewicht (kg)'),
-        TextCellValue('Voorkeursbeen'),
-        TextCellValue('Wedstrijden'),
-        TextCellValue('Goals'),
-        TextCellValue('Assists'),
-        TextCellValue('Trainingen'),
-        TextCellValue('Speelminuten %'),
-      ]);
+      ..appendRow(playerExcelHeaders().map(TextCellValue.new).toList());
 
     // Data
     for (final player in players) {
-      final speelminutenPercentage = player.matchesInSelection > 0
-          ? ((player.minutesPlayed / (player.matchesInSelection * 80)) * 100)
-              .toStringAsFixed(1)
-          : '0.0';
+      final speelminutenPercentage = playtimePercentageFor(player);
 
       sheet.appendRow([
         IntCellValue(player.jerseyNumber),
