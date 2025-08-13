@@ -1,3 +1,36 @@
+# TODO – Vervolgonderzoek acties
+
+Prioriteit A (kritiek, eerst oppakken)
+- [ ] RBAC/RLS: maak een permissie x tabel-matrix en voeg security tests toe voor create/edit/delete/view paden.
+  - [x] RBAC-matrix document toegevoegd (`docs/architecture/RBAC_MATRIX.md`).
+  - [x] Unit tests voor `PermissionService` toegevoegd (`test/services/permission_service_test.dart`).
+  - [ ] RLS end-to-end verificatietests uitbreiden (integration) en stabiliseren.
+- [ ] CI/CD defines: documenteer verplichte `--dart-define` per omgeving; valideer workflows en secrets.
+- [ ] Models/JSON: audit IDs (String), expliciete casts/defaults; fix afwijkingen.
+  - [x] Policy-test toegevoegd voor String IDs in modellen (`test/policies/model_id_policy_test.dart`).
+  - [ ] Volledige audit over alle `models/` (IDs, null-safety, defaults) en fixes waar nodig.
+
+Prioriteit B (hoog)
+- [ ] Repositories: standaardiseer error- en caching-strategie; documenteer SWR en invalidatie.
+- [ ] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer.
+- [ ] Observability: review OTel/Sentry config, scrub PII, definieer sampling en events.
+
+Prioriteit C (medium)
+- [ ] Notifications: platform-setup controleren (iOS/Android), topic/tenant scoping valideren; smoke tests.
+- [ ] Video: compat/perf-meting web/mobiel; fallback-strategie vastleggen.
+- [ ] Demo/standalone: e2e tests voor guards en deep-links naar mutatieroutes.
+
+Prioriteit D (opruiming/beleid)
+- [ ] GraphQL: gebruik inventariseren; verwijderen indien ongebruikt of adoptieplan opstellen.
+- [ ] Privacy/GDPR: export/delete flows, dataretentie, consent; loghygiene check.
+- [ ] Rollen-constants: vervang stringliterals door centrale constants/enum om typefouten te voorkomen.
+
+Kwaliteitschecks (voor elke PR)
+- [ ] `dart format .`
+- [ ] `flutter analyze --fatal-infos`
+- [ ] `flutter test` en `flutter test integration_test/`
+- [ ] Web build: `flutter build web` (en optioneel `--wasm`)
+
 ### Performance & Assessment (from `PERFORMANCE_RATING_ROADMAP.md`)
 
 **Phase 2: Periodieke Assessments (Partially Completed)**

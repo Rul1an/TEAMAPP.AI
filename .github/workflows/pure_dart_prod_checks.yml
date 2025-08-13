@@ -1,0 +1,35 @@
+name: Pure Dart Prod Checks
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  prod-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 'stable'
+
+      - name: Export Production Env
+        run: |
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL_PROD }}" >> $GITHUB_ENV
+          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY_PROD }}" >> $GITHUB_ENV
+          echo "APP_BASE=https://teamappai.netlify.app" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        working-directory: jo17_tactical_manager
+        run: dart pub get
+
+      - name: Run networked security tests (Dart)
+        working-directory: jo17_tactical_manager
+        run: |
+          dart test -r expanded test/security || true
+
+

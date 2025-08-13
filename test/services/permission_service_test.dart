@@ -1,11 +1,146 @@
-// Package imports:
 import 'package:flutter_test/flutter_test.dart';
-
-// Project imports:
-import 'package:jo17_tactical_manager/models/organization.dart';
 import 'package:jo17_tactical_manager/services/permission_service.dart';
+import 'package:jo17_tactical_manager/models/organization.dart';
 
 void main() {
+  group('PermissionService - role capabilities', () {
+    test('View-only roles (speler, ouder) can only view', () {
+      for (final role in ['speler', 'ouder']) {
+        // Allowed views
+        expect(PermissionService.canPerformAction('view_player', role, null),
+            isTrue);
+        expect(PermissionService.canPerformAction('view_training', role, null),
+            isTrue);
+        expect(PermissionService.canPerformAction('view_match', role, null),
+            isTrue);
+
+        // Forbidden modifications
+        for (final action in [
+          'create_player',
+          'edit_player',
+          'delete_player',
+          'create_training',
+          'edit_training',
+          'delete_training',
+          'create_match',
+          'edit_match',
+          'delete_match',
+          'manage_training_sessions',
+          'manage_exercise_library',
+          'access_field_diagram_editor',
+          'access_exercise_designer',
+          'manage_organization',
+          'view_analytics',
+          'access_annual_planning',
+        ]) {
+          expect(
+              PermissionService.canPerformAction(action, role, null), isFalse,
+              reason: 'role=$role should not be able to $action');
+        }
+      }
+    });
+
+    test('Assistent has limited management access', () {
+      const role = 'assistent';
+      expect(
+          PermissionService.canPerformAction(
+              'manage_training_sessions', role, null),
+          isTrue);
+      expect(
+          PermissionService.canPerformAction(
+              'manage_exercise_library', role, null),
+          isTrue);
+      expect(
+          PermissionService.canPerformAction(
+              'access_field_diagram_editor', role, null),
+          isTrue);
+      expect(
+          PermissionService.canPerformAction(
+              'access_exercise_designer', role, null),
+          isTrue);
+
+      // Cannot create/edit players or matches
+      for (final action in [
+        'create_player',
+        'edit_player',
+        'delete_player',
+        'create_match',
+        'edit_match',
+        'delete_match',
+        'manage_organization',
+        'view_analytics',
+        'access_annual_planning',
+      ]) {
+        expect(PermissionService.canPerformAction(action, role, null), isFalse);
+      }
+    });
+
+    test('Hoofdcoach can manage players, training, matches', () {
+      const role = 'hoofdcoach';
+      for (final action in [
+        'create_player',
+        'edit_player',
+        'delete_player',
+        'create_training',
+        'edit_training',
+        'delete_training',
+        'manage_training_sessions',
+        'create_match',
+        'edit_match',
+        'delete_match',
+        'manage_exercise_library',
+        'access_field_diagram_editor',
+        'access_exercise_designer',
+        'view_analytics',
+        'access_annual_planning',
+      ]) {
+        expect(
+            PermissionService.canPerformAction(
+                action, role, OrganizationTier.pro),
+            isTrue);
+      }
+      // No org management
+      expect(
+          PermissionService.canPerformAction('manage_organization', role, null),
+          isFalse);
+    });
+
+    test('Bestuurder/Admin have full management access', () {
+      for (final role in ['bestuurder', 'admin']) {
+        for (final action in [
+          'create_player',
+          'edit_player',
+          'delete_player',
+          'create_training',
+          'edit_training',
+          'delete_training',
+          'manage_training_sessions',
+          'create_match',
+          'edit_match',
+          'delete_match',
+          'manage_exercise_library',
+          'access_field_diagram_editor',
+          'access_exercise_designer',
+          'manage_organization',
+          'view_analytics',
+          'access_annual_planning',
+        ]) {
+          expect(
+              PermissionService.canPerformAction(
+                  action, role, OrganizationTier.enterprise),
+              isTrue,
+              reason: 'role=$role should be able to $action');
+        }
+      }
+    });
+
+    test('SVS requires tier > basic', () {
+      for (final tier in OrganizationTier.values) {
+        final can = PermissionService.canAccessSVS('hoofdcoach', tier);
+        expect(can, tier == OrganizationTier.basic ? isFalse : isTrue);
+      }
+    });
+  });
   group('PermissionService view-only helpers', () {
     test('Players and parents are view-only users', () {
       expect(PermissionService.isViewOnlyUser('speler'), isTrue);
