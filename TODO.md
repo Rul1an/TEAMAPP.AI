@@ -14,6 +14,8 @@ Prioriteit A (kritiek, eerst oppakken)
 
 Prioriteit B (hoog)
 - [ ] Repositories: standaardiseer error- en caching-strategie; documenteer SWR en invalidatie.
+  - [x] Standaard testset geïmplementeerd voor Trainings, Players, Matches; overview sectie “Repository Test Standard (2025)” toegevoegd.
+  - [ ] Profielen en Statistieken repositories in hetzelfde patroon testen en documenteren.
 - [ ] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer.
 - [ ] Observability: review OTel/Sentry config, scrub PII, definieer sampling en events.
   - [x] CI workflow gefilterd op migrations + concurrency toegevoegd (stabiliteit).

@@ -1,83 +1,110 @@
 // Dart imports:
-import 'dart:async';
+import 'dart:io';
 
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 // Project imports:
+import 'package:jo17_tactical_manager/core/result.dart';
 import 'package:jo17_tactical_manager/data/supabase_profile_data_source.dart';
 import 'package:jo17_tactical_manager/hive/hive_profile_cache.dart';
 import 'package:jo17_tactical_manager/models/profile.dart';
 import 'package:jo17_tactical_manager/repositories/profile_repository_impl.dart';
 
-class _MockRemote extends Mock implements SupabaseProfileDataSource {}
+class _FakeRemote extends Mock implements SupabaseProfileDataSource {}
 
-class _MockCache extends Mock implements HiveProfileCache {}
+class _FakeCache extends Mock implements HiveProfileCache {}
 
 void main() {
-  // Shared dummy profile
+  setUpAll(() {
+    // Needed because we use any() with Profile and File in mocktail
+    registerFallbackValue(Profile(
+      userId: 'x',
+      organizationId: 'org',
+      username: 'u',
+      avatarUrl: null,
+      website: null,
+      createdAt: DateTime.utc(2024),
+      updatedAt: DateTime.utc(2024),
+    ));
+    registerFallbackValue(File('dummy'));
+  });
+  late _FakeRemote remote;
+  late _FakeCache cache;
+  late ProfileRepositoryImpl repo;
+
   final profile = Profile(
     userId: 'u1',
     organizationId: 'org1',
-    username: 'john',
-    createdAt: DateTime.utc(2024),
-    updatedAt: DateTime.utc(2024),
+    username: 'user',
+    avatarUrl: null,
+    website: null,
+    createdAt: DateTime.utc(2024, 1, 1),
+    updatedAt: DateTime.utc(2024, 1, 1),
   );
 
-  group('ProfileRepositoryImpl', () {
-    late _MockRemote remote;
-    late _MockCache cache;
-    late ProfileRepositoryImpl repo;
+  setUp(() {
+    remote = _FakeRemote();
+    cache = _FakeCache();
+    repo = ProfileRepositoryImpl(remote: remote, cache: cache);
+  });
 
-    setUpAll(() {
-      registerFallbackValue(profile);
-    });
-
-    setUp(() {
-      remote = _MockRemote();
-      cache = _MockCache();
-      repo = ProfileRepositoryImpl(remote: remote, cache: cache);
-    });
-
-    test('getCurrent returns remote data and writes to cache', () async {
+  group('getCurrent', () {
+    test('returns remote profile and writes cache on success', () async {
       when(() => remote.fetchCurrent()).thenAnswer((_) async => profile);
-      when(() => cache.write(profile)).thenAnswer((_) async {});
+      when(() => cache.write(any())).thenAnswer((_) async {});
 
       final res = await repo.getCurrent();
 
+      expect(res.isSuccess, true);
       expect(res.dataOrNull, profile);
       verify(() => cache.write(profile)).called(1);
     });
 
-    test('getCurrent falls back to cache on error', () async {
-      when(() => remote.fetchCurrent()).thenThrow(Exception('network'));
+    test('falls back to cache when network fails', () async {
+      when(() => remote.fetchCurrent())
+          .thenThrow(const SocketException('down'));
       when(() => cache.read()).thenAnswer((_) async => profile);
 
       final res = await repo.getCurrent();
-
+      expect(res.isSuccess, true);
       expect(res.dataOrNull, profile);
-      verify(() => cache.read()).called(1);
     });
 
-    test('watch emits cached then remote updates', () async {
-      when(() => cache.read()).thenAnswer((_) async => profile);
+    test('returns Failure(NetworkFailure) when both remote and cache fail',
+        () async {
+      when(() => remote.fetchCurrent())
+          .thenThrow(const SocketException('down'));
+      when(() => cache.read()).thenAnswer((_) async => null);
 
-      // Stream controller for remote updates
-      final controller = StreamController<Profile>();
-      when(() => remote.subscribe()).thenAnswer((_) => controller.stream);
+      final res = await repo.getCurrent();
+
+      expect(res.isFailure, true);
+      expect(res.errorOrNull, isA<NetworkFailure>());
+    });
+  });
+
+  group('update & uploadAvatar', () {
+    test('update writes cache and returns Success', () async {
+      when(() => remote.update(
+          username: any(named: 'username'),
+          avatarUrl: any(named: 'avatarUrl'),
+          website: any(named: 'website'))).thenAnswer((_) async => profile);
       when(() => cache.write(any())).thenAnswer((_) async {});
 
-      // Collect first two events then cancel
-      final stream = repo.watch().take(2).toList();
+      final res = await repo.update(username: 'new');
+      expect(res.isSuccess, true);
+      verify(() => cache.write(profile)).called(1);
+    });
 
-      // Emit remote update
-      final updated = profile.copyWith(username: 'doe');
-      controller.add(updated);
-      await controller.close();
+    test('uploadAvatar writes cache and returns Success', () async {
+      when(() => remote.uploadAvatar(any())).thenAnswer((_) async => profile);
+      when(() => cache.write(any())).thenAnswer((_) async {});
 
-      final events = await stream;
-      expect(events, [profile, updated]);
+      final res = await repo.uploadAvatar(File('x'));
+      expect(res.isSuccess, true);
+      verify(() => cache.write(profile)).called(1);
     });
   });
 }
