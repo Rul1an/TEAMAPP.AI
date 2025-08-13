@@ -35,6 +35,34 @@ See the detailed guide: `docs/guides/REPOSITORY_USAGE_GUIDE_2025.md`.
 
 ---
 
+## 🧪 Running Tests (2025)
+
+Profiles:
+- Unit/Widget/Providers/Repos (default): fast, hermetic.
+- Integration (no network): optional.
+- Live/E2E: Supabase real DB + integration_test runner, manual only.
+
+Commands:
+```bash
+# Unit/Widget/Providers/Repos only (what CI main runs)
+flutter test \
+  test/models test/providers test/repositories test/widgets \
+  test/controllers test/utils test/hive test/navigation test/golden test/performance
+
+# Live DB (manual/local) – requires env
+export SUPABASE_URL=...; export SUPABASE_ANON_KEY=...; export ENABLE_REAL_DB_TESTS=1
+flutter test test/integration/supabase_real_database_integration_test.dart
+
+# E2E runner (manual/local)
+flutter test integration_test
+```
+
+CI:
+- `.github/workflows/main-ci.yml`: unit/widget only.
+- `.github/workflows/live-ci.yml`: manual; runs Supabase live + E2E with secrets.
+
+---
+
 ## ⚙️ Local Setup
 ```bash
 # 1. Install Flutter 3.32 + dart 3.8
