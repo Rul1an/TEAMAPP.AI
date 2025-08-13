@@ -15,19 +15,22 @@ Prioriteit A (kritiek, eerst oppakken)
 Prioriteit B (hoog)
 - [ ] Repositories: standaardiseer error- en caching-strategie; documenteer SWR en invalidatie.
   - [x] Standaard testset geïmplementeerd voor Trainings, Players, Matches; overview sectie “Repository Test Standard (2025)” toegevoegd.
-  - [ ] Profielen en Statistieken repositories in hetzelfde patroon testen en documenteren.
+  - [x] Profielen en Statistieken providers rooktests toegevoegd (UI‑safe folding). GraphQL tag‑subscription provider gedekt.
 - [ ] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer.
 - [ ] Observability: review OTel/Sentry config, scrub PII, definieer sampling en events.
   - [x] CI workflow gefilterd op migrations + concurrency toegevoegd (stabiliteit).
+  - [x] Sentry PII‑scrub via breadcrumbs + sample rates via defines; analyzer info’s opgelost.
 
 Prioriteit C (medium)
 - [ ] Notifications: platform-setup controleren (iOS/Android), topic/tenant scoping valideren; smoke tests.
+  - [x] Topic helpers + validatie toegevoegd; rooktests zonder Firebase init.
 - [ ] Video: compat/perf-meting web/mobiel; fallback-strategie vastleggen.
 - [ ] Demo/standalone: e2e tests voor guards en deep-links naar mutatieroutes.
   - [x] 404/500 pagina's: `web/404.html`/`500.html` toegevoegd en Netlify CSP/redirects geverifieerd; CSP uitgebreid met Sentry ingest.
 
 Prioriteit D (opruiming/beleid)
 - [ ] GraphQL: gebruik inventariseren; verwijderen indien ongebruikt of adoptieplan opstellen.
+  - [x] Gebruik bevestigd in video tagging; provider test toegevoegd.
 - [ ] Privacy/GDPR: export/delete flows, dataretentie, consent; loghygiene check.
 - [ ] Rollen-constants: vervang stringliterals door centrale constants/enum om typefouten te voorkomen.
 
@@ -59,11 +62,11 @@ Kwaliteitschecks (voor elke PR)
 *   [X] **Excel/CSV Import:**
     *   [X] Build a template generator. *(Done for players in `import_service.dart`)*
     *   [X] Enable bulk import of players. *(Done in `import_service.dart`)*
-    *   [ ] Allow import of match schedules.
+    *   [x] Allow import of match schedules. (CSV import service + tests)
     *   [ ] Allow import of training plans.
 *   [/] **Validation & Error Handling:**
     *   [X] Implement data validation for imports. *(Done)*
-    *   [/] Add duplicate detection. *(Partially Done: Needs explicit check before insert)*
+    *   [x] Add duplicate detection. *(Key op datum+tegenstander; getest)*
     *   [X] Create error reporting for failed imports. *(Done)*
 
 **Future Features (Backlog)**
