@@ -6,6 +6,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'telemetry_service.dart';
+import 'pii_sanitizer.dart';
 
 /// Enhanced monitoring service for production-ready SaaS application
 /// Implements comprehensive error tracking, performance monitoring, and analytics
@@ -58,8 +59,9 @@ class MonitoringService {
           ..dsn = _sentryDsn
           ..environment = kReleaseMode ? 'production' : 'staging'
           ..release = 'jo17-tactical-manager@1.0.0'
-          ..tracesSampleRate = 0.1 // 10% of transactions
-          ..profilesSampleRate = 0.1 // 10% for profiling
+          ..tracesSampleRate = _readSampleRate('SENTRY_TRACES_SAMPLE_RATE', 0.1)
+          ..profilesSampleRate =
+              _readSampleRate('SENTRY_PROFILES_SAMPLE_RATE', 0.1)
           ..beforeSend = (event, hint) {
             // Filter out development errors
             if (kDebugMode) return null;
@@ -74,15 +76,101 @@ class MonitoringService {
               }
             }
 
-            return event;
+            // Sanitize PII in event
+            final sanitizedHeaders = event.request?.headers == null
+                ? null
+                : PiiSanitizer.sanitizeMap(
+                    Map<String, dynamic>.from(event.request!.headers),
+                  ).map((k, v) => MapEntry(k, v.toString()));
+
+            final sanitizedRequestData =
+                event.request?.data is Map<String, dynamic>
+                    ? PiiSanitizer.sanitizeMap(
+                        Map<String, dynamic>.from(
+                          event.request!.data as Map<String, dynamic>,
+                        ),
+                      )
+                    : event.request?.data is String
+                        ? PiiSanitizer.sanitizeString(
+                            event.request!.data as String,
+                          )
+                        : event.request?.data;
+
+            final sanitizedTags = event.tags == null
+                ? null
+                : PiiSanitizer.sanitizeMap(
+                        Map<String, dynamic>.from(event.tags!))
+                    .map((k, v) => MapEntry(k, v.toString()));
+
+            final sanitizedExtra = event.extra == null
+                ? null
+                : PiiSanitizer.sanitizeMap(
+                    Map<String, dynamic>.from(event.extra!),
+                  );
+
+            final sanitized = event.copyWith(
+              user: event.user == null
+                  ? null
+                  : SentryUser(
+                      id: event.user!.id,
+                      username: event.user!.username,
+                      email: event.user!.email == null
+                          ? null
+                          : PiiSanitizer.redacted,
+                      ipAddress: event.user!.ipAddress,
+                      data: event.user!.data,
+                    ),
+              request: event.request == null
+                  ? null
+                  : SentryRequest(
+                      url: event.request!.url,
+                      method: event.request!.method,
+                      queryString: event.request!.queryString,
+                      cookies: event.request!.cookies,
+                      headers: sanitizedHeaders,
+                      data: sanitizedRequestData,
+                      env: event.request!.env,
+                    ),
+              tags: sanitizedTags,
+              extra: sanitizedExtra,
+            );
+
+            return sanitized;
           }
           ..beforeSendTransaction = (transaction, hint) {
             return transaction;
           }
-          ..beforeBreadcrumb =
-              (Breadcrumb? breadcrumb, Hint? hint) => breadcrumb;
+          ..beforeBreadcrumb = (Breadcrumb? breadcrumb, Hint? hint) {
+            if (breadcrumb == null) return null;
+            final data = breadcrumb.data;
+            final sanitizedMessage = breadcrumb.message == null
+                ? null
+                : PiiSanitizer.sanitizeString(breadcrumb.message!);
+            final sanitizedData = data == null
+                ? null
+                : PiiSanitizer.sanitizeMap(
+                    Map<String, dynamic>.from(data),
+                  );
+            return Breadcrumb(
+              message: sanitizedMessage,
+              data: sanitizedData,
+              category: breadcrumb.category,
+              level: breadcrumb.level,
+              type: breadcrumb.type,
+              timestamp: breadcrumb.timestamp,
+            );
+          };
       });
     }
+  }
+
+  static double _readSampleRate(String defineKey, double fallback) {
+    final value = String.fromEnvironment(defineKey, defaultValue: '');
+    final parsed = double.tryParse(value);
+    if (parsed == null) return fallback;
+    if (parsed < 0.0) return 0.0;
+    if (parsed > 1.0) return 1.0;
+    return parsed;
   }
 
   /// Track custom events for business metrics
