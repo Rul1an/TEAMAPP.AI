@@ -76,66 +76,8 @@ class MonitoringService {
               }
             }
 
-            // Sanitize PII in event
-            final sanitizedHeaders = event.request?.headers == null
-                ? null
-                : PiiSanitizer.sanitizeMap(
-                    Map<String, dynamic>.from(event.request!.headers),
-                  ).map((k, v) => MapEntry(k, v.toString()));
-
-            final sanitizedRequestData =
-                event.request?.data is Map<String, dynamic>
-                    ? PiiSanitizer.sanitizeMap(
-                        Map<String, dynamic>.from(
-                          event.request!.data as Map<String, dynamic>,
-                        ),
-                      )
-                    : event.request?.data is String
-                        ? PiiSanitizer.sanitizeString(
-                            event.request!.data as String,
-                          )
-                        : event.request?.data;
-
-            final sanitizedTags = event.tags == null
-                ? null
-                : PiiSanitizer.sanitizeMap(
-                        Map<String, dynamic>.from(event.tags!))
-                    .map((k, v) => MapEntry(k, v.toString()));
-
-            final sanitizedExtra = event.extra == null
-                ? null
-                : PiiSanitizer.sanitizeMap(
-                    Map<String, dynamic>.from(event.extra!),
-                  );
-
-            final sanitized = event.copyWith(
-              user: event.user == null
-                  ? null
-                  : SentryUser(
-                      id: event.user!.id,
-                      username: event.user!.username,
-                      email: event.user!.email == null
-                          ? null
-                          : PiiSanitizer.redacted,
-                      ipAddress: event.user!.ipAddress,
-                      data: event.user!.data,
-                    ),
-              request: event.request == null
-                  ? null
-                  : SentryRequest(
-                      url: event.request!.url,
-                      method: event.request!.method,
-                      queryString: event.request!.queryString,
-                      cookies: event.request!.cookies,
-                      headers: sanitizedHeaders,
-                      data: sanitizedRequestData,
-                      env: event.request!.env,
-                    ),
-              tags: sanitizedTags,
-              extra: sanitizedExtra,
-            );
-
-            return sanitized;
+            // Keep event unchanged to avoid deprecated APIs; PII is handled in breadcrumbs.
+            return event;
           }
           ..beforeSendTransaction = (transaction, hint) {
             return transaction;
