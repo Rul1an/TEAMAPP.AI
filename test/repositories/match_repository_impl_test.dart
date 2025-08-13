@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 // Project imports:
+import 'package:jo17_tactical_manager/core/result.dart';
 import 'package:jo17_tactical_manager/data/supabase_match_data_source.dart';
 import 'package:jo17_tactical_manager/hive/hive_match_cache.dart';
 import 'package:jo17_tactical_manager/models/match.dart';
@@ -70,5 +71,16 @@ void main() {
 
     expect(res.isSuccess, true);
     verify(() => cache.clear()).called(1);
+  });
+
+  test('returns Failure(NetworkFailure) when network & cache both fail',
+      () async {
+    when(() => remote.fetchAll()).thenThrow(const SocketException('down'));
+    when(() => cache.read()).thenAnswer((_) async => null);
+
+    final res = await repo.getAll();
+
+    expect(res.isFailure, true);
+    expect(res.errorOrNull, isA<NetworkFailure>());
   });
 }
