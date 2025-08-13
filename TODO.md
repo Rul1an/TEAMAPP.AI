@@ -4,21 +4,25 @@ Prioriteit A (kritiek, eerst oppakken)
 - [ ] RBAC/RLS: maak een permissie x tabel-matrix en voeg security tests toe voor create/edit/delete/view paden.
   - [x] RBAC-matrix document toegevoegd (`docs/architecture/RBAC_MATRIX.md`).
   - [x] Unit tests voor `PermissionService` toegevoegd (`test/services/permission_service_test.dart`).
-  - [ ] RLS end-to-end verificatietests uitbreiden (integration) en stabiliseren.
+  - [ ] RLS end-to-end verificatietests uitbreiden (integration) en stabiliseren (admin-harnas toegevoegd: `test/integration/rls_admin_harness_test.dart`, default skip).
 - [ ] CI/CD defines: documenteer verplichte `--dart-define` per omgeving; valideer workflows en secrets.
+  - [x] Overzicht toegevoegd (`docs/plans/CI_SECRETS_ENV.md`).
 - [ ] Models/JSON: audit IDs (String), expliciete casts/defaults; fix afwijkingen.
   - [x] Policy-test toegevoegd voor String IDs in modellen (`test/policies/model_id_policy_test.dart`).
+  - [x] `TrainingExercise.id` omgezet naar `String` en JSON aangepast.
   - [ ] Volledige audit over alle `models/` (IDs, null-safety, defaults) en fixes waar nodig.
 
 Prioriteit B (hoog)
 - [ ] Repositories: standaardiseer error- en caching-strategie; documenteer SWR en invalidatie.
 - [ ] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer.
 - [ ] Observability: review OTel/Sentry config, scrub PII, definieer sampling en events.
+  - [x] CI workflow gefilterd op migrations + concurrency toegevoegd (stabiliteit).
 
 Prioriteit C (medium)
 - [ ] Notifications: platform-setup controleren (iOS/Android), topic/tenant scoping valideren; smoke tests.
 - [ ] Video: compat/perf-meting web/mobiel; fallback-strategie vastleggen.
 - [ ] Demo/standalone: e2e tests voor guards en deep-links naar mutatieroutes.
+ - [ ] 404/500 pagina's: voeg `web/404.html`/`500.html` toe en check SPA fallback vs security tests.
 
 Prioriteit D (opruiming/beleid)
 - [ ] GraphQL: gebruik inventariseren; verwijderen indien ongebruikt of adoptieplan opstellen.
