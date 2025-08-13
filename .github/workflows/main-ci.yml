@@ -1,41 +1,3 @@
-name: Main CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  unit_widget:
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-      - name: Pub get
-        working-directory: jo17_tactical_manager
-        run: flutter pub get
-      - name: Analyze (fatal infos)
-        working-directory: jo17_tactical_manager
-        run: flutter analyze --fatal-infos
-      - name: Unit/Widget/Providers/Repos tests (exclude integration & e2e)
-        working-directory: jo17_tactical_manager
-        run: |
-          flutter test -r expanded \
-            test/models \
-            test/providers \
-            test/repositories \
-            test/widgets \
-            test/controllers \
-            test/utils \
-            test/hive \
-            test/navigation \
-            test/golden \
-            test/performance
-
 name: 🚀 Modern CI/CD Pipeline - 2025 Best Practices
 
 on:
@@ -387,6 +349,76 @@ jobs:
           echo "Emergency diagnostics collected in emergency-diagnostics/"
           ls -la emergency-diagnostics/
           echo "::endgroup::"
+
+  # Phase 1.5: Web Build Matrix (CanvasKit vs Wasm) - metrics only, no deploy
+  web-build-matrix:
+    name: 🌐 Web Build Matrix (${% raw %}{{ matrix.target }}{% endraw %})
+    runs-on: ubuntu-latest
+    needs: quality-and-test
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [canvaskit, wasm]
+    continue-on-error: ${% raw %}{{ matrix.target == 'wasm' }}{% endraw %}
+    permissions:
+      contents: read
+      actions: read
+    timeout-minutes: 12
+    steps:
+      - name: 📂 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📱 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${% raw %}{{ env.FLUTTER_VERSION }}{% endraw %}
+          channel: stable
+          cache: true
+
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      - name: 🏗️ Build Web (${% raw %}{{ matrix.target }}{% endraw %})
+        env:
+          SUPABASE_URL: ${% raw %}{{ secrets.SUPABASE_URL_PREVIEW || secrets.SUPABASE_URL }}{% endraw %}
+          SUPABASE_ANON_KEY: ${% raw %}{{ secrets.SUPABASE_ANON_KEY_PREVIEW || secrets.SUPABASE_ANON_KEY }}{% endraw %}
+        run: |
+          set -e
+          if [ "${% raw %}{{ matrix.target }}{% endraw %}" = "wasm" ]; then
+            echo "Building Web (Wasm)"
+            flutter build web --wasm --release \
+              --dart-define=SUPABASE_URL=${SUPABASE_URL} \
+              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+          else
+            echo "Building Web (CanvasKit default)"
+            flutter build web --release \
+              --dart-define=SUPABASE_URL=${SUPABASE_URL} \
+              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+          fi
+          # Metrics
+          BUILD_DIR=build/web
+          echo "Collecting build metrics for ${% raw %}{{ matrix.target }}{% endraw %}"
+          BUILD_SIZE_KB=$(du -sk "$BUILD_DIR" | cut -f1)
+          BUILD_SIZE_MB=$(echo "scale=2; $BUILD_SIZE_KB/1024" | bc)
+          FILE_COUNT=$(find "$BUILD_DIR" -type f | wc -l)
+          LARGEST=$(find "$BUILD_DIR" -type f -exec ls -lh {} + | sort -rh -k5 | head -5 || true)
+          echo "variant=${% raw %}{{ matrix.target }}{% endraw %}" >> build_metrics.txt
+          echo "size_mb=$BUILD_SIZE_MB" >> build_metrics.txt
+          echo "files=$FILE_COUNT" >> build_metrics.txt
+          echo "largest:\n$LARGEST" >> build_metrics.txt
+          echo "\n### Web Build (${% raw %}{{ matrix.target }}{% endraw %})\n" >> $GITHUB_STEP_SUMMARY
+          echo "- Size: ${BUILD_SIZE_MB}MB" >> $GITHUB_STEP_SUMMARY
+          echo "- Files: ${FILE_COUNT}" >> $GITHUB_STEP_SUMMARY
+          echo "- Largest assets:\n\n\`\n$LARGEST\n\`" >> $GITHUB_STEP_SUMMARY
+
+      - name: 📤 Upload Build (${% raw %}{{ matrix.target }}{% endraw %})
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-${% raw %}{{ matrix.target }}{% endraw %}-${% raw %}{{ github.sha }}{% endraw %}
+          path: |
+            build/web/
+            build_metrics.txt
+          retention-days: 5
 
   # Phase 2: Build & Deploy Pipeline
   build-and-deploy:
