@@ -1,6 +1,7 @@
 // test/integration/supabase_real_database_integration_test.dart
 
 import 'package:flutter_test/flutter_test.dart';
+import 'dart:io';
 import 'package:supabase/supabase.dart';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
@@ -22,6 +23,9 @@ import '../fixtures/test_data_factory.dart';
 /// Gebaseerd op Supabase 2025 testing best practices:
 /// https://supabase.com/docs/guides/local-development/testing/overview
 void main() {
+  final skipRealDb = Platform.environment['CI'] == 'true' &&
+      Platform.environment['ENABLE_REAL_DB_TESTS'] != '1';
+
   group('🔥 Supabase Real Database Integration Tests (2025)', () {
     late SupabaseClient testClient;
     late String testOrgId1;
@@ -458,7 +462,10 @@ void main() {
         }
       });
     });
-  });
+  },
+      skip: skipRealDb
+          ? 'Skipped in CI (set ENABLE_REAL_DB_TESTS=1 to enable)'
+          : false);
 }
 
 /// Generate unique user ID using crypto

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:convert';
 import 'package:test/test.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,9 @@ import 'package:http/http.dart' as http;
 /// Based on: jo17_tactical_manager/docs/MINIMALE_DATABASE_AUDIT_PLAN.md
 /// Section: 🚀 Productie Testing (2-3 uur)
 void main() {
+  final skipInCi = Platform.environment['CI'] == 'true' &&
+      Platform.environment['ENABLE_PROD_TESTS'] != '1';
+
   group('Database Audit Phase 3 - Production Testing', () {
     // Test configuration - can be overridden for different environments
     const String testBaseUrl = 'https://teamappai.netlify.app';
@@ -758,7 +762,10 @@ void main() {
                 'Most error handling tests should pass without information disclosure');
       });
     });
-  });
+  },
+      skip: skipInCi
+          ? 'Skipped in CI (set ENABLE_PROD_TESTS=1 to enable)'
+          : false);
 }
 
 /// Helper class for collecting and analyzing production security test results
