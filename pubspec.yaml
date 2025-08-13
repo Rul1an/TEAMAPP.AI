@@ -97,6 +97,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  test: ^1.25.2
   test_utils:
     path: packages/test_utils
   mocktail: ^1.0.1

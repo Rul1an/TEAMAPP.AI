@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:http/http.dart' as http;
 
 /// Database Audit Phase 3 - Production Testing
@@ -17,7 +17,7 @@ import 'package:http/http.dart' as http;
 void main() {
   group('Database Audit Phase 3 - Production Testing', () {
     // Test configuration - can be overridden for different environments
-    const String testBaseUrl = 'https://teamappai.netlify.com';
+    const String testBaseUrl = 'https://teamappai.netlify.app';
     const String apiBaseUrl = 'https://ohdbsujaetmrztseqana.supabase.co';
 
     group('1. Browser Security Headers Validation', () {
@@ -308,8 +308,10 @@ void main() {
               },
             ).timeout(const Duration(seconds: 5));
 
+            final safePreview =
+                payload.length > 20 ? payload.substring(0, 20) : payload;
             print(
-                'Testing SQL payload: ${payload.substring(0, 20)}... → ${response.statusCode}');
+                'Testing SQL payload: $safePreview... → ${response.statusCode}');
 
             // Should handle gracefully (400/401/403), not 500 (internal error)
             expect(response.statusCode, isNot(equals(500)),

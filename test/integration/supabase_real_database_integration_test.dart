@@ -1,7 +1,7 @@
 // test/integration/supabase_real_database_integration_test.dart
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase/supabase.dart';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
@@ -35,7 +35,7 @@ void main() {
       testClient = SupabaseClient(
         Environment.test.supabaseUrl,
         Environment.test.supabaseAnonKey,
-        // For integration tests we don't persist sessions; PKCE storage not required
+        // Keep auth simple in CI; no PKCE storage required
         authOptions: const AuthClientOptions(
           autoRefreshToken: false,
         ),
