@@ -3,15 +3,16 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('ID String Policy: no "int id" fields in lib/models/**', () async {
+  test('ID String Policy: no "int id" fields in lib/models/**', () {
     final projectRoot = Directory.current.path;
     final modelsDir = Directory('$projectRoot/lib/models');
-    expect(await modelsDir.exists(), isTrue);
+    expect(modelsDir.existsSync(), isTrue);
 
     final badFiles = <String>[];
-    await for (final entity in modelsDir.list(recursive: true)) {
+    final entities = modelsDir.listSync(recursive: true);
+    for (final entity in entities) {
       if (entity is File && entity.path.endsWith('.dart')) {
-        final content = await entity.readAsString();
+        final content = entity.readAsStringSync();
         // Simple heuristic: forbid `int id` and `int? id` declarations.
         if (RegExp(r'\bint\??\s+id\b').hasMatch(content)) {
           badFiles.add(entity.path);
