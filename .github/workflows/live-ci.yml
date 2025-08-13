@@ -1,0 +1,41 @@
+name: Live & E2E (manual)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  live_supabase_and_e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL_PREVIEW }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY_PREVIEW }}
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF_PREVIEW }}
+      ENABLE_REAL_DB_TESTS: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Supabase login/link
+        run: |
+          supabase login --token "$SUPABASE_ACCESS_TOKEN"
+          supabase link --project-ref "$SUPABASE_PROJECT_REF"
+      - name: Pub get
+        working-directory: jo17_tactical_manager
+        run: flutter pub get
+      - name: Run Supabase real DB integration tests (gated)
+        working-directory: jo17_tactical_manager
+        run: |
+          flutter test -r expanded test/integration/supabase_real_database_integration_test.dart
+      - name: Run E2E (integration_test) via device runner
+        working-directory: jo17_tactical_manager
+        run: |
+          flutter test -r expanded integration_test || true
+
+

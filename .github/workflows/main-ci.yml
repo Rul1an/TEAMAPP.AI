@@ -1,3 +1,41 @@
+name: Main CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit_widget:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Pub get
+        working-directory: jo17_tactical_manager
+        run: flutter pub get
+      - name: Analyze (fatal infos)
+        working-directory: jo17_tactical_manager
+        run: flutter analyze --fatal-infos
+      - name: Unit/Widget/Providers/Repos tests (exclude integration & e2e)
+        working-directory: jo17_tactical_manager
+        run: |
+          flutter test -r expanded \
+            test/models \
+            test/providers \
+            test/repositories \
+            test/widgets \
+            test/controllers \
+            test/utils \
+            test/hive \
+            test/navigation \
+            test/golden \
+            test/performance
+
 name: 🚀 Modern CI/CD Pipeline - 2025 Best Practices
 
 on:
