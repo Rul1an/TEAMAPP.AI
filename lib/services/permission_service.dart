@@ -262,7 +262,7 @@ class PermissionService {
   /// Get role display information
   static Map<String, dynamic> getRoleInfo(String? userRole) {
     switch (userRole) {
-      case 'bestuurder':
+      case Roles.bestuurder:
         return {
           'name': 'Bestuurder',
           'description': 'Volledige admin toegang',
@@ -270,7 +270,7 @@ class PermissionService {
           'icon': 'admin_panel_settings',
           'access_level': 'full',
         };
-      case 'hoofdcoach':
+      case Roles.hoofdcoach:
         return {
           'name': 'Hoofdcoach',
           'description': 'Team management en training',
@@ -278,7 +278,7 @@ class PermissionService {
           'icon': 'sports',
           'access_level': 'management',
         };
-      case 'assistent':
+      case Roles.assistent:
         return {
           'name': 'Assistent Coach',
           'description': 'Beperkte management toegang',
@@ -286,7 +286,7 @@ class PermissionService {
           'icon': 'assistant',
           'access_level': 'limited',
         };
-      case 'speler':
+      case Roles.speler:
         return {
           'name': 'Speler',
           'description': 'Alleen bekijken toegestaan',
@@ -294,7 +294,7 @@ class PermissionService {
           'icon': 'person',
           'access_level': 'view_only',
         };
-      case 'ouder':
+      case Roles.ouder:
         return {
           'name': 'Ouder',
           'description': 'Beperkte bekijk toegang',

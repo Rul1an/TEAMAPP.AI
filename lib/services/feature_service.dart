@@ -2,6 +2,8 @@
 /// Manages subscription tiers and feature access control
 library;
 
+import '../constants/roles.dart';
+
 // Features available in the system
 enum Feature {
   // Core features (Basic tier)
@@ -187,7 +189,7 @@ class FeatureService {
   // Role-based permissions
   bool hasPermission(String role, String permission) {
     const rolePermissions = {
-      'bestuurder': [
+      Roles.bestuurder: [
         'manage_club',
         'manage_teams',
         'manage_coaches',
@@ -197,7 +199,7 @@ class FeatureService {
         'manage_settings',
         'export_data',
       ],
-      'hoofdcoach': [
+      Roles.hoofdcoach: [
         'manage_team',
         'manage_training',
         'manage_matches',
@@ -206,13 +208,13 @@ class FeatureService {
         'manage_tactics',
         'plan_season',
       ],
-      'assistent_coach': [
+      Roles.assistent: [
         'view_team',
         'assist_training',
         'view_player_data',
         'create_basic_reports',
       ],
-      'speler': ['view_own_data', 'view_team_schedule', 'submit_wellness'],
+      Roles.speler: ['view_own_data', 'view_team_schedule', 'submit_wellness'],
     };
 
     return rolePermissions[role]?.contains(permission) ?? false;
