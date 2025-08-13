@@ -232,9 +232,11 @@ class _TrainingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attendancePercentage = training.presentPlayerIds.length /
-        (training.presentPlayerIds.length + training.absentPlayerIds.length) *
-        100;
+    final presentCount = training.presentPlayerIds.length;
+    final absentCount = training.absentPlayerIds.length;
+    final totalCount = presentCount + absentCount;
+    final double attendancePercentage =
+        totalCount == 0 ? 0 : (presentCount / totalCount) * 100;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -292,8 +294,7 @@ class _TrainingCard extends StatelessWidget {
                       training.location ?? 'Locatie onbekend',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    if (training.coachNotes != null &&
-                        training.coachNotes!.isNotEmpty) ...[
+                    if ((training.coachNotes ?? '').isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Text(
                         training.coachNotes!,
@@ -318,7 +319,7 @@ class _TrainingCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Text(
-                        '${attendancePercentage.toStringAsFixed(0)}%',
+                        '${attendancePercentage.isFinite ? attendancePercentage.toStringAsFixed(0) : '0'}%',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: attendancePercentage >= 80
