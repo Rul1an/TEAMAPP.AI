@@ -10,11 +10,11 @@ import 'package:jo17_tactical_manager/features/video_tagging/providers/tag_subsc
 
 class _MockGraphQLClient extends Mock implements GraphQLClient {}
 
-class _FakeSubscriptionOptions extends Fake implements SubscriptionOptions {}
-
 void main() {
   setUpAll(() {
-    registerFallbackValue(_FakeSubscriptionOptions());
+    registerFallbackValue(
+      SubscriptionOptions(document: gql('subscription { __typename }')),
+    );
   });
 
   test('tagSubscriptionProvider maps GraphQL result to VideoTag list',
