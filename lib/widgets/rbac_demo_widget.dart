@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../models/organization.dart';
+import '../constants/roles.dart';
 import '../providers/demo_mode_provider.dart';
 import '../services/permission_service.dart';
 
@@ -65,7 +66,7 @@ class RBACDemoWidget extends ConsumerWidget {
                 _buildRoleButton(
                   context,
                   ref,
-                  'bestuurder',
+                  Roles.bestuurder,
                   'Bestuurder',
                   Icons.admin_panel_settings,
                   Colors.red,
@@ -73,7 +74,7 @@ class RBACDemoWidget extends ConsumerWidget {
                 _buildRoleButton(
                   context,
                   ref,
-                  'hoofdcoach',
+                  Roles.hoofdcoach,
                   'Hoofdcoach',
                   Icons.sports,
                   Colors.blue,
@@ -81,7 +82,7 @@ class RBACDemoWidget extends ConsumerWidget {
                 _buildRoleButton(
                   context,
                   ref,
-                  'assistent',
+                  Roles.assistent,
                   'Assistent',
                   Icons.assistant,
                   Colors.green,
@@ -89,7 +90,7 @@ class RBACDemoWidget extends ConsumerWidget {
                 _buildRoleButton(
                   context,
                   ref,
-                  'speler',
+                  Roles.speler,
                   'Speler',
                   Icons.person,
                   Colors.orange,
@@ -97,7 +98,7 @@ class RBACDemoWidget extends ConsumerWidget {
                 _buildRoleButton(
                   context,
                   ref,
-                  'ouder',
+                  Roles.ouder,
                   'Ouder',
                   Icons.family_restroom,
                   Colors.purple,
@@ -346,17 +347,17 @@ class RBACDemoWidget extends ConsumerWidget {
 
   String _getRoleDisplayName(String? role) {
     switch (role) {
-      case 'bestuurder':
+      case Roles.bestuurder:
         return 'Bestuurder';
-      case 'hoofdcoach':
+      case Roles.hoofdcoach:
         return 'Hoofdcoach';
-      case 'assistent':
+      case Roles.assistent:
         return 'Assistent';
-      case 'speler':
+      case Roles.speler:
         return 'Speler';
-      case 'ouder':
+      case Roles.ouder:
         return 'Ouder';
-      case 'admin':
+      case Roles.admin:
         return 'Admin';
       default:
         return 'Onbekend';
@@ -365,17 +366,17 @@ class RBACDemoWidget extends ConsumerWidget {
 
   Color _getRoleColor(String? role) {
     switch (role) {
-      case 'bestuurder':
+      case Roles.bestuurder:
         return Colors.red;
-      case 'hoofdcoach':
+      case Roles.hoofdcoach:
         return Colors.blue;
-      case 'assistent':
+      case Roles.assistent:
         return Colors.green;
-      case 'speler':
+      case Roles.speler:
         return Colors.orange;
-      case 'ouder':
+      case Roles.ouder:
         return Colors.purple;
-      case 'admin':
+      case Roles.admin:
         return Colors.red;
       default:
         return Colors.grey;
