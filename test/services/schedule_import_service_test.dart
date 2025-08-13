@@ -1,11 +1,17 @@
+// Package imports:
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+// Project imports:
 import 'package:jo17_tactical_manager/core/result.dart';
+import 'package:jo17_tactical_manager/models/import_report.dart';
 import 'package:jo17_tactical_manager/models/match.dart';
 import 'package:jo17_tactical_manager/repositories/match_repository.dart';
 import 'package:jo17_tactical_manager/services/schedule_import_service.dart';
+
+class _MockMatchRepo extends Mock implements MatchRepository {}
 
 class _FakeMatchRepo implements MatchRepository {
   final List<Match> _matches = [];
@@ -37,11 +43,26 @@ class _FakeMatchRepo implements MatchRepository {
 
   @override
   Future<Result<void>> update(Match match) async => const Success(null);
-
-  // getByDateRange not needed for these tests
 }
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(Match());
+  });
+
+  test('importCsvBytes reports error on missing required columns', () async {
+    final repo = _MockMatchRepo();
+    when(repo.getAll).thenAnswer((_) async => const Success(<Match>[]));
+    final svc = ScheduleImportService(repo);
+
+    final csv = 'wrong,header\nvalue';
+    final res = await svc.importCsvBytes(Uint8List.fromList(csv.codeUnits));
+    expect(res.isSuccess, true);
+    expect(res.dataOrNull, isA<ImportReport>());
+    expect(res.dataOrNull!.imported, 0);
+    expect(res.dataOrNull!.errors, isNotEmpty);
+  });
+
   group('ScheduleImportService', () {
     late _FakeMatchRepo repo;
     late ScheduleImportService service;
@@ -78,7 +99,6 @@ void main() {
       const csv = 'date,time,opponent,competition,location\n'
           'invalid-date,19:30,FC,U17,Eredivisie,Thuis\n'
           '2025-09-19,18:00,PSV U17,Eredivisie,Uit\n';
-      // Note: first row malformed date
       final res = await service.importCsvBytes(bytes(csv));
       final report = res.dataOrNull!;
       expect(report.imported, 1);
@@ -86,7 +106,6 @@ void main() {
     });
 
     test('detects duplicate rows and skips import', () async {
-      // Pre-seed repo with an existing match on 2025-09-12 vs FC Utrecht U17
       await repo.add(
         Match()
           ..id = 'seed'
@@ -95,8 +114,6 @@ void main() {
           ..competition = Competition.league
           ..location = Location.home,
       );
-
-      // reset counter before import
       repo.addCalls = 0;
 
       const csv = 'date,time,opponent,competition,location\n'
