@@ -1,91 +1,92 @@
 // Project imports:
 import '../models/organization.dart';
+import '../constants/roles.dart';
 
 /// Permission service for role-based access control
 /// Enhanced with strict view-only access for players and parents
 class PermissionService {
   /// Check if user can access admin features
   static bool canAccessAdmin(String? userRole) =>
-      userRole == 'bestuurder' || userRole == 'admin';
+      userRole == Roles.bestuurder || userRole == Roles.admin;
 
   /// Check if user can manage players (add, edit, delete)
   static bool canManagePlayers(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.admin;
 
   /// Check if user can edit players
   static bool canEditPlayers(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.admin;
 
   /// Check if user can manage training sessions (create, edit, delete)
   static bool canManageTraining(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'assistent' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.assistent ||
+      userRole == Roles.admin;
 
   /// Check if user can create/edit training sessions
   static bool canCreateTraining(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.admin;
 
   /// Check if user can manage matches (create, edit, delete)
   static bool canManageMatches(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.admin;
 
   /// Check if user can view analytics
   static bool canViewAnalytics(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.admin;
 
   /// Check if user can access SVS (Pro/Enterprise only)
   static bool canAccessSVS(String? userRole, OrganizationTier? tier) {
     if (tier == OrganizationTier.basic) return false;
 
-    return userRole == 'bestuurder' ||
-        userRole == 'hoofdcoach' ||
-        userRole == 'admin';
+    return userRole == Roles.bestuurder ||
+        userRole == Roles.hoofdcoach ||
+        userRole == Roles.admin;
   }
 
   /// Check if user can access annual planning
   static bool canAccessAnnualPlanning(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.admin;
 
   /// Check if user can access exercise library management
   static bool canManageExerciseLibrary(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'assistent' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.assistent ||
+      userRole == Roles.admin;
 
   /// Check if user can access field diagram editor
   static bool canAccessFieldDiagramEditor(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'assistent' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.assistent ||
+      userRole == Roles.admin;
 
   /// Check if user can access exercise designer
   static bool canAccessExerciseDesigner(String? userRole) =>
-      userRole == 'bestuurder' ||
-      userRole == 'hoofdcoach' ||
-      userRole == 'assistent' ||
-      userRole == 'admin';
+      userRole == Roles.bestuurder ||
+      userRole == Roles.hoofdcoach ||
+      userRole == Roles.assistent ||
+      userRole == Roles.admin;
 
   /// Check if user is a player (view-only access)
-  static bool isPlayer(String? userRole) => userRole == 'speler';
+  static bool isPlayer(String? userRole) => userRole == Roles.speler;
 
   /// Check if user is a parent (limited view access)
-  static bool isParent(String? userRole) => userRole == 'ouder';
+  static bool isParent(String? userRole) => userRole == Roles.ouder;
 
   /// Check if user has view-only access (players and parents)
   static bool isViewOnlyUser(String? userRole) =>
@@ -111,7 +112,7 @@ class PermissionService {
     }
 
     // Assistants have limited management access
-    if (userRole == 'assistent') {
+    if (userRole == Roles.assistent) {
       routes.addAll([
         '/players', // Can view players (limited edit)
         '/training', // Can view training

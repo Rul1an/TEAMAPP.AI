@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jo17_tactical_manager/services/permission_service.dart';
+import 'package:jo17_tactical_manager/constants/roles.dart';
 import 'package:jo17_tactical_manager/models/organization.dart';
 
 void main() {
   group('PermissionService - role capabilities', () {
     test('View-only roles (speler, ouder) can only view', () {
-      for (final role in ['speler', 'ouder']) {
+      for (final role in [Roles.speler, Roles.ouder]) {
         // Allowed views
         expect(PermissionService.canPerformAction('view_player', role, null),
             isTrue);
@@ -41,7 +42,7 @@ void main() {
     });
 
     test('Assistent has limited management access', () {
-      const role = 'assistent';
+      const role = Roles.assistent;
       expect(
           PermissionService.canPerformAction(
               'manage_training_sessions', role, null),
@@ -76,7 +77,7 @@ void main() {
     });
 
     test('Hoofdcoach can manage players, training, matches', () {
-      const role = 'hoofdcoach';
+      const role = Roles.hoofdcoach;
       for (final action in [
         'create_player',
         'edit_player',
@@ -106,7 +107,7 @@ void main() {
     });
 
     test('Bestuurder/Admin have full management access', () {
-      for (final role in ['bestuurder', 'admin']) {
+      for (final role in [Roles.bestuurder, Roles.admin]) {
         for (final action in [
           'create_player',
           'edit_player',
@@ -136,25 +137,30 @@ void main() {
 
     test('SVS requires tier > basic', () {
       for (final tier in OrganizationTier.values) {
-        final can = PermissionService.canAccessSVS('hoofdcoach', tier);
+        final can = PermissionService.canAccessSVS(Roles.hoofdcoach, tier);
         expect(can, tier == OrganizationTier.basic ? isFalse : isTrue);
       }
     });
   });
   group('PermissionService view-only helpers', () {
     test('Players and parents are view-only users', () {
-      expect(PermissionService.isViewOnlyUser('speler'), isTrue);
-      expect(PermissionService.isViewOnlyUser('ouder'), isTrue);
+      expect(PermissionService.isViewOnlyUser(Roles.speler), isTrue);
+      expect(PermissionService.isViewOnlyUser(Roles.ouder), isTrue);
     });
 
     test('Coach is NOT view-only', () {
-      expect(PermissionService.isViewOnlyUser('hoofdcoach'), isFalse);
+      expect(PermissionService.isViewOnlyUser(Roles.hoofdcoach), isFalse);
     });
   });
 
   group('Field-diagram editor access', () {
-    const allowed = ['bestuurder', 'hoofdcoach', 'assistent', 'admin'];
-    const disallowed = ['speler', 'ouder', null];
+    const allowed = [
+      Roles.bestuurder,
+      Roles.hoofdcoach,
+      Roles.assistent,
+      Roles.admin
+    ];
+    const disallowed = [Roles.speler, Roles.ouder, null];
 
     for (final role in allowed) {
       test('Role "$role" has access', () {
@@ -172,22 +178,23 @@ void main() {
   group('SVS access per tier', () {
     test('Basic tier never grants SVS', () {
       expect(
-        PermissionService.canAccessSVS('bestuurder', OrganizationTier.basic),
+        PermissionService.canAccessSVS(
+            Roles.bestuurder, OrganizationTier.basic),
         isFalse,
       );
     });
 
     test('Pro tier grants SVS for coach/admin roles', () {
       expect(
-        PermissionService.canAccessSVS('hoofdcoach', OrganizationTier.pro),
+        PermissionService.canAccessSVS(Roles.hoofdcoach, OrganizationTier.pro),
         isTrue,
       );
       expect(
-        PermissionService.canAccessSVS('bestuurder', OrganizationTier.pro),
+        PermissionService.canAccessSVS(Roles.bestuurder, OrganizationTier.pro),
         isTrue,
       );
       expect(
-        PermissionService.canAccessSVS('speler', OrganizationTier.pro),
+        PermissionService.canAccessSVS(Roles.speler, OrganizationTier.pro),
         isFalse,
       );
     });
@@ -196,7 +203,7 @@ void main() {
   group('Accessible routes', () {
     test('Player gets only view routes', () {
       final routes = PermissionService.getAccessibleRoutes(
-        'speler',
+        Roles.speler,
         OrganizationTier.basic,
       );
       expect(
@@ -208,7 +215,7 @@ void main() {
 
     test('Admin gets admin route', () {
       final routes = PermissionService.getAccessibleRoutes(
-        'bestuurder',
+        Roles.bestuurder,
         OrganizationTier.basic,
       );
       expect(routes, contains('/admin'));
