@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../constants/roles.dart';
 
 enum DemoRole {
   clubAdmin,
@@ -128,15 +129,15 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
   String? getDemoRole() {
     switch (state.role) {
       case DemoRole.boardMember:
-        return 'bestuurder';
+        return Roles.bestuurder;
       case DemoRole.coach:
-        return 'hoofdcoach';
+        return Roles.hoofdcoach;
       case DemoRole.assistantCoach:
-        return 'assistent';
+        return Roles.assistent;
       case DemoRole.player:
-        return 'speler';
+        return Roles.speler;
       case DemoRole.clubAdmin:
-        return 'admin';
+        return Roles.admin;
       case DemoRole.technicalCommittee:
         return 'technisch';
       default:
@@ -168,17 +169,17 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
 
   DemoRole? _stringToRole(String roleName) {
     switch (roleName) {
-      case 'bestuurder':
+      case Roles.bestuurder:
         return DemoRole.boardMember;
-      case 'hoofdcoach':
+      case Roles.hoofdcoach:
         return DemoRole.coach;
-      case 'assistent':
+      case Roles.assistent:
         return DemoRole.assistantCoach;
-      case 'speler':
+      case Roles.speler:
         return DemoRole.player;
-      case 'ouder':
+      case Roles.ouder:
         return DemoRole.player; // Map parent to player for demo
-      case 'admin':
+      case Roles.admin:
         return DemoRole.clubAdmin;
       case 'technisch':
         return DemoRole.technicalCommittee;
