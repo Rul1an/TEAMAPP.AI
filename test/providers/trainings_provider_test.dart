@@ -7,14 +7,14 @@ import 'package:jo17_tactical_manager/repositories/training_repository.dart';
 
 class _FakeRepo implements TrainingRepository {
   _FakeRepo(this._list);
-  List<Training>? _list;
+  final List<Training>? _list;
   @override
   Future<Result<void>> add(Training training) async => const Success(null);
   @override
   Future<Result<void>> delete(String id) async => const Success(null);
   @override
   Future<Result<List<Training>>> getAll() async =>
-      _list == null ? const Failure(NetworkFailure('x')) : Success(_list!);
+      _list == null ? const Failure(NetworkFailure('x')) : Success(_list);
   @override
   Future<Result<Training?>> getById(String id) async => const Success(null);
   @override
