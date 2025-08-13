@@ -2,15 +2,20 @@
 import 'package:flutter_test/flutter_test.dart';
 
 // Project imports:
+import 'package:jo17_tactical_manager/services/notification_service.dart';
 
 void main() {
   test('topic naming: tenant/user scoping pattern', () {
-    // Define a simple convention to validate in code where topics are built
-    String makeTenantTopic(String tenantId) => 'tenant_$tenantId';
-    String makeUserTopic(String userId) => 'user_$userId';
+    // Validate pure helpers
+    expect(NotificationService.tenantTopic('org123'), 'tenant_org123');
+    expect(NotificationService.userTopic('u1'), 'user_u1');
+  });
 
-    expect(makeTenantTopic('org123'), 'tenant_org123');
-    expect(makeUserTopic('u1'), 'user_u1');
+  test('topic validation enforces conservative constraints', () {
+    expect(NotificationService.isValidTopic('tenant_org'), true);
+    expect(NotificationService.isValidTopic('user_u-1'), true);
+    expect(NotificationService.isValidTopic('invalid topic'), false);
+    expect(NotificationService.isValidTopic(''), false);
   });
 
   // Note: avoid instantiating NotificationService here to prevent Firebase init during unit tests.

@@ -9,6 +9,17 @@ class NotificationService {
 
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
+  // Topic helpers (pure, testable, no Firebase dependency)
+  static String tenantTopic(String tenantId) => 'tenant_$tenantId';
+  static String userTopic(String userId) => 'user_$userId';
+
+  // Conservative validation based on FCM topic constraints
+  static bool isValidTopic(String topic) {
+    if (topic.isEmpty || topic.length > 128) return false;
+    final pattern = RegExp(r'^[A-Za-z0-9_\-]+$');
+    return pattern.hasMatch(topic);
+  }
+
   Future<void> init() async {
     // Request permission on iOS / Web
     await requestPermission();
@@ -32,6 +43,24 @@ class NotificationService {
 
   Future<void> subscribeToTopic(String topic) async {
     await _messaging.subscribeToTopic(topic);
+  }
+
+  Future<void> subscribeToTenant(String tenantId) async {
+    final topic = tenantTopic(tenantId);
+    if (isValidTopic(topic)) {
+      await subscribeToTopic(topic);
+    } else if (kDebugMode) {
+      debugPrint('Invalid tenant topic: $topic');
+    }
+  }
+
+  Future<void> subscribeToUser(String userId) async {
+    final topic = userTopic(userId);
+    if (isValidTopic(topic)) {
+      await subscribeToTopic(topic);
+    } else if (kDebugMode) {
+      debugPrint('Invalid user topic: $topic');
+    }
   }
 
   void _handleForegroundMessage(RemoteMessage message) {
