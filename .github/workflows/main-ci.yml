@@ -426,8 +426,9 @@ jobs:
           /api-docs     /404.html 404
           /graphql      /404.html 404
           /api/*        /404.html 404
-          /rest/*       /404.html 404
-          /rpc/*        /404.html 404
+          # Supabase endpoints: signal auth requirement explicitly
+          /rest/*       /401.html 401
+          /rpc/*        /401.html 401
 
           # SPA fallback for valid app routes
           /*            /index.html 200
@@ -481,6 +482,33 @@ jobs:
             <div class="card">
               <h1>500 — Something went wrong</h1>
               <p>Please try again later.</p>
+              <p><a href="/">Go to dashboard</a></p>
+            </div>
+          </body>
+          </html>
+          EOF
+
+          # 401 page for unauthorized API access
+          cat << 'EOF' > build/web/401.html
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>Unauthorized</title>
+            <style>
+              body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:#20100b;color:#ffe9e6;display:flex;align-items:center;justify-content:center;height:100vh}
+              .card{max-width:540px;padding:32px;border:1px solid #3f2116;border-radius:12px;background:#2a140c;box-shadow:0 4px 24px rgba(0,0,0,.35)}
+              h1{margin:0 0 8px;font-size:28px}
+              p{margin:0 0 16px;opacity:.9}
+              a{color:#ffd2c0;text-decoration:none}
+              a:hover{text-decoration:underline}
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <h1>401 — Unauthorized</h1>
+              <p>Authentication is required to access this resource.</p>
               <p><a href="/">Go to dashboard</a></p>
             </div>
           </body>
