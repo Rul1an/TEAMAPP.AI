@@ -15,7 +15,7 @@ class TrainingExercise {
     required this.intensityLevel,
     required this.type,
     required this.coachingPoints,
-    this.id = 0,
+    this.id = '',
     this.trainingSessionId,
     this.sessionPhaseId,
     this.orderIndex = 0,
@@ -161,7 +161,7 @@ class TrainingExercise {
       primaryIntensity: (json['primaryIntensity'] as num?)?.toDouble() ?? 5.0,
     );
     return exercise
-      ..id = json['id'] as int? ?? 0
+      ..id = json['id'] as String? ?? ''
       ..createdAt = json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
           : DateTime.now()
@@ -169,8 +169,7 @@ class TrainingExercise {
           ? DateTime.parse(json['updatedAt'] as String)
           : DateTime.now();
   }
-  // String id = ""; // Disabled for web compatibility
-  int id = 0;
+  String id = '';
 
   // Basic information
   late String name;
@@ -280,7 +279,7 @@ class TrainingExercise {
 
   // Copy method
   TrainingExercise copyWith({
-    int? id,
+    String? id,
     String? name,
     String? description,
     double? durationMinutes,
