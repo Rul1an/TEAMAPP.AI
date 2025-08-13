@@ -57,7 +57,7 @@
       form-action 'self';
       upgrade-insecure-requests;
       require-trusted-types-for 'script';
-      trusted-types dompurify;
+      trusted-types dompurify goog#html;
     """
 
     # Frame Protection - 2025 Enhanced
