@@ -7,7 +7,7 @@ import 'package:csv/csv.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_saver/file_saver.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 // Project imports:
 import '../models/player.dart';
@@ -17,6 +17,72 @@ class ImportService {
   ImportService(this._playerRepository);
 
   final PlayerRepository _playerRepository;
+
+  // Public helpers to enable parser unit testing without IO
+  static DateTime parseDateString(String dateStr) {
+    final s = dateStr.trim();
+    // dd-MM-yyyy
+    final dash = RegExp(r'^\d{2}-\d{2}-\d{4}$');
+    if (dash.hasMatch(s)) {
+      final parts = s.split('-');
+      final day = int.parse(parts[0]);
+      final month = int.parse(parts[1]);
+      final year = int.parse(parts[2]);
+      return DateTime(year, month, day);
+    }
+    // dd/MM/yyyy
+    final slash = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+    if (slash.hasMatch(s)) {
+      final parts = s.split('/');
+      final day = int.parse(parts[0]);
+      final month = int.parse(parts[1]);
+      final year = int.parse(parts[2]);
+      return DateTime(year, month, day);
+    }
+    // yyyy-MM-dd (ISO subset)
+    final iso = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+    if (iso.hasMatch(s)) {
+      try {
+        return DateTime.parse(s);
+      } catch (_) {}
+    }
+    // Fallback: 16 years ago (sane default for U17)
+    return DateTime.now().subtract(const Duration(days: 16 * 365));
+  }
+
+  static Position parsePositionString(String positionStr) {
+    final pos = positionStr.toLowerCase().trim();
+    if (pos.contains('keeper') ||
+        pos.contains('goalkeeper') ||
+        pos == 'gk' ||
+        pos == 'k') {
+      return Position.goalkeeper;
+    } else if (pos.contains('verdedig') ||
+        pos.contains('defender') ||
+        pos == 'def' ||
+        pos == 'v') {
+      return Position.defender;
+    } else if (pos.contains('middenvel') ||
+        pos.contains('midfielder') ||
+        pos == 'mid' ||
+        pos == 'm') {
+      return Position.midfielder;
+    } else if (pos.contains('aanval') ||
+        pos.contains('forward') ||
+        pos == 'fw' ||
+        pos == 'a') {
+      return Position.forward;
+    }
+    return Position.midfielder;
+  }
+
+  static PreferredFoot parsePreferredFootString(String footStr) {
+    final foot = footStr.toLowerCase().trim();
+    if (foot.contains('links') || foot.contains('left') || foot == 'l') {
+      return PreferredFoot.left;
+    }
+    return PreferredFoot.right;
+  }
 
   // Import players from Excel or CSV
   Future<ImportResult> importPlayers() async {
@@ -120,11 +186,11 @@ class ImportService {
           ..firstName = row[0].toString().trim()
           ..lastName = row[1].toString().trim()
           ..jerseyNumber = int.tryParse(row[2].toString()) ?? 0
-          ..birthDate = _parseDate(row[3].toString())
-          ..position = _parsePosition(row[4].toString())
+          ..birthDate = parseDateString(row[3].toString())
+          ..position = parsePositionString(row[4].toString())
           ..height = double.tryParse(row[5].toString()) ?? 0
           ..weight = double.tryParse(row[6].toString()) ?? 0
-          ..preferredFoot = _parsePreferredFoot(row[7].toString());
+          ..preferredFoot = parsePreferredFootString(row[7].toString());
 
         // Validate required fields
         if (player.firstName.isEmpty ||
@@ -154,63 +220,7 @@ class ImportService {
     );
   }
 
-  DateTime _parseDate(String dateStr) {
-    try {
-      // Try different date formats
-      final formats = ['dd-MM-yyyy', 'dd/MM/yyyy', 'yyyy-MM-dd', 'MM/dd/yyyy'];
-
-      for (final format in formats) {
-        try {
-          return DateFormat(format).parse(dateStr);
-        } catch (_) {
-          continue;
-        }
-      }
-
-      // Default to today minus 16 years
-      return DateTime.now().subtract(const Duration(days: 16 * 365));
-    } catch (_) {
-      return DateTime.now().subtract(const Duration(days: 16 * 365));
-    }
-  }
-
-  Position _parsePosition(String positionStr) {
-    final pos = positionStr.toLowerCase().trim();
-
-    if (pos.contains('keeper') ||
-        pos.contains('goalkeeper') ||
-        pos == 'gk' ||
-        pos == 'k') {
-      return Position.goalkeeper;
-    } else if (pos.contains('verdedig') ||
-        pos.contains('defender') ||
-        pos == 'def' ||
-        pos == 'v') {
-      return Position.defender;
-    } else if (pos.contains('middenvel') ||
-        pos.contains('midfielder') ||
-        pos == 'mid' ||
-        pos == 'm') {
-      return Position.midfielder;
-    } else if (pos.contains('aanval') ||
-        pos.contains('forward') ||
-        pos == 'fw' ||
-        pos == 'a') {
-      return Position.forward;
-    }
-
-    return Position.midfielder; // Default
-  }
-
-  PreferredFoot _parsePreferredFoot(String footStr) {
-    final foot = footStr.toLowerCase().trim();
-
-    if (foot.contains('links') || foot.contains('left') || foot == 'l') {
-      return PreferredFoot.left;
-    }
-
-    return PreferredFoot.right; // Default
-  }
+  // Legacy private helpers removed (public static helpers are used instead)
 
   // Generate template for player import
   Future<void> generatePlayerTemplate() async {
