@@ -81,19 +81,19 @@ jobs:
 
       - name: 🔧 Install Dependencies
         run: flutter pub get
-        working-directory: jo17_tactical_manager
+        # runs in repo root
 
       - name: 🧹 Quality Gate
         run: |
           echo "::group::🔍 Environment Debug Info"
           echo "Flutter Doctor:"
-          (cd jo17_tactical_manager && flutter doctor -v)
+          flutter doctor -v
           echo ""
           echo "Flutter Version:"
-          (cd jo17_tactical_manager && flutter --version)
+          flutter --version
           echo ""
           echo "Dart Version:"
-          (cd jo17_tactical_manager && dart --version)
+          dart --version
           echo ""
           echo "System Info:"
           uname -a
@@ -120,26 +120,26 @@ jobs:
           fi
           echo ""
           echo "Pub cache status:"
-          (cd jo17_tactical_manager && flutter pub deps --style=tree | head -50)
+          flutter pub deps --style=tree | head -50
           echo "::endgroup::"
 
           echo "::group::🔍 Flutter Analyze (Verbose)"
           echo "Running flutter analyze with verbose output..."
           echo "Command: flutter analyze --fatal-infos --verbose"
-          if ! (cd jo17_tactical_manager && flutter analyze --fatal-infos --verbose); then
+          if ! flutter analyze --fatal-infos --verbose; then
             echo "::error::Flutter analyze failed!"
             echo ""
             echo "🚨 ANALYZE FAILURE DIAGNOSTICS:"
             echo "Re-running analyze with machine output for debugging:"
-            (cd jo17_tactical_manager && flutter analyze --machine) || true
+            flutter analyze --machine || true
             echo ""
             echo "Checking for common issues:"
             echo "- Missing imports:"
-            find jo17_tactical_manager/lib -name "*.dart" | head -20 | xargs grep -l "import" | head -10 || true
+            find lib -name "*.dart" | head -20 | xargs grep -l "import" | head -10 || true
             echo "- Analysis options:"
             if [ -f analysis_options.yaml ]; then
               echo "✅ analysis_options.yaml found:"
-              cat jo17_tactical_manager/analysis_options.yaml
+              cat analysis_options.yaml
             else
               echo "❌ analysis_options.yaml not found"
             fi
@@ -152,15 +152,15 @@ jobs:
           echo "::group::🎨 Dart Format Check (Verbose)"
           echo "Running dart format check with verbose output..."
           echo "Command: dart format . --set-exit-if-changed"
-          if ! (cd jo17_tactical_manager && dart format . --set-exit-if-changed); then
+          if ! dart format . --set-exit-if-changed; then
             echo "::error::Dart format check failed!"
             echo ""
             echo "🚨 FORMAT FAILURE DIAGNOSTICS:"
             echo "Files that need formatting:"
-            (cd jo17_tactical_manager && dart format . --output=show --set-exit-if-changed) || true
+            dart format . --output=show --set-exit-if-changed || true
             echo ""
             echo "Checking format differences:"
-            (cd jo17_tactical_manager && dart format . --output=show | head -50) || true
+            dart format . --output=show | head -50 || true
             exit 1
           else
             echo "✅ Dart format check passed"
@@ -172,10 +172,10 @@ jobs:
           echo "Command: flutter test --coverage --reporter=failures-only (unit/widget only)"
 
           # Create test results directory
-          mkdir -p jo17_tactical_manager/test-results
+          mkdir -p test-results
 
           # Build list of unit/widget tests (exclude integration, security, connectivity, e2e suites)
-          mapfile -t TEST_FILES < <(git ls-files 'jo17_tactical_manager/test/**_test.dart' \
+          mapfile -t TEST_FILES < <(git ls-files 'test/**_test.dart' \
             | grep -v '^test/integration/' \
             | grep -v '^test/security/' \
             | grep -v '^test/connectivity/' \
@@ -193,24 +193,24 @@ jobs:
 
           # Run tests and capture output, but don't fail on exit code yet
           set +e  # Disable exit on error temporarily
-          (cd jo17_tactical_manager && flutter test --coverage --reporter=failures-only \
+          flutter test --coverage --reporter=failures-only \
             --dart-define=APP_MODE="${APP_MODE}" \
             --dart-define=FLUTTER_ENV="${FLUTTER_ENV}" \
             --dart-define=SUPABASE_URL="${SUPABASE_URL_VAL}" \
             --dart-define=SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY_VAL}" \
-            "${TEST_FILES[@]/#jo17_tactical_manager\//}" > test-results/test-results.txt 2>&1)
+            "${TEST_FILES[@]}" > test-results/test-results.txt 2>&1
           TEST_EXIT_CODE=$?
           set -e  # Re-enable exit on error
 
           # Analyze test results for actual failures
           echo "Flutter test exit code: $TEST_EXIT_CODE"
 
-          if [ -f jo17_tactical_manager/test-results/test-results.txt ]; then
-            echo "Test results file created ($(wc -l < jo17_tactical_manager/test-results/test-results.txt) lines)"
+          if [ -f test-results/test-results.txt ]; then
+            echo "Test results file created ($(wc -l < test-results/test-results.txt) lines)"
 
             # Check for actual test failures (not expected 404s or security test passes)
-            ACTUAL_FAILURES=$(grep -E "(FAIL|ERROR|Exception)" jo17_tactical_manager/test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | grep -v "integration_test plugin was not detected" | wc -l)
-            PASSED_TESTS=$(grep -E "(✅|tests passed)" jo17_tactical_manager/test-results/test-results.txt | wc -l)
+            ACTUAL_FAILURES=$(grep -E "(FAIL|ERROR|Exception)" test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | grep -v "integration_test plugin was not detected" | wc -l)
+            PASSED_TESTS=$(grep -E "(✅|tests passed)" test-results/test-results.txt | wc -l)
 
             echo "Analysis Results:"
             echo "- Actual failures detected: $ACTUAL_FAILURES"
@@ -219,7 +219,7 @@ jobs:
             # Show recent test output for debugging
             echo ""
             echo "Recent test output (last 50 lines):"
-            tail -50 jo17_tactical_manager/test-results/test-results.txt
+            tail -50 test-results/test-results.txt
 
             if [ $ACTUAL_FAILURES -gt 0 ]; then
               echo "::error::Found actual test failures!"
@@ -227,7 +227,7 @@ jobs:
               echo "🚨 REAL TEST FAILURE DIAGNOSTICS:"
               echo ""
               echo "Actual failures found:"
-              grep -E "(FAIL|ERROR|Exception)" jo17_tactical_manager/test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | head -10
+              grep -E "(FAIL|ERROR|Exception)" test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | head -10
               echo ""
               echo "Test environment details:"
               echo "- Test files exist: $(find test -name "*_test.dart" | wc -l)"
@@ -251,16 +251,16 @@ jobs:
           echo "::endgroup::"
 
           echo "::group::📊 Coverage Analysis"
-          if [ -f jo17_tactical_manager/coverage/lcov.info ]; then
+          if [ -f coverage/lcov.info ]; then
             echo "✅ Coverage file generated"
-            echo "Coverage file size: $(wc -l < jo17_tactical_manager/coverage/lcov.info) lines"
+            echo "Coverage file size: $(wc -l < coverage/lcov.info) lines"
             echo "Coverage summary:"
             # Simple coverage analysis
             if command -v genhtml >/dev/null 2>&1; then
-              genhtml jo17_tactical_manager/coverage/lcov.info -o jo17_tactical_manager/coverage/html --summary || true
+              genhtml coverage/lcov.info -o coverage/html --summary || true
             else
               echo "genhtml not available, showing basic coverage info:"
-              grep -E "^LF:|^LH:" jo17_tactical_manager/coverage/lcov.info | head -10 || true
+              grep -E "^LF:|^LH:" coverage/lcov.info | head -10 || true
             fi
           else
             echo "⚠️ No coverage file generated"
@@ -270,7 +270,7 @@ jobs:
       - name: 📊 Upload Coverage
         uses: codecov/codecov-action@v4  # GitHub enforced tag-based reference (SHA pinning deprecated)
         with:
-          files: jo17_tactical_manager/coverage/lcov.info
+          files: coverage/lcov.info
           fail_ci_if_error: false
 
       - name: 📈 Test Report & Failure Analysis
@@ -278,7 +278,6 @@ jobs:
         run: |
           echo "::group::📈 Test Report Summary"
           if [ -f test-results/test-results.txt ]; then
-            cd jo17_tactical_manager
             echo "✅ Test results file found"
             echo "Test output file size: $(wc -l < test-results/test-results.txt) lines"
             echo ""
@@ -295,10 +294,10 @@ jobs:
         with:
           name: test-artifacts-${{ github.sha }}
           path: |
-            jo17_tactical_manager/test-results/
-            jo17_tactical_manager/coverage/
-            jo17_tactical_manager/analysis_options.yaml
-            jo17_tactical_manager/pubspec.lock
+            test-results/
+            coverage/
+            analysis_options.yaml
+            pubspec.lock
           retention-days: 14
 
       - name: 🚨 Failure Diagnostics
