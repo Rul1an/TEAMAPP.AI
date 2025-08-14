@@ -57,7 +57,7 @@
       form-action 'self';
       upgrade-insecure-requests;
       require-trusted-types-for 'script';
-      trusted-types dompurify goog#html flutter-js;
+      trusted-types 'allow-duplicates' sentry-dart dompurify goog#html flutter-js;
     """
 
     # Frame Protection - 2025 Enhanced
@@ -86,12 +86,11 @@
       accelerometer=(),
       gyroscope=(),
       magnetometer=(),
-      ambient-light-sensor=(),
       encrypted-media=(self),
       autoplay=(self),
       picture-in-picture=(self),
       fullscreen=(self),
-      interest-cohort=()
+      browsing-topics=()
     """
 
     # Cross-Origin Policies - 2025 Standards

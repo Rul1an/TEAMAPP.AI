@@ -88,6 +88,7 @@ Doel: voorspelbaar, gedekt gedrag voor offline‑first repositories (Result<T>, 
 ### 9) Web build
 - Standaard CanvasKit: `flutter build web --release` (Impeller/SKWasm roadmap optioneel, zie TODO/roadmap).
 - CI Matrix: CanvasKit en Wasm builds draaien in hoofdworkflow (Wasm als allowed-to-fail) met build metrics in job summary.
+- Wasm hardening (2025): COOP/COEP headers, Trusted Types (sentry-dart, dompurify, goog#html, flutter-js), CSP uitgebreid; wasm audit (`tool/wasm_audit.dart`) in CI.
 - CSP: Supabase + Sentry ingest in `connect-src` (prod hardened).
 - Custom 404/500: `web/404.html`, `web/500.html`.
 
