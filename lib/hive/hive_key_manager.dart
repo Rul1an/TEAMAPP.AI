@@ -13,7 +13,7 @@ import 'package:flutter/foundation.dart';
 /// non-sensitive demo data). This utility is synchronous after first call.
 class HiveKeyManager {
   HiveKeyManager({FlutterSecureStorage? storage})
-      : _storage = storage ?? const FlutterSecureStorage();
+      : _storage = storage ?? FlutterSecureStorage();
 
   /// Creates an in-memory key manager for unit tests, bypassing platform
   /// channels from `flutter_secure_storage`.

@@ -67,28 +67,65 @@ class FlutterSecureStorage {
           dynamic wOptions}) async =>
       Map.from(_memory);
 
-  // Listener helpers (subset of API)
+  // Listener helpers (subset of API compatible with flutter_secure_storage >=9)
   final Map<String, List<ValueChanged<String?>>> _listeners = {};
 
-  void addListener(String key, ValueChanged<String?> listener) {
+  void registerListener({
+    required String key,
+    required ValueChanged<String?> listener,
+  }) {
     _listeners.putIfAbsent(key, () => []).add(listener);
   }
 
-  void removeListener(String key, ValueChanged<String?> listener) {
+  void unregisterListener({
+    required String key,
+    required ValueChanged<String?> listener,
+  }) {
     _listeners[key]?.remove(listener);
+  }
+
+  void unregisterAllListenersForKey({required String key}) {
+    _listeners[key]?.clear();
+  }
+
+  void unregisterAllListeners() {
+    _listeners.clear();
   }
 }
 
-// Empty platform option stubs to satisfy API references when compiling to
-// Wasm or other platforms where flutter_secure_storage is not available.
-class IOSOptions {}
+// Platform option stubs with defaultOptions to satisfy API references
+// when compiling to Wasm or environments without the real plugin.
+class AndroidOptions {
+  const AndroidOptions();
+  static const defaultOptions = AndroidOptions();
+}
 
-class AndroidOptions {}
+class IOSOptions {
+  const IOSOptions();
+  static const defaultOptions = IOSOptions();
+}
 
-class LinuxOptions {}
+class AppleOptions {
+  const AppleOptions();
+  static const defaultOptions = AppleOptions();
+}
 
-class WebOptions {}
+class LinuxOptions {
+  const LinuxOptions();
+  static const defaultOptions = LinuxOptions();
+}
 
-class MacOsOptions {}
+class WebOptions {
+  const WebOptions();
+  static const defaultOptions = WebOptions();
+}
 
-class WindowsOptions {}
+class MacOsOptions {
+  const MacOsOptions();
+  static const defaultOptions = MacOsOptions();
+}
+
+class WindowsOptions {
+  const WindowsOptions();
+  static const defaultOptions = WindowsOptions();
+}
