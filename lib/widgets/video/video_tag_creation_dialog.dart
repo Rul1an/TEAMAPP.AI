@@ -190,7 +190,7 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurface
-                                  .withValues(alpha: 0.7),
+                                  .withOpacity(0.7),
                             ),
                       ),
                     ],
@@ -200,10 +200,8 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close),
                   style: IconButton.styleFrom(
-                    backgroundColor: Theme.of(context)
-                        .colorScheme
-                        .surface
-                        .withValues(alpha: 0.1),
+                    backgroundColor:
+                        Theme.of(context).colorScheme.surface.withOpacity(0.1),
                   ),
                 ),
               ],
@@ -245,8 +243,7 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                                 ),
                                 borderRadius: BorderRadius.circular(12),
                                 color: _selectedTagType == tagType
-                                    ? _getTagTypeColor(tagType)
-                                        .withValues(alpha: 0.1)
+                                    ? _getTagTypeColor(tagType).withOpacity(0.1)
                                     : null,
                               ),
                               child: Row(
@@ -285,7 +282,7 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .onSurface
-                                                    .withValues(alpha: 0.7),
+                                                    .withOpacity(0.7),
                                               ),
                                         ),
                                       ],
@@ -326,7 +323,7 @@ class _VideoTagCreationDialogState extends State<VideoTagCreationDialog> {
                         fillColor: Theme.of(context)
                             .colorScheme
                             .surface
-                            .withValues(alpha: 0.3),
+                            .withOpacity(0.3),
                       ),
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _createTag(),
