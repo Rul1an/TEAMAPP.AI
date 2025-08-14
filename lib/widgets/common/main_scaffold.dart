@@ -19,6 +19,23 @@ class MainScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Enforce min tap target size at scaffold scope for mixed content
+    final theme = Theme.of(context);
+    final minTapTarget = const Size(48, 48);
+    final themed = theme.copyWith(
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(minimumSize: minTapTarget),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(minimumSize: minTapTarget),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(minimumSize: minTapTarget),
+      ),
+      listTileTheme: theme.listTileTheme.copyWith(minVerticalPadding: 12),
+    );
+
     final currentRoute = GoRouterState.of(context).uri.toString();
     final screenWidth = MediaQuery.of(context).size.width;
     // 2025 responsive breakpoints (Material 3 inspired)
@@ -34,211 +51,218 @@ class MainScaffold extends ConsumerWidget {
 
     if (!isPhone) {
       // Desktop/Tablet layout with NavigationRail
-      return Scaffold(
-        body: Column(
-          children: [
-            const ConnectivityBanner(),
-            Expanded(
-              child: Row(
-                children: [
-                  NavigationRail(
-                    selectedIndex: _getSelectedIndex(currentRoute),
-                    onDestinationSelected: (index) =>
-                        _onItemTapped(context, index),
-                    labelType: isTablet
-                        ? NavigationRailLabelType.selected
-                        : NavigationRailLabelType.all,
-                    extended: isDesktop && screenWidth > 1280,
-                    leading: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.sports_soccer,
-                            size: 40,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            isCoachMode ? 'Tactical Coach' : 'JO17 Coach',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const SizedBox(height: 16),
-                          if (isCoachMode)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.green.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                    color: Colors.green.withValues(alpha: 0.3)),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(Icons.offline_pin,
-                                      size: 14, color: Colors.green[700]),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    'Coach',
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      color: Colors.green[700],
-                                      fontWeight: FontWeight.w500,
-                                    ),
+      return Theme(
+        data: themed,
+        child: Scaffold(
+          body: Column(
+            children: [
+              const ConnectivityBanner(),
+              Expanded(
+                child: Row(
+                  children: [
+                    NavigationRail(
+                      selectedIndex: _getSelectedIndex(currentRoute),
+                      onDestinationSelected: (index) =>
+                          _onItemTapped(context, index),
+                      labelType: isTablet
+                          ? NavigationRailLabelType.selected
+                          : NavigationRailLabelType.all,
+                      extended: isDesktop && screenWidth > 1280,
+                      leading: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.sports_soccer,
+                              size: 40,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              isCoachMode ? 'Tactical Coach' : 'JO17 Coach',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                              ),
-                            )
-                          else if (demoMode.isActive)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.orange.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                    color:
-                                        Colors.orange.withValues(alpha: 0.3)),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(Icons.play_circle_outline,
-                                      size: 14, color: Colors.orange[700]),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    'Demo',
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      color: Colors.orange[700],
-                                      fontWeight: FontWeight.w500,
+                            ),
+                            const SizedBox(height: 16),
+                            if (isCoachMode)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.green.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                      color:
+                                          Colors.green.withValues(alpha: 0.3)),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.offline_pin,
+                                        size: 14, color: Colors.green[700]),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      'Coach',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.green[700],
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
+                                  ],
+                                ),
+                              )
+                            else if (demoMode.isActive)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                      color:
+                                          Colors.orange.withValues(alpha: 0.3)),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.play_circle_outline,
+                                        size: 14, color: Colors.orange[700]),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      'Demo',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.orange[700],
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      trailing: isCoachMode
+                          ? null
+                          : Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  if (currentUser != null || demoMode.isActive)
+                                    Text(
+                                      demoMode.isActive
+                                          ? demoMode.userName ?? 'Demo User'
+                                          : currentUser?.email ?? '',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                  const SizedBox(height: 8),
+                                  IconButton(
+                                    icon: const Icon(Icons.logout),
+                                    onPressed: () async {
+                                      if (demoMode.isActive) {
+                                        ref
+                                            .read(demoModeProvider.notifier)
+                                            .endDemo();
+                                      } else {
+                                        await ref
+                                            .read(authNotifierProvider.notifier)
+                                            .signOut();
+                                      }
+                                      if (context.mounted) {
+                                        context.go('/auth');
+                                      }
+                                    },
+                                    tooltip: 'Uitloggen',
                                   ),
                                 ],
                               ),
                             ),
-                        ],
-                      ),
+                      destinations: [
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.dashboard_outlined),
+                          selectedIcon: const Icon(Icons.dashboard),
+                          label: Text(_navLabel('Dashboard', compactLabels)),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.people_outline),
+                          selectedIcon: const Icon(Icons.people),
+                          label: Text(_navLabel('Spelers', compactLabels)),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.stadium_outlined),
+                          selectedIcon: const Icon(Icons.stadium),
+                          label: Text(_navLabel('Wedstrijden', compactLabels)),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.sports_outlined),
+                          selectedIcon: const Icon(Icons.sports),
+                          label: Text(_navLabel('Trainingen', compactLabels)),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.bar_chart_outlined),
+                          selectedIcon: const Icon(Icons.bar_chart),
+                          label: Text(_navLabel('Rapporten', compactLabels)),
+                        ),
+                      ],
                     ),
-                    trailing: isCoachMode
-                        ? null
-                        : Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                if (currentUser != null || demoMode.isActive)
-                                  Text(
-                                    demoMode.isActive
-                                        ? demoMode.userName ?? 'Demo User'
-                                        : currentUser?.email ?? '',
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                const SizedBox(height: 8),
-                                IconButton(
-                                  icon: const Icon(Icons.logout),
-                                  onPressed: () async {
-                                    if (demoMode.isActive) {
-                                      ref
-                                          .read(demoModeProvider.notifier)
-                                          .endDemo();
-                                    } else {
-                                      await ref
-                                          .read(authNotifierProvider.notifier)
-                                          .signOut();
-                                    }
-                                    if (context.mounted) {
-                                      context.go('/auth');
-                                    }
-                                  },
-                                  tooltip: 'Uitloggen',
-                                ),
-                              ],
-                            ),
-                          ),
-                    destinations: [
-                      NavigationRailDestination(
-                        icon: const Icon(Icons.dashboard_outlined),
-                        selectedIcon: const Icon(Icons.dashboard),
-                        label: Text(_navLabel('Dashboard', compactLabels)),
-                      ),
-                      NavigationRailDestination(
-                        icon: const Icon(Icons.people_outline),
-                        selectedIcon: const Icon(Icons.people),
-                        label: Text(_navLabel('Spelers', compactLabels)),
-                      ),
-                      NavigationRailDestination(
-                        icon: const Icon(Icons.stadium_outlined),
-                        selectedIcon: const Icon(Icons.stadium),
-                        label: Text(_navLabel('Wedstrijden', compactLabels)),
-                      ),
-                      NavigationRailDestination(
-                        icon: const Icon(Icons.sports_outlined),
-                        selectedIcon: const Icon(Icons.sports),
-                        label: Text(_navLabel('Trainingen', compactLabels)),
-                      ),
-                      NavigationRailDestination(
-                        icon: const Icon(Icons.bar_chart_outlined),
-                        selectedIcon: const Icon(Icons.bar_chart),
-                        label: Text(_navLabel('Rapporten', compactLabels)),
-                      ),
-                    ],
-                  ),
-                  const VerticalDivider(thickness: 1, width: 1),
-                  Expanded(child: SafeArea(child: child)),
-                ],
+                    const VerticalDivider(thickness: 1, width: 1),
+                    Expanded(child: SafeArea(child: child)),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     } else {
       // Mobile layout with BottomNavigationBar
-      return Scaffold(
-        body: Column(
-          children: [
-            const ConnectivityBanner(),
-            Expanded(child: SafeArea(child: child)),
-          ],
-        ),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: _getSelectedIndex(currentRoute),
-          onDestinationSelected: (index) => _onItemTapped(context, index),
-          destinations: [
-            NavigationDestination(
-              icon: const Icon(Icons.dashboard_outlined),
-              selectedIcon: const Icon(Icons.dashboard),
-              label: _navLabel('Dashboard', compactLabels),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.people_outline),
-              selectedIcon: const Icon(Icons.people),
-              label: _navLabel('Spelers', compactLabels),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.stadium_outlined),
-              selectedIcon: const Icon(Icons.stadium),
-              label: _navLabel('Wedstrijden', compactLabels),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.sports_outlined),
-              selectedIcon: const Icon(Icons.sports),
-              label: _navLabel('Trainingen', compactLabels),
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.bar_chart_outlined),
-              selectedIcon: const Icon(Icons.bar_chart),
-              label: _navLabel('Rapporten', compactLabels),
-            ),
-          ],
+      return Theme(
+        data: themed,
+        child: Scaffold(
+          body: Column(
+            children: [
+              const ConnectivityBanner(),
+              Expanded(child: SafeArea(child: child)),
+            ],
+          ),
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: _getSelectedIndex(currentRoute),
+            onDestinationSelected: (index) => _onItemTapped(context, index),
+            destinations: [
+              NavigationDestination(
+                icon: const Icon(Icons.dashboard_outlined),
+                selectedIcon: const Icon(Icons.dashboard),
+                label: _navLabel('Dashboard', compactLabels),
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.people_outline),
+                selectedIcon: const Icon(Icons.people),
+                label: _navLabel('Spelers', compactLabels),
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.stadium_outlined),
+                selectedIcon: const Icon(Icons.stadium),
+                label: _navLabel('Wedstrijden', compactLabels),
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.sports_outlined),
+                selectedIcon: const Icon(Icons.sports),
+                label: _navLabel('Trainingen', compactLabels),
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.bar_chart_outlined),
+                selectedIcon: const Icon(Icons.bar_chart),
+                label: _navLabel('Rapporten', compactLabels),
+              ),
+            ],
+          ),
         ),
       );
     }

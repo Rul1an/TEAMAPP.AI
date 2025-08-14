@@ -167,6 +167,21 @@ class JO17TacticalManagerApp extends ConsumerWidget {
         title: 'JO17 Tactical Manager',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
+        builder: (context, child) {
+          final media = MediaQuery.of(context);
+          // Clamp text scale between 0.9 and 1.3 to preserve layout while respecting user preference
+          final clampedTextScale = media.textScaleFactor.clamp(0.9, 1.3);
+          // Respect reduced motion for animations (used by widgets that read MediaQuery)
+          final disableAnimations =
+              MediaQuery.maybeOf(context)?.disableAnimations ?? false;
+          return MediaQuery(
+            data: media.copyWith(
+              textScaler: TextScaler.linear(clampedTextScale.toDouble()),
+              disableAnimations: disableAnimations,
+            ),
+            child: child ?? const SizedBox.shrink(),
+          );
+        },
         routerConfig: router,
         // TODO(roel): Once Flutter exposes navigatorObservers on MaterialApp.router,
         // integrate SentryNavigatorObserver via GoRouter observers
