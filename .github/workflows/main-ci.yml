@@ -393,13 +393,15 @@ jobs:
             flutter pub get
             flutter build web --wasm --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
-              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
+              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/
           else
             echo "Building Web (CanvasKit default)"
             flutter pub get
             flutter build web --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
-              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
+              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/
           fi
           # Metrics
           BUILD_DIR=build/web
@@ -439,6 +441,22 @@ jobs:
           name: wasm-audit-${{ matrix.target }}-${{ github.sha }}
           path: wasm_audit.json
           retention-days: 7
+
+      - name: 🔔 WASM Audit Gate (soft)
+        if: always()
+        run: |
+          if [ -f wasm_audit.json ]; then
+            COUNT=$(jq '.restricted_imports | length' wasm_audit.json)
+            echo "WASM restricted imports: $COUNT"
+            if [ "$COUNT" -gt 0 ]; then
+              echo "::warning::WASM audit found $COUNT restricted import(s). See artifact wasm_audit.json"
+              echo "\n### WASM Audit\nFound $COUNT restricted import(s)." >> $GITHUB_STEP_SUMMARY
+            else
+              echo "No restricted imports found." >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "No wasm_audit.json found" >> $GITHUB_STEP_SUMMARY
+          fi
 
   # Phase 2: Build & Deploy Pipeline
   build-and-deploy:

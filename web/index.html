@@ -32,6 +32,22 @@
 
   <title>jo17_tactical_manager</title>
   <link rel="manifest" href="manifest.json">
+  <!-- Trusted Types policy bootstrap for Sentry/Flutter (keeps console clean) -->
+  <script>
+    (function () {
+      try {
+        if (window.trustedTypes && window.trustedTypes.createPolicy) {
+          window.trustedTypes.createPolicy('sentry-dart', {
+            createHTML: (s) => s,
+            createScript: (s) => s,
+            createScriptURL: (s) => s
+          });
+        }
+      } catch (e) {
+        // swallow - policy already exists or unsupported browser
+      }
+    })();
+  </script>
 </head>
 
 <body>
