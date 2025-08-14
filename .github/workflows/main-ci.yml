@@ -381,7 +381,6 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: flutter pub get
-        working-directory: jo17_tactical_manager
 
       - name: 🏗️ Build Web (${{ matrix.target }})
         env:
