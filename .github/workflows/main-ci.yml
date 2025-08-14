@@ -394,14 +394,36 @@ jobs:
             flutter build web --wasm --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
               --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
-              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/
+              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/${GITHUB_SHA}/
           else
             echo "Building Web (CanvasKit default)"
             flutter pub get
             flutter build web --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
               --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
-              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/
+              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/${GITHUB_SHA}/
+          fi
+          # Version CanvasKit assets directory to match the commit SHA for cache-busting
+          if [ -d build/web/canvaskit ]; then
+            mkdir -p build/web/canvaskit/${GITHUB_SHA}
+            cp -a build/web/canvaskit/. build/web/canvaskit/${GITHUB_SHA}/
+            # Inject preload hints for CanvasKit assets if present (improves startup)
+            if [ -f build/web/canvaskit/${GITHUB_SHA}/canvaskit.wasm ]; then
+              echo "Adding preload for canvaskit.wasm"
+              sed -i "s#</head>#  <link rel=\"preload\" href=\"/canvaskit/${GITHUB_SHA}/canvaskit.wasm\" as=\"fetch\" type=\"application/wasm\" crossorigin>\n</head>#" build/web/index.html || true
+            fi
+            if [ -f build/web/canvaskit/${GITHUB_SHA}/canvaskit.js ]; then
+              echo "Adding preload for canvaskit.js"
+              sed -i "s#</head>#  <link rel=\"preload\" href=\"/canvaskit/${GITHUB_SHA}/canvaskit.js\" as=\"script\" crossorigin>\n</head>#" build/web/index.html || true
+            fi
+          fi
+
+          # Inject sw-extra.js into generated service worker for versioned CanvasKit/wasm caching
+          if [ -f web/sw-extra.js ] && [ -f build/web/flutter_service_worker.js ]; then
+            echo "Injecting sw-extra.js into flutter_service_worker.js"
+            sed "s/__SHA__/${GITHUB_SHA}/g" web/sw-extra.js > build/web/sw-extra.${GITHUB_SHA}.js
+            # importScripts at the top keeps Flutter SW intact
+            sed -i '1s;^;importScripts("sw-extra.'"${GITHUB_SHA}"'.js");\n;' build/web/flutter_service_worker.js || true
           fi
           # Metrics
           BUILD_DIR=build/web
