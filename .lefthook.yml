@@ -9,7 +9,7 @@ pre-commit:
 
     format_strict:
       description: "Dart formatter (CI parity: exit if changes needed)"
-      run: dart format . --set-exit-if-changed
+      run: dart format . --set-exit-if-changed --line-length=100
       fail_text: |
         Unformatted files detected. Please run:
           dart format .

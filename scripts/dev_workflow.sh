@@ -102,7 +102,10 @@ echo ""
 # Step 2: Commit with message
 echo "💾 Step 2/3: Creating Commit"
 echo "Commit message: \"$COMMIT_MSG\""
-if git commit -m "$COMMIT_MSG"; then
+# Avoid duplicate checks: we've already run the quality gate above.
+# Bypass Lefthook pre-commit to prevent running the same steps twice.
+export LEFTHOOK=0
+if git commit --no-verify -m "$COMMIT_MSG"; then
     COMMIT_HASH=$(git rev-parse --short HEAD)
     echo "✅ Commit created successfully: $COMMIT_HASH"
 else
