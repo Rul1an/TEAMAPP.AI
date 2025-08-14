@@ -38,7 +38,7 @@ jobs:
       should-deploy: ${{ steps.changes.outputs.should-deploy }}
     defaults:
       run:
-        working-directory: jo17_tactical_manager
+        working-directory: .
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142  # v2.7.0
@@ -81,18 +81,19 @@ jobs:
 
       - name: 🔧 Install Dependencies
         run: flutter pub get
+        working-directory: jo17_tactical_manager
 
       - name: 🧹 Quality Gate
         run: |
           echo "::group::🔍 Environment Debug Info"
           echo "Flutter Doctor:"
-          flutter doctor -v
+          (cd jo17_tactical_manager && flutter doctor -v)
           echo ""
           echo "Flutter Version:"
-          flutter --version
+          (cd jo17_tactical_manager && flutter --version)
           echo ""
           echo "Dart Version:"
-          dart --version
+          (cd jo17_tactical_manager && dart --version)
           echo ""
           echo "System Info:"
           uname -a
@@ -119,26 +120,26 @@ jobs:
           fi
           echo ""
           echo "Pub cache status:"
-          flutter pub deps --style=tree | head -50
+          (cd jo17_tactical_manager && flutter pub deps --style=tree | head -50)
           echo "::endgroup::"
 
           echo "::group::🔍 Flutter Analyze (Verbose)"
           echo "Running flutter analyze with verbose output..."
           echo "Command: flutter analyze --fatal-infos --verbose"
-          if ! flutter analyze --fatal-infos --verbose; then
+          if ! (cd jo17_tactical_manager && flutter analyze --fatal-infos --verbose); then
             echo "::error::Flutter analyze failed!"
             echo ""
             echo "🚨 ANALYZE FAILURE DIAGNOSTICS:"
             echo "Re-running analyze with machine output for debugging:"
-            flutter analyze --machine || true
+            (cd jo17_tactical_manager && flutter analyze --machine) || true
             echo ""
             echo "Checking for common issues:"
             echo "- Missing imports:"
-            find lib -name "*.dart" | head -20 | xargs grep -l "import" | head -10 || true
+            find jo17_tactical_manager/lib -name "*.dart" | head -20 | xargs grep -l "import" | head -10 || true
             echo "- Analysis options:"
             if [ -f analysis_options.yaml ]; then
               echo "✅ analysis_options.yaml found:"
-              cat analysis_options.yaml
+              cat jo17_tactical_manager/analysis_options.yaml
             else
               echo "❌ analysis_options.yaml not found"
             fi
@@ -151,15 +152,15 @@ jobs:
           echo "::group::🎨 Dart Format Check (Verbose)"
           echo "Running dart format check with verbose output..."
           echo "Command: dart format . --set-exit-if-changed"
-          if ! dart format . --set-exit-if-changed; then
+          if ! (cd jo17_tactical_manager && dart format . --set-exit-if-changed); then
             echo "::error::Dart format check failed!"
             echo ""
             echo "🚨 FORMAT FAILURE DIAGNOSTICS:"
             echo "Files that need formatting:"
-            dart format . --output=show --set-exit-if-changed || true
+            (cd jo17_tactical_manager && dart format . --output=show --set-exit-if-changed) || true
             echo ""
             echo "Checking format differences:"
-            dart format . --output=show | head -50 || true
+            (cd jo17_tactical_manager && dart format . --output=show | head -50) || true
             exit 1
           else
             echo "✅ Dart format check passed"
@@ -171,10 +172,10 @@ jobs:
           echo "Command: flutter test --coverage --reporter=failures-only (unit/widget only)"
 
           # Create test results directory
-          mkdir -p test-results
+          mkdir -p jo17_tactical_manager/test-results
 
           # Build list of unit/widget tests (exclude integration, security, connectivity, e2e suites)
-          mapfile -t TEST_FILES < <(git ls-files 'test/**_test.dart' \
+          mapfile -t TEST_FILES < <(git ls-files 'jo17_tactical_manager/test/**_test.dart' \
             | grep -v '^test/integration/' \
             | grep -v '^test/security/' \
             | grep -v '^test/connectivity/' \
@@ -192,24 +193,24 @@ jobs:
 
           # Run tests and capture output, but don't fail on exit code yet
           set +e  # Disable exit on error temporarily
-          flutter test --coverage --reporter=failures-only \
+          (cd jo17_tactical_manager && flutter test --coverage --reporter=failures-only \
             --dart-define=APP_MODE="${APP_MODE}" \
             --dart-define=FLUTTER_ENV="${FLUTTER_ENV}" \
             --dart-define=SUPABASE_URL="${SUPABASE_URL_VAL}" \
             --dart-define=SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY_VAL}" \
-            "${TEST_FILES[@]}" > test-results/test-results.txt 2>&1
+            "${TEST_FILES[@]/#jo17_tactical_manager\//}" > test-results/test-results.txt 2>&1)
           TEST_EXIT_CODE=$?
           set -e  # Re-enable exit on error
 
           # Analyze test results for actual failures
           echo "Flutter test exit code: $TEST_EXIT_CODE"
 
-          if [ -f test-results/test-results.txt ]; then
-            echo "Test results file created ($(wc -l < test-results/test-results.txt) lines)"
+          if [ -f jo17_tactical_manager/test-results/test-results.txt ]; then
+            echo "Test results file created ($(wc -l < jo17_tactical_manager/test-results/test-results.txt) lines)"
 
             # Check for actual test failures (not expected 404s or security test passes)
-            ACTUAL_FAILURES=$(grep -E "(FAIL|ERROR|Exception)" test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | grep -v "integration_test plugin was not detected" | wc -l)
-            PASSED_TESTS=$(grep -E "(✅|tests passed)" test-results/test-results.txt | wc -l)
+            ACTUAL_FAILURES=$(grep -E "(FAIL|ERROR|Exception)" jo17_tactical_manager/test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | grep -v "integration_test plugin was not detected" | wc -l)
+            PASSED_TESTS=$(grep -E "(✅|tests passed)" jo17_tactical_manager/test-results/test-results.txt | wc -l)
 
             echo "Analysis Results:"
             echo "- Actual failures detected: $ACTUAL_FAILURES"
@@ -218,7 +219,7 @@ jobs:
             # Show recent test output for debugging
             echo ""
             echo "Recent test output (last 50 lines):"
-            tail -50 test-results/test-results.txt
+            tail -50 jo17_tactical_manager/test-results/test-results.txt
 
             if [ $ACTUAL_FAILURES -gt 0 ]; then
               echo "::error::Found actual test failures!"
@@ -226,7 +227,7 @@ jobs:
               echo "🚨 REAL TEST FAILURE DIAGNOSTICS:"
               echo ""
               echo "Actual failures found:"
-              grep -E "(FAIL|ERROR|Exception)" test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | head -10
+              grep -E "(FAIL|ERROR|Exception)" jo17_tactical_manager/test-results/test-results.txt | grep -v "Protected (404)" | grep -v "Handles gracefully" | grep -v "tests passed" | head -10
               echo ""
               echo "Test environment details:"
               echo "- Test files exist: $(find test -name "*_test.dart" | wc -l)"
@@ -250,16 +251,16 @@ jobs:
           echo "::endgroup::"
 
           echo "::group::📊 Coverage Analysis"
-          if [ -f coverage/lcov.info ]; then
+          if [ -f jo17_tactical_manager/coverage/lcov.info ]; then
             echo "✅ Coverage file generated"
-            echo "Coverage file size: $(wc -l < coverage/lcov.info) lines"
+            echo "Coverage file size: $(wc -l < jo17_tactical_manager/coverage/lcov.info) lines"
             echo "Coverage summary:"
             # Simple coverage analysis
             if command -v genhtml >/dev/null 2>&1; then
-              genhtml coverage/lcov.info -o coverage/html --summary || true
+              genhtml jo17_tactical_manager/coverage/lcov.info -o jo17_tactical_manager/coverage/html --summary || true
             else
               echo "genhtml not available, showing basic coverage info:"
-              grep -E "^LF:|^LH:" coverage/lcov.info | head -10 || true
+              grep -E "^LF:|^LH:" jo17_tactical_manager/coverage/lcov.info | head -10 || true
             fi
           else
             echo "⚠️ No coverage file generated"
@@ -269,7 +270,7 @@ jobs:
       - name: 📊 Upload Coverage
         uses: codecov/codecov-action@v4  # GitHub enforced tag-based reference (SHA pinning deprecated)
         with:
-          files: coverage/lcov.info
+          files: jo17_tactical_manager/coverage/lcov.info
           fail_ci_if_error: false
 
       - name: 📈 Test Report & Failure Analysis
@@ -277,6 +278,7 @@ jobs:
         run: |
           echo "::group::📈 Test Report Summary"
           if [ -f test-results/test-results.txt ]; then
+            cd jo17_tactical_manager
             echo "✅ Test results file found"
             echo "Test output file size: $(wc -l < test-results/test-results.txt) lines"
             echo ""
@@ -293,10 +295,10 @@ jobs:
         with:
           name: test-artifacts-${{ github.sha }}
           path: |
-            test-results/
-            coverage/
-            analysis_options.yaml
-            pubspec.lock
+            jo17_tactical_manager/test-results/
+            jo17_tactical_manager/coverage/
+            jo17_tactical_manager/analysis_options.yaml
+            jo17_tactical_manager/pubspec.lock
           retention-days: 14
 
       - name: 🚨 Failure Diagnostics
@@ -366,7 +368,7 @@ jobs:
     timeout-minutes: 12
     defaults:
       run:
-        working-directory: jo17_tactical_manager
+        working-directory: .
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
@@ -380,6 +382,7 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: flutter pub get
+        working-directory: jo17_tactical_manager
 
       - name: 🏗️ Build Web (${{ matrix.target }})
         env:
@@ -389,17 +392,17 @@ jobs:
           set -e
           if [ "${{ matrix.target }}" = "wasm" ]; then
             echo "Building Web (Wasm)"
-            flutter build web --wasm --release \
+            (cd jo17_tactical_manager && flutter build web --wasm --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
-              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY})
           else
             echo "Building Web (CanvasKit default)"
-            flutter build web --release \
+            (cd jo17_tactical_manager && flutter build web --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
-              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY})
           fi
           # Metrics
-          BUILD_DIR=build/web
+          BUILD_DIR=jo17_tactical_manager/build/web
           echo "Collecting build metrics for ${{ matrix.target }}"
           BUILD_SIZE_KB=$(du -sk "$BUILD_DIR" | cut -f1)
           BUILD_SIZE_MB=$(echo "scale=2; $BUILD_SIZE_KB/1024" | bc)
@@ -419,8 +422,8 @@ jobs:
         with:
           name: web-${{ matrix.target }}-${{ github.sha }}
           path: |
-            build/web/
-            build_metrics.txt
+            jo17_tactical_manager/build/web/
+            jo17_tactical_manager/build_metrics.txt
           retention-days: 5
 
   # Phase 2: Build & Deploy Pipeline
@@ -439,7 +442,7 @@ jobs:
       name: production
     defaults:
       run:
-        working-directory: jo17_tactical_manager
+        working-directory: .
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@v2
@@ -461,7 +464,7 @@ jobs:
         with:
           path: |
             ~/.pub-cache
-            build/
+            jo17_tactical_manager/build/
           key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
 
       - name: 🔒 Validate required secrets for production
@@ -481,6 +484,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
+          cd jo17_tactical_manager
           flutter pub get
           # Build web with required env and Sentry DSN
           flutter build web --release --no-web-resources-cdn \
@@ -651,7 +655,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: web-build-${{ github.sha }}
-          path: build/web/
+          path: jo17_tactical_manager/build/web/
           retention-days: 7
 
       - name: 📦 Install Sentry CLI
@@ -686,7 +690,7 @@ jobs:
         id: deploy
         run: |
           echo "🚀 Deploying to Netlify..."
-          OUTPUT=$(npx netlify-cli deploy \
+          OUTPUT=$(cd jo17_tactical_manager && npx netlify-cli deploy \
             --dir=build/web \
             --prod \
             --json \
@@ -716,7 +720,7 @@ jobs:
   integration-tests:
     defaults:
       run:
-        working-directory: jo17_tactical_manager
+        working-directory: .
     name: 🔬 Integration Tests (secured)
     runs-on: ubuntu-latest
     needs: quality-and-test
@@ -806,7 +810,7 @@ jobs:
       name: preview-pr-${{ github.event.number }}
     defaults:
       run:
-        working-directory: jo17_tactical_manager
+        working-directory: .
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
