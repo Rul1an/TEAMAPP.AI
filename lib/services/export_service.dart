@@ -15,19 +15,23 @@ import '../models/training.dart';
 import '../repositories/match_repository.dart';
 import '../repositories/player_repository.dart';
 import '../repositories/training_repository.dart';
+import 'analytics_events.dart';
 
 class ExportService {
   ExportService({
     required PlayerRepository playerRepository,
     required MatchRepository matchRepository,
     required TrainingRepository trainingRepository,
+    AnalyticsLogger? analytics,
   })  : _playerRepo = playerRepository,
         _matchRepo = matchRepository,
-        _trainingRepo = trainingRepository;
+        _trainingRepo = trainingRepository,
+        _analytics = analytics ?? const AnalyticsLogger();
 
   final PlayerRepository _playerRepo;
   final MatchRepository _matchRepo;
   final TrainingRepository _trainingRepo;
+  final AnalyticsLogger _analytics;
 
   // Pure helpers for testing/consistency
   static List<String> playerExcelHeaders() => const [
@@ -179,6 +183,10 @@ class ExportService {
       );
 
     await _savePDF(pdfDoc, 'spelers_overzicht');
+    await _analytics.log(
+      AnalyticsEvent.exportPdf,
+      parameters: {'entity': 'players', 'count': players.length},
+    );
   }
 
   // Export Players to Excel
@@ -211,6 +219,10 @@ class ExportService {
     }
 
     await _saveExcel(excel, 'spelers_overzicht');
+    await _analytics.log(
+      AnalyticsEvent.exportCsv,
+      parameters: {'entity': 'players', 'count': players.length},
+    );
   }
 
   // Export Matches to PDF
@@ -272,6 +284,10 @@ class ExportService {
       );
 
     await _savePDF(pdfDoc, 'wedstrijden_overzicht');
+    await _analytics.log(
+      AnalyticsEvent.exportPdf,
+      parameters: {'entity': 'matches', 'count': matches.length},
+    );
   }
 
   // Export Training Attendance to Excel
@@ -320,6 +336,14 @@ class ExportService {
       ..appendRow([TextCellValue('L = Te laat')]);
 
     await _saveExcel(excel, 'training_aanwezigheid');
+    await _analytics.log(
+      AnalyticsEvent.exportCsv,
+      parameters: {
+        'entity': 'training_attendance',
+        'trainings': trainings.length,
+        'players': players.length,
+      },
+    );
   }
 
   // Helper methods - Web compatible
