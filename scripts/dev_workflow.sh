@@ -35,13 +35,13 @@ fi
 # PHASE 1: CODE QUALITY PIPELINE
 # =============================================================================
 
-echo "📊 Phase 1: Code Quality Pipeline"
+echo "📊 Phase 1: Flutter Code Quality Pipeline"
 echo "=================================="
 
 # Step 1: Flutter Analyze
-echo "🔍 Step 1/3: Flutter Analyze"
-echo "Checking for errors, warnings, and lints..."
-if ! flutter analyze --no-fatal-infos; then
+echo "🔍 Step 1/3: Running flutter analyze..."
+echo "Checking for errors, warnings, and lints (CI parity: --fatal-infos)"
+if ! flutter analyze --fatal-infos; then
     echo ""
     echo "💥 FLUTTER ANALYZE FAILED!"
     echo "❌ Pipeline aborted - fix analyzer errors first"
@@ -52,33 +52,28 @@ if ! flutter analyze --no-fatal-infos; then
     echo "   # Then re-run this script"
     exit 1
 fi
-echo "✅ Flutter analyze: PASSED"
+echo "✅ Flutter analyze passed"
 echo ""
 
 # Step 2: Dart Format
-echo "🎨 Step 2/3: Dart Format"
-echo "Applying consistent code formatting..."
-FORMATTED_FILES=$(dart format . --set-exit-if-changed --line-length=80 2>&1 || true)
-if echo "$FORMATTED_FILES" | grep -q "Changed"; then
-    echo "📝 Code formatting applied:"
-    echo "$FORMATTED_FILES"
-    echo "✅ All files now consistently formatted"
-else
-    echo "✅ Code formatting already perfect"
+echo "🎨 Step 2/3: Dart Format (CI parity)"
+echo "Applying consistent code formatting and verifying no diffs..."
+# First apply formatting unconditionally for convenience
+dart format . --line-length=100 >/dev/null
+# Then enforce the gate exactly like CI
+if ! dart format . --set-exit-if-changed --line-length=100; then
+    echo ""
+    echo "💥 FORMAT CHECK FAILED (CI parity)"
+    echo "Some files required formatting and were changed."
+    echo "Please review changes, stage them, and re-run this script."
+    exit 1
 fi
 echo ""
 
 # Step 3: Dart Fix
-echo "🔧 Step 3/3: Dart Fix"
-echo "Applying automated code improvements..."
-FIXES_APPLIED=$(dart fix --apply 2>&1)
-if echo "$FIXES_APPLIED" | grep -q "Applied"; then
-    echo "🔧 Automated fixes applied:"
-    echo "$FIXES_APPLIED"
-    echo "✅ Code improvements successfully applied"
-else
-    echo "✅ No automated fixes needed - code already optimal"
-fi
+echo "🔧 Step 3/3: Running dart fix"
+echo "Applying automated code improvements (non-fatal in CI, safe locally)..."
+dart fix --apply || true
 echo ""
 
 echo "🎉 Phase 1 Complete: Code Quality Pipeline PASSED"
