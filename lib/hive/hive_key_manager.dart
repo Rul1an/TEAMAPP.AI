@@ -57,12 +57,12 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
   @override
   Future<String?> read({
     required String key,
-    AppleOptions? iOptions,
-    AndroidOptions? aOptions,
-    LinuxOptions? lOptions,
-    WebOptions? webOptions,
-    AppleOptions? mOptions,
-    WindowsOptions? wOptions,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
   }) async =>
       _store[key];
 
@@ -70,12 +70,12 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
   Future<void> write({
     required String key,
     required String? value,
-    AppleOptions? iOptions,
-    AndroidOptions? aOptions,
-    LinuxOptions? lOptions,
-    WebOptions? webOptions,
-    AppleOptions? mOptions,
-    WindowsOptions? wOptions,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
   }) async {
     if (value == null) {
       _store.remove(key);
@@ -88,12 +88,12 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
   @override
   Future<void> delete({
     required String key,
-    AppleOptions? iOptions,
-    AndroidOptions? aOptions,
-    LinuxOptions? lOptions,
-    WebOptions? webOptions,
-    AppleOptions? mOptions,
-    WindowsOptions? wOptions,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
   }) async {
     _store.remove(key);
     _listeners[key]?.forEach((listener) => listener(null));
@@ -101,12 +101,12 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
 
   @override
   Future<void> deleteAll({
-    AppleOptions? iOptions,
-    AndroidOptions? aOptions,
-    LinuxOptions? lOptions,
-    WebOptions? webOptions,
-    AppleOptions? mOptions,
-    WindowsOptions? wOptions,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
   }) async {
     _store.clear();
     for (final key in _listeners.keys) {
@@ -117,24 +117,24 @@ class _InMemorySecureStorage implements FlutterSecureStorage {
   // The rest of the API methods are no-op for this stub
   @override
   Future<Map<String, String>> readAll({
-    AppleOptions? iOptions,
-    AndroidOptions? aOptions,
-    LinuxOptions? lOptions,
-    WebOptions? webOptions,
-    AppleOptions? mOptions,
-    WindowsOptions? wOptions,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
   }) async =>
       Map.of(_store);
 
   @override
   Future<bool> containsKey({
     required String key,
-    AppleOptions? iOptions,
-    AndroidOptions? aOptions,
-    LinuxOptions? lOptions,
-    WebOptions? webOptions,
-    AppleOptions? mOptions,
-    WindowsOptions? wOptions,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
   }) async =>
       _store.containsKey(key);
 
