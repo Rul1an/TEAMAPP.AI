@@ -408,6 +408,8 @@ jobs:
               --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
               --dart-define=SENTRY_DSN=${SENTRY_DSN} \
               --dart-define=FLUTTER_ENV=${FLUTTER_ENV} \
+              --dart-define=SENTRY_PING=true \
+              --dart-define=SENTRY_PING_MESSAGE="CI deploy ping (wasm) ${GITHUB_SHA}" \
               --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit-${GITHUB_SHA}/
           else
             echo "Building Web (CanvasKit default)"
@@ -417,6 +419,8 @@ jobs:
               --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
               --dart-define=SENTRY_DSN=${SENTRY_DSN} \
               --dart-define=FLUTTER_ENV=${FLUTTER_ENV} \
+              --dart-define=SENTRY_PING=true \
+              --dart-define=SENTRY_PING_MESSAGE="CI deploy ping (canvaskit) ${GITHUB_SHA}" \
               --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit-${GITHUB_SHA}/
           fi
           # Version CanvasKit assets directory to match the commit SHA for cache-busting
