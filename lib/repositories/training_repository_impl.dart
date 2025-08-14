@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Project imports:
 import '../core/result.dart';
+import 'cache_policy.dart';
 import '../data/supabase_training_data_source.dart';
 import '../hive/hive_training_cache.dart';
 import '../models/training.dart';
@@ -27,14 +28,12 @@ class TrainingRepositoryImpl implements TrainingRepository {
 
   @override
   Future<Result<List<Training>>> getAll() async {
-    try {
-      final list = await _remote.fetchAll();
-      await _cache.write(list);
-      return Success(list);
-    } catch (e) {
-      final cached = await _tryGetCached();
-      return cached != null ? Success(cached) : Failure(_mapError(e));
-    }
+    return CachePolicy.getSWR<List<Training>>(
+      fetchRemote: _remote.fetchAll,
+      readCache: _tryGetCached,
+      writeCache: _cache.write,
+      mapError: _mapError,
+    );
   }
 
   @override
@@ -68,43 +67,29 @@ class TrainingRepositoryImpl implements TrainingRepository {
 
   @override
   Future<Result<void>> add(Training training) async {
-    try {
-      await _remote.add(training);
-      await _cache.clear();
-      return const Success(null);
-    } catch (e) {
-      return Failure(_mapError(e));
-    }
+    return CachePolicy.mutate(
+      remoteCall: () => _remote.add(training),
+      clearCache: _cache.clear,
+      mapError: _mapError,
+    );
   }
 
   @override
   Future<Result<void>> update(Training training) async {
-    try {
-      await _remote.update(training);
-      // write-through: update cached list if present.
-      final cached = await _cache.read();
-      if (cached != null) {
-        final idx = cached.indexWhere((t) => t.id == training.id);
-        if (idx != -1) {
-          cached[idx] = training;
-          await _cache.write(cached);
-        }
-      }
-      return const Success(null);
-    } catch (e) {
-      return Failure(_mapError(e));
-    }
+    return CachePolicy.mutate(
+      remoteCall: () => _remote.update(training),
+      clearCache: _cache.clear,
+      mapError: _mapError,
+    );
   }
 
   @override
   Future<Result<void>> delete(String id) async {
-    try {
-      await _remote.delete(id);
-      await _cache.clear();
-      return const Success(null);
-    } catch (e) {
-      return Failure(_mapError(e));
-    }
+    return CachePolicy.mutate(
+      remoteCall: () => _remote.delete(id),
+      clearCache: _cache.clear,
+      mapError: _mapError,
+    );
   }
 
   @override

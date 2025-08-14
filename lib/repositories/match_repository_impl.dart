@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Project imports:
 import '../core/result.dart';
+import 'cache_policy.dart';
 import '../data/supabase_match_data_source.dart';
 import '../hive/hive_match_cache.dart';
 import '../models/match.dart';
@@ -26,14 +27,12 @@ class MatchRepositoryImpl implements MatchRepository {
 
   @override
   Future<Result<List<Match>>> getAll() async {
-    try {
-      final matches = await _remote.fetchAll();
-      await _cache.write(matches);
-      return Success(matches);
-    } catch (e) {
-      final cache = await _cached();
-      return cache != null ? Success(cache) : Failure(_map(e));
-    }
+    return CachePolicy.getSWR<List<Match>>(
+      fetchRemote: _remote.fetchAll,
+      readCache: _cached,
+      writeCache: _cache.write,
+      mapError: _map,
+    );
   }
 
   @override
@@ -76,15 +75,9 @@ class MatchRepositoryImpl implements MatchRepository {
   }
 
   // mutations
-  Future<Result<void>> _wrapMutation(Future<void> Function() fn) async {
-    try {
-      await fn();
-      await _cache.clear();
-      return const Success(null);
-    } catch (e) {
-      return Failure(_map(e));
-    }
-  }
+  Future<Result<void>> _wrapMutation(Future<void> Function() fn) =>
+      CachePolicy.mutate(
+          remoteCall: fn, clearCache: _cache.clear, mapError: _map);
 
   @override
   Future<Result<void>> add(Match match) =>

@@ -46,7 +46,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
     return CachePolicy.getSWR<List<Player>>(
       fetchRemote: _remote.fetchAll,
       readCache: _tryGetCached,
-      writeCache: (data) => _cache.write(data),
+      writeCache: _cache.write,
       mapError: _mapError,
     );
   }

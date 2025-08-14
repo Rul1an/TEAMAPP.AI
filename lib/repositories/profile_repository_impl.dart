@@ -4,6 +4,7 @@ import 'dart:io';
 
 // Project imports:
 import '../core/result.dart';
+import 'cache_policy.dart';
 import '../data/supabase_profile_data_source.dart';
 import '../hive/hive_profile_cache.dart';
 import '../models/profile.dart';
@@ -33,14 +34,14 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<Result<Profile?>> getCurrent() async {
-    try {
-      final profile = await _remote.fetchCurrent();
-      if (profile != null) await _cache.write(profile);
-      return Success(profile);
-    } catch (e) {
-      final cached = await _cache.read();
-      return cached != null ? Success(cached) : Failure(_mapError(e));
-    }
+    return CachePolicy.getSWR<Profile?>(
+      fetchRemote: _remote.fetchCurrent,
+      readCache: _cache.read,
+      writeCache: (p) async {
+        if (p != null) await _cache.write(p);
+      },
+      mapError: _mapError,
+    );
   }
 
   @override
