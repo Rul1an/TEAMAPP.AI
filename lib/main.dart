@@ -169,17 +169,44 @@ class JO17TacticalManagerApp extends ConsumerWidget {
         darkTheme: AppTheme.darkTheme,
         builder: (context, child) {
           final media = MediaQuery.of(context);
-          // Clamp text scale between 0.9 and 1.3 to preserve layout while respecting user preference
-          final clampedTextScale = media.textScaleFactor.clamp(0.9, 1.3);
-          // Respect reduced motion for animations (used by widgets that read MediaQuery)
-          final disableAnimations =
-              MediaQuery.maybeOf(context)?.disableAnimations ?? false;
+          // Derive current factor from TextScaler without using deprecated textScaleFactor
+          final currentFactor = media.textScaler.scale(14) / 14;
+          final clampedFactor = currentFactor.clamp(0.9, 1.3).toDouble();
+          final disableAnimations = media.disableAnimations;
+
+          Widget effective = child ?? const SizedBox.shrink();
+
+          // If user requests high contrast, overlay a high-contrast color scheme
+          if (media.highContrast) {
+            final theme = Theme.of(context);
+            final cs = theme.colorScheme;
+            final hc = theme.brightness == Brightness.dark
+                ? ColorScheme.highContrastDark(
+                    primary: cs.primary,
+                    secondary: cs.secondary,
+                  )
+                : ColorScheme.highContrastLight(
+                    primary: cs.primary,
+                    secondary: cs.secondary,
+                  );
+            effective = Theme(
+              data: theme.copyWith(
+                colorScheme: hc,
+                textTheme: theme.textTheme.apply(
+                  bodyColor: hc.onSurface,
+                  displayColor: hc.onSurface,
+                ),
+              ),
+              child: effective,
+            );
+          }
+
           return MediaQuery(
             data: media.copyWith(
-              textScaler: TextScaler.linear(clampedTextScale.toDouble()),
+              textScaler: TextScaler.linear(clampedFactor),
               disableAnimations: disableAnimations,
             ),
-            child: child ?? const SizedBox.shrink(),
+            child: effective,
           );
         },
         routerConfig: router,
