@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
@@ -27,10 +28,14 @@ class _ConnectivityBannerState extends State<ConnectivityBanner> {
 
   Future<void> _checkInternetReachability() async {
     try {
-      final response = await http
-          .get(Uri.parse('https://www.gstatic.com/generate_204'))
-          .timeout(const Duration(seconds: 3));
-      final bool online = response.statusCode == 204;
+      final Uri probe = kIsWeb
+          ? Uri.parse(
+              '/favicon.png?nocache=${DateTime.now().millisecondsSinceEpoch}')
+          : Uri.parse('https://www.gstatic.com/generate_204');
+      final response =
+          await http.get(probe).timeout(const Duration(seconds: 3));
+      final bool online =
+          kIsWeb ? response.statusCode == 200 : response.statusCode == 204;
       if (mounted && _isOnline != online) {
         setState(() => _isOnline = online);
       }

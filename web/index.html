@@ -42,7 +42,7 @@
   <!-- Preload critical Flutter manifests & bootstrap -->
   <link rel="preload" as="fetch" href="assets/AssetManifest.bin.json" crossorigin>
   <link rel="preload" as="fetch" href="assets/FontManifest.json" crossorigin>
-  <link rel="preload" as="script" href="flutter_bootstrap.js">
+  <!-- Keep bootstrap async; browsers may warn if not immediately used -->
   <!-- Trusted Types policy bootstrap for Sentry/Flutter (keeps console clean) -->
   <script>
     (function () {
@@ -83,25 +83,7 @@
     });
   </script>
   <script src="flutter_bootstrap.js" async></script>
-  <script>
-    // Hint the browser to warm up CanvasKit on first load for better LCP
-    try {
-      const ckBase = self.FLUTTER_WEB_CANVASKIT_URL || "/canvaskit/";
-      const ckJs = `${ckBase}canvaskit.js`;
-      const ckWasm = `${ckBase}canvaskit.wasm`;
-      const linkJs = document.createElement('link');
-      linkJs.rel = 'preload';
-      linkJs.as = 'script';
-      linkJs.href = ckJs;
-      document.head.appendChild(linkJs);
-      const linkWasm = document.createElement('link');
-      linkWasm.rel = 'preload';
-      linkWasm.as = 'fetch';
-      linkWasm.href = ckWasm;
-      linkWasm.crossOrigin = 'anonymous';
-      document.head.appendChild(linkWasm);
-    } catch { }
-  </script>
+  <!-- CanvasKit warm-up disabled to avoid preload-not-used warnings; SW caches on first use -->
 </body>
 
 </html>
