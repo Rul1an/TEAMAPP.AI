@@ -52,18 +52,25 @@ class _TacticalDrawingCanvasState extends State<TacticalDrawingCanvas> {
           widget.child,
           if (widget.isDrawingMode)
             Positioned.fill(
-              child: GestureDetector(
-                onPanStart: _onPanStart,
-                onPanUpdate: _onPanUpdate,
-                onPanEnd: _onPanEnd,
-                onTapUp: _onTap,
-                child: CustomPaint(
-                  painter: TacticalDrawingPainter(
-                    drawings: widget.drawings,
-                    currentPoints: _currentPoints,
-                    currentTool: widget.selectedTool,
-                    currentColor: widget.selectedColor,
-                    isDrawing: _isDrawing,
+              child: Semantics(
+                container: true,
+                label:
+                    'Tactical drawing area. Use touch or mouse to draw. Double tap to add text when text tool is selected.',
+                child: FocusTraversalGroup(
+                  child: GestureDetector(
+                    onPanStart: _onPanStart,
+                    onPanUpdate: _onPanUpdate,
+                    onPanEnd: _onPanEnd,
+                    onTapUp: _onTap,
+                    child: CustomPaint(
+                      painter: TacticalDrawingPainter(
+                        drawings: widget.drawings,
+                        currentPoints: _currentPoints,
+                        currentTool: widget.selectedTool,
+                        currentColor: widget.selectedColor,
+                        isDrawing: _isDrawing,
+                      ),
+                    ),
                   ),
                 ),
               ),

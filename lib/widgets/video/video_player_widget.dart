@@ -96,38 +96,41 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           }
         }
       },
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Video player
-          AspectRatio(
-            aspectRatio:
-                state.controller?.value.aspectRatio ?? widget.aspectRatio,
-            child: state.controller != null
-                ? VideoPlayer(state.controller!)
-                : const ColoredBox(
-                    color: Colors.black,
-                    child: Center(
-                      child: Icon(
-                        Icons.video_library,
-                        color: Colors.white54,
-                        size: 48,
+      child: FocusTraversalGroup(
+        policy: OrderedTraversalPolicy(),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // Video player
+            AspectRatio(
+              aspectRatio:
+                  state.controller?.value.aspectRatio ?? widget.aspectRatio,
+              child: state.controller != null
+                  ? VideoPlayer(state.controller!)
+                  : const ColoredBox(
+                      color: Colors.black,
+                      child: Center(
+                        child: Icon(
+                          Icons.video_library,
+                          color: Colors.white54,
+                          size: 48,
+                        ),
                       ),
                     ),
-                  ),
-          ),
+            ),
 
-          // Video controls overlay
-          if (widget.showControls && state.showControls)
-            _buildVideoControls(context, state, notifier),
+            // Video controls overlay
+            if (widget.showControls && state.showControls)
+              _buildVideoControls(context, state, notifier),
 
-          // Buffering indicator
-          if (state.isBuffering) _buildBufferingIndicator(),
+            // Buffering indicator
+            if (state.isBuffering) _buildBufferingIndicator(),
 
-          // Play button overlay (when paused and controls are hidden)
-          if (!state.isPlaying && !state.showControls && !state.isBuffering)
-            _buildPlayButtonOverlay(notifier),
-        ],
+            // Play button overlay (when paused and controls are hidden)
+            if (!state.isPlaying && !state.showControls && !state.isBuffering)
+              _buildPlayButtonOverlay(notifier),
+          ],
+        ),
       ),
     );
   }
@@ -225,19 +228,25 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
     VideoPlayerState state,
     VideoPlayerNotifier notifier,
   ) {
-    return GestureDetector(
+    final isPlaying = state.isPlaying;
+    return Semantics(
+      button: true,
+      label: isPlaying ? 'Pause video' : 'Play video',
       onTap: notifier.togglePlayPause,
-      child: Container(
-        width: 80,
-        height: 80,
-        decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.7),
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          state.isPlaying ? Icons.pause : Icons.play_arrow,
-          color: Colors.white,
-          size: 40,
+      child: GestureDetector(
+        onTap: notifier.togglePlayPause,
+        child: Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            color: Colors.black.withValues(alpha: 0.7),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            isPlaying ? Icons.pause : Icons.play_arrow,
+            color: Colors.white,
+            size: 40,
+          ),
         ),
       ),
     );
@@ -334,8 +343,17 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
         onChanged: (double value) {
           notifier.seekTo(Duration(milliseconds: value.round()));
         },
+        semanticFormatterCallback: _formatSliderSemantic,
       ),
     );
+  }
+
+  String _formatSliderSemantic(double value) {
+    final d = Duration(milliseconds: value.round());
+    String two(int n) => n.toString().padLeft(2, '0');
+    final minutes = two(d.inMinutes.remainder(60));
+    final seconds = two(d.inSeconds.remainder(60));
+    return 'Position $minutes minutes $seconds seconds';
   }
 
   Widget _buildSpeedButton(
@@ -365,19 +383,24 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
   }
 
   Widget _buildPlayButtonOverlay(VideoPlayerNotifier notifier) {
-    return GestureDetector(
+    return Semantics(
+      button: true,
+      label: 'Play video',
       onTap: notifier.play,
-      child: Container(
-        width: 80,
-        height: 80,
-        decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.7),
-          shape: BoxShape.circle,
-        ),
-        child: const Icon(
-          Icons.play_arrow,
-          color: Colors.white,
-          size: 40,
+      child: GestureDetector(
+        onTap: notifier.play,
+        child: Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            color: Colors.black.withValues(alpha: 0.7),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(
+            Icons.play_arrow,
+            color: Colors.white,
+            size: 40,
+          ),
         ),
       ),
     );

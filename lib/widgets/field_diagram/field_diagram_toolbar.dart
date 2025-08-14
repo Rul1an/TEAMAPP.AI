@@ -139,23 +139,29 @@ class _FieldDiagramToolbarState extends ConsumerState<FieldDiagramToolbar> {
   }) {
     final isSelected = widget.selectedTool == tool;
 
-    return Material(
-      borderRadius: BorderRadius.circular(8),
-      color: isSelected ? Colors.green[100] : Colors.transparent,
-      child: InkWell(
+    return Semantics(
+      button: true,
+      label: tooltip,
+      toggled: isSelected,
+      child: Material(
         borderRadius: BorderRadius.circular(8),
-        onTap: () => widget.onToolSelected(tool),
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border:
-                isSelected ? Border.all(color: Colors.green, width: 2) : null,
-          ),
-          child: Icon(
-            icon,
-            size: 24,
-            color: color ?? (isSelected ? Colors.green[700] : Colors.grey[600]),
+        color: isSelected ? Colors.green[100] : Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => widget.onToolSelected(tool),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border:
+                  isSelected ? Border.all(color: Colors.green, width: 2) : null,
+            ),
+            child: Icon(
+              icon,
+              size: 24,
+              color:
+                  color ?? (isSelected ? Colors.green[700] : Colors.grey[600]),
+            ),
           ),
         ),
       ),
