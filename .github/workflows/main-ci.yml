@@ -394,6 +394,8 @@ jobs:
             flutter build web --wasm --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
               --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
+              --dart-define=SENTRY_DSN=${SENTRY_DSN} \
+              --dart-define=FLUTTER_ENV=${FLUTTER_ENV} \
               --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/${GITHUB_SHA}/
           else
             echo "Building Web (CanvasKit default)"
@@ -401,6 +403,8 @@ jobs:
             flutter build web --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
               --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
+              --dart-define=SENTRY_DSN=${SENTRY_DSN} \
+              --dart-define=FLUTTER_ENV=${FLUTTER_ENV} \
               --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/${GITHUB_SHA}/
           fi
           # Version CanvasKit assets directory to match the commit SHA for cache-busting
@@ -478,6 +482,35 @@ jobs:
             fi
           else
             echo "No wasm_audit.json found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: ✅ Prepare dart-define env (branch-aware)
+        shell: bash
+        run: |
+          # Compute environment (production on main, test otherwise)
+          if [ "${GITHUB_REF}" = "refs/heads/main" ]; then
+            echo "FLUTTER_ENV=production" >> $GITHUB_ENV
+          else
+            echo "FLUTTER_ENV=test" >> $GITHUB_ENV
+          fi
+          # Prefer preview secrets when available
+          SUPA_URL="${{ secrets.SUPABASE_URL_PREVIEW }}"; if [ -z "$SUPA_URL" ]; then SUPA_URL="${{ secrets.SUPABASE_URL }}"; fi
+          SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}"; if [ -z "$SUPA_KEY" ]; then SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY }}"; fi
+          echo "SUPABASE_URL=$SUPA_URL" >> $GITHUB_ENV
+          echo "SUPABASE_ANON_KEY=$SUPA_KEY" >> $GITHUB_ENV
+          echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+
+      - name: 🔐 Validate required secrets for production
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          missing=()
+          [ -z "$SUPABASE_URL" ] && missing+=(SUPABASE_URL)
+          [ -z "$SUPABASE_ANON_KEY" ] && missing+=(SUPABASE_ANON_KEY)
+          [ -z "$SENTRY_DSN" ] && missing+=(SENTRY_DSN)
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::Missing required secrets: ${missing[*]}"
+            exit 1
           fi
 
   # Phase 2: Build & Deploy Pipeline
