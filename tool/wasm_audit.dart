@@ -14,7 +14,7 @@ Future<void> main() async {
 
   final restricted = await _scanRestrictedImports(
     Directory('lib'),
-    patterns: [RegExp("dart:(html|js|ffi)")],
+    patterns: [RegExp('dart:(html|js|ffi)')],
   );
 
   report['restricted_imports'] = restricted
