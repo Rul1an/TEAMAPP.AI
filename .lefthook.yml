@@ -1,18 +1,29 @@
 pre-commit:
-  # Run tasks in parallel for speed
-  parallel: true
+  # Run sequentially to respect dependency ordering (pub get -> format -> analyze)
+  parallel: false
   commands:
-    format:
-      description: "Dart formatter (staged)"
-      glob: "*.dart"
-      run: dart format --line-length=100 {staged_files}
+    pub_get_on_pubspec_change:
+      description: "Ensure dependencies are up-to-date when pubspec changes"
+      files: ^(pubspec\.yaml|pubspec_overrides\.yaml|packages/.*/pubspec\.yaml)$
+      run: flutter pub get
+
+    format_strict:
+      description: "Dart formatter (CI parity: exit if changes needed)"
+      run: dart format . --set-exit-if-changed
+      fail_text: |
+        Unformatted files detected. Please run:
+          dart format .
+
     import_sorter:
       description: "Sort Dart imports (staged)"
       glob: "*.dart"
-      run: flutter pub run import_sorter:main {staged_files}
-    analyze:
-      description: "Static analysis"
-      run: dart analyze
+      run: >
+        bash -c "if grep -q 'import_sorter' pubspec.lock 2>/dev/null; then flutter pub run import_sorter:main {staged_files}; else echo 'Skipping import_sorter: not in pubspec.lock'; fi"
+
+    analyze_strict:
+      description: "Static analysis (CI parity: fatal infos)"
+      run: flutter analyze --fatal-infos
+
     dcm:
       description: "Dart Code Metrics – style & performance (optional)"
       glob: "*.dart"
