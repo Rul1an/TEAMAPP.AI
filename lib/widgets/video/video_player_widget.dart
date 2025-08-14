@@ -93,12 +93,12 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
 
     return FocusableActionDetector(
       autofocus: true,
-      shortcuts: <ShortcutActivator, Intent>{
-        SingleActivator(LogicalKeyboardKey.space): const ActivateIntent(),
+      shortcuts: const <ShortcutActivator, Intent>{
+        SingleActivator(LogicalKeyboardKey.space): ActivateIntent(),
         SingleActivator(LogicalKeyboardKey.arrowLeft):
-            const ScrollIntent(direction: AxisDirection.left),
+            ScrollIntent(direction: AxisDirection.left),
         SingleActivator(LogicalKeyboardKey.arrowRight):
-            const ScrollIntent(direction: AxisDirection.right),
+            ScrollIntent(direction: AxisDirection.right),
         SingleActivator(LogicalKeyboardKey.keyM): _toggleMuteIntent,
         SingleActivator(LogicalKeyboardKey.keyF): _toggleFullscreenIntent,
       },

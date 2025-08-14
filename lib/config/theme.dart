@@ -106,6 +106,15 @@ class AppTheme {
                 GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),
+        iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(
+            minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
+            padding: const WidgetStatePropertyAll(EdgeInsets.all(12)),
+            tapTargetSize: MaterialTapTargetSize.padded,
+          ),
+        ),
+        tooltipTheme: const TooltipThemeData(
+            preferBelow: true, waitDuration: Duration(milliseconds: 400)),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: backgroundColor,
@@ -218,6 +227,15 @@ class AppTheme {
               GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
+          padding: const WidgetStatePropertyAll(EdgeInsets.all(12)),
+          tapTargetSize: MaterialTapTargetSize.padded,
+        ),
+      ),
+      tooltipTheme: const TooltipThemeData(
+          preferBelow: true, waitDuration: Duration(milliseconds: 400)),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: const Color(0xFF1A1A1A),
