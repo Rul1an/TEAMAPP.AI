@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 
 // Project imports:
 import '../core/result.dart';
+import 'cache_policy.dart';
 import '../data/supabase_player_data_source.dart';
 import '../hive/hive_player_cache.dart';
 import '../models/player.dart';
@@ -42,14 +43,12 @@ class PlayerRepositoryImpl implements PlayerRepository {
 
   @override
   Future<Result<List<Player>>> getAll() async {
-    try {
-      final players = await _remote.fetchAll();
-      await _cache.write(players);
-      return Success(players);
-    } catch (e) {
-      final cached = await _tryGetCached();
-      return cached != null ? Success(cached) : Failure(_mapError(e));
-    }
+    return CachePolicy.getSWR<List<Player>>(
+      fetchRemote: _remote.fetchAll,
+      readCache: _tryGetCached,
+      writeCache: (data) => _cache.write(data),
+      mapError: _mapError,
+    );
   }
 
   @override
@@ -150,23 +149,19 @@ class PlayerRepositoryImpl implements PlayerRepository {
 
   @override
   Future<Result<void>> update(Player player) async {
-    try {
-      await _remote.update(player);
-      await _cache.clear();
-      return const Success(null);
-    } catch (e) {
-      return Failure(_mapError(e));
-    }
+    return CachePolicy.mutate(
+      remoteCall: () => _remote.update(player),
+      clearCache: _cache.clear,
+      mapError: _mapError,
+    );
   }
 
   @override
   Future<Result<void>> delete(String id) async {
-    try {
-      await _remote.delete(id);
-      await _cache.clear();
-      return const Success(null);
-    } catch (e) {
-      return Failure(_mapError(e));
-    }
+    return CachePolicy.mutate(
+      remoteCall: () => _remote.delete(id),
+      clearCache: _cache.clear,
+      mapError: _mapError,
+    );
   }
 }
