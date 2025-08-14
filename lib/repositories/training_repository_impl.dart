@@ -8,6 +8,7 @@ import '../data/supabase_training_data_source.dart';
 import '../hive/hive_training_cache.dart';
 import '../models/training.dart';
 import 'training_repository.dart';
+import '../services/analytics_events.dart';
 
 class TrainingRepositoryImpl implements TrainingRepository {
   TrainingRepositoryImpl({
@@ -18,6 +19,7 @@ class TrainingRepositoryImpl implements TrainingRepository {
 
   final SupabaseTrainingDataSource _remote;
   final HiveTrainingCache _cache;
+  final AnalyticsLogger _analytics = const AnalyticsLogger();
 
   AppFailure _mapError(Object e) {
     if (e is SocketException) return NetworkFailure(e.message);
@@ -68,7 +70,13 @@ class TrainingRepositoryImpl implements TrainingRepository {
   @override
   Future<Result<void>> add(Training training) async {
     return CachePolicy.mutate(
-      remoteCall: () => _remote.add(training),
+      remoteCall: () async {
+        await _remote.add(training);
+        await _analytics.log(
+          AnalyticsEvent.trainingCreate,
+          parameters: {'id': training.id},
+        );
+      },
       clearCache: _cache.clear,
       mapError: _mapError,
     );

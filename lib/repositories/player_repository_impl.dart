@@ -11,6 +11,7 @@ import '../data/supabase_player_data_source.dart';
 import '../hive/hive_player_cache.dart';
 import '../models/player.dart';
 import 'player_repository.dart';
+import '../services/analytics_events.dart';
 
 /// Repository that serves `Player` data using a read-through cache.
 ///
@@ -29,6 +30,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
 
   final SupabasePlayerDataSource _remote;
   final HivePlayerCache _cache;
+  final AnalyticsLogger _analytics = const AnalyticsLogger();
 
   // region Helpers ---------------------------------------------------------
 
@@ -96,6 +98,10 @@ class PlayerRepositoryImpl implements PlayerRepository {
     try {
       await _remote.add(player);
       await _cache.clear();
+      await _analytics.log(
+        AnalyticsEvent.playerCreate,
+        parameters: {'id': player.id},
+      );
       return const Success(null);
     } catch (e) {
       // In standalone mode, fallback to cache-only operation
@@ -140,6 +146,10 @@ class PlayerRepositoryImpl implements PlayerRepository {
             : player;
         cached.add(playerToAdd);
         await _cache.write(cached);
+        await _analytics.log(
+          AnalyticsEvent.playerCreate,
+          parameters: {'id': playerToAdd.id, 'offline': true},
+        );
         return const Success(null);
       } catch (cacheError) {
         return Failure(_mapError(cacheError));
@@ -150,7 +160,13 @@ class PlayerRepositoryImpl implements PlayerRepository {
   @override
   Future<Result<void>> update(Player player) async {
     return CachePolicy.mutate(
-      remoteCall: () => _remote.update(player),
+      remoteCall: () async {
+        await _remote.update(player);
+        await _analytics.log(
+          AnalyticsEvent.playerUpdate,
+          parameters: {'id': player.id},
+        );
+      },
       clearCache: _cache.clear,
       mapError: _mapError,
     );
@@ -159,7 +175,13 @@ class PlayerRepositoryImpl implements PlayerRepository {
   @override
   Future<Result<void>> delete(String id) async {
     return CachePolicy.mutate(
-      remoteCall: () => _remote.delete(id),
+      remoteCall: () async {
+        await _remote.delete(id);
+        await _analytics.log(
+          AnalyticsEvent.playerDelete,
+          parameters: {'id': id},
+        );
+      },
       clearCache: _cache.clear,
       mapError: _mapError,
     );
