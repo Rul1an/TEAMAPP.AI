@@ -391,17 +391,19 @@ jobs:
           set -e
           if [ "${{ matrix.target }}" = "wasm" ]; then
             echo "Building Web (Wasm)"
-            (cd jo17_tactical_manager && flutter build web --wasm --release \
+            flutter pub get
+            flutter build web --wasm --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
-              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY})
+              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
           else
             echo "Building Web (CanvasKit default)"
-            (cd jo17_tactical_manager && flutter build web --release \
+            flutter pub get
+            flutter build web --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
-              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY})
+              --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
           fi
           # Metrics
-          BUILD_DIR=jo17_tactical_manager/build/web
+          BUILD_DIR=build/web
           echo "Collecting build metrics for ${{ matrix.target }}"
           BUILD_SIZE_KB=$(du -sk "$BUILD_DIR" | cut -f1)
           BUILD_SIZE_MB=$(echo "scale=2; $BUILD_SIZE_KB/1024" | bc)
@@ -421,8 +423,8 @@ jobs:
         with:
           name: web-${{ matrix.target }}-${{ github.sha }}
           path: |
-            jo17_tactical_manager/build/web/
-            jo17_tactical_manager/build_metrics.txt
+            build/web/
+            build_metrics.txt
           retention-days: 5
 
   # Phase 2: Build & Deploy Pipeline
@@ -463,7 +465,7 @@ jobs:
         with:
           path: |
             ~/.pub-cache
-            jo17_tactical_manager/build/
+            build/
           key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
 
       - name: 🔒 Validate required secrets for production
@@ -483,7 +485,6 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          cd jo17_tactical_manager
           flutter pub get
           # Build web with required env and Sentry DSN
           flutter build web --release --no-web-resources-cdn \
@@ -689,7 +690,7 @@ jobs:
         id: deploy
         run: |
           echo "🚀 Deploying to Netlify..."
-          OUTPUT=$(cd jo17_tactical_manager && npx netlify-cli deploy \
+          OUTPUT=$(npx netlify-cli deploy \
             --dir=build/web \
             --prod \
             --json \
