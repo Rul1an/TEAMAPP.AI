@@ -60,6 +60,8 @@ class MonitoringService {
           ..environment = kReleaseMode ? 'production' : 'staging'
           ..release = 'jo17-tactical-manager@1.0.0'
           ..sendDefaultPii = false
+          ..enableAutoSessionTracking = true
+          ..maxRequestBodySize = MaxRequestBodySize.small
           ..tracesSampleRate = _readSampleRate('SENTRY_TRACES_SAMPLE_RATE', 0.1)
           ..profilesSampleRate =
               _readSampleRate('SENTRY_PROFILES_SAMPLE_RATE', 0.1)
@@ -88,6 +90,14 @@ class MonitoringService {
               }
             }
 
+            // Scrub user email if present
+            final user = event.user;
+            if (user != null && user.email != null) {
+              final updated = event.toJson();
+              // Remove email field only
+              (updated['user'] as Map<String, dynamic>)['email'] = null;
+              return SentryEvent.fromJson(updated);
+            }
             // Avoid sending default PII; breadcrumbs are sanitized separately.
             return event;
           }

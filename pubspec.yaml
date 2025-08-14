@@ -92,6 +92,7 @@ dependencies:
   package_info_plus: ^8.3.0     # App signature validation (compatible with wakelock_plus)
 
   # Analytics & Data (duplicates removed)
+  riverpod: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
