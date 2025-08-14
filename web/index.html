@@ -20,6 +20,7 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -32,6 +33,16 @@
 
   <title>jo17_tactical_manager</title>
   <link rel="manifest" href="manifest.json">
+  
+  <!-- Performance: resource hints (2025 web best practices) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://browser.sentry-cdn.com" crossorigin>
+  
+  <!-- Preload critical Flutter manifests & bootstrap -->
+  <link rel="preload" as="fetch" href="assets/AssetManifest.bin.json" crossorigin>
+  <link rel="preload" as="fetch" href="assets/FontManifest.json" crossorigin>
+  <link rel="preload" as="script" href="flutter_bootstrap.js">
   <!-- Trusted Types policy bootstrap for Sentry/Flutter (keeps console clean) -->
   <script>
     (function () {
@@ -72,6 +83,25 @@
     });
   </script>
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Hint the browser to warm up CanvasKit on first load for better LCP
+    try {
+      const ckBase = self.FLUTTER_WEB_CANVASKIT_URL || "/canvaskit/";
+      const ckJs = `${ckBase}canvaskit.js`;
+      const ckWasm = `${ckBase}canvaskit.wasm`;
+      const linkJs = document.createElement('link');
+      linkJs.rel = 'preload';
+      linkJs.as = 'script';
+      linkJs.href = ckJs;
+      document.head.appendChild(linkJs);
+      const linkWasm = document.createElement('link');
+      linkWasm.rel = 'preload';
+      linkWasm.as = 'fetch';
+      linkWasm.href = ckWasm;
+      linkWasm.crossOrigin = 'anonymous';
+      document.head.appendChild(linkWasm);
+    } catch {}
+  </script>
 </body>
 
 </html>

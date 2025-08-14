@@ -117,14 +117,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     child: Stack(
                       alignment: Alignment.bottomRight,
                       children: [
-                        CircleAvatar(
-                          radius: 48,
-                          backgroundImage: _profile!.avatarUrl != null
-                              ? NetworkImage(_profile!.avatarUrl!)
-                                  as ImageProvider
-                              : const AssetImage(
-                                  'assets/images/avatar_placeholder.png',
-                                ),
+                        ClipOval(
+                          child: SizedBox(
+                            width: 96,
+                            height: 96,
+                            child: _profile!.avatarUrl != null
+                                ? Image.network(
+                                    _profile!.avatarUrl!,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.medium,
+                                  )
+                                : Image.asset(
+                                    'assets/images/avatar_placeholder.png',
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.medium,
+                                  ),
+                          ),
                         ),
                         IconButton(
                           icon: const Icon(Icons.camera_alt),
