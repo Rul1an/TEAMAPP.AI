@@ -38,7 +38,7 @@ jobs:
       should-deploy: ${{ steps.changes.outputs.should-deploy }}
     defaults:
       run:
-        working-directory: .
+        working-directory: jo17_tactical_manager
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142  # v2.7.0
@@ -352,18 +352,21 @@ jobs:
 
   # Phase 1.5: Web Build Matrix (CanvasKit vs Wasm) - metrics only, no deploy
   web-build-matrix:
-    name: 🌐 Web Build Matrix (${% raw %}{{ matrix.target }}{% endraw %})
+    name: 🌐 Web Build Matrix (${{ matrix.target }})
     runs-on: ubuntu-latest
     needs: quality-and-test
     strategy:
       fail-fast: false
       matrix:
         target: [canvaskit, wasm]
-    continue-on-error: ${% raw %}{{ matrix.target == 'wasm' }}{% endraw %}
+    continue-on-error: ${{ matrix.target == 'wasm' }}
     permissions:
       contents: read
       actions: read
     timeout-minutes: 12
+    defaults:
+      run:
+        working-directory: jo17_tactical_manager
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
@@ -371,20 +374,20 @@ jobs:
       - name: 📱 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${% raw %}{{ env.FLUTTER_VERSION }}{% endraw %}
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
       - name: 📦 Install Dependencies
         run: flutter pub get
 
-      - name: 🏗️ Build Web (${% raw %}{{ matrix.target }}{% endraw %})
+      - name: 🏗️ Build Web (${{ matrix.target }})
         env:
-          SUPABASE_URL: ${% raw %}{{ secrets.SUPABASE_URL_PREVIEW || secrets.SUPABASE_URL }}{% endraw %}
-          SUPABASE_ANON_KEY: ${% raw %}{{ secrets.SUPABASE_ANON_KEY_PREVIEW || secrets.SUPABASE_ANON_KEY }}{% endraw %}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL_PREVIEW || secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW || secrets.SUPABASE_ANON_KEY }}
         run: |
           set -e
-          if [ "${% raw %}{{ matrix.target }}{% endraw %}" = "wasm" ]; then
+          if [ "${{ matrix.target }}" = "wasm" ]; then
             echo "Building Web (Wasm)"
             flutter build web --wasm --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
@@ -397,24 +400,24 @@ jobs:
           fi
           # Metrics
           BUILD_DIR=build/web
-          echo "Collecting build metrics for ${% raw %}{{ matrix.target }}{% endraw %}"
+          echo "Collecting build metrics for ${{ matrix.target }}"
           BUILD_SIZE_KB=$(du -sk "$BUILD_DIR" | cut -f1)
           BUILD_SIZE_MB=$(echo "scale=2; $BUILD_SIZE_KB/1024" | bc)
           FILE_COUNT=$(find "$BUILD_DIR" -type f | wc -l)
           LARGEST=$(find "$BUILD_DIR" -type f -exec ls -lh {} + | sort -rh -k5 | head -5 || true)
-          echo "variant=${% raw %}{{ matrix.target }}{% endraw %}" >> build_metrics.txt
+          echo "variant=${{ matrix.target }}" >> build_metrics.txt
           echo "size_mb=$BUILD_SIZE_MB" >> build_metrics.txt
           echo "files=$FILE_COUNT" >> build_metrics.txt
           echo "largest:\n$LARGEST" >> build_metrics.txt
-          echo "\n### Web Build (${% raw %}{{ matrix.target }}{% endraw %})\n" >> $GITHUB_STEP_SUMMARY
+          echo "\n### Web Build (${{ matrix.target }})\n" >> $GITHUB_STEP_SUMMARY
           echo "- Size: ${BUILD_SIZE_MB}MB" >> $GITHUB_STEP_SUMMARY
           echo "- Files: ${FILE_COUNT}" >> $GITHUB_STEP_SUMMARY
           echo "- Largest assets:\n\n\`\n$LARGEST\n\`" >> $GITHUB_STEP_SUMMARY
 
-      - name: 📤 Upload Build (${% raw %}{{ matrix.target }}{% endraw %})
+      - name: 📤 Upload Build (${{ matrix.target }})
         uses: actions/upload-artifact@v4
         with:
-          name: web-${% raw %}{{ matrix.target }}{% endraw %}-${% raw %}{{ github.sha }}{% endraw %}
+          name: web-${{ matrix.target }}-${{ github.sha }}
           path: |
             build/web/
             build_metrics.txt
@@ -436,7 +439,7 @@ jobs:
       name: production
     defaults:
       run:
-        working-directory: .
+        working-directory: jo17_tactical_manager
     steps:
       - name: 🔐 Harden Runner
         uses: step-security/harden-runner@v2
@@ -711,6 +714,9 @@ jobs:
   # Phase 3: Preview Deployments for PRs
   # Phase 4: Integration Tests (conditional)
   integration-tests:
+    defaults:
+      run:
+        working-directory: jo17_tactical_manager
     name: 🔬 Integration Tests (secured)
     runs-on: ubuntu-latest
     needs: quality-and-test
@@ -800,7 +806,7 @@ jobs:
       name: preview-pr-${{ github.event.number }}
     defaults:
       run:
-        working-directory: .
+        working-directory: jo17_tactical_manager
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
