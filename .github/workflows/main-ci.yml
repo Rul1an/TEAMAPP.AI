@@ -654,7 +654,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: web-build-${{ github.sha }}
-          path: jo17_tactical_manager/build/web/
+          path: build/web/
           retention-days: 7
 
       - name: 📦 Install Sentry CLI
