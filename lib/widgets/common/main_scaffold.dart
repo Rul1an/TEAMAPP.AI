@@ -20,13 +20,18 @@ class MainScaffold extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentRoute = GoRouterState.of(context).uri.toString();
     final screenWidth = MediaQuery.of(context).size.width;
-    final isDesktop = screenWidth > 600;
+    // 2025 responsive breakpoints (Material 3 inspired)
+    const phoneMax = 600.0;
+    const tabletMax = 1024.0;
+    final isPhone = screenWidth <= phoneMax;
+    final isTablet = screenWidth > phoneMax && screenWidth <= tabletMax;
+    final isDesktop = screenWidth > tabletMax;
     final compactLabels = screenWidth < 800;
     final demoMode = ref.watch(demoModeProvider);
     final currentUser = ref.watch(currentUserProvider);
     final isCoachMode = Environment.isCoachMode;
 
-    if (isDesktop) {
+    if (!isPhone) {
       // Desktop/Tablet layout with NavigationRail
       return Scaffold(
         body: Row(
@@ -34,7 +39,10 @@ class MainScaffold extends ConsumerWidget {
             NavigationRail(
               selectedIndex: _getSelectedIndex(currentRoute),
               onDestinationSelected: (index) => _onItemTapped(context, index),
-              labelType: NavigationRailLabelType.all,
+              labelType: isTablet
+                  ? NavigationRailLabelType.selected
+                  : NavigationRailLabelType.all,
+              extended: isDesktop && screenWidth > 1280,
               leading: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(
@@ -188,14 +196,14 @@ class MainScaffold extends ConsumerWidget {
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
-            Expanded(child: child),
+            Expanded(child: SafeArea(child: child)),
           ],
         ),
       );
     } else {
       // Mobile layout with BottomNavigationBar
       return Scaffold(
-        body: child,
+        body: SafeArea(child: child),
         bottomNavigationBar: NavigationBar(
           selectedIndex: _getSelectedIndex(currentRoute),
           onDestinationSelected: (index) => _onItemTapped(context, index),

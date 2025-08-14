@@ -382,10 +382,41 @@ jobs:
       - name: 📦 Install Dependencies
         run: flutter pub get
 
+      - name: ✅ Prepare dart-define env (branch-aware)
+        shell: bash
+        run: |
+          # Compute environment (production on main, test otherwise)
+          if [ "${GITHUB_REF}" = "refs/heads/main" ]; then
+            echo "FLUTTER_ENV=production" >> $GITHUB_ENV
+          else
+            echo "FLUTTER_ENV=test" >> $GITHUB_ENV
+          fi
+          # Prefer preview secrets when available
+          SUPA_URL="${{ secrets.SUPABASE_URL_PREVIEW }}"; if [ -z "$SUPA_URL" ]; then SUPA_URL="${{ secrets.SUPABASE_URL }}"; fi
+          SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}"; if [ -z "$SUPA_KEY" ]; then SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY }}"; fi
+          echo "SUPABASE_URL=$SUPA_URL" >> $GITHUB_ENV
+          echo "SUPABASE_ANON_KEY=$SUPA_KEY" >> $GITHUB_ENV
+          echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+
+      - name: 🔐 Validate required secrets for production
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          missing=()
+          [ -z "$SUPABASE_URL" ] && missing+=(SUPABASE_URL)
+          [ -z "$SUPABASE_ANON_KEY" ] && missing+=(SUPABASE_ANON_KEY)
+          [ -z "$SENTRY_DSN" ] && missing+=(SENTRY_DSN)
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::Missing required secrets: ${missing[*]}"
+            exit 1
+          fi
+
       - name: 🏗️ Build Web (${{ matrix.target }})
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL_PREVIEW || secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW || secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_URL: ${{ env.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ env.SUPABASE_ANON_KEY }}
+          SENTRY_DSN: ${{ env.SENTRY_DSN }}
+          FLUTTER_ENV: ${{ env.FLUTTER_ENV }}
         run: |
           set -e
           if [ "${{ matrix.target }}" = "wasm" ]; then
@@ -499,34 +530,7 @@ jobs:
             echo "No wasm_audit.json found" >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: ✅ Prepare dart-define env (branch-aware)
-        shell: bash
-        run: |
-          # Compute environment (production on main, test otherwise)
-          if [ "${GITHUB_REF}" = "refs/heads/main" ]; then
-            echo "FLUTTER_ENV=production" >> $GITHUB_ENV
-          else
-            echo "FLUTTER_ENV=test" >> $GITHUB_ENV
-          fi
-          # Prefer preview secrets when available
-          SUPA_URL="${{ secrets.SUPABASE_URL_PREVIEW }}"; if [ -z "$SUPA_URL" ]; then SUPA_URL="${{ secrets.SUPABASE_URL }}"; fi
-          SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}"; if [ -z "$SUPA_KEY" ]; then SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY }}"; fi
-          echo "SUPABASE_URL=$SUPA_URL" >> $GITHUB_ENV
-          echo "SUPABASE_ANON_KEY=$SUPA_KEY" >> $GITHUB_ENV
-          echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
-
-      - name: 🔐 Validate required secrets for production
-        if: github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          missing=()
-          [ -z "$SUPABASE_URL" ] && missing+=(SUPABASE_URL)
-          [ -z "$SUPABASE_ANON_KEY" ] && missing+=(SUPABASE_ANON_KEY)
-          [ -z "$SENTRY_DSN" ] && missing+=(SENTRY_DSN)
-          if [ ${#missing[@]} -gt 0 ]; then
-            echo "::error::Missing required secrets: ${missing[*]}"
-            exit 1
-          fi
+      # (moved earlier) env preparation & validation
 
   # Phase 2: Build & Deploy Pipeline
   build-and-deploy:
@@ -588,11 +592,11 @@ jobs:
         run: |
           flutter pub get
           # Build web with required env and Sentry DSN
-          flutter build web --release --no-web-resources-cdn \
+          flutter build web --release \
             --dart-define=SUPABASE_URL=${SUPABASE_URL} \
             --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
             --dart-define=SENTRY_DSN=${{ secrets.SENTRY_DSN }} \
-            --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.39.1/
+            --dart-define=FLUTTER_ENV=production
 
           # Add modern Netlify _headers file (2025 best practice)
           echo "Creating Netlify _headers file with COMPLETE Flutter CanvasKit CSP support + Sentry..."
