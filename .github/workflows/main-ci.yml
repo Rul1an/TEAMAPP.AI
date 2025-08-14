@@ -390,6 +390,18 @@ jobs:
           set -e
           if [ "${{ matrix.target }}" = "wasm" ]; then
             echo "Building Web (Wasm)"
+            # Preflight: wasm audit to decide if we should attempt a wasm build
+            if [ -f tool/wasm_audit.dart ]; then
+              dart run tool/wasm_audit.dart || true
+              if [ -f wasm_audit.json ]; then
+                COUNT=$(jq '.restricted_imports | length' wasm_audit.json)
+                echo "WASM restricted imports before build: $COUNT"
+                if [ "$COUNT" -gt 0 ]; then
+                  echo "::warning::Skipping wasm build due to $COUNT restricted import(s). See wasm_audit.json"
+                  exit 0
+                fi
+              fi
+            fi
             flutter pub get
             flutter build web --wasm --release \
               --dart-define=SUPABASE_URL=${SUPABASE_URL} \
