@@ -1,7 +1,7 @@
 # TODO – Vervolgonderzoek acties
 
 Prioriteit A (kritiek, eerst oppakken)
-- [ ] RBAC/RLS: maak een permissie x tabel-matrix en voeg security tests toe voor create/edit/delete/view paden.
+- [x] RBAC/RLS: maak een permissie x tabel-matrix en voeg security tests toe voor create/edit/delete/view paden.
   - [x] RBAC-matrix document toegevoegd (`docs/architecture/RBAC_MATRIX.md`).
   - [x] Unit tests voor `PermissionService` toegevoegd (`test/services/permission_service_test.dart`).
   - [x] RLS end-to-end verificatietests uitbreiden (integration) en stabiliseren (admin-harnas toegevoegd: `test/integration/rls_admin_harness_test.dart`, default skip).
@@ -10,13 +10,13 @@ Prioriteit A (kritiek, eerst oppakken)
 - [x] CI/CD defines: documenteer verplichte `--dart-define` per omgeving; valideer workflows en secrets.
   - [x] Overzicht (README sectie Build-time defines) + workflow secret-validation op `main`
   - [x] Branch-aware `FLUTTER_ENV` + `SENTRY_PING` voor observability-verificatie
-- [ ] Models/JSON: audit IDs (String), expliciete casts/defaults; fix afwijkingen.
+- [x] Models/JSON: audit IDs (String), expliciete casts/defaults; fix afwijkingen.
   - [x] Policy-test toegevoegd voor String IDs in modellen (`test/policies/model_id_policy_test.dart`).
   - [x] `TrainingExercise.id` omgezet naar `String` en JSON aangepast.
   - [x] Volledige audit over alle `models/` (IDs, null-safety, defaults) en fixes waar nodig (grep op `int id` en `json['id'] as int` → geen hits; rest OK).
 
 Prioriteit B (hoog)
-- [ ] Repositories: standaardiseer error- en caching-strategie; documenteer SWR en invalidatie.
+- [x] Repositories: standaardiseer error- en caching-strategie; documenteer SWR en invalidatie.
   - [x] Standaard testset geïmplementeerd voor Trainings, Players, Matches; overview sectie “Repository Test Standard (2025)” toegevoegd.
   - [x] Profielen en Statistieken providers rooktests toegevoegd (UI‑safe folding). GraphQL tag‑subscription provider gedekt.
 - [x] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer. (CI job `web-build-matrix` met metrics)
@@ -35,7 +35,7 @@ Prioriteit C (medium)
   - [x] 404/500 pagina's: `web/404.html`/`500.html` toegevoegd en Netlify CSP/redirects geverifieerd; CSP uitgebreid met Sentry ingest.
 
 Prioriteit D (opruiming/beleid)
-- [ ] GraphQL: gebruik inventariseren; verwijderen indien ongebruikt of adoptieplan opstellen.
+- [x] GraphQL: gebruik inventariseren; verwijderen indien ongebruikt of adoptieplan opstellen.
   - [x] Gebruik bevestigd in video tagging; provider test toegevoegd.
 - [ ] Privacy/GDPR: export/delete flows, dataretentie, consent; loghygiene check.
   - [x] Log hygiëne: PII sanitization toegepast in centrale logger breadcrumbs/events.

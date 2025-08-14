@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
@@ -33,6 +34,10 @@ class VideoPlayerWidget extends ConsumerStatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
+  // Custom intents for shortcuts
+  static const ToggleMuteIntent _toggleMuteIntent = ToggleMuteIntent();
+  static const ToggleFullscreenIntent _toggleFullscreenIntent =
+      ToggleFullscreenIntent();
   @override
   void initState() {
     super.initState();
@@ -86,50 +91,91 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
       return _buildLoadingWidget();
     }
 
-    return GestureDetector(
-      onTap: () {
-        if (widget.showControls) {
-          if (state.showControls) {
-            notifier.hideControls();
-          } else {
-            notifier.showControls();
-          }
-        }
+    return FocusableActionDetector(
+      autofocus: true,
+      shortcuts: <ShortcutActivator, Intent>{
+        SingleActivator(LogicalKeyboardKey.space): const ActivateIntent(),
+        SingleActivator(LogicalKeyboardKey.arrowLeft):
+            const ScrollIntent(direction: AxisDirection.left),
+        SingleActivator(LogicalKeyboardKey.arrowRight):
+            const ScrollIntent(direction: AxisDirection.right),
+        SingleActivator(LogicalKeyboardKey.keyM): _toggleMuteIntent,
+        SingleActivator(LogicalKeyboardKey.keyF): _toggleFullscreenIntent,
       },
-      child: FocusTraversalGroup(
-        policy: OrderedTraversalPolicy(),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            // Video player
-            AspectRatio(
-              aspectRatio:
-                  state.controller?.value.aspectRatio ?? widget.aspectRatio,
-              child: state.controller != null
-                  ? VideoPlayer(state.controller!)
-                  : const ColoredBox(
-                      color: Colors.black,
-                      child: Center(
-                        child: Icon(
-                          Icons.video_library,
-                          color: Colors.white54,
-                          size: 48,
+      actions: <Type, Action<Intent>>{
+        ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: (intent) {
+          if (widget.showControls) {
+            notifier.togglePlayPause();
+          }
+          return null;
+        }),
+        ScrollIntent: CallbackAction<ScrollIntent>(onInvoke: (intent) {
+          final isLeft = intent.direction == AxisDirection.left;
+          if (isLeft) {
+            notifier.skipBackward(seconds: 10);
+          } else {
+            notifier.skipForward(seconds: 10);
+          }
+          return null;
+        }),
+        ToggleMuteIntent: CallbackAction<ToggleMuteIntent>(onInvoke: (intent) {
+          notifier.toggleMute();
+          return null;
+        }),
+        ToggleFullscreenIntent:
+            CallbackAction<ToggleFullscreenIntent>(onInvoke: (intent) {
+          if (widget.allowFullscreen) {
+            notifier.toggleFullscreen();
+            widget.onFullscreen?.call();
+          }
+          return null;
+        }),
+      },
+      child: GestureDetector(
+        onTap: () {
+          if (widget.showControls) {
+            if (state.showControls) {
+              notifier.hideControls();
+            } else {
+              notifier.showControls();
+            }
+          }
+        },
+        child: FocusTraversalGroup(
+          policy: OrderedTraversalPolicy(),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Video player
+              AspectRatio(
+                aspectRatio:
+                    state.controller?.value.aspectRatio ?? widget.aspectRatio,
+                child: state.controller != null
+                    ? VideoPlayer(state.controller!)
+                    : const ColoredBox(
+                        color: Colors.black,
+                        child: Center(
+                          child: Icon(
+                            Icons.video_library,
+                            color: Colors.white54,
+                            size: 48,
+                          ),
                         ),
                       ),
-                    ),
-            ),
+              ),
 
-            // Video controls overlay
-            if (widget.showControls && state.showControls)
-              _buildVideoControls(context, state, notifier),
+              // Video controls overlay
+              if (widget.showControls && state.showControls)
+                _buildVideoControls(context, state, notifier),
 
-            // Buffering indicator
-            if (state.isBuffering) _buildBufferingIndicator(),
+              // Buffering indicator
+              if (state.isBuffering) _buildBufferingIndicator(),
 
-            // Play button overlay (when paused and controls are hidden)
-            if (!state.isPlaying && !state.showControls && !state.isBuffering)
-              _buildPlayButtonOverlay(notifier),
-          ],
+              // Play button overlay (when paused and controls are hidden)
+              if (!state.isPlaying && !state.showControls && !state.isBuffering)
+                _buildPlayButtonOverlay(notifier),
+            ],
+          ),
         ),
       ),
     );
@@ -506,6 +552,14 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
       ),
     );
   }
+}
+
+class ToggleMuteIntent extends Intent {
+  const ToggleMuteIntent();
+}
+
+class ToggleFullscreenIntent extends Intent {
+  const ToggleFullscreenIntent();
 }
 
 /// Compact video player for previews and thumbnails

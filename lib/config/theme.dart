@@ -34,6 +34,8 @@ class AppTheme {
 
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
+        visualDensity: VisualDensity.standard,
+        materialTapTargetSize: MaterialTapTargetSize.padded,
         colorScheme: ColorScheme.fromSeed(
           seedColor: primaryColor,
           primary: primaryColor,
@@ -150,6 +152,8 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
+      visualDensity: VisualDensity.standard,
+      materialTapTargetSize: MaterialTapTargetSize.padded,
       brightness: Brightness.dark,
       colorScheme: scheme,
       scaffoldBackgroundColor: const Color(0xFF0F0F0F),
