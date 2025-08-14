@@ -1,4 +1,5 @@
 // Package imports:
+import 'dart:async' show unawaited;
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -33,10 +34,10 @@ class AuthService {
         emailRedirectTo: _getRedirectUrl(),
       );
       // Log intent (no user id yet)
-      _analytics.log(
+      unawaited(_analytics.log(
         AnalyticsEvent.authLogin,
         parameters: {'method': 'magic_link'},
-      );
+      ));
     } catch (e) {
       throw AuthException('Failed to send magic link: $e');
     }
@@ -53,11 +54,11 @@ class AuthService {
         password: password,
       );
       final userId = res.user?.id;
-      _analytics.log(
+      unawaited(_analytics.log(
         AnalyticsEvent.authLogin,
         parameters: {'method': 'password'},
         userId: userId,
-      );
+      ));
       return res;
     } catch (e) {
       throw AuthException('Failed to sign in: $e');
@@ -77,11 +78,11 @@ class AuthService {
         data: metadata,
       );
       final userId = res.user?.id;
-      _analytics.log(
+      unawaited(_analytics.log(
         AnalyticsEvent.authLogin,
         parameters: {'method': 'signup'},
         userId: userId,
-      );
+      ));
       return res;
     } catch (e) {
       throw AuthException('Failed to sign up: $e');
@@ -93,10 +94,10 @@ class AuthService {
     try {
       final userId = currentUser?.id;
       await _supabase.auth.signOut();
-      _analytics.log(
+      unawaited(_analytics.log(
         AnalyticsEvent.authLogout,
         userId: userId,
-      );
+      ));
     } catch (e) {
       throw AuthException('Failed to sign out: $e');
     }
@@ -111,11 +112,11 @@ class AuthService {
       final role = metadata['role'] as String?;
       if (role != null) {
         final userId = res.user?.id ?? currentUser?.id;
-        _analytics.log(
+        unawaited(_analytics.log(
           AnalyticsEvent.roleSwitch,
           parameters: {'role': role},
           userId: userId,
-        );
+        ));
       }
       return res;
     } catch (e) {

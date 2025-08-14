@@ -7,8 +7,9 @@ Prioriteit A (kritiek, eerst oppakken)
   - [x] RLS end-to-end verificatietests uitbreiden (integration) en stabiliseren (admin-harnas toegevoegd: `test/integration/rls_admin_harness_test.dart`, default skip).
     - [x] Unauth restricties: `test/integration/rls_unauth_restrictions_test.dart`
     - [x] CRUD/view paden: `test/integration/rls_create_edit_delete_view_test.dart`
-- [ ] CI/CD defines: documenteer verplichte `--dart-define` per omgeving; valideer workflows en secrets.
-  - [x] Overzicht toegevoegd (`docs/plans/CI_SECRETS_ENV.md`).
+- [x] CI/CD defines: documenteer verplichte `--dart-define` per omgeving; valideer workflows en secrets.
+  - [x] Overzicht (README sectie Build-time defines) + workflow secret-validation op `main`
+  - [x] Branch-aware `FLUTTER_ENV` + `SENTRY_PING` voor observability-verificatie
 - [ ] Models/JSON: audit IDs (String), expliciete casts/defaults; fix afwijkingen.
   - [x] Policy-test toegevoegd voor String IDs in modellen (`test/policies/model_id_policy_test.dart`).
   - [x] `TrainingExercise.id` omgezet naar `String` en JSON aangepast.
@@ -21,8 +22,10 @@ Prioriteit B (hoog)
 - [x] Web-build: voeg build-matrix toe (CanvasKit vs `--wasm`), meet bundlegrootte en TTI; rapporteer. (CI job `web-build-matrix` met metrics)
 - [x] Observability: Sentry PII scrub + sampling verbeterd (`sendDefaultPii=false`, `tracesSampler`) en CI secret-check toegevoegd voor prod deploy.
 - [ ] Observability: review OTel/Sentry config, scrub PII, definieer sampling en events.
-  - [x] CI workflow gefilterd op migrations + concurrency toegevoegd (stabiliteit).
-  - [x] Sentry PII‑scrub via breadcrumbs + sample rates via defines; analyzer info’s opgelost.
+  - [x] PII-scrub breadcrumbs + `sendDefaultPii=false`
+  - [x] `tracesSampler` met env-based sampling + sessions aan
+  - [x] CSP + Trusted Types gehard; Sentry CDN toegestaan
+  - [ ] Events/metrics: standaardiseer sleutel events + OTLP endpoint validatie
 
 Prioriteit C (medium)
 - [ ] Notifications: platform-setup controleren (iOS/Android), topic/tenant scoping valideren; smoke tests.
@@ -210,6 +213,57 @@ Kwaliteitschecks (voor elke PR)
 
 ---
 
+### UI Audit – 2025 Best Practices (Nieuw)
+
+Doel: volledige UX/UI-audit conform Flutter/Material 3 & Web 2025 richtlijnen, met concreet verbeterplan.
+
+- [ ] A11y & Semantics
+  - [ ] Voeg `Semantics` labels toe aan custom widgets (field diagram, video controls)
+  - [ ] Focus states/keyboard navigation (FocusTraversalGroup, Shortcuts/Actions)
+  - [ ] Tekstschaal (MediaQuery.textScaleFactor) en min. tappable sizes
+  - [ ] Contrast-check (M3 kleurensysteem, high-contrast schema)
+
+- [ ] Responsiveness & Layout
+  - [ ] Gebruik `LayoutBuilder`/`Breakpoints` voor phone/tablet/desktop
+  - [ ] Adaptive nav (NavigationBar → NavigationRail → NavigationDrawer)
+  - [ ] SafeArea op hoofdschermen; overscroll-behaviour consistent
+
+- [ ] Material 3 & Theming
+  - [ ] Consistente M3 typografie, shape, elevation en state layering
+  - [ ] Donker thema + dynamic color hooks; iconografie audit
+  - [ ] Loading/skeleton states; lege/error states met call-to-action
+
+- [ ] Performance (Web & Mobile)
+  - [ ] Grote lijsten → `ListView.builder`, `AutomaticKeepAliveClientMixin` waar relevant
+  - [ ] Afbeeldingen/video: lazy loading, juiste `filterQuality`, thumbnails
+  - [ ] Web vitals (LCP/CLS/FID) regressietests in CI; preloads kritisch (fonts/canvaskit)
+
+- [ ] Internationalization
+  - [ ] Centraliseer strings; `intl` flows en datum/tijd locale use-site audit
+
+- [ ] Micro-interacties & Motion
+  - [ ] Subtiele animaties (implicit/animated widgets) met reduced motion respect
+  - [ ] Snackbars/Toasts uniform; undo flows waar zinvol
+
+- [ ] PWA/Web
+  - [ ] Install prompt & manifest audit; offline scherm; SW cache strategieën
+  - [ ] Trusted Types policy review voor alle 3rd-party scripts
+
+Verbeteringsplan (sprint-ready)
+1. A11y pass (2 dagen): Semantics labels, focus traversal, text scaling fixes
+2. Layout pass (2 dagen): breakpoints + adaptive navigation
+3. Theming pass (1 dag): M3 tokens, dark mode polish, states
+4. Performance pass (2 dagen): lijsten, images, web vitals preloads/budgets
+5. Micro-interacties (1 dag): animaties, snackbars, progress indicators
+6. PWA polish (1 dag): offline page, install, SW strategieën review
+
+Exit criteria
+- Geen a11y blockers (navigatie, labels, contrast)
+- Web vitals binnen budget (CLS<0.1, LCP<2.5s op 4G)
+- Consistente theming/dark mode; responsive layouts voor ≥3 breakpoints
+
+---
+
 ### 🚨 DATABASE SCHEMA REPAIR PLAN - ✅ 100% COMPLETE (Juli 29, 2025)
 
 **CRITICAL PRODUCTION ISSUE RESOLVED** - Database stability + CI pipeline fully operational!
@@ -346,12 +400,11 @@ Exit criteria:
 - [x] CI: Switch mandatory web build to CanvasKit (`flutter build web --release`). *(Renderer flag verwijderd in 3.29+)*
 
 **Phase 1 – Dependency Audit**
-- [ ] (wasm-dep-audit) `flutter pub deps --json` → script: detect packages importing `dart:html`, `dart:js`, `dart:ffi`.
-- [ ] Tag each offending package with replacement/strategy:
-  - `flutter_secure_storage_web` → conditional import fallback to `universal_io` + `SharedPreferences` for Web.
-  - `share_plus` → Web Share API via `dart:js_interop`.
-  - `connectivity_plus` → `connectivity_plus_web` already ok but fails in Wasm – evaluate.
-  - `win32`, `ffi`, `isar_flutter_libs` → **exclude** from web build via conditional exports.
+- [x] (wasm-dep-audit) `tool/wasm_audit.dart` detecteert `dart:html|js|ffi` imports en publiceert artifact
+- [x] `flutter_secure_storage_web` → wasm shim + internal stub via `pubspec_overrides.yaml`
+- [ ] `share_plus` → Web Share API via `dart:js_interop` (onderzoek/conditional export)
+- [ ] `connectivity_plus` → evalueren wasm-compat of feature-flaggen op wasm
+- [ ] `win32`, `ffi`, `isar_flutter_libs` → uitgesloten voor web/wasm via conditional exports
 - [ ] Document bundle impact & estimator script (`flutter build web --release --no-tree-shake-icons`).
 
 **Phase 2 – Conditional Imports & Stubs**
@@ -360,9 +413,8 @@ Exit criteria:
 - [ ] Auto-generate bindings with `js_gen` for native FFI libs (future-proof).
 
 **Phase 3 – Build Pipeline**
-- [ ] Add `build-web-wasm.yml` matrix job (allowed_to_fail) → `flutter build web --wasm --release --tree-shake-icons`.
-- [ ] Enable `--import-shared-memory` flag & set `node_options: "--experimental-wasm"` for CI.
-- [ ] Ensure CI uses Chrome >= 124 (WasmGC).
+- [x] Matrix job met wasm variant (nu altijd bouwen; audit informatief)
+- [x] `--import-shared-memory` actief via Flutter defaults; Chrome runner voldoet (WasmGC)
 
 **Phase 4 – Runtime & Hosting**
 - [ ] Netlify / CloudRun headers: `Cross-Origin-Embedder-Policy: credentialless`, `Cross-Origin-Opener-Policy: same-origin`.
