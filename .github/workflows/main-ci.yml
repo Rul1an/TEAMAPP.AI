@@ -396,7 +396,7 @@ jobs:
               --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
               --dart-define=SENTRY_DSN=${SENTRY_DSN} \
               --dart-define=FLUTTER_ENV=${FLUTTER_ENV} \
-              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/${GITHUB_SHA}/
+              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit-${GITHUB_SHA}/
           else
             echo "Building Web (CanvasKit default)"
             flutter pub get
@@ -405,20 +405,19 @@ jobs:
               --dart-define=SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY} \
               --dart-define=SENTRY_DSN=${SENTRY_DSN} \
               --dart-define=FLUTTER_ENV=${FLUTTER_ENV} \
-              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit/${GITHUB_SHA}/
+              --dart-define=FLUTTER_WEB_CANVASKIT_URL=/canvaskit-${GITHUB_SHA}/
           fi
           # Version CanvasKit assets directory to match the commit SHA for cache-busting
           if [ -d build/web/canvaskit ]; then
-            mkdir -p build/web/canvaskit/${GITHUB_SHA}
-            cp -a build/web/canvaskit/. build/web/canvaskit/${GITHUB_SHA}/
+            cp -a build/web/canvaskit build/web/canvaskit-${GITHUB_SHA}
             # Inject preload hints for CanvasKit assets if present (improves startup)
-            if [ -f build/web/canvaskit/${GITHUB_SHA}/canvaskit.wasm ]; then
+            if [ -f build/web/canvaskit-${GITHUB_SHA}/canvaskit.wasm ]; then
               echo "Adding preload for canvaskit.wasm"
-              sed -i "s#</head>#  <link rel=\"preload\" href=\"/canvaskit/${GITHUB_SHA}/canvaskit.wasm\" as=\"fetch\" type=\"application/wasm\" crossorigin>\n</head>#" build/web/index.html || true
+              sed -i "s#</head>#  <link rel=\"preload\" href=\"/canvaskit-${GITHUB_SHA}/canvaskit.wasm\" as=\"fetch\" type=\"application/wasm\" crossorigin>\n</head>#" build/web/index.html || true
             fi
-            if [ -f build/web/canvaskit/${GITHUB_SHA}/canvaskit.js ]; then
+            if [ -f build/web/canvaskit-${GITHUB_SHA}/canvaskit.js ]; then
               echo "Adding preload for canvaskit.js"
-              sed -i "s#</head>#  <link rel=\"preload\" href=\"/canvaskit/${GITHUB_SHA}/canvaskit.js\" as=\"script\" crossorigin>\n</head>#" build/web/index.html || true
+              sed -i "s#</head>#  <link rel=\"preload\" href=\"/canvaskit-${GITHUB_SHA}/canvaskit.js\" as=\"script\" crossorigin>\n</head>#" build/web/index.html || true
             fi
           fi
 
@@ -428,6 +427,8 @@ jobs:
             sed "s/__SHA__/${GITHUB_SHA}/g" web/sw-extra.js > build/web/sw-extra.${GITHUB_SHA}.js
             # importScripts at the top keeps Flutter SW intact
             sed -i '1s;^;importScripts("sw-extra.'"${GITHUB_SHA}"'.js");\n;' build/web/flutter_service_worker.js || true
+            # Also rewrite canvaskit path if present to versioned folder
+            sed -i "s#/canvaskit/#/canvaskit-${GITHUB_SHA}/#g" build/web/flutter_service_worker.js || true
           fi
           # Metrics
           BUILD_DIR=build/web
