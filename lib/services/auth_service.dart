@@ -2,12 +2,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Project imports:
+import 'analytics_events.dart';
+
 class AuthService {
   /// Allow dependency injection for testing by passing a custom [SupabaseClient].
   AuthService({SupabaseClient? client})
       : _supabase = client ?? Supabase.instance.client;
 
   final SupabaseClient _supabase;
+  final AnalyticsLogger _analytics = const AnalyticsLogger();
 
   // Get current user
   User? get currentUser => _supabase.auth.currentUser;
@@ -28,6 +32,11 @@ class AuthService {
         email: email,
         emailRedirectTo: _getRedirectUrl(),
       );
+      // Log intent (no user id yet)
+      _analytics.log(
+        AnalyticsEvent.authLogin,
+        parameters: {'method': 'magic_link'},
+      );
     } catch (e) {
       throw AuthException('Failed to send magic link: $e');
     }
@@ -39,10 +48,17 @@ class AuthService {
     required String password,
   }) async {
     try {
-      return await _supabase.auth.signInWithPassword(
+      final res = await _supabase.auth.signInWithPassword(
         email: email,
         password: password,
       );
+      final userId = res.user?.id;
+      _analytics.log(
+        AnalyticsEvent.authLogin,
+        parameters: {'method': 'password'},
+        userId: userId,
+      );
+      return res;
     } catch (e) {
       throw AuthException('Failed to sign in: $e');
     }
@@ -55,11 +71,18 @@ class AuthService {
     Map<String, dynamic>? metadata,
   }) async {
     try {
-      return await _supabase.auth.signUp(
+      final res = await _supabase.auth.signUp(
         email: email,
         password: password,
         data: metadata,
       );
+      final userId = res.user?.id;
+      _analytics.log(
+        AnalyticsEvent.authLogin,
+        parameters: {'method': 'signup'},
+        userId: userId,
+      );
+      return res;
     } catch (e) {
       throw AuthException('Failed to sign up: $e');
     }
@@ -68,7 +91,12 @@ class AuthService {
   // Sign out
   Future<void> signOut() async {
     try {
+      final userId = currentUser?.id;
       await _supabase.auth.signOut();
+      _analytics.log(
+        AnalyticsEvent.authLogout,
+        userId: userId,
+      );
     } catch (e) {
       throw AuthException('Failed to sign out: $e');
     }
@@ -77,7 +105,19 @@ class AuthService {
   // Update user metadata
   Future<UserResponse> updateUserMetadata(Map<String, dynamic> metadata) async {
     try {
-      return await _supabase.auth.updateUser(UserAttributes(data: metadata));
+      final res =
+          await _supabase.auth.updateUser(UserAttributes(data: metadata));
+      // Track role switch when applicable
+      final role = metadata['role'] as String?;
+      if (role != null) {
+        final userId = res.user?.id ?? currentUser?.id;
+        _analytics.log(
+          AnalyticsEvent.roleSwitch,
+          parameters: {'role': role},
+          userId: userId,
+        );
+      }
+      return res;
     } catch (e) {
       throw AuthException('Failed to update user: $e');
     }
