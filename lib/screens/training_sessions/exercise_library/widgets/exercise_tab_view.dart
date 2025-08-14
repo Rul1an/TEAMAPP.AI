@@ -38,10 +38,10 @@ class ExerciseTabView extends ConsumerWidget {
     return TabBarView(
       controller: tabController,
       children: [
-        _buildRecommendedTab(context, exercises),
-        _buildIntensityTab(context, exercises),
-        _buildFocusTab(context, exercises),
-        _buildAllTab(context, exercises),
+        _KeepAlive(child: _buildRecommendedTab(context, exercises)),
+        _KeepAlive(child: _buildIntensityTab(context, exercises)),
+        _KeepAlive(child: _buildFocusTab(context, exercises)),
+        _KeepAlive(child: _buildAllTab(context, exercises)),
       ],
     );
   }
@@ -115,24 +115,29 @@ class ExerciseTabView extends ConsumerWidget {
     BuildContext context,
     Map<String, List<TrainingExercise>> groups,
   ) {
-    return ListView(
+    final nonEmpty = groups.entries.where((e) => e.value.isNotEmpty).toList();
+    return ListView.builder(
       padding: const EdgeInsets.all(16),
-      children: groups.entries.where((e) => e.value.isNotEmpty).map((entry) {
+      cacheExtent: 500,
+      itemCount: nonEmpty.length,
+      itemBuilder: (context, index) {
+        final entry = nonEmpty[index];
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               entry.key,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             _buildExerciseList(context, entry.value),
             const SizedBox(height: 16),
           ],
         );
-      }).toList(),
+      },
     );
   }
 
@@ -147,6 +152,7 @@ class ExerciseTabView extends ConsumerWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+      cacheExtent: 400,
       itemCount: exercises.length,
       separatorBuilder: (_, __) => const Divider(height: 1),
       itemBuilder: (context, index) {
@@ -176,5 +182,25 @@ class ExerciseTabView extends ConsumerWidget {
       case TrainingIntensity.competition:
         return 'Competition';
     }
+  }
+}
+
+class _KeepAlive extends StatefulWidget {
+  const _KeepAlive({required this.child});
+  final Widget child;
+
+  @override
+  State<_KeepAlive> createState() => _KeepAliveState();
+}
+
+class _KeepAliveState extends State<_KeepAlive>
+    with AutomaticKeepAliveClientMixin<_KeepAlive> {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.child;
   }
 }

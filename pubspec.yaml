@@ -86,6 +86,7 @@ dependencies:
   chewie: ^1.7.5  # Enhanced video controls
   wakelock_plus: ^1.2.5  # Prevent screen sleep
   flutter_cache_manager: ^3.3.1
+  connectivity_plus: ^6.1.4
 
   # Security Implementation (DAG 1 - 2025)
   device_info_plus: ^11.0.0     # Device integrity verification (updated for 2025 compatibility)
