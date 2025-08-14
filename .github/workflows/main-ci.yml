@@ -426,6 +426,20 @@ jobs:
             build_metrics.txt
           retention-days: 5
 
+      - name: 🔍 WASM Dependency Audit
+        run: |
+          dart run tool/wasm_audit.dart
+          echo "WASM audit completed. Findings (if any) are in wasm_audit.json"
+        continue-on-error: true
+
+      - name: 📤 Upload WASM Audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wasm-audit-${{ matrix.target }}-${{ github.sha }}
+          path: wasm_audit.json
+          retention-days: 7
+
   # Phase 2: Build & Deploy Pipeline
   build-and-deploy:
     name: 🏗️ Build & Deploy
