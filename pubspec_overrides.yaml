@@ -1,4 +1,7 @@
 # melos_managed_dependency_overrides: test_utils
 dependency_overrides:
+  # WASM shim: prevent real web plugin pulling in dart:html/js when building wasm
+  flutter_secure_storage_web:
+    path: wasm_shims/flutter_secure_storage_web
   test_utils:
     path: packages/test_utils

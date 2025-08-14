@@ -1,0 +1,23 @@
+name: flutter_secure_storage_web
+description: WASM shim for flutter_secure_storage_web that registers a no-op plugin without dart:html/js.
+version: 0.0.0+wasm
+homepage: https://example.com
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+flutter:
+  plugin:
+    platforms:
+      web:
+        pluginClass: FlutterSecureStorageWeb
+        fileName: flutter_secure_storage_web.dart
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
