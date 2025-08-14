@@ -6,6 +6,7 @@
 # Usage: ./scripts/dev_workflow.sh "commit message"
 
 set -e
+set -o pipefail
 
 # =============================================================================
 # CONFIGURATION & VALIDATION

@@ -18,17 +18,17 @@ pre-commit:
       description: "Sort Dart imports (staged)"
       glob: "*.dart"
       run: >
-        bash -c "if grep -q 'import_sorter' pubspec.lock 2>/dev/null; then flutter pub run import_sorter:main {staged_files}; else echo 'Skipping import_sorter: not in pubspec.lock'; fi"
+        bash -eo pipefail -c "if grep -q 'import_sorter' pubspec.lock 2>/dev/null; then flutter pub run import_sorter:main {staged_files}; else echo 'Skipping import_sorter: not in pubspec.lock'; fi"
 
     analyze_strict:
       description: "Static analysis (CI parity: fatal infos)"
-      run: flutter analyze --fatal-infos
+      run: bash -eo pipefail -c "flutter analyze --fatal-infos"
 
     dcm:
       description: "Dart Code Metrics – style & performance (optional)"
       glob: "*.dart"
       run: >
-        bash -c "if command -v dcm >/dev/null 2>&1; then dcm analyze --fatal-style --fatal-warnings {staged_files}; else echo 'Skipping DCM: binary not found'; fi"
+        bash -eo pipefail -c "if command -v dcm >/dev/null 2>&1; then dcm analyze --fatal-style --fatal-warnings {staged_files}; else echo 'Skipping DCM: binary not found'; fi"
 
 commit-msg:
   scripts:
