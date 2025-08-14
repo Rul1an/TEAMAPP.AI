@@ -432,6 +432,8 @@ jobs:
               sed -i "s#</head>#  <link rel=\"preload\" href=\"/canvaskit-${GITHUB_SHA}/canvaskit.js\" as=\"script\" crossorigin>\n</head>#" build/web/index.html || true
             fi
           fi
+          # Bust bootstrap script cache to force SW update
+          sed -i "s#flutter_bootstrap.js#flutter_bootstrap.js?v=${GITHUB_SHA}#" build/web/index.html || true
 
           # Inject sw-extra.js into generated service worker for versioned CanvasKit/wasm caching
           if [ -f web/sw-extra.js ] && [ -f build/web/flutter_service_worker.js ]; then
