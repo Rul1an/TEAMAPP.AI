@@ -614,11 +614,17 @@ class CompactVideoPlayer extends ConsumerWidget {
             children: [
               if (video.thumbnailUrl != null)
                 Positioned.fill(
-                  child: Image.network(
-                    video.thumbnailUrl!,
-                    fit: BoxFit.cover,
-                    filterQuality: FilterQuality.medium,
-                  ),
+                  child: Builder(builder: (context) {
+                    final dpr = MediaQuery.of(context).devicePixelRatio;
+                    final cacheHeight = (height * dpr).round();
+                    return Image.network(
+                      video.thumbnailUrl!,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.medium,
+                      gaplessPlayback: true,
+                      cacheHeight: cacheHeight > 0 ? cacheHeight : null,
+                    );
+                  }),
                 ),
 
               // Gradient overlay
