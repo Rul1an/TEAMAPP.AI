@@ -5,6 +5,8 @@ Voortgang (stand nu):
 - UI A11y: focus traversal toegevoegd (globaal + nav), tooltips/semantics aangevuld op kernschermen (Dashboard shell, Players, Matches, Training).
 - Web performance: preconnect voor Supabase (REST/Realtime) en Sentry ingest; Flutter manifests high-priority preload; `flutter_bootstrap.js` preload.
 - Observability: gestandaardiseerde events gelogd voor create/import/export in Players/Matches/Training.
+- PWA/Web polish: Offline scherm en router-redirect naar `/offline` bij startup zonder verbinding; manifest verrijkt (categories, screenshots, shortcuts, protocol handlers); meta description verbeterd.
+- UI performance bewaking: Lighthouse CI (static) met budgets (FCP/LCP/TBT/CLS) toegevoegd aan GitHub Actions; rapporten als artifact.
 
 
 Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX impact, en CI stabiliteit.
@@ -14,25 +16,26 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
    - Open: Tekstschaal audit in content, contrast-checks (M3 HC), icon-buttons in overige schermen.
 2. UI Audit – Performance restpunten [in progress]
    - Gedaan: Preconnect Supabase/Sentry; high-priority preloads; bootstrap preload.
-   - Open: Web Vitals budget en CI meting; verdere lazy loading verfijningen.
+   - Gedaan: Web Vitals budget en CI-meting via Lighthouse CI; artefacten per build.
+   - Open: Verdere lazy loading verfijningen; web fonts fine-tuning.
 3. Observability – Events/metrics standaardiseren [in progress]
    - Gedaan: Canonical events voor create/import/export (players/matches/training).
    - Open: OTLP endpoint validatie + dashboards alignment.
 4. PWA/Web polish [in progress]
-   - Gedaan: Trusted Types beleid in headers, resource hints/preloads.
-   - Open: Offline scherm, manifest audit, SW cache-strategie review.
+   - Gedaan: Trusted Types beleid in headers; resource hints/preloads; Offline scherm; manifest audit/verbeteringen.
+   - Open: SW cache-strategie review en optimalisatie.
 5. Notifications – platform setup valideren
    - iOS/Android setup en topic/tenant scoping rooktests.
 6. Demo/standalone – e2e guard/deep-link tests
    - Navigatie naar mutatieroutes borgen in standalone/demo mode.
 7. Privacy/GDPR – Dataretentie
    - Retentiebeleid en purge-jobs (cron/edge functions), documentatie.
-8. Performance Monitoring – PM4.5 Error boundaries
-   - Specifieke schermen voorzien van error boundaries.
+8. Performance Monitoring – PM4.5 Error boundaries [done]
+   - AppErrorBoundary toegevoegd en toegepast op Players/Matches/Training.
 9. Advanced Analytics – Heatmaps/predictions (research)
    - Heatmaps, form predictions, trajecten, positie-adviezen (fasegewijs, na events-standaardisatie).
 10. Import – Training plans
-   - CSV/Excel flow voor trainingen met validaties.
+   - CSV/Excel flow voor trainingen met validaties. [planned]
 
 Not planned/Q4+:
 - Wasm dependency vervolgaudit (`share_plus`, `connectivity_plus`) en conditional stubs.
