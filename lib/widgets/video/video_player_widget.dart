@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../models/video.dart';
+import '../common/network_image_smart.dart';
 import '../../controllers/video_player_controller.dart';
 
 /// Professional video player widget with full controls and error handling
@@ -614,17 +615,14 @@ class CompactVideoPlayer extends ConsumerWidget {
             children: [
               if (video.thumbnailUrl != null)
                 Positioned.fill(
-                  child: Builder(builder: (context) {
-                    final dpr = MediaQuery.of(context).devicePixelRatio;
-                    final cacheHeight = (height * dpr).round();
-                    return Image.network(
+                  child: Builder(
+                    builder: (context) => NetworkImageSmart(
                       video.thumbnailUrl!,
                       fit: BoxFit.cover,
+                      height: height,
                       filterQuality: FilterQuality.medium,
-                      gaplessPlayback: true,
-                      cacheHeight: cacheHeight > 0 ? cacheHeight : null,
-                    );
-                  }),
+                    ),
+                  ),
                 ),
 
               // Gradient overlay

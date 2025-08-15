@@ -13,6 +13,7 @@ class NetworkImageSmart extends StatelessWidget {
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.filterQuality = FilterQuality.medium,
     this.placeholderColor = const Color(0xFFEAEAEA),
+    this.deferOffscreen = true,
   });
 
   final String url;
@@ -22,12 +23,22 @@ class NetworkImageSmart extends StatelessWidget {
   final BorderRadius borderRadius;
   final FilterQuality filterQuality;
   final Color placeholderColor;
+  final bool deferOffscreen;
 
   @override
   Widget build(BuildContext context) {
     final dpr = MediaQuery.of(context).devicePixelRatio;
     final int? cacheW = width != null ? (width! * dpr).round() : null;
     final int? cacheH = height != null ? (height! * dpr).round() : null;
+    final bool shouldDefer = deferOffscreen &&
+        Scrollable.recommendDeferredLoadingForContext(context);
+
+    if (shouldDefer) {
+      return ClipRRect(
+        borderRadius: borderRadius,
+        child: _sizedSkeleton(),
+      );
+    }
 
     final image = Image.network(
       url,
@@ -68,4 +79,11 @@ class NetworkImageSmart extends StatelessWidget {
           child: Icon(Icons.broken_image, size: 20, color: Colors.grey),
         ),
       );
+
+  Widget _sizedSkeleton() {
+    if (width != null || height != null) {
+      return SizedBox(width: width, height: height, child: _skeleton());
+    }
+    return _skeleton();
+  }
 }

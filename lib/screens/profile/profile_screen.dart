@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 // Project imports:
 import '../../models/profile.dart';
 import '../../providers/profile_provider.dart';
+import '../../widgets/common/network_image_smart.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -104,9 +105,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dpr = MediaQuery.of(context).devicePixelRatio;
     final avatarSize = 96.0;
-    final cacheHeight = (avatarSize * dpr).round();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Profiel')),
@@ -125,13 +124,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           child: SizedBox.fromSize(
                             size: const Size.square(96),
                             child: _profile!.avatarUrl != null
-                                ? Image.network(
+                                ? NetworkImageSmart(
                                     _profile!.avatarUrl!,
                                     fit: BoxFit.cover,
+                                    width: avatarSize,
+                                    height: avatarSize,
                                     filterQuality: FilterQuality.medium,
-                                    gaplessPlayback: true,
-                                    cacheHeight:
-                                        cacheHeight > 0 ? cacheHeight : null,
                                   )
                                 : Image.asset(
                                     'assets/images/avatar_placeholder.png',
