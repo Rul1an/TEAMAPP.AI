@@ -12,6 +12,7 @@ Voortgang (stand nu):
 - Service Worker: verbeterde cachingstrategie (versioned caches per commit, cache-first voor CanvasKit/Wasm, stale-while-revalidate voor app-assets); minimale precache uitgebreid met manifesten en favicon (offline FCP verbeterd).
 - Import trainingsplannen: service en UI-menu (Trainingen) toegevoegd; template-download beschikbaar; UI-koppeling om na import direct te persistenteren + refresh.
 - Video thumbnails (web): cacheHeight geschaald op devicePixelRatio voor kleinere previews (minder bandbreedte/geheugen).
+- Training lijst: ListView builder afgestemd (repaint boundaries/keepAlives/cacheExtent) voor soepeler scrollen.
 
 
 Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX impact, en CI stabiliteit. Status per prio bevat: Gedaan (concreet resultaat) en Open (gerichte next steps).
@@ -35,7 +36,6 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Video thumbnails: dpr-gebaseerde `cacheHeight` voor previews (web).
      - Lijsten: `ListView.builder` tuned (repaint boundaries/keepAlives/cacheExtent) op Training lijst.
      - Profiel avatar: dpr-gebaseerde `cacheHeight` en `gaplessPlayback`.
-     - Afbeeldingen: `NetworkImageSmart` voorziet in dpr-gebaseerde `cacheWidth/Height` en `gaplessPlayback` om layout shifts en memory footprint te beperken.
    - Open (gericht):
      - Lazy loading verfijnen (zware views/images) en hero-animaties beperken op web.
      - Web-fonts fine-tuning (subset/`display: swap`) indien nodig na LH-artefact review.
@@ -53,8 +53,8 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Trusted Types/COOP/COEP/CSP in Netlify headers.
      - Offline scherm en router-redirect; manifest verrijkt (shortcuts, categories, screenshots, protocol handlers).
      - SW: versioned caches, cache-first (CanvasKit/Wasm), SWR (app-assets), precache core shell + Asset/FontManifest + favicon; cache cleanup.
-     - Web startup: `main.dart.js` preload toegevoegd voor snellere initialisatie.
      - Wasm-compat: PWA install interop vervangen door Wasm-veilige no-op shim om Wasm build te deblokkeren.
+     - Web startup: `main.dart.js` preload toegevoegd voor snellere initialisatie.
    - Open (gericht):
      - Precache-lijst verfijnen met LH-artefacten (alleen LCP/FCP-kritisch, geen overlap met SWR).
      - CI Secrets (Actions) controleren/zetten: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SENTRY_DSN`.
