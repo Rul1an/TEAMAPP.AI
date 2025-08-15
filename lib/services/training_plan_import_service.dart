@@ -8,6 +8,10 @@ import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_saver/file_saver.dart';
 
+// Project imports:
+import '../repositories/training_repository.dart';
+import '../models/training.dart';
+
 /// Data Transfer Object for planned training import rows
 class PlannedTrainingDto {
   PlannedTrainingDto({
@@ -260,6 +264,103 @@ class TrainingPlanImportService {
         bytes: Uint8List.fromList(bytes),
         mimeType: MimeType.microsoftExcel,
       );
+    }
+  }
+
+  /// Persist imported items into the repository
+  Future<TrainingPlanImportResult> persistImported(
+    List<PlannedTrainingDto> items,
+    TrainingRepository repo,
+  ) async {
+    final errors = <String>[];
+    var created = 0;
+
+    for (var i = 0; i < items.length; i++) {
+      final dto = items[i];
+      try {
+        final training = _mapDtoToTraining(dto);
+        final res = await repo.add(training);
+        if (res.isSuccess) {
+          created += 1;
+        } else {
+          errors.add('Rij ${i + 2}: ${res.errorOrNull}');
+        }
+      } catch (e) {
+        errors.add('Rij ${i + 2}: $e');
+      }
+    }
+
+    return TrainingPlanImportResult(
+      success: created > 0,
+      message: created > 0
+          ? 'Planning aangemaakt: $created items'
+          : 'Geen items aangemaakt',
+      items: items,
+      errors: errors,
+    );
+  }
+
+  Training _mapDtoToTraining(PlannedTrainingDto dto) {
+    final training = Training();
+    final timeParts = dto.startTime.split(':');
+    final start = DateTime(
+      dto.date.year,
+      dto.date.month,
+      dto.date.day,
+      int.parse(timeParts[0]),
+      int.parse(timeParts[1]),
+    );
+    training.date = start;
+    training.duration = dto.durationMinutes;
+    training.focus = _mapFocus(dto.focus);
+    training.intensity = _mapIntensity(dto.intensity);
+    training.status = TrainingStatus.planned;
+    training.description = dto.objective;
+    training.location = dto.location;
+    training.coachNotes = dto.title;
+    return training;
+  }
+
+  TrainingFocus _mapFocus(String value) {
+    final v = value.trim().toLowerCase();
+    switch (v) {
+      case 'techniek':
+      case 'technical':
+        return TrainingFocus.technical;
+      case 'tactiek':
+      case 'tactical':
+        return TrainingFocus.tactical;
+      case 'fysiek':
+      case 'physical':
+        return TrainingFocus.physical;
+      case 'mentaal':
+      case 'mental':
+        return TrainingFocus.mental;
+      case 'wedstrijd':
+      case 'match':
+        return TrainingFocus.matchPrep;
+      default:
+        return TrainingFocus.technical;
+    }
+  }
+
+  TrainingIntensity _mapIntensity(String value) {
+    final v = value.trim().toLowerCase();
+    switch (v) {
+      case 'laag':
+      case 'low':
+        return TrainingIntensity.low;
+      case 'gemiddeld':
+      case 'medium':
+        return TrainingIntensity.medium;
+      case 'hoog':
+      case 'high':
+        return TrainingIntensity.high;
+      case 'herstel':
+      case 'recovery':
+        return TrainingIntensity.recovery;
+      default:
+        return TrainingIntensity.medium;
     }
   }
 }
