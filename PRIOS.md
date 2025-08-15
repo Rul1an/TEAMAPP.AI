@@ -27,7 +27,7 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
    - Open (gericht):
      - Tekstschaal-audit in content; clamp-overschrijdingen/ellipsis checken.
      - Contrast-checks M3: badges/overlays (Video, Training-cards) naar high-contrast tokens; Match badges (locatie/competitie) dynamische tekstkleur.
-     - Overige schermen nalopen op ontbrekende `tooltip` bij `IconButton`s.
+     - Overige schermen nalopen op ontbrekende `tooltip` bij `IconButton`s: toegevoegd op Player Detail (edit/export), Match Detail (share/edit/export/save), Exercise Selector (add/remove), Periodization Template dialog (close), AI Demo (info). 48x48 constraints toegepast.
 
 2. UI Audit – Performance restpunten [in progress]
    - Gedaan:
