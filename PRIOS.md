@@ -19,7 +19,8 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
    - Gedaan:
      - Globale `FocusTraversalGroup` + OrderedTraversalPolicy; nav toegankelijk.
      - Tooltips & Semantics: Dashboard shell, Players, Matches, Training.
-     - 48x48 tap targets: Field Canvas (zoom/reset), Video Player (controls), Weekly Calendar acties.
+     - 48x48 tap targets: Field Canvas (zoom/reset), Video Player (controls), Weekly Calendar acties, diverse leading/back/close knoppen.
+     - Tekstschaal: badges in TrainingScreen omgezet naar `Wrap` voor nette layout bij hogere scaling.
    - Open (gericht):
      - Tekstschaal-audit in content; clamp-overschrijdingen/ellipsis checken.
      - Contrast-checks M3: badges/overlays (Video, Training-cards) naar high-contrast tokens.
@@ -46,8 +47,10 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Trusted Types/COOP/COEP/CSP in Netlify headers.
      - Offline scherm en router-redirect; manifest verrijkt (shortcuts, categories, screenshots, protocol handlers).
      - SW: versioned caches, cache-first (CanvasKit/Wasm), SWR (app-assets), precache core shell + Asset/FontManifest + favicon; cache cleanup.
+     - Wasm-compat: PWA install interop vervangen door Wasm-veilige no-op shim om Wasm build te deblokkeren.
    - Open (gericht):
      - Precache-lijst verfijnen met LH-artefacten (alleen LCP/FCP-kritisch, geen overlap met SWR).
+     - CI Secrets (Actions) controleren/zetten: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SENTRY_DSN`.
 
 5. Notifications – platform setup valideren
    - iOS/Android setup en topic/tenant scoping rooktests.
