@@ -7,6 +7,8 @@ Voortgang (stand nu):
 - Observability: gestandaardiseerde events gelogd voor create/import/export in Players/Matches/Training.
 - PWA/Web polish: Offline scherm en router-redirect naar `/offline` bij startup zonder verbinding; manifest verrijkt (categories, screenshots, shortcuts, protocol handlers); meta description verbeterd.
 - UI performance bewaking: Lighthouse CI (static) met budgets (FCP/LCP/TBT/CLS) toegevoegd aan GitHub Actions; rapporten als artifact.
+- Service Worker: verbeterde cachingstrategie (versioned caches per commit, cache-first voor CanvasKit/Wasm, stale-while-revalidate voor app-assets).
+- Import trainingsplannen: service en UI-menu (Trainingen) toegevoegd; template-download beschikbaar.
 
 
 Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX impact, en CI stabiliteit.
@@ -22,8 +24,8 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
    - Gedaan: Canonical events voor create/import/export (players/matches/training).
    - Open: OTLP endpoint validatie + dashboards alignment.
 4. PWA/Web polish [in progress]
-   - Gedaan: Trusted Types beleid in headers; resource hints/preloads; Offline scherm; manifest audit/verbeteringen.
-   - Open: SW cache-strategie review en optimalisatie.
+   - Gedaan: Trusted Types beleid in headers; resource hints/preloads; Offline scherm; manifest audit/verbeteringen; SW caching (versioned caches + SWR assets).
+   - Open: Precache-kandidaten bepalen op basis van Lighthouse artefacten.
 5. Notifications – platform setup valideren
    - iOS/Android setup en topic/tenant scoping rooktests.
 6. Demo/standalone – e2e guard/deep-link tests
@@ -34,8 +36,9 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
    - AppErrorBoundary toegevoegd en toegepast op Players/Matches/Training.
 9. Advanced Analytics – Heatmaps/predictions (research)
    - Heatmaps, form predictions, trajecten, positie-adviezen (fasegewijs, na events-standaardisatie).
-10. Import – Training plans
-   - CSV/Excel flow voor trainingen met validaties. [planned]
+10. Import – Training plans [in progress]
+   - Gedaan: CSV/Excel service met strikte parsing en foutverzameling; template-generator; UI-menu in `Trainingen` (import + template-download).
+   - Open: Mapping van geïmporteerde items naar persistente planning (repo/service) en unit-tests.
 
 Not planned/Q4+:
 - Wasm dependency vervolgaudit (`share_plus`, `connectivity_plus`) en conditional stubs.
