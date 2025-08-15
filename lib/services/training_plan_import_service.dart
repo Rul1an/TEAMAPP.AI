@@ -101,10 +101,24 @@ class TrainingPlanImportService {
       csvString = csvString.replaceAll('\r\n', '\n');
       csvString = csvString.replaceAll('\r', '\n');
 
-      List<List<dynamic>> rows = const CsvToListConverter().convert(csvString);
+      List<List<dynamic>> rows =
+          const CsvToListConverter(eol: '\n').convert(csvString);
       // Fallback: some locales export with semicolons
-      if (rows.isEmpty || rows.length == 1) {
-        rows = const CsvToListConverter(fieldDelimiter: ';').convert(csvString);
+      if (rows.isEmpty || rows.length <= 1) {
+        rows = const CsvToListConverter(eol: '\n', fieldDelimiter: ';')
+            .convert(csvString);
+      }
+      // Manual fallback: simple splitter when csv package fails (edge encodings)
+      if (rows.isEmpty || rows.length <= 1) {
+        final lines = csvString
+            .split('\n')
+            .map((l) => l.trim())
+            .where((l) => l.isNotEmpty)
+            .toList(growable: false);
+        if (lines.isNotEmpty) {
+          final delim = lines.first.contains(';') ? ';' : ',';
+          rows = lines.map((l) => l.split(delim)).toList(growable: false);
+        }
       }
 
       if (rows.isEmpty) {
@@ -113,7 +127,9 @@ class TrainingPlanImportService {
           message: 'CSV bestand is leeg',
         );
       }
-      final dataRows = rows.skip(1).toList();
+      // Attempt header-based mapping; fall back to positional mapping when headers missing
+      final mapped = _remapRowsWithHeaders(rows);
+      final dataRows = mapped ?? rows.skip(1).toList();
       final res = _parseRows(dataRows);
       // If no valid rows found, include a hint for debugging
       if (!res.success && res.items.isEmpty) {
@@ -147,10 +163,10 @@ class TrainingPlanImportService {
           message: 'Excel bestand is leeg',
         );
       }
-      final dataRows = rows
-          .skip(1)
-          .map((row) => row.map((cell) => cell?.value).toList())
-          .toList();
+      final rawRows =
+          rows.map((row) => row.map((cell) => cell?.value).toList()).toList();
+      final mapped = _remapRowsWithHeaders(rawRows);
+      final dataRows = mapped ?? rawRows.skip(1).toList();
       return _parseRows(dataRows);
     } catch (e) {
       return TrainingPlanImportResult(
@@ -158,6 +174,63 @@ class TrainingPlanImportService {
         message: 'Fout bij verwerken Excel: $e',
       );
     }
+  }
+
+  /// Remaps arbitrary headered rows to the expected positional format used by [_parseRows].
+  /// Returns null when headers are not detected.
+  List<List<dynamic>>? _remapRowsWithHeaders(List<List<dynamic>> rows) {
+    if (rows.isEmpty) return null;
+    final header = rows.first
+        .map((c) => (c?.toString() ?? '').trim().toLowerCase())
+        .toList();
+    // Detect if header row contains at least required columns
+    int idxOf(List<String> keys) {
+      for (final k in keys) {
+        final i = header.indexOf(k);
+        if (i != -1) return i;
+      }
+      return -1;
+    }
+
+    final idxDate = idxOf(['datum', 'date']);
+    final idxStart =
+        idxOf(['starttijd', 'start time', 'start', 'tijd', 'time']);
+    final idxDuration =
+        idxOf(['duur', 'duration', 'minutes', 'mins', 'minuten']);
+    final idxFocus = idxOf(['focus', 'onderwerp', 'theme']);
+    final idxIntensity = idxOf(['intensiteit', 'intensity']);
+    final idxTitle = idxOf(['titel', 'title']);
+    final idxObjective = idxOf(['doel', 'objective', 'goal']);
+    final idxLocation = idxOf(['locatie', 'location', 'veld', 'field']);
+
+    // Require at least date and start-time to consider this a headered file
+    if (idxDate == -1 || idxStart == -1) {
+      return null;
+    }
+
+    final remapped = <List<dynamic>>[];
+    for (final row in rows.skip(1)) {
+      final mappedRow = <dynamic>[
+        (idxDate >= 0 && idxDate < row.length) ? row[idxDate] : null,
+        (idxStart >= 0 && idxStart < row.length) ? row[idxStart] : null,
+        (idxDuration >= 0 && idxDuration < row.length)
+            ? row[idxDuration]
+            : null,
+        (idxFocus >= 0 && idxFocus < row.length) ? row[idxFocus] : null,
+        (idxIntensity >= 0 && idxIntensity < row.length)
+            ? row[idxIntensity]
+            : null,
+        (idxTitle >= 0 && idxTitle < row.length) ? row[idxTitle] : null,
+        (idxObjective >= 0 && idxObjective < row.length)
+            ? row[idxObjective]
+            : null,
+        (idxLocation >= 0 && idxLocation < row.length)
+            ? row[idxLocation]
+            : null,
+      ];
+      remapped.add(mappedRow);
+    }
+    return remapped;
   }
 
   TrainingPlanImportResult _parseRows(List<List<dynamic>> rows) {
@@ -215,6 +288,7 @@ class TrainingPlanImportService {
   }
 
   DateTime _parseDate(dynamic value) {
+    if (value is DateTime) return value;
     final s = (value?.toString() ?? '').trim();
     final dash = RegExp(r'^\d{2}-\d{2}-\d{4}$');
     final slash = RegExp(r'^\d{2}/\d{2}/\d{4}$');
@@ -236,13 +310,15 @@ class TrainingPlanImportService {
 
   String? _parseStartTime(String s) {
     final trimmed = s.trim();
-    final re = RegExp(r'^\d{2}:\d{2}$');
-    if (!re.hasMatch(trimmed)) return null;
-    final parts = trimmed.split(':');
+    // Accept HH:mm, H:mm, HH.mm, H.mm
+    var t = trimmed.replaceAll('.', ':');
+    final re = RegExp(r'^\d{1,2}:\d{2}$');
+    if (!re.hasMatch(t)) return null;
+    final parts = t.split(':');
     final hh = int.tryParse(parts[0]) ?? -1;
     final mm = int.tryParse(parts[1]) ?? -1;
     if (hh < 0 || hh > 23 || mm < 0 || mm > 59) return null;
-    return trimmed;
+    return hh.toString().padLeft(2, '0') + ':' + mm.toString().padLeft(2, '0');
   }
 
   /// Generate an Excel template for planned trainings
