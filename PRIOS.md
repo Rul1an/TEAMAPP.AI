@@ -34,9 +34,9 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
    - Gedaan:
      - Resource hints (preconnect Supabase/Sentry) en preload van Flutter manifests + bootstrap.
      - Lighthouse CI met budgets (FCP/LCP/TBT/CLS) in workflow; artefacten beschikbaar.
-     - Video thumbnails: dpr-gebaseerde `cacheHeight` voor previews (web).
+     - Video thumbnails: dpr-gebaseerde `cacheHeight` en deferred loading via `NetworkImageSmart`.
      - Lijsten: `ListView.builder` tuned (repaint boundaries/keepAlives/cacheExtent) op Training- en Matches-lijsten.
-     - Profiel avatar: dpr-gebaseerde `cacheHeight` en `gaplessPlayback`.
+     - Profiel avatar: overgezet naar `NetworkImageSmart` met deferred loading.
    - Open (gericht):
      - Lazy loading verfijnen (zware views/images) en hero-animaties beperken op web.
      - Web-fonts fine-tuning (subset/`display: swap`) indien nodig na LH-artefact review.
