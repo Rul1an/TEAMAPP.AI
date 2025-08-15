@@ -142,7 +142,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                           ],
                         ),
                       );
-                      if (confirm == true) {
+                      if (confirm ?? false) {
                         final repo = ref.read(trainingRepositoryProvider);
                         final persist = await _planImport.persistImported(
                           res.items,
