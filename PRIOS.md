@@ -22,6 +22,7 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Tooltips & Semantics: Dashboard shell, Players, Matches, Training.
      - 48x48 tap targets: Field Canvas (zoom/reset), Video Player (controls), Weekly Calendar acties, diverse leading/back/close knoppen.
      - Tekstschaal: badges in TrainingScreen omgezet naar `Wrap` voor nette layout bij hogere scaling.
+     - Profiel: avatar camera-knop met tooltip + 48x48 constraints.
    - Open (gericht):
      - Tekstschaal-audit in content; clamp-overschrijdingen/ellipsis checken.
      - Contrast-checks M3: badges/overlays (Video, Training-cards) naar high-contrast tokens.
@@ -32,6 +33,8 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Resource hints (preconnect Supabase/Sentry) en preload van Flutter manifests + bootstrap.
      - Lighthouse CI met budgets (FCP/LCP/TBT/CLS) in workflow; artefacten beschikbaar.
      - Video thumbnails: dpr-gebaseerde `cacheHeight` voor previews (web).
+     - Lijsten: `ListView.builder` tuned (repaint boundaries/keepAlives/cacheExtent) op Training lijst.
+     - Profiel avatar: dpr-gebaseerde `cacheHeight` en `gaplessPlayback`.
      - Afbeeldingen: `NetworkImageSmart` voorziet in dpr-gebaseerde `cacheWidth/Height` en `gaplessPlayback` om layout shifts en memory footprint te beperken.
    - Open (gericht):
      - Lazy loading verfijnen (zware views/images) en hero-animaties beperken op web.
