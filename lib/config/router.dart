@@ -24,6 +24,7 @@ import '../screens/training/add_training_screen.dart';
 import '../screens/training/edit_training_screen.dart';
 import '../screens/training/training_attendance_screen.dart';
 import '../screens/training/training_screen.dart';
+import '../screens/offline/offline_screen.dart';
 import '../screens/training_sessions/exercise_designer_screen.dart';
 import '../screens/training_sessions/exercise_library_screen.dart';
 import '../screens/training_sessions/field_diagram_editor_screen.dart';
@@ -85,7 +86,11 @@ GoRouter createRouter(Ref ref) => GoRouter(
           }
 
           if (!isOnline) {
-            // Stay on current route when offline to avoid redirect loops
+            // Keep user on current route; if still at /auth or unknown, show offline page
+            final path = state.fullPath ?? '';
+            if (path.isEmpty || path == '/' || path.startsWith('/auth')) {
+              return '/offline';
+            }
             return null;
           }
 
@@ -112,6 +117,11 @@ GoRouter createRouter(Ref ref) => GoRouter(
           path: '/auth',
           name: 'auth',
           builder: (context, state) => const LoginScreen(),
+        ),
+        GoRoute(
+          path: '/offline',
+          name: 'offline',
+          builder: (context, state) => const OfflineScreen(),
         ),
 
         // Protected routes (inside shell with auth guard)
