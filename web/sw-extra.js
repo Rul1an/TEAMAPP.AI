@@ -8,6 +8,9 @@
         '/flutter_bootstrap.js',
         '/main.dart.js',
         '/manifest.json',
+        '/assets/AssetManifest.bin.json',
+        '/assets/FontManifest.json',
+        '/favicon.png',
         '/icons/Icon-192.png',
         '/icons/Icon-512.png',
     ];

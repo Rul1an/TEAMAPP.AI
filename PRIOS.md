@@ -9,6 +9,7 @@ Voortgang (stand nu):
 - PWA/Web polish: Offline scherm en router-redirect naar `/offline` bij startup zonder verbinding; manifest verrijkt (categories, screenshots, shortcuts, protocol handlers); meta description verbeterd.
 - UI performance bewaking: Lighthouse CI (static) met budgets (FCP/LCP/TBT/CLS) toegevoegd aan GitHub Actions; rapporten als artifact.
 - Service Worker: verbeterde cachingstrategie (versioned caches per commit, cache-first voor CanvasKit/Wasm, stale-while-revalidate voor app-assets).
+ - Service Worker: verbeterde cachingstrategie (versioned caches per commit, cache-first voor CanvasKit/Wasm, stale-while-revalidate voor app-assets); minimale precache uitgebreid met manifesten en favicon.
 - Import trainingsplannen: service en UI-menu (Trainingen) toegevoegd; template-download beschikbaar.
 
 
@@ -23,7 +24,8 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
    - Open: Verdere lazy loading verfijningen; web fonts fine-tuning.
 3. Observability – Events/metrics standaardiseren [in progress]
    - Gedaan: Canonical events voor create/import/export; attributen gesaneerd en genormaliseerd (PII scrub, key normalisatie, metadata flatten, limieten).
-   - Open: OTLP endpoint validatie + dashboards alignment.
+   - Gedaan: OTLP init/diagnostics + startup-event; OTLP override via define; resource attributes (`service.version`, `deployment.environment`).
+   - Open: Dashboards alignment.
 4. PWA/Web polish [in progress]
    - Gedaan: Trusted Types beleid in headers; resource hints/preloads; Offline scherm; manifest audit/verbeteringen; SW caching (versioned caches + SWR assets); minimale precache (core shell) + versioned cache cleanup.
    - Open: Precache-lijst verfijnen op basis van Lighthouse artefacten (LCP/FCP-kritische assets).
