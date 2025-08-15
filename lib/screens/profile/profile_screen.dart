@@ -14,6 +14,7 @@ import '../../providers/profile_provider.dart';
 import '../../widgets/common/network_image_smart.dart';
 import '../../providers/notification_service_provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/consent_provider.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -28,6 +29,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final _websiteCtrl = TextEditingController();
   bool _isSaving = false;
   bool _notifToggle = false;
+  bool _analyticsConsent = false;
 
   Profile? _profile;
 
@@ -46,6 +48,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           _websiteCtrl.text = prof.website ?? '';
         });
       }
+      // Load analytics consent
+      final analytics = await ref.read(analyticsConsentProvider.future);
+      if (mounted) setState(() => _analyticsConsent = analytics);
     });
   }
 
@@ -214,6 +219,35 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                       ),
                                     );
                                   },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // Analytics consent toggle
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            children: [
+                              Icon(Icons.analytics_outlined),
+                              SizedBox(width: 8),
+                              Text('Analytics toestemming')
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          SwitchListTile(
+                            value: _analyticsConsent,
+                            title: const Text('Sta anonieme analytics toe'),
+                            onChanged: (val) async {
+                              setState(() => _analyticsConsent = val);
+                              final service = ref.read(consentServiceProvider);
+                              await service.setConsent({'analytics': val});
+                            },
                           ),
                         ],
                       ),

@@ -22,7 +22,7 @@ class Connectivity {
             event as cp_real.ConnectivityResult;
         final bool isNone = result == cp_real.ConnectivityResult.none;
         return <ConnectivityResult>[
-          isNone ? ConnectivityResult.none : ConnectivityResult.other,
+          if (isNone) ConnectivityResult.none else ConnectivityResult.other,
         ];
       },
     );

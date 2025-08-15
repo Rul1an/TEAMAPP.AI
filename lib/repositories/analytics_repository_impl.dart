@@ -10,7 +10,7 @@ class AnalyticsRepositoryImpl implements AnalyticsRepository {
     required DateTime end,
     required ActionCategory category,
   }) async {
-    // TODO: fetch from data-source
-    return const Success([]);
+    // TODO: fetch from data-source; currently returns empty list
+    return const Success(<ActionEvent>[]);
   }
 }
