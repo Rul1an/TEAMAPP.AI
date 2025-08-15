@@ -28,7 +28,8 @@ class NotificationService {
     if (!_enabled) return;
     // Web support requires explicit Firebase web setup; skip by default
     if (kIsWeb) return;
-    // Request permission on iOS / Web
+
+    // Request permission on iOS / Android
     await requestPermission();
 
     // Ensure a token is generated (helpful for debug logs)
@@ -52,6 +53,10 @@ class NotificationService {
     await _messaging.subscribeToTopic(topic);
   }
 
+  Future<void> unsubscribeFromTopic(String topic) async {
+    await _messaging.unsubscribeFromTopic(topic);
+  }
+
   Future<void> subscribeToTenant(String tenantId) async {
     final topic = tenantTopic(tenantId);
     if (isValidTopic(topic)) {
@@ -61,12 +66,26 @@ class NotificationService {
     }
   }
 
+  Future<void> unsubscribeFromTenant(String tenantId) async {
+    final topic = tenantTopic(tenantId);
+    if (isValidTopic(topic)) {
+      await unsubscribeFromTopic(topic);
+    }
+  }
+
   Future<void> subscribeToUser(String userId) async {
     final topic = userTopic(userId);
     if (isValidTopic(topic)) {
       await subscribeToTopic(topic);
     } else if (kDebugMode) {
       debugPrint('Invalid user topic: $topic');
+    }
+  }
+
+  Future<void> unsubscribeFromUser(String userId) async {
+    final topic = userTopic(userId);
+    if (isValidTopic(topic)) {
+      await unsubscribeFromTopic(topic);
     }
   }
 
