@@ -15,11 +15,14 @@ class Connectivity {
   const Connectivity();
 
   Stream<List<ConnectivityResult>> get onConnectivityChanged {
+    // Normalize to list; connectivity_plus emits single values on stable versions
     return cp_real.Connectivity().onConnectivityChanged.map(
-      (List<cp_real.ConnectivityResult> results) {
-        final bool hasNone = results.contains(cp_real.ConnectivityResult.none);
+      (dynamic event) {
+        final cp_real.ConnectivityResult result =
+            event as cp_real.ConnectivityResult;
+        final bool isNone = result == cp_real.ConnectivityResult.none;
         return <ConnectivityResult>[
-          if (hasNone) ConnectivityResult.none else ConnectivityResult.other,
+          isNone ? ConnectivityResult.none : ConnectivityResult.other,
         ];
       },
     );

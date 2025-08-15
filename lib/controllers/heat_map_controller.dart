@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/action_event.dart';
 import '../repositories/analytics_repository.dart';
 import '../providers/analytics_repository_provider.dart';
+import '../providers/consent_provider.dart';
 
 class HeatMapParams {
   HeatMapParams({
@@ -24,6 +25,12 @@ class HeatMapController extends AsyncNotifier<List<ActionEvent>> {
 
   Future<void> load(HeatMapParams params) async {
     state = const AsyncLoading();
+    final bool analyticsAllowed =
+        await ref.read(analyticsConsentProvider.future);
+    if (!analyticsAllowed) {
+      state = const AsyncData(<ActionEvent>[]);
+      return;
+    }
     final repo = ref.read(analyticsRepositoryProvider);
     final res = await repo.getHeatMapData(
       start: params.start,

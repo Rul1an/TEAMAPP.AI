@@ -13,8 +13,10 @@ class HeatmapAggregator {
     required this.cols,
     double sampleRate = 1.0,
     Random? random,
-  })  : assert(rows > 0 && cols > 0),
-        assert(sampleRate >= 0 && sampleRate <= 1),
+  })  : assert(rows > 0, 'rows must be > 0'),
+        assert(cols > 0, 'cols must be > 0'),
+        assert(sampleRate >= 0 && sampleRate <= 1,
+            'sampleRate must be between 0.0 and 1.0'),
         _sampleRate = sampleRate,
         _random = random ?? Random(0),
         _counts = <String, int>{};
@@ -69,7 +71,7 @@ class HeatmapAggregator {
     };
   }
 
-  static HeatmapAggregator fromJson(
+  factory HeatmapAggregator.fromJson(
     Map<String, dynamic> json, {
     double sampleRate = 1.0,
     Random? random,
