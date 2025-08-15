@@ -1,5 +1,7 @@
 # PRIOS – Volgorde uitvoering (Q3 2025)
 
+Werkafspraak: na iedere wijziging of afronding van een TODO/PRIO wordt dit bestand direct bijgewerkt (Gedaan/Open).
+
 Voortgang (stand nu):
 - Router startup safety: opgelost. Redirect-guard leest providers nu veilig met fallbacks; null-check crash bij opstart verholpen.
 - UI A11y: focus traversal toegevoegd (globaal + nav), tooltips/semantics aangevuld op kernschermen (Dashboard shell, Players, Matches, Training).
