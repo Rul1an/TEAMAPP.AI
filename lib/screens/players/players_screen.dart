@@ -14,6 +14,7 @@ import '../../providers/export_service_provider.dart';
 import '../../providers/players_provider.dart';
 import '../../services/import_service.dart';
 import '../../utils/colors.dart';
+import '../../services/analytics_events.dart';
 
 class PlayersScreen extends ConsumerStatefulWidget {
   const PlayersScreen({super.key});
@@ -104,6 +105,10 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
     );
   }
 
+  void _trackAnalytics(AnalyticsEvent event, {Map<String, dynamic>? params}) {
+    const AnalyticsLogger().log(event, parameters: params);
+  }
+
   Future<void> _downloadTemplate() async {
     await _importService.generatePlayerTemplate();
 
@@ -131,7 +136,11 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
           IconButton(
             icon: const Icon(Icons.upload_file),
             tooltip: 'Importeer spelers',
-            onPressed: _importPlayers,
+            onPressed: () async {
+              _trackAnalytics(AnalyticsEvent.exportCsv,
+                  params: {'action': 'import_players_click'});
+              await _importPlayers();
+            },
           ),
           // Menu voor meer opties
           PopupMenuButton<String>(
@@ -140,8 +149,12 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
             onSelected: (value) async {
               switch (value) {
                 case 'import':
+                  _trackAnalytics(AnalyticsEvent.exportCsv,
+                      params: {'action': 'import_players_menu'});
                   await _importPlayers();
                 case 'export':
+                  _trackAnalytics(AnalyticsEvent.exportCsv,
+                      params: {'entity': 'players'});
                   await _exportPlayers();
                 case 'template':
                   await _downloadTemplate();
@@ -178,7 +191,11 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
           IconButton(
             icon: const Icon(Icons.person_add),
             tooltip: 'Nieuwe speler toevoegen',
-            onPressed: () => context.go('/players/add'),
+            onPressed: () {
+              _trackAnalytics(AnalyticsEvent.playerCreate,
+                  params: {'source': 'appbar'});
+              context.go('/players/add');
+            },
           ),
         ],
       ),

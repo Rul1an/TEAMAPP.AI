@@ -13,6 +13,7 @@ import '../../providers/export_service_provider.dart';
 import '../../providers/trainings_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
+import '../../services/analytics_events.dart';
 
 class TrainingScreen extends ConsumerStatefulWidget {
   const TrainingScreen({super.key});
@@ -26,6 +27,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   late final ValueNotifier<List<Training>> _selectedTrainings;
+  final AnalyticsLogger _analytics = const AnalyticsLogger();
 
   @override
   void initState() {
@@ -55,7 +57,10 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
             IconButton(
               icon: const Icon(Icons.add),
               tooltip: 'Nieuwe training plannen',
-              onPressed: () => context.go('/training/add'),
+              onPressed: () {
+                _analytics.log(AnalyticsEvent.trainingCreate);
+                context.go('/training/add');
+              },
             ),
           if (!isViewOnly)
             PopupMenuButton<String>(
@@ -64,6 +69,8 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
               onSelected: (value) async {
                 try {
                   if (value == 'excel') {
+                    await _analytics.log(AnalyticsEvent.exportCsv,
+                        parameters: {'entity': 'training_attendance'});
                     await ref
                         .read(exportServiceProvider)
                         .exportTrainingAttendanceToExcel();
@@ -87,8 +94,8 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                   }
                 }
               },
-              itemBuilder: (context) => [
-                const PopupMenuItem(
+              itemBuilder: (context) => const [
+                PopupMenuItem(
                   value: 'excel',
                   child: ListTile(
                     leading: Icon(Icons.table_chart),
@@ -126,9 +133,8 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                     shape: BoxShape.circle,
                   ),
                   todayDecoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).primaryColor.withValues(alpha: 0.5),
+                    color:
+                        Theme.of(context).primaryColor.withValues(alpha: 0.5),
                     shape: BoxShape.circle,
                   ),
                   markerDecoration: BoxDecoration(
@@ -146,8 +152,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                   // Navigate to attendance if there's a training on this day
                   final dayTrainings = trainings
                       .where(
-                        (training) => isSameDay(training.date, selectedDay),
-                      )
+                          (training) => isSameDay(training.date, selectedDay))
                       .toList();
 
                   if (dayTrainings.isNotEmpty) {

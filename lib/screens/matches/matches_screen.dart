@@ -15,6 +15,7 @@ import '../../providers/matches_provider.dart'
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 import '../../services/schedule_import_service.dart';
+import '../../services/analytics_events.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
   const MatchesScreen({super.key});
@@ -26,6 +27,7 @@ class MatchesScreen extends ConsumerStatefulWidget {
 class _MatchesScreenState extends ConsumerState<MatchesScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final AnalyticsLogger _analytics = const AnalyticsLogger();
 
   @override
   void initState() {
@@ -53,7 +55,11 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
           IconButton(
             icon: const Icon(Icons.add),
             tooltip: 'Nieuwe wedstrijd plannen',
-            onPressed: () => context.go('/matches/add'),
+            onPressed: () {
+              _analytics.log(AnalyticsEvent.trainingCreate,
+                  parameters: {'entity': 'match'});
+              context.go('/matches/add');
+            },
           ),
           if (!isViewOnly)
             IconButton(
@@ -67,6 +73,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             onSelected: (value) async {
               try {
                 if (value == 'pdf') {
+                  _analytics.log(AnalyticsEvent.exportPdf,
+                      parameters: {'entity': 'matches'});
                   await ref.read(exportServiceProvider).exportMatchesToPDF();
                   if (mounted && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -88,8 +96,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
                 }
               }
             },
-            itemBuilder: (context) => [
-              const PopupMenuItem(
+            itemBuilder: (context) => const [
+              PopupMenuItem(
                 value: 'pdf',
                 child: ListTile(
                   leading: Icon(Icons.picture_as_pdf),
@@ -151,7 +159,11 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
       floatingActionButton: (isDesktop || isViewOnly)
           ? null
           : FloatingActionButton(
-              onPressed: () => context.go('/matches/add'),
+              onPressed: () {
+                _analytics.log(AnalyticsEvent.trainingCreate,
+                    parameters: {'entity': 'match', 'source': 'fab'});
+                context.go('/matches/add');
+              },
               child: const Icon(Icons.add),
             ),
     );
