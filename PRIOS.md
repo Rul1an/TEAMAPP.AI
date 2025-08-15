@@ -23,6 +23,7 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Tooltips & Semantics: Dashboard shell, Players, Matches, Training.
      - 48x48 tap targets: Field Canvas (zoom/reset), Video Player (controls), Weekly Calendar acties, diverse leading/back/close knoppen.
      - Tekstschaal: badges in TrainingScreen omgezet naar `Wrap` voor nette layout bij hogere scaling.
+     - Tekstschaal: ellipsis clamps toegevoegd op Dashboard UpcomingEvents kaarten (Match/Training), Player Detail titel.
      - Profiel: avatar camera-knop met tooltip + 48x48 constraints.
    - Open (gericht):
      - Tekstschaal-audit in content; clamp-overschrijdingen/ellipsis checken.
