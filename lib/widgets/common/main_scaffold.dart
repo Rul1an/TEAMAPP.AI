@@ -12,6 +12,7 @@ import 'skip_to_content.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/demo_mode_provider.dart';
 import '../../config/environment.dart';
+import '../../compat/pwa_install.dart' as pwa;
 
 // ignore_for_file: prefer_const_constructors
 class MainScaffold extends ConsumerWidget {
@@ -165,6 +166,33 @@ class MainScaffold extends ConsumerWidget {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
+                                  FutureBuilder<bool>(
+                                    future: pwa.isPwaInstallAvailable(),
+                                    builder: (context, snapshot) {
+                                      final available =
+                                          (snapshot.data ?? false) == true;
+                                      if (!available)
+                                        return const SizedBox.shrink();
+                                      return IconButton(
+                                        icon: const Icon(Icons.download),
+                                        tooltip: 'App installeren',
+                                        onPressed: () async {
+                                          final ok =
+                                              await pwa.triggerPwaInstall();
+                                          if (!ok && context.mounted) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                  'Installatie niet beschikbaar. Gebruik de browser-optie "Toevoegen aan beginscherm".',
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      );
+                                    },
+                                  ),
                                   if (currentUser != null || demoMode.isActive)
                                     Text(
                                       demoMode.isActive
