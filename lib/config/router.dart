@@ -33,6 +33,7 @@ import '../widgets/common/main_scaffold.dart';
 // import schedule import removed – feature postponed
 import '../config/providers.dart';
 import '../config/environment.dart';
+import '../providers/connectivity_status_provider.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
       // 🎯 2025 Best Practice: Direct routing based on app mode
@@ -49,12 +50,23 @@ GoRouter createRouter(Ref ref) => GoRouter(
 
         // Demo and SaaS mode authentication flows (null-safe)
         try {
+          // Basic offline guard: when offline, keep user on current route (avoid loops)
+          final asyncConn = ref.read(connectivityStatusProvider);
+          final bool isOnline = asyncConn.maybeWhen(
+            data: (bool v) => v,
+            orElse: () => true,
+          );
           final isLoggedIn = ref.read(isLoggedInProvider);
           final isDemoMode = ref.read(demoModeProvider).isActive;
           final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
 
           // Always allow access to auth page
           if (isOnAuthPage) {
+            return null;
+          }
+
+          if (!isOnline) {
+            // Stay on current route when offline to avoid redirect loops
             return null;
           }
 
