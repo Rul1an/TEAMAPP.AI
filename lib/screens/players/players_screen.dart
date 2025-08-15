@@ -137,6 +137,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
           IconButton(
             icon: const Icon(Icons.upload_file),
             tooltip: 'Importeer spelers',
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: () async {
               _trackAnalytics(AnalyticsEvent.exportCsv,
                   params: {'action': 'import_players_click'});
@@ -192,6 +193,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
           IconButton(
             icon: const Icon(Icons.person_add),
             tooltip: 'Nieuwe speler toevoegen',
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: () {
               _trackAnalytics(AnalyticsEvent.playerCreate,
                   params: {'source': 'appbar'});
@@ -360,6 +362,9 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                           )
                         : ListView.builder(
                             padding: EdgeInsets.all(isTablet ? 24 : 16),
+                            addAutomaticKeepAlives: false,
+                            addRepaintBoundaries: true,
+                            cacheExtent: 300,
                             itemCount: filteredPlayers.length,
                             itemBuilder: (context, index) {
                               final player = filteredPlayers[index];
