@@ -211,6 +211,10 @@ enum Environment {
 
   // Telemetry & Monitoring endpoints
   static String? get otlpEndpoint {
+    // Allow explicit override via dart-define
+    const override = String.fromEnvironment('OTLP_ENDPOINT', defaultValue: '');
+    if (override.isNotEmpty) return override;
+
     switch (current.name) {
       case 'production':
         return 'https://otlp.teammanager.app/v1/traces';

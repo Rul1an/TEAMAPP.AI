@@ -44,8 +44,8 @@ class TelemetryService {
       // Skip OTLP setup to avoid noisy errors in console/CI
       assert(() {
         // ignore: avoid_print
-        print('OTLP endpoint not reachable, skipping OpenTelemetry init: ' +
-            endpoint);
+        print(
+            'OTLP endpoint not reachable, skipping OpenTelemetry init: $endpoint');
         return true;
       }());
       return;
@@ -68,7 +68,7 @@ class TelemetryService {
     _initialized = true;
     assert(() {
       // ignore: avoid_print
-      print('OTLP initialized with endpoint: ' + endpoint);
+      print('OTLP initialized with endpoint: $endpoint');
       return true;
     }());
   }

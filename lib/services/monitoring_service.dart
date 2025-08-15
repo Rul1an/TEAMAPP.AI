@@ -7,6 +7,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 // Project imports:
 import 'telemetry_service.dart';
 import 'pii_sanitizer.dart';
+import '../config/environment.dart';
 
 /// Enhanced monitoring service for production-ready SaaS application
 /// Implements comprehensive error tracking, performance monitoring, and analytics
@@ -124,6 +125,12 @@ class MonitoringService {
               timestamp: breadcrumb.timestamp,
             );
           };
+      });
+    }
+    // Emit a minimal startup telemetry event when OTLP is enabled
+    if (TelemetryService().isEnabled) {
+      TelemetryService().trackEvent('app.startup', attributes: {
+        'env': Environment.current.name.toLowerCase(),
       });
     }
   }
