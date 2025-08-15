@@ -341,8 +341,8 @@ class TrainingPlanImportService {
     final re = RegExp(r'^\d{1,2}:\d{2}$');
     if (!re.hasMatch(t)) return null;
     final parts = t.split(':');
-    final hh = int.tryParse(parts[0]) ?? -1;
-    final mm = int.tryParse(parts[1]) ?? -1;
+    var hh = int.tryParse(parts[0]) ?? -1;
+    var mm = int.tryParse(parts[1]) ?? -1;
     if (hh < 0 || hh > 23 || mm < 0 || mm > 59) return null;
     return '${hh.toString().padLeft(2, '0')}:${mm.toString().padLeft(2, '0')}';
   }
