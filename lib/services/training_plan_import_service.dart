@@ -211,22 +211,26 @@ class TrainingPlanImportService {
     final remapped = <List<dynamic>>[];
     for (final row in rows.skip(1)) {
       final mappedRow = <dynamic>[
-        (idxDate >= 0 && idxDate < row.length) ? row[idxDate] : null,
-        (idxStart >= 0 && idxStart < row.length) ? row[idxStart] : null,
-        (idxDuration >= 0 && idxDuration < row.length)
-            ? row[idxDuration]
-            : null,
-        (idxFocus >= 0 && idxFocus < row.length) ? row[idxFocus] : null,
-        (idxIntensity >= 0 && idxIntensity < row.length)
-            ? row[idxIntensity]
-            : null,
-        (idxTitle >= 0 && idxTitle < row.length) ? row[idxTitle] : null,
-        (idxObjective >= 0 && idxObjective < row.length)
-            ? row[idxObjective]
-            : null,
-        (idxLocation >= 0 && idxLocation < row.length)
-            ? row[idxLocation]
-            : null,
+        if (idxDate >= 0 && idxDate < row.length) row[idxDate] else null,
+        if (idxStart >= 0 && idxStart < row.length) row[idxStart] else null,
+        if (idxDuration >= 0 && idxDuration < row.length)
+          row[idxDuration]
+        else
+          null,
+        if (idxFocus >= 0 && idxFocus < row.length) row[idxFocus] else null,
+        if (idxIntensity >= 0 && idxIntensity < row.length)
+          row[idxIntensity]
+        else
+          null,
+        if (idxTitle >= 0 && idxTitle < row.length) row[idxTitle] else null,
+        if (idxObjective >= 0 && idxObjective < row.length)
+          row[idxObjective]
+        else
+          null,
+        if (idxLocation >= 0 && idxLocation < row.length)
+          row[idxLocation]
+        else
+          null,
       ];
       remapped.add(mappedRow);
     }
@@ -311,14 +315,14 @@ class TrainingPlanImportService {
   String? _parseStartTime(String s) {
     final trimmed = s.trim();
     // Accept HH:mm, H:mm, HH.mm, H.mm
-    var t = trimmed.replaceAll('.', ':');
+    final t = trimmed.replaceAll('.', ':');
     final re = RegExp(r'^\d{1,2}:\d{2}$');
     if (!re.hasMatch(t)) return null;
     final parts = t.split(':');
     final hh = int.tryParse(parts[0]) ?? -1;
     final mm = int.tryParse(parts[1]) ?? -1;
     if (hh < 0 || hh > 23 || mm < 0 || mm > 59) return null;
-    return hh.toString().padLeft(2, '0') + ':' + mm.toString().padLeft(2, '0');
+    return '${hh.toString().padLeft(2, '0')}:${mm.toString().padLeft(2, '0')}';
   }
 
   /// Generate an Excel template for planned trainings

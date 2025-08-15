@@ -23,8 +23,9 @@ import '../fixtures/test_data_factory.dart';
 /// Gebaseerd op Supabase 2025 testing best practices:
 /// https://supabase.com/docs/guides/local-development/testing/overview
 void main() {
-  final skipRealDb = Platform.environment['CI'] == 'true' &&
-      Platform.environment['ENABLE_REAL_DB_TESTS'] != '1';
+  // Default-skip unless explicitly enabled via env var
+  final enableFlag = Platform.environment['ENABLE_REAL_DB_TESTS'] == '1';
+  final skipRealDb = !enableFlag;
 
   group('🔥 Supabase Real Database Integration Tests (2025)', () {
     late SupabaseClient testClient;
@@ -464,7 +465,7 @@ void main() {
     });
   },
       skip: skipRealDb
-          ? 'Skipped in CI (set ENABLE_REAL_DB_TESTS=1 to enable)'
+          ? 'Skipped (set ENABLE_REAL_DB_TESTS=1 to enable real DB tests)'
           : false);
 }
 

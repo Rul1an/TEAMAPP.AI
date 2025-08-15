@@ -4,24 +4,24 @@ import 'package:jo17_tactical_manager/widgets/common/main_scaffold.dart';
 void main() {
   group('Navigation Fix Verification Tests 2025', () {
     test('routeToNavIndex maps routes correctly after fix', () {
-      // Test the exact mappings that were failing according to comprehensive test failure analysis
-      expect(MainScaffold.routeToNavIndex('/season'), equals(1),
-          reason: 'Season route should map to index 1');
+      // Mapping aligned with nav order: 0 Dashboard, 1 Players, 2 Matches, 3 Training, 4 Insights
+      expect(MainScaffold.routeToNavIndex('/season'), equals(0),
+          reason: 'Season routes map to dashboard (index 0)');
 
-      expect(MainScaffold.routeToNavIndex('/annual-planning'), equals(1),
-          reason: 'Annual planning route should map to index 1');
+      expect(MainScaffold.routeToNavIndex('/annual-planning'), equals(0),
+          reason: 'Annual planning routes map to dashboard (index 0)');
 
-      expect(MainScaffold.routeToNavIndex('/training'), equals(2),
-          reason: 'Training route should map to index 2');
+      expect(MainScaffold.routeToNavIndex('/training'), equals(3),
+          reason: 'Training route should map to index 3');
 
-      expect(MainScaffold.routeToNavIndex('/matches'), equals(3),
-          reason: 'Matches route should map to index 3');
+      expect(MainScaffold.routeToNavIndex('/matches'), equals(2),
+          reason: 'Matches route should map to index 2');
 
-      expect(MainScaffold.routeToNavIndex('/players'), equals(4),
-          reason: 'Players route should map to index 4');
+      expect(MainScaffold.routeToNavIndex('/players'), equals(1),
+          reason: 'Players route should map to index 1');
 
-      expect(MainScaffold.routeToNavIndex('/insights'), equals(5),
-          reason: 'Insights route should map to index 5');
+      expect(MainScaffold.routeToNavIndex('/insights'), equals(4),
+          reason: 'Insights route should map to index 4');
 
       // Test dashboard (should remain unchanged)
       expect(MainScaffold.routeToNavIndex('/dashboard'), equals(0),
@@ -33,18 +33,18 @@ void main() {
     });
 
     test('sub-routes map correctly', () {
-      // Test exercise library routes (should map to training index 2)
-      expect(MainScaffold.routeToNavIndex('/exercise-library'), equals(2));
-      expect(MainScaffold.routeToNavIndex('/training-sessions'), equals(2));
-      expect(MainScaffold.routeToNavIndex('/field-diagram-editor'), equals(2));
-      expect(MainScaffold.routeToNavIndex('/exercise-designer'), equals(2));
+      // Training-related
+      expect(MainScaffold.routeToNavIndex('/exercise-library'), equals(3));
+      expect(MainScaffold.routeToNavIndex('/training-sessions'), equals(3));
+      expect(MainScaffold.routeToNavIndex('/field-diagram-editor'), equals(3));
+      expect(MainScaffold.routeToNavIndex('/exercise-designer'), equals(3));
 
-      // Test lineup routes (should map to matches index 3)
-      expect(MainScaffold.routeToNavIndex('/lineup'), equals(3));
+      // Lineup maps to Matches
+      expect(MainScaffold.routeToNavIndex('/lineup'), equals(2));
 
-      // Test analytics routes (should map to insights index 5)
-      expect(MainScaffold.routeToNavIndex('/analytics'), equals(5));
-      expect(MainScaffold.routeToNavIndex('/svs'), equals(5));
+      // Analytics maps to Insights
+      expect(MainScaffold.routeToNavIndex('/analytics'), equals(4));
+      expect(MainScaffold.routeToNavIndex('/svs'), equals(4));
     });
 
     test('all navigation indices are valid', () {
@@ -63,9 +63,9 @@ void main() {
         final index = MainScaffold.routeToNavIndex(route);
         expect(index, greaterThanOrEqualTo(0),
             reason: 'Route $route should have non-negative index');
-        expect(index, lessThanOrEqualTo(5),
+        expect(index, lessThanOrEqualTo(4),
             reason:
-                'Route $route should have index <= 5 (max navigation items)');
+                'Route $route should have index <= 4 (max navigation items)');
       }
     });
   });

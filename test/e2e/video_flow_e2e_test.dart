@@ -14,7 +14,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 /// Critical for production readiness validation.
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  // Only initialize integration binding if running as integration test (not unit test)
+  final isIntegration =
+      const bool.fromEnvironment('INTEGRATION_TEST', defaultValue: false);
+  if (isIntegration) {
+    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  }
 
   group('Video Flow E2E Tests', () {
     late SupabaseClient? supabaseClient;
@@ -53,6 +58,9 @@ void main() {
 
     testWidgets('Complete Video Upload and Display Flow',
         (WidgetTester tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       // Launch the app with test-friendly configuration
       await tester.runAsync(() async {
         // Skip environment loading in test environment to avoid .env dependency
@@ -112,6 +120,9 @@ void main() {
     });
 
     testWidgets('Video Analysis Flow', (WidgetTester tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       await tester.runAsync(() async {
         // Skip environment loading in test environment to avoid .env dependency
         if (_isInTestEnvironment()) {
@@ -156,6 +167,9 @@ void main() {
     });
 
     testWidgets('Database Error Handling', (WidgetTester tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       await tester.runAsync(() async {
         // Skip environment loading in test environment to avoid .env dependency
         if (_isInTestEnvironment()) {

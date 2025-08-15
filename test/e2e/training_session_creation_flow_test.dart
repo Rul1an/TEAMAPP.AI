@@ -14,7 +14,11 @@ import 'package:jo17_tactical_manager/main.dart' as app;
 /// Expected Duration: < 30 seconds
 /// Performance Budget: Page loads < 2s, interactions < 100ms
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final isIntegration =
+      const bool.fromEnvironment('INTEGRATION_TEST', defaultValue: false);
+  if (isIntegration) {
+    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  }
 
   group('Training Session Creation E2E Flow', () {
     setUpAll(() async {
@@ -27,6 +31,9 @@ void main() {
     });
 
     testWidgets('Complete training session creation journey', (tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       // Performance tracking
       final stopwatch = Stopwatch()..start();
 
@@ -65,6 +72,9 @@ void main() {
     });
 
     testWidgets('Exercise library search and filter flow', (tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       unawaited(app.main());
       await tester.pumpAndSettle();
 
@@ -89,6 +99,9 @@ void main() {
     });
 
     testWidgets('Session builder drag and drop flow', (tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       unawaited(app.main());
       await tester.pumpAndSettle();
 
@@ -108,6 +121,9 @@ void main() {
 
   group('Error Handling and Edge Cases', () {
     testWidgets('Network failure during session save', (tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       unawaited(app.main());
       await tester.pumpAndSettle();
 
@@ -133,6 +149,9 @@ void main() {
     });
 
     testWidgets('Large exercise library performance', (tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       unawaited(app.main());
       await tester.pumpAndSettle();
 
@@ -155,6 +174,9 @@ void main() {
 
   group('Accessibility Testing', () {
     testWidgets('Screen reader navigation', (tester) async {
+      if (!isIntegration) {
+        return; // Skip under unit test runner
+      }
       unawaited(app.main());
       await tester.pumpAndSettle();
 
