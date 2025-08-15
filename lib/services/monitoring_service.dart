@@ -145,30 +145,116 @@ class MonitoringService {
     String? userRole,
     String? organizationId,
   }) async {
-    TelemetryService().trackEvent(
-      name,
-      attributes: {
-        ...?parameters,
-        'user_id': userId,
-        'user_role': userRole,
-        'organization_id': organizationId,
-      },
-    );
+    final sanitizedParams = _sanitizeAttributes(parameters);
+    // Include normalized context fields with safe keys
+    final attributes = <String, Object?>{
+      ...sanitizedParams,
+      'user_id': userId,
+      'user_role': userRole,
+      'organization_id': organizationId,
+    }..removeWhere((key, value) => value == null);
+
+    TelemetryService().trackEvent(name, attributes: attributes);
 
     await Sentry.addBreadcrumb(
       Breadcrumb(
         message: name,
-        data: {
-          ...?parameters,
-          'user_id': userId,
-          'user_role': userRole,
-          'organization_id': organizationId,
+        data: PiiSanitizer.sanitizeMap({
+          ...attributes,
           'timestamp': DateTime.now().toIso8601String(),
-        },
+        }),
         category: 'custom_event',
         level: SentryLevel.info,
       ),
     );
+  }
+
+  // Normalizes and sanitizes event attributes for OTLP/Sentry (2025 best practices)
+  static Map<String, Object?> _sanitizeAttributes(
+    Map<String, dynamic>? parameters,
+  ) {
+    if (parameters == null || parameters.isEmpty) return const {};
+
+    // Flatten common nested keys like metadata/context under meta.*
+    final input = <String, dynamic>{...parameters};
+    final meta = <String, dynamic>{};
+    for (final k in ['metadata', 'meta', 'context']) {
+      final v = input.remove(k);
+      if (v is Map) {
+        v.forEach((mk, mv) => meta['meta.${mk.toString()}'] = mv);
+      }
+    }
+    input.addAll(meta);
+
+    final out = <String, Object?>{};
+    final keyRegex = RegExp(r'^[a-z0-9_.]+$');
+    for (final entry in input.entries) {
+      var key = entry.key.trim().toLowerCase().replaceAll(' ', '_');
+      if (!keyRegex.hasMatch(key)) {
+        key = key.replaceAll(RegExp(r'[^a-z0-9_.]'), '_');
+      }
+
+      final value = entry.value;
+      Object? normalized;
+      if (value == null) {
+        normalized = null;
+      } else if (value is num || value is bool) {
+        normalized = value;
+      } else if (value is DateTime) {
+        normalized = value.toIso8601String();
+      } else if (value is Duration) {
+        normalized = value.inMilliseconds;
+        key = key.endsWith('_ms') ? key : '${key}_ms';
+      } else if (value is Iterable) {
+        // Convert to comma-joined string to avoid large payloads
+        normalized = value.map((e) => _valueToString(e)).join(',');
+      } else if (value is Map) {
+        // Flatten one level under key.*
+        value.forEach((subKey, subVal) {
+          final sk = '${key}.${subKey.toString()}'.toLowerCase();
+          out[sk] = _valueToPrimitive(subVal);
+        });
+        continue;
+      } else {
+        normalized = _valueToString(value);
+      }
+
+      // Cap strings to 512 chars
+      if (normalized is String && normalized.length > 512) {
+        normalized = normalized.substring(0, 512);
+      }
+
+      out[key] = normalized;
+    }
+
+    // Hard PII scrub on the result, then limit total attributes to 25
+    final scrubbed = PiiSanitizer.sanitizeMap(
+      Map<String, dynamic>.from(out)
+        ..removeWhere((k, v) => v == null || (v is String && v.isEmpty)),
+    );
+    if (scrubbed.length <= 25) return scrubbed;
+    final limited = <String, dynamic>{};
+    var count = 0;
+    for (final e in scrubbed.entries) {
+      limited[e.key] = e.value;
+      count += 1;
+      if (count >= 25) break;
+    }
+    return limited;
+  }
+
+  static Object? _valueToPrimitive(Object? v) {
+    if (v == null) return null;
+    if (v is num || v is bool) return v;
+    if (v is DateTime) return v.toIso8601String();
+    if (v is Duration) return v.inMilliseconds;
+    return _valueToString(v);
+  }
+
+  static String _valueToString(Object? v) {
+    if (v == null) return '';
+    final s = v.toString();
+    return s.length > 512 ? s.substring(0, 512) : s;
   }
 
   /// Track AI feature usage
