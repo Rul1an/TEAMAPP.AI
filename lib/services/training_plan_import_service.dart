@@ -251,7 +251,7 @@ class TrainingPlanImportService {
         }
 
         final date = _parseDate(row[0]);
-        final start = _parseStartTime(row[1]?.toString() ?? '');
+        final start = _parseStartTime(row[1]);
         final duration = int.tryParse(row[2]?.toString() ?? '') ?? 90;
         final focus = (row[3]?.toString() ?? 'Techniek').trim();
         final intensity = (row[4]?.toString() ?? 'Gemiddeld').trim();
@@ -324,10 +324,20 @@ class TrainingPlanImportService {
     return DateTime.now();
   }
 
-  String? _parseStartTime(String s) {
-    final trimmed = s.trim();
+  String? _parseStartTime(dynamic value) {
+    // Excel numeric time support: fraction of a day
+    if (value is num) {
+      // Clamp to 0..1 just in case
+      final fraction = value.clamp(0, 1).toDouble();
+      final totalMinutes = (fraction * 24 * 60).round();
+      final hh = (totalMinutes ~/ 60) % 24;
+      final mm = totalMinutes % 60;
+      return '${hh.toString().padLeft(2, '0')}:${mm.toString().padLeft(2, '0')}';
+    }
+
+    final s = (value?.toString() ?? '').trim();
     // Accept HH:mm, H:mm, HH.mm, H.mm
-    final t = trimmed.replaceAll('.', ':');
+    final t = s.replaceAll('.', ':');
     final re = RegExp(r'^\d{1,2}:\d{2}$');
     if (!re.hasMatch(t)) return null;
     final parts = t.split(':');
