@@ -37,7 +37,7 @@ class HighlightGallery extends ConsumerWidget {
             itemCount: highlights.length,
             itemBuilder: (context, index) {
               final h = highlights[index];
-              return _HighlightThumbnail(highlight: h);
+              return _HighlightThumbnail(key: ValueKey(h.id), highlight: h);
             },
           ),
         );
@@ -47,7 +47,7 @@ class HighlightGallery extends ConsumerWidget {
 }
 
 class _HighlightThumbnail extends ConsumerStatefulWidget {
-  const _HighlightThumbnail({required this.highlight});
+  const _HighlightThumbnail({super.key, required this.highlight});
 
   final VeoHighlight highlight;
 
@@ -56,7 +56,8 @@ class _HighlightThumbnail extends ConsumerStatefulWidget {
       _HighlightThumbnailState();
 }
 
-class _HighlightThumbnailState extends ConsumerState<_HighlightThumbnail> {
+class _HighlightThumbnailState extends ConsumerState<_HighlightThumbnail>
+    with AutomaticKeepAliveClientMixin<_HighlightThumbnail> {
   VideoPlayerController? _controller;
   bool _isPlaying = false;
   bool _loadingUrl = false;
@@ -98,6 +99,7 @@ class _HighlightThumbnailState extends ConsumerState<_HighlightThumbnail> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final h = widget.highlight;
     return GestureDetector(
       onTap: _isPlaying ? null : _initAndPlay,
@@ -133,4 +135,7 @@ class _HighlightThumbnailState extends ConsumerState<_HighlightThumbnail> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
