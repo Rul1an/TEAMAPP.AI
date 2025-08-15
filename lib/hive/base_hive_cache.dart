@@ -44,6 +44,17 @@ class BaseHiveCache<T> {
     return Hive.box<String>(_boxName);
   }
 
+  Future<void> _purgeCorruptBox() async {
+    try {
+      if (Hive.isBoxOpen(_boxName)) {
+        await Hive.box<String>(_boxName).close();
+      }
+    } catch (_) {}
+    try {
+      await Hive.deleteBoxFromDisk(_boxName);
+    } catch (_) {}
+  }
+
   /// Reads cached value when present and not stale.
   Future<T?> read({Duration? ttl}) async {
     try {
@@ -62,8 +73,8 @@ class BaseHiveCache<T> {
       final map = jsonDecode(jsonStr) as Map<String, dynamic>;
       return _fromJson(map);
     } catch (_) {
-      // Defensive: if decryption/decoding/parsing fails, purge corrupt cache and return null
-      await clear();
+      // Defensive: if decryption/decoding/parsing fails, nuke the entire box and return null
+      await _purgeCorruptBox();
       return null;
     }
   }
@@ -80,7 +91,12 @@ class BaseHiveCache<T> {
   /// Clears value and timestamp.
   Future<void> clear() async {
     final box = await _openBox();
-    await box.delete(_valueKey);
-    await box.delete(_tsKey);
+    try {
+      await box.delete(_valueKey);
+      await box.delete(_tsKey);
+    } catch (_) {
+      // If deletion fails due to corruption, purge the box.
+      await _purgeCorruptBox();
+    }
   }
 }

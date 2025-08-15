@@ -38,21 +38,34 @@ class HiveProfileCache {
   /// Reads the cached [Profile] if it exists and has not expired. Returns
   /// `null` when no cache is present or the entry is stale.
   Future<Profile?> read({Duration ttl = _defaultTtl}) async {
-    final box = await _openBox();
+    try {
+      final box = await _openBox();
 
-    // Verify timestamp first to avoid unnecessary JSON parsing.
-    final tsStr = box.get(_tsKey);
-    if (tsStr == null) return null;
+      // Verify timestamp first to avoid unnecessary JSON parsing.
+      final tsStr = box.get(_tsKey);
+      if (tsStr == null) return null;
 
-    final cachedAt = DateTime.fromMillisecondsSinceEpoch(int.parse(tsStr));
-    if (DateTime.now().difference(cachedAt) > ttl) {
-      await clear();
+      final cachedAt = DateTime.fromMillisecondsSinceEpoch(int.parse(tsStr));
+      if (DateTime.now().difference(cachedAt) > ttl) {
+        await clear();
+        return null;
+      }
+
+      final jsonStr = box.get(_key);
+      if (jsonStr == null) return null;
+      return Profile.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+    } catch (_) {
+      // If decryption/decoding fails, drop the box entirely to recover.
+      try {
+        if (Hive.isBoxOpen(_boxName)) {
+          await Hive.box<String>(_boxName).close();
+        }
+      } catch (_) {}
+      try {
+        await Hive.deleteBoxFromDisk(_boxName);
+      } catch (_) {}
       return null;
     }
-
-    final jsonStr = box.get(_key);
-    if (jsonStr == null) return null;
-    return Profile.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
   }
 
   /// Persists the given [profile] and updates the timestamp.

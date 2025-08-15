@@ -55,18 +55,30 @@ class LocalStore<T> {
   }
 
   Future<void> _ensureVersion() async {
-    final box = await _openBox();
-    final storedRaw = box.get(_versionKey);
-    final storedVersion = int.tryParse(storedRaw ?? '0') ?? 0;
+    try {
+      final box = await _openBox();
+      final storedRaw = box.get(_versionKey);
+      final storedVersion = int.tryParse(storedRaw ?? '0') ?? 0;
 
-    if (storedVersion == _schemaVersion) return;
+      if (storedVersion == _schemaVersion) return;
 
-    // Execute custom migration logic if provided.
-    await _onUpgrade?.call(storedVersion, _schemaVersion);
+      // Execute custom migration logic if provided.
+      await _onUpgrade?.call(storedVersion, _schemaVersion);
 
-    // Clear cached data for incompatible schema by default
-    await _cache.clear();
-    await box.put(_versionKey, _schemaVersion.toString());
+      // Clear cached data for incompatible schema by default
+      await _cache.clear();
+      await box.put(_versionKey, _schemaVersion.toString());
+    } catch (_) {
+      // If version access fails due to corruption, nuke the box.
+      try {
+        if (Hive.isBoxOpen(_boxName)) {
+          await Hive.box<String>(_boxName).close();
+        }
+      } catch (_) {}
+      try {
+        await Hive.deleteBoxFromDisk(_boxName);
+      } catch (_) {}
+    }
   }
 
   Future<T?> read({Duration? ttl}) => _cache.read(ttl: ttl);
