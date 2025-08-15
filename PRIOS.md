@@ -14,22 +14,38 @@ Voortgang (stand nu):
 - Import trainingsplannen: service en UI-menu (Trainingen) toegevoegd; template-download beschikbaar.
 
 
-Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX impact, en CI stabiliteit.
+Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX impact, en CI stabiliteit. Status per prio bevat: Gedaan (concreet resultaat) en Open (gerichte next steps).
 
 1. UI Audit – A11y restpunten [in progress]
-   - Gedaan: FocusTraversalGroup (globaal en nav), tooltips/semantics op kernschermen, 48x48 tap targets op kritieke controls.
-   - Open: Tekstschaal audit in content, contrast-checks (M3 HC), icon-buttons in overige schermen.
+   - Gedaan:
+     - Globale `FocusTraversalGroup` + OrderedTraversalPolicy; nav toegankelijk.
+     - Tooltips & Semantics: Dashboard shell, Players, Matches, Training.
+     - 48x48 tap targets: Field Canvas (zoom/reset), Video Player (controls), Weekly Calendar acties.
+   - Open (gericht):
+     - Tekstschaal-audit in content; clamp-overschrijdingen/ellipsis checken.
+     - Contrast-checks M3: badges/overlays (Video, Training-cards) naar high-contrast tokens.
+     - Overige schermen nalopen op ontbrekende `tooltip` bij `IconButton`s.
 2. UI Audit – Performance restpunten [in progress]
-   - Gedaan: Preconnect Supabase/Sentry; high-priority preloads; bootstrap preload.
-   - Gedaan: Web Vitals budget en CI-meting via Lighthouse CI; artefacten per build.
-   - Open: Verdere lazy loading verfijningen; web fonts fine-tuning.
+   - Gedaan:
+     - Resource hints (preconnect Supabase/Sentry) en preload van Flutter manifests + bootstrap.
+     - Lighthouse CI met budgets (FCP/LCP/TBT/CLS) in workflow; artefacten beschikbaar.
+   - Open (gericht):
+     - Lazy loading verfijnen (zware views/images) en hero-animaties beperken op web.
+     - Web-fonts fine-tuning (subset/`display: swap`) indien nodig na LH-artefact review.
 3. Observability – Events/metrics standaardiseren [in progress]
-   - Gedaan: Canonical events voor create/import/export; attributen gesaneerd en genormaliseerd (PII scrub, key normalisatie, metadata flatten, limieten).
-   - Gedaan: OTLP init/diagnostics + startup-event; OTLP override via define; resource attributes (`service.version`, `deployment.environment`).
-   - Open: Dashboards alignment.
+   - Gedaan:
+     - Canonical events voor create/import/export; parameters gesaneerd (PII scrub), keys genormaliseerd, metadata geflattened, limieten toegepast.
+     - OTLP: init-diagnostics, `OTLP_ENDPOINT` override, startup-event, resource attrs: `service.name`, `service.version`, `service.namespace`, `service.instance.id`, `deployment.environment`, `app.mode`.
+     - Router observers: analytics observer + Sentry navigator breadcrumbs geactiveerd.
+   - Open (gericht):
+     - Dashboards alignment: view/convert op basis van nieuwe resource attrs; filters op env/mode/instance.
 4. PWA/Web polish [in progress]
-   - Gedaan: Trusted Types beleid in headers; resource hints/preloads; Offline scherm; manifest audit/verbeteringen; SW caching (versioned caches + SWR assets); minimale precache (core shell) + versioned cache cleanup.
-   - Open: Precache-lijst verfijnen op basis van Lighthouse artefacten (LCP/FCP-kritische assets).
+   - Gedaan:
+     - Trusted Types/COOP/COEP/CSP in Netlify headers.
+     - Offline scherm en router-redirect; manifest verrijkt (shortcuts, categories, screenshots, protocol handlers).
+     - SW: versioned caches, cache-first (CanvasKit/Wasm), SWR (app-assets), precache core shell + Asset/FontManifest + favicon; cache cleanup.
+   - Open (gericht):
+     - Precache-lijst verfijnen met LH-artefacten (alleen LCP/FCP-kritisch, geen overlap met SWR).
 5. Notifications – platform setup valideren
    - iOS/Android setup en topic/tenant scoping rooktests.
 6. Demo/standalone – e2e guard/deep-link tests
@@ -41,8 +57,8 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
 9. Advanced Analytics – Heatmaps/predictions (research)
    - Heatmaps, form predictions, trajecten, positie-adviezen (fasegewijs, na events-standaardisatie).
 10. Import – Training plans [in progress]
-   - Gedaan: CSV/Excel service met strikte parsing en foutverzameling; template-generator; UI-menu in `Trainingen` (import + template-download).
-   - Open: Mapping van geïmporteerde items naar persistente planning (repo/service) en unit-tests.
+   - Gedaan: CSV/Excel service (validaties data/tijd/duratie/focus/intensiteit); template-generator; UI-menu (import + template-download); gebruiker-feedback + waarschuwingen dialoog.
+   - Open (gericht): Mapping naar persistente planning (repo/service), unit-tests parser, happy-path e2e rooktest.
 
 Not planned/Q4+:
 - Wasm dependency vervolgaudit (`share_plus`, `connectivity_plus`) en conditional stubs.
