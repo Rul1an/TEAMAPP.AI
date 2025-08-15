@@ -308,6 +308,9 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                         horizontal: isDesktop ? 24 : 16,
                         vertical: 8,
                       ),
+                      addAutomaticKeepAlives: false,
+                      addRepaintBoundaries: true,
+                      cacheExtent: 300,
                       itemCount: value.length,
                       itemBuilder: (context, index) {
                         final training = value[index];
