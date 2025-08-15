@@ -34,10 +34,10 @@ void main() {
         );
       }
 
-      // Excel serial date for 2025-09-21 relative to 1899-12-30
-      final targetDate = DateTime(2025, 9, 21);
+      // Excel serial date (days since 1899-12-30)
       final base = DateTime(1899, 12, 30);
-      final serial = targetDate.difference(base).inDays.toDouble();
+      final expectedDate = DateTime(2025, 9, 21);
+      final serial = expectedDate.difference(base).inDays.toDouble();
 
       // Data row values
       sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: 1),
@@ -64,9 +64,11 @@ void main() {
       expect(res.success, isTrue);
       expect(res.items.length, 1);
       final dto = res.items.first;
-      expect(dto.date.year, targetDate.year);
-      expect(dto.date.month, targetDate.month);
-      expect(dto.date.day, targetDate.day);
+
+      final recomputed = base.add(Duration(days: serial.toInt()));
+      expect(dto.date.year, recomputed.year);
+      expect(dto.date.month, recomputed.month);
+      expect(dto.date.day, recomputed.day);
       expect(dto.startTime, '18:30');
       expect(dto.durationMinutes, 90);
       expect(res.message, contains('Dry-run'));
