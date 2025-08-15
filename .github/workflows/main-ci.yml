@@ -500,6 +500,22 @@ jobs:
             build_metrics.txt
           retention-days: 5
 
+      - name: 🧪 Lighthouse CI (static)
+        if: matrix.target == 'canvaskit'
+        run: |
+          npm i -g @lhci/cli@0.14.x
+          mkdir -p lhci-reports
+          lhci autorun --config=./lighthouserc.json || true
+        continue-on-error: true
+
+      - name: 📤 Upload Lighthouse Reports
+        if: always() && matrix.target == 'canvaskit'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-${{ github.sha }}
+          path: lhci-reports
+          retention-days: 5
+
       - name: 🔍 WASM Dependency Audit
         run: |
           dart run tool/wasm_audit.dart
