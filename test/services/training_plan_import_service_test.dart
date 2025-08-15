@@ -18,8 +18,8 @@ void main() {
       final svc = TrainingPlanImportService();
       final res = await svc.parseCsvBytes(bytes);
 
-      expect(res.success, isTrue);
       expect(res.items, isNotEmpty);
+      expect(res.success, isTrue, reason: res.message);
       final item = res.items.first;
       expect(item.startTime, '18:30');
       expect(item.durationMinutes, 90);
@@ -32,7 +32,7 @@ void main() {
       final bytes = Uint8List.fromList(utf8.encode(''));
       final svc = TrainingPlanImportService();
       final res = await svc.parseCsvBytes(bytes);
-      expect(res.success, isFalse);
+      expect(res.success, isFalse, reason: 'Empty CSV should not parse');
     });
 
     test('parseCsvBytes handles bad start time', () async {
@@ -41,8 +41,8 @@ void main() {
       final bytes = Uint8List.fromList(utf8.encode(csv));
       final svc = TrainingPlanImportService();
       final res = await svc.parseCsvBytes(bytes);
-      expect(res.success, isFalse);
-      expect(res.errors, isNotEmpty);
+      expect(res.success, isFalse, reason: 'Bad start time should fail');
+      expect(res.errors, isNotEmpty, reason: 'Should report parsing errors');
     });
   });
 }
