@@ -39,7 +39,7 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Profiel avatar: overgezet naar `NetworkImageSmart` met deferred loading.
    - Open (gericht):
      - Lazy loading verfijnen (zware views/images) en hero-animaties beperken op web.
-     - Web-fonts fine-tuning (subset/`display: swap`) indien nodig na LH-artefact review.
+     - Web-fonts fine-tuning (subset/`display: swap`) indien nodig na LH-artefact review. Runtime fetching is uitgeschakeld.
 
 3. Observability – Events/metrics standaardiseren [in progress]
    - Gedaan:
