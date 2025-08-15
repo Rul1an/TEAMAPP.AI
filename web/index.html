@@ -40,9 +40,7 @@
   <link rel="preconnect" href="https://realtime.supabase.co" crossorigin>
   <link rel="preconnect" href="https://ingest.sentry.io" crossorigin>
 
-  <!-- Preload critical Flutter manifests & bootstrap -->
-  <link rel="preload" as="fetch" href="assets/AssetManifest.bin.json" crossorigin fetchpriority="high">
-  <link rel="preload" as="fetch" href="assets/FontManifest.json" crossorigin fetchpriority="high">
+  <!-- Bootstrap only; avoid preloading manifests to prevent console warnings -->
   <link rel="preload" as="script" href="flutter_bootstrap.js" crossorigin="anonymous" fetchpriority="high">
   <!-- Note: Avoid preloading main.dart.js to prevent credentials mode mismatch warnings -->
   <!-- Keep bootstrap async; browsers may warn if not immediately used -->

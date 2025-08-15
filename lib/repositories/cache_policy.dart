@@ -14,7 +14,8 @@ class CachePolicy {
     required AppFailure Function(Object error) mapError,
   }) async {
     try {
-      final T data = await fetchRemote();
+      // Guard against hanging remote calls (e.g., flaky network on web)
+      final T data = await fetchRemote().timeout(const Duration(seconds: 8));
       await writeCache(data);
       return Success<T>(data);
     } catch (e) {
