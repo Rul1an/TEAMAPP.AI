@@ -161,9 +161,16 @@ class DashboardScreen extends ConsumerWidget {
                 cardBuilder: (ctx, match) => Card(
                   child: ListTile(
                     leading: const Icon(Icons.stadium),
-                    title: Text(match.opponent),
-                    subtitle:
-                        Text(DateFormat('dd/MM/yyyy HH:mm').format(match.date)),
+                    title: Text(
+                      match.opponent,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Text(
+                      DateFormat('dd/MM/yyyy HH:mm').format(match.date),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),
@@ -203,9 +210,15 @@ class DashboardScreen extends ConsumerWidget {
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
-                      title: Text(match.opponent),
+                      title: Text(
+                        match.opponent,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       subtitle: Text(
                         '${DateFormat('dd MMM').format(match.date)} - ${match.venue}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       trailing: Text(
                         DateFormat('HH:mm').format(match.date),
