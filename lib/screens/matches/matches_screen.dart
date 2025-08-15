@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -56,8 +59,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             icon: const Icon(Icons.add),
             tooltip: 'Nieuwe wedstrijd plannen',
             onPressed: () {
-              _analytics.log(AnalyticsEvent.trainingCreate,
-                  parameters: {'entity': 'match'});
+              unawaited(_analytics.log(AnalyticsEvent.trainingCreate,
+                  parameters: {'entity': 'match'}));
               context.go('/matches/add');
             },
           ),
@@ -73,8 +76,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             onSelected: (value) async {
               try {
                 if (value == 'pdf') {
-                  _analytics.log(AnalyticsEvent.exportPdf,
-                      parameters: {'entity': 'matches'});
+                  unawaited(_analytics.log(AnalyticsEvent.exportPdf,
+                      parameters: {'entity': 'matches'}));
                   await ref.read(exportServiceProvider).exportMatchesToPDF();
                   if (mounted && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -160,8 +163,8 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
           ? null
           : FloatingActionButton(
               onPressed: () {
-                _analytics.log(AnalyticsEvent.trainingCreate,
-                    parameters: {'entity': 'match', 'source': 'fab'});
+                unawaited(_analytics.log(AnalyticsEvent.trainingCreate,
+                    parameters: {'entity': 'match', 'source': 'fab'}));
                 context.go('/matches/add');
               },
               child: const Icon(Icons.add),

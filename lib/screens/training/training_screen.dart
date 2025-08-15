@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -58,7 +61,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
               icon: const Icon(Icons.add),
               tooltip: 'Nieuwe training plannen',
               onPressed: () {
-                _analytics.log(AnalyticsEvent.trainingCreate);
+                unawaited(_analytics.log(AnalyticsEvent.trainingCreate));
                 context.go('/training/add');
               },
             ),
