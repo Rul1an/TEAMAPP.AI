@@ -257,6 +257,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
             tooltip: state.isControlsLocked
                 ? 'Ontgrendel bediening'
                 : 'Vergrendel bediening',
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
           ),
 
           // Fullscreen button
@@ -272,6 +273,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
               },
               tooltip:
                   state.isFullscreen ? 'Verlaat fullscreen' : 'Volledig scherm',
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             ),
         ],
       ),
@@ -329,6 +331,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                 icon: const Icon(Icons.replay_10, color: Colors.white),
                 onPressed: () => notifier.skipBackward(seconds: 10),
                 tooltip: '10 seconden terug',
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               ),
 
               // Play/pause button
@@ -339,6 +342,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                 ),
                 onPressed: notifier.togglePlayPause,
                 tooltip: state.isPlaying ? 'Pauzeer' : 'Afspelen',
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               ),
 
               // Skip forward button
@@ -346,6 +350,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                 icon: const Icon(Icons.forward_10, color: Colors.white),
                 onPressed: () => notifier.skipForward(seconds: 10),
                 tooltip: '10 seconden vooruit',
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               ),
 
               // Time display
@@ -369,6 +374,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                 ),
                 onPressed: notifier.toggleMute,
                 tooltip: state.isMuted ? 'Dempen uit' : 'Dempen',
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               ),
 
               // Speed control button
