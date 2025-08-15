@@ -1,9 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 // Package imports:
 
 class AppTheme {
+  // Simple no-animation page transition for web to reduce motion and improve perceived performance
+  // (reserved) placeholder for potential reuse
   // Colors
   static const Color primaryColor = Color(0xFF1976D2); // Blue
   static const Color secondaryColor = Color(0xFF388E3C); // Green
@@ -35,6 +38,23 @@ class AppTheme {
         useMaterial3: true,
         visualDensity: VisualDensity.standard,
         materialTapTargetSize: MaterialTapTargetSize.padded,
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: kIsWeb
+              ? const {
+                  TargetPlatform.android: _NoAnimationPageTransitionsBuilder(),
+                  TargetPlatform.iOS: _NoAnimationPageTransitionsBuilder(),
+                  TargetPlatform.linux: _NoAnimationPageTransitionsBuilder(),
+                  TargetPlatform.macOS: _NoAnimationPageTransitionsBuilder(),
+                  TargetPlatform.windows: _NoAnimationPageTransitionsBuilder(),
+                }
+              : const {
+                  TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                  TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+                  TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+                  TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+                },
+        ),
         colorScheme: ColorScheme.fromSeed(
           seedColor: primaryColor,
           primary: primaryColor,
@@ -162,6 +182,23 @@ class AppTheme {
       useMaterial3: true,
       visualDensity: VisualDensity.standard,
       materialTapTargetSize: MaterialTapTargetSize.padded,
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: kIsWeb
+            ? const {
+                TargetPlatform.android: _NoAnimationPageTransitionsBuilder(),
+                TargetPlatform.iOS: _NoAnimationPageTransitionsBuilder(),
+                TargetPlatform.linux: _NoAnimationPageTransitionsBuilder(),
+                TargetPlatform.macOS: _NoAnimationPageTransitionsBuilder(),
+                TargetPlatform.windows: _NoAnimationPageTransitionsBuilder(),
+              }
+            : const {
+                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+              },
+      ),
       brightness: Brightness.dark,
       colorScheme: scheme,
       scaffoldBackgroundColor: const Color(0xFF0F0F0F),
@@ -312,4 +349,19 @@ class AppTheme {
         fontWeight: FontWeight.bold,
         fontSize: 12,
       );
+}
+
+class _NoAnimationPageTransitionsBuilder extends PageTransitionsBuilder {
+  const _NoAnimationPageTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return child;
+  }
 }
