@@ -27,6 +27,7 @@ Must-have (Q3 2025)
 Should-have (Q3→Q4 2025)
 - Import Trainingen: Done – tijdzone/DST offset optioneel toegepast bij persist; unit-tests voor fixed offset en Europe/Amsterdam DST.
 - RLS end‑to‑end verificatie uitbreiden (admin harnas, standaard skip in CI) – uitgebreid met matches‑isolatie tests.
+ - RLS end‑to‑end verificatie uitbreiden (admin harnas, standaard skip in CI) – uitgebreid met matches/teams/training_sessions‑isolatie tests.
 
 Could-have (Q4+ 2025)
 - Advanced Analytics: heatmaps/predictions (na events-standaardisatie).

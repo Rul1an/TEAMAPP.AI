@@ -19,7 +19,7 @@ class Connectivity {
       (List<cp_real.ConnectivityResult> results) {
         final bool hasNone = results.contains(cp_real.ConnectivityResult.none);
         return <ConnectivityResult>[
-          hasNone ? ConnectivityResult.none : ConnectivityResult.other,
+          if (hasNone) ConnectivityResult.none else ConnectivityResult.other,
         ];
       },
     );
