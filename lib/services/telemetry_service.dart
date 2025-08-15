@@ -19,9 +19,12 @@ class TelemetryService {
   static final TelemetryService _instance = TelemetryService._internal();
 
   late final api.Tracer _tracer;
+  Map<String, String> _resourceAttrs = const {};
 
   bool _initialized = false;
   bool get isEnabled => _initialized;
+  Map<String, String> get resourceAttributes =>
+      Map.unmodifiable(_resourceAttrs);
   static final String _instanceId =
       DateTime.now().microsecondsSinceEpoch.toString();
 
@@ -65,20 +68,20 @@ class TelemetryService {
       // keep default
     }
 
-    final resource = sdk.Resource([
-      api.Attribute.fromString('service.name', 'jo17-tactical-manager'),
-      api.Attribute.fromString('service.version', serviceVersion),
-      api.Attribute.fromString('service.namespace', 'teamapp.ai'),
-      api.Attribute.fromString('service.instance.id', _instanceId),
-      api.Attribute.fromString(
-        'deployment.environment',
-        Environment.current.name.toLowerCase(),
-      ),
-      api.Attribute.fromString(
-        'app.mode',
-        Environment.appMode.name,
-      ),
-    ]);
+    _resourceAttrs = {
+      'service.name': 'jo17-tactical-manager',
+      'service.version': serviceVersion,
+      'service.namespace': 'teamapp.ai',
+      'service.instance.id': _instanceId,
+      'deployment.environment': Environment.current.name.toLowerCase(),
+      'app.mode': Environment.appMode.name,
+    };
+
+    final resource = sdk.Resource(
+      _resourceAttrs.entries
+          .map((e) => api.Attribute.fromString(e.key, e.value))
+          .toList(),
+    );
 
     // Use default BatchSpanProcessor (current package version doesn't expose tunables)
     final provider = sdk.TracerProviderBase(
@@ -164,6 +167,15 @@ class TelemetryService {
       ..recordException(error, stackTrace: st)
       ..setStatus(api.StatusCode.error, error.toString())
       ..end();
+  }
+
+  /// Emits a small diagnostic span to verify dashboards are receiving data.
+  Future<void> ping() async {
+    if (!_initialized) return;
+    final span = _tracer.startSpan('dashboard.ping');
+    span.setAttribute(api.Attribute.fromString(
+        'timestamp', DateTime.now().toIso8601String()));
+    span.end();
   }
 
   void _setAttributes(api.Span span, Map<String, Object?> attributes) {
