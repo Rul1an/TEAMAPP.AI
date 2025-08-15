@@ -12,6 +12,8 @@ import 'package:image_picker/image_picker.dart';
 import '../../models/profile.dart';
 import '../../providers/profile_provider.dart';
 import '../../widgets/common/network_image_smart.dart';
+import '../../providers/notification_service_provider.dart';
+import '../../providers/auth_provider.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -25,6 +27,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final _usernameCtrl = TextEditingController();
   final _websiteCtrl = TextEditingController();
   bool _isSaving = false;
+  bool _notifToggle = false;
 
   Profile? _profile;
 
@@ -106,6 +109,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final avatarSize = 96.0;
+    const notifEnabled =
+        bool.fromEnvironment('ENABLE_NOTIFICATIONS', defaultValue: false);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Profiel')),
@@ -151,6 +156,70 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 24),
+                  // Demo-only notifications toggle (gated; no-op on web)
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            children: [
+                              Icon(Icons.notifications_active),
+                              SizedBox(width: 8),
+                              Text('Notificaties (Demo)')
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          SwitchListTile(
+                            value: _notifToggle,
+                            title: Text(
+                              notifEnabled
+                                  ? 'Inschakelen voor huidige gebruiker/organisatie'
+                                  : 'Niet beschikbaar (ENABLE_NOTIFICATIONS=false)',
+                            ),
+                            onChanged: (!notifEnabled || _profile == null)
+                                ? null
+                                : (val) async {
+                                    setState(() => _notifToggle = val);
+                                    // Capture messenger before awaits to satisfy analyzer
+                                    final messenger =
+                                        ScaffoldMessenger.of(context);
+                                    final api =
+                                        ref.read(notificationServiceProvider);
+                                    final user = ref.read(currentUserProvider);
+                                    final orgId =
+                                        ref.read(organizationIdProvider);
+                                    if (user != null) {
+                                      if (val) {
+                                        await api.subscribeToUser(user.id);
+                                      } else {
+                                        await api.unsubscribeFromUser(user.id);
+                                      }
+                                    }
+                                    if (orgId != null) {
+                                      if (val) {
+                                        await api.subscribeToTenant(orgId);
+                                      } else {
+                                        await api.unsubscribeFromTenant(orgId);
+                                      }
+                                    }
+                                    messenger.showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          val
+                                              ? 'Notificaties ingeschakeld'
+                                              : 'Notificaties uitgeschakeld',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   Form(
                     key: _formKey,
                     child: Column(
