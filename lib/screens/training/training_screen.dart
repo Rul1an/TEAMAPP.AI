@@ -18,6 +18,7 @@ import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 import '../../services/analytics_events.dart';
 import '../../widgets/common/app_error_boundary.dart';
+import '../../services/training_plan_import_service.dart';
 
 class TrainingScreen extends ConsumerStatefulWidget {
   const TrainingScreen({super.key});
@@ -32,6 +33,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
   DateTime? _selectedDay;
   late final ValueNotifier<List<Training>> _selectedTrainings;
   final AnalyticsLogger _analytics = const AnalyticsLogger();
+  final TrainingPlanImportService _planImport = TrainingPlanImportService();
 
   @override
   void initState() {
@@ -68,8 +70,8 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
             ),
           if (!isViewOnly)
             PopupMenuButton<String>(
-              icon: const Icon(Icons.download),
-              tooltip: 'Export opties',
+              icon: const Icon(Icons.more_vert),
+              tooltip: 'Meer opties',
               onSelected: (value) async {
                 try {
                   if (value == 'excel') {
@@ -86,12 +88,45 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                         ),
                       );
                     }
+                  } else if (value == 'plan_import') {
+                    final res = await _planImport.importPlannedTrainings();
+                    if (!mounted) return;
+                    final color = res.success ? Colors.green : Colors.orange;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(res.message), backgroundColor: color),
+                    );
+                    if (res.errors.isNotEmpty) {
+                      await showDialog<void>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text('Import waarschuwingen'),
+                          content: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children:
+                                  res.errors.map((e) => Text('• $e')).toList(),
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    // TODO: koppel res.items aan daadwerkelijke planning-aanmaak
+                  } else if (value == 'plan_template') {
+                    await _planImport.generateTemplate();
                   }
                 } catch (e) {
                   if (mounted && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Export mislukt: $e'),
+                        content: Text('Actie mislukt: $e'),
                         backgroundColor: Colors.red,
                       ),
                     );
@@ -104,6 +139,21 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                   child: ListTile(
                     leading: Icon(Icons.table_chart),
                     title: Text('Exporteer aanwezigheid naar Excel'),
+                  ),
+                ),
+                PopupMenuDivider(),
+                PopupMenuItem(
+                  value: 'plan_import',
+                  child: ListTile(
+                    leading: Icon(Icons.upload_file),
+                    title: Text('Importeer trainingsplanning (CSV/Excel)'),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'plan_template',
+                  child: ListTile(
+                    leading: Icon(Icons.description),
+                    title: Text('Download planning template'),
                   ),
                 ),
               ],
