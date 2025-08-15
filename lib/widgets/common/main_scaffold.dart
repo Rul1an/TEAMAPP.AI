@@ -171,8 +171,9 @@ class MainScaffold extends ConsumerWidget {
                                     builder: (context, snapshot) {
                                       final available =
                                           (snapshot.data ?? false) == true;
-                                      if (!available)
+                                      if (!available) {
                                         return const SizedBox.shrink();
+                                      }
                                       return IconButton(
                                         icon: const Icon(Icons.download),
                                         tooltip: 'App installeren',

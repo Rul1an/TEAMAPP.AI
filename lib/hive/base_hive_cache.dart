@@ -46,20 +46,26 @@ class BaseHiveCache<T> {
 
   /// Reads cached value when present and not stale.
   Future<T?> read({Duration? ttl}) async {
-    final box = await _openBox();
-    final tsStr = box.get(_tsKey);
-    if (tsStr == null) return null;
+    try {
+      final box = await _openBox();
+      final tsStr = box.get(_tsKey);
+      if (tsStr == null) return null;
 
-    final cachedAt = DateTime.fromMillisecondsSinceEpoch(int.parse(tsStr));
-    if (DateTime.now().difference(cachedAt) > (ttl ?? _defaultTtl)) {
+      final cachedAt = DateTime.fromMillisecondsSinceEpoch(int.parse(tsStr));
+      if (DateTime.now().difference(cachedAt) > (ttl ?? _defaultTtl)) {
+        await clear();
+        return null;
+      }
+
+      final jsonStr = box.get(_valueKey);
+      if (jsonStr == null) return null;
+      final map = jsonDecode(jsonStr) as Map<String, dynamic>;
+      return _fromJson(map);
+    } catch (_) {
+      // Defensive: if decryption/decoding/parsing fails, purge corrupt cache and return null
       await clear();
       return null;
     }
-
-    final jsonStr = box.get(_valueKey);
-    if (jsonStr == null) return null;
-    final map = jsonDecode(jsonStr) as Map<String, dynamic>;
-    return _fromJson(map);
   }
 
   /// Writes value and timestamp.

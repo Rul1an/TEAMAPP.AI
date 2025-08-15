@@ -94,6 +94,7 @@ dependencies:
 
   # Analytics & Data (duplicates removed)
   riverpod: any
+  js: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
