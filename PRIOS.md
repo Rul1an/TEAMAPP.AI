@@ -19,7 +19,7 @@ Volgorde gebaseerd op 2025 best practices (Security/Compliance → Stabiliteit/P
 
 Must-have (Q3 2025)
 - GDPR/Dataretentie: retentiebeleid + purge-jobs (cron/edge); documentatie en verifieerbare runbooks.
-- PWA precache verfijnen: gebruik LH-artefacten (alleen LCP/FCP-kritisch), geen overlap met SWR; meet regressies in LHCI.
+- PWA precache verfijnen: Done – minimal shell only in `sw-extra.js` (FCP/LCP‑kritisch); geen overlap met SWR. Monitor LHCI.
 - Observability dashboards: aligneren op OTLP resource-attributen (`service.*`, `deployment.environment`, `app.mode`); standaard filters per env/mode/instance.
 - Performance: extra lazy/deferred loading voor zware views/images; hero-animaties minimaliseren op web.
 - Web-fonts: bundling/subsetting en `font-display: swap` verifiëren; runtime fetching staat uit.

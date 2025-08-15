@@ -2,17 +2,11 @@
     const VERSION = '__SHA__';
     const CORE_CACHE = `core-${VERSION}`;
     const ASSETS_CACHE = `assets-${VERSION}`;
+    // Minimal precache (FCP/LCP‑critical shell only). Avoid overlap with SWR assets.
     const PRECACHE_URLS = [
         '/',
         '/index.html',
         '/flutter_bootstrap.js',
-        '/main.dart.js',
-        '/manifest.json',
-        '/assets/AssetManifest.bin.json',
-        '/assets/FontManifest.json',
-        '/favicon.png',
-        '/icons/Icon-192.png',
-        '/icons/Icon-512.png',
     ];
 
     const isCanvasKitOrWasm = (url) => {
