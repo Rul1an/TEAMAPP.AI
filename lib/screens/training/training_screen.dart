@@ -90,13 +90,14 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                     }
                   } else if (value == 'plan_import') {
                     final res = await _planImport.importPlannedTrainings();
-                    if (!mounted) return;
+                    if (!context.mounted) return;
                     final color = res.success ? Colors.green : Colors.orange;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                           content: Text(res.message), backgroundColor: color),
                     );
                     if (res.errors.isNotEmpty) {
+                      if (!context.mounted) return;
                       await showDialog<void>(
                         context: context,
                         builder: (ctx) => AlertDialog(
@@ -118,7 +119,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                         ),
                       );
                     }
-                    // TODO: koppel res.items aan daadwerkelijke planning-aanmaak
+                    // TODO(teamapp): koppel res.items aan daadwerkelijke planning-aanmaak
                   } else if (value == 'plan_template') {
                     await _planImport.generateTemplate();
                   }
