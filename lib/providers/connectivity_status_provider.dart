@@ -8,13 +8,28 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 /// other than `none`. This is a coarse online/offline signal suitable for
 /// simple router redirects. Detailed reachability checks remain in UI widgets.
 final connectivityStatusProvider = StreamProvider<bool>((ref) async* {
-  final connectivity = Connectivity();
-  // Emit initial state
-  final initial = await connectivity.checkConnectivity();
-  yield initial.any((r) => r != ConnectivityResult.none);
+  try {
+    final connectivity = Connectivity();
+    // Emit initial state with safety fallback
+    try {
+      final initial = await connectivity.checkConnectivity();
+      yield initial.any((r) => r != ConnectivityResult.none);
+    } catch (_) {
+      // Assume online at startup to avoid blocking app init
+      yield true;
+    }
 
-  // Listen to subsequent changes
-  await for (final results in connectivity.onConnectivityChanged) {
-    yield results.any((r) => r != ConnectivityResult.none);
+    // Listen to subsequent changes
+    await for (final results in connectivity.onConnectivityChanged) {
+      try {
+        yield results.any((r) => r != ConnectivityResult.none);
+      } catch (_) {
+        // Maintain optimistic online status on intermittent errors
+        yield true;
+      }
+    }
+  } catch (_) {
+    // Ultimate fallback: always assume online if service fails
+    yield true;
   }
 });

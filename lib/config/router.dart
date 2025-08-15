@@ -51,13 +51,32 @@ GoRouter createRouter(Ref ref) => GoRouter(
         // Demo and SaaS mode authentication flows (null-safe)
         try {
           // Basic offline guard: when offline, keep user on current route (avoid loops)
-          final asyncConn = ref.read(connectivityStatusProvider);
-          final bool isOnline = asyncConn.maybeWhen(
-            data: (bool v) => v,
-            orElse: () => true,
-          );
-          final isLoggedIn = ref.read(isLoggedInProvider);
-          final isDemoMode = ref.read(demoModeProvider).isActive;
+          bool isOnline = true; // safe default during startup
+          try {
+            final asyncConn = ref.read(connectivityStatusProvider);
+            isOnline = asyncConn.when(
+              data: (bool v) => v,
+              loading: () => true,
+              error: (_, __) => true,
+            );
+          } catch (_) {
+            isOnline = true;
+          }
+
+          bool isLoggedIn = false;
+          try {
+            isLoggedIn = ref.read(isLoggedInProvider);
+          } catch (_) {
+            isLoggedIn = false;
+          }
+
+          bool isDemoMode = false;
+          try {
+            isDemoMode = ref.read(demoModeProvider).isActive;
+          } catch (_) {
+            isDemoMode = false;
+          }
+
           final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
 
           // Always allow access to auth page
@@ -76,8 +95,8 @@ GoRouter createRouter(Ref ref) => GoRouter(
           }
 
           return null;
-        } catch (_) {
-          // Providers may not be ready during very early router boot; allow auth as fallback
+        } catch (e) {
+          // Providers may not be ready during early router boot; allow auth as fallback
           final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
           return isOnAuthPage ? null : '/auth';
         }
