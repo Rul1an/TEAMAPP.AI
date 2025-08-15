@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
-import '../services/notification_service.dart';
+import 'notification_service_provider.dart';
 import 'auth_provider.dart';
 
 /// Notifications manager: subscribes/unsubscribes to tenant/user topics
@@ -15,8 +15,9 @@ import 'auth_provider.dart';
 /// - Fully gated by ENABLE_NOTIFICATIONS
 /// - Skip on web and demo/standalone modes
 final notificationsManagerProvider = Provider<void>((ref) {
+  final svc = ref.read(notificationServiceProvider);
   // Init FCM (internally gated & skipped on web)
-  unawaited(NotificationService.instance.init());
+  unawaited(svc.init());
 
   // Subscribe/unsubscribe on login state changes
   ref.listen<bool>(isLoggedInProvider, (prev, next) async {
@@ -25,12 +26,10 @@ final notificationsManagerProvider = Provider<void>((ref) {
       final prevUser = ref.read(currentUserProvider);
       final prevOrgId = ref.read(organizationIdProvider);
       if (prevUser != null) {
-        unawaited(
-            NotificationService.instance.unsubscribeFromUser(prevUser.id));
+        unawaited(svc.unsubscribeFromUser(prevUser.id));
       }
       if (prevOrgId != null) {
-        unawaited(
-            NotificationService.instance.unsubscribeFromTenant(prevOrgId));
+        unawaited(svc.unsubscribeFromTenant(prevOrgId));
       }
       return;
     }
@@ -39,10 +38,10 @@ final notificationsManagerProvider = Provider<void>((ref) {
     final user = ref.read(currentUserProvider);
     final orgId = ref.read(organizationIdProvider);
     if (user != null) {
-      unawaited(NotificationService.instance.subscribeToUser(user.id));
+      unawaited(svc.subscribeToUser(user.id));
     }
     if (orgId != null) {
-      unawaited(NotificationService.instance.subscribeToTenant(orgId));
+      unawaited(svc.subscribeToTenant(orgId));
     }
   });
 
@@ -57,10 +56,10 @@ final notificationsManagerProvider = Provider<void>((ref) {
 
     // Swap topics
     if (prev != null) {
-      unawaited(NotificationService.instance.unsubscribeFromTenant(prev));
+      unawaited(svc.unsubscribeFromTenant(prev));
     }
     if (next != null) {
-      unawaited(NotificationService.instance.subscribeToTenant(next));
+      unawaited(svc.subscribeToTenant(next));
     }
   });
 });

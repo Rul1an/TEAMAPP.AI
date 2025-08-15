@@ -1,9 +1,11 @@
 // ignore_for_file: flutter_style_todos
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'notification_api.dart';
 
-class NotificationService {
+class NotificationService implements NotificationApi {
   NotificationService._();
+  // Keep class final in prod; tests should use NotificationApi + provider override
 
   static final NotificationService instance = NotificationService._();
 
@@ -24,6 +26,7 @@ class NotificationService {
     return pattern.hasMatch(topic);
   }
 
+  @override
   Future<void> init() async {
     if (!_enabled) return;
     // Web support requires explicit Firebase web setup; skip by default
@@ -45,18 +48,22 @@ class NotificationService {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   }
 
+  @override
   Future<void> requestPermission() async {
     await _messaging.requestPermission();
   }
 
+  @override
   Future<void> subscribeToTopic(String topic) async {
     await _messaging.subscribeToTopic(topic);
   }
 
+  @override
   Future<void> unsubscribeFromTopic(String topic) async {
     await _messaging.unsubscribeFromTopic(topic);
   }
 
+  @override
   Future<void> subscribeToTenant(String tenantId) async {
     final topic = tenantTopic(tenantId);
     if (isValidTopic(topic)) {
@@ -66,6 +73,7 @@ class NotificationService {
     }
   }
 
+  @override
   Future<void> unsubscribeFromTenant(String tenantId) async {
     final topic = tenantTopic(tenantId);
     if (isValidTopic(topic)) {
@@ -73,6 +81,7 @@ class NotificationService {
     }
   }
 
+  @override
   Future<void> subscribeToUser(String userId) async {
     final topic = userTopic(userId);
     if (isValidTopic(topic)) {
@@ -82,6 +91,7 @@ class NotificationService {
     }
   }
 
+  @override
   Future<void> unsubscribeFromUser(String userId) async {
     final topic = userTopic(userId);
     if (isValidTopic(topic)) {
