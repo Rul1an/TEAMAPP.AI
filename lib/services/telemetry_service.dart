@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:opentelemetry/api.dart' as api;
 import 'package:opentelemetry/sdk.dart' as sdk;
 import 'package:http/http.dart' as http;
+import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
 import '../config/environment.dart';
@@ -53,8 +54,22 @@ class TelemetryService {
 
     final exporter = sdk.CollectorExporter(Uri.parse(endpoint));
 
+    // Enrich resource with version and environment for dashboard alignment
+    String serviceVersion = 'unknown';
+    try {
+      final info = await PackageInfo.fromPlatform();
+      serviceVersion = '${info.version}+${info.buildNumber}';
+    } catch (_) {
+      // keep default
+    }
+
     final resource = sdk.Resource([
       api.Attribute.fromString('service.name', 'jo17-tactical-manager'),
+      api.Attribute.fromString('service.version', serviceVersion),
+      api.Attribute.fromString(
+        'deployment.environment',
+        Environment.current.name.toLowerCase(),
+      ),
     ]);
 
     final provider = sdk.TracerProviderBase(
