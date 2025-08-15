@@ -349,9 +349,9 @@ class _TrainingCard extends StatelessWidget {
                       children: [
                         _buildFocusBadge(training.focus),
                         const SizedBox(width: 8),
-                        _buildIntensityBadge(training.intensity),
+                        _buildIntensityBadge(context, training.intensity),
                         const SizedBox(width: 8),
-                        _buildStatusBadge(training.status),
+                        _buildStatusBadge(context, training.status),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -433,23 +433,28 @@ class _TrainingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIntensityBadge(TrainingIntensity intensity) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          color: _getIntensityColor(intensity),
-          borderRadius: BorderRadius.circular(4),
+  Widget _buildIntensityBadge(
+      BuildContext context, TrainingIntensity intensity) {
+    final bg = _getIntensityColor(intensity);
+    final textColor = bg.computeLuminance() < 0.5 ? Colors.white : Colors.black;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        _getIntensityText(intensity),
+        style: TextStyle(
+          color: textColor,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
         ),
-        child: Text(
-          _getIntensityText(intensity),
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
+      ),
+    );
+  }
 
-  Widget _buildStatusBadge(TrainingStatus status) {
+  Widget _buildStatusBadge(BuildContext context, TrainingStatus status) {
     Color color;
     String text;
 
@@ -465,6 +470,8 @@ class _TrainingCard extends StatelessWidget {
         text = 'AFGELAST';
     }
 
+    final textColor =
+        color.computeLuminance() < 0.5 ? Colors.white : Colors.black;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -473,8 +480,8 @@ class _TrainingCard extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: textColor,
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
