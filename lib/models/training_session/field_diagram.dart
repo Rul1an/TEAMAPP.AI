@@ -49,41 +49,51 @@ class FieldDiagram {
           showGoals: false,
         );
 
-  factory FieldDiagram.fromJson(Map<String, dynamic> json) => FieldDiagram(
-        id: json['id'] as String? ??
-            DateTime.now().millisecondsSinceEpoch.toString(),
-        fieldType: FieldType.values.firstWhere(
-          (e) => e.name == json['fieldType'] as String,
-          orElse: () => FieldType.halfField,
-        ),
-        fieldSize:
-            Dimensions.fromJson(json['fieldSize'] as Map<String, dynamic>),
-        players: (json['players'] as List<dynamic>?)
-                ?.map((p) => PlayerMarker.fromJson(p as Map<String, dynamic>))
-                .toList() ??
-            [],
-        equipment: (json['equipment'] as List<dynamic>?)
-                ?.map(
-                  (e) => EquipmentMarker.fromJson(e as Map<String, dynamic>),
-                )
-                .toList() ??
-            [],
-        movements: (json['movements'] as List<dynamic>?)
-                ?.map((m) => MovementLine.fromJson(m as Map<String, dynamic>))
-                .toList() ??
-            [],
-        areas: (json['areas'] as List<dynamic>?)
-                ?.map((a) => AreaMarker.fromJson(a as Map<String, dynamic>))
-                .toList() ??
-            [],
-        labels: (json['labels'] as List<dynamic>?)
-                ?.map((l) => TextLabel.fromJson(l as Map<String, dynamic>))
-                .toList() ??
-            [],
-        backgroundColor: json['backgroundColor'] as String?,
-        showFieldMarkings: json['showFieldMarkings'] as bool? ?? true,
-        showGoals: json['showGoals'] as bool? ?? true,
-      );
+  factory FieldDiagram.fromJson(Map<String, dynamic> json) {
+    final String? fieldTypeString = json['fieldType'] as String?;
+    final FieldType fieldType = FieldType.values.firstWhere(
+      (e) => e.name == fieldTypeString,
+      orElse: () => FieldType.halfField,
+    );
+
+    final Object? rawFieldSize = json['fieldSize'];
+    final Dimensions fieldSize = rawFieldSize is Map<String, dynamic>
+        ? Dimensions.fromJson(rawFieldSize)
+        : _defaultDimensionsFor(fieldType);
+
+    return FieldDiagram(
+      id: json['id'] as String? ??
+          DateTime.now().millisecondsSinceEpoch.toString(),
+      fieldType: fieldType,
+      fieldSize: fieldSize,
+      players: (json['players'] as List<dynamic>?)
+              ?.map((p) => PlayerMarker.fromJson(p as Map<String, dynamic>))
+              .toList() ??
+          [],
+      equipment: (json['equipment'] as List<dynamic>?)
+              ?.map(
+                (e) => EquipmentMarker.fromJson(e as Map<String, dynamic>),
+              )
+              .toList() ??
+          [],
+      movements: (json['movements'] as List<dynamic>?)
+              ?.map((m) => MovementLine.fromJson(m as Map<String, dynamic>))
+              .toList() ??
+          [],
+      areas: (json['areas'] as List<dynamic>?)
+              ?.map((a) => AreaMarker.fromJson(a as Map<String, dynamic>))
+              .toList() ??
+          [],
+      labels: (json['labels'] as List<dynamic>?)
+              ?.map((l) => TextLabel.fromJson(l as Map<String, dynamic>))
+              .toList() ??
+          [],
+      backgroundColor: json['backgroundColor'] as String?,
+      showFieldMarkings: json['showFieldMarkings'] as bool? ?? true,
+      showGoals: json['showGoals'] as bool? ?? true,
+    );
+  }
+
   final String id;
   final FieldType fieldType;
   final Dimensions fieldSize;
@@ -146,6 +156,23 @@ class FieldDiagram {
   String toString() =>
       'FieldDiagram(type: $fieldType, players: ${players.length}, '
       'equipment: ${equipment.length}, movements: ${movements.length})';
+}
+
+Dimensions _defaultDimensionsFor(FieldType type) {
+  switch (type) {
+    case FieldType.fullField:
+      return const Dimensions(105, 68);
+    case FieldType.halfField:
+      return const Dimensions(52.5, 68);
+    case FieldType.penaltyArea:
+      return const Dimensions(16.5, 40.3);
+    case FieldType.customGrid:
+      return const Dimensions(40, 40);
+    case FieldType.thirdField:
+      return const Dimensions(35, 68);
+    case FieldType.quarterField:
+      return const Dimensions(26.25, 34);
+  }
 }
 
 class PlayerMarker {
