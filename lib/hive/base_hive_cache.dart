@@ -33,7 +33,19 @@ class BaseHiveCache<T> {
   final Duration _defaultTtl;
 
   Future<Box<String>> _openBox() async {
-    if (!Hive.isBoxOpen(_boxName)) {
+    try {
+      if (!Hive.isBoxOpen(_boxName)) {
+        final key = await HiveKeyManager().getKey();
+        await Hive.initFlutter();
+        return Hive.openBox<String>(
+          _boxName,
+          encryptionCipher: HiveAesCipher(key),
+        );
+      }
+      return Hive.box<String>(_boxName);
+    } catch (_) {
+      // If opening fails (e.g., invalid pad block), purge and retry once
+      await _purgeCorruptBox();
       final key = await HiveKeyManager().getKey();
       await Hive.initFlutter();
       return Hive.openBox<String>(
@@ -41,7 +53,6 @@ class BaseHiveCache<T> {
         encryptionCipher: HiveAesCipher(key),
       );
     }
-    return Hive.box<String>(_boxName);
   }
 
   Future<void> _purgeCorruptBox() async {

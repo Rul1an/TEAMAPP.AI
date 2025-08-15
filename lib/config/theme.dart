@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // Colors
@@ -43,47 +42,48 @@ class AppTheme {
           error: errorColor,
           surface: surfaceColor,
         ),
-        textTheme: GoogleFonts.interTextTheme().copyWith(
-          headlineLarge: GoogleFonts.inter(
+        // Switch to system typography to avoid runtime fetching of fonts on web
+        textTheme: Typography.blackMountainView.copyWith(
+          headlineLarge: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
             color: textPrimaryColor,
           ),
-          headlineMedium: GoogleFonts.inter(
+          headlineMedium: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w600,
             color: textPrimaryColor,
           ),
-          headlineSmall: GoogleFonts.inter(
+          headlineSmall: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: textPrimaryColor,
           ),
-          titleLarge: GoogleFonts.inter(
+          titleLarge: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
             color: textPrimaryColor,
           ),
-          titleMedium: GoogleFonts.inter(
+          titleMedium: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
             color: textPrimaryColor,
           ),
-          titleSmall: GoogleFonts.inter(
+          titleSmall: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: textPrimaryColor,
           ),
-          bodyLarge: GoogleFonts.inter(fontSize: 16, color: textPrimaryColor),
-          bodyMedium: GoogleFonts.inter(fontSize: 14, color: textPrimaryColor),
-          bodySmall: GoogleFonts.inter(fontSize: 12, color: textSecondaryColor),
+          bodyLarge: const TextStyle(fontSize: 16, color: textPrimaryColor),
+          bodyMedium: const TextStyle(fontSize: 14, color: textPrimaryColor),
+          bodySmall: const TextStyle(fontSize: 12, color: textSecondaryColor),
         ),
         appBarTheme: AppBarTheme(
           backgroundColor: surfaceColor,
           elevation: 0,
           centerTitle: true,
           iconTheme: const IconThemeData(color: textPrimaryColor),
-          titleTextStyle: GoogleFonts.inter(
+          titleTextStyle: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: textPrimaryColor,
@@ -103,7 +103,7 @@ class AppTheme {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             textStyle:
-                GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600),
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),
         iconButtonTheme: IconButtonThemeData(
@@ -140,7 +140,7 @@ class AppTheme {
         chipTheme: ChipThemeData(
           backgroundColor: backgroundColor,
           selectedColor: primaryColor.withValues(alpha: 0.2),
-          labelStyle: GoogleFonts.inter(fontSize: 14, color: textPrimaryColor),
+          labelStyle: const TextStyle(fontSize: 14, color: textPrimaryColor),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -156,8 +156,7 @@ class AppTheme {
       surface: darkSurface,
     );
 
-    final baseText = GoogleFonts.interTextTheme(
-        ThemeData(brightness: Brightness.dark).textTheme);
+    final baseText = Typography.whiteMountainView;
 
     return ThemeData(
       useMaterial3: true,
@@ -167,46 +166,46 @@ class AppTheme {
       colorScheme: scheme,
       scaffoldBackgroundColor: const Color(0xFF0F0F0F),
       textTheme: baseText.copyWith(
-        headlineLarge: GoogleFonts.inter(
+        headlineLarge: const TextStyle(
           fontSize: 32,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
-        headlineMedium: GoogleFonts.inter(
+        headlineMedium: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
-        headlineSmall: GoogleFonts.inter(
+        headlineSmall: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
-        titleLarge: GoogleFonts.inter(
+        titleLarge: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
-        titleMedium: GoogleFonts.inter(
+        titleMedium: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
           color: Colors.white,
         ),
-        titleSmall: GoogleFonts.inter(
+        titleSmall: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w500,
           color: Colors.white,
         ),
-        bodyLarge: GoogleFonts.inter(fontSize: 16, color: Colors.white),
-        bodyMedium: GoogleFonts.inter(fontSize: 14, color: Colors.white70),
-        bodySmall: GoogleFonts.inter(fontSize: 12, color: Colors.white60),
+        bodyLarge: const TextStyle(fontSize: 16, color: Colors.white),
+        bodyMedium: const TextStyle(fontSize: 14, color: Colors.white70),
+        bodySmall: const TextStyle(fontSize: 12, color: Colors.white60),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: scheme.surface,
         elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
-        titleTextStyle: GoogleFonts.inter(
+        titleTextStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: Colors.white,
@@ -223,8 +222,7 @@ class AppTheme {
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          textStyle:
-              GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
       iconButtonTheme: IconButtonThemeData(
@@ -261,7 +259,7 @@ class AppTheme {
       chipTheme: ChipThemeData(
         backgroundColor: const Color(0xFF1A1A1A),
         selectedColor: scheme.primary.withValues(alpha: 0.2),
-        labelStyle: GoogleFonts.inter(fontSize: 14, color: Colors.white),
+        labelStyle: const TextStyle(fontSize: 14, color: Colors.white),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),

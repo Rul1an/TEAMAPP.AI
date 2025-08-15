@@ -44,8 +44,7 @@
   <link rel="preload" as="fetch" href="assets/AssetManifest.bin.json" crossorigin fetchpriority="high">
   <link rel="preload" as="fetch" href="assets/FontManifest.json" crossorigin fetchpriority="high">
   <link rel="preload" as="script" href="flutter_bootstrap.js" crossorigin="anonymous" fetchpriority="high">
-  <!-- Preload main Dart JS to improve startup on web -->
-  <link rel="preload" as="script" href="main.dart.js" crossorigin="anonymous" fetchpriority="high">
+  <!-- Note: Avoid preloading main.dart.js to prevent credentials mode mismatch warnings -->
   <!-- Keep bootstrap async; browsers may warn if not immediately used -->
   <!-- Trusted Types policy bootstrap for Sentry/Flutter (keeps console clean) -->
   <script>
