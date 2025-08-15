@@ -283,19 +283,27 @@ class TrainingPlanImportService {
 
     return TrainingPlanImportResult(
       success: items.isNotEmpty,
-      message: items.isNotEmpty
-          ? 'Import voltooid: ${items.length} trainingen verwerkt'
-          : 'Geen geldige rijen gevonden',
+      message: 'Dry-run: ${items.length} ok, ${errors.length} fouten',
       items: items,
       errors: errors,
     );
   }
 
   DateTime _parseDate(dynamic value) {
-    if (value is DateTime) return value;
+    if (value is DateTime) {
+      return DateTime(value.year, value.month, value.day);
+    }
+    if (value is num) {
+      // Excel serial date support: days since 1899-12-30
+      final base = DateTime(1899, 12, 30);
+      final days = value.floor();
+      final d = base.add(Duration(days: days));
+      return DateTime(d.year, d.month, d.day);
+    }
     final s = (value?.toString() ?? '').trim();
     final dash = RegExp(r'^\d{2}-\d{2}-\d{4}$');
     final slash = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+    final dot = RegExp(r'^\d{2}\.\d{2}\.\d{4}$');
     final iso = RegExp(r'^\d{4}-\d{2}-\d{2}$');
     if (dash.hasMatch(s)) {
       final p = s.split('-');
@@ -303,6 +311,10 @@ class TrainingPlanImportService {
     }
     if (slash.hasMatch(s)) {
       final p = s.split('/');
+      return DateTime(int.parse(p[2]), int.parse(p[1]), int.parse(p[0]));
+    }
+    if (dot.hasMatch(s)) {
+      final p = s.split('.');
       return DateTime(int.parse(p[2]), int.parse(p[1]), int.parse(p[0]));
     }
     if (iso.hasMatch(s)) {
