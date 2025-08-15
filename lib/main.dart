@@ -22,6 +22,7 @@ import 'services/ui_error_handler.dart';
 import 'services/monitoring_service.dart';
 import 'services/telemetry_service.dart';
 import 'widgets/demo_mode_starter.dart';
+import 'providers/notifications_manager_provider.dart';
 
 Future<void> main() async {
   // CRITICAL ZONE FIX: Initialize bindings in same zone where runApp will be called
@@ -163,6 +164,8 @@ class JO17TacticalManagerApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
+    // Initialize notifications manager (no-op on web or when disabled)
+    ref.watch(notificationsManagerProvider);
 
     return DemoModeStarter(
       child: MaterialApp.router(
