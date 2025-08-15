@@ -33,6 +33,8 @@ class _AIDemoScreenState extends ConsumerState<AIDemoScreen> {
           actions: [
             IconButton(
               icon: const Icon(Icons.info_outline),
+              tooltip: 'Informatie',
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               onPressed: _showInfoDialog,
             ),
           ],

@@ -70,11 +70,14 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
           IconButton(
             icon: const Icon(Icons.share),
             tooltip: 'Deel',
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: _shareMatch,
           ),
           if (canManage) ...[
             IconButton(
               icon: const Icon(Icons.edit),
+              tooltip: 'Bewerken',
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               onPressed: () {
                 context.go('/matches/${widget.matchId}/edit');
               },
@@ -82,12 +85,14 @@ class _MatchDetailScreenState extends ConsumerState<MatchDetailScreen> {
             IconButton(
               icon: const Icon(Icons.picture_as_pdf),
               tooltip: 'Exporteer PDF',
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               onPressed: _exportPdf,
             ),
             IconButton(
               icon: const Icon(Icons.save),
               onPressed: _saveMatch,
               tooltip: 'Opslaan',
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             ),
           ],
         ],

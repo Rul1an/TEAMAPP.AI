@@ -27,10 +27,13 @@ class PlayerDetailScreen extends ConsumerWidget {
           IconButton(
             tooltip: 'Export PDF',
             icon: const Icon(Icons.picture_as_pdf),
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: () => _exportPdf(ref, context),
           ),
           IconButton(
+            tooltip: 'Bewerken',
             icon: const Icon(Icons.edit),
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: () {
               context.go('/players/$playerId/edit');
             },
@@ -67,6 +70,8 @@ class PlayerDetailScreen extends ConsumerWidget {
                         Text(
                           player.name,
                           style: Theme.of(context).textTheme.headlineSmall,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 8),
                         Text('Rugnummer: ${player.jerseyNumber}'),

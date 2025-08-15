@@ -50,6 +50,9 @@ class _PeriodizationTemplateDialogState
                   ),
                   const Spacer(),
                   IconButton(
+                    tooltip: 'Sluiten',
+                    constraints:
+                        const BoxConstraints(minWidth: 48, minHeight: 48),
                     onPressed: () => Navigator.of(context).pop(),
                     icon: const Icon(Icons.close),
                   ),

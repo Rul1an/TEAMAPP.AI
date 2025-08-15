@@ -134,6 +134,9 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
                   ),
                   trailing: isSelected
                       ? IconButton(
+                          tooltip: 'Oefening verwijderen',
+                          constraints:
+                              const BoxConstraints(minWidth: 48, minHeight: 48),
                           icon: const Icon(
                             Icons.remove_circle,
                             color: Colors.red,
@@ -141,6 +144,9 @@ class _ExerciseSelectorState extends State<ExerciseSelector> {
                           onPressed: () => widget.onExerciseRemoved(exercise),
                         )
                       : IconButton(
+                          tooltip: 'Oefening toevoegen',
+                          constraints:
+                              const BoxConstraints(minWidth: 48, minHeight: 48),
                           icon: const Icon(
                             Icons.add_circle,
                             color: Colors.green,
