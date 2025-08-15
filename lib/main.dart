@@ -206,7 +206,10 @@ class JO17TacticalManagerApp extends ConsumerWidget {
               textScaler: TextScaler.linear(clampedFactor),
               disableAnimations: disableAnimations,
             ),
-            child: effective,
+            child: FocusTraversalGroup(
+              policy: OrderedTraversalPolicy(),
+              child: effective,
+            ),
           );
         },
         routerConfig: router,
