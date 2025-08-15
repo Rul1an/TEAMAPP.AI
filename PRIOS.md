@@ -9,7 +9,7 @@ Voortgang (stand nu):
 - Observability: gestandaardiseerde events gelogd; parameters genormaliseerd (key normalisatie, flatten van metadata/context), PII-scrub toegepast, caps/limieten gezet.
 - PWA/Web polish: Offline scherm en router-redirect naar `/offline` bij startup zonder verbinding; manifest verrijkt (categories, screenshots, shortcuts, protocol handlers); meta description verbeterd.
 - UI performance bewaking: Lighthouse CI (static) met budgets (FCP/LCP/TBT/CLS) toegevoegd aan GitHub Actions; rapporten als artifact.
-- Service Worker: verbeterde cachingstrategie (versioned caches per commit, cache-first voor CanvasKit/Wasm, stale-while-revalidate voor app-assets); minimale precache uitgebreid met manifesten en favicon (offline FCP verbeterd).
+- Service Worker: verbeterde cachingstrategie (versioned caches per commit, cache-first voor CanvasKit/Wasm, stale-while-revalidate voor app-assets); minimale precache teruggebracht tot alleen shell (`/`, `/index.html`, `/flutter_bootstrap.js`) om overlap met SWR te voorkomen.
 - Import trainingsplannen: service en UI-menu (Trainingen) toegevoegd; template-download beschikbaar; UI-koppeling om na import direct te persistenteren + refresh.
 - Video thumbnails (web): cacheHeight geschaald op devicePixelRatio voor kleinere previews (minder bandbreedte/geheugen).
 - Training lijst: ListView builder afgestemd (repaint boundaries/keepAlives/cacheExtent) voor soepeler scrollen.
@@ -20,13 +20,11 @@ Volgorde gebaseerd op 2025 best practices (Security/Compliance → Stabiliteit/P
 Must-have (Q3 2025)
 - GDPR/Dataretentie: retentiebeleid + purge-jobs (cron/edge); documentatie en verifieerbare runbooks.
 - PWA precache verfijnen: Done – minimal shell only in `sw-extra.js` (FCP/LCP‑kritisch); geen overlap met SWR. Monitor LHCI.
-- Observability dashboards: aligneren op OTLP resource-attributen (`service.*`, `deployment.environment`, `app.mode`); standaard filters per env/mode/instance.
+- Observability dashboards: resource-attributen geïmplementeerd; dashboards/filters extern inrichten per env/mode/instance.
 - Performance: extra lazy/deferred loading voor zware views/images; hero-animaties minimaliseren op web.
-- Web-fonts: bundling/subsetting en `font-display: swap` verifiëren; runtime fetching staat uit.
-- Notifications: iOS/Android setup en topic/tenant scoping rooktests; toggle in demo.
+- Notifications (mobile): iOS/Android platform-setup en rooktests (topic/tenant).
 
 Should-have (Q3→Q4 2025)
-- Demo/standalone e2e: guards op mutatieroutes + deep-link rooktests.
 - Import Trainingen: mapping edge-cases (tijdzones/locale) + unit-tests (parser/persist) + happy-path e2e.
 - RLS end‑to‑end verificatie uitbreiden (admin harnas, standaard skip in CI).
 
@@ -42,5 +40,13 @@ Afgerond (Q3 2025 – selectie)
 - PWA/Web: CSP/Trusted Types/COOP/COEP; SW versioned caches, cache-first (CanvasKit/Wasm) + SWR; precache core shell; manifest verrijkt; `main.dart.js` preload.
 - Observability: events gestandaardiseerd (PII scrub, caps/limieten), OTLP init + resource attrs, router observers.
 - Wasm compat: PWA install interop naar Wasm‑veilige no‑op shim.
+- Security tests: env-aware gating (prod/live checks disabled by default; ENABLE_PROD_TESTS=1 om te activeren) – CI‑safe.
+- Analyzer: alle info‑issues opgelost; analyzer clean.
+- Import Trainingen: Excel serial date en numerieke tijd (fraction of day) ondersteund; parser vereenvoudigd (HH:mm, HH.mm). Tests groen.
+- Resilience: SWR remote timeout 8s toegevoegd; Hive cache herstelt corrupte box (purge + retry).
+- Web‑fonts: thema omgezet naar systeemtypografie (geen runtime fetching); `google_fonts` niet meer gebruikt.
+- Web UX: pagina‑transities op web uitgeschakeld voor rust/performantie; native transities mobiel/desktop intact.
+- Notifications: NotificationApi + topic scoping (tenant/user) + demo toggle; feature gated en web‑safe.
+- CI/Workflow: `--web-renderer` verwijderd (Flutter 3.22+); standaard CanvasKit, optioneel `--wasm`.
 
 
