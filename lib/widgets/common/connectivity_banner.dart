@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import '../../compat/connectivity_plus_compat.dart' as cp;
 import 'package:http/http.dart' as http;
 
 class ConnectivityBanner extends StatefulWidget {
@@ -13,13 +13,13 @@ class ConnectivityBanner extends StatefulWidget {
 }
 
 class _ConnectivityBannerState extends State<ConnectivityBanner> {
-  StreamSubscription<List<ConnectivityResult>>? _subscription;
+  StreamSubscription<List<cp.ConnectivityResult>>? _subscription;
   bool _isOnline = true;
 
   @override
   void initState() {
     super.initState();
-    _subscription = Connectivity().onConnectivityChanged.listen((_) {
+    _subscription = const cp.Connectivity().onConnectivityChanged.listen((_) {
       _checkInternetReachability();
     });
     // Initial check

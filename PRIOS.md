@@ -18,19 +18,18 @@ Voortgang (stand nu):
 Volgorde gebaseerd op 2025 best practices (Security/Compliance → Stabiliteit/Performance → UX/Polish). Herordend naar Must/Should/Could met concrete open acties.
 
 Must-have (Q3 2025)
-- GDPR/Dataretentie: retentiebeleid + purge-jobs (cron/edge); documentatie en verifieerbare runbooks.
+- GDPR/Dataretentie: Done – SQL retention policies + `purge_expired_data()` RPC; Edge Function scheduler met dry‑run/purge; runbook in docs.
 - PWA precache verfijnen: Done – minimal shell only in `sw-extra.js` (FCP/LCP‑kritisch); geen overlap met SWR. Monitor LHCI.
 - Observability dashboards: resource-attributen geïmplementeerd; dashboards/filters extern inrichten per env/mode/instance.
 - Performance: Done – deferred images via `NetworkImageSmart` (Scroll-aware, DPR‑scaled cacheWidth/cacheHeight, skeletons om layout shifts te voorkomen) en web‑transities geminimaliseerd (page transitions uit op web). Geen `Hero`-animaties in gebruik; policy: geen Hero op web toevoegen.
-- Notifications (mobile): iOS/Android platform-setup en rooktests (topic/tenant).
+- Notifications (mobile): Done – Android POST_NOTIFICATIONS; iOS background `remote-notification`; top‑level background handler; gated by ENABLE_NOTIFICATIONS; provider‑rooktest aanwezig.
 
 Should-have (Q3→Q4 2025)
-- Import Trainingen: mapping edge-cases (tijdzones/locale) + unit-tests (parser/persist) + happy-path e2e.
-- RLS end‑to‑end verificatie uitbreiden (admin harnas, standaard skip in CI).
+- Import Trainingen: Done – tijdzone/DST offset optioneel toegepast bij persist; unit-tests voor fixed offset en Europe/Amsterdam DST.
+- RLS end‑to‑end verificatie uitbreiden (admin harnas, standaard skip in CI) – uitgebreid met matches‑isolatie tests.
 
 Could-have (Q4+ 2025)
 - Advanced Analytics: heatmaps/predictions (na events-standaardisatie).
-- Wasm dependency vervolgaudit (`share_plus`, `connectivity_plus`) en conditional stubs.
 - Analyzer 6 migratiestap (kwaliteitsinfra) zodra upstream stabiel.
 
 Afgerond (Q3 2025 – selectie)
@@ -40,6 +39,9 @@ Afgerond (Q3 2025 – selectie)
 - PWA/Web: CSP/Trusted Types/COOP/COEP; SW versioned caches, cache-first (CanvasKit/Wasm) + SWR; precache core shell; manifest verrijkt; `main.dart.js` preload.
 - Observability: events gestandaardiseerd (PII scrub, caps/limieten), OTLP init + resource attrs, router observers.
 - Wasm compat: PWA install interop naar Wasm‑veilige no‑op shim.
+- Wasm compat: `share_plus` en `connectivity_plus` via compile‑time compat layer
+  (`lib/compat/*_compat.dart` exporteert stub op wasm en native wrapper op io);
+  imports geünificeerd, analyzer/tests groen.
 - Security tests: env-aware gating (prod/live checks disabled by default; ENABLE_PROD_TESTS=1 om te activeren) – CI‑safe.
 - Analyzer: alle info‑issues opgelost; analyzer clean.
 - Import Trainingen: Excel serial date en numerieke tijd (fraction of day) ondersteund; parser vereenvoudigd (HH:mm, HH.mm). Tests groen.

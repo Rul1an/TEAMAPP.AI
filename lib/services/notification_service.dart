@@ -3,6 +3,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'notification_api.dart';
 
+// Top-level background handler as required by Firebase Messaging (2025 best practice)
+// Must be a static entry point for background isolates
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  debugPrint('Handling background message: ${message.messageId}');
+}
+
 class NotificationService implements NotificationApi {
   NotificationService._();
   // Keep class final in prod; tests should use NotificationApi + provider override
@@ -44,8 +51,8 @@ class NotificationService implements NotificationApi {
     // Foreground messages
     FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
 
-    // Background messages – needs a top-level handler
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    // Background messages – requires a top-level handler
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
 
   @override
@@ -106,11 +113,5 @@ class NotificationService implements NotificationApi {
     }
   }
 
-  static Future<void> _firebaseMessagingBackgroundHandler(
-    RemoteMessage message,
-  ) async {
-    // Handle background/terminated state messages.
-    // Currently just logs; extend later with local_notif integration.
-    debugPrint('Handling background message: ${message.messageId}');
-  }
+  // Background handling is implemented as a top-level function above.
 }
