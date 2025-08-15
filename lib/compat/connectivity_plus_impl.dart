@@ -15,22 +15,27 @@ class Connectivity {
   const Connectivity();
 
   Stream<List<ConnectivityResult>> get onConnectivityChanged {
-    // Normalize to list; connectivity_plus emits single values on stable versions
-    return cp_real.Connectivity().onConnectivityChanged.map(
-      (dynamic event) {
-        final cp_real.ConnectivityResult result =
-            event as cp_real.ConnectivityResult;
-        final bool isNone = result == cp_real.ConnectivityResult.none;
-        return <ConnectivityResult>[
-          if (isNone) ConnectivityResult.none else ConnectivityResult.other,
-        ];
-      },
-    );
+    // Normalize to list; connectivity_plus may emit a single value or a list depending on platform/version
+    return cp_real.Connectivity().onConnectivityChanged.map((dynamic event) {
+      final List<cp_real.ConnectivityResult> results = event
+              is List<cp_real.ConnectivityResult>
+          ? event
+          : <cp_real.ConnectivityResult>[event as cp_real.ConnectivityResult];
+      final bool hasNone = results.contains(cp_real.ConnectivityResult.none);
+      return <ConnectivityResult>[
+        if (hasNone) ConnectivityResult.none else ConnectivityResult.other,
+      ];
+    });
   }
 
   Future<List<ConnectivityResult>> checkConnectivity() async {
-    final result = await cp_real.Connectivity().checkConnectivity();
-    if (result == cp_real.ConnectivityResult.none) {
+    final dynamic result = await cp_real.Connectivity().checkConnectivity();
+    // Normalize both legacy (single) and newer (list) return shapes
+    final bool isNone = result is List<cp_real.ConnectivityResult>
+        ? result.contains(cp_real.ConnectivityResult.none)
+        : (result as cp_real.ConnectivityResult) ==
+            cp_real.ConnectivityResult.none;
+    if (isNone) {
       return <ConnectivityResult>[ConnectivityResult.none];
     }
     return <ConnectivityResult>[ConnectivityResult.other];
