@@ -80,6 +80,7 @@ class TelemetryService {
       ),
     ]);
 
+    // Use default BatchSpanProcessor (current package version doesn't expose tunables)
     final provider = sdk.TracerProviderBase(
       processors: [sdk.BatchSpanProcessor(exporter)],
       resource: resource,
