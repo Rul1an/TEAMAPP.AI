@@ -59,6 +59,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
           IconButton(
             icon: const Icon(Icons.add),
             tooltip: 'Nieuwe wedstrijd plannen',
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: () {
               unawaited(_analytics.log(AnalyticsEvent.trainingCreate,
                   parameters: {'entity': 'match'}));
@@ -69,6 +70,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             IconButton(
               icon: const Icon(Icons.upload_file),
               tooltip: 'Importeer schema',
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               onPressed: _importCsv,
             ),
           PopupMenuButton<String>(
@@ -207,6 +209,9 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
       },
       child: ListView.builder(
         padding: EdgeInsets.all(isDesktop ? 24 : 16),
+        addAutomaticKeepAlives: false,
+        addRepaintBoundaries: true,
+        cacheExtent: 300,
         itemCount: matches.length,
         itemBuilder: (context, index) {
           final match = matches[index];
