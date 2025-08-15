@@ -21,7 +21,7 @@ Must-have (Q3 2025)
 - GDPR/Dataretentie: retentiebeleid + purge-jobs (cron/edge); documentatie en verifieerbare runbooks.
 - PWA precache verfijnen: Done – minimal shell only in `sw-extra.js` (FCP/LCP‑kritisch); geen overlap met SWR. Monitor LHCI.
 - Observability dashboards: resource-attributen geïmplementeerd; dashboards/filters extern inrichten per env/mode/instance.
-- Performance: extra lazy/deferred loading voor zware views/images; hero-animaties minimaliseren op web.
+- Performance: Done – deferred images via `NetworkImageSmart` (Scroll-aware, DPR‑scaled cacheWidth/cacheHeight, skeletons om layout shifts te voorkomen) en web‑transities geminimaliseerd (page transitions uit op web). Geen `Hero`-animaties in gebruik; policy: geen Hero op web toevoegen.
 - Notifications (mobile): iOS/Android platform-setup en rooktests (topic/tenant).
 
 Should-have (Q3→Q4 2025)

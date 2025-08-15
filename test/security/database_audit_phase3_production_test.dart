@@ -27,6 +27,11 @@ void main() {
     group('1. Browser Security Headers Validation', () {
       test('should have required security headers on main application',
           () async {
+        if (skipInCi) {
+          print(
+              '⏭️ Skipping browser security headers (ENABLE_PROD_TESTS=1 to enable)');
+          return;
+        }
         try {
           final response = await http
               .head(Uri.parse(testBaseUrl))
@@ -92,14 +97,21 @@ void main() {
           }
         } catch (e) {
           print('Security headers test failed: $e');
-          // Don't fail the test if network issues, but log the problem
-          expect(e, isA<TimeoutException>(),
-              reason:
-                  'If test fails, it should be due to timeout, not other errors');
+          // In CI without prod tests enabled, don't fail due to network
+          if (!skipInCi) {
+            expect(e, isA<TimeoutException>(),
+                reason:
+                    'If test fails, it should be due to timeout, not other errors');
+          }
         }
       });
 
       test('should enforce HTTPS and have proper SSL configuration', () async {
+        if (skipInCi) {
+          print(
+              '⏭️ Skipping HTTPS enforcement (ENABLE_PROD_TESTS=1 to enable)');
+          return;
+        }
         // Test HTTP to HTTPS redirect
         try {
           final httpUrl = testBaseUrl.replaceFirst('https://', 'http://');
@@ -139,6 +151,11 @@ void main() {
       });
 
       test('should have proper error page configuration', () async {
+        if (skipInCi) {
+          print(
+              '⏭️ Skipping error page configuration (ENABLE_PROD_TESTS=1 to enable)');
+          return;
+        }
         // Test 404 page doesn't leak sensitive information
         final notFoundUrl = '$testBaseUrl/non-existent-page-12345';
 
@@ -346,6 +363,11 @@ void main() {
 
     group('3. Rate Limiting & DOS Protection', () {
       test('should implement rate limiting on API endpoints', () async {
+        if (skipInCi) {
+          print(
+              '⏭️ Skipping rate limiting live test (ENABLE_PROD_TESTS=1 to enable)');
+          return;
+        }
         // Test rate limiting by making multiple rapid requests
         const maxRequests = 20;
         const testEndpoint = '$apiBaseUrl/rest/v1/players';
@@ -411,6 +433,11 @@ void main() {
       });
 
       test('should handle concurrent connection limits', () async {
+        if (skipInCi) {
+          print(
+              '⏭️ Skipping concurrent connection live test (ENABLE_PROD_TESTS=1 to enable)');
+          return;
+        }
         // Test concurrent connection handling
         const concurrentRequests = 10;
         final testUrl = '$testBaseUrl/';
@@ -763,9 +790,9 @@ void main() {
       });
     });
   },
-      skip: skipInCi
-          ? 'Skipped in CI (set ENABLE_PROD_TESTS=1 to enable)'
-          : false);
+      skip: Platform.environment['ENABLE_PROD_TESTS'] == '1'
+          ? false
+          : 'Skipped (set ENABLE_PROD_TESTS=1 to enable)');
 }
 
 /// Helper class for collecting and analyzing production security test results

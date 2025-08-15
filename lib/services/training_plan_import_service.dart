@@ -341,8 +341,8 @@ class TrainingPlanImportService {
     final re = RegExp(r'^\d{1,2}:\d{2}$');
     if (!re.hasMatch(t)) return null;
     final parts = t.split(':');
-    var hh = int.tryParse(parts[0]) ?? -1;
-    var mm = int.tryParse(parts[1]) ?? -1;
+    final hh = int.tryParse(parts[0]) ?? -1;
+    final mm = int.tryParse(parts[1]) ?? -1;
     if (hh < 0 || hh > 23 || mm < 0 || mm > 59) return null;
     return '${hh.toString().padLeft(2, '0')}:${mm.toString().padLeft(2, '0')}';
   }
@@ -399,17 +399,29 @@ class TrainingPlanImportService {
   }
 
   /// Persist imported items into the repository
+  /// Optional timezone handling:
+  /// - When [fixedOffsetMinutes] is provided, the computed start DateTime is shifted by this offset.
+  /// - When [applyEuropeAmsterdamDst] is true, a DST-aware offset (60/120 minutes) is applied based on date.
+  /// If both are provided, [fixedOffsetMinutes] takes precedence.
   Future<TrainingPlanImportResult> persistImported(
     List<PlannedTrainingDto> items,
-    TrainingRepository repo,
-  ) async {
+    TrainingRepository repo, {
+    int? fixedOffsetMinutes,
+    bool applyEuropeAmsterdamDst = false,
+  }) async {
     final errors = <String>[];
     var created = 0;
 
     for (var i = 0; i < items.length; i++) {
       final dto = items[i];
       try {
-        final training = _mapDtoToTraining(dto);
+        final training = _mapDtoToTraining(
+          dto,
+          offsetMinutes: fixedOffsetMinutes ??
+              (applyEuropeAmsterdamDst
+                  ? _offsetEuropeAmsterdamFor(dto.date)
+                  : 0),
+        );
         final res = await repo.add(training);
         if (res.isSuccess) {
           created += 1;
@@ -431,16 +443,19 @@ class TrainingPlanImportService {
     );
   }
 
-  Training _mapDtoToTraining(PlannedTrainingDto dto) {
+  Training _mapDtoToTraining(PlannedTrainingDto dto, {int offsetMinutes = 0}) {
     final training = Training();
     final timeParts = dto.startTime.split(':');
-    final start = DateTime(
+    var start = DateTime(
       dto.date.year,
       dto.date.month,
       dto.date.day,
       int.parse(timeParts[0]),
       int.parse(timeParts[1]),
     );
+    if (offsetMinutes != 0) {
+      start = start.add(Duration(minutes: offsetMinutes));
+    }
     training.date = start;
     training.duration = dto.durationMinutes;
     training.focus = _mapFocus(dto.focus);
@@ -450,6 +465,30 @@ class TrainingPlanImportService {
     training.location = dto.location;
     training.coachNotes = dto.title;
     return training;
+  }
+
+  /// Returns the offset in minutes for Europe/Amsterdam at the given [date].
+  /// Uses simple EU DST rule: last Sunday of March → last Sunday of October is DST (+120), otherwise (+60).
+  int _offsetEuropeAmsterdamFor(DateTime date) {
+    final int year = date.year;
+    final DateTime lastSundayMarch = _lastSundayOfMonth(year, 3);
+    final DateTime lastSundayOctober = _lastSundayOfMonth(year, 10);
+    final bool isDst =
+        !date.isBefore(lastSundayMarch) && !date.isAfter(lastSundayOctober);
+    return isDst ? 120 : 60;
+  }
+
+  DateTime _lastSundayOfMonth(int year, int month) {
+    // Start at last day of month, walk back to Sunday (weekday==DateTime.sunday=7)
+    final DateTime firstOfNext =
+        month == 12 ? DateTime(year + 1, 1, 1) : DateTime(year, month + 1, 1);
+    DateTime d = firstOfNext.subtract(const Duration(days: 1));
+    // Dart weekday: 1..7 (Mon..Sun)
+    while (d.weekday != DateTime.sunday) {
+      d = d.subtract(const Duration(days: 1));
+    }
+    // Normalize to midnight
+    return DateTime(d.year, d.month, d.day);
   }
 
   TrainingFocus _mapFocus(String value) {
