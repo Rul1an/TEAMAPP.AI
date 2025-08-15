@@ -104,6 +104,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final dpr = MediaQuery.of(context).devicePixelRatio;
+    final avatarSize = 96.0;
+    final cacheHeight = (avatarSize * dpr).round();
+
     return Scaffold(
       appBar: AppBar(title: const Text('Profiel')),
       body: _profile == null
@@ -118,14 +122,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       alignment: Alignment.bottomRight,
                       children: [
                         ClipOval(
-                          child: SizedBox(
-                            width: 96,
-                            height: 96,
+                          child: SizedBox.fromSize(
+                            size: const Size.square(96),
                             child: _profile!.avatarUrl != null
                                 ? Image.network(
                                     _profile!.avatarUrl!,
                                     fit: BoxFit.cover,
                                     filterQuality: FilterQuality.medium,
+                                    gaplessPlayback: true,
+                                    cacheHeight:
+                                        cacheHeight > 0 ? cacheHeight : null,
                                   )
                                 : Image.asset(
                                     'assets/images/avatar_placeholder.png',
@@ -136,6 +142,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         ),
                         IconButton(
                           icon: const Icon(Icons.camera_alt),
+                          tooltip: 'Wijzig avatar',
+                          constraints: const BoxConstraints(
+                            minWidth: 48,
+                            minHeight: 48,
+                          ),
                           onPressed: _isSaving ? null : _pickAvatar,
                         ),
                       ],
