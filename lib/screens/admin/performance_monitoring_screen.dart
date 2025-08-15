@@ -14,6 +14,7 @@ import 'performance_monitoring/error_tracking_card.dart';
 import 'performance_monitoring/user_activity_metrics_card.dart';
 import 'performance_monitoring/system_resources_card.dart';
 import 'performance_monitoring/performance_telemetry_status_card.dart';
+import 'performance_monitoring/gdpr_retention_card.dart';
 
 /// Performance Monitoring Screen for real-time system health and metrics
 class PerformanceMonitoringScreen extends ConsumerStatefulWidget {
@@ -86,6 +87,8 @@ class _PerformanceMonitoringScreenState
                     const UserActivityMetricsCard(),
                     const SizedBox(height: 24),
                     const SystemResourcesCard(),
+                    const SizedBox(height: 24),
+                    const GdprRetentionCard(),
                   ],
                 ),
               ),
