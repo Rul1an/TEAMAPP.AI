@@ -26,7 +26,7 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Profiel: avatar camera-knop met tooltip + 48x48 constraints.
    - Open (gericht):
      - Tekstschaal-audit in content; clamp-overschrijdingen/ellipsis checken.
-     - Contrast-checks M3: badges/overlays (Video, Training-cards) naar high-contrast tokens.
+     - Contrast-checks M3: badges/overlays (Video, Training-cards) naar high-contrast tokens; Match badges (locatie/competitie) dynamische tekstkleur.
      - Overige schermen nalopen op ontbrekende `tooltip` bij `IconButton`s.
 
 2. UI Audit – Performance restpunten [in progress]
@@ -34,7 +34,7 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Resource hints (preconnect Supabase/Sentry) en preload van Flutter manifests + bootstrap.
      - Lighthouse CI met budgets (FCP/LCP/TBT/CLS) in workflow; artefacten beschikbaar.
      - Video thumbnails: dpr-gebaseerde `cacheHeight` voor previews (web).
-     - Lijsten: `ListView.builder` tuned (repaint boundaries/keepAlives/cacheExtent) op Training lijst.
+     - Lijsten: `ListView.builder` tuned (repaint boundaries/keepAlives/cacheExtent) op Training- en Matches-lijsten.
      - Profiel avatar: dpr-gebaseerde `cacheHeight` en `gaplessPlayback`.
    - Open (gericht):
      - Lazy loading verfijnen (zware views/images) en hero-animaties beperken op web.

@@ -330,6 +330,8 @@ class _MatchCard extends StatelessWidget {
                               .textTheme
                               .titleMedium
                               ?.copyWith(fontWeight: FontWeight.bold),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 4),
                         Row(
@@ -416,21 +418,25 @@ class _MatchCard extends StatelessWidget {
     );
   }
 
-  Widget _buildLocationBadge(Location location) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          color: location == Location.home ? Colors.green : Colors.blue,
-          borderRadius: BorderRadius.circular(4),
+  Widget _buildLocationBadge(Location location) {
+    final bg = location == Location.home ? Colors.green : Colors.blue;
+    final textColor = bg.computeLuminance() < 0.5 ? Colors.white : Colors.black;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        location == Location.home ? 'THUIS' : 'UIT',
+        style: TextStyle(
+          color: textColor,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
         ),
-        child: Text(
-          location == Location.home ? 'THUIS' : 'UIT',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
+      ),
+    );
+  }
 
   Widget _buildCompetitionBadge(Competition competition) {
     String text;
@@ -451,6 +457,8 @@ class _MatchCard extends StatelessWidget {
         color = Colors.indigo;
     }
 
+    final textColor =
+        color.computeLuminance() < 0.5 ? Colors.white : Colors.black;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -459,8 +467,8 @@ class _MatchCard extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: textColor,
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
