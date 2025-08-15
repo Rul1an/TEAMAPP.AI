@@ -11,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 // kIsWeb accessible via existing flutter/foundation.dart import above
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // Project imports:
 import 'config/environment.dart';
@@ -31,8 +30,7 @@ Future<void> main() async {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      // Web fonts: disable runtime fetching to avoid render-blocking requests on web
-      GoogleFonts.config.allowRuntimeFetching = false;
+      // Web fonts: using system typography; no runtime fetching required
 
       await _initializeApp();
 
