@@ -34,7 +34,7 @@ class TelemetryService {
         // ignore: avoid_print
         print('OTLP disabled: no endpoint configured for this environment');
         return true;
-      }());
+      }(), 'OTLP disabled: missing endpoint');
       return;
     }
 
@@ -47,7 +47,7 @@ class TelemetryService {
         print(
             'OTLP endpoint not reachable, skipping OpenTelemetry init: $endpoint');
         return true;
-      }());
+      }(), 'OTLP probe failed, skipping init');
       return;
     }
 
@@ -70,7 +70,7 @@ class TelemetryService {
       // ignore: avoid_print
       print('OTLP initialized with endpoint: $endpoint');
       return true;
-    }());
+    }(), 'OTLP initialized');
   }
 
   Future<bool> _validateOtlpEndpoint(String endpoint) async {
