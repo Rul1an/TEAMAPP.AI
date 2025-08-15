@@ -40,13 +40,37 @@ GoRouter createRouter(Ref ref) => GoRouter(
       // 🎯 2025 Best Practice: Direct routing based on app mode
       initialLocation: Environment.isStandaloneMode ? '/dashboard' : '/auth',
       redirect: (context, state) {
-        // In standalone mode, skip all authentication and go directly to dashboard
-        if (Environment.isStandaloneMode) {
-          final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
-          if (isOnAuthPage) {
-            return '/dashboard';
+        // Helper to map mutation paths to safe view routes
+        String? mapMutationPath(String path) {
+          // Basic patterns for add/edit/build routes
+          if (path.startsWith('/players/') && path.contains('/edit')) {
+            return '/players';
           }
-          return null; // Allow all other routes in standalone mode
+          if (path == '/players/add') return '/players';
+
+          if (path.startsWith('/matches/') && path.contains('/edit')) {
+            return '/matches';
+          }
+          if (path == '/matches/add') return '/matches';
+
+          if (path == '/training/add') return '/training';
+          if (path.startsWith('/training/') && path.contains('/edit')) {
+            return '/training';
+          }
+
+          if (path.startsWith('/training-sessions/builder')) {
+            return '/training-sessions';
+          }
+
+          return null;
+        }
+
+        // In standalone mode, skip auth and block mutation deep-links
+        if (Environment.isStandaloneMode) {
+          final path = state.fullPath ?? '';
+          if (path.startsWith('/auth')) return '/dashboard';
+          final mapped = mapMutationPath(path);
+          return mapped; // null when not a mutation path
         }
 
         // Demo and SaaS mode authentication flows (null-safe)
@@ -97,6 +121,13 @@ GoRouter createRouter(Ref ref) => GoRouter(
           // If not logged in and not in demo mode, redirect to auth
           if (!isLoggedIn && !isDemoMode) {
             return '/auth';
+          }
+
+          // In demo mode, block mutation deep-links
+          if (isDemoMode) {
+            final path = state.fullPath ?? '';
+            final mapped = mapMutationPath(path);
+            if (mapped != null) return mapped;
           }
 
           return null;
