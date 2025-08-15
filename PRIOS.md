@@ -50,6 +50,7 @@ Volgorde gebaseerd op 2025 best practices (Flutter/M3/Web), security first, UX i
      - Trusted Types/COOP/COEP/CSP in Netlify headers.
      - Offline scherm en router-redirect; manifest verrijkt (shortcuts, categories, screenshots, protocol handlers).
      - SW: versioned caches, cache-first (CanvasKit/Wasm), SWR (app-assets), precache core shell + Asset/FontManifest + favicon; cache cleanup.
+     - Web startup: `main.dart.js` preload toegevoegd voor snellere initialisatie.
      - Wasm-compat: PWA install interop vervangen door Wasm-veilige no-op shim om Wasm build te deblokkeren.
    - Open (gericht):
      - Precache-lijst verfijnen met LH-artefacten (alleen LCP/FCP-kritisch, geen overlap met SWR).
