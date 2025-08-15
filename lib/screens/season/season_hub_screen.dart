@@ -188,12 +188,16 @@ class SeasonHubScreen extends ConsumerWidget {
                       Text(
                         season.name,
                         style: Theme.of(context).textTheme.headlineSmall,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         '${season.teamName} | ${season.season}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Colors.grey[600],
                             ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -473,10 +477,16 @@ class SeasonHubScreen extends ConsumerWidget {
                     size: 20,
                   ),
                 ),
-                title: Text('Training ${session.trainingNumber}'),
+                title: Text(
+                  'Training ${session.trainingNumber}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 subtitle: Text(
                   '${session.date.day}/${session.date.month} | ${session.type.name}\n'
                   '${session.sessionObjective ?? 'Geen doelstelling'}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 trailing: Icon(
                   isUpcoming ? Icons.schedule : Icons.check_circle,

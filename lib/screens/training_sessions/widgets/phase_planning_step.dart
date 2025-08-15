@@ -80,10 +80,16 @@ class PhasePlanningStep extends StatelessWidget {
                         backgroundColor: _phaseColor(phase.type),
                         child: Text('${index + 1}'),
                       ),
-                      title: Text(phase.name,
-                          style: const TextStyle(fontWeight: FontWeight.w600)),
+                      title: Text(
+                        phase.name,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       subtitle: Text(
                         '${phase.durationMinutes} min | ${_formatPhaseTime(phase)}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -127,7 +133,11 @@ class PhasePlanningStep extends StatelessWidget {
               child: ListTile(
                 leading: Icon(Icons.timer,
                     color: Theme.of(context).colorScheme.secondary),
-                title: Text('Totale Tijd: $totalDuration minuten'),
+                title: Text(
+                  'Totale Tijd: $totalDuration minuten',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ],
