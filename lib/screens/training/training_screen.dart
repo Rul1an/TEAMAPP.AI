@@ -119,7 +119,51 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                         ),
                       );
                     }
-                    // TODO(teamapp): koppel res.items aan daadwerkelijke planning-aanmaak
+                    // UI-koppeling: na succesvolle import vraag of we planning willen aanmaken
+                    if (res.success &&
+                        res.items.isNotEmpty &&
+                        context.mounted) {
+                      final confirm = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text('Planning aanmaken?'),
+                          content: Text(
+                            'Wil je ${res.items.length} ingevoerde trainingen toevoegen aan de planning?\n\nJe kunt dit later altijd aanpassen of verwijderen.',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(false),
+                              child: const Text('Annuleren'),
+                            ),
+                            FilledButton(
+                              onPressed: () => Navigator.of(ctx).pop(true),
+                              child: const Text('Aanmaken'),
+                            ),
+                          ],
+                        ),
+                      );
+                      if (confirm == true) {
+                        final repo = ref.read(trainingRepositoryProvider);
+                        final persist = await _planImport.persistImported(
+                          res.items,
+                          repo,
+                        );
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(persist.message),
+                              backgroundColor: persist.success
+                                  ? Colors.green
+                                  : Colors.orange,
+                            ),
+                          );
+                        }
+                        // Refresh lijst
+                        await ref
+                            .read(trainingsNotifierProvider.notifier)
+                            .loadTrainings();
+                      }
+                    }
                   } else if (value == 'plan_template') {
                     await _planImport.generateTemplate();
                   }
