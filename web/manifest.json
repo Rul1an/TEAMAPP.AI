@@ -8,7 +8,11 @@
     "description": "Tactical manager for JO17 with training, matches, analytics and PWA support.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
-    "categories": ["sports", "productivity", "education"],
+    "categories": [
+        "sports",
+        "productivity",
+        "education"
+    ],
     "screenshots": [
         {
             "src": "icons/screenshot-dashboard.png",
@@ -18,12 +22,42 @@
         }
     ],
     "shortcuts": [
-        { "name": "Open Dashboard", "url": "/dashboard", "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192"}] },
-        { "name": "Spelers", "url": "/players", "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192"}] },
-        { "name": "Trainingen", "url": "/training", "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192"}] }
+        {
+            "name": "Open Dashboard",
+            "url": "/dashboard",
+            "icons": [
+                {
+                    "src": "icons/Icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Spelers",
+            "url": "/players",
+            "icons": [
+                {
+                    "src": "icons/Icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Trainingen",
+            "url": "/training",
+            "icons": [
+                {
+                    "src": "icons/Icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
     ],
     "protocol_handlers": [
-        { "protocol": "web+teamapp", "url": "/auth?deep=%s" }
+        {
+            "protocol": "web+teamapp",
+            "url": "/auth?deep=%s"
+        }
     ],
     "icons": [
         {

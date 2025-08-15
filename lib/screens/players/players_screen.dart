@@ -15,6 +15,7 @@ import '../../providers/players_provider.dart';
 import '../../services/import_service.dart';
 import '../../utils/colors.dart';
 import '../../services/analytics_events.dart';
+import '../../widgets/common/app_error_boundary.dart';
 
 class PlayersScreen extends ConsumerStatefulWidget {
   const PlayersScreen({super.key});
@@ -105,10 +106,6 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
     );
   }
 
-  void _trackAnalytics(AnalyticsEvent event, {Map<String, dynamic>? params}) {
-    const AnalyticsLogger().log(event, parameters: params);
-  }
-
   Future<void> _downloadTemplate() async {
     await _importService.generatePlayerTemplate();
 
@@ -120,6 +117,10 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
         backgroundColor: Colors.green,
       ),
     );
+  }
+
+  void _trackAnalytics(AnalyticsEvent event, {Map<String, dynamic>? params}) {
+    const AnalyticsLogger().log(event, parameters: params);
   }
 
   @override
@@ -160,8 +161,8 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                   await _downloadTemplate();
               }
             },
-            itemBuilder: (BuildContext context) => [
-              const PopupMenuItem(
+            itemBuilder: (BuildContext context) => const [
+              PopupMenuItem(
                 value: 'import',
                 child: ListTile(
                   leading: Icon(Icons.upload_file, size: 20),
@@ -169,7 +170,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'export',
                 child: ListTile(
                   leading: Icon(Icons.download, size: 20),
@@ -177,8 +178,8 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuDivider(),
-              const PopupMenuItem(
+              PopupMenuDivider(),
+              PopupMenuItem(
                 value: 'template',
                 child: ListTile(
                   leading: Icon(Icons.description, size: 20),
@@ -199,213 +200,210 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Search and Filter Bar
-          Container(
-            padding: EdgeInsets.all(isDesktop ? 24.0 : 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: isDesktop ? 3 : 1,
-                  child: Semantics(
-                    label: 'Zoek spelers',
-                    hint: 'Typ om te filteren op naam of rugnummer',
-                    textField: true,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Zoek op naam of rugnummer...',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        filled: true,
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _searchQuery = value.toLowerCase();
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                if (isTablet) ...[
-                  const SizedBox(width: 16),
-                  Flexible(
-                    child: DropdownButtonFormField<Position?>(
-                      value: _selectedPosition,
-                      decoration: InputDecoration(
-                        labelText: 'Positie',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        filled: true,
-                      ),
-                      items: [
-                        const DropdownMenuItem(child: Text('Alle posities')),
-                        ...Position.values.map(
-                          (position) => DropdownMenuItem(
-                            value: position,
-                            child: Text(_getPositionText(position)),
-                          ),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPosition = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          // Position filter chips for mobile
-          if (!isTablet)
+      body: AppErrorBoundary(
+        child: Column(
+          children: [
+            // Search and Filter Bar
             Container(
-              height: 50,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.all(isDesktop ? 24.0 : 16.0),
+              child: Row(
                 children: [
-                  FilterChip(
-                    label: const Text('Alle'),
-                    selected: _selectedPosition == null,
-                    onSelected: (selected) {
-                      setState(() {
-                        _selectedPosition = null;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 8),
-                  ...Position.values.map(
-                    (position) => Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: FilterChip(
-                        label: Text(_getPositionText(position)),
-                        selected: _selectedPosition == position,
-                        onSelected: (selected) {
+                  Expanded(
+                    flex: isDesktop ? 3 : 1,
+                    child: Semantics(
+                      label: 'Zoek spelers',
+                      hint: 'Typ om te filteren op naam of rugnummer',
+                      textField: true,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Zoek op naam of rugnummer...',
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          filled: true,
+                        ),
+                        onChanged: (value) {
                           setState(() {
-                            _selectedPosition = selected ? position : null;
+                            _searchQuery = value.toLowerCase();
                           });
                         },
                       ),
                     ),
                   ),
+                  if (isTablet) ...[
+                    const SizedBox(width: 16),
+                    Flexible(
+                      child: DropdownButtonFormField<Position?>(
+                        value: _selectedPosition,
+                        decoration: InputDecoration(
+                          labelText: 'Positie',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          filled: true,
+                        ),
+                        items: const [
+                          DropdownMenuItem(child: Text('Alle posities')),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedPosition = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
-          const SizedBox(height: 8),
-          // Players Grid/List
-          Expanded(
-            child: playersAsync.when(
-              data: (players) {
-                final filteredPlayers = players.where((player) {
-                  final fullName =
-                      '${player.firstName} ${player.lastName}'.toLowerCase();
-                  final matchesSearch = _searchQuery.isEmpty ||
-                      fullName.contains(_searchQuery) ||
-                      player.jerseyNumber.toString().contains(_searchQuery);
-                  final matchesPosition = _selectedPosition == null ||
-                      player.position == _selectedPosition;
-                  return matchesSearch && matchesPosition;
-                }).toList();
-
-                if (filteredPlayers.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.person_off,
-                          size: 64,
-                          color: Colors.grey[400],
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'Geen spelers gevonden',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 8),
-                        ElevatedButton.icon(
-                          onPressed: () => context.go('/players/add'),
-                          icon: const Icon(Icons.person_add),
-                          label: const Text('Voeg eerste speler toe'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    ref.invalidate(playersProvider);
-                  },
-                  child: isDesktop
-                      ? GridView.builder(
-                          padding: const EdgeInsets.all(24),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 400,
-                            childAspectRatio: 1.5,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                          ),
-                          itemCount: filteredPlayers.length,
-                          itemBuilder: (context, index) {
-                            final player = filteredPlayers[index];
-                            return _PlayerCard(
-                              player: player,
-                              onTap: () => context.go('/players/${player.id}'),
-                            );
-                          },
-                        )
-                      : ListView.builder(
-                          padding: EdgeInsets.all(isTablet ? 24 : 16),
-                          itemCount: filteredPlayers.length,
-                          itemBuilder: (context, index) {
-                            final player = filteredPlayers[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: _PlayerCard(
-                                player: player,
-                                onTap: () =>
-                                    context.go('/players/${player.id}'),
-                              ),
-                            );
-                          },
-                        ),
-                );
-              },
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) => Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            // Position filter chips for mobile
+            if (!isTablet)
+              Container(
+                height: 50,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
                   children: [
-                    const Icon(
-                      Icons.error_outline,
-                      size: 64,
-                      color: Colors.red,
+                    FilterChip(
+                      label: const Text('Alle'),
+                      selected: _selectedPosition == null,
+                      onSelected: (selected) {
+                        setState(() {
+                          _selectedPosition = null;
+                        });
+                      },
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Er ging iets mis',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(error.toString()),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () => ref.invalidate(playersProvider),
-                      child: const Text('Probeer opnieuw'),
+                    const SizedBox(width: 8),
+                    ...Position.values.map(
+                      (position) => Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: FilterChip(
+                          label: Text(_getPositionText(position)),
+                          selected: _selectedPosition == position,
+                          onSelected: (selected) {
+                            setState(() {
+                              _selectedPosition = selected ? position : null;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
+            const SizedBox(height: 8),
+            // Players Grid/List
+            Expanded(
+              child: playersAsync.when(
+                data: (players) {
+                  final filteredPlayers = players.where((player) {
+                    final fullName =
+                        '${player.firstName} ${player.lastName}'.toLowerCase();
+                    final matchesSearch = _searchQuery.isEmpty ||
+                        fullName.contains(_searchQuery) ||
+                        player.jerseyNumber.toString().contains(_searchQuery);
+                    final matchesPosition = _selectedPosition == null ||
+                        player.position == _selectedPosition;
+                    return matchesSearch && matchesPosition;
+                  }).toList();
+
+                  if (filteredPlayers.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.person_off,
+                            size: 64,
+                            color: Colors.grey[400],
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Geen spelers gevonden',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton.icon(
+                            onPressed: () => context.go('/players/add'),
+                            icon: const Icon(Icons.person_add),
+                            label: const Text('Voeg eerste speler toe'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      ref.invalidate(playersProvider);
+                    },
+                    child: isDesktop
+                        ? GridView.builder(
+                            padding: const EdgeInsets.all(24),
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 400,
+                              childAspectRatio: 1.5,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                            ),
+                            itemCount: filteredPlayers.length,
+                            itemBuilder: (context, index) {
+                              final player = filteredPlayers[index];
+                              return _PlayerCard(
+                                player: player,
+                                onTap: () =>
+                                    context.go('/players/${player.id}'),
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            padding: EdgeInsets.all(isTablet ? 24 : 16),
+                            itemCount: filteredPlayers.length,
+                            itemBuilder: (context, index) {
+                              final player = filteredPlayers[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: _PlayerCard(
+                                  player: player,
+                                  onTap: () =>
+                                      context.go('/players/${player.id}'),
+                                ),
+                              );
+                            },
+                          ),
+                  );
+                },
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        size: 64,
+                        color: Colors.red,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Er ging iets mis',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(error.toString()),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () => ref.invalidate(playersProvider),
+                        child: const Text('Probeer opnieuw'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: isDesktop
           ? null

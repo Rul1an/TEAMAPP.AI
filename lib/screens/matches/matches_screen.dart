@@ -19,6 +19,7 @@ import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 import '../../services/schedule_import_service.dart';
 import '../../services/analytics_events.dart';
+import '../../widgets/common/app_error_boundary.dart';
 
 class MatchesScreen extends ConsumerStatefulWidget {
   const MatchesScreen({super.key});
@@ -134,28 +135,30 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
           final allMatches = List<Match>.from(matches)
             ..sort((a, b) => b.date.compareTo(a.date));
 
-          return TabBarView(
-            controller: _tabController,
-            children: [
-              _buildMatchList(
-                upcomingMatches,
-                isDesktop,
-                'Geen aankomende wedstrijden',
-                isViewOnly,
-              ),
-              _buildMatchList(
-                completedMatches,
-                isDesktop,
-                'Geen afgelopen wedstrijden',
-                isViewOnly,
-              ),
-              _buildMatchList(
-                allMatches,
-                isDesktop,
-                'Geen wedstrijden',
-                isViewOnly,
-              ),
-            ],
+          return AppErrorBoundary(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildMatchList(
+                  upcomingMatches,
+                  isDesktop,
+                  'Geen aankomende wedstrijden',
+                  isViewOnly,
+                ),
+                _buildMatchList(
+                  completedMatches,
+                  isDesktop,
+                  'Geen afgelopen wedstrijden',
+                  isViewOnly,
+                ),
+                _buildMatchList(
+                  allMatches,
+                  isDesktop,
+                  'Geen wedstrijden',
+                  isViewOnly,
+                ),
+              ],
+            ),
           );
         },
       ),

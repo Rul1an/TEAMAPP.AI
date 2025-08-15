@@ -17,6 +17,7 @@ import '../../providers/trainings_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 import '../../services/analytics_events.dart';
+import '../../widgets/common/app_error_boundary.dart';
 
 class TrainingScreen extends ConsumerStatefulWidget {
   const TrainingScreen({super.key});
@@ -112,117 +113,120 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
       body: trainingsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(child: Text('Fout: $error')),
-        data: (trainings) => Column(
-          children: [
-            // Calendar
-            Card(
-              margin: EdgeInsets.all(isDesktop ? 24 : 16),
-              child: TableCalendar<Training>(
-                firstDay: DateTime.utc(2020),
-                lastDay: DateTime.utc(2030, 12, 31),
-                focusedDay: _focusedDay,
-                calendarFormat: _calendarFormat,
-                locale: 'nl_NL',
-                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                eventLoader: (day) => trainings
-                    .where((training) => isSameDay(training.date, day))
-                    .toList(),
-                startingDayOfWeek: StartingDayOfWeek.monday,
-                calendarStyle: CalendarStyle(
-                  outsideDaysVisible: false,
-                  weekendTextStyle: TextStyle(color: Colors.grey[600]),
-                  selectedDecoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    shape: BoxShape.circle,
-                  ),
-                  todayDecoration: BoxDecoration(
-                    color:
-                        Theme.of(context).primaryColor.withValues(alpha: 0.5),
-                    shape: BoxShape.circle,
-                  ),
-                  markerDecoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                headerStyle: const HeaderStyle(titleCentered: true),
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _focusedDay = focusedDay;
-                  });
-
-                  // Navigate to attendance if there's a training on this day
-                  final dayTrainings = trainings
-                      .where(
-                          (training) => isSameDay(training.date, selectedDay))
-                      .toList();
-
-                  if (dayTrainings.isNotEmpty) {
-                    context.go('/training/${dayTrainings.first.id}/attendance');
-                  }
-                },
-                onFormatChanged: (format) {
-                  if (_calendarFormat != format) {
-                    setState(() {
-                      _calendarFormat = format;
-                    });
-                  }
-                },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
-                },
-              ),
-            ),
-            // Selected Day Trainings
-            Expanded(
-              child: ValueListenableBuilder<List<Training>>(
-                valueListenable: _selectedTrainings,
-                builder: (context, value, _) {
-                  if (value.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.fitness_center,
-                            size: 64,
-                            color: Colors.grey[400],
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Geen trainingen op ${DateFormat('d MMMM', 'nl').format(_selectedDay ?? DateTime.now())}',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 8),
-                          ElevatedButton.icon(
-                            onPressed: () => context.go('/training/add'),
-                            icon: const Icon(Icons.add),
-                            label: const Text('Plan training'),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  return ListView.builder(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isDesktop ? 24 : 16,
-                      vertical: 8,
+        data: (trainings) => AppErrorBoundary(
+          child: Column(
+            children: [
+              // Calendar
+              Card(
+                margin: EdgeInsets.all(isDesktop ? 24 : 16),
+                child: TableCalendar<Training>(
+                  firstDay: DateTime.utc(2020),
+                  lastDay: DateTime.utc(2030, 12, 31),
+                  focusedDay: _focusedDay,
+                  calendarFormat: _calendarFormat,
+                  locale: 'nl_NL',
+                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                  eventLoader: (day) => trainings
+                      .where((training) => isSameDay(training.date, day))
+                      .toList(),
+                  startingDayOfWeek: StartingDayOfWeek.monday,
+                  calendarStyle: CalendarStyle(
+                    outsideDaysVisible: false,
+                    weekendTextStyle: TextStyle(color: Colors.grey[600]),
+                    selectedDecoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.circle,
                     ),
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
-                      final training = value[index];
-                      return _TrainingCard(
-                        training: training,
-                        onTap: () => context.go('/training/${training.id}'),
-                      );
-                    },
-                  );
-                },
+                    todayDecoration: BoxDecoration(
+                      color:
+                          Theme.of(context).primaryColor.withValues(alpha: 0.5),
+                      shape: BoxShape.circle,
+                    ),
+                    markerDecoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  headerStyle: const HeaderStyle(titleCentered: true),
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                    });
+
+                    // Navigate to attendance if there's a training on this day
+                    final dayTrainings = trainings
+                        .where(
+                            (training) => isSameDay(training.date, selectedDay))
+                        .toList();
+
+                    if (dayTrainings.isNotEmpty) {
+                      context
+                          .go('/training/${dayTrainings.first.id}/attendance');
+                    }
+                  },
+                  onFormatChanged: (format) {
+                    if (_calendarFormat != format) {
+                      setState(() {
+                        _calendarFormat = format;
+                      });
+                    }
+                  },
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
+                  },
+                ),
               ),
-            ),
-          ],
+              // Selected Day Trainings
+              Expanded(
+                child: ValueListenableBuilder<List<Training>>(
+                  valueListenable: _selectedTrainings,
+                  builder: (context, value, _) {
+                    if (value.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.fitness_center,
+                              size: 64,
+                              color: Colors.grey[400],
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Geen trainingen op ${DateFormat('d MMMM', 'nl').format(_selectedDay ?? DateTime.now())}',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 8),
+                            ElevatedButton.icon(
+                              onPressed: () => context.go('/training/add'),
+                              icon: const Icon(Icons.add),
+                              label: const Text('Plan training'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return ListView.builder(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isDesktop ? 24 : 16,
+                        vertical: 8,
+                      ),
+                      itemCount: value.length,
+                      itemBuilder: (context, index) {
+                        final training = value[index];
+                        return _TrainingCard(
+                          training: training,
+                          onTap: () => context.go('/training/${training.id}'),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: isViewOnly
