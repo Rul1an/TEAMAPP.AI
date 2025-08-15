@@ -63,6 +63,8 @@ class SessionBuilderView extends StatelessWidget {
           title: const Text('Training Sessie'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
+            tooltip: 'Terug',
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: () => context.pop(),
           ),
           actions: [

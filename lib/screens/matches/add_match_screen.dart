@@ -28,6 +28,8 @@ class _AddMatchScreenState extends ConsumerState<AddMatchScreen> {
           title: const Text('Wedstrijd Toevoegen'),
           leading: IconButton(
             icon: const Icon(Icons.close),
+            tooltip: 'Sluiten',
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: () => context.pop(),
           ),
         ),
