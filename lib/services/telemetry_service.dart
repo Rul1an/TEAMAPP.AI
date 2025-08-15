@@ -122,6 +122,11 @@ class TelemetryService {
     if (!_initialized) return;
     final span = _tracer.startSpan(name);
     _setAttributes(span, attributes);
+    // Attach resource attributes once for convenience in dashboards
+    for (final entry in _resourceAttrs.entries) {
+      span.setAttribute(
+          api.Attribute.fromString('resource.${entry.key}', entry.value));
+    }
     span.end();
   }
 
