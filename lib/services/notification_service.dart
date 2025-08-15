@@ -9,6 +9,10 @@ class NotificationService {
 
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
+  // Feature toggle via dart-define: --dart-define=ENABLE_NOTIFICATIONS=true
+  static const bool _enabled =
+      bool.fromEnvironment('ENABLE_NOTIFICATIONS', defaultValue: false);
+
   // Topic helpers (pure, testable, no Firebase dependency)
   static String tenantTopic(String tenantId) => 'tenant_$tenantId';
   static String userTopic(String userId) => 'user_$userId';
@@ -21,6 +25,9 @@ class NotificationService {
   }
 
   Future<void> init() async {
+    if (!_enabled) return;
+    // Web support requires explicit Firebase web setup; skip by default
+    if (kIsWeb) return;
     // Request permission on iOS / Web
     await requestPermission();
 
