@@ -323,8 +323,8 @@ class MainScaffold extends ConsumerWidget {
 
   /// Public helper for testing: maps a route string to the nav index used
   /// by both NavigationRail and NavigationBar.
-  /// Mapping aligned with test expectations and UI structure:
-  /// 0: Dashboard, 1: Season/Annual, 2: Training, 3: Matches, 4: Players, 5: Insights
+  /// Mapping aligned with current nav order (Rail/BottomNav):
+  /// 0: Dashboard, 1: Players, 2: Matches, 3: Training, 4: Insights
   static int routeToNavIndex(String currentRoute) {
     if (kDebugMode) {
       print('🔍 Route mapping: $currentRoute');
@@ -337,16 +337,24 @@ class MainScaffold extends ConsumerWidget {
       return 0;
     }
 
-    // 1: Season & Annual Planning
-    if (currentRoute.startsWith('/season') ||
-        currentRoute.startsWith('/annual-planning')) {
+    // 1: Players
+    if (currentRoute.startsWith('/players')) {
       if (kDebugMode) {
-        print('🔍 Mapped to index 1 (Season/Annual)');
+        print('🔍 Mapped to index 1 (Players)');
       }
       return 1;
     }
 
-    // 2: Training & related
+    // 2: Matches & lineup
+    if (currentRoute.startsWith('/matches') ||
+        currentRoute.startsWith('/lineup')) {
+      if (kDebugMode) {
+        print('🔍 Mapped to index 2 (Matches)');
+      }
+      return 2;
+    }
+
+    // 3: Training & related
     if (currentRoute.startsWith('/training') ||
         currentRoute.startsWith('/exercise') ||
         currentRoute.startsWith('/training-sessions') ||
@@ -354,36 +362,28 @@ class MainScaffold extends ConsumerWidget {
         currentRoute.startsWith('/field-diagram-editor') ||
         currentRoute.startsWith('/exercise-designer')) {
       if (kDebugMode) {
-        print('🔍 Mapped to index 2 (Training)');
-      }
-      return 2;
-    }
-
-    // 3: Matches & lineup
-    if (currentRoute.startsWith('/matches') ||
-        currentRoute.startsWith('/lineup')) {
-      if (kDebugMode) {
-        print('🔍 Mapped to index 3 (Matches)');
+        print('🔍 Mapped to index 3 (Training)');
       }
       return 3;
     }
 
-    // 4: Players
-    if (currentRoute.startsWith('/players')) {
-      if (kDebugMode) {
-        print('🔍 Mapped to index 4 (Players)');
-      }
-      return 4;
-    }
-
-    // 5: Insights & legacy analytics
+    // 4: Insights & legacy analytics
     if (currentRoute.startsWith('/insights') ||
         currentRoute.startsWith('/analytics') ||
         currentRoute.startsWith('/svs')) {
       if (kDebugMode) {
-        print('🔍 Mapped to index 5 (Insights)');
+        print('🔍 Mapped to index 4 (Insights)');
       }
-      return 5;
+      return 4;
+    }
+
+    // Season/Annual Planning not in nav: map to Dashboard (0)
+    if (currentRoute.startsWith('/season') ||
+        currentRoute.startsWith('/annual-planning')) {
+      if (kDebugMode) {
+        print('🔍 Season/Annual route mapped to index 0 (Dashboard)');
+      }
+      return 0;
     }
 
     if (kDebugMode) {
