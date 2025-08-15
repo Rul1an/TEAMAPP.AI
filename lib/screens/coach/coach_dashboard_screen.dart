@@ -27,6 +27,8 @@ class CoachDashboardScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications),
+            tooltip: 'Meldingen',
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             onPressed: () {
               // TODO(author): Implement notifications
             },
