@@ -389,12 +389,12 @@ class _TrainingCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
                       children: [
                         _buildFocusBadge(training.focus),
-                        const SizedBox(width: 8),
                         _buildIntensityBadge(context, training.intensity),
-                        const SizedBox(width: 8),
                         _buildStatusBadge(context, training.status),
                       ],
                     ),
