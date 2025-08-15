@@ -122,18 +122,21 @@ class _FieldCanvasState extends ConsumerState<FieldCanvas> {
               onPressed: _zoomIn,
               tooltip: 'Inzoomen',
               iconSize: 20,
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             ),
             IconButton(
               icon: const Icon(Icons.zoom_out),
               onPressed: _zoomOut,
               tooltip: 'Uitzoomen',
               iconSize: 20,
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             ),
             IconButton(
               icon: const Icon(Icons.center_focus_strong),
               onPressed: _resetZoom,
               tooltip: 'Reset Zoom',
               iconSize: 20,
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             ),
             const SizedBox(width: 16),
 
