@@ -22,6 +22,8 @@ class TelemetryService {
 
   bool _initialized = false;
   bool get isEnabled => _initialized;
+  static final String _instanceId =
+      DateTime.now().microsecondsSinceEpoch.toString();
 
   Future<void> init() async {
     if (_initialized) return;
@@ -66,9 +68,15 @@ class TelemetryService {
     final resource = sdk.Resource([
       api.Attribute.fromString('service.name', 'jo17-tactical-manager'),
       api.Attribute.fromString('service.version', serviceVersion),
+      api.Attribute.fromString('service.namespace', 'teamapp.ai'),
+      api.Attribute.fromString('service.instance.id', _instanceId),
       api.Attribute.fromString(
         'deployment.environment',
         Environment.current.name.toLowerCase(),
+      ),
+      api.Attribute.fromString(
+        'app.mode',
+        Environment.appMode.name,
       ),
     ]);
 
