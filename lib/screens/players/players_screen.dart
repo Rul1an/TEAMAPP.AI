@@ -177,6 +177,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.person_add),
+            tooltip: 'Nieuwe speler toevoegen',
             onPressed: () => context.go('/players/add'),
           ),
         ],
@@ -190,20 +191,25 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
               children: [
                 Expanded(
                   flex: isDesktop ? 3 : 1,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Zoek op naam of rugnummer...',
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                  child: Semantics(
+                    label: 'Zoek spelers',
+                    hint: 'Typ om te filteren op naam of rugnummer',
+                    textField: true,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Zoek op naam of rugnummer...',
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        filled: true,
                       ),
-                      filled: true,
+                      onChanged: (value) {
+                        setState(() {
+                          _searchQuery = value.toLowerCase();
+                        });
+                      },
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        _searchQuery = value.toLowerCase();
-                      });
-                    },
                   ),
                 ),
                 if (isTablet) ...[

@@ -52,6 +52,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
+            tooltip: 'Nieuwe wedstrijd plannen',
             onPressed: () => context.go('/matches/add'),
           ),
           if (!isViewOnly)
@@ -62,6 +63,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
             ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.download),
+            tooltip: 'Export opties',
             onSelected: (value) async {
               try {
                 if (value == 'pdf') {

@@ -54,11 +54,13 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
           if (!isViewOnly)
             IconButton(
               icon: const Icon(Icons.add),
+              tooltip: 'Nieuwe training plannen',
               onPressed: () => context.go('/training/add'),
             ),
           if (!isViewOnly)
             PopupMenuButton<String>(
               icon: const Icon(Icons.download),
+              tooltip: 'Export opties',
               onSelected: (value) async {
                 try {
                   if (value == 'excel') {
