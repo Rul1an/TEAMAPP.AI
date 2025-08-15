@@ -20,6 +20,7 @@ class TelemetryService {
   late final api.Tracer _tracer;
 
   bool _initialized = false;
+  bool get isEnabled => _initialized;
 
   Future<void> init() async {
     if (_initialized) return;
@@ -28,6 +29,12 @@ class TelemetryService {
     final endpoint = Environment.otlpEndpoint;
     if (endpoint == null || endpoint.isEmpty) {
       // No endpoint – skip initialization (e.g. local dev).
+      assert(() {
+        // Visible in debug logs only
+        // ignore: avoid_print
+        print('OTLP disabled: no endpoint configured for this environment');
+        return true;
+      }());
       return;
     }
 
@@ -35,6 +42,12 @@ class TelemetryService {
     final ok = await _validateOtlpEndpoint(endpoint);
     if (!ok) {
       // Skip OTLP setup to avoid noisy errors in console/CI
+      assert(() {
+        // ignore: avoid_print
+        print('OTLP endpoint not reachable, skipping OpenTelemetry init: ' +
+            endpoint);
+        return true;
+      }());
       return;
     }
 
@@ -53,13 +66,23 @@ class TelemetryService {
     _tracer = api.globalTracerProvider.getTracer('app');
 
     _initialized = true;
+    assert(() {
+      // ignore: avoid_print
+      print('OTLP initialized with endpoint: ' + endpoint);
+      return true;
+    }());
   }
 
   Future<bool> _validateOtlpEndpoint(String endpoint) async {
     try {
       final uri = Uri.parse(endpoint);
       // HEAD may be blocked; accept 200-405 as reachable
-      final resp = await http.head(uri).timeout(const Duration(seconds: 3));
+      final resp = await http.head(
+        uri,
+        headers: const {
+          'User-Agent': 'JO17-Tactical-Manager/OTLP-Probe',
+        },
+      ).timeout(const Duration(seconds: 3));
       final code = resp.statusCode;
       return code >= 200 && code < 500;
     } catch (_) {

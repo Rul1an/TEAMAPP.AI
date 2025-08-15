@@ -191,7 +191,7 @@ class MonitoringService {
     for (final entry in input.entries) {
       var key = entry.key.trim().toLowerCase().replaceAll(' ', '_');
       if (!keyRegex.hasMatch(key)) {
-        key = key.replaceAll(RegExp(r'[^a-z0-9_.]'), '_');
+        key = key.replaceAll(RegExp('[^a-z0-9_.]'), '_');
       }
 
       final value = entry.value;
@@ -207,11 +207,11 @@ class MonitoringService {
         key = key.endsWith('_ms') ? key : '${key}_ms';
       } else if (value is Iterable) {
         // Convert to comma-joined string to avoid large payloads
-        normalized = value.map((e) => _valueToString(e)).join(',');
+        normalized = value.map(_valueToString).join(',');
       } else if (value is Map) {
         // Flatten one level under key.*
         value.forEach((subKey, subVal) {
-          final sk = '${key}.${subKey.toString()}'.toLowerCase();
+          final sk = '$key.${subKey.toString()}'.toLowerCase();
           out[sk] = _valueToPrimitive(subVal);
         });
         continue;
