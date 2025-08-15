@@ -1,13 +1,30 @@
 {
-    "name": "jo17_tactical_manager",
-    "short_name": "jo17_tactical_manager",
+    "name": "JO17 Tactical Manager",
+    "short_name": "JO17 Coach",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Tactical manager for JO17 with training, matches, analytics and PWA support.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
+    "categories": ["sports", "productivity", "education"],
+    "screenshots": [
+        {
+            "src": "icons/screenshot-dashboard.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+    ],
+    "shortcuts": [
+        { "name": "Open Dashboard", "url": "/dashboard", "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192"}] },
+        { "name": "Spelers", "url": "/players", "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192"}] },
+        { "name": "Trainingen", "url": "/training", "icons": [{"src": "icons/Icon-192.png", "sizes": "192x192"}] }
+    ],
+    "protocol_handlers": [
+        { "protocol": "web+teamapp", "url": "/auth?deep=%s" }
+    ],
     "icons": [
         {
             "src": "icons/Icon-192.png",
