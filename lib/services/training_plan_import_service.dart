@@ -95,8 +95,18 @@ class TrainingPlanImportService {
 
   Future<TrainingPlanImportResult> _fromCsv(Uint8List bytes) async {
     try {
-      final csvString = utf8.decode(bytes);
-      final rows = const CsvToListConverter().convert(csvString);
+      String csvString = utf8.decode(bytes);
+      // Normalize BOM and line endings for robust parsing across platforms
+      csvString = csvString.replaceAll('\ufeff', '');
+      csvString = csvString.replaceAll('\r\n', '\n');
+      csvString = csvString.replaceAll('\r', '\n');
+
+      List<List<dynamic>> rows = const CsvToListConverter().convert(csvString);
+      // Fallback: some locales export with semicolons
+      if (rows.isEmpty || rows.length == 1) {
+        rows = const CsvToListConverter(fieldDelimiter: ';').convert(csvString);
+      }
+
       if (rows.isEmpty) {
         return TrainingPlanImportResult(
           success: false,
@@ -104,7 +114,20 @@ class TrainingPlanImportService {
         );
       }
       final dataRows = rows.skip(1).toList();
-      return _parseRows(dataRows);
+      final res = _parseRows(dataRows);
+      // If no valid rows found, include a hint for debugging
+      if (!res.success && res.items.isEmpty) {
+        return TrainingPlanImportResult(
+          success: false,
+          message: 'Geen geldige rijen gevonden',
+          items: const [],
+          errors: [
+            ...res.errors,
+            'Hint: controleer scheidingsteken ("," of ";") en tijdformaat HH:mm',
+          ],
+        );
+      }
+      return res;
     } catch (e) {
       return TrainingPlanImportResult(
         success: false,
