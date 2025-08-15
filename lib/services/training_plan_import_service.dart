@@ -50,6 +50,12 @@ class TrainingPlanImportResult {
 
 /// Service to import planned trainings from CSV/Excel according to a strict template
 class TrainingPlanImportService {
+  // Exposed for unit tests and programmatic imports
+  Future<TrainingPlanImportResult> parseCsvBytes(Uint8List bytes) =>
+      _fromCsv(bytes);
+  Future<TrainingPlanImportResult> parseExcelBytes(Uint8List bytes) =>
+      _fromExcel(bytes);
+
   Future<TrainingPlanImportResult> importPlannedTrainings() async {
     try {
       final result = await FilePicker.platform.pickFiles(
