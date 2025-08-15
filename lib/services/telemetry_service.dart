@@ -4,6 +4,7 @@ import 'dart:async';
 // Package imports:
 import 'package:opentelemetry/api.dart' as api;
 import 'package:opentelemetry/sdk.dart' as sdk;
+import 'package:http/http.dart' as http;
 
 // Project imports:
 import '../config/environment.dart';
@@ -30,6 +31,13 @@ class TelemetryService {
       return;
     }
 
+    // Validate endpoint reachability (best-effort, non-fatal)
+    final ok = await _validateOtlpEndpoint(endpoint);
+    if (!ok) {
+      // Skip OTLP setup to avoid noisy errors in console/CI
+      return;
+    }
+
     final exporter = sdk.CollectorExporter(Uri.parse(endpoint));
 
     final resource = sdk.Resource([
@@ -45,6 +53,18 @@ class TelemetryService {
     _tracer = api.globalTracerProvider.getTracer('app');
 
     _initialized = true;
+  }
+
+  Future<bool> _validateOtlpEndpoint(String endpoint) async {
+    try {
+      final uri = Uri.parse(endpoint);
+      // HEAD may be blocked; accept 200-405 as reachable
+      final resp = await http.head(uri).timeout(const Duration(seconds: 3));
+      final code = resp.statusCode;
+      return code >= 200 && code < 500;
+    } catch (_) {
+      return false;
+    }
   }
 
   /// Records a simple event.
