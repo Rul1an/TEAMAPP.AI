@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/foundation.dart';
 import 'connectivity_banner.dart';
+import 'skip_to_content.dart';
 
 // Project imports:
 import '../../providers/auth_provider.dart';
@@ -57,6 +58,16 @@ class MainScaffold extends ConsumerWidget {
           body: Column(
             children: [
               const ConnectivityBanner(),
+              // Skip link becomes visible on focus/hover; moves focus to content
+              SkipToContent(
+                onActivate: () {
+                  final primary = PrimaryScrollController.maybeOf(context);
+                  primary?.animateTo(0,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeOut);
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+              ),
               Expanded(
                 child: Row(
                   children: [
@@ -229,6 +240,15 @@ class MainScaffold extends ConsumerWidget {
           body: Column(
             children: [
               const ConnectivityBanner(),
+              SkipToContent(
+                onActivate: () {
+                  final primary = PrimaryScrollController.maybeOf(context);
+                  primary?.animateTo(0,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeOut);
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+              ),
               Expanded(child: SafeArea(child: child)),
             ],
           ),

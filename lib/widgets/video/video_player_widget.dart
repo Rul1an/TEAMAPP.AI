@@ -73,7 +73,10 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: _buildPlayerContent(context, playerState, playerNotifier),
+        child: Semantics(
+          label: 'Videospeler',
+          child: _buildPlayerContent(context, playerState, playerNotifier),
+        ),
       ),
     );
   }
@@ -251,6 +254,9 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
               color: Colors.white,
             ),
             onPressed: notifier.toggleControlsLock,
+            tooltip: state.isControlsLocked
+                ? 'Ontgrendel bediening'
+                : 'Vergrendel bediening',
           ),
 
           // Fullscreen button
@@ -264,6 +270,8 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                 notifier.toggleFullscreen();
                 widget.onFullscreen?.call();
               },
+              tooltip:
+                  state.isFullscreen ? 'Verlaat fullscreen' : 'Volledig scherm',
             ),
         ],
       ),
@@ -320,6 +328,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
               IconButton(
                 icon: const Icon(Icons.replay_10, color: Colors.white),
                 onPressed: () => notifier.skipBackward(seconds: 10),
+                tooltip: '10 seconden terug',
               ),
 
               // Play/pause button
@@ -329,12 +338,14 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                   color: Colors.white,
                 ),
                 onPressed: notifier.togglePlayPause,
+                tooltip: state.isPlaying ? 'Pauzeer' : 'Afspelen',
               ),
 
               // Skip forward button
               IconButton(
                 icon: const Icon(Icons.forward_10, color: Colors.white),
                 onPressed: () => notifier.skipForward(seconds: 10),
+                tooltip: '10 seconden vooruit',
               ),
 
               // Time display
@@ -357,6 +368,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                   color: Colors.white,
                 ),
                 onPressed: notifier.toggleMute,
+                tooltip: state.isMuted ? 'Dempen uit' : 'Dempen',
               ),
 
               // Speed control button
@@ -407,24 +419,27 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
     VideoPlayerState state,
     VideoPlayerNotifier notifier,
   ) {
-    return PopupMenuButton<VideoPlaybackSpeed>(
-      icon: const Icon(Icons.speed, color: Colors.white),
-      onSelected: (speed) => notifier.setPlaybackSpeed(speed.value),
-      itemBuilder: (context) => VideoPlaybackSpeed.values
-          .map((speed) => PopupMenuItem(
-                value: speed,
-                child: Row(
-                  children: [
-                    Text(speed.label),
-                    if (state.playbackSpeed == speed.value)
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Icon(Icons.check, size: 16),
-                      ),
-                  ],
-                ),
-              ))
-          .toList(),
+    return Tooltip(
+      message: 'Afspeelsnelheid',
+      child: PopupMenuButton<VideoPlaybackSpeed>(
+        icon: const Icon(Icons.speed, color: Colors.white),
+        onSelected: (speed) => notifier.setPlaybackSpeed(speed.value),
+        itemBuilder: (context) => VideoPlaybackSpeed.values
+            .map((speed) => PopupMenuItem(
+                  value: speed,
+                  child: Row(
+                    children: [
+                      Text(speed.label),
+                      if (state.playbackSpeed == speed.value)
+                        const Padding(
+                          padding: EdgeInsets.only(left: 8),
+                          child: Icon(Icons.check, size: 16),
+                        ),
+                    ],
+                  ),
+                ))
+            .toList(),
+      ),
     );
   }
 
