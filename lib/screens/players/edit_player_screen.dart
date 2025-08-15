@@ -86,6 +86,7 @@ class _EditPlayerScreenState extends ConsumerState<EditPlayerScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
+            tooltip: 'Verwijder speler',
             onPressed: _showDeleteDialog,
           ),
         ],

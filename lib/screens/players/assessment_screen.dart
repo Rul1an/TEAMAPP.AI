@@ -110,7 +110,11 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
               tooltip: 'Exporteer naar PDF',
             ),
           ],
-          IconButton(icon: const Icon(Icons.save), onPressed: _saveAssessment),
+          IconButton(
+            icon: const Icon(Icons.save),
+            tooltip: 'Opslaan',
+            onPressed: _saveAssessment,
+          ),
         ],
       ),
       body: SingleChildScrollView(

@@ -309,6 +309,7 @@ class _DayDetailsSheet extends StatelessWidget {
               subtitle: const Text('18:00 - 20:10\nVeld 1 - VOAB Sportpark'),
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
+                tooltip: 'Ga naar training',
                 onPressed: () {
                   Navigator.pop(context);
                   // Navigate to training details
@@ -328,6 +329,7 @@ class _DayDetailsSheet extends StatelessWidget {
               ),
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
+                tooltip: 'Ga naar wedstrijd',
                 onPressed: () {
                   Navigator.pop(context);
                   // Navigate to match details

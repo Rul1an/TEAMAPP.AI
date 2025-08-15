@@ -29,6 +29,7 @@ class _AddPlayerScreenState extends ConsumerState<AddPlayerScreen> {
           title: const Text('Speler Toevoegen'),
           leading: IconButton(
             icon: const Icon(Icons.close),
+            tooltip: 'Sluiten',
             onPressed: () => context.pop(),
           ),
         ),

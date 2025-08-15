@@ -78,6 +78,7 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
+            tooltip: 'Verwijder wedstrijd',
             onPressed: _showDeleteDialog,
           ),
         ],

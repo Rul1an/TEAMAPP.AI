@@ -37,6 +37,7 @@ class _FormationTemplateSelectorState extends State<FormationTemplateSelector> {
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.close),
+                    tooltip: 'Sluiten',
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],
