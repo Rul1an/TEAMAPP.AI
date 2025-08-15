@@ -25,12 +25,19 @@ class NetworkImageSmart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dpr = MediaQuery.of(context).devicePixelRatio;
+    final int? cacheW = width != null ? (width! * dpr).round() : null;
+    final int? cacheH = height != null ? (height! * dpr).round() : null;
+
     final image = Image.network(
       url,
       width: width,
       height: height,
       fit: fit,
       filterQuality: filterQuality,
+      gaplessPlayback: true,
+      cacheWidth: cacheW,
+      cacheHeight: cacheH,
       loadingBuilder: (context, child, progress) {
         if (progress == null) return child;
         return _skeleton();
