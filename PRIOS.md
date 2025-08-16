@@ -29,15 +29,13 @@ Should-have (Q3→Q4 2025)
 - RLS end‑to‑end verificatie uitbreiden (admin harnas, standaard skip in CI): Done – uitgebreid met matches/teams/training_sessions‑isolatie tests.
 
 Could-have (Q4+ 2025)
-- Advanced Analytics: heatmaps/predictions (na events-standaardisatie).
-  - Progress: `analytics/heatmap_aggregator.dart` + tests; normaliseerde coördinaten, sparse counts, deterministische sampling, JSON round‑trip; consent‑gating; k‑anonimiteit (minCount) en optionele DP‑noise (`HeatmapPrivacyService`) met ε‑selector; helpers `aggregateEvents()` en `matrixFromEntries()`; baseline `PredictionService` (xG‑achtig) met tests.
-  - UI: Heatmap kaart met predictions‑toggle, palet‑selectie (`classic`, `blueOrange`, `viridis`), legenda, k≥ dropdown, DP‑toggle + ε‑selector; opacity‑tuning.
-  - Export: Heatmap PNG‑export (RepaintBoundary), CSV‑export en JSON‑export van sparse counts (`row,col,count`). CSV/JSON respecteren k‑anonimiteit en toegepaste DP‑noise; predictions worden niet geëxporteerd. Metadata toegevoegd (rows, cols, palette, k, dpEnabled/epsilon, category, timestamp) en bestandsnamen bevatten timestamp en settings.
+- (leeg)
 
 Afgerond (kwaliteitsinfra)
 - Analyzer 6→7 migratiestap: gereed – project gebruikt `analyzer ^7`, `very_good_analysis ^9`; `flutter analyze --fatal-infos` actief; `custom_lint` (nog) uitgeschakeld i.v.m. upstream compatibiliteit. Analyzer is schoon (incl. info‑niveau) in CI en lokaal.
 
 Afgerond (Q3 2025 – selectie)
+- Advanced Analytics: heatmaps/predictions – Done. `heatmap_aggregator.dart` + tests; consent‑gating; k‑anonimiteit en optionele DP‑noise via `HeatmapPrivacyService`; UI met predictions‑toggle, paletten/legenda, k‑dropdown, DP‑toggle + ε‑selector; export (PNG/CSV/JSON) met metadata (rows/cols/palette/k/DP/category/timestamp), bestandsnaam met settings.
 - Router startup safety; offline route/guard.
 - A11y: focus traversal, tooltips, 48x48 targets, tekstschaal clamps (Dashboard/Players/Matches/Training/PhasePlanning/Season Hub), contrast voor badges (incl. Matches), Weekly Calendar/Video controls.
 - Performance: resource hints + preloads; LHCI budgets; lijst-tuning; deferred images (`NetworkImageSmart`) voor avatar en video-thumbnails.
