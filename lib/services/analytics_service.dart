@@ -61,6 +61,14 @@ class AnalyticsService {
       }
     }
 
+    // Add environment tags (for dashboards/filters)
+    const String appEnv =
+        String.fromEnvironment('APP_ENV', defaultValue: 'dev');
+    const String appMode =
+        String.fromEnvironment('APP_MODE', defaultValue: 'saas');
+    safeParams.putIfAbsent('app_env', () => appEnv);
+    safeParams.putIfAbsent('app_mode', () => appMode);
+
     try {
       await analytics.logEvent(name: safeName, parameters: safeParams);
     } catch (_) {
