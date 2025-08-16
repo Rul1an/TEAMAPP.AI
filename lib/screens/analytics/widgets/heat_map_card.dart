@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
 import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../controllers/heat_map_controller.dart';
 import '../../../utils/heatmap_utils.dart';
@@ -198,8 +199,17 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       if (byteData == null) return;
       final bytes = byteData.buffer.asUint8List();
+
+      // Build filename with metadata
+      final settings = ref.read(heatMapSettingsProvider);
+      final ts = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+      final dpPart = settings.dpEnabled ? 'dp_${settings.epsilon}' : 'dp_off';
+      final predPart = _showPredictions ? 'pred_on' : 'pred_off';
+      final name =
+          'heatmap_${settings.palette.name}_k${settings.minCount}_${dpPart}_${_category.name}_${predPart}_$ts.png';
+
       await fs.FileSaver.instance.saveFile(
-        name: 'heatmap.png',
+        name: name,
         bytes: bytes,
         mimeType: fs.MimeType.png,
       );
@@ -225,14 +235,29 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
         );
         return;
       }
+      final settings = ref.read(heatMapSettingsProvider);
+      final ts = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+      final dpPart = settings.dpEnabled ? 'dp_${settings.epsilon}' : 'dp_off';
+      final name =
+          'heatmap_counts_${settings.palette.name}_k${settings.minCount}_${dpPart}_${_category.name}_$ts.csv';
+
       final buffer = StringBuffer();
+      // Metadata header (commented) for reproducibility
+      buffer.writeln('# heatmap csv export');
+      buffer.writeln('# palette=${settings.palette.name}');
+      buffer.writeln('# minCount=${settings.minCount}');
+      buffer.writeln('# dpEnabled=${settings.dpEnabled}');
+      buffer.writeln(
+          '# epsilon=${settings.dpEnabled ? settings.epsilon : 'n/a'}');
+      buffer.writeln('# category=${_category.name}');
+      buffer.writeln('# predictions=false');
       buffer.writeln('row,col,count');
       for (final e in entries) {
         buffer.writeln('${e[0]},${e[1]},${e[2]}');
       }
       final bytes = Uint8List.fromList(buffer.toString().codeUnits);
       await fs.FileSaver.instance.saveFile(
-        name: 'heatmap_counts.csv',
+        name: name,
         bytes: bytes,
         mimeType: fs.MimeType.csv,
       );
