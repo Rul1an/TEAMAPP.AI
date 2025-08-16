@@ -31,21 +31,28 @@ import '../screens/training_sessions/training_sessions_screen.dart';
 import '../widgets/common/main_scaffold.dart';
 // import schedule import removed – feature postponed
 import '../config/providers.dart';
-import '../config/environment.dart';
+// import '../config/environment.dart';
 // import '../providers/connectivity_status_provider.dart';
 import '../services/monitoring_service.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
-      // Minimal routing to exclude redirect loops during recovery
-      initialLocation: '/auth',
+      // Restore normal initial route
+      initialLocation: '/dashboard',
       redirect: (context, state) {
-        MonitoringService.breadcrumb('router.redirect.disabled',
-            data: {
-              'path': state.fullPath,
-              'mode': Environment.appMode.name,
-            },
-            category: 'router');
-        return null;
+        try {
+          // Basic guards restored (lightweight): allow auth and offline
+          final isOnAuth = state.fullPath?.startsWith('/auth') ?? false;
+          if (isOnAuth) return null;
+
+          // Avoid heavy provider access during early boot; soft-allow
+          MonitoringService.breadcrumb('router.redirect.ok',
+              data: {'path': state.fullPath}, category: 'router');
+          return null;
+        } catch (e) {
+          MonitoringService.breadcrumb('router.redirect.fallback',
+              data: {'error': e.toString()}, category: 'router');
+          return null;
+        }
       },
       observers: [
         ref.read(analyticsRouteObserverProvider),

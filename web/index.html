@@ -87,7 +87,8 @@
       max-height: 40vh;
       overflow: auto;
       pointer-events: none;
-      display: none; /* hidden by default; enable via ?debug or localStorage flag */
+      display: none;
+      /* hidden by default; enable via ?debug or localStorage flag */
     }
   </style>
 
@@ -186,23 +187,30 @@
           console.log = function () {
             try {
               const msg = Array.from(arguments).join(' ');
-              if (!shouldFilter(msg)) appendOverlay(msg);
-            } catch (_) { }
-            _log.apply(console, arguments);
+              if (!shouldFilter(msg)) {
+                appendOverlay(msg);
+                _log.apply(console, arguments);
+              }
+              // filtered → suppress original console output
+            } catch (_) { _log.apply(console, arguments); }
           };
           console.error = function () {
             try {
               const msg = Array.from(arguments).join(' ');
-              if (!shouldFilter(msg)) appendOverlay('ERROR: ' + msg);
-            } catch (_) { }
-            _err.apply(console, arguments);
+              if (!shouldFilter(msg)) {
+                appendOverlay('ERROR: ' + msg);
+                _err.apply(console, arguments);
+              }
+            } catch (_) { _err.apply(console, arguments); }
           };
           console.warn = function () {
             try {
               const msg = Array.from(arguments).join(' ');
-              if (!shouldFilter(msg)) appendOverlay('WARN: ' + msg);
-            } catch (_) { }
-            _warn.apply(console, arguments);
+              if (!shouldFilter(msg)) {
+                appendOverlay('WARN: ' + msg);
+                _warn.apply(console, arguments);
+              }
+            } catch (_) { _warn.apply(console, arguments); }
           };
         } catch (_) { /* ignore */ }
 
@@ -222,7 +230,7 @@
             if (panel) {
               const next = panel.style.display === 'none' ? 'block' : 'none';
               panel.style.display = next;
-              try { localStorage.setItem('debug_overlay', next === 'block' ? '1' : '0'); } catch (_) {}
+              try { localStorage.setItem('debug_overlay', next === 'block' ? '1' : '0'); } catch (_) { }
             }
           }
         });

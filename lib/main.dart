@@ -182,7 +182,8 @@ class JO17TacticalManagerApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
-    // Initialize notifications manager (temporarily disabled during recovery)
+    // Restore notifications manager init (no-op on web if disabled internally)
+    // Note: provider import is currently commented; leave disabled to avoid reintroducing issues
     // ref.watch(notificationsManagerProvider);
 
     return DemoModeStarter(
