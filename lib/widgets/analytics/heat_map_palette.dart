@@ -20,6 +20,15 @@ extension HeatMapPaletteColors on HeatMapPalette {
         ]);
     }
   }
+
+  List<Color> gradientStops({int samples = 5}) {
+    final int count = samples.clamp(2, 12);
+    return List<Color>.generate(
+      count,
+      (int i) => colorFor(i / (count - 1)),
+      growable: false,
+    );
+  }
 }
 
 Color _lerpColors(double t, List<Color> stops) {

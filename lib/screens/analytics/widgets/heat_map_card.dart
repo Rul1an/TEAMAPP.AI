@@ -10,6 +10,7 @@ import '../../../models/action_event.dart';
 import '../../../services/analytics_service.dart';
 import '../../../services/prediction_service.dart';
 import '../../../widgets/analytics/heat_map_legend.dart';
+import '../../../widgets/analytics/heat_map_palette.dart';
 
 class HeatMapCard extends ConsumerStatefulWidget {
   const HeatMapCard({super.key});
@@ -86,7 +87,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
               ),
             ),
             const SizedBox(height: 12),
-            const HeatMapLegend(),
+            const HeatMapLegend(palette: HeatMapPalette.classic),
           ],
         ),
       ),

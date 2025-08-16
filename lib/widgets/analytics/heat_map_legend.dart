@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'heat_map_palette.dart';
 
 class HeatMapLegend extends StatelessWidget {
-  const HeatMapLegend({super.key});
+  const HeatMapLegend({super.key, this.palette = HeatMapPalette.classic});
+
+  final HeatMapPalette palette;
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +18,12 @@ class HeatMapLegend extends StatelessWidget {
           Expanded(
             child: Container(
               height: 12,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(6)),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: [Colors.yellow, Colors.red],
+                  colors: palette.gradientStops(samples: 6),
                 ),
               ),
             ),
