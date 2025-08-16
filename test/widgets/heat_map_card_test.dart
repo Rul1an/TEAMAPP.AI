@@ -44,6 +44,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(mockNotifier.loadCalls, 0);
 
+    // Scroll toolbar horizontally to ensure the dropdown is visible in test viewport
+    final Finder scroller = find.byType(SingleChildScrollView);
+    await tester.drag(scroller, const Offset(-600, 0));
+    await tester.pumpAndSettle();
+
     // open category dropdown and select next option
     final Finder categoryDd = find.byKey(const Key('heatmap_category_dd'));
     await tester.tap(categoryDd, warnIfMissed: false);
