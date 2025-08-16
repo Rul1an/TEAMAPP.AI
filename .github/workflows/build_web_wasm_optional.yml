@@ -1,6 +1,55 @@
 name: Build Web (Wasm Optional)
 
 on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  build-web:
+    name: Build Web (CanvasKit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter analyze --fatal-infos
+      - name: Build web (CanvasKit)
+        run: flutter build web --release
+
+  build-wasm:
+    name: Build Web (Wasm, allowed-to-fail)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: build-web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - run: flutter --version
+      - run: flutter pub get
+      - name: Build web (Wasm)
+        run: |
+          flutter build web --wasm --release || echo "Wasm build not available on this channel; skipping"
+
+name: Build Web (Wasm Optional)
+
+on:
   workflow_dispatch:
   schedule:
     - cron: '0 2 * * *'
