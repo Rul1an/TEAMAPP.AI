@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
-import 'package:file_saver/file_saver.dart' as fs;
+import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../controllers/heat_map_controller.dart';
@@ -16,6 +16,7 @@ import '../../../widgets/analytics/heat_map_legend.dart';
 import '../../../widgets/analytics/heat_map_palette.dart';
 import '../../../providers/heat_map_settings_provider.dart';
 import '../../../services/heatmap_privacy_service.dart';
+import 'package:file_saver/file_saver.dart' as fs;
 
 class HeatMapCard extends ConsumerStatefulWidget {
   const HeatMapCard({super.key});
@@ -29,6 +30,9 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
   _TimeFrame _frame = _TimeFrame.season;
   bool _showPredictions = false;
   final GlobalKey _repaintKey = GlobalKey();
+
+  // Export state (for CSV)
+  List<List<int>>? _lastEntries; // [row, col, count]
 
   @override
   void initState() {
@@ -69,6 +73,12 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                       icon: const Icon(Icons.download),
                       onPressed: _exportHeatmap,
                     ),
+                    const SizedBox(width: 4),
+                    IconButton(
+                      tooltip: 'Exporteren (CSV)',
+                      icon: const Icon(Icons.table_view),
+                      onPressed: _exportCsv,
+                    ),
                   ],
                 ),
                 _buildCategoryDropdown(),
@@ -88,6 +98,8 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                     const PredictionService svc = PredictionService();
                     final danger = svc.shotDangerGrid(events: events);
                     final matrix = normalizeToIntMatrix(danger, scale: 100);
+                    // Predictions: CSV export niet van toepassing (geen telwaarden)
+                    _lastEntries = null;
                     return RepaintBoundary(
                       key: _repaintKey,
                       child: CustomPaint(
@@ -115,6 +127,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                       final entries = (payload['entries'] as List)
                           .map<List<int>>((e) => (e as List).cast<int>())
                           .toList(growable: false);
+                      _lastEntries = entries;
                       final matrix = matrixFromEntries(
                         rows: rows,
                         cols: cols,
@@ -135,6 +148,19 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                     final raw = binEvents(events: events);
                     final matrix = applyKAnonymityThreshold(raw,
                         minCount: settings.minCount);
+                    // Genereer entries uit matrix voor CSV export
+                    final rows = matrix.isEmpty ? 0 : matrix[0].length;
+                    final cols = matrix.length;
+                    final entries = <List<int>>[];
+                    for (int r = 0; r < rows; r += 1) {
+                      for (int c = 0; c < cols; c += 1) {
+                        final count = matrix[c][r];
+                        if (count > 0) {
+                          entries.add(<int>[r, c, count]);
+                        }
+                      }
+                    }
+                    _lastEntries = entries;
                     return RepaintBoundary(
                       key: _repaintKey,
                       child: CustomPaint(
@@ -185,6 +211,39 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Export mislukt: $e')),
+      );
+    }
+  }
+
+  Future<void> _exportCsv() async {
+    try {
+      final entries = _lastEntries;
+      if (entries == null || entries.isEmpty) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Geen data om te exporteren')),
+        );
+        return;
+      }
+      final buffer = StringBuffer();
+      buffer.writeln('row,col,count');
+      for (final e in entries) {
+        buffer.writeln('${e[0]},${e[1]},${e[2]}');
+      }
+      final bytes = Uint8List.fromList(buffer.toString().codeUnits);
+      await fs.FileSaver.instance.saveFile(
+        name: 'heatmap_counts.csv',
+        bytes: bytes,
+        mimeType: fs.MimeType.csv,
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('CSV geëxporteerd')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('CSV export mislukt: $e')),
       );
     }
   }
