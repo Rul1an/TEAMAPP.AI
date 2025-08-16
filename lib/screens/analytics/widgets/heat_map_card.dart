@@ -241,9 +241,23 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
       final name =
           'heatmap_counts_${settings.palette.name}_k${settings.minCount}_${dpPart}_${_category.name}_$ts.csv';
 
+      // Derive grid dimensions from sparse entries
+      int rows = 0;
+      int cols = 0;
+      for (final e in entries) {
+        if (e.length >= 2) {
+          final r = e[0];
+          final c = e[1];
+          if (r + 1 > rows) rows = r + 1;
+          if (c + 1 > cols) cols = c + 1;
+        }
+      }
+
       final buffer = StringBuffer();
       // Metadata header (commented) for reproducibility
       buffer.writeln('# heatmap csv export');
+      buffer.writeln('# rows=$rows');
+      buffer.writeln('# cols=$cols');
       buffer.writeln('# palette=${settings.palette.name}');
       buffer.writeln('# minCount=${settings.minCount}');
       buffer.writeln('# dpEnabled=${settings.dpEnabled}');
