@@ -140,7 +140,8 @@ class DashboardScreen extends ConsumerWidget {
         const PlayerQuickActions(),
         const SizedBox(height: 24),
         PlayerStatsSection(
-          trainingCount: (statistics?.totalTrainingAttendance ?? 0) as int,
+          // Align with Statistics.toLegacyMap(): use 'totalTrainings'
+          trainingCount: (statistics?.totalTrainings ?? 0) as int,
           matchCount: (statistics?.totalMatches ?? 0) as int,
         ),
         const SizedBox(height: 24),
