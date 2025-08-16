@@ -32,147 +32,20 @@ import '../widgets/common/main_scaffold.dart';
 // import schedule import removed – feature postponed
 import '../config/providers.dart';
 import '../config/environment.dart';
-import '../providers/connectivity_status_provider.dart';
+// import '../providers/connectivity_status_provider.dart';
 import '../services/monitoring_service.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
-      // 🎯 2025 Best Practice: Direct routing based on app mode
-      initialLocation: '/dashboard',
+      // Minimal routing to exclude redirect loops during recovery
+      initialLocation: '/auth',
       redirect: (context, state) {
-        MonitoringService.breadcrumb('router.redirect.enter',
+        MonitoringService.breadcrumb('router.redirect.disabled',
             data: {
               'path': state.fullPath,
               'mode': Environment.appMode.name,
             },
             category: 'router');
-        // Helper to map mutation paths to safe view routes
-        String? mapMutationPath(String path) {
-          // Basic patterns for add/edit/build routes
-          if (path.startsWith('/players/') && path.contains('/edit')) {
-            return '/players';
-          }
-          if (path == '/players/add') return '/players';
-
-          if (path.startsWith('/matches/') && path.contains('/edit')) {
-            return '/matches';
-          }
-          if (path == '/matches/add') return '/matches';
-
-          if (path == '/training/add') return '/training';
-          if (path.startsWith('/training/') && path.contains('/edit')) {
-            return '/training';
-          }
-
-          if (path.startsWith('/training-sessions/builder')) {
-            return '/training-sessions';
-          }
-
-          return null;
-        }
-
-        // In standalone mode, skip auth and block mutation deep-links
-        if (Environment.isStandaloneMode) {
-          final path = state.fullPath ?? '';
-          if (path.startsWith('/auth')) return '/dashboard';
-          final mapped = mapMutationPath(path);
-          return mapped; // null when not a mutation path
-        }
-
-        // Demo and SaaS mode authentication flows (null-safe)
-        try {
-          // Basic offline guard: when offline, keep user on current route (avoid loops)
-          bool isOnline = true; // safe default during startup
-          try {
-            final asyncConn = ref.read(connectivityStatusProvider);
-            isOnline = asyncConn.when(
-              data: (bool v) => v,
-              loading: () => true,
-              error: (_, __) => true,
-            );
-          } catch (_) {
-            isOnline = true;
-          }
-          MonitoringService.breadcrumb('router.guard.net',
-              data: {
-                'online': isOnline,
-              },
-              category: 'router');
-
-          bool isLoggedIn = false;
-          try {
-            isLoggedIn = ref.read(isLoggedInProvider);
-          } catch (_) {
-            isLoggedIn = false;
-          }
-          MonitoringService.breadcrumb('router.guard.auth',
-              data: {
-                'logged_in': isLoggedIn,
-              },
-              category: 'router');
-
-          bool isDemoMode = false;
-          try {
-            isDemoMode = ref.read(demoModeProvider).isActive;
-          } catch (_) {
-            isDemoMode = false;
-          }
-          MonitoringService.breadcrumb('router.guard.demo',
-              data: {
-                'demo_active': isDemoMode,
-              },
-              category: 'router');
-
-          final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
-
-          // Always allow access to auth page
-          if (isOnAuthPage) {
-            MonitoringService.breadcrumb('router.allow.auth',
-                category: 'router');
-            return null;
-          }
-
-          if (!isOnline) {
-            // Keep user on current route; if still at /auth or unknown, show offline page
-            final path = state.fullPath ?? '';
-            if (path.isEmpty || path == '/' || path.startsWith('/auth')) {
-              MonitoringService.breadcrumb('router.redirect.offline',
-                  category: 'router');
-              return '/offline';
-            }
-            return null;
-          }
-
-          // If not logged in and not in demo mode, redirect to auth
-          if (!isLoggedIn && !isDemoMode) {
-            MonitoringService.breadcrumb('router.redirect.auth',
-                category: 'router');
-            return '/auth';
-          }
-
-          // In demo mode, block mutation deep-links
-          if (isDemoMode) {
-            final path = state.fullPath ?? '';
-            final mapped = mapMutationPath(path);
-            if (mapped != null) return mapped;
-          }
-
-          MonitoringService.breadcrumb('router.redirect.ok',
-              data: {
-                'path': state.fullPath,
-              },
-              category: 'router');
-          return null;
-        } catch (e) {
-          // Providers may not be ready during early router boot; allow auth as fallback
-          final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
-          MonitoringService.breadcrumb('router.redirect.fallback',
-              data: {
-                'error': e.toString(),
-              },
-              category: 'router',
-              level: SentryLevel.warning);
-          return isOnAuthPage ? null : '/auth';
-        }
+        return null;
       },
       observers: [
         ref.read(analyticsRouteObserverProvider),

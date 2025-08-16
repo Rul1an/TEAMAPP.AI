@@ -22,7 +22,7 @@ import 'services/ui_error_handler.dart';
 import 'services/monitoring_service.dart';
 import 'services/telemetry_service.dart';
 import 'widgets/demo_mode_starter.dart';
-import 'providers/notifications_manager_provider.dart';
+// import 'providers/notifications_manager_provider.dart';
 
 Future<void> main() async {
   // CRITICAL ZONE FIX: Initialize bindings in same zone where runApp will be called
@@ -131,8 +131,9 @@ Future<void> _initializeApp() async {
     }
   }
 
-  // Initialize Supabase with error handling - FIXED: No double initialization
+  // Initialize Supabase with error handling - add diagnostics breadcrumbs
   try {
+    MonitoringService.breadcrumb('init.supabase.enter');
     // Try to access Supabase - if it fails, we need to initialize
     try {
       // ignore: unnecessary_statements
@@ -140,6 +141,7 @@ Future<void> _initializeApp() async {
       // If we get here, Supabase is already initialized
     } catch (_) {
       // Supabase not initialized yet
+      MonitoringService.breadcrumb('init.supabase.initialize.start');
       await Supabase.initialize(
         url: Environment.current.supabaseUrl,
         anonKey: Environment.current.supabaseAnonKey,
@@ -152,6 +154,7 @@ Future<void> _initializeApp() async {
     }
 
     // Initialize our SupabaseConfig wrapper (safe - no duplicate Supabase.initialize)
+    MonitoringService.breadcrumb('init.supabase.config.start');
     await SupabaseConfig.initializeClient();
     MonitoringService.breadcrumb('supabase.init_done');
   } catch (e) {
@@ -179,8 +182,8 @@ class JO17TacticalManagerApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
-    // Initialize notifications manager (no-op on web or when disabled)
-    ref.watch(notificationsManagerProvider);
+    // Initialize notifications manager (temporarily disabled during recovery)
+    // ref.watch(notificationsManagerProvider);
 
     return DemoModeStarter(
       child: MaterialApp.router(
