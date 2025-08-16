@@ -42,3 +42,33 @@ List<List<int>> applyKAnonymityThreshold(
   }
   return matrix;
 }
+
+/// Normalize a double-valued grid into an integer intensity matrix 0..[scale].
+/// If the max value is 0, returns all zeros.
+List<List<int>> normalizeToIntMatrix(
+  List<List<double>> grid, {
+  int scale = 100,
+}) {
+  if (grid.isEmpty) return <List<int>>[];
+  final int width = grid.length;
+  final int height = grid.first.length;
+  double maxVal = 0.0;
+  for (int x = 0; x < width; x += 1) {
+    for (int y = 0; y < height; y += 1) {
+      if (grid[x][y] > maxVal) maxVal = grid[x][y];
+    }
+  }
+  if (maxVal <= 0.0) {
+    return List<List<int>>.generate(
+      width,
+      (_) => List<int>.filled(height, 0),
+    );
+  }
+  return List<List<int>>.generate(
+    width,
+    (int x) => List<int>.generate(
+      height,
+      (int y) => ((grid[x][y] / maxVal) * scale).round(),
+    ),
+  );
+}

@@ -19,6 +19,7 @@ class HeatMapCard extends ConsumerStatefulWidget {
 class _HeatMapCardState extends ConsumerState<HeatMapCard> {
   ActionCategory _category = ActionCategory.overall;
   _TimeFrame _frame = _TimeFrame.season;
+  bool _showPredictions = false;
 
   @override
   void initState() {
@@ -42,6 +43,15 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                 const SizedBox(width: 8),
                 Text('Heatmap', style: Theme.of(context).textTheme.titleMedium),
                 const Spacer(),
+                Row(
+                  children: [
+                    const Text('Pred.'),
+                    Switch(
+                      value: _showPredictions,
+                      onChanged: (v) => setState(() => _showPredictions = v),
+                    ),
+                  ],
+                ),
                 _buildCategoryDropdown(),
                 const SizedBox(width: 8),
                 _buildFrameDropdown(),

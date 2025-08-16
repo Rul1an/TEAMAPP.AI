@@ -47,4 +47,19 @@ void main() {
     expect(filtered[0], <int>[0, 0, 0, 3, 4, 5]);
     expect(filtered[1], <int>[6, 0, 0, 0, 3, 4]);
   });
+
+  test('normalizeToIntMatrix scales values to 0..scale', () {
+    final grid = <List<double>>[
+      <double>[0.0, 0.5, 1.0],
+      <double>[0.25, 0.75, 0.0],
+    ];
+    final norm = normalizeToIntMatrix(grid, scale: 10);
+    expect(norm.length, 2);
+    expect(norm[0].length, 3);
+    // Max 1.0 → 10, 0.5 → 5, 0.25 → 2 or 3 depending on rounding
+    expect(norm[0][0], 0);
+    expect(norm[0][1], 5);
+    expect(norm[0][2], 10);
+    expect(norm[1][0], inInclusiveRange(2, 3));
+  });
 }
