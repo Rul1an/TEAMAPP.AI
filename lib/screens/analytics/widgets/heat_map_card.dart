@@ -8,6 +8,7 @@ import '../../../widgets/analytics/heat_map_painter.dart';
 import '../../../models/action_category.dart';
 import '../../../models/action_event.dart';
 import '../../../services/analytics_service.dart';
+import '../../../services/prediction_service.dart';
 
 class HeatMapCard extends ConsumerStatefulWidget {
   const HeatMapCard({super.key});
@@ -64,12 +65,22 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                 // custom util widget assumed
                 value: eventsAsync,
                 data: (events) {
-                  final raw = binEvents(events: events);
-                  final matrix = applyKAnonymityThreshold(raw, minCount: 4);
-                  return CustomPaint(
-                    painter: HeatMapPainter(matrix),
-                    size: Size.infinite,
-                  );
+                  if (_showPredictions) {
+                    const PredictionService svc = PredictionService();
+                    final danger = svc.shotDangerGrid(events: events);
+                    final matrix = normalizeToIntMatrix(danger, scale: 100);
+                    return CustomPaint(
+                      painter: HeatMapPainter(matrix),
+                      size: Size.infinite,
+                    );
+                  } else {
+                    final raw = binEvents(events: events);
+                    final matrix = applyKAnonymityThreshold(raw, minCount: 4);
+                    return CustomPaint(
+                      painter: HeatMapPainter(matrix),
+                      size: Size.infinite,
+                    );
+                  }
                 },
               ),
             ),
