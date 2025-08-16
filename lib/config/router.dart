@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import '../models/training_session/training_exercise.dart';
-import '../screens/annual_planning/annual_planning_screen.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/matches/add_match_screen.dart';
@@ -35,11 +33,18 @@ import '../widgets/common/main_scaffold.dart';
 import '../config/providers.dart';
 import '../config/environment.dart';
 import '../providers/connectivity_status_provider.dart';
+import '../services/monitoring_service.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
       // 🎯 2025 Best Practice: Direct routing based on app mode
       initialLocation: Environment.isStandaloneMode ? '/dashboard' : '/auth',
       redirect: (context, state) {
+        MonitoringService.breadcrumb('router.redirect.enter',
+            data: {
+              'path': state.fullPath,
+              'mode': Environment.appMode.name,
+            },
+            category: 'router');
         // Helper to map mutation paths to safe view routes
         String? mapMutationPath(String path) {
           // Basic patterns for add/edit/build routes
@@ -87,6 +92,11 @@ GoRouter createRouter(Ref ref) => GoRouter(
           } catch (_) {
             isOnline = true;
           }
+          MonitoringService.breadcrumb('router.guard.net',
+              data: {
+                'online': isOnline,
+              },
+              category: 'router');
 
           bool isLoggedIn = false;
           try {
@@ -94,6 +104,11 @@ GoRouter createRouter(Ref ref) => GoRouter(
           } catch (_) {
             isLoggedIn = false;
           }
+          MonitoringService.breadcrumb('router.guard.auth',
+              data: {
+                'logged_in': isLoggedIn,
+              },
+              category: 'router');
 
           bool isDemoMode = false;
           try {
@@ -101,11 +116,18 @@ GoRouter createRouter(Ref ref) => GoRouter(
           } catch (_) {
             isDemoMode = false;
           }
+          MonitoringService.breadcrumb('router.guard.demo',
+              data: {
+                'demo_active': isDemoMode,
+              },
+              category: 'router');
 
           final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
 
           // Always allow access to auth page
           if (isOnAuthPage) {
+            MonitoringService.breadcrumb('router.allow.auth',
+                category: 'router');
             return null;
           }
 
@@ -113,6 +135,8 @@ GoRouter createRouter(Ref ref) => GoRouter(
             // Keep user on current route; if still at /auth or unknown, show offline page
             final path = state.fullPath ?? '';
             if (path.isEmpty || path == '/' || path.startsWith('/auth')) {
+              MonitoringService.breadcrumb('router.redirect.offline',
+                  category: 'router');
               return '/offline';
             }
             return null;
@@ -120,6 +144,8 @@ GoRouter createRouter(Ref ref) => GoRouter(
 
           // If not logged in and not in demo mode, redirect to auth
           if (!isLoggedIn && !isDemoMode) {
+            MonitoringService.breadcrumb('router.redirect.auth',
+                category: 'router');
             return '/auth';
           }
 
@@ -130,10 +156,21 @@ GoRouter createRouter(Ref ref) => GoRouter(
             if (mapped != null) return mapped;
           }
 
+          MonitoringService.breadcrumb('router.redirect.ok',
+              data: {
+                'path': state.fullPath,
+              },
+              category: 'router');
           return null;
         } catch (e) {
           // Providers may not be ready during early router boot; allow auth as fallback
           final isOnAuthPage = state.fullPath?.startsWith('/auth') ?? false;
+          MonitoringService.breadcrumb('router.redirect.fallback',
+              data: {
+                'error': e.toString(),
+              },
+              category: 'router',
+              level: SentryLevel.warning);
           return isOnAuthPage ? null : '/auth';
         }
       },
@@ -218,18 +255,17 @@ GoRouter createRouter(Ref ref) => GoRouter(
                   builder: (context, state) => const AddTrainingScreen(),
                 ),
                 GoRoute(
-                  path: 'attendance/:id',
-                  builder: (context, state) {
-                    final trainingId = state.pathParameters['id'] ?? '';
-                    return TrainingAttendanceScreen(trainingId: trainingId);
-                  },
+                  path: ':trainingId/edit',
+                  builder: (context, state) => EditTrainingScreen(
+                    trainingId: state.pathParameters['trainingId'] ?? '',
+                  ),
                 ),
                 GoRoute(
-                  path: ':id/edit',
-                  builder: (context, state) {
-                    final trainingId = state.pathParameters['id'] ?? '';
-                    return EditTrainingScreen(trainingId: trainingId);
-                  },
+                  path: ':trainingId/attendance',
+                  name: 'training-attendance',
+                  builder: (context, state) => TrainingAttendanceScreen(
+                    trainingId: state.pathParameters['trainingId'] ?? '',
+                  ),
                 ),
               ],
             ),
@@ -244,9 +280,9 @@ GoRouter createRouter(Ref ref) => GoRouter(
                   name: 'add-match',
                   builder: (context, state) => const AddMatchScreen(),
                 ),
-                // Import schedule route temporarily disabled pending new implementation
                 GoRoute(
                   path: ':matchId',
+                  name: 'match-detail',
                   builder: (context, state) => MatchDetailScreen(
                     matchId: state.pathParameters['matchId'] ?? '',
                   ),
@@ -257,93 +293,64 @@ GoRouter createRouter(Ref ref) => GoRouter(
                     matchId: state.pathParameters['matchId'] ?? '',
                   ),
                 ),
-              ],
-            ),
-            GoRoute(
-              path: '/lineup',
-              name: 'lineup-builder',
-              pageBuilder: (context, state) {
-                final matchId = state.uri.queryParameters['matchId'];
-                return NoTransitionPage(
-                  child: LineupBuilderScreen(matchId: matchId),
-                );
-              },
-            ),
-            GoRoute(
-              path: '/annual-planning',
-              name: 'annual-planning',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: AnnualPlanningScreen()),
-            ),
-            GoRoute(
-              path: '/training-sessions',
-              name: 'training-sessions',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: TrainingSessionsScreen()),
-              routes: [
                 GoRoute(
-                  path: 'builder',
-                  name: 'session-builder',
-                  builder: (context, state) {
-                    final sessionId = state.uri.queryParameters['sessionId'];
-                    return SessionBuilderView(
-                      sessionId:
-                          sessionId != null ? int.tryParse(sessionId) : null,
-                    );
-                  },
+                  path: 'lineup',
+                  name: 'lineup-builder',
+                  builder: (context, state) => const LineupBuilderScreen(),
                 ),
               ],
             ),
-            GoRoute(
-              path: '/exercise-library',
-              name: 'exercise-library',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: ExerciseLibraryScreen()),
-            ),
-            GoRoute(
-              path: '/field-diagram-editor',
-              name: 'field-diagram-editor',
-              builder: (context, state) => const FieldDiagramEditorScreen(),
-            ),
-            GoRoute(
-              path: '/exercise-designer',
-              name: 'exercise-designer',
-              builder: (context, state) {
-                final sessionId = state.uri.queryParameters['sessionId'];
-                final typeString = state.uri.queryParameters['type'];
-                ExerciseType? type;
-
-                if (typeString != null) {
-                  type = ExerciseType.values.firstWhere(
-                    (e) => e.name == typeString,
-                    orElse: () => ExerciseType.technical,
-                  );
-                }
-
-                return ExerciseDesignerScreen(
-                  sessionId: sessionId,
-                  initialType: type,
-                );
-              },
-            ),
-            GoRoute(
-              path: '/season',
-              name: 'season-hub',
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: SeasonHubScreen()),
-            ),
-            // New combined insights route
             GoRoute(
               path: '/insights',
               name: 'insights',
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: InsightsScreen()),
             ),
-            // Legacy deep-link routes removed (analytics, svs, admin) – replaced by unified Insights screen.
+            GoRoute(
+              path: '/season',
+              name: 'season',
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: SeasonHubScreen()),
+            ),
+            GoRoute(
+              path: '/exercise-library',
+              name: 'exercise-library',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: ExerciseLibraryScreen(),
+              ),
+            ),
+            GoRoute(
+              path: '/field-diagram-editor',
+              name: 'field-diagram-editor',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: FieldDiagramEditorScreen(),
+              ),
+            ),
+            GoRoute(
+              path: '/exercise-designer',
+              name: 'exercise-designer',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: ExerciseDesignerScreen(),
+              ),
+            ),
+            GoRoute(
+              path: '/training-sessions',
+              name: 'training-sessions',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: TrainingSessionsScreen(),
+              ),
+              routes: [
+                GoRoute(
+                  path: 'builder',
+                  name: 'session-builder',
+                  pageBuilder: (context, state) => const NoTransitionPage(
+                    child: SessionBuilderView(),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
-
-        // Legacy deep-links removed pending future implementation
       ],
     );
 

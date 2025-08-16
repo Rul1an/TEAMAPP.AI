@@ -30,15 +30,20 @@ Future<void> main() async {
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      MonitoringService.breadcrumb('app.zone_entered');
 
       // Web fonts: using system typography; no runtime fetching required
 
+      MonitoringService.breadcrumb('app.init_start');
       await _initializeApp();
+      MonitoringService.breadcrumb('app.init_done');
 
       // Initialize UI Error Handler within the same zone
       UIErrorHandler.initialize();
+      MonitoringService.breadcrumb('ui_error_handler.init');
 
       // Run app in the same zone where bindings were initialized
+      MonitoringService.breadcrumb('app.runApp');
       runApp(const ProviderScope(child: JO17TacticalManagerApp()));
     },
     (error, stackTrace) {
@@ -47,6 +52,11 @@ Future<void> main() async {
         print('🚨 App Initialization Error: $error');
         print('Stack: $stackTrace');
       }
+      MonitoringService.reportError(
+        error: error,
+        stackTrace: stackTrace,
+        context: 'main.runZonedGuarded',
+      );
     },
   );
 }
@@ -83,6 +93,7 @@ Future<void> _initializeApp() async {
   // Initialize Sentry monitoring early in app startup
   try {
     await MonitoringService.initialize();
+    MonitoringService.breadcrumb('monitoring.init_done');
   } catch (e) {
     if (kDebugMode) {
       debugPrint('⚠️ Sentry initialization failed: $e');
@@ -102,6 +113,7 @@ Future<void> _initializeApp() async {
       if (kDebugMode) {
         debugPrint('📨 Sentry ping sent: $sentryPingMessage');
       }
+      MonitoringService.breadcrumb('sentry.ping_sent');
     } catch (e) {
       if (kDebugMode) {
         debugPrint('⚠️ Failed to send Sentry ping: $e');
@@ -112,6 +124,7 @@ Future<void> _initializeApp() async {
   // Initialize OpenTelemetry if configured
   try {
     await TelemetryService().init();
+    MonitoringService.breadcrumb('telemetry.init_done');
   } catch (e) {
     if (kDebugMode) {
       debugPrint('⚠️ Telemetry initialization failed: $e');
@@ -140,6 +153,7 @@ Future<void> _initializeApp() async {
 
     // Initialize our SupabaseConfig wrapper (safe - no duplicate Supabase.initialize)
     await SupabaseConfig.initializeClient();
+    MonitoringService.breadcrumb('supabase.init_done');
   } catch (e) {
     // Log error but don't crash - app can work offline
     if (kDebugMode) {
@@ -155,6 +169,7 @@ Future<void> _initializeApp() async {
     await Firebase.initializeApp();
     await FirebasePerformance.instance
         .setPerformanceCollectionEnabled(!kDebugMode);
+    MonitoringService.breadcrumb('firebase.init_done');
   }
 }
 

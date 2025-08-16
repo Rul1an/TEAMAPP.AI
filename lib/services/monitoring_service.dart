@@ -144,6 +144,38 @@ class MonitoringService {
     return parsed;
   }
 
+  /// Lightweight breadcrumb helper for ad-hoc diagnostics (startup/router, etc.)
+  static void breadcrumb(
+    String message, {
+    Map<String, Object?>? data,
+    String category = 'diagnostic',
+    SentryLevel level = SentryLevel.info,
+  }) {
+    try {
+      // Console hint for quick visibility
+      if (kDebugMode) {
+        // ignore: avoid_print
+        print('🧭 $category: $message ${data == null ? '' : data.toString()}');
+      }
+      Sentry.addBreadcrumb(
+        Breadcrumb(
+          message: message,
+          data: data == null
+              ? null
+              : PiiSanitizer.sanitizeMap(
+                  Map<String, dynamic>.from(data)
+                    ..removeWhere((k, v) => v == null),
+                ),
+          category: category,
+          level: level,
+          timestamp: DateTime.now(),
+        ),
+      );
+    } catch (_) {
+      // swallow
+    }
+  }
+
   /// Track custom events for business metrics
   static Future<void> trackEvent({
     required String name,
