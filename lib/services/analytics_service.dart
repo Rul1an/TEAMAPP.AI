@@ -38,7 +38,11 @@ class AnalyticsService {
     Map<String, Object>? parameters,
   }) async {
     // Respect user consent
-    if (!await _hasConsent()) return;
+    try {
+      if (!await _hasConsent()) return;
+    } catch (_) {
+      // In case consent storage breaks, do not block rendering
+    }
 
     // Initialize analytics if available
     await _ensureInitialized();

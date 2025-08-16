@@ -1,6 +1,7 @@
 // User consent management: persist locally (Hive) and propagate to Supabase user metadata when authenticated.
 
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../config/supabase_config.dart';
@@ -47,6 +48,12 @@ class ConsentService {
   }
 
   Future<Box<Map<String, bool>>> _openBox() async {
+    try {
+      // Ensure Hive is initialized on web/mobile before opening
+      await Hive.initFlutter();
+    } catch (_) {
+      // Safe to ignore if already initialized or not needed on this platform
+    }
     if (!Hive.isBoxOpen(_boxName)) {
       return Hive.openBox<Map<String, bool>>(_boxName);
     }

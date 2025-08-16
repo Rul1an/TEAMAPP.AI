@@ -37,7 +37,7 @@ import '../services/monitoring_service.dart';
 
 GoRouter createRouter(Ref ref) => GoRouter(
       // 🎯 2025 Best Practice: Direct routing based on app mode
-      initialLocation: Environment.isStandaloneMode ? '/dashboard' : '/auth',
+      initialLocation: '/dashboard',
       redirect: (context, state) {
         MonitoringService.breadcrumb('router.redirect.enter',
             data: {
