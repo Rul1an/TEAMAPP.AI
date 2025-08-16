@@ -13,8 +13,6 @@ import '../../../widgets/analytics/heat_map_legend.dart';
 import '../../../widgets/analytics/heat_map_palette.dart';
 import '../../../providers/heat_map_settings_provider.dart';
 import '../../../services/heatmap_privacy_service.dart';
-import '../../../utils/heatmap_utils.dart'
-    show aggregateEvents, matrixFromEntries;
 
 class HeatMapCard extends ConsumerStatefulWidget {
   const HeatMapCard({super.key});
