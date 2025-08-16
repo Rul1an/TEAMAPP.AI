@@ -70,14 +70,14 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                     final danger = svc.shotDangerGrid(events: events);
                     final matrix = normalizeToIntMatrix(danger, scale: 100);
                     return CustomPaint(
-                      painter: HeatMapPainter(matrix),
+                      painter: HeatMapPainter(matrix, opacity: 0.85),
                       size: Size.infinite,
                     );
                   } else {
                     final raw = binEvents(events: events);
                     final matrix = applyKAnonymityThreshold(raw, minCount: 4);
                     return CustomPaint(
-                      painter: HeatMapPainter(matrix),
+                      painter: HeatMapPainter(matrix, opacity: 0.9),
                       size: Size.infinite,
                     );
                   }

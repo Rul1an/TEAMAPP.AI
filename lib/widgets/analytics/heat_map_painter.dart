@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HeatMapPainter extends CustomPainter {
-  HeatMapPainter(this.matrix);
+  HeatMapPainter(this.matrix, {this.opacity = 1.0});
 
   final List<List<int>> matrix; // 30x20 grid intensities
+  final double opacity; // 0..1
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -16,7 +17,8 @@ class HeatMapPainter extends CustomPainter {
         final val = matrix[i][j];
         if (val == 0) continue;
         final intensity = val / max;
-        paint.color = Color.lerp(Colors.yellow, Colors.red, intensity)!;
+        paint.color = Color.lerp(Colors.yellow, Colors.red, intensity)!
+            .withOpacity(opacity.clamp(0.0, 1.0));
         final rect = Rect.fromLTWH(i * cellW, j * cellH, cellW, cellH);
         canvas.drawRect(rect, paint);
       }
