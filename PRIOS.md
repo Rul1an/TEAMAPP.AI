@@ -32,6 +32,7 @@ Could-have (Q4+ 2025)
 - Advanced Analytics: heatmaps/predictions (na events-standaardisatie).
   - Progress: `analytics/heatmap_aggregator.dart` + tests; normaliseerde coördinaten, sparse counts, deterministische sampling, JSON round‑trip; consent‑gating; k‑anonimiteit (minCount) en optionele DP‑noise (`HeatmapPrivacyService`) met ε‑selector; helpers `aggregateEvents()` en `matrixFromEntries()`; baseline `PredictionService` (xG‑achtig) met tests.
   - UI: Heatmap kaart met predictions‑toggle, palet‑selectie (`classic`, `blueOrange`, `viridis`), legenda, k≥ dropdown, DP‑toggle + ε‑selector; opacity‑tuning.
+  - Export: Heatmap PNG‑export (RepaintBoundary) en CSV‑export van sparse counts (`row,col,count`). CSV respecteert k‑anonimiteit en toegepaste DP‑noise; predictions worden niet geëxporteerd.
 - Analyzer 6 migratiestap (kwaliteitsinfra) zodra upstream stabiel.
 
 Afgerond (Q3 2025 – selectie)
