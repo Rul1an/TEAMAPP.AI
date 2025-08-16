@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:ui' as ui;
+import 'package:file_saver/file_saver.dart' as fs;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../controllers/heat_map_controller.dart';
@@ -25,6 +28,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
   ActionCategory _category = ActionCategory.overall;
   _TimeFrame _frame = _TimeFrame.season;
   bool _showPredictions = false;
+  final GlobalKey _repaintKey = GlobalKey();
 
   @override
   void initState() {
@@ -59,6 +63,12 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                     _buildPaletteMenu(context),
                     const SizedBox(width: 8),
                     _buildMinCountMenu(context),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      tooltip: 'Exporteren (PNG)',
+                      icon: const Icon(Icons.download),
+                      onPressed: _exportHeatmap,
+                    ),
                   ],
                 ),
                 _buildCategoryDropdown(),
@@ -78,13 +88,16 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                     const PredictionService svc = PredictionService();
                     final danger = svc.shotDangerGrid(events: events);
                     final matrix = normalizeToIntMatrix(danger, scale: 100);
-                    return CustomPaint(
-                      painter: HeatMapPainter(
-                        matrix,
-                        opacity: 0.85,
-                        palette: settings.palette,
+                    return RepaintBoundary(
+                      key: _repaintKey,
+                      child: CustomPaint(
+                        painter: HeatMapPainter(
+                          matrix,
+                          opacity: 0.85,
+                          palette: settings.palette,
+                        ),
+                        size: Size.infinite,
                       ),
-                      size: Size.infinite,
                     );
                   } else {
                     // Count-based matrix; if DP enabled, add Laplace noise via privacy service
@@ -107,25 +120,31 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                         cols: cols,
                         entries: entries,
                       );
-                      return CustomPaint(
+                      return RepaintBoundary(
+                        key: _repaintKey,
+                        child: CustomPaint(
+                          painter: HeatMapPainter(
+                            matrix,
+                            opacity: 0.9,
+                            palette: settings.palette,
+                          ),
+                          size: Size.infinite,
+                        ),
+                      );
+                    }
+                    final raw = binEvents(events: events);
+                    final matrix = applyKAnonymityThreshold(raw,
+                        minCount: settings.minCount);
+                    return RepaintBoundary(
+                      key: _repaintKey,
+                      child: CustomPaint(
                         painter: HeatMapPainter(
                           matrix,
                           opacity: 0.9,
                           palette: settings.palette,
                         ),
                         size: Size.infinite,
-                      );
-                    }
-                    final raw = binEvents(events: events);
-                    final matrix = applyKAnonymityThreshold(raw,
-                        minCount: settings.minCount);
-                    return CustomPaint(
-                      painter: HeatMapPainter(
-                        matrix,
-                        opacity: 0.9,
-                        palette: settings.palette,
                       ),
-                      size: Size.infinite,
                     );
                   }
                 },
@@ -140,6 +159,34 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
         ),
       ),
     );
+  }
+
+  Future<void> _exportHeatmap() async {
+    try {
+      final ctx = _repaintKey.currentContext;
+      if (ctx == null) return;
+      final boundary = ctx.findRenderObject() as RenderRepaintBoundary?;
+      if (boundary == null) return;
+      final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+      final ui.Image image = await boundary.toImage(pixelRatio: pixelRatio);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData == null) return;
+      final bytes = byteData.buffer.asUint8List();
+      await fs.FileSaver.instance.saveFile(
+        name: 'heatmap.png',
+        bytes: bytes,
+        mimeType: fs.MimeType.png,
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Heatmap geëxporteerd als PNG')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Export mislukt: $e')),
+      );
+    }
   }
 
   Widget _buildPaletteMenu(BuildContext context) {
