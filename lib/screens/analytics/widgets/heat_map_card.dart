@@ -131,16 +131,25 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
 
   Widget _buildMinCountMenu(BuildContext context) {
     final settings = ref.watch(heatMapSettingsProvider);
-    return DropdownButton<int>(
-      value: settings.minCount,
-      onChanged: (v) {
-        if (v == null) return;
-        ref.read(heatMapSettingsProvider.notifier).setMinCount(v);
-      },
-      items: const [2, 3, 4, 5, 6]
-          .map((n) => DropdownMenuItem(value: n, child: Text('k≥$n')))
-          .toList(),
-    );
+    return Row(children: [
+      DropdownButton<int>(
+        value: settings.minCount,
+        onChanged: (v) {
+          if (v == null) return;
+          ref.read(heatMapSettingsProvider.notifier).setMinCount(v);
+        },
+        items: const [2, 3, 4, 5, 6]
+            .map((n) => DropdownMenuItem(value: n, child: Text('k≥$n')))
+            .toList(),
+      ),
+      const SizedBox(width: 8),
+      const Text('DP'),
+      Switch(
+        value: settings.dpEnabled,
+        onChanged: (v) =>
+            ref.read(heatMapSettingsProvider.notifier).setDpEnabled(v),
+      ),
+    ]);
   }
 
   Widget _buildCategoryDropdown() => DropdownButton<ActionCategory>(
