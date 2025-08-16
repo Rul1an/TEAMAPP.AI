@@ -12,6 +12,9 @@ import '../../../services/prediction_service.dart';
 import '../../../widgets/analytics/heat_map_legend.dart';
 import '../../../widgets/analytics/heat_map_palette.dart';
 import '../../../providers/heat_map_settings_provider.dart';
+import '../../../services/heatmap_privacy_service.dart';
+import '../../../utils/heatmap_utils.dart'
+    show aggregateEvents, matrixFromEntries;
 
 class HeatMapCard extends ConsumerStatefulWidget {
   const HeatMapCard({super.key});
@@ -86,6 +89,35 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                       size: Size.infinite,
                     );
                   } else {
+                    // Count-based matrix; if DP enabled, add Laplace noise via privacy service
+                    if (settings.dpEnabled) {
+                      final agg = aggregateEvents(events: events);
+                      final payload =
+                          const HeatmapPrivacyService().prepareUpload(
+                        aggregator: agg,
+                        minCount: settings.minCount,
+                        epsilon: settings.epsilon,
+                        seed: 0,
+                      );
+                      final rows = payload['rows'] as int;
+                      final cols = payload['cols'] as int;
+                      final entries = (payload['entries'] as List)
+                          .map<List<int>>((e) => (e as List).cast<int>())
+                          .toList(growable: false);
+                      final matrix = matrixFromEntries(
+                        rows: rows,
+                        cols: cols,
+                        entries: entries,
+                      );
+                      return CustomPaint(
+                        painter: HeatMapPainter(
+                          matrix,
+                          opacity: 0.9,
+                          palette: settings.palette,
+                        ),
+                        size: Size.infinite,
+                      );
+                    }
                     final raw = binEvents(events: events);
                     final matrix = applyKAnonymityThreshold(raw,
                         minCount: settings.minCount);
@@ -149,6 +181,22 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
         onChanged: (v) =>
             ref.read(heatMapSettingsProvider.notifier).setDpEnabled(enabled: v),
       ),
+      if (settings.dpEnabled) ...[
+        const SizedBox(width: 8),
+        DropdownButton<double>(
+          value: settings.epsilon,
+          onChanged: (val) {
+            if (val == null) return;
+            ref.read(heatMapSettingsProvider.notifier).setEpsilon(val);
+          },
+          items: const [0.5, 1.0, 2.0]
+              .map((e) => DropdownMenuItem(
+                    value: e,
+                    child: Text('ε=$e'),
+                  ))
+              .toList(),
+        ),
+      ],
     ]);
   }
 
