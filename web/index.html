@@ -72,6 +72,22 @@
       padding: 2rem;
       color: #333;
     }
+    #debug-log {
+      position: fixed;
+      left: 8px;
+      bottom: 8px;
+      z-index: 2147483647; /* always on top */
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font: 12px/1.4 monospace;
+      max-width: 60vw;
+      max-height: 40vh;
+      overflow: auto;
+      pointer-events: none;
+      display: block;
+    }
   </style>
 
   <div id="splash" class="ci-splash">Loading…</div>
@@ -80,13 +96,17 @@
     // Keep splash available for diagnostics; fade out instead of removing
     window.addEventListener('flutter-first-frame', () => {
       const splash = document.getElementById('splash');
-      if (!splash) return;
-      splash.style.transition = 'opacity 300ms ease';
-      splash.style.opacity = '0';
-      setTimeout(() => {
-        // Hide but keep in DOM for potential error messages
-        splash.style.display = 'none';
-      }, 350);
+      if (splash) {
+        splash.style.transition = 'opacity 300ms ease';
+        splash.style.opacity = '0';
+        setTimeout(() => { splash.style.display = 'none'; }, 350);
+      }
+      // Re-append debug panel so it's last in DOM and guaranteed on top
+      const panel = document.getElementById('debug-log');
+      if (panel) {
+        document.body.appendChild(panel);
+        panel.style.display = 'block';
+      }
     });
   </script>
   <script>
@@ -120,7 +140,6 @@
         if (!debugPanel) {
           debugPanel = document.createElement('div');
           debugPanel.id = 'debug-log';
-          debugPanel.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:rgba(0,0,0,0.7);color:#fff;padding:6px 8px;border-radius:6px;font:12px/1.4 monospace;max-width:60vw;max-height:40vh;overflow:auto;pointer-events:none;';
           document.body.appendChild(debugPanel);
         }
         const renderText = (msg) => `Loading… ${new Date().toISOString()}\n${msg}`;
@@ -135,6 +154,25 @@
             debugPanel.appendChild(line);
           }
         };
+
+        // Show first error as alert to surface issues when console is blocked
+        let alerted = false;
+        window.addEventListener('error', (e) => {
+          if (!alerted) {
+            alerted = true;
+            try { alert('Error: ' + e.message); } catch(_) {}
+          }
+        }, { once: false });
+
+        // Hotkey to toggle debug panel (press "d")
+        document.addEventListener('keydown', (ev) => {
+          if ((ev.key || '').toLowerCase() === 'd') {
+            const panel = document.getElementById('debug-log');
+            if (panel) {
+              panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            }
+          }
+        });
 
         if (safeMode) {
           // Provide basic controls in safe mode
