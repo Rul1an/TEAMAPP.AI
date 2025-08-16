@@ -1,6 +1,5 @@
 // User consent management: persist locally (Hive) and propagate to Supabase user metadata when authenticated.
 
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
