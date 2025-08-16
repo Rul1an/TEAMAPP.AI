@@ -83,6 +83,55 @@
       splash?.remove();
     });
   </script>
+  <script>
+    // Early diagnostics & Service Worker control (2025 recovery mode)
+    (function () {
+      try {
+        const params = new URLSearchParams(location.search);
+        const disableSW = true // temporary recovery default to force unregister
+          || params.has('nosw')
+          || localStorage.getItem('disable_sw') === '1';
+
+        // Disable Flutter's SW registration by nulling the version
+        window.flutterConfiguration = {
+          serviceWorker: { serviceWorkerVersion: null }
+        };
+
+        // Unregister any existing SWs to break bad caches
+        if (disableSW && 'serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations()
+            .then((regs) => Promise.all(regs.map((r) => r.unregister())))
+            .catch(() => { /* ignore */ });
+        }
+
+        // Minimal on-screen logging in case console is unavailable
+        const splash = document.getElementById('splash');
+        const log = (msg) => {
+          try { console.log(msg); } catch (_) { /* ignore */ }
+          if (splash) {
+            splash.textContent = `Loading… ${new Date().toISOString()}\n${msg}`;
+          }
+        };
+
+        window.addEventListener('error', (e) => {
+          log(`window.error: ${e.message}`);
+        });
+        window.addEventListener('unhandledrejection', (e) => {
+          const reason = e && e.reason ? (e.reason.message || String(e.reason)) : 'unknown';
+          log(`unhandledrejection: ${reason}`);
+        });
+
+        // Bootstrap timeout guard: if no first frame, show hint
+        let firstFrame = false;
+        window.addEventListener('flutter-first-frame', () => { firstFrame = true; });
+        setTimeout(() => {
+          if (!firstFrame) {
+            log('bootstrap timeout: no first frame yet. SW disabled; try hard refresh (Cmd+Shift+R).');
+          }
+        }, 6000);
+      } catch (_) { /* ignore */ }
+    })();
+  </script>
   <script src="flutter_bootstrap.js" async crossorigin="anonymous"></script>
   <!-- CanvasKit warm-up disabled to avoid preload-not-used warnings; SW caches on first use -->
 </body>
