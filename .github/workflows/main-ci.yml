@@ -779,10 +779,15 @@ jobs:
           path: build/web/
           retention-days: 7
 
+      - name: 🎯 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: 📦 Install Sentry CLI
         if: ${{ !cancelled() }}
         run: |
-          curl -sL https://sentry.io/get-cli/ | bash
+          npm i -g @sentry/cli
 
       - name: 🧭 Create Sentry Release and Upload Web Source Maps
         env:
@@ -801,11 +806,6 @@ jobs:
           echo "📤 Uploading sourcemaps from build/web"
           sentry-cli releases files "$RELEASE" upload-sourcemaps build/web --rewrite --url-prefix "~/"
           sentry-cli releases finalize "$RELEASE"
-
-      - name: 🎯 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
 
       - name: 🚀 Deploy to Netlify
         id: deploy
