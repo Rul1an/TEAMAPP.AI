@@ -11,6 +11,7 @@ import '../../../services/analytics_service.dart';
 import '../../../services/prediction_service.dart';
 import '../../../widgets/analytics/heat_map_legend.dart';
 import '../../../widgets/analytics/heat_map_palette.dart';
+import '../../../providers/heat_map_settings_provider.dart';
 
 class HeatMapCard extends ConsumerStatefulWidget {
   const HeatMapCard({super.key});
@@ -53,6 +54,10 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                       value: _showPredictions,
                       onChanged: (v) => setState(() => _showPredictions = v),
                     ),
+                    const SizedBox(width: 8),
+                    _buildPaletteMenu(context),
+                    const SizedBox(width: 8),
+                    _buildMinCountMenu(context),
                   ],
                 ),
                 _buildCategoryDropdown(),
@@ -67,19 +72,29 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                 // custom util widget assumed
                 value: eventsAsync,
                 data: (events) {
+                  final settings = ref.watch(heatMapSettingsProvider);
                   if (_showPredictions) {
                     const PredictionService svc = PredictionService();
                     final danger = svc.shotDangerGrid(events: events);
                     final matrix = normalizeToIntMatrix(danger, scale: 100);
                     return CustomPaint(
-                      painter: HeatMapPainter(matrix, opacity: 0.85),
+                      painter: HeatMapPainter(
+                        matrix,
+                        opacity: 0.85,
+                        palette: settings.palette,
+                      ),
                       size: Size.infinite,
                     );
                   } else {
                     final raw = binEvents(events: events);
-                    final matrix = applyKAnonymityThreshold(raw, minCount: 4);
+                    final matrix = applyKAnonymityThreshold(raw,
+                        minCount: settings.minCount);
                     return CustomPaint(
-                      painter: HeatMapPainter(matrix, opacity: 0.9),
+                      painter: HeatMapPainter(
+                        matrix,
+                        opacity: 0.9,
+                        palette: settings.palette,
+                      ),
                       size: Size.infinite,
                     );
                   }
@@ -87,10 +102,44 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
               ),
             ),
             const SizedBox(height: 12),
-            const HeatMapLegend(palette: HeatMapPalette.classic),
+            Consumer(builder: (context, ref, _) {
+              final settings = ref.watch(heatMapSettingsProvider);
+              return HeatMapLegend(palette: settings.palette);
+            }),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPaletteMenu(BuildContext context) {
+    final settings = ref.watch(heatMapSettingsProvider);
+    return DropdownButton<HeatMapPalette>(
+      value: settings.palette,
+      onChanged: (p) {
+        if (p == null) return;
+        ref.read(heatMapSettingsProvider.notifier).setPalette(p);
+      },
+      items: HeatMapPalette.values
+          .map((p) => DropdownMenuItem(
+                value: p,
+                child: Text(p.name),
+              ))
+          .toList(),
+    );
+  }
+
+  Widget _buildMinCountMenu(BuildContext context) {
+    final settings = ref.watch(heatMapSettingsProvider);
+    return DropdownButton<int>(
+      value: settings.minCount,
+      onChanged: (v) {
+        if (v == null) return;
+        ref.read(heatMapSettingsProvider.notifier).setMinCount(v);
+      },
+      items: const [2, 3, 4, 5, 6]
+          .map((n) => DropdownMenuItem(value: n, child: Text('k≥$n')))
+          .toList(),
     );
   }
 
