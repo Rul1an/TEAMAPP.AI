@@ -77,10 +77,16 @@
   <div id="splash" class="ci-splash">Loading…</div>
 
   <script>
-    // Remove splash once Flutter renders its first frame.
+    // Keep splash available for diagnostics; fade out instead of removing
     window.addEventListener('flutter-first-frame', () => {
       const splash = document.getElementById('splash');
-      splash?.remove();
+      if (!splash) return;
+      splash.style.transition = 'opacity 300ms ease';
+      splash.style.opacity = '0';
+      setTimeout(() => {
+        // Hide but keep in DOM for potential error messages
+        splash.style.display = 'none';
+      }, 350);
     });
   </script>
   <script>
@@ -106,10 +112,23 @@
 
         // Minimal on-screen logging in case console is unavailable
         const splash = document.getElementById('splash');
+        let debugPanel = document.getElementById('debug-log');
+        if (!debugPanel) {
+          debugPanel = document.createElement('div');
+          debugPanel.id = 'debug-log';
+          debugPanel.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:rgba(0,0,0,0.7);color:#fff;padding:6px 8px;border-radius:6px;font:12px/1.4 monospace;max-width:60vw;max-height:40vh;overflow:auto;pointer-events:none;';
+          document.body.appendChild(debugPanel);
+        }
+        const renderText = (msg) => `Loading… ${new Date().toISOString()}\n${msg}`;
         const log = (msg) => {
           try { console.log(msg); } catch (_) { /* ignore */ }
-          if (splash) {
-            splash.textContent = `Loading… ${new Date().toISOString()}\n${msg}`;
+          if (splash && splash.style.display !== 'none') {
+            splash.textContent = renderText(msg);
+          }
+          if (debugPanel) {
+            const line = document.createElement('div');
+            line.textContent = msg;
+            debugPanel.appendChild(line);
           }
         };
 
@@ -132,7 +151,26 @@
       } catch (_) { /* ignore */ }
     })();
   </script>
-  <script src="flutter_bootstrap.js" async crossorigin="anonymous"></script>
+  <script>
+    // Dynamic bootstrap with cache-busting to avoid stale CDN caches
+    (function () {
+      try {
+        const s = document.createElement('script');
+        const v = Date.now().toString();
+        s.src = 'flutter_bootstrap.js?v=' + v;
+        s.async = true;
+        s.crossOrigin = 'anonymous';
+        s.onerror = function () {
+          const splash = document.getElementById('splash');
+          if (splash) {
+            splash.style.display = 'block';
+            splash.textContent = 'Failed to load bootstrap. Please hard refresh (Cmd+Shift+R).';
+          }
+        };
+        document.body.appendChild(s);
+      } catch (_) { /* ignore */ }
+    })();
+  </script>
   <!-- CanvasKit warm-up disabled to avoid preload-not-used warnings; SW caches on first use -->
 </body>
 
