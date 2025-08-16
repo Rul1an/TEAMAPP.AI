@@ -72,3 +72,40 @@ List<List<int>> normalizeToIntMatrix(
     ),
   );
 }
+
+/// Aggregates events into a HeatmapAggregator for reuse (e.g., DP processing).
+HeatmapAggregator aggregateEvents({
+  required List<ActionEvent> events,
+  int gridX = 30,
+  int gridY = 20,
+}) {
+  final HeatmapAggregator aggregator =
+      HeatmapAggregator(rows: gridY, cols: gridX);
+  for (final ActionEvent ev in events) {
+    aggregator.addPoint(x: ev.x, y: ev.y);
+  }
+  return aggregator;
+}
+
+/// Builds a [gridX][gridY] matrix from sparse entry triples [row, col, count].
+List<List<int>> matrixFromEntries({
+  required int rows,
+  required int cols,
+  required List<List<int>> entries,
+}) {
+  // Our painter expects [gridX][gridY] orientation (x-major). Convert accordingly.
+  final List<List<int>> matrix = List<List<int>>.generate(
+    cols,
+    (_) => List<int>.filled(rows, 0),
+  );
+  for (final List<int> e in entries) {
+    if (e.length != 3) continue;
+    final int r = e[0];
+    final int c = e[1];
+    final int count = e[2];
+    if (c >= 0 && c < cols && r >= 0 && r < rows) {
+      matrix[c][r] = count;
+    }
+  }
+  return matrix;
+}
