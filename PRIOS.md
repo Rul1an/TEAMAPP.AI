@@ -30,7 +30,7 @@ Should-have (Q3→Q4 2025)
 
 Could-have (Q4+ 2025)
 - Advanced Analytics: heatmaps/predictions (na events-standaardisatie).
-  - Progress: toegevoegd `analytics/heatmap_aggregator.dart` + tests; normaliseerde coördinaten, sparse counts, deterministische sampling, JSON round‑trip; consent‑gating in `HeatMapController` en profiel‑toggle toegevoegd.
+  - Progress: toegevoegd `analytics/heatmap_aggregator.dart` + tests; normaliseerde coördinaten, sparse counts, deterministische sampling, JSON round‑trip; consent‑gating in `HeatMapController` en profiel‑toggle toegevoegd; k‑anonimiteit (minCount=4) en optionele DP‑noise (`HeatmapPrivacyService`) toegepast.
 - Analyzer 6 migratiestap (kwaliteitsinfra) zodra upstream stabiel.
 
 Afgerond (Q3 2025 – selectie)
