@@ -36,4 +36,15 @@ void main() {
       expect(total, 2);
     });
   });
+
+  test('applyKAnonymityThreshold zeros sparse cells below minCount', () {
+    final matrix = <List<int>>[
+      <int>[0, 1, 2, 3, 4, 5],
+      <int>[6, 0, 1, 2, 3, 4],
+    ];
+    final filtered = applyKAnonymityThreshold(matrix, minCount: 3);
+    // Values 1 and 2 become 0; 3+ stay
+    expect(filtered[0], <int>[0, 0, 0, 3, 4, 5]);
+    expect(filtered[1], <int>[6, 0, 0, 0, 3, 4]);
+  });
 }

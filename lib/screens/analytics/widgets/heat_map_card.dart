@@ -54,7 +54,8 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                 // custom util widget assumed
                 value: eventsAsync,
                 data: (events) {
-                  final matrix = binEvents(events: events);
+                  final raw = binEvents(events: events);
+                  final matrix = applyKAnonymityThreshold(raw, minCount: 4);
                   return CustomPaint(
                     painter: HeatMapPainter(matrix),
                     size: Size.infinite,
