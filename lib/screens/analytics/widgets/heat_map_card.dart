@@ -228,6 +228,21 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
         bytes: bytes,
         mimeType: fs.MimeType.png,
       );
+      // Fire-and-forget analytics (consent-gated inside service)
+      // Not awaited to avoid blocking UI
+      // ignore: unawaited_futures
+      AnalyticsService.instance.logEvent(
+        'heatmap_export',
+        parameters: <String, Object>{
+          'format': 'png',
+          'palette': settings.palette.name,
+          'k': settings.minCount,
+          'dp_enabled': settings.dpEnabled,
+          'epsilon': settings.dpEnabled ? settings.epsilon : 0.0,
+          'category': _category.name,
+          'predictions': _showPredictions,
+        },
+      );
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Heatmap geëxporteerd als PNG')),
@@ -280,6 +295,19 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
         bytes: bytes,
         mimeType: fs.MimeType.csv,
       );
+      // ignore: unawaited_futures
+      AnalyticsService.instance.logEvent(
+        'heatmap_export',
+        parameters: <String, Object>{
+          'format': 'csv',
+          'palette': settings.palette.name,
+          'k': settings.minCount,
+          'dp_enabled': settings.dpEnabled,
+          'epsilon': settings.dpEnabled ? settings.epsilon : 0.0,
+          'category': _category.name,
+          'predictions': false,
+        },
+      );
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('CSV geëxporteerd')),
@@ -326,6 +354,19 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
         name: name,
         bytes: bytes,
         mimeType: fs.MimeType.json,
+      );
+      // ignore: unawaited_futures
+      AnalyticsService.instance.logEvent(
+        'heatmap_export',
+        parameters: <String, Object>{
+          'format': 'json',
+          'palette': settings.palette.name,
+          'k': settings.minCount,
+          'dp_enabled': settings.dpEnabled,
+          'epsilon': settings.dpEnabled ? settings.epsilon : 0.0,
+          'category': _category.name,
+          'predictions': false,
+        },
       );
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

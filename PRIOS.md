@@ -36,6 +36,7 @@ Afgerond (kwaliteitsinfra)
 
 Afgerond (Q3 2025 – selectie)
 - Advanced Analytics: heatmaps/predictions – Done. `heatmap_aggregator.dart` + tests; consent‑gating; k‑anonimiteit en optionele DP‑noise via `HeatmapPrivacyService`; UI met predictions‑toggle, paletten/legenda, k‑dropdown, DP‑toggle + ε‑selector; export (PNG/CSV/JSON) met metadata (rows/cols/palette/k/DP/category/timestamp), bestandsnaam met settings.
+  - Analytics events: export-acties (PNG/CSV/JSON) worden consent‑gated gelogd via `AnalyticsService` met parameters (format/palette/k/dp_enabled/epsilon/category/predictions).
 - Router startup safety; offline route/guard.
 - A11y: focus traversal, tooltips, 48x48 targets, tekstschaal clamps (Dashboard/Players/Matches/Training/PhasePlanning/Season Hub), contrast voor badges (incl. Matches), Weekly Calendar/Video controls.
 - Performance: resource hints + preloads; LHCI budgets; lijst-tuning; deferred images (`NetworkImageSmart`) voor avatar en video-thumbnails.
