@@ -138,7 +138,7 @@
           try {
             const originalRegister = navigator.serviceWorker.register.bind(navigator.serviceWorker);
             navigator.serviceWorker.register = function () {
-              try { console.warn('ServiceWorker.register blocked by recovery mode'); } catch (_) { }
+              // Quietly reject to avoid console spam
               return Promise.reject(new Error('ServiceWorker registration disabled'));
             };
             // Expose for debugging if needed
@@ -155,8 +155,7 @@
           document.body.appendChild(debugPanel);
         }
         const renderText = (msg) => `Loading… ${new Date().toISOString()}\n${msg}`;
-        const log = (msg) => {
-          try { console.log(msg); } catch (_) { /* ignore */ }
+        const appendOverlay = (msg) => {
           if (splash && splash.style.display !== 'none') {
             splash.textContent = renderText(msg);
           }
@@ -172,9 +171,9 @@
           const _log = console.log.bind(console);
           const _err = console.error.bind(console);
           const _warn = console.warn.bind(console);
-          console.log = function () { try { log(Array.from(arguments).join(' ')); } catch (_) { } _log.apply(console, arguments); };
-          console.error = function () { try { log('ERROR: ' + Array.from(arguments).join(' ')); } catch (_) { } _err.apply(console, arguments); };
-          console.warn = function () { try { log('WARN: ' + Array.from(arguments).join(' ')); } catch (_) { } _warn.apply(console, arguments); };
+          console.log = function () { try { appendOverlay(Array.from(arguments).join(' ')); } catch (_) { } _log.apply(console, arguments); };
+          console.error = function () { try { appendOverlay('ERROR: ' + Array.from(arguments).join(' ')); } catch (_) { } _err.apply(console, arguments); };
+          console.warn = function () { try { appendOverlay('WARN: ' + Array.from(arguments).join(' ')); } catch (_) { } _warn.apply(console, arguments); };
         } catch (_) { /* ignore */ }
 
         // Show first error as alert to surface issues when console is blocked
