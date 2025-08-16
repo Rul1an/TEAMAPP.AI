@@ -72,12 +72,14 @@
       padding: 2rem;
       color: #333;
     }
+
     #debug-log {
       position: fixed;
       left: 8px;
       bottom: 8px;
-      z-index: 2147483647; /* always on top */
-      background: rgba(0,0,0,0.7);
+      z-index: 2147483647;
+      /* always on top */
+      background: rgba(0, 0, 0, 0.7);
       color: #fff;
       padding: 6px 8px;
       border-radius: 6px;
@@ -132,6 +134,16 @@
           navigator.serviceWorker.getRegistrations()
             .then((regs) => Promise.all(regs.map((r) => r.unregister())))
             .catch(() => { /* ignore */ });
+          // Prevent any future registrations during this session
+          try {
+            const originalRegister = navigator.serviceWorker.register.bind(navigator.serviceWorker);
+            navigator.serviceWorker.register = function () {
+              try { console.warn('ServiceWorker.register blocked by recovery mode'); } catch (_) { }
+              return Promise.reject(new Error('ServiceWorker registration disabled'));
+            };
+            // Expose for debugging if needed
+            navigator.serviceWorker.__originalRegister = originalRegister;
+          } catch (_) { /* ignore */ }
         }
 
         // Minimal on-screen logging in case console is unavailable
@@ -155,12 +167,22 @@
           }
         };
 
+        // Mirror console logs into overlay for visibility of Dart/Flutter prints
+        try {
+          const _log = console.log.bind(console);
+          const _err = console.error.bind(console);
+          const _warn = console.warn.bind(console);
+          console.log = function () { try { log(Array.from(arguments).join(' ')); } catch (_) { } _log.apply(console, arguments); };
+          console.error = function () { try { log('ERROR: ' + Array.from(arguments).join(' ')); } catch (_) { } _err.apply(console, arguments); };
+          console.warn = function () { try { log('WARN: ' + Array.from(arguments).join(' ')); } catch (_) { } _warn.apply(console, arguments); };
+        } catch (_) { /* ignore */ }
+
         // Show first error as alert to surface issues when console is blocked
         let alerted = false;
         window.addEventListener('error', (e) => {
           if (!alerted) {
             alerted = true;
-            try { alert('Error: ' + e.message); } catch(_) {}
+            try { alert('Error: ' + e.message); } catch (_) { }
           }
         }, { once: false });
 
