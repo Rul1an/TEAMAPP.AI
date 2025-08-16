@@ -87,7 +87,7 @@
       max-height: 40vh;
       overflow: auto;
       pointer-events: none;
-      display: block;
+      display: none; /* hidden by default; enable via ?debug or localStorage flag */
     }
   </style>
 
@@ -153,6 +153,11 @@
           debugPanel.id = 'debug-log';
           document.body.appendChild(debugPanel);
         }
+        // Respect debug flag to show overlay by default
+        const debugEnabled = params.has('debug') || localStorage.getItem('debug_overlay') === '1';
+        if (debugPanel && debugEnabled) {
+          debugPanel.style.display = 'block';
+        }
         const renderText = (msg) => `Loading… ${new Date().toISOString()}\n${msg}`;
         const appendOverlay = (msg) => {
           if (splash && splash.style.display !== 'none') {
@@ -215,7 +220,9 @@
           if ((ev.key || '').toLowerCase() === 'd') {
             const panel = document.getElementById('debug-log');
             if (panel) {
-              panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+              const next = panel.style.display === 'none' ? 'block' : 'none';
+              panel.style.display = next;
+              try { localStorage.setItem('debug_overlay', next === 'block' ? '1' : '0'); } catch (_) {}
             }
           }
         });
