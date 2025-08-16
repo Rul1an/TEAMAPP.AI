@@ -65,6 +65,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                       children: [
                         const Text('Pred.'),
                         Switch(
+                          key: const Key('heatmap_pred_switch'),
                           value: _showPredictions,
                           onChanged: (v) =>
                               setState(() => _showPredictions = v),
@@ -341,6 +342,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
   Widget _buildPaletteMenu(BuildContext context) {
     final settings = ref.watch(heatMapSettingsProvider);
     return DropdownButton<HeatMapPalette>(
+      key: const Key('heatmap_palette_dd'),
       value: settings.palette,
       onChanged: (p) {
         if (p == null) return;
@@ -359,6 +361,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
     final settings = ref.watch(heatMapSettingsProvider);
     return Row(children: [
       DropdownButton<int>(
+        key: const Key('heatmap_k_dd'),
         value: settings.minCount,
         onChanged: (v) {
           if (v == null) return;
@@ -378,6 +381,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
       if (settings.dpEnabled) ...[
         const SizedBox(width: 8),
         DropdownButton<double>(
+          key: const Key('heatmap_eps_dd'),
           value: settings.epsilon,
           onChanged: (val) {
             if (val == null) return;
@@ -395,6 +399,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
   }
 
   Widget _buildCategoryDropdown() => DropdownButton<ActionCategory>(
+        key: const Key('heatmap_category_dd'),
         value: _category,
         onChanged: (v) {
           if (v == null) return;
@@ -407,6 +412,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
       );
 
   Widget _buildFrameDropdown() => DropdownButton<_TimeFrame>(
+        key: const Key('heatmap_frame_dd'),
         value: _frame,
         onChanged: (v) {
           if (v == null) return;

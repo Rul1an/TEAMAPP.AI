@@ -45,9 +45,9 @@ void main() {
     await tester.pumpAndSettle();
 
     // Toggle predictions on
-    final Finder toggle = find.byType(Switch);
+    final Finder toggle = find.byKey(const Key('heatmap_pred_switch'));
     expect(toggle, findsOneWidget);
-    await tester.tap(toggle);
+    await tester.tap(toggle, warnIfMissed: false);
     await tester.pumpAndSettle();
 
     // If we reached here, predictions rendering path did not throw

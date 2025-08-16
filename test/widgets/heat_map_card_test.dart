@@ -45,9 +45,11 @@ void main() {
     expect(mockNotifier.loadCalls, 0);
 
     // open category dropdown and select next option
-    await tester.tap(find.byType(DropdownButton<ActionCategory>).first);
+    final Finder categoryDd = find.byKey(const Key('heatmap_category_dd'));
+    await tester.tap(categoryDd, warnIfMissed: false);
     await tester.pumpAndSettle();
-    await tester.tap(find.text(ActionCategory.offensive.name).last);
+    await tester.tap(find.text(ActionCategory.offensive.name).last,
+        warnIfMissed: false);
     await tester.pumpAndSettle();
 
     expect(mockNotifier.loadCalls, 1);
