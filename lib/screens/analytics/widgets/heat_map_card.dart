@@ -147,7 +147,7 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
       Switch(
         value: settings.dpEnabled,
         onChanged: (v) =>
-            ref.read(heatMapSettingsProvider.notifier).setDpEnabled(v),
+            ref.read(heatMapSettingsProvider.notifier).setDpEnabled(enabled: v),
       ),
     ]);
   }

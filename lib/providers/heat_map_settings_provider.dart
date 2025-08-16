@@ -49,7 +49,7 @@ class HeatMapSettingsNotifier extends StateNotifier<HeatMapSettings> {
     state = state.copyWith(minCount: safe);
   }
 
-  void setDpEnabled(bool enabled) {
+  void setDpEnabled({required bool enabled}) {
     state = state.copyWithAll(dpEnabled: enabled);
   }
 
