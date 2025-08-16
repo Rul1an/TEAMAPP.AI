@@ -8,7 +8,10 @@ void main() {
     final c1 = HeatMapPalette.classic.colorFor(1.0);
     expect(c0, isNotNull);
     expect(c1, isNotNull);
-    expect(c0.value, isNot(equals(c1.value)));
+    // Compare components using modern getters
+    final different =
+        (c0.a != c1.a) || (c0.r != c1.r) || (c0.g != c1.g) || (c0.b != c1.b);
+    expect(different, isTrue);
   });
 
   test('viridis palette returns non-null colors across range', () {
