@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
 import 'dart:typed_data';
-import 'dart:convert' as convert;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -18,6 +17,7 @@ import '../../../widgets/analytics/heat_map_legend.dart';
 import '../../../widgets/analytics/heat_map_palette.dart';
 import '../../../providers/heat_map_settings_provider.dart';
 import '../../../services/heatmap_privacy_service.dart';
+import '../../../utils/heatmap_export.dart';
 import 'package:file_saver/file_saver.dart' as fs;
 
 class HeatMapCard extends ConsumerStatefulWidget {
@@ -58,40 +58,47 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
                 const SizedBox(width: 8),
                 Text('Heatmap', style: Theme.of(context).textTheme.titleMedium),
                 const Spacer(),
-                Row(
-                  children: [
-                    const Text('Pred.'),
-                    Switch(
-                      value: _showPredictions,
-                      onChanged: (v) => setState(() => _showPredictions = v),
+                Flexible(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const Text('Pred.'),
+                        Switch(
+                          value: _showPredictions,
+                          onChanged: (v) =>
+                              setState(() => _showPredictions = v),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildPaletteMenu(context),
+                        const SizedBox(width: 8),
+                        _buildMinCountMenu(context),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          tooltip: 'Exporteren (PNG)',
+                          icon: const Icon(Icons.download),
+                          onPressed: _exportHeatmap,
+                        ),
+                        const SizedBox(width: 4),
+                        IconButton(
+                          tooltip: 'Exporteren (CSV)',
+                          icon: const Icon(Icons.table_view),
+                          onPressed: _exportCsv,
+                        ),
+                        const SizedBox(width: 4),
+                        IconButton(
+                          tooltip: 'Exporteren (JSON)',
+                          icon: const Icon(Icons.data_object),
+                          onPressed: _exportJson,
+                        ),
+                        const SizedBox(width: 8),
+                        _buildCategoryDropdown(),
+                        const SizedBox(width: 8),
+                        _buildFrameDropdown(),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    _buildPaletteMenu(context),
-                    const SizedBox(width: 8),
-                    _buildMinCountMenu(context),
-                    const SizedBox(width: 8),
-                    IconButton(
-                      tooltip: 'Exporteren (PNG)',
-                      icon: const Icon(Icons.download),
-                      onPressed: _exportHeatmap,
-                    ),
-                    const SizedBox(width: 4),
-                    IconButton(
-                      tooltip: 'Exporteren (CSV)',
-                      icon: const Icon(Icons.table_view),
-                      onPressed: _exportCsv,
-                    ),
-                    const SizedBox(width: 4),
-                    IconButton(
-                      tooltip: 'Exporteren (JSON)',
-                      icon: const Icon(Icons.data_object),
-                      onPressed: _exportJson,
-                    ),
-                  ],
+                  ),
                 ),
-                _buildCategoryDropdown(),
-                const SizedBox(width: 8),
-                _buildFrameDropdown(),
               ],
             ),
             const SizedBox(height: 16),
@@ -249,34 +256,24 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
           'heatmap_counts_${settings.palette.name}_k${settings.minCount}_${dpPart}_${_category.name}_$ts.csv';
 
       // Derive grid dimensions from sparse entries
-      int rows = 0;
-      int cols = 0;
-      for (final e in entries) {
-        if (e.length >= 2) {
-          final r = e[0];
-          final c = e[1];
-          if (r + 1 > rows) rows = r + 1;
-          if (c + 1 > cols) cols = c + 1;
-        }
-      }
+      final dims = computeRowsCols(entries);
+      final rows = dims.rows;
+      final cols = dims.cols;
 
-      final buffer = StringBuffer();
-      // Metadata header (commented) for reproducibility
-      buffer.writeln('# heatmap csv export');
-      buffer.writeln('# rows=$rows');
-      buffer.writeln('# cols=$cols');
-      buffer.writeln('# palette=${settings.palette.name}');
-      buffer.writeln('# minCount=${settings.minCount}');
-      buffer.writeln('# dpEnabled=${settings.dpEnabled}');
-      buffer.writeln(
-          '# epsilon=${settings.dpEnabled ? settings.epsilon : 'n/a'}');
-      buffer.writeln('# category=${_category.name}');
-      buffer.writeln('# predictions=false');
-      buffer.writeln('row,col,count');
-      for (final e in entries) {
-        buffer.writeln('${e[0]},${e[1]},${e[2]}');
-      }
-      final bytes = Uint8List.fromList(buffer.toString().codeUnits);
+      // Build CSV via shared util
+      final meta = HeatMapExportMeta(
+        rows: rows,
+        cols: cols,
+        palette: settings.palette.name,
+        minCount: settings.minCount,
+        dpEnabled: settings.dpEnabled,
+        epsilon: settings.dpEnabled ? settings.epsilon : null,
+        category: _category.name,
+        predictions: false,
+        timestampIso: DateTime.now().toIso8601String(),
+      );
+      final csv = buildHeatmapCsv(entries: entries, meta: meta);
+      final bytes = Uint8List.fromList(csv.codeUnits);
       await fs.FileSaver.instance.saveFile(
         name: name,
         bytes: bytes,
@@ -306,30 +303,19 @@ class _HeatMapCardState extends ConsumerState<HeatMapCard> {
       }
       final settings = ref.read(heatMapSettingsProvider);
       // Derive rows/cols
-      int rows = 0;
-      int cols = 0;
-      for (final e in entries) {
-        if (e.length >= 2) {
-          final r = e[0];
-          final c = e[1];
-          if (r + 1 > rows) rows = r + 1;
-          if (c + 1 > cols) cols = c + 1;
-        }
-      }
-      final tsIso = DateTime.now().toIso8601String();
-      final jsonObj = {
-        'rows': rows,
-        'cols': cols,
-        'palette': settings.palette.name,
-        'minCount': settings.minCount,
-        'dpEnabled': settings.dpEnabled,
-        'epsilon': settings.dpEnabled ? settings.epsilon : null,
-        'category': _category.name,
-        'predictions': false,
-        'timestamp': tsIso,
-        'entries': entries,
-      };
-      final jsonStr = convert.jsonEncode(jsonObj);
+      final dims = computeRowsCols(entries);
+      final meta = HeatMapExportMeta(
+        rows: dims.rows,
+        cols: dims.cols,
+        palette: settings.palette.name,
+        minCount: settings.minCount,
+        dpEnabled: settings.dpEnabled,
+        epsilon: settings.dpEnabled ? settings.epsilon : null,
+        category: _category.name,
+        predictions: false,
+        timestampIso: DateTime.now().toIso8601String(),
+      );
+      final jsonStr = buildHeatmapJson(entries: entries, meta: meta);
       final bytes = Uint8List.fromList(jsonStr.codeUnits);
       final ts = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
       final dpPart = settings.dpEnabled ? 'dp_${settings.epsilon}' : 'dp_off';

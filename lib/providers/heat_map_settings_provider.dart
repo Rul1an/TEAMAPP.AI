@@ -70,8 +70,12 @@ class HeatMapSettingsNotifier extends StateNotifier<HeatMapSettings> {
 
   Future<void> _load() async {
     try {
+      if (!Hive.isBoxOpen(_boxName)) {
+        // In tests or before Hive init: skip persistence
+        return;
+      }
       final Box<Map<dynamic, dynamic>> box =
-          await Hive.openBox<Map<dynamic, dynamic>>(_boxName);
+          Hive.box<Map<dynamic, dynamic>>(_boxName);
       final Map<dynamic, dynamic>? data = box.get(_key);
       if (data == null) return;
       final paletteIndex = data['palette'] as int?;
@@ -95,8 +99,12 @@ class HeatMapSettingsNotifier extends StateNotifier<HeatMapSettings> {
 
   Future<void> _persist() async {
     try {
+      if (!Hive.isBoxOpen(_boxName)) {
+        // In tests or before Hive init: skip persistence
+        return;
+      }
       final Box<Map<dynamic, dynamic>> box =
-          await Hive.openBox<Map<dynamic, dynamic>>(_boxName);
+          Hive.box<Map<dynamic, dynamic>>(_boxName);
       await box.put(_key, <String, dynamic>{
         'palette': state.palette.index,
         'minCount': state.minCount,
