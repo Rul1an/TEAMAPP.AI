@@ -32,7 +32,7 @@ Could-have (Q4+ 2025)
 - Advanced Analytics: heatmaps/predictions (na events-standaardisatie).
   - Progress: `analytics/heatmap_aggregator.dart` + tests; normaliseerde coördinaten, sparse counts, deterministische sampling, JSON round‑trip; consent‑gating; k‑anonimiteit (minCount) en optionele DP‑noise (`HeatmapPrivacyService`) met ε‑selector; helpers `aggregateEvents()` en `matrixFromEntries()`; baseline `PredictionService` (xG‑achtig) met tests.
   - UI: Heatmap kaart met predictions‑toggle, palet‑selectie (`classic`, `blueOrange`, `viridis`), legenda, k≥ dropdown, DP‑toggle + ε‑selector; opacity‑tuning.
-  - Export: Heatmap PNG‑export (RepaintBoundary) en CSV‑export van sparse counts (`row,col,count`). CSV respecteert k‑anonimiteit en toegepaste DP‑noise; predictions worden niet geëxporteerd. Metadata toegevoegd in CSV‑header (rows, cols, palette, k, dpEnabled/epsilon, category) en bestandsnamen bevatten timestamp en settings.
+  - Export: Heatmap PNG‑export (RepaintBoundary), CSV‑export en JSON‑export van sparse counts (`row,col,count`). CSV/JSON respecteren k‑anonimiteit en toegepaste DP‑noise; predictions worden niet geëxporteerd. Metadata toegevoegd (rows, cols, palette, k, dpEnabled/epsilon, category, timestamp) en bestandsnamen bevatten timestamp en settings.
 
 Afgerond (kwaliteitsinfra)
 - Analyzer 6→7 migratiestap: gereed – project gebruikt `analyzer ^7`, `very_good_analysis ^9`; `flutter analyze --fatal-infos` actief; `custom_lint` (nog) uitgeschakeld i.v.m. upstream compatibiliteit. Analyzer is schoon (incl. info‑niveau) in CI en lokaal.
