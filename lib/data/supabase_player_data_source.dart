@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
+import '../config/supabase_config.dart';
 import '../models/player.dart';
 
 /// Raw Supabase I/O for the `players` table.
@@ -20,11 +21,24 @@ class SupabasePlayerDataSource {
   // region Public API -------------------------------------------------------
 
   Future<List<Player>> fetchAll() async {
-    final data = await _supabase.from(_table).select();
-    return (data as List<dynamic>)
-        .cast<Map<String, dynamic>>()
-        .map(_fromRow)
-        .toList();
+    // Scope by organization for performance and RLS alignment
+    try {
+      final orgId = await _supabase.getOrganizationIdWithFallback();
+      if (orgId == null || orgId.isEmpty) {
+        return <Player>[];
+      }
+      final data = await _supabase
+          .from(_table)
+          .select()
+          .eq('organization_id', orgId)
+          .order('last_name');
+      return (data as List<dynamic>)
+          .cast<Map<String, dynamic>>()
+          .map(_fromRow)
+          .toList();
+    } catch (_) {
+      return <Player>[];
+    }
   }
 
   Future<Player?> fetchById(String id) async {
@@ -34,7 +48,14 @@ class SupabasePlayerDataSource {
   }
 
   Future<void> add(Player player) async {
-    await _supabase.from(_table).insert(_toRow(player));
+    // Ensure organization context is present and include it in insert
+    final orgId = await _supabase.getOrganizationIdWithFallback();
+    if (orgId == null || orgId.isEmpty) {
+      throw StateError('Cannot add player: no organization selected');
+    }
+    await _supabase
+        .from(_table)
+        .insert({..._toRow(player), 'organization_id': orgId});
   }
 
   Future<void> update(Player player) async {
