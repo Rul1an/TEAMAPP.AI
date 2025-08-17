@@ -73,7 +73,7 @@ class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
       state = const AsyncValue.loading();
       final res = await _repo.getAll();
       state = res.when(
-        success: (list) => AsyncValue.data(list),
+        success: AsyncValue.data,
         failure: (_) => const AsyncValue.data(<Match>[]),
       );
     } catch (_) {
