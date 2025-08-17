@@ -1,3 +1,6 @@
+// Package imports:
+import 'package:flutter/foundation.dart';
+
 // Project imports:
 import '../core/result.dart';
 
@@ -15,7 +18,9 @@ class CachePolicy {
   }) async {
     try {
       // Guard against hanging remote calls (e.g., flaky network on web)
-      final T data = await fetchRemote().timeout(const Duration(seconds: 8));
+      final Duration timeout =
+          kIsWeb ? const Duration(seconds: 3) : const Duration(seconds: 8);
+      final T data = await fetchRemote().timeout(timeout);
       await writeCache(data);
       return Success<T>(data);
     } catch (e) {
