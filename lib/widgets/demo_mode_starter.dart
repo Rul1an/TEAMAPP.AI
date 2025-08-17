@@ -67,13 +67,14 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
         } else {
           // Fallback: Log the demo mode activation
           if (kDebugMode) {
-            print('🎭 Demo Mode Actief! ScaffoldMessenger not available yet.');
+            debugPrint(
+                '🎭 Demo Mode Actief! ScaffoldMessenger not available yet.');
           }
         }
       } catch (e) {
         // Graceful fallback if ScaffoldMessenger access fails
         if (kDebugMode) {
-          print('🎭 Demo Mode Actief! (ScaffoldMessenger error: $e)');
+          debugPrint('🎭 Demo Mode Actief! (ScaffoldMessenger error: $e)');
         }
       }
     }
