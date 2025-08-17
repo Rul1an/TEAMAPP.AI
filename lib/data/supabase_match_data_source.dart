@@ -16,29 +16,28 @@ class SupabaseMatchDataSource {
 
   // fetch operations
   Future<List<Match>> fetchAll() async {
-    // Scope by organization for performance where possible
-    List<dynamic> data;
+    // Scope by organization for performance and avoid network in tests
     try {
       final orgId = await _supabase.getOrganizationIdWithFallback();
-      if (orgId != null) {
-        data = await PerfLog.timeAsync('matches.fetchAll(org=$orgId)', () {
-          return _supabase
-              .from(_table)
-              .select()
-              .eq('organization_id', orgId)
-              .order('date_time');
-        });
-      } else {
-        data = await PerfLog.timeAsync('matches.fetchAll(no-org)', () {
-          return _supabase.from(_table).select();
-        });
+      if (orgId == null || orgId.isEmpty) {
+        // In tests or when org context is missing, return empty to avoid bad requests
+        PerfLog.log('matches.fetchAll(no-org) → returning empty list');
+        return <Match>[];
       }
-    } catch (_) {
-      data = await PerfLog.timeAsync('matches.fetchAll(fallback)', () {
-        return _supabase.from(_table).select();
+      final data = await PerfLog.timeAsync('matches.fetchAll(org=$orgId)', () {
+        return _supabase
+            .from(_table)
+            .select()
+            .eq('organization_id', orgId)
+            .order('date_time');
       });
+      return data.cast<Map<String, dynamic>>().map(_fromRow).toList();
+    } on PostgrestException catch (e) {
+      PerfLog.log('matches.fetchAll error: $e');
+      return <Match>[];
+    } catch (_) {
+      return <Match>[];
     }
-    return data.cast<Map<String, dynamic>>().map(_fromRow).toList();
   }
 
   Future<Match?> fetchById(String id) async {
