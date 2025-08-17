@@ -156,7 +156,7 @@ void main() {
         ),
       );
 
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pump(const Duration(milliseconds: 100));
 
       // AppBar action icons
       expect(find.byIcon(Icons.add_circle_outline), findsWidgets);
@@ -182,7 +182,7 @@ void main() {
         ),
       );
 
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.textContaining('RBAC Demo Mode'), findsOneWidget);
     });
@@ -201,7 +201,7 @@ void main() {
         ),
       );
 
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.textContaining('RBAC Demo Mode'), findsNothing);
     });

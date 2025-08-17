@@ -18,7 +18,7 @@ final matchRepositoryProvider = Provider<MatchRepository>((ref) {
 final matchesProvider = FutureProvider<List<Match>>((ref) async {
   final repo = ref.read(matchRepositoryProvider);
   try {
-    final res = await repo.getAll().timeout(const Duration(seconds: 4));
+    final res = await repo.getAll();
     return res.dataOrNull ?? [];
   } catch (_) {
     return [];
@@ -28,7 +28,7 @@ final matchesProvider = FutureProvider<List<Match>>((ref) async {
 final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
   final repo = ref.read(matchRepositoryProvider);
   try {
-    final res = await repo.getUpcoming().timeout(const Duration(seconds: 4));
+    final res = await repo.getUpcoming();
     return res.dataOrNull ?? [];
   } catch (_) {
     return [];
@@ -38,7 +38,7 @@ final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
 final recentMatchesProvider = FutureProvider<List<Match>>((ref) async {
   final repo = ref.read(matchRepositoryProvider);
   try {
-    final res = await repo.getRecent().timeout(const Duration(seconds: 4));
+    final res = await repo.getRecent();
     return res.dataOrNull ?? [];
   } catch (_) {
     return [];
