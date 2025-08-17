@@ -990,6 +990,8 @@ jobs:
       needs.quality-and-test.outputs.should-deploy == 'true'
     permissions:
       contents: read
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
@@ -1035,7 +1037,7 @@ jobs:
             exit $STATUS
           fi
       - name: ⚙️ Configure remote DB URL (direct 5432, optional)
-        if: ${{ secrets.SUPABASE_DB_URL != '' }}
+        if: ${{ env.SUPABASE_DB_URL != '' }}
         run: |
           echo "Setting remote DB URL from secret (direct connection)"
-          supabase db remote set "${{ secrets.SUPABASE_DB_URL }}"
+          supabase db remote set "${{ env.SUPABASE_DB_URL }}"
