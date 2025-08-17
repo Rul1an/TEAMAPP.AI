@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
+import '../config/supabase_config.dart';
 import '../models/match.dart';
 
 /// Raw Supabase access for `matches` table.
@@ -14,11 +15,20 @@ class SupabaseMatchDataSource {
 
   // fetch operations
   Future<List<Match>> fetchAll() async {
-    final data = await _supabase.from(_table).select();
-    return (data as List<dynamic>)
-        .cast<Map<String, dynamic>>()
-        .map(_fromRow)
-        .toList();
+    // Scope by organization for performance where possible
+    List<dynamic> data;
+    try {
+      final orgId = await _supabase.getOrganizationIdWithFallback();
+      if (orgId != null) {
+        data =
+            await _supabase.from(_table).select().eq('organization_id', orgId);
+      } else {
+        data = await _supabase.from(_table).select();
+      }
+    } catch (_) {
+      data = await _supabase.from(_table).select();
+    }
+    return data.cast<Map<String, dynamic>>().map(_fromRow).toList();
   }
 
   Future<Match?> fetchById(String id) async {

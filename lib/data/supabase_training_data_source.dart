@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
+import '../config/supabase_config.dart';
 import 'package:jo17_tactical_manager/models/training.dart';
 import 'package:jo17_tactical_manager/utils/error_sanitizer.dart';
 
@@ -15,11 +16,23 @@ class SupabaseTrainingDataSource {
 
   Future<List<Training>> fetchAll() async {
     try {
-      final data = await _supabase.from(_table).select();
-      return (data as List<dynamic>)
-          .cast<Map<String, dynamic>>()
-          .map(_fromRow)
-          .toList();
+      // Prefer organization-scoped queries for performance under RLS
+      List<dynamic> data;
+      try {
+        final orgId = await _supabase.getOrganizationIdWithFallback();
+        if (orgId != null) {
+          data = await _supabase
+              .from(_table)
+              .select()
+              .eq('organization_id', orgId)
+              .order('date');
+        } else {
+          data = await _supabase.from(_table).select();
+        }
+      } catch (_) {
+        data = await _supabase.from(_table).select();
+      }
+      return data.cast<Map<String, dynamic>>().map(_fromRow).toList();
     } on PostgrestException catch (e, st) {
       throw StateError(ErrorSanitizer.sanitize(e, st));
     } catch (e, st) {
