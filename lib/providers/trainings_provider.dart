@@ -49,12 +49,16 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
   TrainingRepository get _repo => _ref.read(trainingRepositoryProvider);
 
   Future<void> loadTrainings() async {
-    state = const AsyncValue.loading();
-    final res = await _repo.getAll();
-    state = res.when(
-      success: AsyncValue.data,
-      failure: (err) => AsyncValue.error(err, StackTrace.current),
-    );
+    try {
+      state = const AsyncValue.loading();
+      final res = await _repo.getAll();
+      state = res.when(
+        success: (list) => AsyncValue.data(list),
+        failure: (_) => const AsyncValue.data(<Training>[]),
+      );
+    } catch (_) {
+      state = const AsyncValue.data(<Training>[]);
+    }
   }
 
   Future<void> addTraining(Training training) async {

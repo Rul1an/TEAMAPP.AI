@@ -29,7 +29,8 @@ class MatchRepositoryImpl implements MatchRepository {
   Future<Result<List<Match>>> getAll() async {
     return CachePolicy.getSWR<List<Match>>(
       fetchRemote: () async {
-        return _remote.fetchAll().timeout(const Duration(seconds: 6));
+        // Remote fetch is already no-org safe; keep a modest timeout for web
+        return _remote.fetchAll().timeout(const Duration(seconds: 4));
       },
       readCache: _cached,
       writeCache: _cache.write,

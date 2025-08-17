@@ -26,8 +26,9 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
     try {
       // OPTIMIZED PATTERN: Apply organization-based filtering for consistent performance
       final orgId = await _client.getOrganizationIdWithFallback();
-      if (orgId == null) {
-        return Failure(NetworkFailure('No organization context available'));
+      if (orgId == null || orgId.isEmpty) {
+        // In unauthenticated/demo contexts, return an empty list quickly
+        return const Success(<TrainingSession>[]);
       }
       final data =
           await _client.from(_table).select().eq('organization_id', orgId);
@@ -46,8 +47,8 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
       final nowIso = DateTime.now().toIso8601String();
       // OPTIMIZED PATTERN: Combine date filtering with organization-based optimization
       final orgId = await _client.getOrganizationIdWithFallback();
-      if (orgId == null) {
-        return Failure(NetworkFailure('No organization context available'));
+      if (orgId == null || orgId.isEmpty) {
+        return const Success(<TrainingSession>[]);
       }
       final data = await _client
           .from(_table)

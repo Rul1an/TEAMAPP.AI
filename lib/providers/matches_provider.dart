@@ -69,12 +69,16 @@ class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
   MatchRepository get _repo => _ref.read(matchRepositoryProvider);
 
   Future<void> loadMatches() async {
-    state = const AsyncValue.loading();
-    final res = await _repo.getAll();
-    state = res.when(
-      success: AsyncValue.data,
-      failure: (err) => AsyncValue.error(err, StackTrace.current),
-    );
+    try {
+      state = const AsyncValue.loading();
+      final res = await _repo.getAll();
+      state = res.when(
+        success: (list) => AsyncValue.data(list),
+        failure: (_) => const AsyncValue.data(<Match>[]),
+      );
+    } catch (_) {
+      state = const AsyncValue.data(<Match>[]);
+    }
   }
 
   Future<void> addMatch(Match match) async {
