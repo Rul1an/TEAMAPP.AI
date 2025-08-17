@@ -19,6 +19,9 @@ env:
   # Optional preview secrets (if defined in repo secrets)
   SUPABASE_URL_PREVIEW: ${{ secrets.SUPABASE_URL_PREVIEW }}
   SUPABASE_ANON_KEY_PREVIEW: ${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}
+  SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+  SUPABASE_PROJECT_REF_PREVIEW: ${{ secrets.SUPABASE_PROJECT_REF_PREVIEW }}
+  SUPABASE_DB_URL_PREVIEW: ${{ secrets.SUPABASE_DB_URL_PREVIEW }}
   # Base secrets (may be empty on forks)
   SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
   SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
@@ -860,22 +863,18 @@ jobs:
         uses: supabase/setup-cli@v1
         with:
           version: latest
-      - name: 🔐 Optionally prepare staging schema (if secrets provided)
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          SUPABASE_PROJECT_REF_PREVIEW: ${{ secrets.SUPABASE_PROJECT_REF_PREVIEW }}
+      - name: 🔐 Login & Link (preview) if secrets available
         run: |
-          if [ -n "$SUPABASE_ACCESS_TOKEN" ] && [ -n "$SUPABASE_PROJECT_REF_PREVIEW" ]; then
-            echo "Preparing staging schema using Supabase CLI..."
-            set +e
-            supabase login --token "$SUPABASE_ACCESS_TOKEN"
-            supabase link --project-ref "$SUPABASE_PROJECT_REF_PREVIEW"
-            supabase db push
-            set -e
-            echo "(Non-fatal) Completed optional staging prepare step"
-            exit 0
+          if [ -n "${SUPABASE_ACCESS_TOKEN}" ] && [ -n "${SUPABASE_PROJECT_REF_PREVIEW}" ]; then
+            echo "Logging into Supabase and linking preview project..."
+            supabase login --token "${SUPABASE_ACCESS_TOKEN}"
+            supabase link --project-ref "${SUPABASE_PROJECT_REF_PREVIEW}"
+            if [ -n "${SUPABASE_DB_URL_PREVIEW}" ]; then
+              echo "Setting direct DB URL for preview (bypass pooler)"
+              supabase db remote set "${SUPABASE_DB_URL_PREVIEW}"
+            fi
           else
-            echo "Skipping staging schema prepare (no SUPABASE_* preview secrets)."
+            echo "Preview Supabase secrets not present; skipping link."
           fi
 
       - name: 📱 Setup Flutter
@@ -891,8 +890,8 @@ jobs:
       - name: 🔐 Export Secrets
         shell: bash
         run: |
-          SUPA_URL="${{ secrets.SUPABASE_URL_PREVIEW }}"; if [ -z "$SUPA_URL" ]; then SUPA_URL="${{ secrets.SUPABASE_URL }}"; fi
-          SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}"; if [ -z "$SUPA_KEY" ]; then SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY }}"; fi
+          SUPA_URL="${SUPABASE_URL_PREVIEW}"; if [ -z "$SUPA_URL" ]; then SUPA_URL="${SUPABASE_URL}"; fi
+          SUPA_KEY="${SUPABASE_ANON_KEY_PREVIEW}"; if [ -z "$SUPA_KEY" ]; then SUPA_KEY="${SUPABASE_ANON_KEY}"; fi
           echo "SUPABASE_URL=$SUPA_URL" >> $GITHUB_ENV
           echo "SUPABASE_ANON_KEY=$SUPA_KEY" >> $GITHUB_ENV
 
