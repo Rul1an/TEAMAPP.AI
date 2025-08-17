@@ -15,9 +15,10 @@ class SupabaseMatchRepository implements MatchRepository {
   static const _table = 'matches';
 
   Match _fromRow(Map<String, dynamic> row) {
+    final dateStr = (row['date_time'] as String?) ?? (row['date'] as String?);
     final m = Match()
       ..id = row['id'] as String
-      ..date = DateTime.parse(row['date'] as String)
+      ..date = DateTime.parse(dateStr!)
       ..opponent = row['opponent'] as String? ?? ''
       ..location = Location.values.firstWhere(
         (e) => e.name == (row['location'] as String? ?? '').toLowerCase(),
@@ -40,7 +41,7 @@ class SupabaseMatchRepository implements MatchRepository {
 
   Map<String, dynamic> _toRow(Match m) => {
         'id': m.id,
-        'date': m.date.toIso8601String(),
+        'date_time': m.date.toIso8601String(),
         'opponent': m.opponent,
         'location': m.location.name,
         'competition': m.competition.name,
@@ -90,8 +91,11 @@ class SupabaseMatchRepository implements MatchRepository {
   Future<Result<List<Match>>> getUpcoming() async {
     try {
       final nowIso = DateTime.now().toIso8601String();
-      final data =
-          await _client.from(_table).select().gte('date', nowIso).order('date');
+      final data = await _client
+          .from(_table)
+          .select()
+          .gte('date_time', nowIso)
+          .order('date_time');
       final matches = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))
           .toList();
@@ -108,8 +112,8 @@ class SupabaseMatchRepository implements MatchRepository {
       final data = await _client
           .from(_table)
           .select()
-          .lt('date', nowIso)
-          .order('date', ascending: false)
+          .lt('date_time', nowIso)
+          .order('date_time', ascending: false)
           .limit(20);
       final matches = (data as List<dynamic>)
           .map((e) => _fromRow(e as Map<String, dynamic>))

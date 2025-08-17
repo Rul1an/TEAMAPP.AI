@@ -26,7 +26,7 @@ class SupabaseMatchDataSource {
               .from(_table)
               .select()
               .eq('organization_id', orgId)
-              .order('date');
+              .order('date_time');
         });
       } else {
         data = await PerfLog.timeAsync('matches.fetchAll(no-org)', () {
