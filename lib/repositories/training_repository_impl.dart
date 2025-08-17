@@ -31,7 +31,10 @@ class TrainingRepositoryImpl implements TrainingRepository {
   @override
   Future<Result<List<Training>>> getAll() async {
     return CachePolicy.getSWR<List<Training>>(
-      fetchRemote: _remote.fetchAll,
+      fetchRemote: () async {
+        // Guard against indefinite hanging on web by timing out
+        return _remote.fetchAll().timeout(const Duration(seconds: 6));
+      },
       readCache: _tryGetCached,
       writeCache: _cache.write,
       mapError: _mapError,

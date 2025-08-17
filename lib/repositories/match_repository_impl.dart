@@ -28,7 +28,9 @@ class MatchRepositoryImpl implements MatchRepository {
   @override
   Future<Result<List<Match>>> getAll() async {
     return CachePolicy.getSWR<List<Match>>(
-      fetchRemote: _remote.fetchAll,
+      fetchRemote: () async {
+        return _remote.fetchAll().timeout(const Duration(seconds: 6));
+      },
       readCache: _cached,
       writeCache: _cache.write,
       mapError: _map,

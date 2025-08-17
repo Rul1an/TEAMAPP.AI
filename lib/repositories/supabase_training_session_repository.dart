@@ -53,8 +53,8 @@ class SupabaseTrainingSessionRepository implements TrainingSessionRepository {
           .from(_table)
           .select()
           .eq('organization_id', orgId)
-          .gte('date', nowIso)
-          .order('date')
+          .gte('date_time', nowIso)
+          .order('date_time')
           .limit(20);
 
       final sessions = (data as List<dynamic>)
