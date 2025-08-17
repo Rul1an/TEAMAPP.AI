@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 // Project imports:
 import '../config/supabase_config.dart';
 import '../models/match.dart';
+import '../utils/perf_log.dart';
 
 /// Raw Supabase access for `matches` table.
 class SupabaseMatchDataSource {
@@ -20,13 +21,22 @@ class SupabaseMatchDataSource {
     try {
       final orgId = await _supabase.getOrganizationIdWithFallback();
       if (orgId != null) {
-        data =
-            await _supabase.from(_table).select().eq('organization_id', orgId);
+        data = await PerfLog.timeAsync('matches.fetchAll(org=$orgId)', () {
+          return _supabase
+              .from(_table)
+              .select()
+              .eq('organization_id', orgId)
+              .order('date');
+        });
       } else {
-        data = await _supabase.from(_table).select();
+        data = await PerfLog.timeAsync('matches.fetchAll(no-org)', () {
+          return _supabase.from(_table).select();
+        });
       }
     } catch (_) {
-      data = await _supabase.from(_table).select();
+      data = await PerfLog.timeAsync('matches.fetchAll(fallback)', () {
+        return _supabase.from(_table).select();
+      });
     }
     return data.cast<Map<String, dynamic>>().map(_fromRow).toList();
   }

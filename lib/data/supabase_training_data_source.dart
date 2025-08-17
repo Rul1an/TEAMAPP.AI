@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/supabase_config.dart';
 import 'package:jo17_tactical_manager/models/training.dart';
 import 'package:jo17_tactical_manager/utils/error_sanitizer.dart';
+import 'package:jo17_tactical_manager/utils/perf_log.dart';
 
 /// Raw Supabase I/O for the `trainings` table.
 class SupabaseTrainingDataSource {
@@ -21,16 +22,22 @@ class SupabaseTrainingDataSource {
       try {
         final orgId = await _supabase.getOrganizationIdWithFallback();
         if (orgId != null) {
-          data = await _supabase
-              .from(_table)
-              .select()
-              .eq('organization_id', orgId)
-              .order('date');
+          data = await PerfLog.timeAsync('trainings.fetchAll(org=$orgId)', () {
+            return _supabase
+                .from(_table)
+                .select()
+                .eq('organization_id', orgId)
+                .order('date');
+          });
         } else {
-          data = await _supabase.from(_table).select();
+          data = await PerfLog.timeAsync('trainings.fetchAll(no-org)', () {
+            return _supabase.from(_table).select();
+          });
         }
       } catch (_) {
-        data = await _supabase.from(_table).select();
+        data = await PerfLog.timeAsync('trainings.fetchAll(fallback)', () {
+          return _supabase.from(_table).select();
+        });
       }
       return data.cast<Map<String, dynamic>>().map(_fromRow).toList();
     } on PostgrestException catch (e, st) {
