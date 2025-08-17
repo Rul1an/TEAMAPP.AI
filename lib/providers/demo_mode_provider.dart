@@ -153,7 +153,8 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
       // Use zero to skip scheduling a timer in widget tests
       mins = 0;
       return true;
-    }());
+    }(),
+        'Skip demo expiration timer in tests to avoid pending Timer in widget tests');
     if (mins <= 0) {
       return; // no pending timer in tests/debug
     }
