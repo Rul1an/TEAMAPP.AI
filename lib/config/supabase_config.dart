@@ -41,6 +41,12 @@ class SupabaseConfig {
 
     // Setup auth state listener
     _setupAuthListener();
+
+    // Ensure org context is available as early as possible for authenticated users
+    // (used by data sources to scope queries and avoid 400s when missing)
+    // Best-effort; do not await to avoid blocking app startup
+    // ignore: unawaited_futures
+    ensureOrganizationContext();
   }
 
   /// Initialize only our SupabaseConfig wrapper (assumes Supabase.initialize already called)
@@ -59,6 +65,10 @@ class SupabaseConfig {
 
     // Setup auth state listener
     _setupAuthListener();
+
+    // Ensure org context if possible
+    // ignore: unawaited_futures
+    ensureOrganizationContext();
   }
 
   /// Get the Supabase client instance - with null safety
@@ -101,6 +111,9 @@ class SupabaseConfig {
       switch (event) {
         case AuthChangeEvent.signedIn:
           AppLogger.i('✅ User signed in: ${session?.user.email}');
+          // After sign-in, try to populate missing organization context
+          // ignore: unawaited_futures
+          ensureOrganizationContext();
         case AuthChangeEvent.signedOut:
           AppLogger.i('👋 User signed out');
         case AuthChangeEvent.tokenRefreshed:
@@ -113,6 +126,35 @@ class SupabaseConfig {
           AppLogger.i('🔄 Auth state changed: $event');
       }
     });
+  }
+
+  /// Ensure a valid organization context is set for the authenticated user.
+  /// If user metadata lacks `organization_id`, pick the first membership and set it.
+  static Future<void> ensureOrganizationContext() async {
+    if (!isInitialized || !isAuthenticated) return;
+
+    final currentOrgId = client.currentOrganizationId;
+    if (currentOrgId != null && currentOrgId.isNotEmpty) {
+      return; // Already set
+    }
+
+    try {
+      final orgs = await getUserOrganizations();
+      if (orgs.isNotEmpty) {
+        final first = orgs.first['organizations'] as Map<String, dynamic>?;
+        final String? orgId = first?['id'] as String?;
+        if (orgId != null && orgId.isNotEmpty) {
+          await client.setCurrentOrganizationId(orgId);
+          AppLogger.i(
+              '🏢 Organization context set to first membership: $orgId');
+        }
+      } else {
+        AppLogger.w(
+            'No organizations found for user; organization context remains unset');
+      }
+    } catch (e) {
+      AppLogger.e('Failed to ensure organization context: $e');
+    }
   }
 
   /// Sign up new user
