@@ -1,0 +1,15 @@
+# Paths requiring explicit review
+
+# Database migrations and SQL
+/supabase/migrations/* @Rul1an
+
+# CI workflows
+/.github/workflows/* @Rul1an
+
+# Security-sensitive config
+/netlify.toml @Rul1an
+/web/* @Rul1an
+
+# Core app code (fallback)
+/lib/** @Rul1an
+
