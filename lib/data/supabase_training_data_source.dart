@@ -17,33 +17,28 @@ class SupabaseTrainingDataSource {
 
   Future<List<Training>> fetchAll() async {
     try {
-      // Prefer organization-scoped queries for performance under RLS
-      List<dynamic> data;
-      try {
-        final orgId = await _supabase.getOrganizationIdWithFallback();
-        if (orgId != null) {
-          data = await PerfLog.timeAsync('trainings.fetchAll(org=$orgId)', () {
-            return _supabase
-                .from(_table)
-                .select()
-                .eq('organization_id', orgId)
-                .order('date');
-          });
-        } else {
-          data = await PerfLog.timeAsync('trainings.fetchAll(no-org)', () {
-            return _supabase.from(_table).select();
-          });
-        }
-      } catch (_) {
-        data = await PerfLog.timeAsync('trainings.fetchAll(fallback)', () {
-          return _supabase.from(_table).select();
-        });
+      final orgId = await _supabase.getOrganizationIdWithFallback();
+      if (orgId == null || orgId.isEmpty) {
+        PerfLog.log('trainings.fetchAll(no-org) → returning empty list');
+        return <Training>[];
       }
+      final data =
+          await PerfLog.timeAsync('trainings.fetchAll(org=$orgId)', () {
+        return _supabase
+            .from(_table)
+            .select()
+            .eq('organization_id', orgId)
+            .order('date');
+      });
       return data.cast<Map<String, dynamic>>().map(_fromRow).toList();
     } on PostgrestException catch (e, st) {
-      throw StateError(ErrorSanitizer.sanitize(e, st));
+      PerfLog.log(
+          'trainings.fetchAll error: ${ErrorSanitizer.sanitize(e, st)}');
+      return <Training>[];
     } catch (e, st) {
-      throw StateError(ErrorSanitizer.sanitize(e, st));
+      PerfLog.log(
+          'trainings.fetchAll unknown error: ${ErrorSanitizer.sanitize(e, st)}');
+      return <Training>[];
     }
   }
 
