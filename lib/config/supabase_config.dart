@@ -388,6 +388,11 @@ extension SupabaseOrganizationHelpers on SupabaseClient {
   /// Try to resolve the current organization id via RPC first, then fallback to user metadata.
   /// Returns null if neither source provides an id.
   Future<String?> getOrganizationIdWithFallback() async {
+    // Fast-path: if not authenticated, avoid RPC/network entirely
+    if (auth.currentUser == null) {
+      return null;
+    }
+
     // 1) Prefer RPC for server-authoritative value (and to benefit from DB-side caching)
     try {
       final String? orgId = await rpc<String?>(
