@@ -22,6 +22,7 @@ env:
   SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
   SUPABASE_PROJECT_REF_PREVIEW: ${{ secrets.SUPABASE_PROJECT_REF_PREVIEW }}
   SUPABASE_DB_URL_PREVIEW: ${{ secrets.SUPABASE_DB_URL_PREVIEW }}
+  SUPABASE_DB_PASSWORD_PREVIEW: ${{ secrets.SUPABASE_DB_PASSWORD_PREVIEW }}
   # Base secrets (may be empty on forks)
   SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
   SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
@@ -863,6 +864,12 @@ jobs:
         uses: supabase/setup-cli@v1
         with:
           version: latest
+      - name: 🔧 Compose preview DB URL if missing (from ref+password)
+        run: |
+          if [ -z "${SUPABASE_DB_URL_PREVIEW}" ] && [ -n "${SUPABASE_PROJECT_REF_PREVIEW}" ] && [ -n "${SUPABASE_DB_PASSWORD_PREVIEW}" ]; then
+            echo "Composing SUPABASE_DB_URL_PREVIEW from project ref + password"
+            echo "SUPABASE_DB_URL_PREVIEW=postgresql://postgres:${SUPABASE_DB_PASSWORD_PREVIEW}@db.${SUPABASE_PROJECT_REF_PREVIEW}.supabase.co:5432/postgres" >> $GITHUB_ENV
+          fi
       - name: 🔐 Login & Link (preview) if secrets available
         run: |
           if [ -n "${SUPABASE_ACCESS_TOKEN}" ] && [ -n "${SUPABASE_PROJECT_REF_PREVIEW}" ]; then
