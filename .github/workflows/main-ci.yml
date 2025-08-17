@@ -889,9 +889,12 @@ jobs:
         run: flutter pub get
 
       - name: 🔐 Export Secrets
+        shell: bash
         run: |
-          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL_PREVIEW || secrets.SUPABASE_URL }}" >> $GITHUB_ENV
-          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY_PREVIEW || secrets.SUPABASE_ANON_KEY }}" >> $GITHUB_ENV
+          SUPA_URL="${{ secrets.SUPABASE_URL_PREVIEW }}"; if [ -z "$SUPA_URL" ]; then SUPA_URL="${{ secrets.SUPABASE_URL }}"; fi
+          SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY_PREVIEW }}"; if [ -z "$SUPA_KEY" ]; then SUPA_KEY="${{ secrets.SUPABASE_ANON_KEY }}"; fi
+          echo "SUPABASE_URL=$SUPA_URL" >> $GITHUB_ENV
+          echo "SUPABASE_ANON_KEY=$SUPA_KEY" >> $GITHUB_ENV
 
       - name: 🧪 Run Integration Tests
         run: |
@@ -1031,3 +1034,8 @@ jobs:
             fi
             exit $STATUS
           fi
+      - name: ⚙️ Configure remote DB URL (direct 5432, optional)
+        if: ${{ secrets.SUPABASE_DB_URL != '' }}
+        run: |
+          echo "Setting remote DB URL from secret (direct connection)"
+          supabase db remote set "${{ secrets.SUPABASE_DB_URL }}"
