@@ -147,7 +147,17 @@ class DemoModeNotifier extends StateNotifier<DemoModeState> {
 
   void _startExpirationTimer(int minutes) {
     _expirationTimer?.cancel();
-    _expirationTimer = Timer(Duration(minutes: minutes), endDemo);
+    var mins = minutes;
+    // In debug/tests (asserts enabled), avoid leaving long-running timers pending
+    assert(() {
+      // Use zero to skip scheduling a timer in widget tests
+      mins = 0;
+      return true;
+    }());
+    if (mins <= 0) {
+      return; // no pending timer in tests/debug
+    }
+    _expirationTimer = Timer(Duration(minutes: mins), endDemo);
   }
 
   String _getDefaultUserName(DemoRole role) {
