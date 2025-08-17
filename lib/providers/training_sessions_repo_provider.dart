@@ -16,14 +16,22 @@ final allTrainingSessionsProvider = FutureProvider<List<TrainingSession>>((
   ref,
 ) async {
   final repo = ref.read(trainingSessionRepositoryProvider);
-  final res = await repo.getAll();
-  return res.dataOrNull ?? [];
+  try {
+    final res = await repo.getAll().timeout(const Duration(seconds: 4));
+    return res.dataOrNull ?? [];
+  } catch (_) {
+    return [];
+  }
 });
 
 final upcomingTrainingSessionsProvider = FutureProvider<List<TrainingSession>>((
   ref,
 ) async {
   final repo = ref.read(trainingSessionRepositoryProvider);
-  final res = await repo.getUpcoming();
-  return res.dataOrNull ?? [];
+  try {
+    final res = await repo.getUpcoming().timeout(const Duration(seconds: 4));
+    return res.dataOrNull ?? [];
+  } catch (_) {
+    return [];
+  }
 });

@@ -27,8 +27,14 @@ final playerRepositoryProvider = Provider<PlayerRepository>((ref) {
 
 final playersProvider = FutureProvider<List<Player>>((ref) async {
   final repo = ref.read(playerRepositoryProvider);
-  final res = await repo.getAll();
-  return res.dataOrNull ?? [];
+  try {
+    final res = await repo
+        .getAll()
+        .timeout(const Duration(seconds: 4)); // hard ceiling to avoid spinners
+    return res.dataOrNull ?? [];
+  } catch (_) {
+    return [];
+  }
 });
 
 final playerByIdProvider = FutureProvider.family<Player?, String>((
