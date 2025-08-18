@@ -6,6 +6,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase/supabase.dart' as s;
 
 void main() {
+  // Only run on explicit request for production perf checks
+  final enableProd = Platform.environment['ENABLE_PROD_TESTS'] == '1';
+  if (!enableProd) {
+    return; // Skip in CI/staging by default
+  }
+
   final url = Platform.environment['SUPABASE_URL'];
   final anon = Platform.environment['SUPABASE_ANON_KEY'];
 
