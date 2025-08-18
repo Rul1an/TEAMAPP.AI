@@ -7,6 +7,7 @@ import '../hive/hive_match_cache.dart';
 import '../models/match.dart';
 import '../repositories/match_repository.dart';
 import '../repositories/match_repository_impl.dart';
+import 'organization_provider.dart';
 
 final matchRepositoryProvider = Provider<MatchRepository>((ref) {
   return MatchRepositoryImpl(
@@ -70,6 +71,12 @@ class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
 
   Future<void> loadMatches() async {
     try {
+      // If no organization context (and not in demo), return empty immediately
+      final org = _ref.read(currentOrganizationProvider);
+      if (org == null) {
+        state = const AsyncValue.data(<Match>[]);
+        return;
+      }
       state = const AsyncValue.loading();
       final res = await _repo.getAll();
       state = res.when(

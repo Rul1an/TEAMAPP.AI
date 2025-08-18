@@ -7,6 +7,7 @@ import '../hive/hive_training_cache.dart';
 import '../models/training.dart';
 import '../repositories/training_repository.dart';
 import '../repositories/training_repository_impl.dart';
+import 'organization_provider.dart';
 
 final trainingRepositoryProvider = Provider<TrainingRepository>((ref) {
   return TrainingRepositoryImpl(
@@ -50,6 +51,11 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
 
   Future<void> loadTrainings() async {
     try {
+      final org = _ref.read(currentOrganizationProvider);
+      if (org == null) {
+        state = const AsyncValue.data(<Training>[]);
+        return;
+      }
       state = const AsyncValue.loading();
       final res = await _repo.getAll();
       state = res.when(
