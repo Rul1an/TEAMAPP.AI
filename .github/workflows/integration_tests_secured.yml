@@ -59,12 +59,12 @@ jobs:
       - name: Supabase Login
         run: supabase login --token "$SUPABASE_ACCESS_TOKEN"
 
-      - name: Supabase Link (${{ matrix.env_name }})
-        run: supabase link --project-ref "$PROJECT_REF"
+      - name: Supabase Link (best-effort)
+        run: supabase link --project-ref "$PROJECT_REF" || true
 
-      - name: Configure remote DB URL (direct 5432)
+      - name: Configure remote DB URL (prefer pooler or direct)
         if: ${{ env.DB_URL != '' }}
-        run: supabase db remote set "$DB_URL"
+        run: supabase db remote set "$DB_URL" || true
 
       - name: Push DB migrations (retry on transient SASL errors)
         run: |

@@ -874,12 +874,15 @@ jobs:
         run: |
           if [ -n "${SUPABASE_ACCESS_TOKEN}" ] && [ -n "${SUPABASE_PROJECT_REF_PREVIEW}" ]; then
             echo "Logging into Supabase and linking preview project..."
-            supabase login --token "${SUPABASE_ACCESS_TOKEN}"
-            supabase link --project-ref "${SUPABASE_PROJECT_REF_PREVIEW}"
+            set +e
+            supabase login --token "${SUPABASE_ACCESS_TOKEN}" || true
+            # Avoid failing the job on interactive DB password prompt; linking is best-effort here
+            supabase link --project-ref "${SUPABASE_PROJECT_REF_PREVIEW}" || true
             if [ -n "${SUPABASE_DB_URL_PREVIEW}" ]; then
               echo "Setting direct DB URL for preview (bypass pooler)"
-              supabase db remote set "${SUPABASE_DB_URL_PREVIEW}"
+              supabase db remote set "${SUPABASE_DB_URL_PREVIEW}" || true
             fi
+            set -e
           else
             echo "Preview Supabase secrets not present; skipping link."
           fi
