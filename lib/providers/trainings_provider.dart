@@ -52,7 +52,7 @@ class TrainingsNotifier extends StateNotifier<AsyncValue<List<Training>>> {
   Future<void> loadTrainings() async {
     try {
       final org = _ref.read(currentOrganizationProvider);
-      if (org == null) {
+      if (org == null || org.id == 'default-org') {
         state = const AsyncValue.data(<Training>[]);
         return;
       }
