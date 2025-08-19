@@ -22,23 +22,20 @@ class SupabasePlayerDataSource {
 
   Future<List<Player>> fetchAll() async {
     // Scope by organization for performance and RLS alignment
-    try {
-      final orgId = await _supabase.getOrganizationIdWithFallback();
-      if (orgId == null || orgId.isEmpty) {
-        return <Player>[];
-      }
-      final data = await _supabase
-          .from(_table)
-          .select()
-          .eq('organization_id', orgId)
-          .order('last_name');
-      return (data as List<dynamic>)
-          .cast<Map<String, dynamic>>()
-          .map(_fromRow)
-          .toList();
-    } catch (_) {
-      return <Player>[];
+    final orgId = await _supabase.getOrganizationIdWithFallback();
+    if (orgId == null || orgId.isEmpty) {
+      // Surface as error so SWR policy keeps cached data instead of overwriting with []
+      throw StateError('No organization context available');
     }
+    final data = await _supabase
+        .from(_table)
+        .select()
+        .eq('organization_id', orgId)
+        .order('last_name');
+    return (data as List<dynamic>)
+        .cast<Map<String, dynamic>>()
+        .map(_fromRow)
+        .toList();
   }
 
   Future<Player?> fetchById(String id) async {
