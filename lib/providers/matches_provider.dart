@@ -17,7 +17,7 @@ final matchRepositoryProvider = Provider<MatchRepository>((ref) {
 });
 
 final matchesProvider = FutureProvider<List<Match>>((ref) async {
-  final org = ref.read(currentOrganizationProvider);
+  final org = ref.watch(currentOrganizationProvider);
   if (org == null || org.id == 'default-org') {
     return [];
   }
@@ -31,7 +31,7 @@ final matchesProvider = FutureProvider<List<Match>>((ref) async {
 });
 
 final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
-  final org = ref.read(currentOrganizationProvider);
+  final org = ref.watch(currentOrganizationProvider);
   if (org == null || org.id == 'default-org') {
     return [];
   }
@@ -45,7 +45,7 @@ final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
 });
 
 final recentMatchesProvider = FutureProvider<List<Match>>((ref) async {
-  final org = ref.read(currentOrganizationProvider);
+  final org = ref.watch(currentOrganizationProvider);
   if (org == null || org.id == 'default-org') {
     return [];
   }
