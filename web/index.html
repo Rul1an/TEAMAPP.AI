@@ -171,6 +171,14 @@
           }
         };
 
+        // Define a safe log helper used below
+        const log = (msg) => {
+          try { appendOverlay(String(msg)); } catch (_) { /* ignore */ }
+          try { console.log(msg); } catch (_) { /* ignore */ }
+        };
+        // Expose for debugging
+        try { window.log = log; } catch (_) { /* ignore */ }
+
         // Mirror console logs into overlay for visibility of Dart/Flutter prints
         try {
           const _log = console.log.bind(console);
