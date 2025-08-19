@@ -127,31 +127,40 @@ class SupabasePlayerDataSource {
     });
   }
 
-  static Map<String, dynamic> _toRow(Player p) => <String, dynamic>{
-        'id': p.id,
-        'first_name': p.firstName,
-        'last_name': p.lastName,
-        'jersey_number': p.jerseyNumber,
-        'birth_date': p.birthDate.toIso8601String(),
-        'position': p.position.name,
-        'preferred_foot': p.preferredFoot.name,
-        'height_cm': p.height,
-        'weight_kg': p.weight,
-        'phone': p.phoneNumber,
-        'email': p.email,
-        'parent_contact': p.parentContact,
-        'matches_played': p.matchesPlayed,
-        'matches_in_selection': p.matchesInSelection,
-        'minutes_played': p.minutesPlayed,
-        'goals': p.goals,
-        'assists': p.assists,
-        'yellow_cards': p.yellowCards,
-        'red_cards': p.redCards,
-        'trainings_attended': p.trainingsAttended,
-        'trainings_total': p.trainingsTotal,
-        'created_at': p.createdAt.toIso8601String(),
-        'updated_at': DateTime.now().toIso8601String(),
-      }..removeWhere((_, v) => v == null);
+  static Map<String, dynamic> _toRow(Player p) {
+    final map = <String, dynamic>{
+      'id': p.id,
+      'first_name': p.firstName,
+      'last_name': p.lastName,
+      'jersey_number': p.jerseyNumber,
+      'birth_date': p.birthDate.toIso8601String(),
+      'position': p.position.name,
+      'preferred_foot': p.preferredFoot.name,
+      'height_cm': p.height,
+      'weight_kg': p.weight,
+      'phone': p.phoneNumber,
+      'email': p.email,
+      'parent_contact': p.parentContact,
+      'matches_played': p.matchesPlayed,
+      'matches_in_selection': p.matchesInSelection,
+      'minutes_played': p.minutesPlayed,
+      'goals': p.goals,
+      'assists': p.assists,
+      'yellow_cards': p.yellowCards,
+      'red_cards': p.redCards,
+      'trainings_attended': p.trainingsAttended,
+      'trainings_total': p.trainingsTotal,
+      'created_at': p.createdAt.toIso8601String(),
+      'updated_at': DateTime.now().toIso8601String(),
+    }..removeWhere((_, v) => v == null);
+
+    // Do not send an empty UUID; let the DB default generate it
+    final id = map['id'] as String?;
+    if (id == null || id.isEmpty) {
+      map.remove('id');
+    }
+    return map;
+  }
 
   static bool _listEquals(List<Player> a, List<Player> b) {
     if (a.length != b.length) return false;

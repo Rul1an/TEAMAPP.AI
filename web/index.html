@@ -124,10 +124,7 @@
         const safeMode = params.has('safe') || localStorage.getItem('safe_mode') === '1';
         window.__SAFE_MODE__ = safeMode;
 
-        // Disable Flutter's SW registration by nulling the version
-        window.flutterConfiguration = {
-          serviceWorker: { serviceWorkerVersion: null }
-        };
+        // Do not use deprecated window.flutterConfiguration. Rely on default engine initializer.
 
         // Unregister any existing SWs to break bad caches
         if (disableSW && 'serviceWorker' in navigator) {
