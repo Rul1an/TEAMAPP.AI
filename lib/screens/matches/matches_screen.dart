@@ -14,7 +14,7 @@ import 'package:file_picker/file_picker.dart';
 import '../../models/match.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/matches_provider.dart'
-    show matchRepositoryProvider, matchesNotifierProvider;
+    show matchRepositoryProvider, matchesProvider;
 import '../../providers/auth_provider.dart';
 import '../../services/permission_service.dart';
 import '../../services/schedule_import_service.dart';
@@ -47,7 +47,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
 
   @override
   Widget build(BuildContext context) {
-    final matchesAsync = ref.watch(matchesNotifierProvider);
+    final matchesAsync = ref.watch(matchesProvider);
     final isDesktop = MediaQuery.of(context).size.width > 900;
     final userRole = ref.watch(userRoleProvider);
     final isViewOnly = PermissionService.isViewOnlyUser(userRole);
@@ -205,7 +205,10 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
 
     return RefreshIndicator(
       onRefresh: () async {
-        await ref.read(matchesNotifierProvider.notifier).loadMatches();
+        // Trigger a refresh of matchesProvider
+        ref.invalidate(matchesProvider);
+        // Wait for the fresh value to resolve
+        await ref.read(matchesProvider.future);
       },
       child: ListView.builder(
         padding: EdgeInsets.all(isDesktop ? 24 : 16),
@@ -258,7 +261,7 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
     );
 
     // Refresh match list
-    await ref.read(matchesNotifierProvider.notifier).loadMatches();
+    ref.invalidate(matchesProvider);
   }
 }
 
