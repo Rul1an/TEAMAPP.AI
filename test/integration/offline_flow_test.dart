@@ -7,7 +7,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:jo17_tactical_manager/data/supabase_match_data_source.dart';
 import 'package:jo17_tactical_manager/hive/hive_match_cache.dart';
 import 'package:jo17_tactical_manager/models/match.dart';
+import 'package:jo17_tactical_manager/models/organization.dart';
 import 'package:jo17_tactical_manager/providers/matches_provider.dart';
+import 'package:jo17_tactical_manager/providers/organization_provider.dart';
 import 'package:jo17_tactical_manager/repositories/match_repository_impl.dart';
 
 class _MockRemote extends Mock implements SupabaseMatchDataSource {}
@@ -43,7 +45,16 @@ void main() {
 
       final repo = MatchRepositoryImpl(remote: remote, cache: cache);
       final container = ProviderContainer(
-        overrides: [matchRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          matchRepositoryProvider.overrideWithValue(repo),
+          currentOrganizationProvider.overrideWith((ref) => Organization(
+                id: 'test-org',
+                name: 'Test Org',
+                slug: 'test-org',
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now(),
+              )),
+        ],
       );
 
       final list = await container.read(matchesProvider.future);
@@ -57,7 +68,16 @@ void main() {
 
       final repo = MatchRepositoryImpl(remote: remote, cache: cache);
       final container = ProviderContainer(
-        overrides: [matchRepositoryProvider.overrideWithValue(repo)],
+        overrides: [
+          matchRepositoryProvider.overrideWithValue(repo),
+          currentOrganizationProvider.overrideWith((ref) => Organization(
+                id: 'test-org',
+                name: 'Test Org',
+                slug: 'test-org',
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now(),
+              )),
+        ],
       );
 
       final list = await container.read(matchesProvider.future);
