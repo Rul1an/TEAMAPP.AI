@@ -17,12 +17,20 @@ final trainingRepositoryProvider = Provider<TrainingRepository>((ref) {
 });
 
 final trainingsProvider = FutureProvider<List<Training>>((ref) async {
+  final org = ref.read(currentOrganizationProvider);
+  if (org == null || org.id == 'default-org') {
+    return [];
+  }
   final repo = ref.read(trainingRepositoryProvider);
   final res = await repo.getAll();
   return res.dataOrNull ?? [];
 });
 
 final upcomingTrainingsProvider = FutureProvider<List<Training>>((ref) async {
+  final org = ref.read(currentOrganizationProvider);
+  if (org == null || org.id == 'default-org') {
+    return [];
+  }
   final repo = ref.read(trainingRepositoryProvider);
   final res = await repo.getUpcoming();
   return res.dataOrNull ?? [];

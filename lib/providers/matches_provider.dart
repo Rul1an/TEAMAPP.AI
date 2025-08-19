@@ -17,6 +17,10 @@ final matchRepositoryProvider = Provider<MatchRepository>((ref) {
 });
 
 final matchesProvider = FutureProvider<List<Match>>((ref) async {
+  final org = ref.read(currentOrganizationProvider);
+  if (org == null || org.id == 'default-org') {
+    return [];
+  }
   final repo = ref.read(matchRepositoryProvider);
   try {
     final res = await repo.getAll();
@@ -27,6 +31,10 @@ final matchesProvider = FutureProvider<List<Match>>((ref) async {
 });
 
 final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
+  final org = ref.read(currentOrganizationProvider);
+  if (org == null || org.id == 'default-org') {
+    return [];
+  }
   final repo = ref.read(matchRepositoryProvider);
   try {
     final res = await repo.getUpcoming();
@@ -37,6 +45,10 @@ final upcomingMatchesProvider = FutureProvider<List<Match>>((ref) async {
 });
 
 final recentMatchesProvider = FutureProvider<List<Match>>((ref) async {
+  final org = ref.read(currentOrganizationProvider);
+  if (org == null || org.id == 'default-org') {
+    return [];
+  }
   final repo = ref.read(matchRepositoryProvider);
   try {
     final res = await repo.getRecent();
@@ -73,7 +85,7 @@ class MatchesNotifier extends StateNotifier<AsyncValue<List<Match>>> {
     try {
       // If no organization context (and not in demo), return empty immediately
       final org = _ref.read(currentOrganizationProvider);
-      if (org == null) {
+      if (org == null || org.id == 'default-org') {
         state = const AsyncValue.data(<Match>[]);
         return;
       }
