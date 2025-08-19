@@ -16,6 +16,8 @@ import '../../providers/export_service_provider.dart';
 import '../../providers/matches_provider.dart'
     show matchRepositoryProvider, matchesProvider;
 import '../../providers/auth_provider.dart';
+import '../../providers/organization_provider.dart';
+import '../../models/organization.dart';
 import '../../services/permission_service.dart';
 import '../../services/schedule_import_service.dart';
 import '../../services/analytics_events.dart';
@@ -123,7 +125,18 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
         ),
       ),
       body: matchesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () {
+          final org = ref.watch<Organization?>(currentOrganizationProvider);
+          if (org == null || org.id == 'default-org') {
+            return _buildMatchList(
+              const <Match>[],
+              isDesktop,
+              'Geen wedstrijden',
+              isViewOnly,
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
         error: (error, stack) => Center(child: Text('Error: $error')),
         data: (matches) {
           final upcomingMatches = matches
