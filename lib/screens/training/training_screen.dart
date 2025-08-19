@@ -50,7 +50,7 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final trainingsAsync = ref.watch(trainingsNotifierProvider);
+    final trainingsAsync = ref.watch(trainingsProvider);
     final isDesktop = MediaQuery.of(context).size.width > 900;
     final userRole = ref.watch(userRoleProvider);
     final isViewOnly = PermissionService.isViewOnlyUser(userRole);
@@ -159,9 +159,8 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
                           );
                         }
                         // Refresh lijst
-                        await ref
-                            .read(trainingsNotifierProvider.notifier)
-                            .loadTrainings();
+                        ref.invalidate(trainingsProvider);
+                        await ref.read(trainingsProvider.future);
                       }
                     }
                   } else if (value == 'plan_template') {
