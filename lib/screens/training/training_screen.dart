@@ -15,6 +15,8 @@ import '../../models/training.dart';
 import '../../providers/export_service_provider.dart';
 import '../../providers/trainings_provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/organization_provider.dart';
+import '../../models/organization.dart';
 import '../../services/permission_service.dart';
 import '../../services/analytics_events.dart';
 import '../../widgets/common/app_error_boundary.dart';
@@ -205,7 +207,29 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
         ],
       ),
       body: trainingsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () {
+          final org = ref.watch<Organization?>(currentOrganizationProvider);
+          if (org == null || org.id == 'default-org') {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.fitness_center,
+                    size: 64,
+                    color: Colors.grey[400],
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Geen trainingen',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ],
+              ),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
         error: (error, stack) => Center(child: Text('Fout: $error')),
         data: (trainings) => AppErrorBoundary(
           child: Column(
