@@ -17,7 +17,7 @@ final trainingRepositoryProvider = Provider<TrainingRepository>((ref) {
 });
 
 final trainingsProvider = FutureProvider<List<Training>>((ref) async {
-  final org = ref.read(currentOrganizationProvider);
+  final org = ref.watch(currentOrganizationProvider);
   if (org == null || org.id == 'default-org') {
     return [];
   }
@@ -27,7 +27,7 @@ final trainingsProvider = FutureProvider<List<Training>>((ref) async {
 });
 
 final upcomingTrainingsProvider = FutureProvider<List<Training>>((ref) async {
-  final org = ref.read(currentOrganizationProvider);
+  final org = ref.watch(currentOrganizationProvider);
   if (org == null || org.id == 'default-org') {
     return [];
   }
