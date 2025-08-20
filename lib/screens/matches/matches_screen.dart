@@ -125,57 +125,58 @@ class _MatchesScreenState extends ConsumerState<MatchesScreen>
           ],
         ),
       ),
-      body: (org == null || org.id == 'default-org')
-          ? _buildMatchList(
-              const <Match>[],
-              isDesktop,
-              'Geen wedstrijden',
-              isViewOnly,
-            )
-          : matchesAsync.when(
-              loading: () {
-                return const Center(child: CircularProgressIndicator());
-              },
-              error: (error, stack) => Center(child: Text('Error: $error')),
-              data: (matches) {
-                final upcomingMatches = matches
-                    .where((m) => m.status == MatchStatus.scheduled)
-                    .toList()
-                  ..sort((a, b) => a.date.compareTo(b.date));
-                final completedMatches = matches
-                    .where((m) => m.status == MatchStatus.completed)
-                    .toList()
-                  ..sort((a, b) => b.date.compareTo(a.date));
-                final allMatches = List<Match>.from(matches)
-                  ..sort((a, b) => b.date.compareTo(a.date));
+      body:
+          (org == null || org.id == 'default-org' || org.id.startsWith('demo'))
+              ? _buildMatchList(
+                  const <Match>[],
+                  isDesktop,
+                  'Geen wedstrijden',
+                  isViewOnly,
+                )
+              : matchesAsync.when(
+                  loading: () {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                  error: (error, stack) => Center(child: Text('Error: $error')),
+                  data: (matches) {
+                    final upcomingMatches = matches
+                        .where((m) => m.status == MatchStatus.scheduled)
+                        .toList()
+                      ..sort((a, b) => a.date.compareTo(b.date));
+                    final completedMatches = matches
+                        .where((m) => m.status == MatchStatus.completed)
+                        .toList()
+                      ..sort((a, b) => b.date.compareTo(a.date));
+                    final allMatches = List<Match>.from(matches)
+                      ..sort((a, b) => b.date.compareTo(a.date));
 
-                return AppErrorBoundary(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      _buildMatchList(
-                        upcomingMatches,
-                        isDesktop,
-                        'Geen aankomende wedstrijden',
-                        isViewOnly,
+                    return AppErrorBoundary(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          _buildMatchList(
+                            upcomingMatches,
+                            isDesktop,
+                            'Geen aankomende wedstrijden',
+                            isViewOnly,
+                          ),
+                          _buildMatchList(
+                            completedMatches,
+                            isDesktop,
+                            'Geen afgelopen wedstrijden',
+                            isViewOnly,
+                          ),
+                          _buildMatchList(
+                            allMatches,
+                            isDesktop,
+                            'Geen wedstrijden',
+                            isViewOnly,
+                          ),
+                        ],
                       ),
-                      _buildMatchList(
-                        completedMatches,
-                        isDesktop,
-                        'Geen afgelopen wedstrijden',
-                        isViewOnly,
-                      ),
-                      _buildMatchList(
-                        allMatches,
-                        isDesktop,
-                        'Geen wedstrijden',
-                        isViewOnly,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
       floatingActionButton: (isDesktop || isViewOnly)
           ? null
           : FloatingActionButton(

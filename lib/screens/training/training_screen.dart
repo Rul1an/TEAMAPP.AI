@@ -207,7 +207,9 @@ class _TrainingScreenState extends ConsumerState<TrainingScreen> {
             ),
         ],
       ),
-      body: (org == null || org.id == 'default-org')
+      body: (org == null ||
+              org.id == 'default-org' ||
+              org.id.startsWith('demo'))
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
