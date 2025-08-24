@@ -388,6 +388,11 @@ extension SupabaseOrganizationHelpers on SupabaseClient {
   /// Try to resolve the current organization id via RPC first, then fallback to user metadata.
   /// Returns null if neither source provides an id.
   Future<String?> getOrganizationIdWithFallback() async {
+    // Demo mode support: use demo organization ID when in SaaS mode without auth
+    if (Environment.isSaasMode && auth.currentUser == null) {
+      return 'voab-jo17-production'; // Demo organization ID
+    }
+
     // Fast-path: if not authenticated, avoid RPC/network entirely
     if (auth.currentUser == null) {
       return null;

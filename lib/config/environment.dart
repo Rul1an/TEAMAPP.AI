@@ -151,9 +151,9 @@ enum Environment {
       return AppMode.standalone;
     }
 
-    // Default to Standalone mode for backward compatibility
-    // Changing this to SaaS would be a breaking change
-    return AppMode.standalone;
+    // Default to SaaS mode for full functionality
+    // This enables all features including data persistence
+    return AppMode.saas;
   }
 
   /// Check if app is running in coach-only mode (legacy compatibility)

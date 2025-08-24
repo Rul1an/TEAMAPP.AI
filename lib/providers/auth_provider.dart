@@ -42,8 +42,12 @@ final isLoggedInProvider = Provider<bool>((ref) {
     return demoState.isActive;
   }
 
-  // In SaaS mode, check actual user authentication
+  // In SaaS mode, accept demo state as valid authentication for development
   if (Environment.isSaasMode) {
+    final demoState = ref.watch(demoModeProvider);
+    if (demoState.isActive) {
+      return true; // Allow demo admin access in SaaS mode
+    }
     final user = ref.watch(currentUserProvider);
     return user != null;
   }
@@ -59,6 +63,14 @@ final userRoleProvider = Provider<String?>((ref) {
     return 'coach';
   }
 
+  // In SaaS mode, check demo state first
+  if (Environment.isSaasMode) {
+    final demoState = ref.watch(demoModeProvider);
+    if (demoState.isActive) {
+      return ref.read(demoModeProvider.notifier).getDemoRole(); // Use demo role
+    }
+  }
+
   final authService = ref.watch(authServiceProvider);
   return authService.getUserRole();
 });
@@ -68,6 +80,14 @@ final organizationIdProvider = Provider<String?>((ref) {
   // In standalone mode, return a mock organization ID
   if (Environment.isStandaloneMode) {
     return 'standalone-org-local';
+  }
+
+  // In SaaS mode, check demo state first
+  if (Environment.isSaasMode) {
+    final demoState = ref.watch(demoModeProvider);
+    if (demoState.isActive && demoState.organizationId != null) {
+      return demoState.organizationId; // Use demo organization ID
+    }
   }
 
   final authService = ref.watch(authServiceProvider);

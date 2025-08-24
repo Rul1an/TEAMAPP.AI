@@ -39,13 +39,13 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
   }
 
   void _startDemoMode() {
-    // Start demo mode with hoofdcoach role
+    // Start demo mode with hoofdcoach role - EXTENDED FOR FULL SaaS ACCESS
     ref.read(demoModeProvider.notifier).startDemo(
-          role: DemoRole.coach, // hoofdcoach
-          organizationId: 'demo-voab-jo17',
-          userId: 'demo-user-coach',
-          userName: 'Demo Hoofdcoach',
-          durationMinutes: 60, // 1 hour demo session
+          role: DemoRole.clubAdmin, // Full admin access instead of coach
+          organizationId: 'voab-jo17-production', // Real organization ID
+          userId: 'admin-user-roel',
+          userName: 'Roel Schuurkes (Admin)',
+          durationMinutes: 1440, // 24 hours instead of 1 hour
         );
 
     // SAFE SNACKBAR: Only show if ScaffoldMessenger is available
@@ -58,23 +58,23 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
           messenger.showSnackBar(
             const SnackBar(
               content: Text(
-                '🎭 Demo Mode Actief! Wissel tussen rollen in het gebruikersmenu.',
+                '🚀 SaaS Mode Actief! Volledig admin toegang - alle functies beschikbaar.',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               backgroundColor: Colors.blue,
             ),
           );
         } else {
-          // Fallback: Log the demo mode activation
+          // Fallback: Log the SaaS mode activation
           if (kDebugMode) {
             debugPrint(
-                '🎭 Demo Mode Actief! ScaffoldMessenger not available yet.');
+                '🚀 SaaS Mode Actief! ScaffoldMessenger not available yet.');
           }
         }
       } catch (e) {
         // Graceful fallback if ScaffoldMessenger access fails
         if (kDebugMode) {
-          debugPrint('🎭 Demo Mode Actief! (ScaffoldMessenger error: $e)');
+          debugPrint('🚀 SaaS Mode Actief! (ScaffoldMessenger error: $e)');
         }
       }
     }

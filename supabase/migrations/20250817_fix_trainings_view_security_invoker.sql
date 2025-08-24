@@ -30,3 +30,5 @@ commit;
 -- where table_schema='public' and table_name='trainings';
 
 
+
+

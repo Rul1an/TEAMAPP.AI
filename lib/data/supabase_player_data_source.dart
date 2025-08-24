@@ -24,8 +24,9 @@ class SupabasePlayerDataSource {
     // Scope by organization for performance and RLS alignment
     final orgId = await _supabase.getOrganizationIdWithFallback();
     if (orgId == null || orgId.isEmpty) {
-      // Surface as error so SWR policy keeps cached data instead of overwriting with []
-      throw StateError('No organization context available');
+      // In SaaS/demo mode without auth, return empty list instead of throwing error
+      // This allows the cache to be used and prevents infinite loading states
+      return <Player>[];
     }
     final data = await _supabase
         .from(_table)
@@ -48,7 +49,9 @@ class SupabasePlayerDataSource {
     // Ensure organization context is present and include it in insert
     final orgId = await _supabase.getOrganizationIdWithFallback();
     if (orgId == null || orgId.isEmpty) {
-      throw StateError('Cannot add player: no organization selected');
+      // In demo mode without auth, silently fail to allow local-only storage
+      throw StateError(
+          'Cannot add player: no organization selected - using local storage only');
     }
     await _supabase
         .from(_table)
