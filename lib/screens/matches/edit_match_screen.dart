@@ -451,8 +451,13 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
         _opponentScoreController.text.isEmpty) {
       return Colors.grey;
     }
-    final teamScore = int.parse(_teamScoreController.text);
-    final opponentScore = int.parse(_opponentScoreController.text);
+    
+    final teamScore = int.tryParse(_teamScoreController.text);
+    final opponentScore = int.tryParse(_opponentScoreController.text);
+    
+    if (teamScore == null || opponentScore == null) {
+      return Colors.grey;
+    }
 
     if (teamScore > opponentScore) return Colors.green;
     if (teamScore < opponentScore) return Colors.red;
@@ -464,8 +469,13 @@ class _EditMatchScreenState extends ConsumerState<EditMatchScreen> {
         _opponentScoreController.text.isEmpty) {
       return '';
     }
-    final teamScore = int.parse(_teamScoreController.text);
-    final opponentScore = int.parse(_opponentScoreController.text);
+    
+    final teamScore = int.tryParse(_teamScoreController.text);
+    final opponentScore = int.tryParse(_opponentScoreController.text);
+    
+    if (teamScore == null || opponentScore == null) {
+      return '';
+    }
 
     if (teamScore > opponentScore) return 'Gewonnen!';
     if (teamScore < opponentScore) return 'Verloren';
