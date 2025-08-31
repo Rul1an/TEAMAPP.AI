@@ -53,9 +53,20 @@ class SupabasePlayerDataSource {
       throw StateError(
           'Cannot add player: no organization selected - using local storage only');
     }
-    await _supabase
-        .from(_table)
-        .insert({..._toRow(player), 'organization_id': orgId});
+    
+    try {
+      await _supabase
+          .from(_table)
+          .insert({..._toRow(player), 'organization_id': orgId});
+    } catch (e) {
+      // If RLS policies block demo mode, fail gracefully to allow local storage fallback
+      if (e.toString().contains('row-level security policy') || 
+          e.toString().contains('Unauthorized')) {
+        throw StateError(
+            'Demo mode: using local storage only - RLS policies prevent remote storage');
+      }
+      rethrow;
+    }
   }
 
   Future<void> update(Player player) async {
