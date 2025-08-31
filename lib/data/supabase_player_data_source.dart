@@ -98,8 +98,9 @@ class SupabasePlayerDataSource {
     // Prefer using domain JSON constructor for consistency and type safety
     final fullName = row['name'] as String? ?? '';
     final nameParts = fullName.split(' ');
-    final performanceData = row['performance_data'] as Map<String, dynamic>? ?? {};
-    
+    final performanceData =
+        row['performance_data'] as Map<String, dynamic>? ?? {};
+
     return Player.fromJson({
       'id': row['id'] as String? ?? '',
       'firstName': nameParts.isNotEmpty ? nameParts.first : '',
@@ -109,14 +110,16 @@ class SupabasePlayerDataSource {
           row['date_of_birth'] as String? ?? DateTime.now().toIso8601String(),
       'position': (row['position'] as String?)?.toLowerCase() ?? 'midfielder',
       'preferredFoot':
-          (performanceData['preferred_foot'] as String?)?.toLowerCase() ?? 'right',
+          (performanceData['preferred_foot'] as String?)?.toLowerCase() ??
+              'right',
       'height': (performanceData['height_cm'] as num?)?.toDouble() ?? 0.0,
       'weight': (performanceData['weight_kg'] as num?)?.toDouble() ?? 0.0,
       'phoneNumber': row['phone'] as String?,
       'email': row['email'] as String?,
       'parentContact': row['emergency_contact'] as String?,
       'matchesPlayed': performanceData['matches_played'] as int? ?? 0,
-      'matchesInSelection': performanceData['matches_in_selection'] as int? ?? 0,
+      'matchesInSelection':
+          performanceData['matches_in_selection'] as int? ?? 0,
       'minutesPlayed': performanceData['minutes_played'] as int? ?? 0,
       'goals': performanceData['goals'] as int? ?? 0,
       'assists': performanceData['assists'] as int? ?? 0,
@@ -124,8 +127,9 @@ class SupabasePlayerDataSource {
       'redCards': performanceData['red_cards'] as int? ?? 0,
       'trainingsAttended': performanceData['trainings_attended'] as int? ?? 0,
       'trainingsTotal': performanceData['trainings_total'] as int? ?? 0,
-      'createdAt':
-          performanceData['created_at'] as String? ?? row['created_at'] as String? ?? DateTime.now().toIso8601String(),
+      'createdAt': performanceData['created_at'] as String? ??
+          row['created_at'] as String? ??
+          DateTime.now().toIso8601String(),
       'updatedAt':
           row['updated_at'] as String? ?? DateTime.now().toIso8601String(),
     });
