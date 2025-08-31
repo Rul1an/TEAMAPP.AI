@@ -98,6 +98,8 @@ class SupabasePlayerDataSource {
     // Prefer using domain JSON constructor for consistency and type safety
     final fullName = row['name'] as String? ?? '';
     final nameParts = fullName.split(' ');
+    final performanceData = row['performance_data'] as Map<String, dynamic>? ?? {};
+    
     return Player.fromJson({
       'id': row['id'] as String? ?? '',
       'firstName': nameParts.isNotEmpty ? nameParts.first : '',
@@ -107,52 +109,54 @@ class SupabasePlayerDataSource {
           row['date_of_birth'] as String? ?? DateTime.now().toIso8601String(),
       'position': (row['position'] as String?)?.toLowerCase() ?? 'midfielder',
       'preferredFoot':
-          (row['preferred_foot'] as String?)?.toLowerCase() ?? 'right',
-      'height': (row['height_cm'] as num?)?.toDouble() ?? 0.0,
-      'weight': (row['weight_kg'] as num?)?.toDouble() ?? 0.0,
+          (performanceData['preferred_foot'] as String?)?.toLowerCase() ?? 'right',
+      'height': (performanceData['height_cm'] as num?)?.toDouble() ?? 0.0,
+      'weight': (performanceData['weight_kg'] as num?)?.toDouble() ?? 0.0,
       'phoneNumber': row['phone'] as String?,
       'email': row['email'] as String?,
-      'parentContact': row['parent_contact'] as String?,
-      'matchesPlayed': row['matches_played'] as int? ?? 0,
-      'matchesInSelection': row['matches_in_selection'] as int? ?? 0,
-      'minutesPlayed': row['minutes_played'] as int? ?? 0,
-      'goals': row['goals'] as int? ?? 0,
-      'assists': row['assists'] as int? ?? 0,
-      'yellowCards': row['yellow_cards'] as int? ?? 0,
-      'redCards': row['red_cards'] as int? ?? 0,
-      'trainingsAttended': row['trainings_attended'] as int? ?? 0,
-      'trainingsTotal': row['trainings_total'] as int? ?? 0,
+      'parentContact': row['emergency_contact'] as String?,
+      'matchesPlayed': performanceData['matches_played'] as int? ?? 0,
+      'matchesInSelection': performanceData['matches_in_selection'] as int? ?? 0,
+      'minutesPlayed': performanceData['minutes_played'] as int? ?? 0,
+      'goals': performanceData['goals'] as int? ?? 0,
+      'assists': performanceData['assists'] as int? ?? 0,
+      'yellowCards': performanceData['yellow_cards'] as int? ?? 0,
+      'redCards': performanceData['red_cards'] as int? ?? 0,
+      'trainingsAttended': performanceData['trainings_attended'] as int? ?? 0,
+      'trainingsTotal': performanceData['trainings_total'] as int? ?? 0,
       'createdAt':
-          row['created_at'] as String? ?? DateTime.now().toIso8601String(),
+          performanceData['created_at'] as String? ?? row['created_at'] as String? ?? DateTime.now().toIso8601String(),
       'updatedAt':
           row['updated_at'] as String? ?? DateTime.now().toIso8601String(),
     });
   }
 
   static Map<String, dynamic> _toRow(Player p) {
+    // Store main fields in table columns, additional data in performance_data JSON
     final map = <String, dynamic>{
       'id': p.id,
       'name': '${p.firstName} ${p.lastName}'.trim(),
       'jersey_number': p.jerseyNumber,
       'date_of_birth': p.birthDate.toIso8601String(),
       'position': p.position.name,
-      'preferred_foot': p.preferredFoot.name,
-      'height_cm': p.height,
-      'weight_kg': p.weight,
-      'phone': p.phoneNumber,
       'email': p.email,
-      'parent_contact': p.parentContact,
-      'matches_played': p.matchesPlayed,
-      'matches_in_selection': p.matchesInSelection,
-      'minutes_played': p.minutesPlayed,
-      'goals': p.goals,
-      'assists': p.assists,
-      'yellow_cards': p.yellowCards,
-      'red_cards': p.redCards,
-      'trainings_attended': p.trainingsAttended,
-      'trainings_total': p.trainingsTotal,
-      'created_at': p.createdAt.toIso8601String(),
-      'updated_at': DateTime.now().toIso8601String(),
+      'phone': p.phoneNumber,
+      'emergency_contact': p.parentContact,
+      'performance_data': {
+        'preferred_foot': p.preferredFoot.name,
+        'height_cm': p.height,
+        'weight_kg': p.weight,
+        'matches_played': p.matchesPlayed,
+        'matches_in_selection': p.matchesInSelection,
+        'minutes_played': p.minutesPlayed,
+        'goals': p.goals,
+        'assists': p.assists,
+        'yellow_cards': p.yellowCards,
+        'red_cards': p.redCards,
+        'trainings_attended': p.trainingsAttended,
+        'trainings_total': p.trainingsTotal,
+        'created_at': p.createdAt.toIso8601String(),
+      },
     }..removeWhere((_, v) => v == null);
 
     // Do not send an empty UUID; let the DB default generate it
