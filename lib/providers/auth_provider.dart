@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
-import '../services/auth_service.dart';
 import '../config/environment.dart';
+import '../services/auth_service.dart';
 import 'demo_mode_provider.dart';
 
 // Auth service provider

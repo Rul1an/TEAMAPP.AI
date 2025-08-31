@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import '../providers/demo_mode_provider.dart';
 
 /// 🚀 Demo Mode Starter - Automatically activates demo mode for testing
@@ -42,7 +47,8 @@ class _DemoModeStarterState extends ConsumerState<DemoModeStarter> {
     // Start demo mode with hoofdcoach role - EXTENDED FOR FULL SaaS ACCESS
     ref.read(demoModeProvider.notifier).startDemo(
           role: DemoRole.clubAdmin, // Full admin access instead of coach
-          organizationId: 'voab-jo17-production', // Real organization ID
+          organizationId:
+              '123e4567-e89b-12d3-a456-426614174000', // Demo organization UUID
           userId: 'admin-user-roel',
           userName: 'Roel Schuurkes (Admin)',
           durationMinutes: 1440, // 24 hours instead of 1 hour

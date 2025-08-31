@@ -390,7 +390,7 @@ extension SupabaseOrganizationHelpers on SupabaseClient {
   Future<String?> getOrganizationIdWithFallback() async {
     // Demo mode support: use demo organization ID when in SaaS mode without auth
     if (Environment.isSaasMode && auth.currentUser == null) {
-      return 'voab-jo17-production'; // Demo organization ID
+      return '123e4567-e89b-12d3-a456-426614174000'; // Demo organization UUID
     }
 
     // Fast-path: if not authenticated, avoid RPC/network entirely
