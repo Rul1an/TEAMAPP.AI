@@ -32,7 +32,7 @@ class SupabasePlayerDataSource {
         .from(_table)
         .select()
         .eq('organization_id', orgId)
-        .order('last_name');
+        .order('name');
     return (data as List<dynamic>)
         .cast<Map<String, dynamic>>()
         .map(_fromRow)
@@ -96,13 +96,15 @@ class SupabasePlayerDataSource {
 
   static Player _fromRow(Map<String, dynamic> row) {
     // Prefer using domain JSON constructor for consistency and type safety
+    final fullName = row['name'] as String? ?? '';
+    final nameParts = fullName.split(' ');
     return Player.fromJson({
       'id': row['id'] as String? ?? '',
-      'firstName': row['first_name'] as String? ?? '',
-      'lastName': row['last_name'] as String? ?? '',
+      'firstName': nameParts.isNotEmpty ? nameParts.first : '',
+      'lastName': nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
       'jerseyNumber': row['jersey_number'] ?? 0,
       'birthDate':
-          row['birth_date'] as String? ?? DateTime.now().toIso8601String(),
+          row['date_of_birth'] as String? ?? DateTime.now().toIso8601String(),
       'position': (row['position'] as String?)?.toLowerCase() ?? 'midfielder',
       'preferredFoot':
           (row['preferred_foot'] as String?)?.toLowerCase() ?? 'right',
@@ -130,10 +132,9 @@ class SupabasePlayerDataSource {
   static Map<String, dynamic> _toRow(Player p) {
     final map = <String, dynamic>{
       'id': p.id,
-      'first_name': p.firstName,
-      'last_name': p.lastName,
+      'name': '${p.firstName} ${p.lastName}'.trim(),
       'jersey_number': p.jerseyNumber,
-      'birth_date': p.birthDate.toIso8601String(),
+      'date_of_birth': p.birthDate.toIso8601String(),
       'position': p.position.name,
       'preferred_foot': p.preferredFoot.name,
       'height_cm': p.height,
