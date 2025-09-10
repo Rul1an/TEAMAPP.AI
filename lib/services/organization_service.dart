@@ -1,6 +1,3 @@
-// TODO(author): Uncomment when implementing real Supabase queries
-// import 'package:supabase_flutter/supabase_flutter.dart';
-
 // Package imports:
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -11,7 +8,6 @@ class OrganizationService {
   OrganizationService({SupabaseClient? client})
       : _supabase = client ?? _tryGetSupabaseInstance();
 
-  // ignore: unused_field
   final SupabaseClient _supabase;
 
   // Returns Supabase.instance.client when Supabase.initialize was called, or
@@ -26,96 +22,125 @@ class OrganizationService {
     }
   }
 
-  // For MVP: Simple organization creation
   Future<Organization> createOrganization({
     required String name,
     required String slug,
     OrganizationTier tier = OrganizationTier.basic,
   }) async {
     try {
-      // For MVP: Create in-memory organization
-      // TODO(author): Implement Supabase table creation
-      final org = Organization(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        name: name,
-        slug: slug,
-        tier: tier,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
+      final now = DateTime.now().toUtc().toIso8601String();
+      final response = await _supabase
+          .from('organizations')
+          .insert({
+            'name': name,
+            'slug': slug,
+            'tier': tier.name,
+            'created_at': now,
+            'updated_at': now,
+          })
+          .select()
+          .single();
 
-      // In real implementation, save to Supabase
-      // final response = await _supabase
-      //     .from('organizations')
-      //     .insert(org.toJson())
-      //     .select()
-      //     .single();
-
-      return org;
+      return _mapOrganization(response);
     } catch (e) {
-      throw Exception('Failed to create organization: $e');
+      throw OrganizationException('Failed to create organization: $e');
     }
   }
 
-  // Get organization by ID
   Future<Organization?> getOrganization(String id) async {
     try {
-      // For MVP: Return mock organization
-      // TODO(author): Implement Supabase query
-      if (id == 'default-org') {
-        return Organization(
-          id: id,
-          name: 'Mijn Voetbalclub',
-          slug: 'mijn-voetbalclub',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-      }
-      return null;
+      final response = await _supabase
+          .from('organizations')
+          .select()
+          .eq('id', id)
+          .maybeSingle();
+
+      return response == null ? null : _mapOrganization(response);
     } catch (e) {
-      throw Exception('Failed to get organization: $e');
+      throw OrganizationException('Failed to get organization: $e');
     }
   }
 
-  // Get user's organizations
   Future<List<Organization>> getUserOrganizations(String userId) async {
     try {
-      // For MVP: Return single default organization
-      // TODO(author): Implement Supabase query with join on organization_members
-      return [
-        Organization(
-          id: 'default-org',
-          name: 'Mijn Voetbalclub',
-          slug: 'mijn-voetbalclub',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        ),
-      ];
+      final response = await _supabase
+          .from('organization_members')
+          .select('organizations(*)')
+          .eq('user_id', userId) as List<dynamic>;
+
+      return response
+          .map(
+            (row) =>
+                _mapOrganization(row['organizations'] as Map<String, dynamic>),
+          )
+          .toList();
     } catch (e) {
-      throw Exception('Failed to get user organizations: $e');
+      throw OrganizationException('Failed to get user organizations: $e');
     }
   }
 
-  // Update organization
   Future<Organization> updateOrganization(Organization org) async {
     try {
-      // For MVP: Return updated organization
-      // TODO(author): Implement Supabase update
-      return org.copyWith(updatedAt: DateTime.now());
+      final response = await _supabase
+          .from('organizations')
+          .update({
+            'name': org.name,
+            'slug': org.slug,
+            'tier': org.tier.name,
+            'logo_url': org.logoUrl,
+            'primary_color': org.primaryColor,
+            'secondary_color': org.secondaryColor,
+            'settings': org.settings,
+            'subscription_status': org.subscriptionStatus,
+            'subscription_end_date':
+                org.subscriptionEndDate?.toIso8601String(),
+            'updated_at': DateTime.now().toUtc().toIso8601String(),
+          })
+          .eq('id', org.id)
+          .select()
+          .single();
+
+      return _mapOrganization(response);
     } catch (e) {
-      throw Exception('Failed to update organization: $e');
+      throw OrganizationException('Failed to update organization: $e');
     }
   }
 
-  // Check if slug is available
   Future<bool> isSlugAvailable(String slug) async {
     try {
-      // For MVP: Simple check
-      // TODO(author): Implement Supabase query
-      final reservedSlugs = ['admin', 'api', 'app', 'www', 'demo'];
-      return !reservedSlugs.contains(slug.toLowerCase());
+      final response = await _supabase
+          .from('organizations')
+          .select('id')
+          .eq('slug', slug)
+          .maybeSingle();
+      return response == null;
     } catch (e) {
-      throw Exception('Failed to check slug availability: $e');
+      throw OrganizationException('Failed to check slug availability: $e');
     }
   }
+
+  Organization _mapOrganization(Map<String, dynamic> data) =>
+      Organization.fromJson({
+        'id': data['id'],
+        'name': data['name'],
+        'slug': data['slug'],
+        'tier': data['tier'],
+        'logoUrl': data['logo_url'],
+        'primaryColor': data['primary_color'],
+        'secondaryColor': data['secondary_color'],
+        'settings': data['settings'],
+        'subscriptionStatus': data['subscription_status'],
+        'subscriptionEndDate': data['subscription_end_date'],
+        'createdAt': data['created_at'],
+        'updatedAt': data['updated_at'],
+      });
 }
+
+class OrganizationException implements Exception {
+  OrganizationException(this.message);
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
