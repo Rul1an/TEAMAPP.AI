@@ -46,7 +46,7 @@ class DeepLinkService {
 
     // On web links are provided as hash fragments (e.g. #/matches/123).
     final path = uri.fragment.isNotEmpty ? uri.fragment : uri.path;
-    final segments = Uri.parse(path).pathSegments;
+    final segments = Uri(path: path).pathSegments;
     if (segments.length < 2) return;
 
     final id = segments[1];
