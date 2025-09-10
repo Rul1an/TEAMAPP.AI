@@ -8,13 +8,19 @@ import '../models/club/staff_member.dart';
 import '../models/club/team.dart';
 import '../models/player.dart';
 import '../repositories/club_repository.dart';
+import '../services/club_service.dart';
 
 /// 🏆 Club Provider
 /// Manages club-level operations, teams, staff, and player progress
 class ClubProvider extends ChangeNotifier {
-  ClubProvider({required ClubRepository clubRepository})
-      : _clubRepository = clubRepository;
+  ClubProvider({
+    required ClubRepository clubRepository,
+    required ClubService clubService,
+  })  : _clubRepository = clubRepository,
+        _clubService = clubService;
+
   final ClubRepository _clubRepository;
+  final ClubService _clubService;
 
   // State
   Club? _currentClub;
@@ -118,18 +124,25 @@ class ClubProvider extends ChangeNotifier {
   // Team Management
   Future<void> _loadTeams() async {
     if (_currentClub == null) return;
-    // TODO(author): Implement when ClubService has getTeamsForClub method
-    // _teams = await _clubService.getTeamsForClub(_currentClub!.id);
-    notifyListeners();
+    try {
+      final loaded = await _clubService.getTeamsForClub(_currentClub!.id);
+      _teams
+        ..clear()
+        ..addAll(loaded);
+    } catch (e) {
+      _setError('Failed to load teams: $e');
+    } finally {
+      notifyListeners();
+    }
   }
 
   Future<void> addTeam(Team team) async {
     _setLoading(true);
     try {
-      // TODO(author): Implement when ClubService has createTeam method
-      // final newTeam = await _clubService.createTeam(team);
-      // _teams.add(newTeam);
+      final newTeam = await _clubService.createTeam(team);
+      _teams.add(newTeam);
       _clearError();
+      notifyListeners();
     } catch (e) {
       _setError('Failed to add team: $e');
     } finally {
@@ -140,23 +153,45 @@ class ClubProvider extends ChangeNotifier {
   // Data loading methods
   Future<void> _loadStaff() async {
     if (_currentClub == null) return;
-    // TODO(author): Implement when ClubService has getStaffForClub method
-    // _staff = await _clubService.getStaffForClub(_currentClub!.id);
-    notifyListeners();
+    try {
+      final loaded = await _clubService.getStaffForClub(_currentClub!.id);
+      _staff
+        ..clear()
+        ..addAll(loaded);
+    } catch (e) {
+      _setError('Failed to load staff: $e');
+    } finally {
+      notifyListeners();
+    }
   }
 
   Future<void> _loadAllPlayers() async {
     if (_currentClub == null) return;
-    // TODO(author): Implement when ClubService has getPlayersForClub method
-    // _allPlayers = await _clubService.getPlayersForClub(_currentClub!.id);
-    notifyListeners();
+    try {
+      final loaded = await _clubService.getPlayersForClub(_currentClub!.id);
+      _allPlayers
+        ..clear()
+        ..addAll(loaded);
+    } catch (e) {
+      _setError('Failed to load players: $e');
+    } finally {
+      notifyListeners();
+    }
   }
 
   Future<void> _loadPlayerProgress() async {
     if (_currentClub == null) return;
-    // TODO(author): Implement when ClubService has getPlayerProgressForClub method
-    // _playerProgress = await _clubService.getPlayerProgressForClub(_currentClub!.id);
-    notifyListeners();
+    try {
+      final loaded =
+          await _clubService.getPlayerProgressForClub(_currentClub!.id);
+      _playerProgress
+        ..clear()
+        ..addAll(loaded);
+    } catch (e) {
+      _setError('Failed to load player progress: $e');
+    } finally {
+      notifyListeners();
+    }
   }
 
   // Helper Methods

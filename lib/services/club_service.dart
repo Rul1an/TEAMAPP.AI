@@ -60,6 +60,58 @@ class ClubService {
     return _clubs.values.toList();
   }
 
+  // Team Operations
+  Future<List<Team>> getTeamsForClub(String clubId) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    return _clubTeams[clubId]?.toList() ?? [];
+  }
+
+  Future<Team> createTeam(Team team) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    final teams = _clubTeams.putIfAbsent(team.clubId, () => []);
+    teams.add(team);
+    return team;
+  }
+
+  // Staff Operations
+  Future<List<StaffMember>> getStaffForClub(String clubId) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    return _clubStaff[clubId]?.toList() ?? [];
+  }
+
+  Future<StaffMember> addStaffMember(StaffMember staff) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    final staffList = _clubStaff.putIfAbsent(staff.clubId, () => []);
+    staffList.add(staff);
+    return staff;
+  }
+
+  // Player Operations
+  Future<List<Player>> getPlayersForClub(String clubId) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    return _clubPlayers[clubId]?.toList() ?? [];
+  }
+
+  Future<Player> addPlayer(Player player, String clubId) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    final players = _clubPlayers.putIfAbsent(clubId, () => []);
+    players.add(player);
+    return player;
+  }
+
+  // Player Progress Operations
+  Future<List<PlayerProgress>> getPlayerProgressForClub(String clubId) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    return _clubProgress[clubId]?.toList() ?? [];
+  }
+
+  Future<PlayerProgress> addPlayerProgress(PlayerProgress progress) async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    final progressList = _clubProgress.putIfAbsent(progress.clubId, () => []);
+    progressList.add(progress);
+    return progress;
+  }
+
   // Simplified demo data for testing
   Future<void> initializeDemoData() async {
     // Basic demo implementation would go here
