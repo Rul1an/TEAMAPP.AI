@@ -10,6 +10,8 @@ class OrganizationService {
 
   final SupabaseClient _supabase;
 
+  static const Set<String> _reservedSlugs = {'admin', 'api', 'app'};
+
   // Returns Supabase.instance.client when Supabase.initialize was called, or
   // falls back to a dummy client for unit-test contexts where full
   // initialization is undesirable.
@@ -35,8 +37,8 @@ class OrganizationService {
             'name': name,
             'slug': slug,
             'tier': tier.name,
-            'created_at': now,
-            'updated_at': now,
+            'createdAt': now,
+            'updatedAt': now,
           })
           .select()
           .single();
@@ -87,14 +89,14 @@ class OrganizationService {
             'name': org.name,
             'slug': org.slug,
             'tier': org.tier.name,
-            'logo_url': org.logoUrl,
-            'primary_color': org.primaryColor,
-            'secondary_color': org.secondaryColor,
+            'logoUrl': org.logoUrl,
+            'primaryColor': org.primaryColor,
+            'secondaryColor': org.secondaryColor,
             'settings': org.settings,
-            'subscription_status': org.subscriptionStatus,
-            'subscription_end_date':
+            'subscriptionStatus': org.subscriptionStatus,
+            'subscriptionEndDate':
                 org.subscriptionEndDate?.toIso8601String(),
-            'updated_at': DateTime.now().toUtc().toIso8601String(),
+            'updatedAt': DateTime.now().toUtc().toIso8601String(),
           })
           .eq('id', org.id)
           .select()
@@ -107,6 +109,8 @@ class OrganizationService {
   }
 
   Future<bool> isSlugAvailable(String slug) async {
+    final normalized = slug.toLowerCase();
+    if (_reservedSlugs.contains(normalized)) return false;
     try {
       final response = await _supabase
           .from('organizations')
@@ -121,18 +125,18 @@ class OrganizationService {
 
   Organization _mapOrganization(Map<String, dynamic> data) =>
       Organization.fromJson({
-        'id': data['id'],
-        'name': data['name'],
-        'slug': data['slug'],
-        'tier': data['tier'],
-        'logoUrl': data['logo_url'],
-        'primaryColor': data['primary_color'],
-        'secondaryColor': data['secondary_color'],
-        'settings': data['settings'],
-        'subscriptionStatus': data['subscription_status'],
-        'subscriptionEndDate': data['subscription_end_date'],
-        'createdAt': data['created_at'],
-        'updatedAt': data['updated_at'],
+        'id': data['id'] as String,
+        'name': data['name'] as String,
+        'slug': data['slug'] as String,
+        'tier': data['tier'] as String?,
+        'logoUrl': data['logoUrl'] as String?,
+        'primaryColor': data['primaryColor'] as String?,
+        'secondaryColor': data['secondaryColor'] as String?,
+        'settings': data['settings'] as Map<String, dynamic>?,
+        'subscriptionStatus': data['subscriptionStatus'] as String?,
+        'subscriptionEndDate': data['subscriptionEndDate'] as String?,
+        'createdAt': data['createdAt'] as String,
+        'updatedAt': data['updatedAt'] as String,
       });
 }
 
