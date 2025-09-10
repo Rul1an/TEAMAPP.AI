@@ -73,18 +73,19 @@ void main() {
     );
     await service.addStaffMember(staff);
 
-    final player = Player()
-      ..id = 'p1'
-      ..firstName = 'Alice'
-      ..lastName = 'Smith'
-      ..jerseyNumber = 9
-      ..birthDate = DateTime(2008, 1, 1)
-      ..position = Position.forward
-      ..preferredFoot = PreferredFoot.right
-      ..height = 170
-      ..weight = 60
-      ..createdAt = DateTime.now()
-      ..updatedAt = DateTime.now();
+    final player = Player(
+      id: 'p1',
+      firstName: 'Alice',
+      lastName: 'Smith',
+      jerseyNumber: 9,
+      birthDate: DateTime(2008, 1, 1),
+      position: Position.forward,
+      preferredFoot: PreferredFoot.right,
+      height: 170,
+      weight: 60,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
     await service.addPlayer(player, club.id);
 
     final progress = PlayerProgress(
