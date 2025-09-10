@@ -42,8 +42,8 @@ void main() {
           'name': 'Test Club',
           'slug': 'test-club',
           'tier': 'basic',
-          'created_at': '2023-01-01T00:00:00Z',
-          'updated_at': '2023-01-01T00:00:00Z',
+          'createdAt': '2023-01-01T00:00:00Z',
+          'updatedAt': '2023-01-01T00:00:00Z',
           'settings': <String, dynamic>{},
         },
       );
@@ -69,8 +69,8 @@ void main() {
           'name': 'Test Club',
           'slug': 'test-club',
           'tier': 'basic',
-          'created_at': '2023-01-01T00:00:00Z',
-          'updated_at': '2023-01-01T00:00:00Z',
+          'createdAt': '2023-01-01T00:00:00Z',
+          'updatedAt': '2023-01-01T00:00:00Z',
           'settings': <String, dynamic>{},
         },
       );
@@ -93,8 +93,8 @@ void main() {
               'name': 'Test Club',
               'slug': 'test-club',
               'tier': 'basic',
-              'created_at': '2023-01-01T00:00:00Z',
-              'updated_at': '2023-01-01T00:00:00Z',
+              'createdAt': '2023-01-01T00:00:00Z',
+              'updatedAt': '2023-01-01T00:00:00Z',
               'settings': <String, dynamic>{},
             }
           }
@@ -128,8 +128,8 @@ void main() {
           'name': 'Test Club',
           'slug': 'test-club',
           'tier': 'basic',
-          'created_at': '2023-01-01T00:00:00Z',
-          'updated_at': '2023-01-02T00:00:00Z',
+          'createdAt': '2023-01-01T00:00:00Z',
+          'updatedAt': '2023-01-02T00:00:00Z',
           'settings': <String, dynamic>{},
         },
       );
