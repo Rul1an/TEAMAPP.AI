@@ -127,6 +127,24 @@ class TrainingPlanImportService {
           message: 'CSV bestand is leeg',
         );
       }
+      // Validate header for required columns
+      final header = rows.first
+          .map((c) => (c?.toString() ?? '').trim().toLowerCase())
+          .toList();
+      const required = [
+        'datum',
+        'starttijd',
+        'duur',
+        'focus',
+        'intensiteit'
+      ];
+      if (!required.every(header.contains)) {
+        final missing = required.where((c) => !header.contains(c)).join(', ');
+        return TrainingPlanImportResult(
+          success: false,
+          message: 'CSV mist verplichte kolommen: $missing',
+        );
+      }
       // Attempt header-based mapping; fall back to positional mapping when headers missing
       final mapped = _remapRowsWithHeaders(rows);
       final dataRows = mapped ?? rows.skip(1).toList();
@@ -251,6 +269,10 @@ class TrainingPlanImportService {
         }
 
         final date = _parseDate(row[0]);
+        if (date == null) {
+          errors.add('Rij ${i + 2}: Ongeldige datum (verwacht dd-mm-jjjj)');
+          continue;
+        }
         final start = _parseStartTime(row[1]);
         final duration = int.tryParse(row[2]?.toString() ?? '') ?? 90;
         final focus = (row[3]?.toString() ?? 'Techniek').trim();
@@ -289,7 +311,7 @@ class TrainingPlanImportService {
     );
   }
 
-  DateTime _parseDate(dynamic value) {
+  DateTime? _parseDate(dynamic value) {
     if (value is DateTime) {
       return DateTime(value.year, value.month, value.day);
     }
@@ -320,8 +342,7 @@ class TrainingPlanImportService {
     if (iso.hasMatch(s)) {
       return DateTime.parse(s);
     }
-    // Fallback: today
-    return DateTime.now();
+    return null;
   }
 
   String? _parseStartTime(dynamic value) {

@@ -237,8 +237,9 @@ class JO17TacticalManagerApp extends ConsumerWidget {
           );
         },
         routerConfig: router,
-        // TODO(roel): Once Flutter exposes navigatorObservers on MaterialApp.router,
-        // integrate SentryNavigatorObserver via GoRouter observers
+        // TODO(roel): Monitor Flutter updates for navigatorObservers support on
+        // MaterialApp.router. Once available, inject SentryNavigatorObserver via
+        // GoRouter observers and verify navigation breadcrumbs in Sentry.
         debugShowCheckedModeBanner: false,
       ),
     );

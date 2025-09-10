@@ -55,9 +55,22 @@ class ScheduleImportService {
     for (var i = 1; i < rows.length; i++) {
       final row = rows[i];
       try {
+        if (row.length <= dateIdx ||
+            row.length <= timeIdx ||
+            row.length <= oppIdx ||
+            row.length <= compIdx ||
+            row.length <= locIdx) {
+          errors.add('Rij $i: onvoldoende kolommen');
+          continue;
+        }
+
         final dateStr = row[dateIdx]?.toString();
         final timeStr = row[timeIdx]?.toString();
-        final dt = DateTime.parse('$dateStr $timeStr');
+        final dt = DateTime.tryParse('$dateStr $timeStr');
+        if (dt == null) {
+          errors.add('Rij $i: ongeldige datum of tijd');
+          continue;
+        }
         final locStr = row[locIdx].toString().toLowerCase();
         final compStr = row[compIdx].toString().toLowerCase();
 

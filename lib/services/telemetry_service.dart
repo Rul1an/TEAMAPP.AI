@@ -6,6 +6,7 @@ import 'package:opentelemetry/api.dart' as api;
 import 'package:opentelemetry/sdk.dart' as sdk;
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // Project imports:
 import '../config/environment.dart';
@@ -31,8 +32,11 @@ class TelemetryService {
   Future<void> init() async {
     if (_initialized) return;
 
-    // Get telemetry endpoint from Environment configuration
-    final endpoint = Environment.otlpEndpoint;
+    // Get telemetry endpoint from env override or Environment configuration
+    final envEndpoint = dotenv.env['OTLP_ENDPOINT'];
+    final endpoint = (envEndpoint != null && envEndpoint.isNotEmpty)
+        ? envEndpoint
+        : Environment.otlpEndpoint;
     if (endpoint == null || endpoint.isEmpty) {
       // No endpoint – skip initialization (e.g. local dev).
       assert(() {

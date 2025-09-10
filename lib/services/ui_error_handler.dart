@@ -233,7 +233,7 @@ class UIErrorHandler {
       if (value is double) return value;
       if (value is int) return value.toDouble();
 
-      final parsed = double.tryParse(value.toString());
+      final parsed = double.tryParse(value.toString().trim());
       return parsed ?? defaultValue;
     } catch (e) {
       _logError('SafeToDouble', e, StackTrace.current);
@@ -248,7 +248,7 @@ class UIErrorHandler {
       if (value is int) return value;
       if (value is double) return value.round();
 
-      final parsed = int.tryParse(value.toString());
+      final parsed = int.tryParse(value.toString().trim());
       return parsed ?? defaultValue;
     } catch (e) {
       _logError('SafeToInt', e, StackTrace.current);
