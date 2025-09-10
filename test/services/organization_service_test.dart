@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_implementing_value_types, directives_ordering
+// ignore_for_file: directives_ordering
 
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
