@@ -95,6 +95,10 @@ class PlayerCard extends ConsumerWidget {
                                       compact: true,
                                     );
                                   }
+                                  if (snapshot.hasError) {
+                                    // Silently fail for performance data - it's not critical
+                                    return const SizedBox.shrink();
+                                  }
                                   return const SizedBox.shrink();
                                 },
                               ),
